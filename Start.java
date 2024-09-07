@@ -12,7 +12,7 @@ public class Start {
 	public static void main(String[] args) {
 		
 		Main game = new Main();
-		//game.startGame();
+		game.startGame();
 
 	}
 }
