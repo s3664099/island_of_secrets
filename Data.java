@@ -10,16 +10,38 @@ Source: https://archive.org/details/island-of-secrets_202303
 public class Data {
 	
 	private String[] data;
+	private int[] intData;
 	
 	public Data(String[] data) {
 		this.data = data;
 	}
 	
+	public Data(String intData,int mod) {
+		
+		this.intData = new int[intData.length()];
+		
+		for (int x=0;x<intData.length();x++) {
+			this.intData[x] = ((int) intData.charAt(x))-mod;
+			System.out.println(this.intData[x]);
+		}
+		
+	}
+	
 	public String retrieveData(int position) {
 		
-		String retrievedData = this.data[position-1];
-		
-		return retrievedData;
+		return this.data[position-1];
+	}
+	
+	public int retrieveIntData(int position) {
+		return this.intData[position-1];
+	}
+	
+	public void modifyIntData() {
+		for (int x=0;x<this.intData.length;x++) {
+			if(this.intData[x]>127) {
+				this.intData[x] = this.intData[x]-96;
+			}
+		}
 	}
 
 }

@@ -1,0 +1,43 @@
+2830 LET Z=31
+2840 LET V=42:LET C4=43
+
+
+
+4130 LET B=9:LET L=1000:LET E=0
+4140 LET C1=16:LET C2=21:LET C3=24:LET F=2:LET G=2
+4150 LET F=2:LET G=2
+4160 LET Y=100:LET X=35
+
+
+LET W=51	- Size of H$ & Q$
+LET R=23	- Room Player is in
+
+L(W)		- Is the ASCII value of each of the characters in H$ - 32
+F(W)		- Is the ASCII value of each of the characters in Q$ - 48 (which translates to the number)
+H$			- Code_one
+W$			- code_two
+
+V$			- Verbs
+Z$			- Nouns
+
+Function Defines
+DEF FNR(Z)=INT(RND(1)*Z)+1
+DEF FNP(Z)=POS(0)
+DEF FNS(Z)=Y-(E/C4+.1)
+
+String Values
+G$="----------------------------------------"
+F$="LET YOUR QUEST BEGIN"
+K$="REFLECTIONS STIR WITHIN"
+L$="REMEMBER ALADIN IT WORKED FOR HIM"
+M$="DECIDE TO HAVE A LITTLE FUN AND "
+N$="THE TORCH BRIGHTENS"
+U$="YOU ANGER THE BIRD"
+W$="YOU CAN'T "
+P$="REMEMBER OLD TIMES"
+R$=" WHICH FLIES YOU TO A REMOTE PLACE"
+S$="FALLING UNDER THE SPELL OF THE BOATMAN"
+T$="AND ARE TAKEN TO THE ISLAN OF SECRETS"
+J$="THE STONES ARE FIXED"
+O$="WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY"
+H$="STONY WORDS"
