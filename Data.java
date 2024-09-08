@@ -50,6 +50,10 @@ public class Data {
 			}
 		}
 	}
+	
+	public void getLength() {
+		System.out.println(this.data.length);
+	}
 }
 /*
 7 September 2024 - Created File

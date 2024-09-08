@@ -28,6 +28,9 @@ W$			- code_two - itemVisibility
 
 V$			- Verbs
 Z$			- Nouns
+F$			- Message
+A$			- Noun
+X$			- Verb
 
 Function Defines
 DEF FNR(Z)=INT(RND(1)*Z)+1
@@ -35,7 +38,6 @@ DEF FNP(Z)=POS(0)
 DEF FNS(Z)=Y-(E/C4+.1)
 
 String Values
-F$="LET YOUR QUEST BEGIN"
 K$="REFLECTIONS STIR WITHIN"
 L$="REMEMBER ALADIN IT WORKED FOR HIM"
 M$="DECIDE TO HAVE A LITTLE FUN AND "

@@ -18,5 +18,4 @@ public class Start {
 
 /*
 7 September 2024 - Created File
-8 September 2024 - Added the input method
 */
