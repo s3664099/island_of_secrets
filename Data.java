@@ -22,9 +22,16 @@ public class Data {
 		
 		for (int x=0;x<intData.length();x++) {
 			this.intData[x] = ((int) intData.charAt(x))-mod;
-			System.out.println(this.intData[x]);
 		}
+	}
+	
+	public Data(String data,int len,boolean temp) {
 		
+		this.data = new String[data.length()/3];
+		
+		for (int x=0;x<data.length();x+=3) {
+			this.data[x/3] = data.substring(x,x+3);			
+		}
 	}
 	
 	public String retrieveData(int position) {
@@ -43,5 +50,8 @@ public class Data {
 			}
 		}
 	}
-
 }
+/*
+7 September 2024 - Created File
+8 September 2024 - Added Constructors for other data styles 
+*/

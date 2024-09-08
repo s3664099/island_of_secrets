@@ -41,3 +41,6 @@ T$="AND ARE TAKEN TO THE ISLAN OF SECRETS"
 J$="THE STONES ARE FIXED"
 O$="WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY"
 H$="STONY WORDS"
+
+660 - Reads the locations and will stop at the player's location. Then will split the
+	  location values.
