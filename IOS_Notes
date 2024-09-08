@@ -1,21 +1,29 @@
-2830 LET Z=31
+
 2840 LET V=42:LET C4=43
 
 
 
-4130 LET B=9:LET L=1000:LET E=0
+4130 LET B=9:LET E=0
 4140 LET C1=16:LET C2=21:LET C3=24:LET F=2:LET G=2
 4150 LET F=2:LET G=2
-4160 LET Y=100:LET X=35
+
 
 
 LET W=51	- Size of H$ & Q$
 LET R=23	- Room Player is in
+LET Z=31	- Length of screen
+LET Y=100	- Strength
+LET X=35	- Wisdom
+LET L=1000	- Time
 
 L(W)		- Is the ASCII value of each of the characters in H$ - 32
+			- This shows where the items are located
+			- itemLocation
 F(W)		- Is the ASCII value of each of the characters in Q$ - 48 (which translates to the number)
-H$			- Code_one
-W$			- code_two
+			- This indicates whether the items are visible
+			- itemVisibility
+H$			- Code_one - itemLocation
+W$			- code_two - itemVisibility
 
 V$			- Verbs
 Z$			- Nouns
@@ -44,3 +52,5 @@ H$="STONY WORDS"
 
 660 - Reads the locations and will stop at the player's location. Then will split the
 	  location values.
+2770 - Clears the Screen
+2780 - Moves the pointer to the end of the location data

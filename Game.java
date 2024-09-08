@@ -7,35 +7,88 @@ Date: 8 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
+import java.io.IOException;
+import java.util.Random;
+
 public class Game {
 	
 	private Data locations;
 	private Data objects;
 	private Data prepositions;
-	private Data code_L;
-	private Data code_F;
+	private Data itemLocation;
+	private Data itemVisibility;
 	private Data verbs;
 	private Data nouns;
+	private int room = 23;
+	private int noRooms = 80;
+	private int strength = 100;
+	private int wisdom = 35;
+	private int timeRemaining = 1000;
 	
 	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
 				Data verbs,Data nouns) {
 		this.locations = locations;
 		this.objects = objects;
 		this.prepositions = prepositions;
-		this.code_L = code_L;
-		this.code_F = code_F;
+		this.itemLocation = code_L;
+		this.itemVisibility = code_F;
 		this.verbs = verbs;
 		this.nouns = nouns;
 	}
 	
-	public void Run() {
+	public void run() {
 		
+		int roomNumber = this.room;
+		String[] roomDetails = getRoom(this.locations,roomNumber);
+		String roomDescription = String.format("I AM %s %s", 
+				prepositions.retrieveData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
+		ClearScreen();
+	}
+	
+	//Retrieves the location details and splits the code
+	private String[] getRoom(Data rooms,int room) {
+		
+		String[] roomDetails = new String[3];
+		int newRoom = room;
+		Random rand = new Random();
+		
+		if (room == 20) {
+			newRoom = rand.nextInt(noRooms);
+			newRoom ++;
+		}
+		
+		String roomDescription = rooms.retrieveData(newRoom);
+		roomDetails[0] = roomDescription.substring(0,1);		
+		roomDetails[1] = roomDescription.substring(1,roomDescription.length()-4);
+		roomDetails[2] = roomDescription.substring(roomDescription.length()-4,roomDescription.length());
+
+		if (room == 39) {
+			int begin = rand.nextInt(5);
+			roomDetails[2] = "101110100".substring(begin,begin+4);
+		} else if (room == 20) {
+			roomDetails[2] = "1110";
+		}
+		
+		return roomDetails;
+	}
+	
+	private void ClearScreen() {
+		
+       try {
+		Runtime.getRuntime().exec("clear");
+       } catch (IOException e) {
+		e.printStackTrace();
+       }		
 	}
 }
 /*
 
 
-30 LET D=R:IF R=20 THEN LET D=FNR(80)
+
+
+
+
+
 40 GOSUB 650:GOSUB 2770:PRINT "ISLAND OF SECRETS","TIME REMAINING:";L
 50 PRINT G$;TAB(0)"STRENGTH = ";INT(Y);TAB(23);"WISDOM = ";X:PRINT G$
 60 PRINT"YOU ARE ";I$(VAL(LEFT$(A$,1)));" ";:GOSUB720;LET N=0
@@ -43,7 +96,7 @@ public class Game {
 80 LET C=0:READ Y$
 90 IF L(I)=R AND F(I)<1 THEN LET C=1
 100 IF N>0 AND C=1 THEN LET A$=A$+","
-110 IF C=1 THEN LET A$=A32$+" "+Y$:LET N=N+1
+110 IF C=1 THEN LET A$=A$+" "+Y$:LET N=N+1
 120 NEXT I
 130 IF N>0 THEN LET A$="*YOU SEE"+A$:GOSUB 270
 140 PRINT:PRINT G$;F$
@@ -97,12 +150,7 @@ public class Game {
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
-650 RESTORE
-660 FOR I=1 TO D:READ A$:NEXT I
-680 LET D$=RIGHT$(A$,4):LET A$=LEFT$(A$,LEN(A$)-4)
-690 IF R=39 THEN LET D$=MID$("101110100",FNR(5),4)
-700 IF R=20 THEN LET D$="1110"
-710 GOSUB 2780:RETURN
+
 720 FOR I=2 TO LEN(A$):LET E$=MID$(A$,I,1)
 730 PRINT E$;: IF E$=" " AND FNP(Z)>Z THEN PRINT
 740 NEXT I
@@ -308,7 +356,7 @@ public class Game {
 2740 GOSUB2770
 2750 GOSUB720:GOSUB2760:RETURN
 2760 FOR D=1 TO 900:NEXT D:RETURN
-2770 PRINT CHR$(147):RETURN
+
 
 2800 LET A$="*THE WORLD LIVES WITH NEW HOPE":GOSUB2750
 2810 LET F$="YOUR QUEST IS OVER":RETURN
