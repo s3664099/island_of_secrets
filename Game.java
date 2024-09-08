@@ -21,9 +21,11 @@ public class Game {
 	private Data nouns;
 	private int room = 23;
 	private int noRooms = 80;
+	private int noItems = 43;
 	private int strength = 100;
 	private int wisdom = 35;
 	private int timeRemaining = 1000;
+	private String line = "----------------------------------------------------------------";
 	
 	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
 				Data verbs,Data nouns) {
@@ -40,9 +42,10 @@ public class Game {
 		
 		int roomNumber = this.room;
 		String[] roomDetails = getRoom(this.locations,roomNumber);
-		String roomDescription = String.format("I AM %s %s", 
+		String roomDescription = String.format("YOU ARE %s %s", 
 				prepositions.retrieveData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
 		ClearScreen();
+		Display(this.timeRemaining,this.strength,this.wisdom,roomDescription,roomNumber);
 	}
 	
 	//Retrieves the location details and splits the code
@@ -80,6 +83,22 @@ public class Game {
 		e.printStackTrace();
        }		
 	}
+	
+	private void Display(int timeRemaining,int strength,int wisdom,String roomDescription,
+			int roomNumber) {
+		
+		System.out.printf("%-10sISLAND OF SECRETS%-20sTIME REMAINING: %d%n"," "," ",timeRemaining);
+		System.out.printf("%-5s%s%n"," ",this.line);
+		System.out.printf("%-10sSTRENGTH = %d%-24sWISDOM = %d%n"," ",strength," ",wisdom);
+		System.out.printf("%-5s%s%n%-10s%s%n"," ",this.line," ",roomDescription);
+		
+		for (int x=1;x<this.noItems+1;x++) {
+			if (this.itemLocation.retrieveIntData(x) == roomNumber &&
+					this.itemVisibility.retrieveIntData(x)<1) {
+				
+			}
+		}
+	}
 }
 /*
 
@@ -89,9 +108,9 @@ public class Game {
 
 
 
-40 GOSUB 650:GOSUB 2770:PRINT "ISLAND OF SECRETS","TIME REMAINING:";L
-50 PRINT G$;TAB(0)"STRENGTH = ";INT(Y);TAB(23);"WISDOM = ";X:PRINT G$
-60 PRINT"YOU ARE ";I$(VAL(LEFT$(A$,1)));" ";:GOSUB720;LET N=0
+
+
+60 LET N=0
 70 FOR I=1 TO C4
 80 LET C=0:READ Y$
 90 IF L(I)=R AND F(I)<1 THEN LET C=1
@@ -100,6 +119,7 @@ public class Game {
 120 NEXT I
 130 IF N>0 THEN LET A$="*YOU SEE"+A$:GOSUB 270
 140 PRINT:PRINT G$;F$
+
 150 PRINT:PRINT "WHAT WILL YOU DO";
 160 INPUT E$
 170 LET C$="":LET X$="":LET A=0:LET O=52:LET LI=LEN(E$)
@@ -151,10 +171,7 @@ public class Game {
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
 
-720 FOR I=2 TO LEN(A$):LET E$=MID$(A$,I,1)
-730 PRINT E$;: IF E$=" " AND FNP(Z)>Z THEN PRINT
-740 NEXT I
-750 PRINT". ";:LET A$="":RETURN
+
 760 IF LEN(X$)<3 THEN LET X$=X$+"???"
 770 FOR I=1 TO W
 780 IF LEFT$(X$,3)=MID$(32Z$,3*(I-1)+1,3) THEN LET D=1

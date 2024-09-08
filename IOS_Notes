@@ -1,5 +1,5 @@
 
-2840 LET V=42:LET C4=43
+2840 LET V=42
 
 
 
@@ -15,6 +15,7 @@ LET Z=31	- Length of screen
 LET Y=100	- Strength
 LET X=35	- Wisdom
 LET L=1000	- Time
+LET C4=43	- Number of Items
 
 L(W)		- Is the ASCII value of each of the characters in H$ - 32
 			- This shows where the items are located
@@ -34,7 +35,6 @@ DEF FNP(Z)=POS(0)
 DEF FNS(Z)=Y-(E/C4+.1)
 
 String Values
-G$="----------------------------------------"
 F$="LET YOUR QUEST BEGIN"
 K$="REFLECTIONS STIR WITHIN"
 L$="REMEMBER ALADIN IT WORKED FOR HIM"
@@ -52,5 +52,6 @@ H$="STONY WORDS"
 
 660 - Reads the locations and will stop at the player's location. Then will split the
 	  location values.
+720 - Prints the description of the location. Determines the length and goes to a new line
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data
