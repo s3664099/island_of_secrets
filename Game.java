@@ -9,6 +9,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 	
@@ -45,6 +46,7 @@ public class Game {
 		while (this.gamePlaying) {
 			ClearScreen();
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
+			String action = getAction();
 		}
 	}
 	
@@ -75,6 +77,7 @@ public class Game {
 		return roomDetails;
 	}
 
+	//Checks if there are any visible items in the room
 	private String getItems(Data items, int roomNumber) {
 		
 		int numItems = 0;
@@ -100,6 +103,7 @@ public class Game {
 		return itemDetails;
 	}	
 	
+	//Clears the screen (though does not work on the console).
 	private void ClearScreen() {
 		
        try {
@@ -109,6 +113,7 @@ public class Game {
        }		
 	}
 	
+	//Displays the contents of the room.
 	private String Display(int timeRemaining,int strength,int wisdom,int roomNumber) {
 		
 		//Gets details of location and any items 
@@ -131,6 +136,20 @@ public class Game {
 		
 		return roomDetails[2];
 	}
+	
+	private String getAction() {
+		
+		String action = "";
+
+	    Scanner myObj = new Scanner(System.in);
+	    System.out.printf("%-10sWHAT WILL YOU DO: "," ");
+
+	    action = myObj.nextLine();
+	    
+	    System.out.printf("%n%n", null);
+		
+		return action;
+	}
 }
 
 
@@ -143,10 +162,9 @@ public class Game {
 
 /*
 
-140 PRINT:PRINT G$;F$
 
-150 PRINT:PRINT "WHAT WILL YOU DO";
-160 INPUT E$
+
+
 170 LET C$="":LET X$="":LET A=0:LET O=52:LET LI=LEN(E$)
 180 FOR I=1 TO LI
 190 IF MID$(E$,I,1)=" "AND C$="" THEN LET C$=LEFT$(E$,I-1)
