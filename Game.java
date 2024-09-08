@@ -26,6 +26,8 @@ public class Game {
 	private int wisdom = 35;
 	private int timeRemaining = 1000;
 	private String line = "----------------------------------------------------------------";
+	private String message = "LET YOUR QUEST BEGIN";
+	private boolean gamePlaying = true;
 	
 	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
 				Data verbs,Data nouns) {
@@ -40,12 +42,10 @@ public class Game {
 	
 	public void run() {
 		
-		int roomNumber = this.room;
-		String[] roomDetails = getRoom(this.locations,roomNumber);
-		String roomDescription = String.format("YOU ARE %s %s", 
-				prepositions.retrieveData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
-		ClearScreen();
-		Display(this.timeRemaining,this.strength,this.wisdom,roomDescription,roomNumber);
+		while (this.gamePlaying) {
+			ClearScreen();
+			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
+		}
 	}
 	
 	//Retrieves the location details and splits the code
@@ -74,6 +74,31 @@ public class Game {
 		
 		return roomDetails;
 	}
+
+	private String getItems(Data items, int roomNumber) {
+		
+		int numItems = 0;
+		String itemDetails = "";
+		
+		for (int x=1;x<this.noItems+1;x++) {
+			
+			if (this.itemLocation.retrieveIntData(x) == roomNumber &&
+					this.itemVisibility.retrieveIntData(x)<1) {
+				
+				if (numItems>0) {
+					itemDetails += ", ";
+				}
+				itemDetails += items.retrieveData(x);
+				numItems ++;
+			}
+		}
+		
+		if (numItems>0) {
+			itemDetails = String.format("YOU SEE %s",itemDetails);
+		}
+		
+		return itemDetails;
+	}	
 	
 	private void ClearScreen() {
 		
@@ -84,40 +109,40 @@ public class Game {
        }		
 	}
 	
-	private void Display(int timeRemaining,int strength,int wisdom,String roomDescription,
-			int roomNumber) {
+	private String Display(int timeRemaining,int strength,int wisdom,int roomNumber) {
+		
+		//Gets details of location and any items 
+		String[] roomDetails = getRoom(this.locations,roomNumber);
+		String roomDescription = String.format("YOU ARE %s %s", 
+				prepositions.retrieveData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
+		String itemDetails = getItems(this.objects,roomNumber);
 		
 		System.out.printf("%-10sISLAND OF SECRETS%-20sTIME REMAINING: %d%n"," "," ",timeRemaining);
 		System.out.printf("%-5s%s%n"," ",this.line);
-		System.out.printf("%-10sSTRENGTH = %d%-24sWISDOM = %d%n"," ",strength," ",wisdom);
+		System.out.printf("%-10sSTRENGTH = %d%-23sWISDOM = %d%n"," ",strength," ",wisdom);
 		System.out.printf("%-5s%s%n%-10s%s%n"," ",this.line," ",roomDescription);
 		
-		for (int x=1;x<this.noItems+1;x++) {
-			if (this.itemLocation.retrieveIntData(x) == roomNumber &&
-					this.itemVisibility.retrieveIntData(x)<1) {
-				
-			}
+		//If there are any items, displays item line
+		if (itemDetails.length()>0) {
+			System.out.printf("%-10s%s"," ",itemDetails);
 		}
+		
+		System.out.printf("%-5s%s%n%-10s%s%n%n"," ",this.line," ",this.message);
+		
+		return roomDetails[2];
 	}
 }
+
+
+
+
+
+
+
+
+
 /*
 
-
-
-
-
-
-
-
-
-60 LET N=0
-70 FOR I=1 TO C4
-80 LET C=0:READ Y$
-90 IF L(I)=R AND F(I)<1 THEN LET C=1
-100 IF N>0 AND C=1 THEN LET A$=A$+","
-110 IF C=1 THEN LET A$=A$+" "+Y$:LET N=N+1
-120 NEXT I
-130 IF N>0 THEN LET A$="*YOU SEE"+A$:GOSUB 270
 140 PRINT:PRINT G$;F$
 
 150 PRINT:PRINT "WHAT WILL YOU DO";
