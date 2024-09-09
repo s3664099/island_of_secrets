@@ -49,6 +49,7 @@ public class Game {
 			ClearScreen();
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
 			String action = getAction();
+			this.timeRemaining --;
 			processAction(action);
 		}
 	}
@@ -160,7 +161,6 @@ public class Game {
 		int wordFound = 0;
 		int wordNo = 1;
 		
-		action = action.toUpperCase();
 		if (action.length()<3) {
 			action = String.format("%s%s", action,"???");
 		}
@@ -174,6 +174,10 @@ public class Game {
 			wordNo ++;
 		}
 		
+		if (wordFound == 0) {
+			wordFound = noWords+1;
+		}
+		
 		return wordFound;
 		
 	}
@@ -181,18 +185,27 @@ public class Game {
 	private String processAction(String action) {
 		
 		String[] actions = {"",""};
-		int noCommands = 52;
+		action = action.toUpperCase();
 		String[] noWords = action.split(" ");
 		actions[0] = noWords[0];
+		String response = "";
 		
 		if (noWords.length>1) {
 			actions[1] = noWords[1];
 		} else {
 			actions[1] = "???";
 		}
-		
+				
 		int verbFound = getWords(actions[0],this.noVerbs,this.verbs);
 		int nounFound = getWords(actions[1],this.noNouns,this.nouns);
+		
+		if (actions[1].equals("???")) {
+			response = "MOST ACTIONS NEED TWO WORDS";
+		} else if ((verbFound>this.noVerbs) && (nounFound>this.noNouns)) {
+			response = "WHAT!";
+		} else if ((verbFound>this.noVerbs) || (nounFound>this.noNouns)) {
+			response = String.format("%s%s %s", "YOU CAN'T ",actions[0],actions[1]);
+		}
 		
 		return "";
 	}
@@ -202,17 +215,12 @@ public class Game {
 
 
 
-760 IF LEN(X$)<3 THEN LET X$=X$+"???"
-770 FOR I=1 TO W
-780 IF LEFT$(X$,3)=MID$(32Z$,3*(I-1)+1,3) THEN LET D=1
-790 NEXT I:IF O=0 THEN LET O=52
-800 RETURN
 
-280 LET B$="":IF A=0 THEN LET A=V+1
-290 IF I$="???" THEN LET F$="MOST ACTIONS NEED TWO WORDS"
-300 IF A>V OR O=52 THEN LET F$=W$+C$+" "+X$
-310 IF A>V AND O=52 THEN LET F$="WHAT!"
-320 L=L-1:LET Y=FNS(2)
+
+
+
+
+320 LET Y=FNS(2)
 330 GOSUB 4500
 340 ON INT(A/10)+1 GOSUB 590,600,610,620,630,630,640
 350 IF R=61 THEN LET X=X+FNR(2)+1
@@ -486,4 +494,5 @@ public class Game {
 
 8 September 2024 - Created File
 9 September 2024 - Added method to retrieve input and started processing command
+10 September 2024 - Added code to respond to incorrect commands
 */

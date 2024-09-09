@@ -1,5 +1,5 @@
 
-2840 LET V=42
+s
 
 
 
@@ -16,6 +16,9 @@ LET Y=100	- Strength
 LET X=35	- Wisdom
 LET L=1000	- Time
 LET C4=43	- Number of Items
+LET V=42	- number of verbs
+A			- verb chosen
+O			- noun choses
 
 L(W)		- Is the ASCII value of each of the characters in H$ - 32
 			- This shows where the items are located
@@ -24,7 +27,7 @@ F(W)		- Is the ASCII value of each of the characters in Q$ - 48 (which translate
 			- This indicates whether the items are visible
 			- itemVisibility
 H$			- Code_one - itemLocation
-W$			- code_two - itemVisibility
+Q$			- code_two - itemVisibility
 
 V$			- Verbs
 Z$			- Nouns
@@ -56,5 +59,6 @@ H$="STONY WORDS"
 	  location values.
 720 - Prints the description of the location. Determines the length and goes to a new line
 	  Actually, it prints A$, which holds various information.
+760 - Processes the noun portion of the parser.
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data
