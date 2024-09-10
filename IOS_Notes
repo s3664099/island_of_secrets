@@ -3,7 +3,7 @@ s
 
 
 
-4130 LET B=9:LET E=0
+4130 LET B=9
 4140 LET C1=16:LET C2=21:LET C3=24:LET F=2:LET G=2
 4150 LET F=2:LET G=2
 
@@ -17,8 +17,9 @@ LET X=35	- Wisdom
 LET L=1000	- Time
 LET C4=43	- Number of Items
 LET V=42	- number of verbs
+LET E=0		- weight
 A			- verb chosen
-O			- noun choses
+O			- noun chosen
 
 L(W)		- Is the ASCII value of each of the characters in H$ - 32
 			- This shows where the items are located
@@ -34,6 +35,7 @@ Z$			- Nouns
 F$			- Message
 A$			- Noun
 X$			- Verb
+B$			- Coded Noun
 
 Function Defines
 DEF FNR(Z)=INT(RND(1)*Z)+1
@@ -60,5 +62,6 @@ H$="STONY WORDS"
 720 - Prints the description of the location. Determines the length and goes to a new line
 	  Actually, it prints A$, which holds various information.
 760 - Processes the noun portion of the parser.
+810 - Move
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data

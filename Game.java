@@ -23,11 +23,12 @@ public class Game {
 	private int room = 23;
 	private int noRooms = 80;
 	private int noItems = 43;
-	private int strength = 100;
+	private float strength = 100;
 	private int wisdom = 35;
 	private int timeRemaining = 1000;
 	private int noVerbs = 42;
 	private int noNouns = 52;
+	private int weight = 0;
 	private String line = "----------------------------------------------------------------";
 	private String message = "LET YOUR QUEST BEGIN";
 	private boolean gamePlaying = true;
@@ -50,6 +51,7 @@ public class Game {
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
 			String action = getAction();
 			this.timeRemaining --;
+			this.strength -= (this.weight/this.noItems)+.1;
 			processAction(action);
 		}
 	}
@@ -118,7 +120,7 @@ public class Game {
 	}
 	
 	//Displays the contents of the room.
-	private String Display(int timeRemaining,int strength,int wisdom,int roomNumber) {
+	private String Display(int timeRemaining,float strength,int wisdom,int roomNumber) {
 		
 		//Gets details of location and any items 
 		String[] roomDetails = getRoom(this.locations,roomNumber);
@@ -128,7 +130,7 @@ public class Game {
 		
 		System.out.printf("%-10sISLAND OF SECRETS%-20sTIME REMAINING: %d%n"," "," ",timeRemaining);
 		System.out.printf("%-5s%s%n"," ",this.line);
-		System.out.printf("%-10sSTRENGTH = %d%-23sWISDOM = %d%n"," ",strength," ",wisdom);
+		System.out.printf("%-10sSTRENGTH = %f%-23sWISDOM = %d%n"," ",strength," ",wisdom);
 		System.out.printf("%-5s%s%n%-10s%s%n"," ",this.line," ",roomDescription);
 		
 		//If there are any items, displays item line
@@ -182,6 +184,23 @@ public class Game {
 		
 	}
 	
+	//Codes the noun, as occurs in the game
+	private String codeNoun(int nounFound) {
+		
+		String codedNoun = String.format("%d%d%d%d", nounFound,this.itemLocation.retrieveIntData(nounFound),
+				this.itemVisibility.retrieveIntData(nounFound),this.room);
+		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
+		
+		if (codedNoun.length()>1) {
+			codedNoun = codedNoun.substring(1);
+		}
+		
+		System.out.println(codedNoun);
+		
+		return codedNoun;
+		
+	}	
+	
 	private String processAction(String action) {
 		
 		String[] actions = {"",""};
@@ -207,6 +226,8 @@ public class Game {
 			response = String.format("%s%s %s", "YOU CAN'T ",actions[0],actions[1]);
 		}
 		
+		String codedNoun = codeNoun(nounFound);
+		
 		return "";
 	}
 }
@@ -220,8 +241,9 @@ public class Game {
 
 
 
-320 LET Y=FNS(2)
-330 GOSUB 4500
+
+
+
 340 ON INT(A/10)+1 GOSUB 590,600,610,620,630,630,640
 350 IF R=61 THEN LET X=X+FNR(2)+1
 360 IF R=14 AND FNR(3)=1 THEN LET Y=Y-1:LET F$="YOU ARE BITTEN"
@@ -475,9 +497,7 @@ public class Game {
 
 
 
-4500 B$=STR$(O)+STR$(L(O))+STR$(F(O))+STR$(R)
-4510 B$=STR$(VAL(B$)):B$=RIGHT$(B$,LEN(B$)-1)
-4520 RETURN
+
 
 
 
