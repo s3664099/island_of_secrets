@@ -63,5 +63,6 @@ H$="STONY WORDS"
 	  Actually, it prints A$, which holds various information.
 760 - Processes the noun portion of the parser.
 810 - Move
+2110 (2100) to 2200 - Swimming in poisoned waters
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data
