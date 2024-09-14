@@ -3,7 +3,7 @@ Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 0.8
-Date: 8 September 2024
+Date: 12 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -49,7 +49,7 @@ public class Game {
 		while (this.gamePlaying) {
 			ClearScreen();
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
-			String action = getAction();
+			String action = getAction("%-10sWHAT WILL YOU DO: ");
 			this.timeRemaining --;
 			this.strength -= (this.weight/this.noItems)+.1;
 			processAction(action);
@@ -143,12 +143,12 @@ public class Game {
 		return roomDetails[2];
 	}
 	
-	private String getAction() {
+	private String getAction(String query) {
 		
 		String action = "";
 
 	    Scanner myObj = new Scanner(System.in);
-	    System.out.printf("%-10sWHAT WILL YOU DO: "," ");
+	    System.out.printf(query," ");
 
 	    action = myObj.nextLine();
 	    
@@ -231,6 +231,45 @@ public class Game {
 		return "";
 	}
 	
+	private void poisonWater() {
+		
+		this.wisdom --;
+		Random rand = new Random();
+		this.room = rand.nextInt(4)+1;
+		ClearScreen();
+		System.out.printf("%nSWIMMING IN THE POISONOUS WATERS%n YOUR STRENGHT = %d%n",this.strength);
+		this.message = "YOU SURFACE";
+		int moveCount=0;
+		String codedNoun = "";
+		
+		while ((this.room/2>moveCount) && this.strength>2) {
+
+			for (int x=1;x<this.room;x++) {
+				if (this.strength<15) {
+					System.out.println("YOU ARE VERY WEAK");
+				}	
+				String action = getAction("%-10sWHICH WAY: ");
+				codedNoun = String.format("%s%s", codedNoun,action.charAt(0));
+			}
+		
+			codedNoun = codedNoun.toUpperCase();
+
+			for (int x=0;x<this.room-1;x++) {
+				this.strength -= ((this.weight/this.noItems)+.1)-3;
+			
+				if (codedNoun.substring(x,x+1).equals("N")) {
+					moveCount++;
+				}
+			}
+		}
+		
+		if (this.strength<2) {
+			this.message = "YOU LOST AND DROWNED";
+		}
+		
+		this.room = 30+rand.nextInt(3)+1;
+	}
+	
 	private int move(String codedNoun, int nounChosen, int verbChosen) {
 		
 		int direction = 0;
@@ -256,30 +295,15 @@ public class Game {
 		}
 		
 		if (codedNoun.equals("490051") && this.itemVisibility.retrieveIntData(29) == 0) {
-			//GOSUB 2110
+			poisonWater();
 		} else {
-			
+						
 		}
 		
 		return 0;
 	}
 }
 /*
-2110 LET X=X-1:LET R=FNR(5):GOSUB2770:PRINT "SWIMMING IN THE POISONOUS WATERS"
-2120 LET J=0:LET B$="":LET F$="YOU SURFACE":PRINT "YOUR STRENGTH = ";INT(Y)
-2130 FOR I=1 TO R
-2140 IF Y<15 THEN PRINT"YOU ARE VERY WEAK"
-2150 PRINT"WHICH WAY";:INPUT X$:LET X$=LEFT$(X$,1):LET B$=B$+X$:NEXT I
-2160 FOR I=1TO R
-2170 LET Y=FNS(Z)-3:IF MID$(B$,I,1)="N" THEN LET J=J+1
-2180 NEXT I:IF R/2>J AND Y>1 THEN GOTO 2110
-2190 IF Y<2 THEN LET F$="YOU LOST AND DROWNED"
-2200 LET R=30+FNR(3):RETURN
-
-
-
-
-
 890 IF R=L(39) AND (X+Y<180 OR R=10) THEN LET F$=W$+"LEAVE!":RETURN
 900 IF R=L(32) AND F(32)<1 AND D=3 THEN LET F$="HE WILL NOT LET YOU PASS":RETURN
 910 IF R=47 AND F(44)=0 THEN LET F$="THE ROCKS MOVE TO PREVENT YOU":RETURN
@@ -299,6 +323,16 @@ public class Game {
 1050 IF X<60 THEN LET A$="#TO SERVE OMEGAN FOREVER!":LET F(W)=1
 1060 IF X>59 THEN LET A$="#THE BOAT SKIMS THE DARK SILENT WATERS":LET R=57
 1070 GOSUB2750:GOSUB2760:GOSUB2760:RETURN
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -548,4 +582,5 @@ public class Game {
 8 September 2024 - Created File
 9 September 2024 - Added method to retrieve input and started processing command
 10 September 2024 - Added code to respond to incorrect commands
+12 September 2024 - Started building the move methods.
 */
