@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.8
-Date: 12 September 2024
+Version: 0.9
+Date: 14 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -52,7 +52,7 @@ public class Game {
 			String action = getAction("%-10sWHAT WILL YOU DO: ");
 			this.timeRemaining --;
 			this.strength -= (this.weight/this.noItems)+.1;
-			processAction(action);
+			processAction(action,exits);
 		}
 	}
 	
@@ -99,7 +99,7 @@ public class Game {
 				}
 				itemDetails += items.retrieveData(x);
 				numItems ++;
-			}
+			}		
 		}
 		
 		if (numItems>0) {
@@ -135,10 +135,11 @@ public class Game {
 		
 		//If there are any items, displays item line
 		if (itemDetails.length()>0) {
-			System.out.printf("%-10s%s"," ",itemDetails);
+			System.out.printf("%-10s%s%n"," ",itemDetails);
 		}
 		
 		System.out.printf("%-5s%s%n%-10s%s%n%n"," ",this.line," ",this.message);
+		this.message = "";
 		
 		return roomDetails[2];
 	}
@@ -194,14 +195,12 @@ public class Game {
 		if (codedNoun.length()>1) {
 			codedNoun = codedNoun.substring(0,codedNoun.length());
 		}
-		
-		System.out.println(codedNoun);
-				
+						
 		return codedNoun;
 		
 	}	
 	
-	private String processAction(String action) {
+	private String processAction(String action,String exits) {
 		
 		String[] actions = {"",""};
 		action = action.toUpperCase();
@@ -227,6 +226,10 @@ public class Game {
 		}
 		
 		String codedNoun = codeNoun(nounFound);
+		
+		if (verbFound>0 && verbFound<6) {
+			move(codedNoun,nounFound,verbFound,exits);
+		}
 		
 		return "";
 	}
@@ -270,10 +273,10 @@ public class Game {
 		this.room = 30+rand.nextInt(3)+1;
 	}
 	
-	private int move(String codedNoun, int nounChosen, int verbChosen) {
+	private int move(String codedNoun, int nounChosen, int verbChosen,String exits) {
 		
 		int direction = 0;
-		int c=0;
+		boolean moved=false;
 		
 		if (nounChosen == 52) {
 			direction = verbChosen;
@@ -293,27 +296,47 @@ public class Game {
 		} else if (codedNoun.equals("510044") || codedNoun.equals("510052")) {
 			direction = 3;
 		}
-		
+				
 		if (codedNoun.equals("490051") && this.itemVisibility.retrieveIntData(29) == 0) {
 			poisonWater();
 		} else {
-						
+			if(this.room == this.itemLocation.retrieveIntData(39) && 
+				(this.strength+this.wisdom<180 || this.room == 10)) {
+				this.message = "YOU CAN'T LEAVE!";
+			} else if (this.room == this.itemLocation.retrieveIntData(32) &&
+					this.itemVisibility.retrieveIntData(32)<1 && direction ==3) {
+				this.message = "HE WILL NOT LET YOU PASS";
+			} else if (this.room == 47 && this.itemVisibility.retrieveIntData(44) == 0) {
+				this.message = "THE ROCKS MOVE TO PREVENT YOU";
+			} else if (this.room == 28 && this.itemVisibility.retrieveIntData(7) != 1) {
+				this.message = "THE ARMS HOLD YOU FAST";
+			} else if (this.room == 45 && this.itemVisibility.retrieveIntData(40) == 0 &&
+					direction == 4) {
+				this.message = "HISSSS!";
+			} else if (this.room == 42 && this.itemVisibility.retrieveIntData(16) + 
+					this.itemLocation.retrieveIntData(16) != -1 && direction ==3) {
+				this.message = "TOO STEEP TO CLIMB";
+			} else if (this.room == 51 && direction == 3) {
+				this.message = "THE DOOR IS BARRED!";
+			} else {
+				if(exits.charAt(direction-1) == '0') {
+					this.room = this.room + Integer.parseInt("-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
+					moved = true;
+					this.message = "OK";
+				}
+				
+				if (direction<1 || !moved) {
+					this.message = "YOU CAN'T GO THAT WAY";
+				}
+			}
 		}
-		
+				
 		return 0;
 	}
 }
 /*
-890 IF R=L(39) AND (X+Y<180 OR R=10) THEN LET F$=W$+"LEAVE!":RETURN
-900 IF R=L(32) AND F(32)<1 AND D=3 THEN LET F$="HE WILL NOT LET YOU PASS":RETURN
-910 IF R=47 AND F(44)=0 THEN LET F$="THE ROCKS MOVE TO PREVENT YOU":RETURN
-920 IF R=28 AND F(7)<>1 THEN LET F$="THE ARMS HOLD YOU FAST":RETURN
-930 IF R=45 AND F(40)=0 AND D=4 THEN LET F$="HISSSS!":RETURN
-940 IF R=25 AND F(16)+L(16)<>-1 AND D=3 THEN LET F$="TOO STEEP TO CLIMB":RETURN
-950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN
-960 IFD>0THENIFMID$(D$,D,1)="0"THENR=R+VAL(MID$("-10+10+01-01",D*3+2,3)):C=1
-970 LET F$="0K"
-980 IF D<1 OR C=0 THEN LET F$=W$+"GO THAT WAY"
+
+
 990 IF R=33 AND L(16)=0 THEN L(16)=FNR(4):F(16)=0:F$="THE BEAST RUNS AWAY"
 1000 IF R<>L(25) OR O<>25 THEN RETURN
 1010 LET F$="":LET A$="#YOU BOARD THE CRAFT "
@@ -323,6 +346,11 @@ public class Game {
 1050 IF X<60 THEN LET A$="#TO SERVE OMEGAN FOREVER!":LET F(W)=1
 1060 IF X>59 THEN LET A$="#THE BOAT SKIMS THE DARK SILENT WATERS":LET R=57
 1070 GOSUB2750:GOSUB2760:GOSUB2760:RETURN
+
+
+
+
+
 
 
 
@@ -583,4 +611,6 @@ public class Game {
 9 September 2024 - Added method to retrieve input and started processing command
 10 September 2024 - Added code to respond to incorrect commands
 12 September 2024 - Started building the move methods.
+14 September 2024 - Added the poison water method and continued the move method
+					completed main move section.
 */
