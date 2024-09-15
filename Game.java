@@ -328,6 +328,30 @@ public class Game {
 				if (direction<1 || !moved) {
 					this.message = "YOU CAN'T GO THAT WAY";
 				}
+				
+				Random rand = new Random();
+				
+				if (this.room == 33 && this.itemLocation.retrieveIntData(16) == 0) {
+					this.itemLocation.updateIntData(16, rand.nextInt(4));
+					this.itemVisibility.updateIntData(15,0);
+					this.message = "THE BEAST RUNS AWAY";
+				}
+				
+				if (this.room == this.itemLocation.retrieveIntData(25) || 
+					nounChosen == 25) {
+					this.message = "";
+					String noun = "#YOU BOARD THE CRAFT ";
+					
+					if (this.room<60) {
+						noun = String.format("%s%s",noun,"FALLING UNDER THE SPELL OF THE BOATMAN ");
+						
+					}
+					
+					noun = String.format("%s%s", "AND ARE TAKEN TO THE ISLAN OF SECRETS");
+					
+					//Pause - Print noun
+					//Clear Screen
+				}
 			}
 		}
 				
@@ -337,12 +361,11 @@ public class Game {
 /*
 
 
-990 IF R=33 AND L(16)=0 THEN L(16)=FNR(4):F(16)=0:F$="THE BEAST RUNS AWAY"
-1000 IF R<>L(25) OR O<>25 THEN RETURN
-1010 LET F$="":LET A$="#YOU BOARD THE CRAFT "
-1020 IF X<60 THEN LET A$=A$+S$
-1030 LET A$=A$=+T$
-1040 GOSUB2740:GOSUB2760:GOSUB2760
+
+
+
+
+
 1050 IF X<60 THEN LET A$="#TO SERVE OMEGAN FOREVER!":LET F(W)=1
 1060 IF X>59 THEN LET A$="#THE BOAT SKIMS THE DARK SILENT WATERS":LET R=57
 1070 GOSUB2750:GOSUB2760:GOSUB2760:RETURN
@@ -372,7 +395,8 @@ public class Game {
 
 
 
-340 ON INT(A/10)+1 GOSUB 590,600,610,620,630,630,640
+340 ON INT(A/10)+1 G2740 GOSUB2770
+OSUB 590,600,610,620,630,630,640
 350 IF R=61 THEN LET X=X+FNR(2)+1
 360 IF R=14 AND FNR(3)=1 THEN LET Y=Y-1:LET F$="YOU ARE BITTEN"
 370 IF F(36)<1 AND -R<>F(22) THEN LET F(36)=F(36)+1:LET L(36)=R:LET Y=Y-1
@@ -507,7 +531,8 @@ public class Game {
 2050 RETURN
 2060 IF L(31)<>R THEN RETURN
 2070 LET A$="*THE COAL BURNS WIGTH A WARM RED FLAME":LET F(13)=-1
-2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
+2080 IF R=10 AND R=L2740 GOSUB2770
+(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
 2090 RETURN
 2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
 	- Then swimming in poisoned waters
@@ -566,9 +591,9 @@ public class Game {
 2710 LET F$="OK":RETURN
 2720 LET F(W)=-1:LET F$="YOU RELINQUISH YOUR QUEST.":LET L=1:RETURN
 2730 INPUT "PRESS RETURN";A$:RETURN
-2740 GOSUB2770
+
 2750 GOSUB720:GOSUB2760:RETURN
-2760 FOR D=1 TO 900:NEXT D:RETURN
+
 
 
 2800 LET A$="*THE WORLD LIVES WITH NEW HOPE":GOSUB2750

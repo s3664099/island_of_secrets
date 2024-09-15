@@ -43,6 +43,10 @@ public class Data {
 		return this.intData[position-1];
 	}
 	
+	public void updateIntData(int position,int newInt) {
+		this.intData[position-1] = newInt;
+	}
+	
 	public void modifyIntData() {
 		for (int x=0;x<this.intData.length;x++) {
 			if(this.intData[x]>127) {
