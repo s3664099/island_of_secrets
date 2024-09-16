@@ -4,11 +4,11 @@
 
 
 4130 LET B=9
-4140 LET C1=16:LET C2=21:LET C3=24:LET F=2:LET G=2
+4140 LET C1=16:LET C2=21:LET F=2:LET G=2
 4150 LET F=2:LET G=2
 
 
-
+LET C3=24	- Carriable Items
 LET W=51	- Size of H$ & Q$
 LET R=23	- Room Player is in
 LET Z=31	- Length of screen

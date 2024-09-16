@@ -29,6 +29,7 @@ public class Game {
 	private int noVerbs = 42;
 	private int noNouns = 52;
 	private int weight = 0;
+	private int carriableItems = 24;
 	private String line = "----------------------------------------------------------------";
 	private String message = "LET YOUR QUEST BEGIN";
 	private boolean gamePlaying = true;
@@ -195,6 +196,8 @@ public class Game {
 		if (codedNoun.length()>1) {
 			codedNoun = codedNoun.substring(0,codedNoun.length());
 		}
+		
+		System.out.println(codedNoun);
 						
 		return codedNoun;
 		
@@ -229,6 +232,8 @@ public class Game {
 		
 		if (verbFound>0 && verbFound<6) {
 			move(codedNoun,nounFound,verbFound,exits);
+		} else if (verbFound == 6 || verbFound == 7) {
+			take(nounFound,codedNoun);
 		}
 		
 		return "";
@@ -367,11 +372,35 @@ public class Game {
 			}
 		}
 	}
+	
+	private void take(int nounNumber, String codedNoun) {
+		
+		if (((this.itemVisibility.retrieveIntData(nounNumber)>0 && 
+			this.itemVisibility.retrieveIntData(nounNumber)<9) ||
+			this.itemLocation.retrieveIntData(nounNumber) != this.room) &&
+			nounNumber < this.carriableItems) {
+			
+			this.message = "WHAT "+this.objects.retrieveData(nounNumber)+"?";			
+		} else if (codedNoun.equals("3450050")) {
+			this.strength = this.strength-8;
+			this.wisdom = this.wisdom-5;
+			this.message = "THEY ARE CURSED";
+		} else if (codedNoun.equals("3810010")) {
+			
+			//Give it better effects
+			this.message = "///Lightning Flashes";
+			this.itemLocation.updateIntData(nounNumber, this.room);
+			this.strength = this.strength-8;
+			this.wisdom = this.wisdom-2;
+			
+		}
+		
+	}
 }
 /*
-1080 IF (F(O)>0 AND F(O)<9 OR L(O)<>R)AND O<=C3 THEN F$="WHAT "+X$+"?":RETURN
-1090 IF B$="3450050"THEN LET Y=Y-8:LET X=X-5:LET F$="THEY ARE CURSED":RETURN
-1100 IF B$="3810010" THEN GOSUB1370
+
+
+
 1110 IF(A=15ANDO<>20ANDO<>1)OR(A=29ANDO<>16)ORO>C3THENF$=W$+C$+" "+X$:RETURN
 1120 IF L(O)=R AND (F(O)<1 OR F(O)=9)AND O<C3 THEN LET L(O)=0:LET A=-1
 1130 IF O=16 AND L(10)<>0 THEN LET L(O)=R:LET F$="IT ESCAPED":LET A=0
@@ -398,8 +427,8 @@ public class Game {
 1340 IF L(8)=0 THEN LET F$=F$+" AND ASKS YOU FOR THE PEBBLE YOU CARRY"
 1350 RETURN
 1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
-1370 FOR K=1 TO 30:GOSUB2770 :PRINT"///LIGHTNING FLASHES!":NEXT K
-1380 LET L(39)=R:LET Y=Y-8:LET X=X-2:RETURN
+
+
 
 
 
@@ -458,7 +487,7 @@ public class Game {
 560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
 570 PRINT:PRINT:PRINT "GAME OVER"
 580 END
-590 ON A GOSUB 1080,1080,1390,1530:RETURN
+590 ON A GOSUB 1390,1530:RETURN
 600 ON A-9 GOSUB 1540,1630,1670,1710,1730,1080,1760,1760,1760,1760:RETURN
 610 ON A-19 GOSUB 1820,1820,1820,1820,1910,2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
