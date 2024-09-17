@@ -4,8 +4,7 @@
 
 
 4130 LET B=9
-4140 LET C1=16:LET C2=21:LET F=2:LET G=2
-4150 LET F=2:LET G=2
+
 
 
 LET C3=24	- Carriable Items
@@ -18,6 +17,10 @@ LET L=1000	- Time
 LET C4=43	- Number of Items
 LET V=42	- number of verbs
 LET E=0		- weight
+LET F=2		- Food
+LET G=2		- Drink
+LET C1=16	- Above is Food (and below 21)
+LET C2=21	- Above is drink (and below 24)
 A			- verb chosen
 O			- noun chosen
 

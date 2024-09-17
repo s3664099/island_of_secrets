@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.9
-Date: 14 September 2024
+Version: 0.10
+Date: 17 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,15 +21,19 @@ public class Game {
 	private Data verbs;
 	private Data nouns;
 	private int room = 23;
-	private int noRooms = 80;
-	private int noItems = 43;
+	private final int noRooms = 80;
+	private final int noItems = 43;
 	private float strength = 100;
 	private int wisdom = 35;
 	private int timeRemaining = 1000;
-	private int noVerbs = 42;
-	private int noNouns = 52;
+	private final int noVerbs = 42;
+	private final int noNouns = 52;
 	private int weight = 0;
-	private int carriableItems = 24;
+	private final int carriableItems = 24;
+	private int food = 2;
+	private int drink = 2;
+	private final int foodLine = 16;
+	private final int drinkLine = 21;
 	private String line = "----------------------------------------------------------------";
 	private String message = "LET YOUR QUEST BEGIN";
 	private boolean gamePlaying = true;
@@ -233,7 +237,7 @@ public class Game {
 		if (verbFound>0 && verbFound<6) {
 			move(codedNoun,nounFound,verbFound,exits);
 		} else if (verbFound == 6 || verbFound == 7) {
-			take(nounFound,codedNoun);
+			take(nounFound,codedNoun,verbFound,actions);
 		}
 		
 		return "";
@@ -373,7 +377,9 @@ public class Game {
 		}
 	}
 	
-	private void take(int nounNumber, String codedNoun) {
+	private void take(int nounNumber, String codedNoun, int verbNumber, String[] actions) {
+		
+		boolean takeSuccessful = false;
 		
 		if (((this.itemVisibility.retrieveIntData(nounNumber)>0 && 
 			this.itemVisibility.retrieveIntData(nounNumber)<9) ||
@@ -393,6 +399,24 @@ public class Game {
 			this.strength = this.strength-8;
 			this.wisdom = this.wisdom-2;
 			
+		} else if ((verbNumber == 15 && nounNumber !=20 && nounNumber != 1) || 
+				nounNumber > this.carriableItems) {
+			this.message = "YOU CAN'T "+actions[0]+" "+actions[1];
+		} else if ((this.itemLocation.retrieveIntData(verbNumber) == this.room) &&
+				(this.itemVisibility.retrieveIntData(verbNumber)<1 ||
+				 this.itemVisibility.retrieveIntData(verbNumber)==0) && verbNumber<
+				 this.carriableItems) {
+			this.itemVisibility.updateIntData(verbNumber,0);
+			verbNumber = -1;
+			takeSuccessful = true;
+		} else if (verbNumber == 16 && this.itemLocation.retrieveIntData(10) != 0) {
+			this.itemLocation.updateIntData(verbNumber, this.room);
+			this.message = "IT ESCAPED";
+			verbNumber = 0;
+		}
+		
+		if (takeSuccessful) {
+			
 		}
 		
 	}
@@ -401,9 +425,9 @@ public class Game {
 
 
 
-1110 IF(A=15ANDO<>20ANDO<>1)OR(A=29ANDO<>16)ORO>C3THENF$=W$+C$+" "+X$:RETURN
-1120 IF L(O)=R AND (F(O)<1 OR F(O)=9)AND O<C3 THEN LET L(O)=0:LET A=-1
-1130 IF O=16 AND L(10)<>0 THEN LET L(O)=R:LET F$="IT ESCAPED":LET A=0
+
+
+//Food & Drink - In Take Successful
 1140 IF O>C1 AND O<C2 THEN LET F=F+2:LET A=-1
 1150 IF O>=C2 AND O<=C3 THEN LET G=G+2:LET A=-1
 1160 IF O>C1 AND O<C3 THEN LET L(O)=-81
@@ -674,4 +698,5 @@ public class Game {
 12 September 2024 - Started building the move methods.
 14 September 2024 - Added the poison water method and continued the move method
 					completed main move section.
+17 September 2024 - Finished Movement and started on take objects
 */
