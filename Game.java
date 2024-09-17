@@ -37,6 +37,7 @@ public class Game {
 	private String line = "----------------------------------------------------------------";
 	private String message = "LET YOUR QUEST BEGIN";
 	private boolean gamePlaying = true;
+	Random rand = new Random();
 	
 	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
 				Data verbs,Data nouns) {
@@ -66,7 +67,6 @@ public class Game {
 		
 		String[] roomDetails = new String[3];
 		int newRoom = room;
-		Random rand = new Random();
 		
 		if (room == 20) {
 			newRoom = rand.nextInt(noRooms);
@@ -337,9 +337,7 @@ public class Game {
 				if (direction<1 || !moved) {
 					this.message = "YOU CAN'T GO THAT WAY";
 				}
-				
-				Random rand = new Random();
-				
+								
 				if (this.room == 33 && this.itemLocation.retrieveIntData(16) == 0) {
 					this.itemLocation.updateIntData(16, rand.nextInt(4));
 					this.itemVisibility.updateIntData(15,0);
@@ -402,20 +400,47 @@ public class Game {
 		} else if ((verbNumber == 15 && nounNumber !=20 && nounNumber != 1) || 
 				nounNumber > this.carriableItems) {
 			this.message = "YOU CAN'T "+actions[0]+" "+actions[1];
-		} else if ((this.itemLocation.retrieveIntData(verbNumber) == this.room) &&
-				(this.itemVisibility.retrieveIntData(verbNumber)<1 ||
-				 this.itemVisibility.retrieveIntData(verbNumber)==0) && verbNumber<
+		} else if ((this.itemLocation.retrieveIntData(nounNumber) == this.room) &&
+				(this.itemVisibility.retrieveIntData(nounNumber)<1 ||
+				 this.itemVisibility.retrieveIntData(nounNumber)==0) && nounNumber<
 				 this.carriableItems) {
-			this.itemVisibility.updateIntData(verbNumber,0);
-			verbNumber = -1;
+			this.itemVisibility.updateIntData(nounNumber,0);
 			takeSuccessful = true;
-		} else if (verbNumber == 16 && this.itemLocation.retrieveIntData(10) != 0) {
-			this.itemLocation.updateIntData(verbNumber, this.room);
+		} else if (nounNumber == 16 && this.itemLocation.retrieveIntData(10) != 0) {
+			this.itemLocation.updateIntData(nounNumber, this.room);
 			this.message = "IT ESCAPED";
 			verbNumber = 0;
 		}
 		
 		if (takeSuccessful) {
+			if (nounNumber > this.foodLine && nounNumber <this.foodLine) {
+				this.food += 2;
+				verbNumber = -1;
+			} else if (nounNumber >= this.drinkLine && nounNumber <=this.carriableItems) {
+				this.drink += 2;
+				verbNumber = -1;
+			}
+			
+			if (nounNumber>this.foodLine && nounNumber<this.carriableItems) {
+				this.itemLocation.updateIntData(nounNumber,-81);
+			}
+			
+			this.message = "TAKEN";
+			this.wisdom += 4;
+			this.weight += 1;
+			
+			if (this.itemVisibility.retrieveIntData(nounNumber)>1) {
+				this.itemVisibility.updateIntData(nounNumber, 0);
+			}
+			
+			//Bird Section (Stealing egg)
+			if (codedNoun.equals("246046") || this.itemLocation.retrieveIntData(11) != 0) {
+				this.message = "YOU ANGER THE BIRD";
+				
+				if(rand.nextInt(3)>2) {
+					String noun = "#YOU ANGER THE BIRD  WHICH FLIES YOU TO A REMOTE PLACE";
+				};
+			}
 			
 		}
 		
@@ -427,14 +452,6 @@ public class Game {
 
 
 
-//Food & Drink - In Take Successful
-1140 IF O>C1 AND O<C2 THEN LET F=F+2:LET A=-1
-1150 IF O>=C2 AND O<=C3 THEN LET G=G+2:LET A=-1
-1160 IF O>C1 AND O<C3 THEN LET L(O)=-81
-1170 IF A=-1 THEN LET F$="TAKEN":LET X=X+4:LET E=E+1:IF F(O)>1 THEN LET F(O)=0
-1180 IF B$<>"246046"OR L(11)=0 THEN RETURN
-1190 LET F$=U$:LET L(O)=R:IF FNR(3)<3 THEN RETURN
-1200 LET A$="#"+U$+R$
 1210 LET R=63+FNR(6):LET L(16)=1:LET F$=""
 1220 GOSUB2740:GOSUB2760
 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
@@ -451,6 +468,14 @@ public class Game {
 1340 IF L(8)=0 THEN LET F$=F$+" AND ASKS YOU FOR THE PEBBLE YOU CARRY"
 1350 RETURN
 1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
+
+
+
+
+
+
+
+
 
 
 
