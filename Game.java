@@ -239,7 +239,7 @@ public class Game {
 		} else if (verbFound == 6 || verbFound == 7) {
 			take(nounFound,codedNoun,verbFound,actions);
 		} else if (verbFound == 8) {
-			give(nounFound,codedNoun);
+			give(nounFound,codedNoun,actions);
 		}
 		
 		return "";
@@ -447,15 +447,26 @@ public class Game {
 		}
 	}
 	
-	private void give(int nounNumber,String codedNoun) {
+	private void give(int nounNumber,String codedNoun,String[] actions) {
 		
+		if ((nounNumber != 24 && this.itemLocation.retrieveIntData(nounNumber)>0) ||
+			nounNumber == 52) {
+			this.message = "YOU DON'T HAVE THE "+actions[1];
+		} else {
+			String action = getAction("GIVE THE "+actions[1]+" TO WHOM");
+			int objectNumber = getWords(action, noNouns,this.objects);
+			
+			if (this.room != this.itemLocation.retrieveIntData(objectNumber)) {
+				this.message = "THE "+action+" IS NOT HERE";
+			}
+			//N = objectNumber
+		}
 	}
 }
 /*
-1390 IF (O<>24 AND L(O)>0) OR O=52 THEN LET F$="YOU DON'T HAVE THE "+X$:RETURN
-1400 PRINT"GIVE THE ";X$;" TO WHOM";:INPUT X$
-1410 LET Q=0:GOSUB760:LET N=0:LET O=Q
-1420 IF R<>L(N) LEN LET F$="THE "+X$+" IS NOT HERE":RETURN
+
+
+
 1430 IF B$="10045" AND N=40 THEN L(O)=81:F(40)=1:F$="THE SNAKE UNCURLS"
 1440 IFB$="2413075"ANDN=30ANDG>1THENF(11)=0:F$="HE OFFERS HIS STAFF":G=G-1
 1450 LET B$=LEFT$(B$,3):LET F$="IT IS REFUSED"
