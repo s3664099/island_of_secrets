@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.10
-Date: 17 September 2024
+Version: 0.11
+Date: 21 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -236,10 +236,12 @@ public class Game {
 		
 		if (verbFound>0 && verbFound<6) {
 			move(codedNoun,nounFound,verbFound,exits);
-		} else if (verbFound == 6 || verbFound == 7) {
+		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15) {
 			take(nounFound,codedNoun,verbFound,actions);
 		} else if (verbFound == 8) {
 			give(nounFound,codedNoun,actions);
+		} else if (verbFound == 9 || verbFound == 10) {
+			drop(nounFound,verbFound);
 		}
 		
 		return "";
@@ -511,9 +513,50 @@ public class Game {
 			}
 		}
 	}
+	
+	private void drop(int nounFound,int verbFound) {
+		
+		if (verbFound == 9) {
+			if (nounFound == 4 && this.itemLocation.retrieveIntData(nounFound) == 0) {
+				this.itemLocation.updateIntData(nounFound, 81);
+				this.wisdom --;
+				this.message = "IT BREAKS!";
+			} else {
+				dropObject(nounFound);
+			}
+		} else {
+			dropObject(nounFound);
+		}
+	}
+	
+	private void dropObject(int nounFound) {
+		
+		if (this.itemLocation.retrieveIntData(nounFound) == 0 && nounFound < this.foodLine) {
+			this.itemLocation.updateIntData(nounFound,this.room);
+			this.message = "DONE";
+			this.weight --;
+		}
+		
+	}
 }
 /*
-
+- Eat
+1630 IF(O<C1 OR O>C3) AND X$<>"???" THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
+1640 LET F$="YOU HAVE NO FOOD":IF F>0 THEN LET F=F-1:LET Y=Y+10:LET F$="OK"
+1650 IF D=3 THEN LET X=X-5:LET Y=Y-2:LET F$="THEY MAKE YOU VERY ILL"
+1660 RETURN
+- Drink
+1670 IF O=31 THEN GOSUB 2380:RETURN
+1680 IF I$<>"???" AND (O<21 OR O>C3) THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
+1690 LET F$="YOU HAVE NO DRINK":IF G>0 THEN LET G=G-1:LET Y=Y+7:LET F$="OK"
+1700 RETURN
+- Ride
+1710 IF LEFT$(B$,4)="1600" THEN LET F(O)=-1:LET F$="IT ALLOWS YOU TO RIDE"
+1720 RETURN
+- Open
+1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
+1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
+1750 RETURN
 
 
 
@@ -600,7 +643,7 @@ public class Game {
 570 PRINT:PRINT:PRINT "GAME OVER"
 580 END
 
-600 ON A-9 GOSUB 1540,1630,1670,1710,1730,1080,1760,1760,1760,1760:RETURN
+600 ON A-9 GOSUB 1760,1760,1760,1760:RETURN
 610 ON A-19 GOSUB 1820,1820,1820,1820,1910,2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
@@ -630,19 +673,8 @@ public class Game {
 1600 IF L(I)<>0 AND I<C1 THEN LET I=I+1:GOTO 1600
 1610 IF L(I)=0 THEN LET L(I)=R:LET F(I)=0:GOSUB1540:LET F$="YOU DROP SOMTHING"
 1620 RETURN
-1630 IF(O<C1 OR O>C3) AND X$="???" THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
-1640 LET F$="YOU HAVE NO FOOD":IF F>0 THEN LET F=F-1:LET Y=Y+10:LET F$="OK"
-1650 IF D=3 THEN LET X=X-5:LET Y=Y-2:LET F$="THEY MAKE YOU VERY ILL"
-1660 RETURN
-1670 IF O=31 THEN GOSUB 2380:RETURN
-1680 IF I$<>"???" AND (O<21 OR O>C3) THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
-1690 LET F$="YOU HAVE NO DRINK":IF G>0 THEN LET G=G-1:LET Y=Y+7:LET F$="OK"
-1700 RETURN
-1710 IF LEFT$(B$,4)="1600" THEN LET F(O)=-1:LET F$="IT ALLOWS YOU TO RIDE"
-1720 RETURN
-1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
-1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
-1750 RETURN
+
+
 1760 LET Y=Y-2:IF B$="3577077"AND L(9)=0THEN LET F(23)=0:LET L(23)=R
 1770 IF V>15 AND V<19 AND (L(9)=0 OR L(15)=0) THEN LET F$="OK"
 1780 IF B$="1258158"OR B$="2758158"AND L(15)=0 THEN F(12)=0:F(27)=0:F$="CRACK"
@@ -783,4 +815,5 @@ public class Game {
 14 September 2024 - Added the poison water method and continued the move method
 					completed main move section.
 17 September 2024 - Finished Movement and started on take objects
+21 September 2024 - Finished give & drop methods
 */
