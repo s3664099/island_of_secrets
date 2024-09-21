@@ -448,13 +448,14 @@ public class Game {
 	}
 	
 	private void give(int nounNumber,String codedNoun,String[] actions) {
-		
+				
 		if ((nounNumber != 24 && this.itemLocation.retrieveIntData(nounNumber)>0) ||
-			nounNumber == 52) {
+			nounNumber >= 52) {
 			this.message = "YOU DON'T HAVE THE "+actions[1];
 		} else {
-			String action = getAction("GIVE THE "+actions[1]+" TO WHOM");
-			int objectNumber = getWords(action, noNouns,this.objects);
+			String action = getAction("GIVE THE "+actions[1]+" TO WHOM ");
+			action = action.toUpperCase();
+			int objectNumber = getWords(action, this.noNouns,this.nouns);
 			
 			if (this.room != this.itemLocation.retrieveIntData(objectNumber)) {
 				this.message = "THE "+action+" IS NOT HERE";
