@@ -448,7 +448,9 @@ public class Game {
 	}
 	
 	private void give(int nounNumber,String codedNoun,String[] actions) {
-				
+		
+		String message = "";
+		
 		if ((nounNumber != 24 && this.itemLocation.retrieveIntData(nounNumber)>0) ||
 			nounNumber >= 52) {
 			this.message = "YOU DON'T HAVE THE "+actions[1];
@@ -459,8 +461,54 @@ public class Game {
 			
 			if (this.room != this.itemLocation.retrieveIntData(objectNumber)) {
 				this.message = "THE "+action+" IS NOT HERE";
+			} else if (codedNoun.equals("10045") && objectNumber ==40) {
+				this.itemLocation.updateIntData(nounNumber, 81);
+				this.itemVisibility.updateIntData(40,1);
+				this.message = "THE SNAKE UNCURLS";
+			} else if (codedNoun.equals("2413075") && objectNumber == 40 && this.drink>1) {
+				this.itemVisibility.updateIntData(11,0);
+				this.message = "HE OFFERS HIS STAFF";
+				this.drink --;
+			} else {
+				this.message = "IT IS REFUSED";
+				codedNoun = codedNoun.substring(0,3);
+				
+				if ((codedNoun.equals("300") || codedNoun.equals("120")) && objectNumber == 42) {
+					this.wisdom += 10;
+					this.itemLocation.updateIntData(nounNumber,81);
+				}
+				
+				if (codedNoun.equals("40") && this.itemVisibility.retrieveIntData(4)<0 && objectNumber == 32) {
+					this.itemVisibility.updateIntData(objectNumber,1);
+					this.itemLocation.updateIntData(nounNumber,81);
+				}
+				
+				if (codedNoun.substring(0,2).equalsIgnoreCase("80") && objectNumber == 43) {
+					this.itemLocation.updateIntData(objectNumber,81);
+					
+					message = "HE TAKES IT ";
+					
+					if (this.room != 8) {
+						message += "RUNS DOWN THE CORRIDOR, ";
+					}
+					
+					System.out.println(message);
+					System.out.println("AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH");
+					System.out.println("A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND");
+					this.itemVisibility.updateIntData(8,-1);		
+				}
+				
+				if (this.itemLocation.retrieveIntData(nounNumber) == 81 ||
+					(nounNumber == 24 && this.itemLocation.retrieveIntData(11)>0 &&
+					 this.drink>0)) {
+					this.message = "IT IS ACCEPTED";
+				}
+				
+				if (objectNumber == 41) {
+					this.itemLocation.updateIntData(nounNumber,51);
+					this.message = "IT IS TAKEN";
+				}
 			}
-			//N = objectNumber
 		}
 	}
 }
@@ -468,16 +516,14 @@ public class Game {
 
 
 
-1430 IF B$="10045" AND N=40 THEN L(O)=81:F(40)=1:F$="THE SNAKE UNCURLS"
-1440 IFB$="2413075"ANDN=30ANDG>1THENF(11)=0:F$="HE OFFERS HIS STAFF":G=G-1
-1450 LET B$=LEFT$(B$,3):LET F$="IT IS REFUSED"
-1460 IF B$="300" AND N=42 THEN LET X=X+10:LET L(O)=81
-1470 IF B$="120" AND N=42 THEN LET X=X+10:LET L(O)=81
-1480 IF B$="40" AND F(4)<0 AND N=32 THEN LET F(N)=1:LET L(O)=81
-1490 IF LEFT(B$,2)="80"AND N=43 THEN LET L(O)=81:GOSUB1560
-1500 IF L(O)=81 OR (O=24 AND L(11)>0 AND G>0)THEN LET F$="IT IS ACCEPTED"
-1510 IF N=41 THEN LET L(O)=51:LET F$="IT IS TAKEN"
-1520 RETURN
+
+
+
+
+
+
+
+
 
 
 
@@ -553,7 +599,7 @@ public class Game {
 560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
 570 PRINT:PRINT:PRINT "GAME OVER"
 580 END
-590 ON A GOSUB 1530:RETURN
+
 600 ON A-9 GOSUB 1540,1630,1670,1710,1730,1080,1760,1760,1760,1760:RETURN
 610 ON A-19 GOSUB 1820,1820,1820,1820,1910,2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
@@ -579,13 +625,8 @@ public class Game {
 1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
 
 
-1530 IF O=4 AND L(O)=0THEN LET L(O)=81:LET X=X-1:LET F$="IT BREAKS!":RETURN
-1540 IF L(O)=0 AND O<=C1 THEN LET L(O)=R:LET F$="DONE":LET E=E-1
-1550 RETURN
-1560 LET A$="*HE TAKES IT ":IF R<>8 THEN LET A$+A$+"RUNS DOWN THE CORRIDOR,"
-1570 GOSUB2740:A$="*AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH"
-1580 A$=A$+" A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND"
-1590 LET F(8)=-1:GOSUB2750:GOSUB2760:GOSUB2760:RETURN
+
+
 1600 IF L(I)<>0 AND I<C1 THEN LET I=I+1:GOTO 1600
 1610 IF L(I)=0 THEN LET L(I)=R:LET F(I)=0:GOSUB1540:LET F$="YOU DROP SOMTHING"
 1620 RETURN
