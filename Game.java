@@ -52,6 +52,8 @@ public class Game {
 	
 	public void run() {
 		
+		this.verbs.displayData();
+		
 		while (this.gamePlaying) {
 			ClearScreen();
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
@@ -234,6 +236,8 @@ public class Game {
 		
 		String codedNoun = codeNoun(nounFound);
 		
+		System.out.println(verbFound);
+		
 		if (verbFound>0 && verbFound<6) {
 			move(codedNoun,nounFound,verbFound,exits);
 		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15) {
@@ -242,6 +246,8 @@ public class Game {
 			give(nounFound,codedNoun,actions);
 		} else if (verbFound == 9 || verbFound == 10) {
 			drop(nounFound,verbFound);
+		} else if (verbFound == 11) {
+			
 		}
 		
 		return "";
@@ -358,7 +364,7 @@ public class Game {
 						
 					}
 					
-					noun = String.format("%s%s", "AND ARE TAKEN TO THE ISLAN OF SECRETS");
+					noun = String.format("%s%s",noun,"AND ARE TAKEN TO THE ISLAND OF SECRETS");
 					
 					//Line 720
 					System.out.println(noun.substring(1,noun.length()));
@@ -536,15 +542,36 @@ public class Game {
 			this.message = "DONE";
 			this.weight --;
 		}
+	}
+	
+	private void eat(int nounFound, String[] actions) {
+		
+		if ((nounFound < this.foodLine || nounFound>this.carriableItems) && !actions[1].equals("???")) {
+			this.message = "YOU CAN'T "+actions[0]+" "+actions[1];
+			this.wisdom --;
+		} else {
+			this.message = "YOU HAVE NO FOOD";
+			
+			if (this.food>0) {
+				this.food --;
+				this.strength += 10;
+				this.message = "OK";
+			}
+			
+			if (nounFound == 3) {
+				this.strength -= 5; 
+				this.wisdom -= 2;
+				this.message = "THEY MAKE YOU VERY ILL";
+			}
+		}
 		
 	}
 }
 /*
-- Eat
-1630 IF(O<C1 OR O>C3) AND X$<>"???" THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
-1640 LET F$="YOU HAVE NO FOOD":IF F>0 THEN LET F=F-1:LET Y=Y+10:LET F$="OK"
-1650 IF D=3 THEN LET X=X-5:LET Y=Y-2:LET F$="THEY MAKE YOU VERY ILL"
-1660 RETURN
+
+
+
+
 - Drink
 1670 IF O=31 THEN GOSUB 2380:RETURN
 1680 IF I$<>"???" AND (O<21 OR O>C3) THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN

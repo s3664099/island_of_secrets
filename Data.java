@@ -58,6 +58,13 @@ public class Data {
 	public void getLength() {
 		System.out.println(this.data.length);
 	}
+	
+	public void displayData() {
+		
+		for (int x=0;x<this.data.length;x++) {
+			System.out.printf("%d %d) %s %n",x,x+1,this.data[x]);
+		}
+	}
 }
 /*
 7 September 2024 - Created File

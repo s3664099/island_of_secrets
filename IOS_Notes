@@ -7,20 +7,21 @@
 
 
 
-LET C3=24	- Carriable Items
+
 LET W=51	- Size of H$ & Q$
 LET R=23	- Room Player is in
 LET Z=31	- Length of screen
 LET Y=100	- Strength
 LET X=35	- Wisdom
 LET L=1000	- Time
-LET C4=43	- Number of Items
 LET V=42	- number of verbs
 LET E=0		- weight
 LET F=2		- Food
 LET G=2		- Drink
 LET C1=16	- Above is Food (and below 21)
 LET C2=21	- Above is drink (and below 24)
+LET C3=24	- Carriable Items
+LET C4=43	- Number of Items
 A			- verb chosen
 O			- noun chosen
 
