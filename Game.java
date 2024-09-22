@@ -2,14 +2,15 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.11
-Date: 21 September 2024
+Version: 0.12
+Date: 22 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+
 
 public class Game {
 	
@@ -247,7 +248,9 @@ public class Game {
 		} else if (verbFound == 9 || verbFound == 10) {
 			drop(nounFound,verbFound);
 		} else if (verbFound == 11) {
-			
+			eat(nounFound,actions);
+		} else if (verbFound == 12) {
+			drink(nounFound,actions);
 		}
 		
 		return "";
@@ -566,17 +569,43 @@ public class Game {
 		}
 		
 	}
+	
+	private void drink(int nounFound,String[] action) {
+		
+		if (nounFound == 31) {
+			if (this.itemVisibility.retrieveIntData(4)+this.itemVisibility.retrieveIntData(3) != -1) {
+				this.message = "YOU DON'T HAVE "+action[0];
+			} else {
+				System.out.println("YOU TASTE A DROP AND .. ");
+				
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				this.message = "OUCH";
+				this.wisdom -=4;
+				this.strength -= 7;
+			}
+		} else {
+			if (((nounFound < this.drinkLine || nounFound>this.carriableItems) && !action[1].equals("???"))) {
+				this.message = "YOU CAN'T "+action[0]+" "+action[1];
+				this.wisdom --;
+			} else {
+				this.message = "YOU HAVE NO DRINK";
+				
+				if (this.drink>0) {
+					this.drink --;
+					this.strength += 7;
+					this.message = "OK";
+				}
+			}
+		}
+		
+	}
 }
 /*
-
-
-
-
-- Drink
-1670 IF O=31 THEN GOSUB 2380:RETURN
-1680 IF I$<>"???" AND (O<21 OR O>C3) THEN LET F$=W$+C$+" "+X$:LET X=X-1:RETURN
-1690 LET F$="YOU HAVE NO DRINK":IF G>0 THEN LET G=G-1:LET Y=Y+7:LET F$="OK"
-1700 RETURN
 - Ride
 1710 IF LEFT$(B$,4)="1600" THEN LET F(O)=-1:LET F$="IT ALLOWS YOU TO RIDE"
 1720 RETURN
@@ -584,6 +613,13 @@ public class Game {
 1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
 1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
 1750 RETURN
+
+
+
+
+
+
+
 
 
 
@@ -758,8 +794,8 @@ public class Game {
 2350 LET F$=X$:IF X$=H$ AND R=47 AND F(8)=0THEN LET F(44)=1:LET F$=J$
 2360 IF X$<>P$ OR R<>L(42) OR L(3)<81 OR L(12)<18 THEN RETURN
 2370 LET F$="HE EATS THE FLOWERS- AND CHANGES":LET F$="YOU DON'T HAVE "+X$:RETURN
-2380 IF F(4)+L(4)<>-1 THEN LET F$="YOU DON'T HAVE "+X$:RETURN
-2390 GOSUB2770:PRINT"YOU TASTE A DROP AND..":GOSUB2760:F$="*OUCH":Y=Y-4:X=X-7
+
+
 2400 GOSUB2770:FOR I=1 TO ABS(F(36))+3
 2410 LET L=L-1:IF Y<100 FOR -R=F(22) THEN LET Y=Y+1
 2420 PRINT"TIME PASSES":GOSUB2760
@@ -843,4 +879,5 @@ public class Game {
 					completed main move section.
 17 September 2024 - Finished Movement and started on take objects
 21 September 2024 - Finished give & drop methods
+22 September 2024 - Completed Eat & Drink methods
 */
