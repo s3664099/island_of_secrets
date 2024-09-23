@@ -251,6 +251,8 @@ public class Game {
 			eat(nounFound,actions);
 		} else if (verbFound == 12) {
 			drink(nounFound,actions);
+		} else if (verbFound == 13) {
+			ride(codedNoun,nounFound);
 		}
 		
 		return "";
@@ -602,13 +604,18 @@ public class Game {
 				}
 			}
 		}
-		
+	}
+	
+	private void ride(String codedNoun, int nounFound) {
+				
+		if (codedNoun.substring(0,4).equals("1600")) {
+			this.itemLocation.updateIntData(nounFound,-1);
+			this.message = "IT ALLOWS YOU TO RIDE";
+		};
 	}
 }
 /*
-- Ride
-1710 IF LEFT$(B$,4)="1600" THEN LET F(O)=-1:LET F$="IT ALLOWS YOU TO RIDE"
-1720 RETURN
+
 - Open
 1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
 1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
