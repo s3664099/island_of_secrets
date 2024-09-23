@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.12
-Date: 22 September 2024
+Version: 0.13
+Date: 23 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -256,7 +256,7 @@ public class Game {
 		} else if (verbFound == 14) {
 			open(codedNoun);
 		} else if (verbFound>15 && verbFound<20) {
-			
+			breakObject(codedNoun,verbFound,nounFound);
 		}
 		
 		return "";
@@ -613,7 +613,7 @@ public class Game {
 	private void ride(String codedNoun, int nounFound) {
 				
 		if (codedNoun.substring(0,4).equals("1600")) {
-			this.itemLocation.updateIntData(nounFound,-1);
+			this.itemVisibility.updateIntData(nounFound,-1);
 			this.message = "IT ALLOWS YOU TO RIDE";
 		};
 	}
@@ -622,32 +622,79 @@ public class Game {
 		
 		if (codedNoun.equals("2644044")) {
 			this.message = "CHEST OPEN";
-			this.itemLocation.updateIntData(6,9);
-			this.itemLocation.updateIntData(5,9);
-			this.itemLocation.updateIntData(15,9);
+			this.itemVisibility.updateIntData(6,9);
+			this.itemVisibility.updateIntData(5,9);
+			this.itemVisibility.updateIntData(15,9);
 		}
 		
 		if (codedNoun.equals("2951151")) {
 			this.message = "THE TRAPDOOR CREAKS";
-			this.itemLocation.updateIntData(29,0);
+			this.itemVisibility.updateIntData(29,0);
 			this.wisdom += 3;
 		}
 	}
-}
+	
+	private void breakObject(String codedNoun, int verbChosen , int nounChosen) {
+		
+		this.strength -= 2;
+		if (codedNoun.equals("3577077") && this.itemLocation.retrieveIntData(9) == 0) {
+			this.itemVisibility.updateIntData(23,0);
+			this.itemLocation.updateIntData(23,this.room);
+		}
+		
+		if (this.noVerbs>15 && this.noVerbs<19 && (this.itemLocation.retrieveIntData(9) == 0
+				|| this.itemLocation.retrieveIntData(15) == 0)) {
+			this.message = "OK";
+		}
+		
+		if (codedNoun.equals("1258158") || codedNoun.equals("2758158") && this.itemLocation.retrieveIntData(15) == 0) {
+			this.itemVisibility.updateIntData(12,0);
+			this.itemVisibility.updateIntData(27,0);
+			this.message = "CRACK";
+		}
+		
+		if (codedNoun.substring(0,4).equals("1100") && this.room == 10) {
+			//1980
+		}
+		
+		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
+			//1900
+		}
+		
+	}
+} 
 /*
 
 
 
 
-- Break
-1760 LET Y=Y-2:IF B$="3577077"AND L(9)=0THEN LET F(23)=0:LET L(23)=R
-1770 IF V>15 AND V<19 AND (L(9)=0 OR L(15)=0) THEN LET F$="OK"
-1780 IF B$="1258158"OR B$="2758158"AND L(15)=0 THEN F(12)=0:F(27)=0:F$="CRACK"
-1790 IF LEFT$(B$,4)="1100" AND R=10 THEN GOSUB 1980
-1800 IF A=18 AND (O>29 AND O<34) OR (O>38 AND O<44) OR O=16 THEN GOSUB 1900
-1810 RETURN
 
 
+
+
+
+
+
+1900 IF L(9)>0 THEN RETURN
+1910 LET Y=Y-12:LET X=X-10:LET F$="THAT WOULD BE UNWISE!"
+1920 IF R<>L(0) THEN RETURN
+1930 LET F(W)=1:LET A$="#THUNDER SPLITS THE SKY!":LET F$=""
+1940 LET A$=A$+"IT IS THE TRIUMPHANT VOICE OF OMEGAN.":GOSUB2740
+1950 LET A$="#WELL DONE ALPHAN! THE MEANS BECOMES THE END.."
+1960 LET A$=A$+"I CLAIM YOU AS MY OWN! HA HA HAH!":GOSUB2750
+1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
+1980 GOSUB2770:ON O-1 GOSUB 2010,2060,2060,2060
+1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB270:GOSUB2760:GOSUB2760
+2000 RETURN
+2010 LET A$="#IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!"
+2020 IF L(2)<>R THEN RETURN
+2030 LET A$=A$+"THE EGG HATCHES INTO A BABY DACTYL "+O$
+2040 LET L(39)=81:LET L(2)=81:LET F(2)=-1:LET Y=Y+40
+2050 RETURN
+2060 IF L(31)<>R THEN RETURN
+2070 LET A$="*THE COAL BURNS WIGTH A WARM RED FLAME":LET F(13)=-1
+2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
+2090 RETURN
 
 
 
@@ -744,7 +791,8 @@ public class Game {
 640 RETURN
 
 
-
+1800 IF A=18 AND (O>29 AND O<34) OR (O>38 AND O<44) OR O=16 THEN GOSUB 1900
+1810 RETURN
 
 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
 1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
@@ -778,27 +826,8 @@ public class Game {
 1870 IF O=46 THEN GOSUB1200
 1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
 1890 LET Y=Y-8:LET X=X-5:RETURN
-1900 IF L(9)>0 THEN RETURN
-1910 LET Y=Y-12:LET X=X-10:LET F$="THAT WOULD BE UNWISE!"
-1920 IF R<>L(0) THEN RETURN
-1930 LET F(W)=1:LET A$="#THUNDER SPLITS THE SKY!":LET F$=""
-1940 LET A$=A$+"IT IS THE TRIUMPHANT VOICE OF OMEGAN.":GOSUB2740
-1950 LET A$="#WELL DONE ALPHAN! THE MEANS BECOMES THE END.."
-1960 LET A$=A$+"I CLAIM YOU AS MY OWN! HA HA HAH!":GOSUB2750
-1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
-1980 GOSUB2770:ON O-1 GOSUB 2010,2060,2060,2060
-1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB270:GOSUB2760:GOSUB2760
-2000 RETURN
-2010 LET A$="#IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!"
-2020 IF L(2)<>R THEN RETURN
-2030 LET A$=A$+"THE EGG HATCHES INTO A BABY DACTYL "+O$
-2040 LET L(39)=81:LET L(2)=81:LET F(2)=-1:LET Y=Y+40
-2050 RETURN
-2060 IF L(31)<>R THEN RETURN
-2070 LET A$="*THE COAL BURNS WIGTH A WARM RED FLAME":LET F(13)=-1
-2080 IF R=10 AND R=L2740 GOSUB2770
-(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
-2090 RETURN
+
+
 2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
 	- Then swimming in poisoned waters
 
@@ -906,4 +935,5 @@ public class Game {
 17 September 2024 - Finished Movement and started on take objects
 21 September 2024 - Finished give & drop methods
 22 September 2024 - Completed Eat & Drink methods
+23 September 2024 - Completed ride, open and started break
 */
