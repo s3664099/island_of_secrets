@@ -253,6 +253,10 @@ public class Game {
 			drink(nounFound,actions);
 		} else if (verbFound == 13) {
 			ride(codedNoun,nounFound);
+		} else if (verbFound == 14) {
+			open(codedNoun);
+		} else if (verbFound>15 && verbFound<20) {
+			
 		}
 		
 		return "";
@@ -613,15 +617,35 @@ public class Game {
 			this.message = "IT ALLOWS YOU TO RIDE";
 		};
 	}
+	
+	private void open(String codedNoun) {
+		
+		if (codedNoun.equals("2644044")) {
+			this.message = "CHEST OPEN";
+			this.itemLocation.updateIntData(6,9);
+			this.itemLocation.updateIntData(5,9);
+			this.itemLocation.updateIntData(15,9);
+		}
+		
+		if (codedNoun.equals("2951151")) {
+			this.message = "THE TRAPDOOR CREAKS";
+			this.itemLocation.updateIntData(29,0);
+			this.wisdom += 3;
+		}
+	}
 }
 /*
 
-- Open
-1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
-1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
-1750 RETURN
 
 
+
+- Break
+1760 LET Y=Y-2:IF B$="3577077"AND L(9)=0THEN LET F(23)=0:LET L(23)=R
+1770 IF V>15 AND V<19 AND (L(9)=0 OR L(15)=0) THEN LET F$="OK"
+1780 IF B$="1258158"OR B$="2758158"AND L(15)=0 THEN F(12)=0:F(27)=0:F$="CRACK"
+1790 IF LEFT$(B$,4)="1100" AND R=10 THEN GOSUB 1980
+1800 IF A=18 AND (O>29 AND O<34) OR (O>38 AND O<44) OR O=16 THEN GOSUB 1900
+1810 RETURN
 
 
 
@@ -745,12 +769,7 @@ public class Game {
 1620 RETURN
 
 
-1760 LET Y=Y-2:IF B$="3577077"AND L(9)=0THEN LET F(23)=0:LET L(23)=R
-1770 IF V>15 AND V<19 AND (L(9)=0 OR L(15)=0) THEN LET F$="OK"
-1780 IF B$="1258158"OR B$="2758158"AND L(15)=0 THEN F(12)=0:F(27)=0:F$="CRACK"
-1790 IF LEFT$(B$,4)="1100" AND R=10 THEN GOSUB 1980
-1800 IF A=18 AND (O>29 AND O<34) OR (O>38 AND O<44) OR O=16 THEN GOSUB 1900
-1810 RETURN
+
 1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
 1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
 1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
