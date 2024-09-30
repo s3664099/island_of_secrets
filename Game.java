@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.13
-Date: 23 September 2024
+Version: 0.14
+Date: 30 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -654,7 +654,34 @@ public class Game {
 		}
 		
 		if (codedNoun.substring(0,4).equals("1100") && this.room == 10) {
-			//1980
+			
+			if (nounChosen-10==1) {
+				
+				this.message = "IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!";
+				
+				if (this.itemLocation.retrieveIntData(2) == this.room) {
+					this.message += " THE EGG HATCHES INTO A BABY DACTYL "+
+							"WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY";
+					this.itemLocation.updateIntData(39,81);
+					this.itemLocation.updateIntData(2,81);
+					this.itemVisibility.updateIntData(2,-1);
+					this.strength += 40;
+				}
+			} else if (nounChosen-10>1 && nounChosen-10<5) {
+				
+				if (this.itemLocation.retrieveIntData(31) == this.room) {
+					this.message = "THE COAL BURNS WITH A WARM RED FLAME";
+					this.itemVisibility.updateIntData(13,-1);
+					
+					if (this.room == 10 && this.itemLocation.retrieveIntData(39) == this.room) {
+						this.message += " WHICH DISOLVES OMEGAN'S CLOAK";
+						this.strength += 20;
+					}
+				}	
+			}
+			this.wisdom += 10;
+			this.itemLocation.updateIntData(nounChosen,81);
+			this.itemVisibility.updateIntData(nounChosen,-1);
 		}
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
@@ -664,17 +691,6 @@ public class Game {
 	}
 } 
 /*
-
-
-
-
-
-
-
-
-
-
-
 1900 IF L(9)>0 THEN RETURN
 1910 LET Y=Y-12:LET X=X-10:LET F$="THAT WOULD BE UNWISE!"
 1920 IF R<>L(0) THEN RETURN
@@ -683,18 +699,21 @@ public class Game {
 1950 LET A$="#WELL DONE ALPHAN! THE MEANS BECOMES THE END.."
 1960 LET A$=A$+"I CLAIM YOU AS MY OWN! HA HA HAH!":GOSUB2750
 1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
-1980 GOSUB2770:ON O-1 GOSUB 2010,2060,2060,2060
-1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB270:GOSUB2760:GOSUB2760
-2000 RETURN
-2010 LET A$="#IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!"
-2020 IF L(2)<>R THEN RETURN
-2030 LET A$=A$+"THE EGG HATCHES INTO A BABY DACTYL "+O$
-2040 LET L(39)=81:LET L(2)=81:LET F(2)=-1:LET Y=Y+40
-2050 RETURN
-2060 IF L(31)<>R THEN RETURN
-2070 LET A$="*THE COAL BURNS WIGTH A WARM RED FLAME":LET F(13)=-1
-2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
-2090 RETURN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -936,4 +955,5 @@ public class Game {
 21 September 2024 - Finished give & drop methods
 22 September 2024 - Completed Eat & Drink methods
 23 September 2024 - Completed ride, open and started break
+30 September 2024 - Continued working on the break function
 */
