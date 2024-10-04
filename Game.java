@@ -53,7 +53,7 @@ public class Game {
 	
 	public void run() {
 		
-		this.verbs.displayData();
+		//this.verbs.displayData();
 		
 		while (this.gamePlaying) {
 			ClearScreen();
@@ -253,10 +253,18 @@ public class Game {
 			drink(nounFound,actions);
 		} else if (verbFound == 13) {
 			ride(codedNoun,nounFound);
+		
+		
 		} else if (verbFound == 14) {
 			open(codedNoun);
+
+		//1760
 		} else if (verbFound>15 && verbFound<20) {
 			breakObject(codedNoun,verbFound,nounFound);
+			
+		//1820
+		} else if (verbFound>19 && verbFound<24) {
+			attack();
 		}
 		
 		return "";
@@ -686,6 +694,8 @@ public class Game {
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
 			if (this.itemLocation.retrieveIntData(9)==0) {
+				
+				//1910
 				this.strength -= 12;
 				this.wisdom -= 10;
 				this.message = "THAT WOULD BE UNWISE";
@@ -712,9 +722,20 @@ public class Game {
 			}
 		}
 	}
+	
+	private void attack() {
+		
+	}
 } 
 /*
-
+1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
+1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
+1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
+1850 IF O=33 THEN LET F$=W$+"TOUCH HER!":LET L(3)=81
+1860 IF O=41 THEN LET F$="THEY THINK THAT'S FUNNY!"
+1870 IF O=46 THEN GOSUB1200
+1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
+1890 LET Y=Y-8:LET X=X-5:RETURN
 
 
 
@@ -822,15 +843,14 @@ public class Game {
 570 PRINT:PRINT:PRINT "GAME OVER"
 580 END
 
-600 ON A-9 GOSUB 1760,1760,1760,1760:RETURN
+
 610 ON A-19 GOSUB 1820,1820,1820,1820,1910,2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
 
 
-1800 IF A=18 AND (O>29 AND O<34) OR (O>38 AND O<44) OR O=16 THEN GOSUB 1900
-1810 RETURN
+
 
 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
 1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
@@ -856,14 +876,7 @@ public class Game {
 
 
 
-1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
-1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
-1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
-1850 IF O=33 THEN LET F$=W$+"TOUCH HER!":LET L(3)=81
-1860 IF O=41 THEN LET F$="THEY THINK THAT'S FUNNY!"
-1870 IF O=46 THEN GOSUB1200
-1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
-1890 LET Y=Y-8:LET X=X-5:RETURN
+
 
 
 2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
