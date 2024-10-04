@@ -2,7 +2,7 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.14
+Version: 0.15
 Date: 30 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -685,20 +685,39 @@ public class Game {
 		}
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
-			//1900
+			if (this.itemLocation.retrieveIntData(9)==0) {
+				this.strength -= 12;
+				this.wisdom -= 10;
+				this.message = "THAT WOULD BE UNWISE";
+				
+				if (this.itemLocation.retrieveIntData(nounChosen) == this.room) {
+					this.itemVisibility.updateIntData(51,1);
+					this.message = "THUNDER SPLITS THE SKY!";
+					this.message += " IT IS THE TRIUMPHANT VOICE OF OMEGAN";
+					
+					//Clears Screen & Displays 2740
+					System.out.println(this.message);
+					
+					this.message = "WELL DONE ALPHAN! THE MEANS BECOMES THE END ..";
+					this.message += " I CLAIM YOU AS MY OWN! HA HA HAH!";
+					
+					//DISPLAY MESSAGE 720
+					System.out.println(this.message);
+					
+					//PAUSE
+					this.strength = 0;
+					this.wisdom = 0;
+					this.timeRemaining = 0;
+				}
+			}
 		}
-		
 	}
 } 
 /*
-1900 IF L(9)>0 THEN RETURN
-1910 LET Y=Y-12:LET X=X-10:LET F$="THAT WOULD BE UNWISE!"
-1920 IF R<>L(0) THEN RETURN
-1930 LET F(W)=1:LET A$="#THUNDER SPLITS THE SKY!":LET F$=""
-1940 LET A$=A$+"IT IS THE TRIUMPHANT VOICE OF OMEGAN.":GOSUB2740
-1950 LET A$="#WELL DONE ALPHAN! THE MEANS BECOMES THE END.."
-1960 LET A$=A$+"I CLAIM YOU AS MY OWN! HA HA HAH!":GOSUB2750
-1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
+
+
+
+
 
 
 
@@ -956,4 +975,5 @@ public class Game {
 22 September 2024 - Completed Eat & Drink methods
 23 September 2024 - Completed ride, open and started break
 30 September 2024 - Continued working on the break function
+4 October 2024 - Finished Break Method
 */
