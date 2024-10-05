@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.15
-Date: 30 September 2024
+Version: 0.16
+Date: 5 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -253,8 +253,6 @@ public class Game {
 			drink(nounFound,actions);
 		} else if (verbFound == 13) {
 			ride(codedNoun,nounFound);
-		
-		
 		} else if (verbFound == 14) {
 			open(codedNoun);
 
@@ -264,7 +262,7 @@ public class Game {
 			
 		//1820
 		} else if (verbFound>19 && verbFound<24) {
-			attack();
+			attack(codedNoun, nounFound);
 		}
 		
 		return "";
@@ -662,34 +660,7 @@ public class Game {
 		}
 		
 		if (codedNoun.substring(0,4).equals("1100") && this.room == 10) {
-			
-			if (nounChosen-10==1) {
-				
-				this.message = "IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!";
-				
-				if (this.itemLocation.retrieveIntData(2) == this.room) {
-					this.message += " THE EGG HATCHES INTO A BABY DACTYL "+
-							"WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY";
-					this.itemLocation.updateIntData(39,81);
-					this.itemLocation.updateIntData(2,81);
-					this.itemVisibility.updateIntData(2,-1);
-					this.strength += 40;
-				}
-			} else if (nounChosen-10>1 && nounChosen-10<5) {
-				
-				if (this.itemLocation.retrieveIntData(31) == this.room) {
-					this.message = "THE COAL BURNS WITH A WARM RED FLAME";
-					this.itemVisibility.updateIntData(13,-1);
-					
-					if (this.room == 10 && this.itemLocation.retrieveIntData(39) == this.room) {
-						this.message += " WHICH DISOLVES OMEGAN'S CLOAK";
-						this.strength += 20;
-					}
-				}	
-			}
-			this.wisdom += 10;
-			this.itemLocation.updateIntData(nounChosen,81);
-			this.itemVisibility.updateIntData(nounChosen,-1);
+			breakAttack(nounChosen);
 		}
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
@@ -723,19 +694,73 @@ public class Game {
 		}
 	}
 	
-	private void attack() {
+	//Shared routine in the break & attack methods - line 1980
+	private void breakAttack(int nounChosen) {
+
+		if (nounChosen-10==1) {
+			
+			this.message = "IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!";
+			
+			if (this.itemLocation.retrieveIntData(2) == this.room) {
+				this.message += " THE EGG HATCHES INTO A BABY DACTYL "+
+						"WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY";
+				this.itemLocation.updateIntData(39,81);
+				this.itemLocation.updateIntData(2,81);
+				this.itemVisibility.updateIntData(2,-1);
+				this.strength += 40;
+			}
+		} else if (nounChosen-10>1 && nounChosen-10<5) {
+			
+			if (this.itemLocation.retrieveIntData(31) == this.room) {
+				this.message = "THE COAL BURNS WITH A WARM RED FLAME";
+				this.itemVisibility.updateIntData(13,-1);
+				
+				if (this.room == 10 && this.itemLocation.retrieveIntData(39) == this.room) {
+					this.message += " WHICH DISOLVES OMEGAN'S CLOAK";
+					this.strength += 20;
+				}
+			}	
+		}
+		this.wisdom += 10;
+		this.itemLocation.updateIntData(nounChosen,81);
+		this.itemVisibility.updateIntData(nounChosen,-1);
+	}
+	
+	private void attack(String codedNoun, int nounChosen) {
+		this.strength -= 2;
+		this.wisdom -=2;
 		
+		if (this.room == this.itemLocation.retrieveIntData(nounChosen) ||
+				this.itemLocation.retrieveIntData(nounChosen) == 0) {
+			if (nounChosen == 39) {
+				this.message = "HE LAUGHS DANGEROUSLY";
+			} else if (nounChosen == 32) {
+				this.message = "THE SWAMPMAN IS UNMOVED";
+			} else if (nounChosen == 33) {
+				this.message = "YOU CAN'T TOUCH HER!";
+				this.itemLocation.updateIntData(3, 81);
+			} else if (nounChosen == 41) {
+				this.message = "THEY THINK THAT'S FUNNY!";
+			} else if (nounChosen == 46) {
+				//GOSUB 1200
+			} else if (codedNoun.substring(0,4).equals("1400") && 
+					this.itemLocation.retrieveIntData(39) == this.room) {
+				breakAttack(nounChosen);
+			}
+			
+			this.strength -= 8;
+			this.wisdom -=5;
+		}
 	}
 } 
 /*
-1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
-1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
-1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
-1850 IF O=33 THEN LET F$=W$+"TOUCH HER!":LET L(3)=81
-1860 IF O=41 THEN LET F$="THEY THINK THAT'S FUNNY!"
-1870 IF O=46 THEN GOSUB1200
-1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
-1890 LET Y=Y-8:LET X=X-5:RETURN
+
+
+
+
+
+
+
 
 
 
@@ -844,7 +869,7 @@ public class Game {
 580 END
 
 
-610 ON A-19 GOSUB 1820,1820,1820,1820,1910,2100,2210,2270,2270,1080:RETURN
+610 ON A-19 GOSUB 1910,2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
@@ -989,4 +1014,5 @@ public class Game {
 23 September 2024 - Completed ride, open and started break
 30 September 2024 - Continued working on the break function
 4 October 2024 - Finished Break Method
+5 October 2024 - Finished Attack Method
 */
