@@ -263,6 +263,8 @@ public class Game {
 		//1820
 		} else if (verbFound>19 && verbFound<24) {
 			attack(codedNoun, nounFound);
+		} else if (verbFound == 24) {
+			kill(nounFound);
 		}
 		
 		return "";
@@ -665,32 +667,36 @@ public class Game {
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
 			if (this.itemLocation.retrieveIntData(9)==0) {
-				
-				//1910
-				this.strength -= 12;
-				this.wisdom -= 10;
-				this.message = "THAT WOULD BE UNWISE";
-				
-				if (this.itemLocation.retrieveIntData(nounChosen) == this.room) {
-					this.itemVisibility.updateIntData(51,1);
-					this.message = "THUNDER SPLITS THE SKY!";
-					this.message += " IT IS THE TRIUMPHANT VOICE OF OMEGAN";
-					
-					//Clears Screen & Displays 2740
-					System.out.println(this.message);
-					
-					this.message = "WELL DONE ALPHAN! THE MEANS BECOMES THE END ..";
-					this.message += " I CLAIM YOU AS MY OWN! HA HA HAH!";
-					
-					//DISPLAY MESSAGE 720
-					System.out.println(this.message);
-					
-					//PAUSE
-					this.strength = 0;
-					this.wisdom = 0;
-					this.timeRemaining = 0;
-				}
+				kill(nounChosen);
 			}
+		}
+	}
+	
+	//Break Method
+	private void kill(int nounChosen) {
+		//1910
+		this.strength -= 12;
+		this.wisdom -= 10;
+		this.message = "THAT WOULD BE UNWISE";
+		
+		if (this.itemLocation.retrieveIntData(nounChosen) == this.room) {
+			this.itemVisibility.updateIntData(51,1);
+			this.message = "THUNDER SPLITS THE SKY!";
+			this.message += " IT IS THE TRIUMPHANT VOICE OF OMEGAN";
+			
+			//Clears Screen & Displays 2740
+			System.out.println(this.message);
+			
+			this.message = "WELL DONE ALPHAN! THE MEANS BECOMES THE END ..";
+			this.message += " I CLAIM YOU AS MY OWN! HA HA HAH!";
+			
+			//DISPLAY MESSAGE 720
+			System.out.println(this.message);
+			
+			//PAUSE
+			this.strength = 0;
+			this.wisdom = 0;
+			this.timeRemaining = 0;
 		}
 	}
 	
@@ -754,7 +760,8 @@ public class Game {
 	}
 } 
 /*
-
+2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
+	- Then swimming in poisoned waters
 
 
 
@@ -869,7 +876,7 @@ public class Game {
 580 END
 
 
-610 ON A-19 GOSUB 1910,2100,2210,2270,2270,1080:RETURN
+610 ON A-19 GOSUB 2100,2210,2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
@@ -904,8 +911,7 @@ public class Game {
 
 
 
-2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
-	- Then swimming in poisoned waters
+
 
 
 2210 IF F(36)>-1 THEN RETURN
