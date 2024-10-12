@@ -166,6 +166,33 @@ public class Game {
 		return action;
 	}
 	
+	//Move player to new location when running for shelter
+	private int getIntInput() {
+		
+		boolean correct = false;
+		Scanner myObj = new Scanner(System.in);
+		String option = "";
+		int intOption = 0;
+		
+		while (!correct) {
+			option = myObj.nextLine();
+			
+			if (option.equals("1")) {
+				intOption = 44;
+				correct = true;
+			} else if (option.equals("2")) {
+				intOption = 11;
+				correct = true;				
+			} else if (option.equals("3")) {
+				intOption = 41;
+				correct = true;					
+			} else {
+				System.out.println("Please enter 1,2 or 3");
+			}
+		}
+		return intOption;
+	}
+	
 	//Function to location the word in the word bank
 	private int getWords(String action, int noWords, Data wordBank) {
 		
@@ -286,6 +313,14 @@ public class Game {
 		//2100
 		} else if (verbFound == 25) {
 			swim(actions[0]);
+		
+		//2210
+		} else if (verbFound == 26) {
+			shelter();
+		
+		//2270
+		} else if (verbFound == 27 || verbFound == 28) {
+			
 		}
 		
 		return "";
@@ -791,8 +826,35 @@ public class Game {
 			this.wisdom += 1;
 		}
 	}
+	
+	private void shelter() {
+		
+		if (this.itemVisibility.retrieveIntData(36)<0) {
+			
+			//Clear the screen
+			
+			System.out.println("YOU CAN SHELTER IN:");
+			System.out.println("1) GRANDPA'S SHACK");
+			System.out.println("2) CAVE OF SNELM");
+			System.out.println("3) LOG CABIN");
+			System.out.println("CHOOSE FROM 1-3");
+			
+			this.room = getIntInput();
+			this.itemVisibility.updateIntData(22,this.room*-1);
+			System.out.println("YOU BLINDLY RUN THROUGH THE STORM");
+			this.message = "YOU REACH SHELTER";
+			
+			//Pause
+			
+		}
+	}
 } 
 /*
+
+
+
+
+
 
 
 
@@ -908,7 +970,7 @@ public class Game {
 580 END
 
 
-610 ON A-19 GOSUB 2100,2210,2270,2270,1080:RETURN
+610 ON A-19 GOSUB 2270,2270,1080:RETURN
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
@@ -946,12 +1008,7 @@ public class Game {
 
 
 
-2210 IF F(36)>-1 THEN RETURN
-2220 GOSUB2770 :PRINT"YOU CAN SHELTER IN:";PRINT"1) GRANDPA'S SHACK"
-2230 PRINT"2) CAVE OF SNELM";PRINT"3) LOG CABIN":PRINT"CHOOSE FROM 1-3":INPUTA$
-2240 IF A$>"0" AND A$<"4"THEN LET R=ASC(MID$("A >",VAL(A$),1))-21:LET F(22)=-R
-2250 PRINT"YOU BLINDLY RUN THROUGH THE STORM":LET F$="YOU REACH SHELTER"
-2260 GOSUB2760:RETURN
+
 2270 IF B$="3075075"OR B$="3371071"THEN LET F$="HOW WILL YOU DO THAT"
 2280 IF B$="3371071" AND A=28 THEN F(3)=0:F$="HOW WILL YOU DO THAT"
 2290 RETURN
@@ -1053,5 +1110,6 @@ public class Game {
 30 September 2024 - Continued working on the break function
 4 October 2024 - Finished Break Method
 5 October 2024 - Finished Attack Method
-12 October 2024 - Finished Last part of attack method and added swim method
+12 October 2024 - Finished Last part of attack method and added swim method.
+				  Added shelter method & set up Help method
 */
