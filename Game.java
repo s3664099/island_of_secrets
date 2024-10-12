@@ -271,7 +271,7 @@ public class Game {
 			move(codedNoun,nounFound,verbFound,exits);
 
 		//1080
-		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15) {
+		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15 || verbFound == 29) {
 			take(nounFound,codedNoun,verbFound,actions);
 
 		//1390
@@ -850,7 +850,9 @@ public class Game {
 	}
 } 
 /*
-
+2270 IF B$="3075075"OR B$="3371071"THEN LET F$="HOW WILL YOU DO THAT"
+2280 IF B$="3371071" AND A=28 THEN F(3)=0:F$="HOW WILL YOU DO THAT"
+2290 RETURN
 
 
 
@@ -970,7 +972,7 @@ public class Game {
 580 END
 
 
-610 ON A-19 GOSUB 2270,2270,1080:RETURN
+
 620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
@@ -1009,9 +1011,7 @@ public class Game {
 
 
 
-2270 IF B$="3075075"OR B$="3371071"THEN LET F$="HOW WILL YOU DO THAT"
-2280 IF B$="3371071" AND A=28 THEN F(3)=0:F$="HOW WILL YOU DO THAT"
-2290 RETURN
+
 2300 LET F$="EXAMINE THE BOOK FOR CLUES"
 2310 IF LEFT$(B$,3)="600"THEN LET F$=L$
 2320 RETURN
