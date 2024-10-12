@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.16
-Date: 5 October 2024
+Version: 0.17
+Date: 12 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -239,20 +239,35 @@ public class Game {
 		
 		System.out.println(verbFound);
 		
+		//810
 		if (verbFound>0 && verbFound<6) {
 			move(codedNoun,nounFound,verbFound,exits);
+
+		//1080
 		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15) {
 			take(nounFound,codedNoun,verbFound,actions);
+
+		//1390
 		} else if (verbFound == 8) {
 			give(nounFound,codedNoun,actions);
+		
+		//1530 (1540)
 		} else if (verbFound == 9 || verbFound == 10) {
 			drop(nounFound,verbFound);
+		
+		//1630
 		} else if (verbFound == 11) {
 			eat(nounFound,actions);
+		
+		//1670
 		} else if (verbFound == 12) {
 			drink(nounFound,actions);
+		
+		//1710
 		} else if (verbFound == 13) {
 			ride(codedNoun,nounFound);
+		
+		//1730
 		} else if (verbFound == 14) {
 			open(codedNoun);
 
@@ -263,8 +278,14 @@ public class Game {
 		//1820
 		} else if (verbFound>19 && verbFound<24) {
 			attack(codedNoun, nounFound);
+		
+		//1910
 		} else if (verbFound == 24) {
 			kill(nounFound);
+		
+		//2100
+		} else if (verbFound == 25) {
+			swim(actions[0]);
 		}
 		
 		return "";
@@ -465,11 +486,15 @@ public class Game {
 				this.message = "YOU ANGER THE BIRD";
 				
 				if(rand.nextInt(3)>2) {
-					String noun = "#YOU ANGER THE BIRD WHICH FLIES YOU TO A REMOTE PLACE";
-					this.room = 63+rand.nextInt(6);
+					flyRandom();
 				};
 			}
 		}
+	}
+	
+	private void flyRandom() {
+		this.message = "#YOU ANGER THE BIRD WHICH FLIES YOU TO A REMOTE PLACE";
+		this.room = 63+rand.nextInt(6);
 	}
 	
 	private void give(int nounNumber,String codedNoun,String[] actions) {
@@ -748,7 +773,7 @@ public class Game {
 			} else if (nounChosen == 41) {
 				this.message = "THEY THINK THAT'S FUNNY!";
 			} else if (nounChosen == 46) {
-				//GOSUB 1200
+				flyRandom();
 			} else if (codedNoun.substring(0,4).equals("1400") && 
 					this.itemLocation.retrieveIntData(39) == this.room) {
 				breakAttack(nounChosen);
@@ -758,10 +783,17 @@ public class Game {
 			this.wisdom -=5;
 		}
 	}
+	
+	private void swim(String verb) {
+		
+		if (this.room != 51 || this.itemVisibility.retrieveIntData(28)>0) {
+			this.message = "YOU CAN'T "+verb+" HERE";
+			this.wisdom += 1;
+		}
+	}
 } 
 /*
-2100 IF R<>51 OR F(29)>0THEN LET F$=W$+C$+" HERE":X=X+1
-	- Then swimming in poisoned waters
+
 
 
 
@@ -1021,4 +1053,5 @@ public class Game {
 30 September 2024 - Continued working on the break function
 4 October 2024 - Finished Break Method
 5 October 2024 - Finished Attack Method
+12 October 2024 - Finished Last part of attack method and added swim method
 */
