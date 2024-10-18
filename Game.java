@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.17
-Date: 12 October 2024
+Version: 0.18
+Date: 18 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -320,7 +320,7 @@ public class Game {
 		
 		//2270
 		} else if (verbFound == 27 || verbFound == 28) {
-			
+			help(codedNoun,verbFound);
 		}
 		
 		return "";
@@ -845,14 +845,24 @@ public class Game {
 			this.message = "YOU REACH SHELTER";
 			
 			//Pause
-			
+		}
+	}
+	
+	private void help(String codedNoun, int verbChosen) {
+		
+		if (codedNoun.equals("3075075") ||codedNoun.equals("3075075")) {
+			this.message = "HOW WILL YOU DO THAT";
+		}
+		
+		if (codedNoun.equals("3371071") && verbChosen == 28) {
+			this.itemVisibility.updateIntData(3,0);
+			this.message = "SHE NODS SLOWLY";
+			this.wisdom += 5;
 		}
 	}
 } 
 /*
-2270 IF B$="3075075"OR B$="3371071"THEN LET F$="HOW WILL YOU DO THAT"
-2280 IF B$="3371071" AND A=28 THEN F(3)=0:F$="HOW WILL YOU DO THAT"
-2290 RETURN
+
 
 
 
@@ -1112,4 +1122,5 @@ public class Game {
 5 October 2024 - Finished Attack Method
 12 October 2024 - Finished Last part of attack method and added swim method.
 				  Added shelter method & set up Help method
+18 October 2024 - Added the help method
 */
