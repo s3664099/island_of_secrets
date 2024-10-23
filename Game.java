@@ -325,6 +325,9 @@ public class Game {
 		//2500
 		} else if (verbFound == 30 || verbFound == 31) {
 			rub(codedNoun,nounFound,verbFound,actions);
+		//2300
+		} else if (verbFound == 32 || verbFound == 33) {
+			examine(codedNoun);
 		}
 		
 		return "";
@@ -879,8 +882,17 @@ public class Game {
 			this.message = "THE STONE UTTERS STONY WORDS";
 		}
 	}
+	
+	private void examine(String codedNoun) {
+		this.message = "EXAMINE THE BOOK FOR CLUES";
+		if (codedNoun.substring(0,2).equals("600")) {
+			this.message = "REMEMBER ALADIN IT WORKED FOR HIM";
+		}
+	}
 } 
 /*
+
+
 
 
 
@@ -1005,7 +1017,7 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2500,2500,2300,2300,2330,2350,2400,2400,2470,2540:RETURN
+620 ON A-29 GOSUB 2300,2300,2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
 
@@ -1044,9 +1056,7 @@ public class Game {
 
 
 
-2300 LET F$="EXAMINE THE BOOK FOR CLUES"
-2310 IF LEFT$(B$,3)="600"THEN LET F$=L$
-2320 RETURN
+
 2330 IF B$="40041" THEN LET F(4)=-1:LET F$="FILLED"
 2340 RETURN
 2350 LET F$=X$:IF X$=H$ AND R=47 AND F(8)=0THEN LET F(44)=1:LET F$=J$
@@ -1142,5 +1152,5 @@ public class Game {
 12 October 2024 - Finished Last part of attack method and added swim method.
 				  Added shelter method & set up Help method
 18 October 2024 - Added the help method
-23 October 2024 - Added rub method
+23 October 2024 - Added rub method, examine
 */
