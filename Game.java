@@ -328,6 +328,9 @@ public class Game {
 		//2300
 		} else if (verbFound == 32 || verbFound == 33) {
 			examine(codedNoun);
+		//2330
+		} else if (verbFound == 34) {
+			fill(codedNoun);
 		}
 		
 		return "";
@@ -889,8 +892,16 @@ public class Game {
 			this.message = "REMEMBER ALADIN IT WORKED FOR HIM";
 		}
 	}
+	
+	private void fill(String codedNoun) {
+		if (codedNoun.equals("40041")) {
+			this.itemVisibility.updateIntData(4,-1);
+			this.message = "FILLED";
+		}
+	}
 } 
 /*
+
 
 
 
@@ -1017,7 +1028,7 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2300,2300,2330,2350,2400,2400,2470,2540:RETURN
+620 ON A-29 GOSUB 2330,2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
 
@@ -1057,8 +1068,7 @@ public class Game {
 
 
 
-2330 IF B$="40041" THEN LET F(4)=-1:LET F$="FILLED"
-2340 RETURN
+
 2350 LET F$=X$:IF X$=H$ AND R=47 AND F(8)=0THEN LET F(44)=1:LET F$=J$
 2360 IF X$<>P$ OR R<>L(42) OR L(3)<81 OR L(12)<18 THEN RETURN
 2370 LET F$="HE EATS THE FLOWERS- AND CHANGES":LET F$="YOU DON'T HAVE "+X$:RETURN
@@ -1152,5 +1162,5 @@ public class Game {
 12 October 2024 - Finished Last part of attack method and added swim method.
 				  Added shelter method & set up Help method
 18 October 2024 - Added the help method
-23 October 2024 - Added rub method, examine
+23 October 2024 - Added rub method, examine & fill method
 */
