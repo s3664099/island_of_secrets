@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.18
-Date: 18 October 2024
+Version: 0.19
+Date: 23 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -321,6 +321,10 @@ public class Game {
 		//2270
 		} else if (verbFound == 27 || verbFound == 28) {
 			help(codedNoun,verbFound);
+			
+		//2500
+		} else if (verbFound == 30 || verbFound == 31) {
+			rub(codedNoun,nounFound,verbFound,actions);
 		}
 		
 		return "";
@@ -860,8 +864,26 @@ public class Game {
 			this.wisdom += 5;
 		}
 	}
+	
+	private void rub(String codedNoun,int nounFound,int verbFound, String[] actions) {
+		this.message = "A-DUB-DUB";
+		
+		if (codedNoun.substring(0,4).equals("2815")) {
+			if(this.itemVisibility.retrieveIntData(nounFound) == 1) {
+				this.itemVisibility.updateIntData(nounFound, 0);
+				this.message = "REFLECTIONS STIR WITHIN";
+			}
+		} else if (this.itemLocation.retrieveIntData(5)==0) {
+			this.itemVisibility.updateIntData(8,0);
+			take(nounFound,codedNoun,verbFound,actions);
+			this.message = "THE STONE UTTERS STONY WORDS";
+		}
+	}
 } 
 /*
+
+
+
 
 
 
@@ -1042,10 +1064,7 @@ public class Game {
 2470 IF R=L(25)THEN LET F$="THE BOATMAN WAVES BACK"
 2480 IF LEFT$(B$,3)="700"THEN LET F(7)=1:LET F$=N$:LET X=X+8
 2490 RETURN
-2500 LET F$="A-DUB-DUB":IF LEFT$(B$,4)<>"2815"THEN RETURN
-2510 IF F(O)=1 THEN LET F(O)=0:LET F$=K$:RETURN
-2520 IF L(5)=0 THEN LET F(8)=0:GOSUB1080:LET F$="THE STONE UTTERS"+H$
-2530 RETURN
+
 2540 GOSUB2770 :PRINT" INFO - ITEMS CARRIED":GOSUB2780
 2550 PRINT G$:TAB(0);" FOOD=";F;TAB(23);"DRINK=";G:PRINT G$;:LET F$="OK"
 2560 FOR I=1 TO C4
@@ -1123,4 +1142,5 @@ public class Game {
 12 October 2024 - Finished Last part of attack method and added swim method.
 				  Added shelter method & set up Help method
 18 October 2024 - Added the help method
+23 October 2024 - Added rub method
 */
