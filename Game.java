@@ -335,6 +335,9 @@ public class Game {
 		//2350
 		} else if (verbFound == 35) {
 			say(actions[1]);
+		//2400
+		} else if (verbFound == 36 || verbFound == 37) {
+			rest(verbFound);
 		}
 		
 		return "";
@@ -917,11 +920,38 @@ public class Game {
 			this.message = "HE EATS THE FLOWERS- AND CHANGES";
 			this.itemVisibility.updateIntData(42,1);
 			this.itemVisibility.updateIntData(43,0);
+		}	
+	}
+	
+	public void rest(int verbFound) {
+		
+		//Clear Screen
+		
+		for(int i=0;i<Math.abs(this.itemVisibility.retrieveIntData(36))+3;i++) {
+			this.timeRemaining--;
+			if (this.strength<100 || this.itemVisibility.retrieveIntData(22)==-this.room) {
+				this.strength ++;
+			}
+			System.out.println("TIME PASSES");
+			//Pause
 		}
-				
+		if (this.strength>100 || this.itemVisibility.retrieveIntData(36)<1) {
+			this.wisdom+=2;
+			this.itemVisibility.updateIntData(36,1);
+		}
+		
+		if (verbFound == 37 || verbFound == 36) {
+			this.message = "OK";
+		}
 	}
 } 
 /*
+
+
+
+
+
+
 
 
 
@@ -1051,9 +1081,9 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2350,2400,2400,2470,2540:RETURN
+620 ON A-29 GOSUB 2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
-640 RETURN
+640 RETURN - goes back to 340
 
 
 
@@ -1095,13 +1125,7 @@ public class Game {
 
 
 
-2400 GOSUB2770:FOR I=1 TO ABS(F(36))+3
-2410 LET L=L-1:IF Y<100 FOR -R=F(22) THEN LET Y=Y+1
-2420 PRINT"TIME PASSES":GOSUB2760
-2430 NEXT I
-2440 IF L>100 OR F(36)<1 THEN LET X=X+2:LET F(36)=1
-2450 IF A=37 OR A=36 THEN LET F$="OK"
-2460 RETURN
+
 2470 IF R=L(25)THEN LET F$="THE BOATMAN WAVES BACK"
 2480 IF LEFT$(B$,3)="700"THEN LET F(7)=1:LET F$=N$:LET X=X+8
 2490 RETURN
@@ -1184,5 +1208,5 @@ public class Game {
 				  Added shelter method & set up Help method
 18 October 2024 - Added the help method
 23 October 2024 - Added rub method, examine & fill method
-24 October 2024 - Added the say method
+24 October 2024 - Added the say & rest method
 */
