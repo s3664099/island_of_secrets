@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.19
-Date: 23 October 2024
+Version: 0.20
+Date: 24 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -246,7 +246,8 @@ public class Game {
 		String response = "";
 		
 		if (noWords.length>1) {
-			actions[1] = noWords[1];
+			actions[1] = action.substring(actions[0].length()+1);
+			System.out.println(actions[1]);
 		} else {
 			actions[1] = "???";
 		}
@@ -331,6 +332,9 @@ public class Game {
 		//2330
 		} else if (verbFound == 34) {
 			fill(codedNoun);
+		//2350
+		} else if (verbFound == 35) {
+			say(actions[1]);
 		}
 		
 		return "";
@@ -899,8 +903,27 @@ public class Game {
 			this.message = "FILLED";
 		}
 	}
+	
+	private void say(String noun) {
+		this.message = noun;
+		
+		if (noun.equals("STONEY WORDS") && this.room == 47 && this.itemVisibility.retrieveIntData(8) == 0) {
+			this.itemVisibility.updateIntData(44,1);
+			this.message = "THE STONES ARE FIXED";
+		} 
+		
+		if (noun.equals("REMEMBER OLD TIMES") && this.itemLocation.retrieveIntData(3)>80 &&
+			this.room == this.itemLocation.retrieveIntData(42) && this.itemLocation.retrieveIntData(12)>17) {
+			this.message = "HE EATS THE FLOWERS- AND CHANGES";
+			this.itemVisibility.updateIntData(42,1);
+			this.itemVisibility.updateIntData(43,0);
+		}
+				
+	}
 } 
 /*
+
+
 
 
 
@@ -1028,7 +1051,7 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2330,2350,2400,2400,2470,2540:RETURN
+620 ON A-29 GOSUB 2350,2400,2400,2470,2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN
 
@@ -1069,9 +1092,7 @@ public class Game {
 
 
 
-2350 LET F$=X$:IF X$=H$ AND R=47 AND F(8)=0THEN LET F(44)=1:LET F$=J$
-2360 IF X$<>P$ OR R<>L(42) OR L(3)<81 OR L(12)<18 THEN RETURN
-2370 LET F$="HE EATS THE FLOWERS- AND CHANGES":LET F$="YOU DON'T HAVE "+X$:RETURN
+
 
 
 2400 GOSUB2770:FOR I=1 TO ABS(F(36))+3
@@ -1163,4 +1184,5 @@ public class Game {
 				  Added shelter method & set up Help method
 18 October 2024 - Added the help method
 23 October 2024 - Added rub method, examine & fill method
+24 October 2024 - Added the say method
 */
