@@ -338,6 +338,9 @@ public class Game {
 		//2400
 		} else if (verbFound == 36 || verbFound == 37) {
 			rest(verbFound);
+		//2470
+		} else if (verbFound == 38) {
+			wave(codedNoun);
 		}
 		
 		return "";
@@ -923,7 +926,7 @@ public class Game {
 		}	
 	}
 	
-	public void rest(int verbFound) {
+	private void rest(int verbFound) {
 		
 		//Clear Screen
 		
@@ -944,8 +947,21 @@ public class Game {
 			this.message = "OK";
 		}
 	}
+	
+	private void wave(String codedNoun) {
+		if (this.room == this.itemLocation.retrieveIntData(25)) {
+			this.message = "THE BOATMAN WAVES BACK";
+		}
+		
+		if (codedNoun.substring(0,3).equals("700")) {
+			this.itemVisibility.updateIntData(7,1);
+			this.message = "THE TORCH BRIGHTENS";
+			this.wisdom += 8;
+		}
+	}
 } 
 /*
+
 
 
 
@@ -1126,9 +1142,7 @@ public class Game {
 
 
 
-2470 IF R=L(25)THEN LET F$="THE BOATMAN WAVES BACK"
-2480 IF LEFT$(B$,3)="700"THEN LET F(7)=1:LET F$=N$:LET X=X+8
-2490 RETURN
+
 
 2540 GOSUB2770 :PRINT" INFO - ITEMS CARRIED":GOSUB2780
 2550 PRINT G$:TAB(0);" FOOD=";F;TAB(23);"DRINK=";G:PRINT G$;:LET F$="OK"
