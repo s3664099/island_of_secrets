@@ -59,6 +59,10 @@ public class Data {
 		System.out.println(this.data.length);
 	}
 	
+	public int getDataLength() {
+		return this.data.length;
+	}
+	
 	public void displayData() {
 		
 		for (int x=0;x<this.data.length;x++) {

@@ -341,6 +341,9 @@ public class Game {
 		//2470
 		} else if (verbFound == 38) {
 			wave(codedNoun);
+		//2450
+		} else if (verbFound == 39) {
+			info();
 		}
 		
 		return "";
@@ -959,8 +962,34 @@ public class Game {
 			this.wisdom += 8;
 		}
 	}
+	
+	private void info() {
+		System.out.println("INFO - ITEMS CARRIED");
+		System.out.println("----------------------------------------");
+		System.out.printf("FOOD=%d                        DRINK=%d%n",this.food,this.drink);
+		System.out.println("----------------------------------------");
+
+		int noItems = 0;
+		for (int x=0;x<this.carriableItems;x++) {
+			if (this.itemLocation.getIntData(x+1)==0) {
+				System.out.println(this.objects.getStringData(x+1));
+				noItems++;
+			}
+		}
+		
+		if (noItems>0) {
+			System.out.println("----------------------------------------");
+		}
+		
+		this.message = "OK";
+	}
 } 
 /*
+
+
+
+
+
 
 
 
@@ -1097,7 +1126,7 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2470,2540:RETURN
+620 ON A-29 GOSUB 2540:RETURN
 630 ON A-39 GOSUB 2600,2600,2720,640
 640 RETURN - goes back to 340
 
@@ -1144,12 +1173,7 @@ public class Game {
 
 
 
-2540 GOSUB2770 :PRINT" INFO - ITEMS CARRIED":GOSUB2780
-2550 PRINT G$:TAB(0);" FOOD=";F;TAB(23);"DRINK=";G:PRINT G$;:LET F$="OK"
-2560 FOR I=1 TO C4
-2570 READ Y$:IF L(I)=0 THEN PRINT Y$
-2580 NEXT I
-2590 PRINT G$;:GOSUB2730:RETURN
+
 2600 LET C$="LOAD":IF A=41 THEN LET C$="SAVE"
 2610 PRINT"PREPARE TO ";C$:GOSUB2730
 2620 IF A=40 THEN OPEN 1,1,0,"ISDATA"
@@ -1223,5 +1247,6 @@ public class Game {
 18 October 2024 - Added the help method
 23 October 2024 - Added rub method, examine & fill method
 24 October 2024 - Added the say & rest method
-26 October 2024 - Added wave method and refactored data name and methods
+26 October 2024 - Added wave method and refactored data name and methods. Added info method
+				  
 */
