@@ -2,7 +2,7 @@
 Title: Island of Secrets Data Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.0
+Version: 0.1
 Date: 7 September 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -34,12 +34,12 @@ public class Data {
 		}
 	}
 	
-	public String retrieveData(int position) {
+	public String getStringData(int position) {
 		
 		return this.data[position-1];
 	}
 	
-	public int retrieveIntData(int position) {
+	public int getIntData(int position) {
 		return this.intData[position-1];
 	}
 	
@@ -68,5 +68,6 @@ public class Data {
 }
 /*
 7 September 2024 - Created File
-8 September 2024 - Added Constructors for other data styles 
+8 September 2024 - Added Constructors for other data styles
+26 October 2024 - Updated the names of the method
 */

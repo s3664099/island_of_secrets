@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.20
-Date: 24 October 2024
+Version: 0.21
+Date: 26 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,7 +18,7 @@ public class Game {
 	private Data objects;
 	private Data prepositions;
 	private Data itemLocation;
-	private Data itemVisibility;
+	private Data itemFlag;
 	private Data verbs;
 	private Data nouns;
 	private int room = 23;
@@ -46,7 +46,7 @@ public class Game {
 		this.objects = objects;
 		this.prepositions = prepositions;
 		this.itemLocation = code_L;
-		this.itemVisibility = code_F;
+		this.itemFlag = code_F;
 		this.verbs = verbs;
 		this.nouns = nouns;
 	}
@@ -76,7 +76,7 @@ public class Game {
 			newRoom ++;
 		}
 		
-		String roomDescription = rooms.retrieveData(newRoom);
+		String roomDescription = rooms.getStringData(newRoom);
 		roomDetails[0] = roomDescription.substring(0,1);		
 		roomDetails[1] = roomDescription.substring(1,roomDescription.length()-4);
 		roomDetails[2] = roomDescription.substring(roomDescription.length()-4,roomDescription.length());
@@ -99,13 +99,13 @@ public class Game {
 		
 		for (int x=1;x<this.noItems+1;x++) {
 			
-			if (this.itemLocation.retrieveIntData(x) == roomNumber &&
-					this.itemVisibility.retrieveIntData(x)<1) {
+			if (this.itemLocation.getIntData(x) == roomNumber &&
+					this.itemFlag.getIntData(x)<1) {
 				
 				if (numItems>0) {
 					itemDetails += ", ";
 				}
-				itemDetails += items.retrieveData(x);
+				itemDetails += items.getStringData(x);
 				numItems ++;
 			}		
 		}
@@ -133,7 +133,7 @@ public class Game {
 		//Gets details of location and any items 
 		String[] roomDetails = getRoom(this.locations,roomNumber);
 		String roomDescription = String.format("YOU ARE %s %s", 
-				prepositions.retrieveData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
+				prepositions.getStringData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
 		String itemDetails = getItems(this.objects,roomNumber);
 		
 		System.out.printf("%-10sISLAND OF SECRETS%-20sTIME REMAINING: %d%n"," "," ",timeRemaining);
@@ -205,7 +205,7 @@ public class Game {
 				
 		while (wordNo<noWords+1) {
 			
-			if (action.startsWith(wordBank.retrieveData(wordNo))) {
+			if (action.startsWith(wordBank.getStringData(wordNo))) {
 				wordFound = wordNo;
 				wordNo = 99;
 			}
@@ -223,8 +223,8 @@ public class Game {
 	//Codes the noun, as occurs in the game
 	private String codeNoun(int nounFound) {
 				
-		String codedNoun = String.format("%d%d%d%d", nounFound,this.itemLocation.retrieveIntData(nounFound),
-				this.itemVisibility.retrieveIntData(nounFound),this.room);
+		String codedNoun = String.format("%d%d%d%d", nounFound,this.itemLocation.getIntData(nounFound),
+				this.itemFlag.getIntData(nounFound),this.room);
 		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
 		
 		if (codedNoun.length()>1) {
@@ -409,24 +409,24 @@ public class Game {
 			direction = 3;
 		}
 				
-		if (codedNoun.equals("490051") && this.itemVisibility.retrieveIntData(29) == 0) {
+		if (codedNoun.equals("490051") && this.itemFlag.getIntData(29) == 0) {
 			poisonWater();
 		} else {
-			if(this.room == this.itemLocation.retrieveIntData(39) && 
+			if(this.room == this.itemLocation.getIntData(39) && 
 				(this.strength+this.wisdom<180 || this.room == 10)) {
 				this.message = "YOU CAN'T LEAVE!";
-			} else if (this.room == this.itemLocation.retrieveIntData(32) &&
-					this.itemVisibility.retrieveIntData(32)<1 && direction ==3) {
+			} else if (this.room == this.itemLocation.getIntData(32) &&
+					this.itemFlag.getIntData(32)<1 && direction ==3) {
 				this.message = "HE WILL NOT LET YOU PASS";
-			} else if (this.room == 47 && this.itemVisibility.retrieveIntData(44) == 0) {
+			} else if (this.room == 47 && this.itemFlag.getIntData(44) == 0) {
 				this.message = "THE ROCKS MOVE TO PREVENT YOU";
-			} else if (this.room == 28 && this.itemVisibility.retrieveIntData(7) != 1) {
+			} else if (this.room == 28 && this.itemFlag.getIntData(7) != 1) {
 				this.message = "THE ARMS HOLD YOU FAST";
-			} else if (this.room == 45 && this.itemVisibility.retrieveIntData(40) == 0 &&
+			} else if (this.room == 45 && this.itemFlag.getIntData(40) == 0 &&
 					direction == 4) {
 				this.message = "HISSSS!";
-			} else if (this.room == 42 && this.itemVisibility.retrieveIntData(16) + 
-					this.itemLocation.retrieveIntData(16) != -1 && direction ==3) {
+			} else if (this.room == 42 && this.itemFlag.getIntData(16) + 
+					this.itemLocation.getIntData(16) != -1 && direction ==3) {
 				this.message = "TOO STEEP TO CLIMB";
 			} else if (this.room == 51 && direction == 3) {
 				this.message = "THE DOOR IS BARRED!";
@@ -441,13 +441,13 @@ public class Game {
 					this.message = "YOU CAN'T GO THAT WAY";
 				}
 								
-				if (this.room == 33 && this.itemLocation.retrieveIntData(16) == 0) {
+				if (this.room == 33 && this.itemLocation.getIntData(16) == 0) {
 					this.itemLocation.updateIntData(16, rand.nextInt(4));
-					this.itemVisibility.updateIntData(15,0);
+					this.itemFlag.updateIntData(15,0);
 					this.message = "THE BEAST RUNS AWAY";
 				}
 				
-				if (this.room == this.itemLocation.retrieveIntData(25) || 
+				if (this.room == this.itemLocation.getIntData(25) || 
 					nounChosen == 25) {
 					this.message = "";
 					String noun = "#YOU BOARD THE CRAFT ";
@@ -482,12 +482,12 @@ public class Game {
 		
 		boolean takeSuccessful = false;
 		
-		if (((this.itemVisibility.retrieveIntData(nounNumber)>0 && 
-			this.itemVisibility.retrieveIntData(nounNumber)<9) ||
-			this.itemLocation.retrieveIntData(nounNumber) != this.room) &&
+		if (((this.itemFlag.getIntData(nounNumber)>0 && 
+			this.itemFlag.getIntData(nounNumber)<9) ||
+			this.itemLocation.getIntData(nounNumber) != this.room) &&
 			nounNumber < this.carriableItems) {
 			
-			this.message = "WHAT "+this.objects.retrieveData(nounNumber)+"?";			
+			this.message = "WHAT "+this.objects.getStringData(nounNumber)+"?";			
 		} else if (codedNoun.equals("3450050")) {
 			this.strength = this.strength-8;
 			this.wisdom = this.wisdom-5;
@@ -503,13 +503,13 @@ public class Game {
 		} else if ((verbNumber == 15 && nounNumber !=20 && nounNumber != 1) || 
 				nounNumber > this.carriableItems) {
 			this.message = "YOU CAN'T "+actions[0]+" "+actions[1];
-		} else if ((this.itemLocation.retrieveIntData(nounNumber) == this.room) &&
-				(this.itemVisibility.retrieveIntData(nounNumber)<1 ||
-				 this.itemVisibility.retrieveIntData(nounNumber)==0) && nounNumber<
+		} else if ((this.itemLocation.getIntData(nounNumber) == this.room) &&
+				(this.itemFlag.getIntData(nounNumber)<1 ||
+				 this.itemFlag.getIntData(nounNumber)==0) && nounNumber<
 				 this.carriableItems) {
-			this.itemVisibility.updateIntData(nounNumber,0);
+			this.itemFlag.updateIntData(nounNumber,0);
 			takeSuccessful = true;
-		} else if (nounNumber == 16 && this.itemLocation.retrieveIntData(10) != 0) {
+		} else if (nounNumber == 16 && this.itemLocation.getIntData(10) != 0) {
 			this.itemLocation.updateIntData(nounNumber, this.room);
 			this.message = "IT ESCAPED";
 			verbNumber = 0;
@@ -532,12 +532,12 @@ public class Game {
 			this.wisdom += 4;
 			this.weight += 1;
 			
-			if (this.itemVisibility.retrieveIntData(nounNumber)>1) {
-				this.itemVisibility.updateIntData(nounNumber, 0);
+			if (this.itemFlag.getIntData(nounNumber)>1) {
+				this.itemFlag.updateIntData(nounNumber, 0);
 			}
 			
 			//Bird Section (Stealing egg)
-			if (codedNoun.equals("246046") || this.itemLocation.retrieveIntData(11) != 0) {
+			if (codedNoun.equals("246046") || this.itemLocation.getIntData(11) != 0) {
 				this.message = "YOU ANGER THE BIRD";
 				
 				if(rand.nextInt(3)>2) {
@@ -556,7 +556,7 @@ public class Game {
 		
 		String message = "";
 		
-		if ((nounNumber != 24 && this.itemLocation.retrieveIntData(nounNumber)>0) ||
+		if ((nounNumber != 24 && this.itemLocation.getIntData(nounNumber)>0) ||
 			nounNumber >= 52) {
 			this.message = "YOU DON'T HAVE THE "+actions[1];
 		} else {
@@ -564,14 +564,14 @@ public class Game {
 			action = action.toUpperCase();
 			int objectNumber = getWords(action, this.noNouns,this.nouns);
 			
-			if (this.room != this.itemLocation.retrieveIntData(objectNumber)) {
+			if (this.room != this.itemLocation.getIntData(objectNumber)) {
 				this.message = "THE "+action+" IS NOT HERE";
 			} else if (codedNoun.equals("10045") && objectNumber ==40) {
 				this.itemLocation.updateIntData(nounNumber, 81);
-				this.itemVisibility.updateIntData(40,1);
+				this.itemFlag.updateIntData(40,1);
 				this.message = "THE SNAKE UNCURLS";
 			} else if (codedNoun.equals("2413075") && objectNumber == 40 && this.drink>1) {
-				this.itemVisibility.updateIntData(11,0);
+				this.itemFlag.updateIntData(11,0);
 				this.message = "HE OFFERS HIS STAFF";
 				this.drink --;
 			} else {
@@ -583,8 +583,8 @@ public class Game {
 					this.itemLocation.updateIntData(nounNumber,81);
 				}
 				
-				if (codedNoun.equals("40") && this.itemVisibility.retrieveIntData(4)<0 && objectNumber == 32) {
-					this.itemVisibility.updateIntData(objectNumber,1);
+				if (codedNoun.equals("40") && this.itemFlag.getIntData(4)<0 && objectNumber == 32) {
+					this.itemFlag.updateIntData(objectNumber,1);
 					this.itemLocation.updateIntData(nounNumber,81);
 				}
 				
@@ -600,11 +600,11 @@ public class Game {
 					System.out.println(message);
 					System.out.println("AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH");
 					System.out.println("A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND");
-					this.itemVisibility.updateIntData(8,-1);		
+					this.itemFlag.updateIntData(8,-1);		
 				}
 				
-				if (this.itemLocation.retrieveIntData(nounNumber) == 81 ||
-					(nounNumber == 24 && this.itemLocation.retrieveIntData(11)>0 &&
+				if (this.itemLocation.getIntData(nounNumber) == 81 ||
+					(nounNumber == 24 && this.itemLocation.getIntData(11)>0 &&
 					 this.drink>0)) {
 					this.message = "IT IS ACCEPTED";
 				}
@@ -620,7 +620,7 @@ public class Game {
 	private void drop(int nounFound,int verbFound) {
 		
 		if (verbFound == 9) {
-			if (nounFound == 4 && this.itemLocation.retrieveIntData(nounFound) == 0) {
+			if (nounFound == 4 && this.itemLocation.getIntData(nounFound) == 0) {
 				this.itemLocation.updateIntData(nounFound, 81);
 				this.wisdom --;
 				this.message = "IT BREAKS!";
@@ -634,7 +634,7 @@ public class Game {
 	
 	private void dropObject(int nounFound) {
 		
-		if (this.itemLocation.retrieveIntData(nounFound) == 0 && nounFound < this.foodLine) {
+		if (this.itemLocation.getIntData(nounFound) == 0 && nounFound < this.foodLine) {
 			this.itemLocation.updateIntData(nounFound,this.room);
 			this.message = "DONE";
 			this.weight --;
@@ -667,7 +667,7 @@ public class Game {
 	private void drink(int nounFound,String[] action) {
 		
 		if (nounFound == 31) {
-			if (this.itemVisibility.retrieveIntData(4)+this.itemVisibility.retrieveIntData(3) != -1) {
+			if (this.itemFlag.getIntData(4)+this.itemFlag.getIntData(3) != -1) {
 				this.message = "YOU DON'T HAVE "+action[0];
 			} else {
 				System.out.println("YOU TASTE A DROP AND .. ");
@@ -701,7 +701,7 @@ public class Game {
 	private void ride(String codedNoun, int nounFound) {
 				
 		if (codedNoun.substring(0,4).equals("1600")) {
-			this.itemVisibility.updateIntData(nounFound,-1);
+			this.itemFlag.updateIntData(nounFound,-1);
 			this.message = "IT ALLOWS YOU TO RIDE";
 		};
 	}
@@ -710,14 +710,14 @@ public class Game {
 		
 		if (codedNoun.equals("2644044")) {
 			this.message = "CHEST OPEN";
-			this.itemVisibility.updateIntData(6,9);
-			this.itemVisibility.updateIntData(5,9);
-			this.itemVisibility.updateIntData(15,9);
+			this.itemFlag.updateIntData(6,9);
+			this.itemFlag.updateIntData(5,9);
+			this.itemFlag.updateIntData(15,9);
 		}
 		
 		if (codedNoun.equals("2951151")) {
 			this.message = "THE TRAPDOOR CREAKS";
-			this.itemVisibility.updateIntData(29,0);
+			this.itemFlag.updateIntData(29,0);
 			this.wisdom += 3;
 		}
 	}
@@ -725,19 +725,19 @@ public class Game {
 	private void breakObject(String codedNoun, int verbChosen , int nounChosen) {
 		
 		this.strength -= 2;
-		if (codedNoun.equals("3577077") && this.itemLocation.retrieveIntData(9) == 0) {
-			this.itemVisibility.updateIntData(23,0);
+		if (codedNoun.equals("3577077") && this.itemLocation.getIntData(9) == 0) {
+			this.itemFlag.updateIntData(23,0);
 			this.itemLocation.updateIntData(23,this.room);
 		}
 		
-		if (this.noVerbs>15 && this.noVerbs<19 && (this.itemLocation.retrieveIntData(9) == 0
-				|| this.itemLocation.retrieveIntData(15) == 0)) {
+		if (this.noVerbs>15 && this.noVerbs<19 && (this.itemLocation.getIntData(9) == 0
+				|| this.itemLocation.getIntData(15) == 0)) {
 			this.message = "OK";
 		}
 		
-		if (codedNoun.equals("1258158") || codedNoun.equals("2758158") && this.itemLocation.retrieveIntData(15) == 0) {
-			this.itemVisibility.updateIntData(12,0);
-			this.itemVisibility.updateIntData(27,0);
+		if (codedNoun.equals("1258158") || codedNoun.equals("2758158") && this.itemLocation.getIntData(15) == 0) {
+			this.itemFlag.updateIntData(12,0);
+			this.itemFlag.updateIntData(27,0);
 			this.message = "CRACK";
 		}
 		
@@ -746,7 +746,7 @@ public class Game {
 		}
 		
 		if (verbChosen == 18 && (nounChosen>29 &&  nounChosen<34) || (nounChosen>38 &&  nounChosen<44) || nounChosen == 16) {
-			if (this.itemLocation.retrieveIntData(9)==0) {
+			if (this.itemLocation.getIntData(9)==0) {
 				kill(nounChosen);
 			}
 		}
@@ -759,8 +759,8 @@ public class Game {
 		this.wisdom -= 10;
 		this.message = "THAT WOULD BE UNWISE";
 		
-		if (this.itemLocation.retrieveIntData(nounChosen) == this.room) {
-			this.itemVisibility.updateIntData(51,1);
+		if (this.itemLocation.getIntData(nounChosen) == this.room) {
+			this.itemFlag.updateIntData(51,1);
 			this.message = "THUNDER SPLITS THE SKY!";
 			this.message += " IT IS THE TRIUMPHANT VOICE OF OMEGAN";
 			
@@ -787,21 +787,21 @@ public class Game {
 			
 			this.message = "IT SHATTERS RELEASING A DAZZLING RAINBOW OF COLOURS!";
 			
-			if (this.itemLocation.retrieveIntData(2) == this.room) {
+			if (this.itemLocation.getIntData(2) == this.room) {
 				this.message += " THE EGG HATCHES INTO A BABY DACTYL "+
 						"WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY";
 				this.itemLocation.updateIntData(39,81);
 				this.itemLocation.updateIntData(2,81);
-				this.itemVisibility.updateIntData(2,-1);
+				this.itemFlag.updateIntData(2,-1);
 				this.strength += 40;
 			}
 		} else if (nounChosen-10>1 && nounChosen-10<5) {
 			
-			if (this.itemLocation.retrieveIntData(31) == this.room) {
+			if (this.itemLocation.getIntData(31) == this.room) {
 				this.message = "THE COAL BURNS WITH A WARM RED FLAME";
-				this.itemVisibility.updateIntData(13,-1);
+				this.itemFlag.updateIntData(13,-1);
 				
-				if (this.room == 10 && this.itemLocation.retrieveIntData(39) == this.room) {
+				if (this.room == 10 && this.itemLocation.getIntData(39) == this.room) {
 					this.message += " WHICH DISOLVES OMEGAN'S CLOAK";
 					this.strength += 20;
 				}
@@ -809,15 +809,15 @@ public class Game {
 		}
 		this.wisdom += 10;
 		this.itemLocation.updateIntData(nounChosen,81);
-		this.itemVisibility.updateIntData(nounChosen,-1);
+		this.itemFlag.updateIntData(nounChosen,-1);
 	}
 	
 	private void attack(String codedNoun, int nounChosen) {
 		this.strength -= 2;
 		this.wisdom -=2;
 		
-		if (this.room == this.itemLocation.retrieveIntData(nounChosen) ||
-				this.itemLocation.retrieveIntData(nounChosen) == 0) {
+		if (this.room == this.itemLocation.getIntData(nounChosen) ||
+				this.itemLocation.getIntData(nounChosen) == 0) {
 			if (nounChosen == 39) {
 				this.message = "HE LAUGHS DANGEROUSLY";
 			} else if (nounChosen == 32) {
@@ -830,7 +830,7 @@ public class Game {
 			} else if (nounChosen == 46) {
 				flyRandom();
 			} else if (codedNoun.substring(0,4).equals("1400") && 
-					this.itemLocation.retrieveIntData(39) == this.room) {
+					this.itemLocation.getIntData(39) == this.room) {
 				breakAttack(nounChosen);
 			}
 			
@@ -841,7 +841,7 @@ public class Game {
 	
 	private void swim(String verb) {
 		
-		if (this.room != 51 || this.itemVisibility.retrieveIntData(28)>0) {
+		if (this.room != 51 || this.itemFlag.getIntData(28)>0) {
 			this.message = "YOU CAN'T "+verb+" HERE";
 			this.wisdom += 1;
 		}
@@ -849,7 +849,7 @@ public class Game {
 	
 	private void shelter() {
 		
-		if (this.itemVisibility.retrieveIntData(36)<0) {
+		if (this.itemFlag.getIntData(36)<0) {
 			
 			//Clear the screen
 			
@@ -860,7 +860,7 @@ public class Game {
 			System.out.println("CHOOSE FROM 1-3");
 			
 			this.room = getIntInput();
-			this.itemVisibility.updateIntData(22,this.room*-1);
+			this.itemFlag.updateIntData(22,this.room*-1);
 			System.out.println("YOU BLINDLY RUN THROUGH THE STORM");
 			this.message = "YOU REACH SHELTER";
 			
@@ -875,7 +875,7 @@ public class Game {
 		}
 		
 		if (codedNoun.equals("3371071") && verbChosen == 28) {
-			this.itemVisibility.updateIntData(3,0);
+			this.itemFlag.updateIntData(3,0);
 			this.message = "SHE NODS SLOWLY";
 			this.wisdom += 5;
 		}
@@ -885,12 +885,12 @@ public class Game {
 		this.message = "A-DUB-DUB";
 		
 		if (codedNoun.substring(0,4).equals("2815")) {
-			if(this.itemVisibility.retrieveIntData(nounFound) == 1) {
-				this.itemVisibility.updateIntData(nounFound, 0);
+			if(this.itemFlag.getIntData(nounFound) == 1) {
+				this.itemFlag.updateIntData(nounFound, 0);
 				this.message = "REFLECTIONS STIR WITHIN";
 			}
-		} else if (this.itemLocation.retrieveIntData(5)==0) {
-			this.itemVisibility.updateIntData(8,0);
+		} else if (this.itemLocation.getIntData(5)==0) {
+			this.itemFlag.updateIntData(8,0);
 			take(nounFound,codedNoun,verbFound,actions);
 			this.message = "THE STONE UTTERS STONY WORDS";
 		}
@@ -905,7 +905,7 @@ public class Game {
 	
 	private void fill(String codedNoun) {
 		if (codedNoun.equals("40041")) {
-			this.itemVisibility.updateIntData(4,-1);
+			this.itemFlag.updateIntData(4,-1);
 			this.message = "FILLED";
 		}
 	}
@@ -913,16 +913,16 @@ public class Game {
 	private void say(String noun) {
 		this.message = noun;
 		
-		if (noun.equals("STONEY WORDS") && this.room == 47 && this.itemVisibility.retrieveIntData(8) == 0) {
-			this.itemVisibility.updateIntData(44,1);
+		if (noun.equals("STONEY WORDS") && this.room == 47 && this.itemFlag.getIntData(8) == 0) {
+			this.itemFlag.updateIntData(44,1);
 			this.message = "THE STONES ARE FIXED";
 		} 
 		
-		if (noun.equals("REMEMBER OLD TIMES") && this.itemLocation.retrieveIntData(3)>80 &&
-			this.room == this.itemLocation.retrieveIntData(42) && this.itemLocation.retrieveIntData(12)>17) {
+		if (noun.equals("REMEMBER OLD TIMES") && this.itemLocation.getIntData(3)>80 &&
+			this.room == this.itemLocation.getIntData(42) && this.itemLocation.getIntData(12)>17) {
 			this.message = "HE EATS THE FLOWERS- AND CHANGES";
-			this.itemVisibility.updateIntData(42,1);
-			this.itemVisibility.updateIntData(43,0);
+			this.itemFlag.updateIntData(42,1);
+			this.itemFlag.updateIntData(43,0);
 		}	
 	}
 	
@@ -930,17 +930,17 @@ public class Game {
 		
 		//Clear Screen
 		
-		for(int i=0;i<Math.abs(this.itemVisibility.retrieveIntData(36))+3;i++) {
+		for(int i=0;i<Math.abs(this.itemFlag.getIntData(36))+3;i++) {
 			this.timeRemaining--;
-			if (this.strength<100 || this.itemVisibility.retrieveIntData(22)==-this.room) {
+			if (this.strength<100 || this.itemFlag.getIntData(22)==-this.room) {
 				this.strength ++;
 			}
 			System.out.println("TIME PASSES");
 			//Pause
 		}
-		if (this.strength>100 || this.itemVisibility.retrieveIntData(36)<1) {
+		if (this.strength>100 || this.itemFlag.getIntData(36)<1) {
 			this.wisdom+=2;
-			this.itemVisibility.updateIntData(36,1);
+			this.itemFlag.updateIntData(36,1);
 		}
 		
 		if (verbFound == 37 || verbFound == 36) {
@@ -949,12 +949,12 @@ public class Game {
 	}
 	
 	private void wave(String codedNoun) {
-		if (this.room == this.itemLocation.retrieveIntData(25)) {
+		if (this.room == this.itemLocation.getIntData(25)) {
 			this.message = "THE BOATMAN WAVES BACK";
 		}
 		
 		if (codedNoun.substring(0,3).equals("700")) {
-			this.itemVisibility.updateIntData(7,1);
+			this.itemFlag.updateIntData(7,1);
 			this.message = "THE TORCH BRIGHTENS";
 			this.wisdom += 8;
 		}
@@ -1223,4 +1223,5 @@ public class Game {
 18 October 2024 - Added the help method
 23 October 2024 - Added rub method, examine & fill method
 24 October 2024 - Added the say & rest method
+26 October 2024 - Added wave method and refactored data name and methods
 */
