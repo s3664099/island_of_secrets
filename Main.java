@@ -28,6 +28,16 @@ public class Main {
 				+ "ANLOAMELBISMUSBOTWINSAPWATBOACHECOLSTOTRAVILLIQSWASAGBOORO"
 				+ "OASAWRACLOOMESNALOGSCAMEDNORSOUEASWESUP?DOWIN?OUT???",3,false);
 		
+		System.out.println("Locations\n------------------------");
+		for (int x=0;x<locations.getDataLength();x++) {
+			System.out.printf("%d) %s %n",x+1, locations.getStringData(x+1));
+		}
+
+		System.out.println("\nItems\n------------------------");
+		for (int x=0;x<objects.getDataLength();x++) {
+			System.out.printf("%d) %s %n",x+1, objects.getStringData(x+1));
+		}
+		
 		Game game = new Game(locations,objects,prepositions,itemLocation,itemVisibility,verbs,nouns);
 		game.run();
 	}

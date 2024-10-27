@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.21
-Date: 26 October 2024
+Version: 0.22
+Date: 27 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -344,7 +344,100 @@ public class Game {
 		//2450
 		} else if (verbFound == 39) {
 			info();
+		//2600
+		} else if (verbFound == 40) {
+			//Load
+		//2600
+		} else if (verbFound == 41) {
+			//Save
+		} else if (verbFound == 42) {
+			this.timeRemaining =0;
+			this.message = "YOU RELINQUISH YOUR QUEST.";
+			this.itemFlag.updateIntData(this.itemFlag.getDataLength(),-1);
+			
+			//Press Return
 		}
+		
+		//At Mad Orchards
+		if (this.room == 61) {
+			this.wisdom += rand.nextInt(2)+1;
+		}
+		
+		//At Thicket of Biting Bushes
+		if (this.room == 14 && rand.nextInt(3)==1) {
+			this.strength --;
+			this.message = "YOU ARE BITTEN";
+		}
+		
+		//Living Storm Movement
+		if (this.itemFlag.getIntData(36)<1 && this.room != -this.itemFlag.getIntData(22)) {
+			int newValue = this.itemFlag.getIntData(36);
+			this.itemFlag.updateIntData(36, newValue++);
+			this.itemLocation.updateIntData(36,this.room);
+			this.strength --;
+		}
+		
+		//Wild Canyon Beast Movement
+		if (this.room != this.itemLocation.getIntData(16) && this.itemLocation.getIntData(16)>0) {
+			this.itemLocation.updateIntData(16,rand.nextInt(4)+1);
+		}
+		
+		//Omegan Movement
+		if (this.room != this.itemLocation.getIntData(39)) {
+			int part1 = 10 * rand.nextInt(5)+2;
+			int part2 = 7 *rand.nextInt(3)+1;
+			int newLocation = Math.min(part1+part2, 80);			
+		}
+		
+		//Omegan Present
+		if (this.room == this.itemLocation.getIntData(39) &&
+			this.room != this.itemLocation.getIntData(43) &&
+			this.itemFlag.getIntData(13)>-1) {
+			this.strength -=2;
+			this.wisdom -=2;
+		}
+		
+		//Swampman's Movement
+		if (this.room<78) {
+			this.itemLocation.updateIntData(32,76+rand.nextInt(2));
+		}
+		
+		//Boatman location update
+		if (this.room == 33 || this.room==57 || this.room==73 || rand.nextInt(2)==1) {
+			this.itemLocation.updateIntData(25,this.room);
+		}
+		
+		//Swampman Present?
+		if (this.room == this.itemLocation.getIntData(32) && rand.nextInt(2)==1 &&
+			this.itemFlag.getIntData(32) == 0) {
+			//GOSUB 1310
+		}
+		/*
+		 
+
+
+
+
+
+
+
+
+440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
+450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
+460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
+470 IF F(43)=0 THEN LET L(43)=R
+480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
+490 IF R=18 THEN LET Y=Y-1
+500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
+510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
+520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
+530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
+540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
+550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
+560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
+570 PRINT:PRINT:PRINT "GAME OVER"
+580 END
+		 */
 		
 		return "";
 	}
@@ -994,120 +1087,6 @@ public class Game {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-340 ON INT(A/10)+1 GOSUB 590,600,610,620,630,630,640
-350 IF R=61 THEN LET X=X+FNR(2)+1
-360 IF R=14 AND FNR(3)=1 THEN LET Y=Y-1:LET F$="YOU ARE BITTEN"
-370 IF F(36)<1 AND -R<>F(22) THEN LET F(36)=F(36)+1:LET L(36)=R:LET Y=Y-1
-380 IF R<>L(16) AND L(16)>0 THEN LET L(16)=1+FNR(4)
-390 IF R<>L(39) THEN LET L(39)=10*(FNR(5)+1)+7*FNR(3)
-400 IF R=L(39) AND R<>L(43) AND F(13)>-1 THEN LET Y=Y-2:LET X=X-2
-410 IF R<78 THEN LET L(32)=76+FNR(2)
-420 IF R=33 OR R=57 OR R=73 AND FNR(2)=1 THEN LET L(25)=R
-430 IF R=L(32) AND FNR(2)=1 AND F(32)=0 THEN GOSUB 1310
 440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
 450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
 460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
@@ -1126,9 +1105,122 @@ public class Game {
 
 
 
-620 ON A-29 GOSUB 2540:RETURN
-630 ON A-39 GOSUB 2600,2600,2720,640
-640 RETURN - goes back to 340
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1174,20 +1266,8 @@ public class Game {
 
 
 
-2600 LET C$="LOAD":IF A=41 THEN LET C$="SAVE"
-2610 PRINT"PREPARE TO ";C$:GOSUB2730
-2620 IF A=40 THEN OPEN 1,1,0,"ISDATA"
-2630 IF A=41 THEN OPEN 1,1,1,"ISDATA"
-2640 IF A=41 THEN F(50)=R:F(49)=Y:F(48)=X:F(47)=F:F(46)=B:F(45)=L
-2650 FOR I=1 TO W
-2660 IF A=40 THEN INPUT#1,L(I):INPUT#1,F(I)
-2670 IF A=41 THEN PRINT#1,L(I):PRINT#1,F(I)
-2680 NEXT I
-2690 CLOSE 1
-2700 IF A=40 THEN R=F(50):Y=F(49):X=F(48):F=F(47):G=F(46):L=F(45)
-2710 LET F$="OK":RETURN
-2720 LET F(W)=-1:LET F$="YOU RELINQUISH YOUR QUEST.":LET L=1:RETURN
-2730 INPUT "PRESS RETURN";A$:RETURN
+
+
 
 2750 GOSUB720:GOSUB2760:RETURN
 
@@ -1248,5 +1328,5 @@ public class Game {
 23 October 2024 - Added rub method, examine & fill method
 24 October 2024 - Added the say & rest method
 26 October 2024 - Added wave method and refactored data name and methods. Added info method
-				  
+27 October 2024 - Started writing the updates for every move				  
 */
