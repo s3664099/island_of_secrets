@@ -479,7 +479,31 @@ public class Game {
 			this.strength --;
 		}
 		
-		//Too Week to carry
+		//Too Week to carry items
+		if (this.strength<50) {
+			int object = rand.nextInt(9);
+			
+			String addMessage = "";
+			
+			if (object == 4 && this.itemLocation.getIntData(object)==0) {
+				this.itemLocation.updateIntData(object,81);
+				addMessage = " AND IT BREAKS!";
+			}
+			
+			if (this.itemLocation.getIntData(object)==0 && object< this.foodLine) {
+				this.itemLocation.updateIntData(object, this.room);
+				this.weight --;
+				this.message = "YOU DROP SOMETHING"+addMessage;
+			}
+		}
+		
+		//Updates the living storms
+		if (this.timeRemaining<900 && this.room==23 && this.itemFlag.getIntData(36)>0 &&
+			rand.nextInt(3)==3) {	
+			this.itemFlag.updateIntData(36,rand.nextInt(4)+6*-1);
+			this.message = "A STORM BREAKS OVERHEAD!";
+		}
+		
 		
 		/*
 
@@ -488,8 +512,8 @@ public class Game {
 
 
 
-500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
-510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
+
+
 520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
 530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
 540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
