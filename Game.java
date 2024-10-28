@@ -440,27 +440,54 @@ public class Game {
 			this.itemFlag.updateIntData(41,flagValue);
 			
 			if (flagValue<-4) {
-				//GOSUB 1230
-				/*
-				 * 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
-1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
-1250 IF R<34 THEN LET A$=A$+"THROW YOU IN THE WATER":LET R=32
-1260 IF R>33 THEN LET A$=A$+"TIE YOU UP IN A STOREROOM":LET R=51
-1270 GOSUB2750:GOSUB2760
-1280 FOR I=3 TO 4
-1290 IF L(I)=0 THEN LET L(I)=42
-1300 NEXT I:RETURN
-				 */
+				
+				//Clear Screen
+				this.message = "";
+				System.out.println("THE LOGMEN DECIDE TO HAVE A LITTLE FUN AND ");
+				this.itemFlag.updateIntData(41,0);
+				this.strength -= 4;
+				this.wisdom -=4;
+				
+				if (this.room<34) {
+					System.out.println("THROW YOU IN THE WATER");
+					this.room = 32;
+				} else {
+					System.out.println("TIE YOU UP IN A STOREROOM");
+					this.room = 51;
+				}
+				
+				//Display message & Pause
+				for (int i=3;i<5;i++) {
+					if (this.itemLocation.getIntData(i) == 0) {
+						this.itemLocation.updateIntData(i,42);
+					}
+				}
 			}
 		}
+		
+		//Move Median to player's location
+		if (this.itemFlag.getIntData(43)==0) {
+			this.itemLocation.updateIntData(43,this.room);
+		}
+		
+		if ((this.itemLocation.getIntData(43)<18) && this.room !=9 && this.room !=10 &&
+			 this.itemFlag.getIntData(this.itemLocation.getDataLength()-2)<1) {
+			this.message = "MEDIAN CAN DISABLE THE EQUIPMENT";
+		}
+		
+		if (this.room == 18) {
+			this.strength --;
+		}
+		
+		//Too Week to carry
 		
 		/*
 
 
 
-470 IF F(43)=0 THEN LET L(43)=R
-480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
-490 IF R=18 THEN LET Y=Y-1
+
+
+
 500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
 510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
 520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
@@ -1267,14 +1294,14 @@ public class Game {
 
 
 
-1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
-1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
-1250 IF R<34 THEN LET A$=A$+"THROW YOU IN THE WATER":LET R=32
-1260 IF R>33 THEN LET A$=A$+"TIE YOU UP IN A STOREROOM":LET R=51
-1270 GOSUB2750:GOSUB2760
-1280 FOR I=3 TO 4
-1290 IF L(I)=0 THEN LET L(I)=42
-1300 NEXT I:RETURN
+
+
+
+
+
+
+
+
 
 1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
 
