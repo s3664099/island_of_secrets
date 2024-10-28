@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.22
-Date: 27 October 2024
+Version: 0.23
+Date: 28 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -410,18 +410,19 @@ public class Game {
 		//Swampman Present?
 		if (this.room == this.itemLocation.getIntData(32) && rand.nextInt(2)==1 &&
 			this.itemFlag.getIntData(32) == 0) {
-			//GOSUB 1310
+			
+			System.out.println("THE SWAMPMAN TELLS HIS TALE");
+			//Clears Screens - Displays above - pauses
+			this.itemFlag.updateIntData(31,-1);
+			this.message = "MEDIAN CAN DISABLE THE EQUIPMENT";
+			
+			if (this.itemLocation.getIntData(8) == 0) {
+				this.message += " AND ASKS FOR THE PEBBLE YOU CARRY";
+			}
 		}
+		
+		
 		/*
-		 
-
-
-
-
-
-
-
-
 440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
 450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
 460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
@@ -436,7 +437,16 @@ public class Game {
 550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
 560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
 570 PRINT:PRINT:PRINT "GAME OVER"
-580 END
+580 END		 
+
+
+
+
+
+
+
+
+
 		 */
 		
 		return "";
@@ -1233,11 +1243,7 @@ public class Game {
 1280 FOR I=3 TO 4
 1290 IF L(I)=0 THEN LET L(I)=42
 1300 NEXT I:RETURN
-1310 LET A$="*THE SWAMPMAN TELLS HIS TALE"
-1320 GOSUB2740:LET F(32)=-1:RETURN
-1330 LET F$="MEDIAN CAN DISABLE THE EQUIPMENT"
-1340 IF L(8)=0 THEN LET F$=F$+" AND ASKS YOU FOR THE PEBBLE YOU CARRY"
-1350 RETURN
+
 1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
 
 
@@ -1328,5 +1334,6 @@ public class Game {
 23 October 2024 - Added rub method, examine & fill method
 24 October 2024 - Added the say & rest method
 26 October 2024 - Added wave method and refactored data name and methods. Added info method
-27 October 2024 - Started writing the updates for every move				  
+27 October 2024 - Started writing the updates for every move
+28 October 2024 - Added Swampman Section			  
 */
