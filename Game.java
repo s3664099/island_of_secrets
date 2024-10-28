@@ -421,11 +421,43 @@ public class Game {
 			}
 		}
 		
+		//Next to the well
+		if (this.room == 19 && this.strength<70 && this.itemFlag.getIntData(43)==0 &&
+			rand.nextInt(4)==1)  {
+			this.message = "PUSHED INTO THE PIT";
+			this.itemFlag.updateIntData(this.noNouns,1);
+		}
+		
+		//Not in same location as logmen - Moves them
+		if (this.room != this.itemLocation.getIntData(41)) {
+			this.itemLocation.updateIntData(41,21+(rand.nextInt(3)*10)+rand.nextInt(2));
+		
+		//Same room as the logmen
+		} else {
+			
+			int flagValue = this.itemFlag.getIntData(41);
+			flagValue -=1;
+			this.itemFlag.updateIntData(41,flagValue);
+			
+			if (flagValue<-4) {
+				//GOSUB 1230
+				/*
+				 * 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
+1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
+1250 IF R<34 THEN LET A$=A$+"THROW YOU IN THE WATER":LET R=32
+1260 IF R>33 THEN LET A$=A$+"TIE YOU UP IN A STOREROOM":LET R=51
+1270 GOSUB2750:GOSUB2760
+1280 FOR I=3 TO 4
+1290 IF L(I)=0 THEN LET L(I)=42
+1300 NEXT I:RETURN
+				 */
+			}
+		}
 		
 		/*
-440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
-450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
-460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
+
+
+
 470 IF F(43)=0 THEN LET L(43)=R
 480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
 490 IF R=18 THEN LET Y=Y-1
@@ -1097,9 +1129,9 @@ public class Game {
 
 
 
-440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
-450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
-460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
+
+
+
 470 IF F(43)=0 THEN LET L(43)=R
 480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
 490 IF R=18 THEN LET Y=Y-1
