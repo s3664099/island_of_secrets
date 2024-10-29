@@ -171,7 +171,7 @@ public class Game {
 
 	    action = myObj.nextLine();
 	    
-	    System.out.printf("%n%n", null);
+	    //System.out.printf("%n%n", null);
 		
 		return action;
 	}

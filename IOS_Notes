@@ -1,5 +1,5 @@
-
-
+D 	- 
+Z	- Length of the Screen (Not Needed)
 
 
 
@@ -73,6 +73,7 @@ H$="STONY WORDS"
 2760 - Pauses
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data
+2820 - Initialise The Game
 
 1) N?? 
 2) S?? 
