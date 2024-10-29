@@ -117,6 +117,16 @@ H$="STONY WORDS"
 41) XSA 
 42) QUI
 
+Have list of items with name, description, location, and flag
+	Items should be an object
+	
+Have list of locations contain name, description, exits, and predicate
+
+Have player object that contains room, strength, wisdom
+
+Where prints - have a popup instead
+
+this.message should always be an add, so when displays will split lines if go over certain length
 
 Room no 1:
 Shadows stretch across the tangled underbrush, where thick vines and twisted roots create a near-impenetrable barrier. The air is dense and damp, filled with the earthy scent of moss and decay. Occasional patches of faint light pierce through the dense canopy above, but visibility is limited, adding an eerie silence as if the forest itself is holding its breath. This secluded area feels untouched, as though few, if any, have dared to venture this far.

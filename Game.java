@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.23
-Date: 28 October 2024
+Version: 0.24
+Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -504,6 +504,18 @@ public class Game {
 			this.message = "A STORM BREAKS OVERHEAD!";
 		}
 		
+		//Standing Stones
+		if (this.room == 47 && this.itemFlag.getIntData(8)>0) {
+			this.message += " YOU CAN GO NO FURTHER";
+		}
+		
+		if (this.itemFlag.getIntData(8)+this.itemFlag.getIntData(11)+this.itemFlag.getIntData(13)==-3) {
+			this.itemFlag.updateIntData(this.itemFlag.getDataLength(),1);
+			System.out.println("THE WORLD LIVES WITH NEW HOPE");
+			this.message = "YOUR QUEST IS OVER";
+			//Display - Pause
+		}
+		
 		
 		/*
 
@@ -514,8 +526,9 @@ public class Game {
 
 
 
-520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
-530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
+
+
+
 540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
 550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
 560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
@@ -1183,11 +1196,7 @@ public class Game {
 
 
 
-470 IF F(43)=0 THEN LET L(43)=R
-480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
-490 IF R=18 THEN LET Y=Y-1
-500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
-510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
+
 520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
 530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
 540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
@@ -1358,12 +1367,12 @@ public class Game {
 
 
 
-2750 GOSUB720:GOSUB2760:RETURN
 
 
 
-2800 LET A$="*THE WORLD LIVES WITH NEW HOPE":GOSUB2750
-2810 LET F$="YOUR QUEST IS OVER":RETURN
+
+
+
 2820 PRINT"INITIALISING"
 
 
@@ -1418,5 +1427,6 @@ public class Game {
 24 October 2024 - Added the say & rest method
 26 October 2024 - Added wave method and refactored data name and methods. Added info method
 27 October 2024 - Started writing the updates for every move
-28 October 2024 - Added Swampman Section			  
+28 October 2024 - Added Swampman Section
+29 October 2024 - Added success game scenario			  
 */
