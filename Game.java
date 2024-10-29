@@ -61,6 +61,18 @@ public class Game {
 			this.strength -= (this.weight/this.noItems)+.1;
 			processAction(action,exits);
 		}
+		
+		int timeMod = 0;
+		if (this.timeRemaining<640) {
+			timeMod = -1;
+		}
+		
+		//Computes final score
+		int score = (int) (this.strength+this.wisdom+(Math.abs(this.timeRemaining/7*timeMod)));
+		System.out.println(this.message);
+		System.out.printf("YOUR FINAL SCORE=%d%n",score);
+		System.out.println("GAME OVER");
+			
 	}
 	
 	//Retrieves the location details and splits the code
@@ -235,7 +247,7 @@ public class Game {
 		
 	}	
 	
-	private String processAction(String action,String exits) {
+	private void processAction(String action,String exits) {
 		
 		String[] actions = {"",""};
 		action = action.toUpperCase();
@@ -349,7 +361,9 @@ public class Game {
 		} else if (verbFound == 41) {
 			//Save
 		} else if (verbFound == 42) {
-			this.timeRemaining =0;
+
+			//Quit Game
+			this.gamePlaying = false;
 			this.message = "YOU RELINQUISH YOUR QUEST.";
 			this.itemFlag.updateIntData(this.itemFlag.getDataLength(),-1);
 			
@@ -511,39 +525,14 @@ public class Game {
 			this.itemFlag.updateIntData(this.itemFlag.getDataLength(),1);
 			System.out.println("THE WORLD LIVES WITH NEW HOPE");
 			this.message = "YOUR QUEST IS OVER";
+			this.gamePlaying = false;
 			//Display - Pause
 		}
 		
-		
-		/*
-
-
-
-
-
-
-
-
-
-
-
-540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
-550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
-560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
-570 PRINT:PRINT:PRINT "GAME OVER"
-580 END		 
-
-
-
-
-
-
-
-
-
-		 */
-		
-		return "";
+		if (this.timeRemaining<1 || this.strength<1 || this.wisdom<1) {
+			this.message = "YOU HAVE FAILED, THE EVIL ONE SUCCEEDS";
+			this.gamePlaying = false;
+		}
 	}
 	
 	private void poisonWater() {
@@ -1182,229 +1171,6 @@ public class Game {
 	}
 } 
 /*
-
-
-
-
-
-
-
-
-
-
-
-
-
-520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
-530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
-540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
-550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
-560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
-570 PRINT:PRINT:PRINT "GAME OVER"
-580 END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1360 LET F(36)=-(FNR(4)+6):LET F$="A STORM BREAKS OVERHEAD!":RETURN
-
-
-
-
-1600 IF L(I)<>0 AND I<C1 THEN LET I=I+1:GOTO 1600
-1610 IF L(I)=0 THEN LET L(I)=R:LET F(I)=0:GOSUB1540:LET F$="YOU DROP SOMTHING"
-1620 RETURN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2820 PRINT"INITIALISING"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 8 September 2024 - Created File
 9 September 2024 - Added method to retrieve input and started processing command
 10 September 2024 - Added code to respond to incorrect commands
@@ -1426,5 +1192,5 @@ public class Game {
 26 October 2024 - Added wave method and refactored data name and methods. Added info method
 27 October 2024 - Started writing the updates for every move
 28 October 2024 - Added Swampman Section
-29 October 2024 - Added success game scenario			  
+29 October 2024 - Added end game functions & completed basic conversion		  
 */
