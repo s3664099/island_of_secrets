@@ -2,7 +2,7 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.24
+Version: 1.0
 Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -1192,5 +1192,6 @@ public class Game {
 26 October 2024 - Added wave method and refactored data name and methods. Added info method
 27 October 2024 - Started writing the updates for every move
 28 October 2024 - Added Swampman Section
-29 October 2024 - Added end game functions & completed basic conversion		  
+29 October 2024 - Added end game functions & completed basic conversion
+	  			- Upgraded to version 1.0
 */

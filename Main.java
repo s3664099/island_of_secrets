@@ -2,8 +2,8 @@
 Title: Island of Secrets Main
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.1
-Date: 7 September 2024
+Version: 1.0
+Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,4 +37,5 @@ public class Main {
 /*
 7 Sept 2024 - Created File
 8 Sept 2024 - Finished Initialisation
+29 October 2024 - Updated to version 1
 */
