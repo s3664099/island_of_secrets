@@ -52,9 +52,7 @@ public class Game {
 	}
 	
 	public void run() {
-		
-		//this.verbs.displayData();
-		
+				
 		while (this.gamePlaying) {
 			ClearScreen();
 			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
@@ -1414,7 +1412,7 @@ public class Game {
 14 September 2024 - Added the poison water method and continued the move method
 					completed main move section.
 17 September 2024 - Finished Movement and started on take objects
-21 September 2024 - Finished give & drop methods
+21 September 2024 - Finished give & drop methods2750 GOSUB720:GOSUB2760:RETURN
 22 September 2024 - Completed Eat & Drink methods
 23 September 2024 - Completed ride, open and started break
 30 September 2024 - Continued working on the break function
