@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
+import Data.Data;
+
 
 public class Game {
 	

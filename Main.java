@@ -7,12 +7,15 @@ Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
+import Data.Data;
+import Data.Initialise;
+
 public class Main {
 
 	public void startGame() {
 
 		//Initialises the raw data
-		RawData data = new RawData();
+		Initialise player = new Initialise();
 
 		//Begins initialising the game
 		Data locations = new Data(data.getLocations());

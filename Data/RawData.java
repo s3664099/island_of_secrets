@@ -2,10 +2,11 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 0.0
-Date: 7 September 2024
+Version: 1.1
+Date: 30 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+package Data;
 
 public class RawData {
 	
@@ -154,3 +155,7 @@ public class RawData {
 	}
 
 }
+/*	9 September 2024 - Created File
+ * 	29 October 2024 - Moved to version 1
+ * 30 October 2024 - Moved to data packages
+*/

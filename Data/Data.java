@@ -2,10 +2,11 @@
 Title: Island of Secrets Data Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 29 October 2024
+Version: 1.1
+Date: 30 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+package Data;
 
 public class Data {
 	
@@ -75,4 +76,5 @@ public class Data {
 8 September 2024 - Added Constructors for other data styles
 26 October 2024 - Updated the names of the method
 29 October 2024 - Upgraded to version 1.
+30 October 2024 - Moved into Data package
 */
