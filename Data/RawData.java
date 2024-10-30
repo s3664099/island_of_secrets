@@ -10,7 +10,7 @@ package Data;
 
 public class RawData {
 	
-	private String[] locations = {
+	private static String[] locations = {
 		"4THE FURTHEST DEPTHS OF THE FOREST1001",
 		"4THE DEPTHS OF THE MUTANT FOREST1000",
 		"7A PATH OF OUT THE OVERGROWN DEPTHS1000",
@@ -48,7 +48,7 @@ public class RawData {
 		"1A GROUP OF TALL TREES1010",
 		"7A NARROW LEDGE AT THE SUMMIT OF THE CANYON0011",
 		"2A MONSTEROUS PORTAL IN THE CASTLE WALL0011",
-		"4A CHAMBER INCHES DEEP WITH DUST",
+		"4A CHAMBER INCHES DEEP WITH DUST0001",
 		"4HERE1111",
 		"2A CARVED ARCHWAY0010",
 		"4A SMALL HUT IN THE LOG SETTLEMENT0111",
@@ -93,7 +93,7 @@ public class RawData {
 		"4A HOLLOW CHAMBER MANY METERS IN DIAMETER1110"		
 	};
 	
-	private String[] objects = {
+	private static String[] objects = {
 		"A SHINY APPLE",
 		"A FOSSILISED EGG",
 		"A LILY FLOWER",
@@ -138,24 +138,25 @@ public class RawData {
 		"THE ANCIENT SCAVENGER","MEDIAN"
 	};
 	
-	private String[] prepositions = {
+	private static String[] prepositions = {
 		"BY","FACING","AT","IN","OUTSIDE","BENEATH","ON"	
 	};
 	
-	public String[] getLocations() {
-		return this.locations;
+	public static String[] getLocations() {
+		return locations;
 	}
 	
-	public String[] getObjects() {
-		return this.objects;
+	public static String[] getObjects() {
+		return objects;
 	}
 
-	public String[] getPrepositions() {
-		return this.prepositions;
+	public static String[] getPrepositions() {
+		return prepositions;
 	}
 
 }
 /*	9 September 2024 - Created File
  * 	29 October 2024 - Moved to version 1
  * 30 October 2024 - Moved to data packages
+ * 				   - made class static
 */

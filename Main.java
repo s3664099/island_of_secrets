@@ -18,9 +18,9 @@ public class Main {
 		Initialise player = new Initialise();
 
 		//Begins initialising the game
-		Data locations = new Data(data.getLocations());
-		Data objects = new Data(data.getObjects());
-		Data prepositions = new Data(data.getPrepositions());
+		//Data locations = new Data(data.getLocations());
+		//Data objects = new Data(data.getObjects());
+		//Data prepositions = new Data(data.getPrepositions());
 		Data itemLocation = new Data("MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ",32);
 		Data itemVisibility = new Data("90101191001109109000901000111000000100000010000000000",48);
 		itemLocation.modifyIntData();
@@ -31,8 +31,8 @@ public class Main {
 				+ "ANLOAMELBISMUSBOTWINSAPWATBOACHECOLSTOTRAVILLIQSWASAGBOORO"
 				+ "OASAWRACLOOMESNALOGSCAMEDNORSOUEASWESUP?DOWIN?OUT???",3,false);
 				
-		Game game = new Game(locations,objects,prepositions,itemLocation,itemVisibility,verbs,nouns);
-		game.run();
+		//Game game = new Game(locations,objects,prepositions,itemLocation,itemVisibility,verbs,nouns);
+		//game.run();
 	}
 	
 }
