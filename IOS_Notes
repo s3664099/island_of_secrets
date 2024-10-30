@@ -1,4 +1,22 @@
-D 	- 
+B	- ??
+C4	- Number of Items (constant 43)
+D 	- ??
+E	- Weight Carrying
+F	- Food
+F()	- Array holding item flags
+	- Is the ASCII value of each of the characters in Q$
+G	- Drink
+H$	- Item Locations coded (but single)
+I$  - Array of particaples (7)
+L() - Array holding item locations
+	- Is the ASCII value of each of the characters in H$
+L	- Time Remaining
+Q$	- Item Code
+R	- Current Room
+W	- number of objects (Constant 51)
+V	- number of verbs (Constant 42)
+X	- Wisdom
+Y	- Strength
 Z	- Length of the Screen (Not Needed)
 
 
@@ -8,31 +26,22 @@ Z	- Length of the Screen (Not Needed)
 
 
 
-LET W=51	- Size of H$ & Q$
-LET R=23	- Room Player is in
-LET Z=31	- Length of screen
-LET Y=100	- Strength
-LET X=35	- Wisdom
-LET L=1000	- Time
-LET V=42	- number of verbs
-LET E=0		- weight
-LET F=2		- Food
-LET G=2		- Drink
+
+
+
+
+ 
+
+
 LET C1=16	- Above is Food (and below 21)
 LET C2=21	- Above is drink (and below 24)
 LET C3=24	- Carriable Items
-LET C4=43	- Number of Items
+
 A			- verb chosen
 O			- noun chosen
 
-L(W)		- Is the ASCII value of each of the characters in H$ - 32
-			- This shows where the items are located
-			- itemLocation
-F(W)		- Is the ASCII value of each of the characters in Q$ - 48 (which translates to the number)
-			- This indicates whether the items are visible
-			- itemVisibility
-H$			- Code_one - itemLocation
-Q$			- code_two - itemVisibility
+
+
 
 V$			- Verbs
 Z$			- Nouns
@@ -74,6 +83,9 @@ H$="STONY WORDS"
 2770 - Clears the Screen
 2780 - Moves the pointer to the end of the location data
 2820 - Initialise The Game
+2870 - Data - Rooms
+3760 - Data - Objects
+4100 - Data - Particaples
 
 1) N?? 
 2) S?? 
