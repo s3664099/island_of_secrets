@@ -221,16 +221,62 @@ public class RawData {
 		"THE ANCIENT SCAVENGER","MEDIAN"
 	};
 	
+	private static String[] objectDescription = {
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		};	
+	
 	private static String[] prepositions = {
 		"BY","FACING","AT","IN","OUTSIDE","BENEATH","ON"	
 	};
 	
-	public static String[] getLocations() {
-		return locations;
+	public static String getLocation(int number) {
+		return locations[number];
 	}
 	
-	public static String[] getObjects() {
-		return objects;
+	public static String getObjects(int number) {
+		return objects[number];
 	}
 
 	public static String[] getPrepositions() {
@@ -238,13 +284,19 @@ public class RawData {
 	}
 	
 	public static String getDescription(int number) {
-		return description[number-1];
+		return description[number];
+	}
+	
+	public static String getObjectDescription(int number) {
+		return objectDescription[number];
 	}
 
 }
-/*	9 September 2024 - Created File
- * 	29 October 2024 - Moved to version 1
+/* 9 September 2024 - Created File
+ * 29 October 2024 - Moved to version 1
  * 30 October 2024 - Moved to data packages
  * 				   - made class static
  * 31 October 2024 - Added description array and method to retrieve it
+ * 				   - Added description for items and changed way to retrieve item and locations
+ * 				   -
 */
