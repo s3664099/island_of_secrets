@@ -2,10 +2,11 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
+Version: 1.1
 Date: 30 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package Data;
 
 public class Initialise {
@@ -20,12 +21,14 @@ public class Initialise {
 		
 		for (String location:RawData.getLocations()) {
 			System.out.printf("Room Numner %d%n",roomNumber);
-			Location newLocation = new Location(location,RawData.getPrepositions());
+			Location newLocation = new Location(location,RawData.getPrepositions(),
+												RawData.getDescription(roomNumber));
 			locationList[roomNumber] = newLocation;
 			roomNumber ++;
 		}
 	}
 }
 
-/*	30 October 2024 - Created File
-*/
+/* 30 October 2024 - Created File
+ * 31 October 2024 - Added description to the locations.
+ */

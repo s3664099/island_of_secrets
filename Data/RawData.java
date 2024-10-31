@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.1
-Date: 30 October 2024
+Version: 1.2
+Date: 31 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package Data;
@@ -93,6 +93,89 @@ public class RawData {
 		"4A HOLLOW CHAMBER MANY METERS IN DIAMETER1110"		
 	};
 	
+	private static String[] description = {
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		""
+	};
+	
 	private static String[] objects = {
 		"A SHINY APPLE",
 		"A FOSSILISED EGG",
@@ -153,10 +236,15 @@ public class RawData {
 	public static String[] getPrepositions() {
 		return prepositions;
 	}
+	
+	public static String getDescription(int number) {
+		return description[number-1];
+	}
 
 }
 /*	9 September 2024 - Created File
  * 	29 October 2024 - Moved to version 1
  * 30 October 2024 - Moved to data packages
  * 				   - made class static
+ * 31 October 2024 - Added description array and method to retrieve it
 */
