@@ -1,7 +1,11 @@
 B	- ??
+C1	- Above is Food (Const 16)
+C2	- Above is drink (Const 21)
+C3	- Carriable Items Limit (Const 24)
 C4	- Number of Items (constant 42)
 D 	- ??
 E	- Weight Carrying
+F$	- Message
 F	- Food
 F()	- Array holding item flags
 	- Is the ASCII value of each of the characters in Q$
@@ -14,10 +18,13 @@ L	- Time Remaining
 Q$	- Item Code
 R	- Current Room
 W	- number of objects (Constant 51)
+V$	- Verbs
 V	- number of verbs (Constant 42)
 X	- Wisdom
 Y	- Strength
 Z	- Length of the Screen (Not Needed)
+Z$	- Nouns
+
 
 
 
@@ -33,9 +40,7 @@ Z	- Length of the Screen (Not Needed)
  
 
 
-LET C1=16	- Above is Food (and below 21)
-LET C2=21	- Above is drink (and below 24)
-LET C3=24	- Carriable Items
+
 
 A			- verb chosen
 O			- noun chosen
@@ -43,9 +48,7 @@ O			- noun chosen
 
 
 
-V$			- Verbs
-Z$			- Nouns
-F$			- Message
+
 A$			- Noun - also seems to hold messages
 X$			- Verb
 B$			- Coded Noun
@@ -86,6 +89,10 @@ H$="STONY WORDS"
 2870 - Data - Rooms
 3760 - Data - Objects
 4100 - Data - Particaples
+4110 - Reads data
+4130 - Sets constants and player data
+4390 - Generates Item locations and flags
+4430 - Defines Functions
 
 1) N?? 
 2) S?? 

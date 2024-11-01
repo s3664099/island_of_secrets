@@ -11,13 +11,15 @@ package Data;
 
 public class Initialise {
 	
-	private int noRooms = 80;
-	private int noItems = 43;
+	private int noRooms = Constants.noRooms;
+	private int noItems = Constants.noItems;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
 	
-	
 	public Initialise() {
+		
+		//Create Nouns & Verbs
+		//Create Second Class to hold player data
 		
 		locationList[0] = null;
 		itemList[0] = null;

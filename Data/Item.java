@@ -22,6 +22,10 @@ public class Item {
 		this.itemFlag = ((int) flag)-48;
 		this.itemLocation = ((int) location)-32;
 
+		if (this.itemLocation>127) {
+			this.itemLocation -= 96;
+		}
+		
 		//Saves the descriptions
 		this.item = item;
 		this.description = description;
