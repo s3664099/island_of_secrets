@@ -21,9 +21,7 @@ public class Main {
 		//Data locations = new Data(data.getLocations());
 		//Data objects = new Data(data.getObjects());
 		//Data prepositions = new Data(data.getPrepositions());
-		Data itemLocation = new Data("MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ",32);
-		Data itemVisibility = new Data("90101191001109109000901000111000000100000010000000000",48);
-		itemLocation.modifyIntData();
+		//itemLocation.modifyIntData();
 		Data verbs = new Data("N??S??E??W??GO?GETTAKGIVDROLEAEATDRIRIDOPEPICC"
 				+ "HOCHITAPBREFIGSTRATTHITKILSWISHEHELSCRCATRUBPOLREAEXAFILSA"
 				+ "YWAIRESWAVINFXLOXSAQUI",3,false);

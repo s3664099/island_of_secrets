@@ -13,20 +13,26 @@ public class Initialise {
 	
 	private int noRooms = 80;
 	private int noItems = 51;
-	private Location[] locationList = new Location[noRooms];
-	private Item[] itemList = new Item[noItems];
+	private Location[] locationList = new Location[noRooms+1];
+	private Item[] itemList = new Item[noItems+1];
 	
 	
 	public Initialise() {
 		
 		locationList[0] = null;
+		itemList[0] = null;
 				
 		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
-			System.out.printf("Room Numner %d%n",roomNumber);
+			System.out.printf("Room Number %d %s %n",roomNumber,RawData.getLocation(roomNumber));
 			Location newLocation = new Location(RawData.getLocation(roomNumber),
 												RawData.getPrepositions(),
 												RawData.getDescription(roomNumber));
-			locationList[roomNumber] = newLocation;
+			locationList[roomNumber+1] = newLocation;
+		}
+		
+		for (int itemNumber=1;itemNumber<noItems;itemNumber++) {
+			System.out.printf("Item Number %d %s %n", itemNumber,RawData.getObjects(itemNumber));
+			Item newItem == new Item(RawData.getObjects(itemNumber),)
 		}
 	}
 }

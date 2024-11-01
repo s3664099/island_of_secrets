@@ -2,8 +2,8 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.1
-Date: 31 October 2024
+Version: 1.2
+Date: 1 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -22,17 +22,12 @@ public class Location {
 		this.description = description;
 		int x=0;
 		for (int i=name.length()-4;i<name.length();i++) {
-			System.out.println(name.substring(i,i+1));
 			exits[x] = Integer.parseInt(name.substring(i,i+1));
 			x++;
 		}
 	}
-	
-	public void displayLocation() {
-		System.out.println(this.name);
-	}
-
 }
 /* 30 October 2024 - Created File
  * 31 October 2024 - Added description
+ * 1 November 2024 - Removed testing lines
 */

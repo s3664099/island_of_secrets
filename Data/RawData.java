@@ -265,7 +265,10 @@ public class RawData {
 			"",
 			"",
 			""
-		};	
+		};
+	
+	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
+	private static String itemFlag = "90101191001109109000901000111000000100000010000000000";
 	
 	private static String[] prepositions = {
 		"BY","FACING","AT","IN","OUTSIDE","BENEATH","ON"	
@@ -289,6 +292,11 @@ public class RawData {
 	
 	public static String getObjectDescription(int number) {
 		return objectDescription[number];
+	}
+	
+	public static String getItemLocation(int number) {
+		String location = itemLocation.substring(number-1,number);
+		return location;
 	}
 
 }
