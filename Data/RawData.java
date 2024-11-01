@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.2
-Date: 31 October 2024
+Version: 1.3
+Date: 1 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package Data;
@@ -294,9 +294,12 @@ public class RawData {
 		return objectDescription[number];
 	}
 	
-	public static String getItemLocation(int number) {
-		String location = itemLocation.substring(number-1,number);
-		return location;
+	public static char getItemLocation(int number) {
+		return itemLocation.charAt(number-1);
+	}
+	
+	public static char getItemFlag(int number) {
+		return itemFlag.charAt(number-1);
 	}
 
 }
@@ -306,5 +309,5 @@ public class RawData {
  * 				   - made class static
  * 31 October 2024 - Added description array and method to retrieve it
  * 				   - Added description for items and changed way to retrieve item and locations
- * 				   -
+ * 1 November 2024 - Added the code to handle the items
 */
