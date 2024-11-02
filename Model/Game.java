@@ -6,20 +6,18 @@ Version: 1.0
 Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+package Model;
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
-
-import Data.Data;
-
 
 public class Game {
 	
 
 
 
-	
+	/*
 	private boolean gamePlaying = true;
 	Random rand = new Random();
 	
@@ -1152,6 +1150,7 @@ public class Game {
 		
 		this.message = "OK";
 	}
+	*/
 } 
 /*
 8 September 2024 - Created File

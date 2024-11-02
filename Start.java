@@ -7,6 +7,8 @@ Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
+import Model.Main;
+
 public class Start {
 	
 	public static void main(String[] args) {

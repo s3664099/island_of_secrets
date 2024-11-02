@@ -49,3 +49,10 @@ command line so that it can be played in a window environment, and that the game
 Also, I need to go over the code again and make further notes, and also tidy up the notes that I have
 added to the notes file.
 
+2 November 2024
+Finished the initialisation classes. Moved the locations and objects into separate methods which are contained
+in the game method (and are stored in set arrays). The commands are once again split into nouns and verbs, however
+I have decided to use the whole words as opposed to the first three letters. I note that this method was originally
+for making the code less complicated on older computers, but it can cause confusion (as well as being lazy). These
+are also stored in arrays, and since they do not change they have been marked as final.
+

@@ -7,7 +7,12 @@ Date: 1 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Data;
+package Model;
+
+import Data.Constants;
+import Data.Item;
+import Data.Location;
+import Data.RawData;
 
 public class InitialiseGame {
 	
