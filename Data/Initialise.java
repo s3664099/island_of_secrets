@@ -18,8 +18,8 @@ public class Initialise {
 	
 	public Initialise() {
 		
-		//Create Nouns & Verbs
 		//Create Second Class to hold player data
+		//Update the readme when the initialisation has been completed
 		
 		locationList[0] = null;
 		itemList[0] = null;

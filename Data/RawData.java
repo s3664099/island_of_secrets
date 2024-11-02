@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 1 November 2024
+Version: 1.4
+Date: 2 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package Data;
@@ -267,6 +267,22 @@ public class RawData {
 			""
 		};
 	
+	private static final String[] verbs = {
+		"n","s","e","w","go","get","take","give","drop","leave","eat","drink","ride",
+		"open","pick","chop","chip","tap","break","fight","strike","attack","hit",
+		"kill","swim","shelter","help","scratch","catch","rub","polish","read",
+		"examine","fill","say","wait","rest","wave","info","load","save","quit"
+	};
+	
+	private static final String[] nouns = {
+		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",
+		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits",
+		"mushoorms","bottle","flagon","sap","water","boatman","chest","column","opening",
+		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
+		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
+		"up","down","in","out"
+	};
+		
 	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
 	private static String itemFlag = "90101191001109109000901000111000000100000010000000000";
 	
@@ -301,7 +317,6 @@ public class RawData {
 	public static char getItemFlag(int number) {
 		return itemFlag.charAt(number-1);
 	}
-
 }
 /* 9 September 2024 - Created File
  * 29 October 2024 - Moved to version 1
@@ -310,4 +325,5 @@ public class RawData {
  * 31 October 2024 - Added description array and method to retrieve it
  * 				   - Added description for items and changed way to retrieve item and locations
  * 1 November 2024 - Added the code to handle the items
+ * 2 November 2024 - Added arrays to hold verbs & nouns
 */
