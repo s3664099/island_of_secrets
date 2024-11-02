@@ -317,6 +317,14 @@ public class RawData {
 	public static char getItemFlag(int number) {
 		return itemFlag.charAt(number-1);
 	}
+	
+	public static String[] getVerbs() {
+		return verbs;
+	}
+	
+	public static String[] getNouns() {
+		return nouns;
+	}
 }
 /* 9 September 2024 - Created File
  * 29 October 2024 - Moved to version 1

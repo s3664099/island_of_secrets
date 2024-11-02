@@ -16,29 +16,10 @@ import Data.Data;
 
 public class Game {
 	
-	private Data locations;
-	private Data objects;
-	private Data prepositions;
-	private Data itemLocation;
-	private Data itemFlag;
-	private Data verbs;
-	private Data nouns;
-	private int room = 23;
-	private final int noRooms = 80;
-	private final int noItems = 43;
-	private float strength = 100;
-	private int wisdom = 35;
-	private int timeRemaining = 1000;
-	private final int noVerbs = 42;
-	private final int noNouns = 52;
-	private int weight = 0;
-	private final int carriableItems = 24;
-	private int food = 2;
-	private int drink = 2;
-	private final int foodLine = 16;
-	private final int drinkLine = 21;
-	private String line = "----------------------------------------------------------------";
-	private String message = "LET YOUR QUEST BEGIN";
+
+
+
+	
 	private boolean gamePlaying = true;
 	Random rand = new Random();
 	

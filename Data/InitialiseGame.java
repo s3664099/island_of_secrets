@@ -9,18 +9,16 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Data;
 
-public class Initialise {
+public class InitialiseGame {
 	
 	private int noRooms = Constants.noRooms;
 	private int noItems = Constants.noItems;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
-	
-	public Initialise() {
-		
-		//Create Second Class to hold player data
-		//Update the readme when the initialisation has been completed
-		
+	private String message = "Let your quest begin";
+
+	public InitialiseGame() {
+				
 		locationList[0] = null;
 		itemList[0] = null;
 		
