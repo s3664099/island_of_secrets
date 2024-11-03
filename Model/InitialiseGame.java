@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.2
-Date: 1 November 2024
+Version: 1.3
+Date: 3 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -45,10 +45,15 @@ public class InitialiseGame {
 									RawData.getObjectDescription(itemNumber));
 		}
 	}
+	
+	public Location getRoom(int roomNumber) {
+		return this.locationList[roomNumber];
+	}
 }
 
 /* 30 October 2024 - Created File
  * 31 October 2024 - Added description to the locations.
  * 				   - Adjusted way to extract rooms
  * 1 November 2024 - Added the items
+ * 3 November 2024 - Added method to retrieve the player's current location
  */

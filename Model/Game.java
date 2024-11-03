@@ -6,15 +6,28 @@ Version: 1.0
 Date: 29 October 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package Model;
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
+import Data.Location;
+
 public class Game {
 	
-
+	private InitialiseGame game;
+	private InitialisePlayer player;
+	
+	public Game(InitialiseGame game,InitialisePlayer player) {
+		this.game = game;
+		this.player = player;
+	}
+	
+	public Location getCurrentRoom() {
+		return game.getRoom(player.getRoom());
+	}
 
 
 	/*

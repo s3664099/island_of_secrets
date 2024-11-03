@@ -2,10 +2,11 @@
 Title: Island of Secrets Main
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 2 November 2024
+Version: 1.2
+Date: 3 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package Model;
 
 import javax.swing.SwingUtilities;
@@ -16,8 +17,9 @@ public class Main {
 	public void startGame() {
 
 		//Initialises the game data
-		InitialiseGame game = new InitialiseGame();
+		InitialiseGame gameData = new InitialiseGame();
 		InitialisePlayer player = new InitialisePlayer();
+		Game game = new Game(gameData,player);
 		
 		//Creating a thread to allow multiple objects
 		SwingUtilities.invokeLater(new Runnable( ) {
@@ -28,10 +30,7 @@ public class Main {
 				new GameFrame();
 			}
 		});
-		
-		
 	}
-	
 }
 
 /*
@@ -40,4 +39,5 @@ public class Main {
 29 October 2024 - Updated to version 1
 2 November 2024 - Added the player class to hold the player details
 				- Removed the extraneous files
+3 November 2024 - Added code to create a new game
 */

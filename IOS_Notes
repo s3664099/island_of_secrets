@@ -3,7 +3,7 @@ C1	- Above is Food (Const 16)
 C2	- Above is drink (Const 21)
 C3	- Carriable Items Limit (Const 24)
 C4	- Number of Items (constant 42)
-D 	- ??
+D 	- Used to retrieve the current room from the data
 E	- Weight Carrying
 F$	- Message
 F	- Food
@@ -76,7 +76,7 @@ J$="THE STONES ARE FIXED"
 O$="WHICH TAKES OMEGAN IN ITS CLAWS AND FLIES AWAY"
 H$="STONY WORDS"
 
-660 - Reads the locations and will stop at the player's location. Then will split the
+650 - Reads the locations and will stop at the player's location. Then will split the
 	  location values.
 720 - Prints the description of the location. Determines the length and goes to a new line
 	  Actually, it prints A$, which holds various information.
