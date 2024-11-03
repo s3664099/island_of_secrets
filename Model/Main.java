@@ -17,9 +17,9 @@ public class Main {
 	public void startGame() {
 
 		//Initialises the game data
-		InitialiseGame gameData = new InitialiseGame();
-		InitialisePlayer player = new InitialisePlayer();
-		Game game = new Game(gameData,player);
+		Game gameData = new Game();
+		Player player = new Player();
+		GameEngine game = new GameEngine(gameData,player);
 		
 		//Creating a thread to allow multiple objects
 		SwingUtilities.invokeLater(new Runnable( ) {
@@ -27,7 +27,7 @@ public class Main {
 			//Runs the thread as an inner class
 			public void run ()
 			{ 
-				new GameFrame();
+				new GameFrame(gameData,player);
 			}
 		});
 	}
