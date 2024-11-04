@@ -24,17 +24,22 @@ public class GameEngine {
 		this.game = game;
 		this.player = player;
 	}
-	
-	public Location getCurrentRoom() {
-		return game.getRoom(player.getRoom());
-	}
-	
+		
 	public String getTime() {
 		return player.getTime();
 	}
 	
 	public String getStatus() {
 		return player.getStatus();
+	}
+	
+	public String getRoom() {
+		int room = player.getRoom();
+		return String.format("You are %s",game.getRoomName(room));
+	}
+	
+	public String getItems() {
+		return game.getItems(player.getRoom());
 	}
 
 

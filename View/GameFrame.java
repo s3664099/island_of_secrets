@@ -31,6 +31,9 @@ public class GameFrame extends JFrame {
 		this.setLayout (new GridLayout (12,1)); 
         
 	    this.add(CreateStatusPanel(game));
+	    this.add(CreateLabelPanel(game.getRoom(),1));
+	    this.add(CreateLabelPanel("",0)); //Possibily do it as a text panel
+	    this.add(CreateLabelPanel(game.getItems(),1));
 	    		
 		//sets the boundaries of the frame.
 		setBounds(100,100, 800,600);
@@ -46,15 +49,21 @@ public class GameFrame extends JFrame {
         JLabel statLabel = new JLabel(game.getStatus());
         statPanel.add(statLabel);
         
-        // Add the inner panels to the main statusPanel
-        statusPanel.add(createLabelPanel(game.getTime()));
-        statusPanel.add(createLabelPanel(game.getStatus())); 
+        statusPanel.add(CreateLabelPanel(game.getTime(),0));
+        statusPanel.add(CreateLabelPanel(game.getStatus(),0)); 
         
         return statusPanel;
 	}
 	
-	private JPanel createLabelPanel(String labelString) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel CreateLabelPanel(String labelString,int flowType) {
+		
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+		
+		if (flowType==1) {
+			flow = new FlowLayout(FlowLayout.LEFT);
+		}
+		
+        JPanel panel = new JPanel(flow);
         JLabel label = new JLabel(labelString);
         panel.add(label);
         return panel;

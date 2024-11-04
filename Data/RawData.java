@@ -33,13 +33,13 @@ public class RawData {
 		"4THE ROOM OF SECRET VISIONS1110",
 		"4SLEM'S INNER CHAMBER0111",
 		"3THE SOUTHERN EDGE OF THE FOREST1010",
-		"7A LEAFY PATH1000",
-		"3A FORK IN THE PATH0100",
-		"7AN APPARENTLY UNCLIMABLE ROCKY PATH1100",
-		"7A LEDGE ATOP THE CRIMSON CANYON0010",
+		"7a leafy path1000",
+		"3a fork in the path0100",
+		"7an apparently unclimable rocky path1100",
+		"7a ledge atop the crimson canyon0010",
 		"4A TALL ENTRANCE CHAMBER1101",
-		"4A LOW PASSAGE WITH ARMS REACHING FROM THE WALLS1010",
-		"7THE APPROACH TO THE WELL OF DESPAIR0001",
+		"4a low passage with arms reaching from the wall1010",
+		"7the approach to the well of despair0001",
 		"4A DIM CORRIDOR DEEP IN THE CASTLE1010",
 		"4THE STAGNANT WATERS OF THE CRAWLING CREEK1001",
 		"4A SHALLOW POOL OFF THE CREEK1100",
@@ -287,7 +287,7 @@ public class RawData {
 	private static String itemFlag = "90101191001109109000901000111000000100000010000000000";
 	
 	private static String[] prepositions = {
-		"BY","FACING","AT","IN","OUTSIDE","BENEATH","ON"	
+		"by","facing","at","in","outside","beneath","on"	
 	};
 	
 	public static String getLocation(int number) {

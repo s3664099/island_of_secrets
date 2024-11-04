@@ -29,7 +29,7 @@ public class Game {
 		
 		//Builds the location objects
 		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
-
+			
 			Location newLocation = new Location(RawData.getLocation(roomNumber),
 												RawData.getPrepositions(),
 												RawData.getDescription(roomNumber));
@@ -38,16 +38,41 @@ public class Game {
 		
 		//Builds the item objects
 		for (int itemNumber=1;itemNumber<noItems;itemNumber++) {
-
+			
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
 									RawData.getObjects(itemNumber),
 									RawData.getObjectDescription(itemNumber));
+			itemList[itemNumber] = newItem;;
 		}
 	}
 	
-	public Location getRoom(int roomNumber) {
-		return this.locationList[roomNumber];
+	public String getRoomName(int roomNumber) {
+		return this.locationList[roomNumber].getName();
+	}
+	
+	//Goes through the items and checks what is present
+	public String getItems(int roomNumber) {
+				
+		int count = 0;
+		String items = "";
+		
+		for (Item item:itemList) {
+			
+			if(item != null) {
+				if(item.checkLocation(roomNumber)) {
+					System.out.println(item.getItem());
+					count ++;
+					items = String.format("%s %s",items,item.getItem());
+				}
+			}
+		}
+		
+		if (count>0) {
+			items = String.format("%s %s","You see:",items);
+		}
+		
+		return items;
 	}
 }
 

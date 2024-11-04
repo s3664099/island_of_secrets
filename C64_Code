@@ -7,9 +7,15 @@
 
 --- Displays the Main Screen
 30 LET D=R:IF R=20 THEN LET D=FNR(80) - Randomises room
+
+-- Player Stats
 40 GOSUB 650:GOSUB 2770:PRINT "ISLAND OF SECRETS","TIME REMAINING:";L
 50 PRINT G$;TAB(0)"STRENGTH = ";INT(Y);TAB(23);"WISDOM = ";X:PRINT G$
+
+-- Current Room
 60 PRINT"YOU ARE ";I$(VAL(LEFT$(A$,1)));" ";:GOSUB720;LET N=0
+
+-- Reads the items and displays those at the location
 70 FOR I=1 TO C4
 80 LET C=0:READ Y$
 90 IF L(I)=R AND F(I)<1 THEN LET C=1
@@ -17,6 +23,8 @@
 110 IF C=1 THEN LET A$=A$+" "+Y$:LET N=N+1
 120 NEXT I
 130 IF N>0 THEN LET A$="*YOU SEE"+A$:GOSUB 720
+
+
 140 PRINT:PRINT G$;F$
 150 PRINT:PRINT "WHAT WILL YOU DO";
 160 INPUT E$
@@ -77,6 +85,7 @@
 700 IF R=20 THEN LET D$="1110"					   - ?? Unsure purpose of this line
 710 GOSUB 2780:RETURN
 
+-- Checks if the text exceeds the size of the screen and wraps it to the next line
 720 FOR I=2 TO LEN(A$):LET E$=MID$(A$,I,1)
 730 PRINT E$;: IF E$=" " AND FNP(Z)>Z THEN PRINT
 740 NEXT I

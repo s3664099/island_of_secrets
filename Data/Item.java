@@ -21,7 +21,7 @@ public class Item {
 		//Converts the strings to the appropriate int
 		this.itemFlag = ((int) flag)-48;
 		this.itemLocation = ((int) location)-32;
-
+		
 		if (this.itemLocation>127) {
 			this.itemLocation -= 96;
 		}
@@ -29,6 +29,22 @@ public class Item {
 		//Saves the descriptions
 		this.item = item;
 		this.description = description;
+	}
+	
+	public String getItem() {
+		return this.item;
+	}
+	
+	//Checks if the item is present at the location
+	public boolean checkLocation(int location) {
+		
+		boolean itemPresent = false;
+		
+		if (location == this.itemLocation)  {
+			itemPresent = true;
+		}
+		
+		return itemPresent;
 	}
 
 }
