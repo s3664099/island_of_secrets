@@ -74,4 +74,5 @@ public class GameFrame extends JFrame {
 /* 2 November 2024 - Created File
  * 3 November 2024 - Added Status Box at the top
  * 4 November 2024 - Moved Label Panel creations to separate box.
+ * 				   - Added panel to display location items
  */
