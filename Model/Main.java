@@ -2,8 +2,8 @@
 Title: Island of Secrets Main
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.2
-Date: 3 November 2024
+Version: 1.3
+Date: 4 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,7 +27,7 @@ public class Main {
 			//Runs the thread as an inner class
 			public void run ()
 			{ 
-				new GameFrame(gameData,player);
+				new GameFrame(game);
 			}
 		});
 	}
@@ -40,4 +40,5 @@ public class Main {
 2 November 2024 - Added the player class to hold the player details
 				- Removed the extraneous files
 3 November 2024 - Added code to create a new game
+4 November 2024 - Moved game engine into GrameFrame instead
 */
