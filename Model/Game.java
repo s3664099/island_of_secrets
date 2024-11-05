@@ -20,7 +20,7 @@ public class Game {
 	private int noItems = Constants.noItems;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
-	private String message = "Let your quest begin";
+	private String message = "Let your quest begin!";
 
 	public Game() {
 				
@@ -120,6 +120,26 @@ public class Game {
 		
 		return exits;
 	}
+	
+	//Retrieves the message
+	public String getMessage() {
+		return this.message;
+	}
+	
+	//Resets the message
+	public void clearMessage() {
+		this.message = "";
+	}
+	
+	//add to the message
+	public void setMessage(String message) {
+		
+		if (this.message.length()>0) {
+			this.message = String.format("%s, s%", this.message, message);
+		} else {
+			this.message = message;
+		}
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -127,6 +147,7 @@ public class Game {
  * 				   - Adjusted way to extract rooms
  * 1 November 2024 - Added the items
  * 3 November 2024 - Added method to retrieve the player's current location
- * 4 November 2024 - Added method to retrieve items at the player's location\
+ * 4 November 2024 - Added method to retrieve items at the player's location.
  * 5 November 2024 - Updated get items method. Added get exits method
+ * 				   - added methods to deal with the message
  */

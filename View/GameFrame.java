@@ -72,6 +72,11 @@ public class GameFrame extends JFrame {
 		
 		//Add exits
 		middlePanel.add(CreateLabelPanel(game.getExits(),1));
+		middlePanel.add(CreateLabelPanel("",2));
+		middlePanel.add(CreateLabelPanel("", 1));
+		middlePanel.add(CreateLabelPanel(game.getMessage(), 1));
+		
+		
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
@@ -106,11 +111,17 @@ public class GameFrame extends JFrame {
 
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		
-		if (flowType==1) {
+		if (flowType==1 || flowType==2) {
 			flow = new FlowLayout(FlowLayout.LEFT);
 		}
 		
-        return new JPanel(flow);
+		JPanel panel = new JPanel(flow);
+		
+		if (flowType == 2) {
+			panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		}
+		
+        return panel;
 		
 	}
 	

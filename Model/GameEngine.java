@@ -45,6 +45,14 @@ public class GameEngine {
 	public String getExits() {
 		return game.getExits(player.getRoom());
 	}
+	
+	public String getMessage() {
+		
+		String message = game.getMessage();
+		game.clearMessage();
+		
+		return message;
+	}
 
 
 	/*
@@ -1209,4 +1217,5 @@ public class GameEngine {
 1 November 2024 - Cleared previous methods and stored game & player class
 4 November 2024 - Added methods to retrieve strings from game & player
 5 November 2024 - Added get exit method
+				- Added get message method
 */
