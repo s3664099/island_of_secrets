@@ -44,27 +44,54 @@ public class GameFrame extends JFrame {
 		
 		
 		// Top section for status and label panels
-		JPanel topPanel = new JPanel(new GridLayout(2, 1)); // Adjust as necessary
+		JPanel topPanel = new JPanel(new GridLayout(1, 1)); // Adjust as necessary
 		topPanel.add(CreateStatusPanel(game));
-		topPanel.add(CreateLabelPanel(game.getRoom(), 1));
+		topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		
+		JPanel middlePanel = new JPanel(new GridLayout(20,1));
+		middlePanel.add(CreateLabelPanel(game.getRoom(), 1));
+		middlePanel.add(CreateLabelPanel("", 1));
+		
+		//Deal with the description
+		
+		//Add the items to the room panel
+		String itemString = game.getItems();
+		
+		while (itemString.length()>0) {
+			
+			int lineLength = 100;
+						
+			if (lineLength>itemString.length()) {
+				lineLength = itemString.length();
+			}
+			
+			if (itemString.length()>99) {
+				while(!Character.isWhitespace(itemString.charAt(lineLength))) {
+					lineLength --;
+
+				}
+			}
+			
+			String itemLine = itemString.substring(0,lineLength);
+			itemString = itemString.substring(lineLength);
+			
+			middlePanel.add(CreateLabelPanel(itemLine, 1));
+		}
+		
+		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		
 		//topPanel.add(CreateLabelPanel("", 0)); // This is for adding the description
 											   // Need to consider this when doing it
 
 		//Items Section - May need to update the styling when finished
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
-		String position = BorderLayout.CENTER;
-		
-		//Adds the item text panel, if there are any items
-		if (game.getItems().length()>0) {
-			this.add(CreateTextPanel(game.getItems()),BorderLayout.CENTER);
-			position = BorderLayout.SOUTH;
-		}
-	    
+		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
+			    
 		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
-		bottomPanel.add(CreateLabelPanel(game.getExits(),1));
+		bottomPanel.add(CreateLabelPanel("Bottom Panel",1));
 
-		this.add(bottomPanel,position);
-		this.pack();
+		this.add(bottomPanel,BorderLayout.SOUTH);
+		//this.pack();
 		
 		//sets the boundaries of the frame.
 		setBounds(100,100, 800,600);
@@ -74,7 +101,6 @@ public class GameFrame extends JFrame {
 	private JPanel CreateStatusPanel(GameEngine game) {
 		
         JPanel statusPanel = new JPanel(new GridLayout(2,1));
-        statusPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         
         JPanel statPanel = CreatePanel(0);
         JLabel statLabel = new JLabel(game.getStatus());
