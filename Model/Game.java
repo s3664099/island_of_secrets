@@ -38,11 +38,11 @@ public class Game {
 		
 		//Builds the item objects
 		for (int itemNumber=1;itemNumber<noItems;itemNumber++) {
-			
+						
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
 									RawData.getObjects(itemNumber),
-									RawData.getObjectDescription(itemNumber));
+									RawData.getObjectDescription(itemNumber));			
 			itemList[itemNumber] = newItem;;
 		}
 	}

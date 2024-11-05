@@ -295,7 +295,7 @@ public class RawData {
 	}
 	
 	public static String getObjects(int number) {
-		return objects[number];
+		return objects[number-1];
 	}
 
 	public static String[] getPrepositions() {
@@ -307,7 +307,7 @@ public class RawData {
 	}
 	
 	public static String getObjectDescription(int number) {
-		return objectDescription[number];
+		return objectDescription[number-1];
 	}
 	
 	public static char getItemLocation(int number) {

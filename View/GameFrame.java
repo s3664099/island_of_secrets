@@ -73,20 +73,18 @@ public class GameFrame extends JFrame {
 		//Add exits
 		middlePanel.add(CreateLabelPanel(game.getExits(),1));
 		middlePanel.add(CreateLabelPanel("",2));
+		
+		//Display message
 		middlePanel.add(CreateLabelPanel("", 1));
 		middlePanel.add(CreateLabelPanel(game.getMessage(), 1));
-		
-		
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		
+		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
+		bottomPanel.add(CreateLabelPanel("Bottom Panel",1));		
 		
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
-			    
-		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
-		bottomPanel.add(CreateLabelPanel("Bottom Panel",1));
-
 		this.add(bottomPanel,BorderLayout.SOUTH);
-		//this.pack();
 		
 		//sets the boundaries of the frame.
 		setBounds(100,100, 800,600);

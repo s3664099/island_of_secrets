@@ -9,12 +9,6 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
-import java.io.IOException;
-import java.util.Random;
-import java.util.Scanner;
-
-import Data.Location;
-
 public class GameEngine {
 	
 	private Game game;
@@ -34,12 +28,14 @@ public class GameEngine {
 	}
 	
 	public String getRoom() {
-		int room = player.getRoom();
+		
+		player.updateDisplayRoom();
+		int room = player.getDisplayRoom();
 		return String.format("You are %s",game.getRoomName(room));
 	}
 	
 	public String getItems() {
-		return game.getItems(player.getRoom());
+		return game.getItems(player.getDisplayRoom());
 	}
 	
 	public String getExits() {

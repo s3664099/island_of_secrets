@@ -29,8 +29,6 @@ Z$	- Nouns
 
 
 -- Unknown Variables
-30 LET D=R:IF R=20 THEN LET D=FNR(80) - Unknown what D is, but if you are in room 20
-										it is moved to a random room
 4130 LET B=9
 
 
