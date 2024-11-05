@@ -46,6 +46,10 @@ public class Item {
 		
 		return itemPresent;
 	}
+	
+	public int getFlag() {
+		return this.itemFlag;
+	}
 
 }
 /*

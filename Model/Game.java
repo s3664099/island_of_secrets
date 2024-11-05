@@ -57,13 +57,19 @@ public class Game {
 		int count = 0;
 		String items = "";
 		
+		//Goes through each of the items
 		for (Item item:itemList) {
-			
 			if(item != null) {
-				if(item.checkLocation(roomNumber)) {
-					System.out.println(item.getItem());
+				
+				//If the items are visible display them.
+				if(item.checkLocation(roomNumber) && item.getFlag()<1) {
+					
 					count ++;
-					items = String.format("%s %s",items,item.getItem());
+					if (count>1) {
+						items = String.format("%s, %s",items,item.getItem());
+					} else {
+						items = String.format("%s %s",items,item.getItem());
+					}
 				}
 			}
 		}
