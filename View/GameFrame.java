@@ -10,10 +10,12 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +39,10 @@ public class GameFrame extends JFrame {
 
 		this.setLayout (new BorderLayout()); 
         
+		//Need to do what they did in the game, namely go through each of the lines and
+		//work out the size, and then add to the grid.
+		
+		
 		// Top section for status and label panels
 		JPanel topPanel = new JPanel(new GridLayout(2, 1)); // Adjust as necessary
 		topPanel.add(CreateStatusPanel(game));
@@ -46,8 +52,20 @@ public class GameFrame extends JFrame {
 
 		//Items Section - May need to update the styling when finished
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
-		this.add(CreateTextPanel(game.getItems()), BorderLayout.CENTER); // Center the text panel
-	    		
+		String position = BorderLayout.CENTER;
+		
+		//Adds the item text panel, if there are any items
+		if (game.getItems().length()>0) {
+			this.add(CreateTextPanel(game.getItems()),BorderLayout.CENTER);
+			position = BorderLayout.SOUTH;
+		}
+	    
+		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
+		bottomPanel.add(CreateLabelPanel(game.getExits(),1));
+
+		this.add(bottomPanel,position);
+		this.pack();
+		
 		//sets the boundaries of the frame.
 		setBounds(100,100, 800,600);
 		setVisible(true);
@@ -91,13 +109,19 @@ public class GameFrame extends JFrame {
 	private JPanel CreateTextPanel(String text) {
 		
 		JPanel panel = CreatePanel(1);
-		JTextArea textArea = new JTextArea(text,4,70);
+		JTextArea textArea = new JTextArea(text);
+		textArea.setColumns(70);
+		textArea.setRows(7);
 		textArea.setEditable(false);  // This makes the JTextArea read-only
 		textArea.setLineWrap(true);   // Optional: Wrap lines if text is too long
 		textArea.setWrapStyleWord(true);  // Optional: Wrap at word boundaries
 		textArea.setBackground(background);
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(textArea);
 		
+		panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		textArea.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.red));
 		return panel;
 	}
 	

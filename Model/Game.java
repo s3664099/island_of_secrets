@@ -62,7 +62,7 @@ public class Game {
 			if(item != null) {
 				
 				//If the items are visible display them.
-				if(item.checkLocation(roomNumber) && item.getFlag()<1) {
+				if(item.checkLocation(roomNumber) || item.getFlag()<1) {
 					
 					count ++;
 					if (count>1) {
@@ -80,6 +80,46 @@ public class Game {
 		
 		return items;
 	}
+	
+	public String getExits(int roomNumber) {
+		
+		int[] exitNumbers = locationList[roomNumber].getExits();
+		String exits = "";
+		
+		if (exitNumbers[0] == 0) {
+			exits = addExit("North",exits);
+		}
+		
+		if (exitNumbers[1] == 0) {
+			exits = addExit("South",exits);
+		}
+		
+		if (exitNumbers[2] == 0) {
+			exits = addExit("East",exits);
+		}
+		
+		if (exitNumbers[3] == 0) {
+			exits = addExit("West",exits);
+		}
+		
+		if (exits.length()>0) {
+			exits = String.format("You can go:%s",exits);
+		}
+		
+		return exits;
+	}
+	
+	//Checks to see if an exit has already been added
+	private String addExit(String exit, String exits) {
+		
+		if (exits.length()>0) {
+			exits = String.format("%s, %s",exits,exit);
+		} else {
+			exits = String.format("%s %s",exits,exit);
+		}
+		
+		return exits;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -88,5 +128,5 @@ public class Game {
  * 1 November 2024 - Added the items
  * 3 November 2024 - Added method to retrieve the player's current location
  * 4 November 2024 - Added method to retrieve items at the player's location\
- * 5 November 2024 - Updated get items method
+ * 5 November 2024 - Updated get items method. Added get exits method
  */
