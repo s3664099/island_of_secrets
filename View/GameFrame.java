@@ -52,38 +52,28 @@ public class GameFrame extends JFrame {
 		middlePanel.add(CreateLabelPanel(game.getRoom(), 1));
 		middlePanel.add(CreateLabelPanel("", 1));
 		
-		//Deal with the description
+		//Add the the description
 		
 		//Add the items to the room panel
 		String itemString = game.getItems();
 		
 		while (itemString.length()>0) {
 			
-			int lineLength = 100;
-						
-			if (lineLength>itemString.length()) {
-				lineLength = itemString.length();
-			}
-			
-			if (itemString.length()>99) {
-				while(!Character.isWhitespace(itemString.charAt(lineLength))) {
-					lineLength --;
-
-				}
-			}
-			
+			int lineLength = getLineLength(itemString);
 			String itemLine = itemString.substring(0,lineLength);
 			itemString = itemString.substring(lineLength);
-			
 			middlePanel.add(CreateLabelPanel(itemLine, 1));
 		}
 		
+		//Adds space if there are items.
+		if (game.getItems().length()>0) {
+			middlePanel.add(CreateLabelPanel("", 1));
+		}
+		
+		//Add exits
+		middlePanel.add(CreateLabelPanel(game.getExits(),1));
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
-		//topPanel.add(CreateLabelPanel("", 0)); // This is for adding the description
-											   // Need to consider this when doing it
-
-		//Items Section - May need to update the styling when finished
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 			    
@@ -151,6 +141,23 @@ public class GameFrame extends JFrame {
 		return panel;
 	}
 	
+	private int getLineLength(String line) {
+		
+		int lineLength = 100;
+		
+		if (lineLength>line.length()) {
+			lineLength = line.length();
+		}
+		
+		if (line.length()>99) {
+			while(!Character.isWhitespace(line.charAt(lineLength))) {
+				lineLength --;
+			}
+		}
+		
+		return lineLength;
+	}
+	
 }
 
 /* 2 November 2024 - Created File
@@ -158,4 +165,5 @@ public class GameFrame extends JFrame {
  * 4 November 2024 - Moved Label Panel creations to separate box.
  * 				   - Added panel to display location items
  * 5 November 2024 - Updated the display for the items
+ * 				   - Completed the display for the place location
  */
