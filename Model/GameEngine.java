@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import View.GameFrame;
+
 public class GameEngine {
 	
 	private Game game;
@@ -48,6 +50,17 @@ public class GameEngine {
 		game.clearMessage();
 		
 		return message;
+	}
+	
+	public String getCommand(int number) {
+		return game.getCommand(number);
+	}
+	
+	public void processCommand(String command,GameFrame game) {
+		
+		//Add code to place command above this, so that last three commands have been recorded
+		//Takes words, splits in two, and creates
+		
 	}
 
 
@@ -1214,4 +1227,6 @@ public class GameEngine {
 4 November 2024 - Added methods to retrieve strings from game & player
 5 November 2024 - Added get exit method
 				- Added get message method
+				- Added get previous command method
+				- Added process command method
 */

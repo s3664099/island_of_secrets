@@ -14,12 +14,19 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JTextField;
 
+import Model.GameEngine;
+import View.GameFrame;
+
 public class CommandListener implements KeyListener {
 
 	JTextField text;
+	GameEngine game;
+	GameFrame gameFrame;
 	
-	public CommandListener(JTextField text) {
+	public CommandListener(JTextField text, GameEngine game, GameFrame gameFrame) {
 		this.text = text;
+		this.game = game;
+		this.gameFrame = gameFrame;
 	}
 	
 	@Override
@@ -27,12 +34,10 @@ public class CommandListener implements KeyListener {
 		
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-			//Add code to place command above this, so that last three commands have been recorded
 			
-			//Takes words, splits in two, and creates
-			System.out.println("Hello:"+this.text.getText());
+			String command = this.text.getText();
 			this.text.setText("");
+			game.processCommand(command, gameFrame);
 		}
 		
 	}

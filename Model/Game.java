@@ -21,6 +21,7 @@ public class Game {
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
 	private String message = "Let your quest begin!";
+	private String[] commands = {"","",""};
 
 	public Game() {
 				
@@ -139,6 +140,10 @@ public class Game {
 		} else {
 			this.message = message;
 		}
+	}
+	
+	public String getCommand(int number) {
+		return commands[number];
 	}
 }
 
