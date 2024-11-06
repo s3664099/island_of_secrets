@@ -12,13 +12,28 @@ package Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JTextField;
+
 public class CommandListener implements KeyListener {
 
+	JTextField text;
+	
+	public CommandListener(JTextField text) {
+		this.text = text;
+	}
+	
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent evt) {
 		
-		//Takes words, splits in two, and creates
-		System.out.println("Hello");
+		//Checks if user presses enter
+		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+			//Add code to place command above this, so that last three commands have been recorded
+			
+			//Takes words, splits in two, and creates
+			System.out.println("Hello:"+this.text.getText());
+			this.text.setText("");
+		}
 		
 	}
 

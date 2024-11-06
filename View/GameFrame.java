@@ -83,8 +83,11 @@ public class GameFrame extends JFrame {
 		//Creates the command field
 		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
 		JTextField commandField = new JTextField(2);
-		commandField.addKeyListener(new CommandListener());
-		bottomPanel.add(commandField);		
+		commandField.addKeyListener(new CommandListener(commandField));
+		bottomPanel.add(commandField);
+		
+		//Command Field includes four labels above which contain the last three commands.
+		//Also one for a blank spot
 		
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
