@@ -49,7 +49,7 @@ public class GameFrame extends JFrame {
 		topPanel.add(CreateStatusPanel(game));
 		topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
-		JPanel middlePanel = new JPanel(new GridLayout(20,1));
+		JPanel middlePanel = new JPanel(new GridLayout(18,1));
 		middlePanel.add(CreateLabelPanel(game.getRoom(), 1));
 		middlePanel.add(CreateLabelPanel("", 1));
 		
@@ -61,7 +61,7 @@ public class GameFrame extends JFrame {
 		while (itemString.length()>0) {
 			
 			int lineLength = getLineLength(itemString);
-			String itemLine = itemString.substring(0,lineLength);
+			String itemLine = itemString.substring(0,lineLength).trim();
 			itemString = itemString.substring(lineLength);
 			middlePanel.add(CreateLabelPanel(itemLine, 1));
 		}
@@ -81,7 +81,10 @@ public class GameFrame extends JFrame {
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		//Creates the command field
-		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
+		JPanel bottomPanel = new JPanel(new GridLayout(7,1));
+		bottomPanel.add(CreateLabelPanel("", 1));
+		bottomPanel.add(CreateLabelPanel("", 1));
+		bottomPanel.add(CreateLabelPanel("", 1));
 		JTextField commandField = new JTextField(2);
 		commandField.addKeyListener(new CommandListener(commandField));
 		bottomPanel.add(commandField);
@@ -159,7 +162,7 @@ public class GameFrame extends JFrame {
 	
 	private int getLineLength(String line) {
 		
-		int lineLength = 100;
+		int lineLength = 90;
 		
 		if (lineLength>line.length()) {
 			lineLength = line.length();

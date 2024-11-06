@@ -62,7 +62,7 @@ public class Game {
 			if(item != null) {
 				
 				//If the items are visible display them.
-				if(item.checkLocation(roomNumber) && item.getFlag()<1) {
+				if(item.checkLocation(roomNumber) || item.getFlag()<1) {
 					
 					count ++;
 					if (count>1) {
