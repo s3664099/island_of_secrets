@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Controller.CommandListener;
 import Model.GameEngine;
 
 public class GameFrame extends JFrame {
@@ -79,8 +80,11 @@ public class GameFrame extends JFrame {
 		middlePanel.add(CreateLabelPanel(game.getMessage(), 1));
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
+		//Creates the command field
 		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
-		bottomPanel.add(new JTextField(2));		
+		JTextField commandField = new JTextField(2);
+		commandField.addKeyListener(new CommandListener());
+		bottomPanel.add(commandField);		
 		
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
