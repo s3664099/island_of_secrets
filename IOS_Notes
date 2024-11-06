@@ -1,4 +1,5 @@
 B	- ??
+C$	- Verb
 C1	- Above is Food (Const 16)
 C2	- Above is drink (Const 21)
 C3	- Carriable Items Limit (Const 24)
@@ -21,6 +22,7 @@ W	- number of objects (Constant 51)
 V$	- Verbs
 V	- number of verbs (Constant 42)
 X	- Wisdom
+X$	- Noun
 Y	- Strength
 Z	- Length of the Screen (Not Needed)
 Z$	- Nouns
@@ -51,7 +53,7 @@ O			- noun chosen
 
 
 A$			- Noun - also seems to hold messages
-X$			- Verb
+
 B$			- Coded Noun
 
 Function Defines

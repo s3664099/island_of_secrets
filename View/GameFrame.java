@@ -10,7 +10,6 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -20,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import Model.GameEngine;
 
@@ -80,7 +80,7 @@ public class GameFrame extends JFrame {
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		JPanel bottomPanel = new JPanel(new GridLayout(3,1));
-		bottomPanel.add(CreateLabelPanel("Bottom Panel",1));		
+		bottomPanel.add(new JTextField(2));		
 		
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
