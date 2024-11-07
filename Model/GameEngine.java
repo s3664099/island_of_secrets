@@ -57,6 +57,10 @@ public class GameEngine {
 		return game.getCommand(number);
 	}
 	
+	public String[] getCommands() {
+		return this.commands;
+	}
+	
 	public void processCommand(String command,GameFrame game) {
 		
 		if (this.commands[0].equals("")) {
@@ -71,6 +75,8 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
+		//Move contents of JFrame into a JPanel
+		//Refresh the panel here
 		//Takes words, splits in two, and creates
 		
 	}

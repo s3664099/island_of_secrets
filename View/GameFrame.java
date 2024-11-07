@@ -81,10 +81,11 @@ public class GameFrame extends JFrame {
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		//Creates the command field
+		String[] commands = game.getCommands();
 		JPanel bottomPanel = new JPanel(new GridLayout(7,1));
-		bottomPanel.add(CreateLabelPanel(game.getCommand(0),1));
-		bottomPanel.add(CreateLabelPanel(game.getCommand(1),1));
-		bottomPanel.add(CreateLabelPanel(game.getCommand(2),1));
+		bottomPanel.add(CreateLabelPanel(commands[0],1));
+		bottomPanel.add(CreateLabelPanel(commands[1],1));
+		bottomPanel.add(CreateLabelPanel(commands[2],1));
 		JTextField commandField = new JTextField(2);
 		commandField.addKeyListener(new CommandListener(commandField,game,this));
 		bottomPanel.add(commandField);
