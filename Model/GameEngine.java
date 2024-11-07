@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 5 November 2024
+Version: 1.4
+Date: 7 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,6 +15,7 @@ public class GameEngine {
 	
 	private Game game;
 	private Player player;
+	private String[] commands = {"","",""};
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -58,7 +59,18 @@ public class GameEngine {
 	
 	public void processCommand(String command,GameFrame game) {
 		
-		//Add code to place command above this, so that last three commands have been recorded
+		if (this.commands[0].equals("")) {
+			this.commands[0] = command;
+		} else if (this.commands[1].equals("")) {
+			this.commands[1] = command;
+		} else if (this.commands[2].equals("")) {
+			this.commands[2] = command;
+		} else {
+			this.commands[0] = this.commands[1];
+			this.commands[1] = this.commands[2];
+			this.commands[2] = command;
+		}
+		
 		//Takes words, splits in two, and creates
 		
 	}
@@ -1229,4 +1241,5 @@ public class GameEngine {
 				- Added get message method
 				- Added get previous command method
 				- Added process command method
+7 November 2024 - Added array to hold three previous commands
 */
