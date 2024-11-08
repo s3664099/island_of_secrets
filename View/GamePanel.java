@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 5 November 2024
+Version: 1.4
+Date: 8 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package View;
@@ -186,4 +186,5 @@ public class GamePanel extends JPanel {
  * 				   - Added panel to display location items
  * 5 November 2024 - Updated the display for the items
  * 				   - Completed the display for the place location
+ * 8 November 2024 - Change from Frame to Panel and created an add method
  */

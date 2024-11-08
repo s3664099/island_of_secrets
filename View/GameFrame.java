@@ -1,3 +1,11 @@
+/*
+Title: Island of Secrets Game Frame
+Author: Jenny Tyler & Les Howarth
+Translator: David Sarkies
+Version: 1.4
+Date: 8 November 2024
+Source: https://archive.org/details/island-of-secrets_202303
+*/
 package View;
 
 import javax.swing.JFrame;
@@ -21,3 +29,6 @@ public class GameFrame extends JFrame {
 		setVisible(true);
 	}
 }
+/* 8 November 2024 - Created File
+ * 
+ */

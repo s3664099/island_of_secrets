@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.4
-Date: 7 November 2024
+Version: 1.5
+Date: 8 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1252,4 +1252,5 @@ public class GameEngine {
 				- Added get previous command method
 				- Added process command method
 7 November 2024 - Added array to hold three previous commands
+8 November 2024 - Change frame to panel and added refresh options.
 */
