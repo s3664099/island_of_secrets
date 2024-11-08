@@ -9,7 +9,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
-import View.GameFrame;
+import View.GamePanel;
 
 public class GameEngine {
 	
@@ -61,7 +61,7 @@ public class GameEngine {
 		return this.commands;
 	}
 	
-	public void processCommand(String command,GameFrame game) {
+	public void processCommand(String command,GamePanel game) {
 		
 		if (this.commands[0].equals("")) {
 			this.commands[0] = command;
@@ -78,7 +78,11 @@ public class GameEngine {
 		//Move contents of JFrame into a JPanel
 		//Refresh the panel here
 		//Takes words, splits in two, and creates
-		
+
+		game.removeAll();
+		game.add(this);
+		game.revalidate();
+		game.repaint();
 	}
 
 

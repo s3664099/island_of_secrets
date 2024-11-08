@@ -15,18 +15,18 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextField;
 
 import Model.GameEngine;
-import View.GameFrame;
+import View.GamePanel;
 
 public class CommandListener implements KeyListener {
 
 	JTextField text;
 	GameEngine game;
-	GameFrame gameFrame;
+	GamePanel gamePanel;
 	
-	public CommandListener(JTextField text, GameEngine game, GameFrame gameFrame) {
+	public CommandListener(JTextField text, GameEngine game, GamePanel gameFrame) {
 		this.text = text;
 		this.game = game;
-		this.gameFrame = gameFrame;
+		this.gamePanel = gameFrame;
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class CommandListener implements KeyListener {
 			
 			String command = this.text.getText();
 			this.text.setText("");
-			game.processCommand(command, gameFrame);
+			game.processCommand(command, gamePanel);
 		}
 		
 	}
