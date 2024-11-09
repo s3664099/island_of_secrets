@@ -6,6 +6,7 @@ Version: 1.4
 Date: 8 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package View;
 
 import java.awt.BorderLayout;

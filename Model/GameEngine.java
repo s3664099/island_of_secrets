@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 8 November 2024
+Version: 1.6
+Date: 9 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -75,20 +75,19 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
-		//Move contents of JFrame into a JPanel
-		//Refresh the panel here
-		//Takes words, splits in two, and creates
+		Commands processCommands = new Commands(command,player,this.game);
 
 		game.removeAll();
 		game.add(this);
 		game.revalidate();
 		game.repaint();
 	}
+	
+	
 
 
 	/*
 	private boolean gamePlaying = true;
-	Random rand = new Random();
 	
 	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
 				Data verbs,Data nouns) {
@@ -141,12 +140,7 @@ public class GameEngine {
 		roomDetails[1] = roomDescription.substring(1,roomDescription.length()-4);
 		roomDetails[2] = roomDescription.substring(roomDescription.length()-4,roomDescription.length());
 
-		if (room == 39) {
-			int begin = rand.nextInt(5);
-			roomDetails[2] = "101110100".substring(begin,begin+4);
-		} else if (room == 20) {
-			roomDetails[2] = "1110";
-		}
+
 		
 		return roomDetails;
 	}
@@ -1253,4 +1247,5 @@ public class GameEngine {
 				- Added process command method
 7 November 2024 - Added array to hold three previous commands
 8 November 2024 - Change frame to panel and added refresh options.
+9 November 2024 - Began working on processing the command
 */

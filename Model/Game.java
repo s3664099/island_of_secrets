@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.util.Random;
+
 import Data.Constants;
 import Data.Item;
 import Data.Location;
@@ -22,6 +24,7 @@ public class Game {
 	private Item[] itemList = new Item[noItems+1];
 	private String message = "Let your quest begin!";
 	private String[] commands = {"","",""};
+	private Random rand = new Random();
 
 	public Game() {
 				
@@ -63,7 +66,7 @@ public class Game {
 			if(item != null) {
 				
 				//If the items are visible display them.
-				if(item.checkLocation(roomNumber) || item.getFlag()<1) {
+				if(item.checkLocation(roomNumber) && item.getFlag()<1) {
 					
 					count ++;
 					if (count>1) {
@@ -86,6 +89,19 @@ public class Game {
 		
 		int[] exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
+		
+		if (roomNumber == 39) {
+			int randExit = rand.nextInt(5);
+			int[] exitArray = {1,0,1,1,1,0,1,0,0};
+			int count = 0;
+			
+			for (int x=randExit;x<randExit+4;x++) {
+				exitNumbers[count]=exitArray[x];
+				count ++;
+			}
+		}
+		
+		//IF R=39 THEN LET D$=MID$("101110100",FNR(5),4)
 		
 		if (exitNumbers[0] == 0) {
 			exits = addExit("North",exits);
