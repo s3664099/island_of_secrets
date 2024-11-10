@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 4 November 2024
+Version: 1.6
+Date: 10 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,8 +35,7 @@ public class Game {
 		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
 			
 			Location newLocation = new Location(RawData.getLocation(roomNumber),
-												RawData.getPrepositions(),
-												RawData.getDescription(roomNumber));
+												RawData.getPrepositions());
 			locationList[roomNumber+1] = newLocation;
 		}
 		
@@ -45,8 +44,7 @@ public class Game {
 						
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
-									RawData.getObjects(itemNumber),
-									RawData.getObjectDescription(itemNumber));			
+									RawData.getObjects(itemNumber));			
 			itemList[itemNumber] = newItem;;
 		}
 	}
@@ -171,4 +169,5 @@ public class Game {
  * 4 November 2024 - Added method to retrieve items at the player's location.
  * 5 November 2024 - Updated get items method. Added get exits method
  * 				   - added methods to deal with the message
+ * 10 November 2024 - Removed Description for location & items
  */

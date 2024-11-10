@@ -9,13 +9,15 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import Data.RawData;
+
 public class Commands {
 	
 	String[] splitCommand = {"",""};
 	int verbNo;
 	int nounNo;
 	
-	public Commands(String command) {
+	public Commands(String command,Game game) {
 				
 		command = command.toLowerCase();
 		String[] commands = command.split(" ");
@@ -23,20 +25,25 @@ public class Commands {
 		
 		if (commands.length>1) {
 			splitCommand[1] = command.substring(commands[0].length()).trim();
+		} else {
+			game.setMessage("Most commands need two words");
 		}
-		
-		
 	}
 	
-	private int getVerbNumber(String verb) {
+	public int getVerbNumber() {
 		
-		int verbNumber = -1;
-		//Goes through each of the verbs and matches. If match then returns the number
-		//Otherwise returns -1 indicating 
-		//240 FOR I=1 TO V
-		//250 IF LEFT$(C$,3)=MID$(V$,3*(I-1)+1,3) THEN LET A=I
-		//260 NEXT I
-		//270 GOSUB 760
+		int verbNumber = 0;
+		int verbCount = 0;
+		
+		for (String command:RawData.getVerbs()) {
+			verbCount ++;
+			System.out.println(command);
+			if (splitCommand[0].toLowerCase().equals(command)) {
+				verbNumber = verbCount;
+			}
+		}
+		
+		System.out.println(verbNumber);
 				
 		return verbNumber;
 	}

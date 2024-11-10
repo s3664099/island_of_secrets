@@ -94,16 +94,16 @@ public class RawData {
 	};
 		
 	private static String[] objects = {
-		"a shiny apple",
-		"a fossilised egg",
-		"a lily flower",
-		"an earthenware jug",
-		"a dirty old rag",
-		"a ragged parchment",
-		"a flickering torch",
-		"a blistering pebble",
-		"A WOODMAN'S AXE",
-		"A COIL OF ROPE",
+		"A shiny apple",
+		"A fossilised egg",
+		"A lily flower",
+		"An earthenware jug",
+		"A dirty old rag",
+		"A ragged parchment",
+		"A flickering torch",
+		"A blistering pebble",
+		"A woodman's axe",
+		"A coil of rope",
 		"A RUGGED STAFF",
 		"A CHIP OF MARBLE",
 		"A POLISH COAL",
@@ -153,52 +153,7 @@ public class RawData {
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
 		"up","down","in","out"
 	};
-	
-	private static final String[] nounsLong = {
-		"Shiny apple",
-		"Fossilised egg",
-		"Lily flower",
-		"Earthenware jug",
-		"Dirty old rag",
-		"Ragged parchment",
-		"Flickering torch",
-		"Blistering pebble",
-		"Woodman's axe",
-		"Coil of rope",
-		"Rugged staff",
-		"Chip of marble",
-		"Polished coal",
-		"Piece of flint",
-		"Geologist's hammer",
-		"Wild Canyon Beast",
-		"Grain loaf",
-		"Juicy melon",
-		"Biscuits",
-		"Growth of mushrooms",
-		"Bottle of water",
-		"Flagon of wine",
-		"Flowing sap",
-		"Sparkling freshwater spring",
-		"Boatman",
-		"Strapped oak chest",
-		"Fracture in the column",
-		"Mouth-like opening",
-		"Open trapdoor",
-		"Parched Dessicated Villager",
-		"A still of bubbling green liquid",
-		"A tough skinned swampman",
-		"The Sage of the Lillies",
-		"Wall after wall of evil books",
-		"A number of softer roots",
-		"Fierce living storm that follows you",
-		"Malevolent wraiths who push you towards the well",
-		"His dreaded cloak of entropy",
-		"Omegan the Evil One",
-		"An immense snake wound around the hut",
-		"A group of aggressive logmen",
-		"The Ancient Scavenger","Median"		
-	};
-		
+			
 	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
 	private static String itemFlag = "90101191001109109000901000111000000100000010000000000";
 	
