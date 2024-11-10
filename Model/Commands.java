@@ -14,21 +14,45 @@ public class Commands {
 	String[] splitCommand = {"",""};
 	int verbNo;
 	int nounNo;
-	Game game;
-	Player player;
 	
-	public Commands(String command,Player player, Game game) {
-		
-		this.game = game;
-		this.player = player;
-		
+	public Commands(String command) {
+				
 		command = command.toLowerCase();
 		String[] commands = command.split(" ");
 		splitCommand[0] = commands[0];
 		
 		if (commands.length>1) {
 			splitCommand[1] = command.substring(commands[0].length()).trim();
-		}	
+		}
+		
+		
+	}
+	
+	private int getVerbNumber(String verb) {
+		
+		int verbNumber = -1;
+		//Goes through each of the verbs and matches. If match then returns the number
+		//Otherwise returns -1 indicating 
+		//240 FOR I=1 TO V
+		//250 IF LEFT$(C$,3)=MID$(V$,3*(I-1)+1,3) THEN LET A=I
+		//260 NEXT I
+		//270 GOSUB 760
+				
+		return verbNumber;
+	}
+	
+	private int getNounNumber(String noun) {
+		
+		int nounNumber = -1;
+		//Goes through two sets of nouns - simply and full
+		//If simply found all good if not checks for full
+		//760 IF LEN(X$)<3 THEN LET X$=X$+"???"
+		//		770 FOR I=1 TO W
+		//		780 IF LEFT$(X$,3)=MID$(Z$,3*(I-1)+1,3) THEN LET O=I
+		//		790 NEXT I:IF O=0 THEN LET O=52
+		//		800 RETURN
+		
+		return nounNumber;
 	}
 }
 

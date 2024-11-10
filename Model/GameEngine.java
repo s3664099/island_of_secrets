@@ -75,7 +75,7 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
-		Commands processCommands = new Commands(command,player,this.game);
+		Commands processCommands = new Commands(command);
 
 		game.removeAll();
 		game.add(this);

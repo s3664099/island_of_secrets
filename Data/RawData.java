@@ -47,14 +47,14 @@ public class RawData {
 		"4a stretch of featureless dunes1100",
 		"1a group of tall trees1010",
 		"7a narrow ledge at the summit of the canyon0011",
-		"2A MONSTEROUS PORTAL IN THE CASTLE WALL0011",
-		"4A CHAMBER INCHES DEEP WITH DUST0001",
-		"4HERE1111",
-		"2A CARVED ARCHWAY0010",
-		"4A SMALL HUT IN THE LOG SETTLEMENT0111",
-		"1A HUGE SPLIT-LOG TABLE1001",
-		"4THE PORCH OF THE LOGMEN'S CABIN0110",
-		"4GRANDPA'S SHACK1101",
+		"2a monsterous portal in the castle wall0011",
+		"4a chamber inches deep with dust0001",
+		"4here!!!!!1111",
+		"2a carved archway0010",
+		"4a small hut in the log settlement0111",
+		"1a huge split-log table1001",
+		"4the porch of the logman's cabin0110",
+		"4grandpa's shack1101",
 		"3A CLEARING IN THE TREES BY A RICKETY SHACK0010",
 		"4THE NEST OF A HUGE DACTYL0111",
 		"6THE CASTLE OF DARK SECRETS BY TWO HUGE STONES0011",
@@ -92,90 +92,7 @@ public class RawData {
 		"4A TUNNEL INTO ONE OF THE TREE STUMPS1100",
 		"4A HOLLOW CHAMBER MANY METERS IN DIAMETER1110"		
 	};
-	
-	private static String[] description = {
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		""
-	};
-	
+		
 	private static String[] objects = {
 		"a shiny apple",
 		"a fossilised egg",
@@ -220,53 +137,7 @@ public class RawData {
 		"A GROUP OF AGGRESSIVE LOGMEN",
 		"THE ANCIENT SCAVENGER","MEDIAN"
 	};
-	
-	private static String[] objectDescription = {
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		};
-	
+		
 	private static final String[] verbs = {
 		"n","s","e","w","go","get","take","give","drop","leave","eat","drink","ride",
 		"open","pick","chop","chip","tap","break","fight","strike","attack","hit",
@@ -281,6 +152,51 @@ public class RawData {
 		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
 		"up","down","in","out"
+	};
+	
+	private static final String[] nounsLong = {
+		"Shiny Apple",
+		"Fossilised Egg",
+		"Lily Flower",
+		"Earthenware Jug",
+		"Dirty Old Rag",
+		"Ragged Parchment",
+		"Flickering Torch",
+		"Blistering Pebble",
+		"Woodman's Axe",
+		"Coil of Rope",
+		"Rugged Staff",
+		"Chip of Marble",
+		"Polished Coal",
+		"Piece of Flint",
+		"Geologist's Hammer",
+		"Wild Canyon Beast",
+		"Grain Loaf",
+		"Juicy Melon",
+		"Biscuits",
+		"Growth of Mushrooms",
+		"Bottle of Water",
+		"Flagon of Wine",
+		"Flowing Sap",
+		"Sparkling Freshwater Spring",
+		"Boatman",
+		"Strapped Oak Chest",
+		"Fracture in the Column",
+		"Mouth-like Opening",
+		"Open Trapdoor",
+		"Parched Dessicated Villager",
+		"A STILL OF BUBBLING GREEN LIQUID",
+		"A TOUGH SKINNED SWAMPMAN",
+		"THE SAGE OF THE LILLIES",
+		"WALL AFTER WALL OF EVIL BOOKS",
+		"A NUMBER OF SOFTER ROOTS",
+		"FIERCE LIVING STORM THAT FOLLOWS YOU",
+		"MALEVOLENT WRAITHS WHO PUSH YOU TOWARDS THE WELL",
+		"HIS DREADED CLOAK OF ENTROPY",
+		"OMEGAN THE EVIL ONE",
+		"AN IMMENSE SNAKE WOUND AROUND THE HUT",
+		"A GROUP OF AGGRESSIVE LOGMEN",
+		"THE ANCIENT SCAVENGER","MEDIAN"		
 	};
 		
 	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
@@ -301,15 +217,7 @@ public class RawData {
 	public static String[] getPrepositions() {
 		return prepositions;
 	}
-	
-	public static String getDescription(int number) {
-		return description[number];
-	}
-	
-	public static String getObjectDescription(int number) {
-		return objectDescription[number-1];
-	}
-	
+		
 	public static char getItemLocation(int number) {
 		return itemLocation.charAt(number-1);
 	}
