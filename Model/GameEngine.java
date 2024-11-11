@@ -77,6 +77,7 @@ public class GameEngine {
 		
 		Commands processCommands = new Commands(command,this.game);
 		int verbNumber = processCommands.getVerbNumber();
+		int nounNumber = processCommands.getNounNumber();
 		
 		//verbNumber starts at 1 - 0 is no verb
 		//280 LET B$="":IF A=0 THEN LET A=V+1 - Nonsense verb

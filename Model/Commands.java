@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 9 November 2024
+Version: 1.2
+Date: 11 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -48,21 +48,27 @@ public class Commands {
 		return verbNumber;
 	}
 	
-	private int getNounNumber(String noun) {
+	public int getNounNumber() {
 		
-		int nounNumber = -1;
-		//Goes through two sets of nouns - simply and full
-		//If simply found all good if not checks for full
-		//760 IF LEN(X$)<3 THEN LET X$=X$+"???"
-		//		770 FOR I=1 TO W
-		//		780 IF LEFT$(X$,3)=MID$(Z$,3*(I-1)+1,3) THEN LET O=I
-		//		790 NEXT I:IF O=0 THEN LET O=52
-		//		800 RETURN
+		int nounNumber = 52;
+		int nounCount = 0;
+		
+		//Only called if more than two words
+		if (splitCommand.length>1) {
+			for (String command:RawData.getNouns()) {
+				nounCount ++;
+				System.out.println(command);
+				if (splitCommand[1].toLowerCase().equals(command)) {
+					nounNumber = nounCount;
+				}
+			}
+		}
 		
 		return nounNumber;
 	}
 }
 
 /* 9 November 2024 - Created method
- *
+ * 10 November 2024 - Added the verb count method
+ * 11 November 2024 - Added the noun count method
  */
