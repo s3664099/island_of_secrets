@@ -148,7 +148,7 @@ public class RawData {
 	private static final String[] nouns = {
 		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",
 		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits",
-		"mushoorms","bottle","flagon","sap","water","boatman","chest","column","opening",
+		"mushrooms","bottle","flagon","sap","water","boatman","chest","column","opening",
 		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
 		"up","down","in","out"
@@ -174,10 +174,12 @@ public class RawData {
 	}
 		
 	public static char getItemLocation(int number) {
+		System.out.println(itemLocation.charAt(number-1)+" "+number);
 		return itemLocation.charAt(number-1);
 	}
 	
 	public static char getItemFlag(int number) {
+		System.out.println(itemFlag.charAt(number-1)+" "+number);
 		return itemFlag.charAt(number-1);
 	}
 	

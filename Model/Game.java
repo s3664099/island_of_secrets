@@ -19,7 +19,7 @@ import Data.RawData;
 public class Game {
 	
 	private int noRooms = Constants.noRooms;
-	private int noItems = Constants.noItems;
+	private int noItems = Constants.noNouns;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
 	private String message = "Let your quest begin!";
@@ -41,11 +41,17 @@ public class Game {
 		
 		//Builds the item objects
 		for (int itemNumber=1;itemNumber<noItems;itemNumber++) {
-						
+			
+			String item = "";
+			
+			if(itemNumber<Constants.noItems) {
+				item = RawData.getObjects(itemNumber);
+			}
+			
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
-									RawData.getObjects(itemNumber));			
-			itemList[itemNumber] = newItem;;
+									item);			
+			itemList[itemNumber] = newItem;
 		}
 	}
 	
@@ -164,6 +170,14 @@ public class Game {
 	
 	public String getCommand(int number) {
 		return commands[number];
+	}
+	
+	public Item getItem(int itemNumber) {
+		
+		System.out.println(itemList.length);
+		System.out.println(itemList[52]);
+		
+		return itemList[itemNumber];
 	}
 }
 

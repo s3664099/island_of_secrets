@@ -2,14 +2,15 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 9 November 2024
+Version: 1.7
+Date: 11 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
 import Data.Constants;
+import Data.Item;
 import View.GamePanel;
 
 public class GameEngine {
@@ -90,6 +91,11 @@ public class GameEngine {
 			this.game.setMessage("What!!");
 		}
 		
+		
+		this.player.move();
+		Item item = this.game.getItem(nounNumber);
+		String codedCommand = processCommands.codeCommand(this.player.getRoom(),item);
+				
 		game.removeAll();
 		game.add(this);
 		game.revalidate();
@@ -1261,4 +1267,5 @@ public class GameEngine {
 7 November 2024 - Added array to hold three previous commands
 8 November 2024 - Change frame to panel and added refresh options.
 9 November 2024 - Began working on processing the command
+11 November 2024 - Got the command processing working and now working on coding the command
 */

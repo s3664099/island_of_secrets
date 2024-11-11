@@ -52,8 +52,11 @@
 300 IF A>V OR O=52 THEN LET F$=W$+C$+" "+X$
 310 IF A>V AND O=52 THEN LET F$="WHAT!"
 
+- Time reduction
 320 L=L-1:LET Y=FNS(2)
 330 GOSUB 4500
+
+-- Calls main command routine
 340 ON INT(A/10)+1 GOSUB 590,600,610,620,630,630,640
 350 IF R=61 THEN LET X=X+FNR(2)+1
 360 IF R=14 AND FNR(3)=1 THEN LET Y=Y-1:LET F$="YOU ARE BITTEN"
@@ -505,6 +508,7 @@
 4450 DEF FNS(Z)=Y-(E/C4+.1)
 4460 RETURN 
 
+-- Builds a coded noun - Object Number, Location, Flag, and current room
 4500 B$=STR$(O)+STR$(L(O))+STR$(F(O))+STR$(R)
 4510 B$=STR$(VAL(B$)):B$=RIGHT$(B$,LEN(B$)-1)
 4520 RETURN

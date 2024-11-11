@@ -48,6 +48,10 @@ public class Item {
 	public int getFlag() {
 		return this.itemFlag;
 	}
+	
+	public int getLocation() {
+		return this.itemLocation;
+	}
 
 }
 /*
@@ -55,4 +59,5 @@ public class Item {
  * 4 November 2024 - Added code to retrieve name & location
  * 5 November 2024 - Added section to retrieve item flag
  * 10 November 2024 - Removed description field
+ * 11 November 2024 - Added method to retrieve the item location
  */

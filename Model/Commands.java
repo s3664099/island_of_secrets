@@ -10,15 +10,16 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import Data.Constants;
+import Data.Item;
 import Data.RawData;
 
 public class Commands {
 	
-	String[] splitCommand = {"",""};
-	String[] commands;
-	int verbNo;
-	int nounNo;
-	String codedCommand;
+	private String[] splitCommand = {"",""};
+	private String[] commands;
+	private int verbNo;
+	private int nounNo;
+	private String codedCommand;
 	
 	public Commands(String command,Game game) {
 				
@@ -58,9 +59,10 @@ public class Commands {
 		if (commands.length>1) {
 			for (String command:RawData.getNouns()) {
 				nounCount ++;
-				
+								
 				if (splitCommand[1].toLowerCase().equals(command)) {
 					nounNumber = nounCount;
+					System.out.println(nounNumber);
 				}
 			}
 		} else {
@@ -69,10 +71,21 @@ public class Commands {
 		
 		return nounNumber;
 	}
+	
+	public String codeCommand(int room, Item item) {
+		
+		//Command Coding
+		//4500 B$=STR$(O)+STR$(L(O))+STR$(F(O))+STR$(R)
+		//4510 B$=STR$(VAL(B$)):B$=RIGHT$(B$,LEN(B$)-1)
+		//4520 RETURN
+		
+		return "";
+	}
 }
 
 /* 9 November 2024 - Created method
  * 10 November 2024 - Added the verb count method
  * 11 November 2024 - Added the noun count method
  * 					- Got the command splitting working and sending correct errors
+ * 					- Added method to process the coded command.
  */

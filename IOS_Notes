@@ -18,7 +18,7 @@ I$  - Array of particaples (7)
 L() - Array holding item locations
 	- Is the ASCII value of each of the characters in H$
 L	- Time Remaining
-O	- Noun Choses
+O	- Noun Chosen
 Q$	- Item Code
 R	- Current Room
 W	- number of objects (Constant 51)
