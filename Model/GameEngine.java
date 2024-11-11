@@ -9,6 +9,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import Data.Constants;
 import View.GamePanel;
 
 public class GameEngine {
@@ -79,13 +80,16 @@ public class GameEngine {
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
-		//verbNumber starts at 1 - 0 is no verb
-		//280 LET B$="":IF A=0 THEN LET A=V+1 - Nonsense verb
-		//290 IF X$="???" THEN LET F$="MOST ACTIONS NEED TWO WORDS"
-		//300 IF A>V OR O=52 THEN LET F$=W$+C$+" "+X$ - Either nonsense verb or noun
-		//310 IF A>V AND O=52 THEN LET F$="WHAT!" - both nonsense
-		
+		//Either verb or noun doesn't exist
+		if (verbNumber>Constants.noVerbs || nounNumber == 52) {
+			this.game.setMessage("You can't "+command);
+		} 
 
+		//Neither exists
+		if (verbNumber>Constants.noVerbs && nounNumber == 52) {
+			this.game.setMessage("What!!");
+		}
+		
 		game.removeAll();
 		game.add(this);
 		game.revalidate();
