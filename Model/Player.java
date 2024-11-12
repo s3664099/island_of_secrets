@@ -56,7 +56,7 @@ public class Player {
 		return String.format("Strength: %.2f         wisdom: %d", this.strength,this.wisdom);
 	}
 	
-	public void move() {
+	public void update() {
 		this.timeRemaining --;
 		this.strength = (float) (this.strength-(this.weight/Constants.noItems+.1));
 	}

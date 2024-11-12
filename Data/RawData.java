@@ -174,12 +174,10 @@ public class RawData {
 	}
 		
 	public static char getItemLocation(int number) {
-		System.out.println(itemLocation.charAt(number-1)+" "+number);
 		return itemLocation.charAt(number-1);
 	}
 	
 	public static char getItemFlag(int number) {
-		System.out.println(itemFlag.charAt(number-1)+" "+number);
 		return itemFlag.charAt(number-1);
 	}
 	

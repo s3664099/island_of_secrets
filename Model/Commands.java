@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.2
-Date: 11 November 2024
+Version: 1.3
+Date: 13 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -31,7 +31,6 @@ public class Commands {
 			splitCommand[1] = command.substring(commands[0].length()).trim();
 		} else {
 			game.setMessage("Most commands need two words");
-			System.out.println("One Word");
 		}
 	}
 	
@@ -62,7 +61,6 @@ public class Commands {
 								
 				if (splitCommand[1].toLowerCase().equals(command)) {
 					nounNumber = nounCount;
-					System.out.println(nounNumber);
 				}
 			}
 		} else {
@@ -72,14 +70,12 @@ public class Commands {
 		return nounNumber;
 	}
 	
-	public String codeCommand(int room, Item item) {
+	public String codeCommand(int room, int nounNumber, Item item) {
 		
-		//Command Coding
-		//4500 B$=STR$(O)+STR$(L(O))+STR$(F(O))+STR$(R)
-		//4510 B$=STR$(VAL(B$)):B$=RIGHT$(B$,LEN(B$)-1)
-		//4520 RETURN
-		
-		return "";
+		String codedNoun = String.format("%d%d%d%d",nounNumber,item.getLocation(),item.getFlag(),room);
+		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
+				
+		return codedNoun;
 	}
 }
 
@@ -88,4 +84,5 @@ public class Commands {
  * 11 November 2024 - Added the noun count method
  * 					- Got the command splitting working and sending correct errors
  * 					- Added method to process the coded command.
+ * 12 November 2024 - Completed the codeCommand method
  */

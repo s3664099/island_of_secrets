@@ -172,11 +172,7 @@ public class Game {
 		return commands[number];
 	}
 	
-	public Item getItem(int itemNumber) {
-		
-		System.out.println(itemList.length);
-		System.out.println(itemList[52]);
-		
+	public Item getItem(int itemNumber) {		
 		return itemList[itemNumber];
 	}
 }
