@@ -77,7 +77,7 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
-		Commands processCommands = new Commands(command,this.game);
+		CommandProcess processCommands = new CommandProcess(command,this.game);
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
