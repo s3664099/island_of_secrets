@@ -83,9 +83,11 @@ public class CommandProcess {
 		return codedNoun;
 	}
 	
-	public void executeCommand(Game game,Player player) {
+	//Executes the command
+	public void executeCommand(Game game,Player player,int nounNumber) {
 		
-		this.command = new Commands(verbNo,nounNo,codedCommand);
+		nounNo = nounNumber;
+		this.command = new Commands(verbNo,nounNumber,codedCommand);
 		
 		//Movement Command
 		if ((verbNo>0 || verbNo<6)) {

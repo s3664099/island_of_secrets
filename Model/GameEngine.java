@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.8
-Date: 12 November 2024
+Version: 1.9
+Date: 13 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -99,7 +99,7 @@ public class GameEngine {
 		this.player.update();
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-		
+		processCommands.executeCommand(this.game, player, nounNumber);
 		
 		game.removeAll();
 		game.add(this);
@@ -111,209 +111,25 @@ public class GameEngine {
 
 
 	/*
-	private boolean gamePlaying = true;
+
 	
-	public Game(Data locations, Data objects, Data prepositions, Data code_L, Data code_F,
-				Data verbs,Data nouns) {
-		this.locations = locations;
-		this.objects = objects;
-		this.prepositions = prepositions;
-		this.itemLocation = code_L;
-		this.itemFlag = code_F;
-		this.verbs = verbs;
-		this.nouns = nouns;
-	}
+
 	
-	public void run() {
-				
-		while (this.gamePlaying) {
-			ClearScreen();
-			String exits = Display(this.timeRemaining,this.strength,this.wisdom,this.room);
-			String action = getAction("%-10sWHAT WILL YOU DO: ");
-			this.timeRemaining --;
-			this.strength -= (this.weight/this.noItems)+.1;
-			processAction(action,exits);
-		}
-		
-		int timeMod = 0;
-		if (this.timeRemaining<640) {
-			timeMod = -1;
-		}
-		
-		//Computes final score
-		int score = (int) (this.strength+this.wisdom+(Math.abs(this.timeRemaining/7*timeMod)));
-		System.out.println(this.message);
-		System.out.printf("YOUR FINAL SCORE=%d%n",score);
-		System.out.println("GAME OVER");
-			
-	}
-	
-	//Retrieves the location details and splits the code
-	private String[] getRoom(Data rooms,int room) {
-		
-		String[] roomDetails = new String[3];
-		int newRoom = room;
-		
-		if (room == 20) {
-			newRoom = rand.nextInt(noRooms);
-			newRoom ++;
-		}
-		
-		String roomDescription = rooms.getStringData(newRoom);
-		roomDetails[0] = roomDescription.substring(0,1);		
-		roomDetails[1] = roomDescription.substring(1,roomDescription.length()-4);
-		roomDetails[2] = roomDescription.substring(roomDescription.length()-4,roomDescription.length());
 
 
-		
-		return roomDetails;
-	}
 
-	//Checks if there are any visible items in the room
-	private String getItems(Data items, int roomNumber) {
-		
-		int numItems = 0;
-		String itemDetails = "";
-		
-		for (int x=1;x<this.noItems+1;x++) {
-			
-			if (this.itemLocation.getIntData(x) == roomNumber &&
-					this.itemFlag.getIntData(x)<1) {
-				
-				if (numItems>0) {
-					itemDetails += ", ";
-				}
-				itemDetails += items.getStringData(x);
-				numItems ++;
-			}		
-		}
-		
-		if (numItems>0) {
-			itemDetails = String.format("YOU SEE %s",itemDetails);
-		}
-		
-		return itemDetails;
-	}	
 	
-	//Clears the screen (though does not work on the console).
-	private void ClearScreen() {
-		
-       try {
-		Runtime.getRuntime().exec("clear");
-       } catch (IOException e) {
-		e.printStackTrace();
-       }		
-	}
-	
-	//Displays the contents of the room.
-	private String Display(int timeRemaining,float strength,int wisdom,int roomNumber) {
-		
-		//Gets details of location and any items 
-		String[] roomDetails = getRoom(this.locations,roomNumber);
-		String roomDescription = String.format("YOU ARE %s %s", 
-				prepositions.getStringData(Integer.parseInt(roomDetails[0])),roomDetails[1]);
-		String itemDetails = getItems(this.objects,roomNumber);
-		
-		System.out.printf("%-10sISLAND OF SECRETS%-20sTIME REMAINING: %d%n"," "," ",timeRemaining);
-		System.out.printf("%-5s%s%n"," ",this.line);
-		System.out.printf("%-10sSTRENGTH = %f%-23sWISDOM = %d%n"," ",strength," ",wisdom);
-		System.out.printf("%-5s%s%n%-10s%s%n"," ",this.line," ",roomDescription);
-		
-		//If there are any items, displays item line
-		if (itemDetails.length()>0) {
-			System.out.printf("%-10s%s%n"," ",itemDetails);
-		}
-		
-		System.out.printf("%-5s%s%n%-10s%s%n%n"," ",this.line," ",this.message);
-		this.message = "";
-		
-		return roomDetails[2];
-	}
-	
-	private String getAction(String query) {
-		
-		String action = "";
 
-	    Scanner myObj = new Scanner(System.in);
-	    System.out.printf(query," ");
+	
 
-	    action = myObj.nextLine();
-	    
-	    //System.out.printf("%n%n", null);
-		
-		return action;
-	}
 	
-	//Move player to new location when running for shelter
-	private int getIntInput() {
-		
-		boolean correct = false;
-		Scanner myObj = new Scanner(System.in);
-		String option = "";
-		int intOption = 0;
-		
-		while (!correct) {
-			option = myObj.nextLine();
-			
-			if (option.equals("1")) {
-				intOption = 44;
-				correct = true;
-			} else if (option.equals("2")) {
-				intOption = 11;
-				correct = true;				
-			} else if (option.equals("3")) {
-				intOption = 41;
-				correct = true;					
-			} else {
-				System.out.println("Please enter 1,2 or 3");
-			}
-		}
-		return intOption;
-	}
+
 	
-	//Function to location the word in the word bank
-	private int getWords(String action, int noWords, Data wordBank) {
-		
-		int wordFound = 0;
-		int wordNo = 1;
-		
-		if (action.length()<3) {
-			action = String.format("%s%s", action,"???");
-		}
-				
-		while (wordNo<noWords+1) {
-			
-			if (action.startsWith(wordBank.getStringData(wordNo))) {
-				wordFound = wordNo;
-				wordNo = 99;
-			}
-			wordNo ++;
-		}
-		
-		if (wordFound == 0) {
-			wordFound = noWords+1;
-		}
-		
-		return wordFound;
-		
-	}
+
 	
-	//Codes the noun, as occurs in the game
-	private String codeNoun(int nounFound) {
-				
-		String codedNoun = String.format("%d%d%d%d", nounFound,this.itemLocation.getIntData(nounFound),
-				this.itemFlag.getIntData(nounFound),this.room);
-		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
-		
-		if (codedNoun.length()>1) {
-			codedNoun = codedNoun.substring(0,codedNoun.length());
-		}
-		
-		System.out.println(codedNoun);
-						
-		return codedNoun;
-		
-	}	
+
+	
+
 	
 	private void processAction(String action,String exits) {
 		
@@ -345,9 +161,7 @@ public class GameEngine {
 		
 		System.out.println(verbFound);
 		
-		//810
-		if (verbFound>0 && verbFound<6) {
-			move(codedNoun,nounFound,verbFound,exits);
+
 
 		//1080
 		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15 || verbFound == 29) {
@@ -688,15 +502,6 @@ public class GameEngine {
 			} else if (this.room == 51 && direction == 3) {
 				this.message = "THE DOOR IS BARRED!";
 			} else {
-				if(exits.charAt(direction-1) == '0') {
-					this.room = this.room + Integer.parseInt("-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
-					moved = true;
-					this.message = "OK";
-				}
-				
-				if (direction<1 || !moved) {
-					this.message = "YOU CAN'T GO THAT WAY";
-				}
 								
 				if (this.room == 33 && this.itemLocation.getIntData(16) == 0) {
 					this.itemLocation.updateIntData(16, rand.nextInt(4));
@@ -1274,4 +1079,5 @@ public class GameEngine {
 9 November 2024 - Began working on processing the command
 11 November 2024 - Got the command processing working and now working on coding the command
 12 November 2024 - Added extra parameter to create coded command being noun number
+13 November 2024 - Added code to execute the command
 */
