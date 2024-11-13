@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
-Date: 11 November 2024
+Version: 1.8
+Date: 13 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -89,6 +89,7 @@ public class Game {
 		return items;
 	}
 	
+	//Returns a display of the available exits.
 	public String getExits(int roomNumber) {
 		
 		int[] exitNumbers = locationList[roomNumber].getExits();
@@ -104,8 +105,6 @@ public class Game {
 				count ++;
 			}
 		}
-		
-		//IF R=39 THEN LET D$=MID$("101110100",FNR(5),4)
 		
 		if (exitNumbers[0] == 0) {
 			exits = addExit("North",exits);
@@ -128,6 +127,18 @@ public class Game {
 		}
 		
 		return exits;
+	}
+	
+	//Checks if it is possible to move through the exit
+	public boolean checkExit(int room, int direction) {
+		
+		boolean open = false;
+		
+		if (locationList[room].getExits()[direction]==0) {
+			open = true;
+		}
+		
+		return open;
 	}
 	
 	//Checks to see if an exit has already been added
@@ -187,4 +198,5 @@ public class Game {
  * 				   - added methods to deal with the message
  * 10 November 2024 - Removed Description for location & items
  * 11 November 2024 - Added second method so that only some messages are extended.
+ * 13 November 2024 - Added method to check if exit available
  */

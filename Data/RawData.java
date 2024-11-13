@@ -32,7 +32,7 @@ public class RawData {
 		"7edge of the well0000",
 		"4the room of secret visions1110",
 		"4Snelm's inner chamber0111",
-		"3the southern edge of the forest1010",
+		"3the southern edge of the forest0101",
 		"7a leafy path1000",
 		"3a fork in the path0100",
 		"7an apparently unclimable rocky path1100",

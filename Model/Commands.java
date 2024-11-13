@@ -26,7 +26,7 @@ public class Commands {
 	public void move(Game game,Player player) {
 		
 		int direction = 0;
-		int c=0; //????
+		boolean haveMoved=false;
 		
 		//Verb only
 		if (this.noun == 52) {
@@ -53,20 +53,23 @@ public class Commands {
 			940 IF R=25 AND F(16)+L(16)<>-1 AND D=3 THEN LET F$="TOO STEEP TO CLIMB":RETURN
 			950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN */
 		
-		if (direction>0) {}
-
-		/*if(exits.charAt(direction-1) == '0') {
-			this.room = this.room + Integer.parseInt("-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
-			moved = true;
-			this.message = "OK";
+		if (direction>0) {
+			if (game.checkExit(player.getRoom(),direction-1)) {
+				int newRoom = player.getRoom() + Integer.parseInt(
+						"-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
+				player.setRoom(newRoom);
+				game.setMessage("Ok");
+				haveMoved = true;
+			}
 		}
 		
-		if (direction<1 || !moved) {
-			this.message = "YOU CAN'T GO THAT WAY";
-		}*/
-		//960 IFD>0THENIFMID$(D$,D,1)="0"THENR=R+VAL(MID$("-10+10+01-01",D*3+2,3)):C=1
-		//970 LET F$="0K"
-		//980 IF D<1 OR C=0 THEN LET F$=W$+"GO THAT WAY"
+		if (direction<1 || !haveMoved) {
+			game.setMessage("You can't go that way");
+		}
+
+
+
+
 		
 			/*990 IF R=33 AND L(16)=0 THEN L(16)=FNR(4):F(16)=0:F$="THE BEAST RUNS AWAY"
 			1000 IF R<>L(25) OR O<>25 THEN RETURN
@@ -82,6 +85,6 @@ public class Commands {
 	}
 }
 
-/* 13 November 2024 - Created File
+/* 13 November 2024 - Created File. Added code to move player
  * 
  */
