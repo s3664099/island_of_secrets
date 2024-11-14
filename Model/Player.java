@@ -15,7 +15,7 @@ import Data.Constants;
 
 public class Player {
 	
-	private int room = 23;
+	private int room = 37;
 	private int roomToDisplay = this.room;
 	private float strength = 100;
 	private int wisdom = 35;

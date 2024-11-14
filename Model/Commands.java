@@ -2,10 +2,12 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 13 November 2024
+Version: 1.1
+Date: 14 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
+//880 IF B$="490051" AND F(29)=0 THEN GOSUB 2110:RETURN - Poisonous Waters Minigame
 
 package Model;
 
@@ -35,16 +37,30 @@ public class Commands {
 			direction = this.noun-Constants.noItems;
 		}
 		
+		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
+			direction = 4;
+		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
+				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
+				   code.equals("490051")) {
+			direction = 1;
+		} else if (code.equals("510060")||code.equals("480056")) {
+			direction = 2;
+		} else if (code.equals("510044")||code.equals("510052")) {
+			direction = 3;
+		}
+		
 		
 		
 		/*
+		
+		
 			
-			830 IF B$="500012" OR B$="500053" OR B$="500045" THEN LET D=4
-			840 IF B$="500070" OR B$="500037" OR B$="510011" OR B$="510041" THEN LET D=1
-			850 IF B$="510043" OR B$="490066" OR B$="490051" THEN LET D=1
-			860 IF B$="510060" OR B$="480056" THEN LET D=2
-			870 IF B$="510044" OR B$="510052" THEN LET D=3
-			880 IF B$="490051" AND F(29)=0 THEN GOSUB 2110:RETURN
+			
+
+			
+
+			
+			
 			890 IF R=L(39) AND (X+Y<180 OR R=10) THEN LET F$=W$+"LEAVE!":RETURN
 			900 IF R=L(32) AND F(32)<1 AND D=3 THEN LET F$="HE WILL NOT LET YOU PASS":RETURN
 			910 IF R=47 AND F(44)=0 THEN LET F$="THE ROCKS MOVE TO PREVENT YOU":RETURN
@@ -52,6 +68,10 @@ public class Commands {
 			930 IF R=45 AND F(40)=0 AND D=4 THEN LET F$="HISSSS!":RETURN
 			940 IF R=25 AND F(16)+L(16)<>-1 AND D=3 THEN LET F$="TOO STEEP TO CLIMB":RETURN
 			950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN */
+		
+		if (direction>4) {
+			direction = 0;
+		}
 		
 		if (direction>0) {
 			if (game.checkExit(player.getRoom(),direction-1)) {
@@ -86,5 +106,7 @@ public class Commands {
 }
 
 /* 13 November 2024 - Created File. Added code to move player
+ * 14 November 2024 - Added code to handed in/out/up/down at certain locations
+ */
  * 
  */
