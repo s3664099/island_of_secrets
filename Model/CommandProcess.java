@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.4
-Date: 13 November 2024
+Version: 1.5
+Date: 14 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,7 @@ public class CommandProcess {
 	public CommandProcess(String command,Game game) {
 				
 		command = command.toLowerCase();
+		command = fixCommand(command);
 		commands = command.split(" ");
 		splitCommand[0] = commands[0];
 		
@@ -33,6 +34,31 @@ public class CommandProcess {
 		} else {
 			game.setMessage("Most commands need two words");
 		}
+	}
+	
+	private String fixCommand(String command) {
+		
+		if (command.equals("u") || command.equals("up")) {
+			command = "go up";
+		} else if (command.equals("d") || command.equals("down")) {
+			command = "go down";
+		} else if (command.equals("i") || command.equals("enter") ||
+				command.equals("inside") || command.equals("go inside")) {
+			command = "go in";
+		} else if (command.equals("o") || command.equals("exit") ||				
+				command.equals("outside") || command.equals("go outside")) {
+			command = "go out";
+		} else if (command.equals("north")) {
+			command = "n";
+		} else if (command.equals("south")) {
+			command = "s";
+		} else if (command.equals("east")) {
+			command = "e";
+		} else if (command.equals("west")) {
+			command = "w";
+		}
+		
+		return command;	
 	}
 	
 	public int getVerbNumber() {
@@ -104,4 +130,5 @@ public class CommandProcess {
  * 					- Added method to process the coded command.
  * 12 November 2024 - Completed the codeCommand method
  * 13 November 2024 - Stored the variables 
+ * 14 November 2024 - Added more options for movement
  */
