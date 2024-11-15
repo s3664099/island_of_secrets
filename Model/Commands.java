@@ -50,44 +50,63 @@ public class Commands {
 			direction = 3;
 		}
 		
+		//Prevents Player from leaving is Omegan present
+		if (player.getRoom() == game.getItem(39).getLocation() && 
+			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
+			game.setMessage("You can't leave!");
 		
+		//Swampman blocks
+		} else if (player.getRoom() == game.getItem(32).getLocation() && 
+					game.getItem(32).getFlag()<1 && direction == 3) {
+			game.setMessage("He will not let you pass.");
+		
+		//The Rocks
+		} else if (player.getRoom() == 47 && game.getItem(44).getFlag()==1) {
+			game.setMessage("The rocks move to prevent you");
+		} else if (player.getRoom() == 28 && game.getItem(7).getFlag()!=1) {
+			game.setMessage("The arms hold you fast");
+		
+		//Snake at grandpa's Shack
+		} else if (player.getRoom()==45 && game.getItem(40).getFlag()==0 && direction == 4) {
+			game.setMessage("Hisss!");
+		} 
 		
 		/*
-		
-		
 			
 			
-
 			
-
-			
-			
-			890 IF R=L(39) AND (X+Y<180 OR R=10) THEN LET F$=W$+"LEAVE!":RETURN
-			900 IF R=L(32) AND F(32)<1 AND D=3 THEN LET F$="HE WILL NOT LET YOU PASS":RETURN
-			910 IF R=47 AND F(44)=0 THEN LET F$="THE ROCKS MOVE TO PREVENT YOU":RETURN
-			920 IF R=28 AND F(7)<>1 THEN LET F$="THE ARMS HOLD YOU FAST":RETURN
-			930 IF R=45 AND F(40)=0 AND D=4 THEN LET F$="HISSSS!":RETURN
 			940 IF R=25 AND F(16)+L(16)<>-1 AND D=3 THEN LET F$="TOO STEEP TO CLIMB":RETURN
-			950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN */
+			950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN */		
 		
-		if (direction>4) {
-			direction = 0;
-		}
+			
+			
+
+			
+
+			
+			
+			
+			
+		//Can move
+		else {
+			if (direction>4) {
+				direction = 0;
+			}
 		
-		if (direction>0) {
-			if (game.checkExit(player.getRoom(),direction-1)) {
-				int newRoom = player.getRoom() + Integer.parseInt(
+			if (direction>0) {
+				if (game.checkExit(player.getRoom(),direction-1)) {
+					int newRoom = player.getRoom() + Integer.parseInt(
 						"-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
-				player.setRoom(newRoom);
-				game.setMessage("Ok");
-				haveMoved = true;
+					player.setRoom(newRoom);
+					game.setMessage("Ok");
+					haveMoved = true;
+				}
+			}
+		
+			if (direction<1 || !haveMoved) {
+				game.setMessage("You can't go that way");
 			}
 		}
-		
-		if (direction<1 || !haveMoved) {
-			game.setMessage("You can't go that way");
-		}
-
 
 
 

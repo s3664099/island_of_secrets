@@ -15,7 +15,7 @@ import Data.Constants;
 
 public class Player {
 	
-	private int room = 37;
+	private int room = 23;
 	private int roomToDisplay = this.room;
 	private float strength = 100;
 	private int wisdom = 35;
@@ -63,6 +63,10 @@ public class Player {
 	
 	public void setRoom(int newRoom) {
 		this.room = newRoom;
+	}
+	
+	public float getStrengthWisdon() {
+		return this.strength+this.wisdom;
 	}
 	
 }
