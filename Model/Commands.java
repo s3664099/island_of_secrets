@@ -8,6 +8,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 */
 
 //880 IF B$="490051" AND F(29)=0 THEN GOSUB 2110:RETURN - Poisonous Waters Minigame
+//Have code to change u & d to go up & go down. Also enter and exit to go in and out
 
 package Model;
 
@@ -106,7 +107,6 @@ public class Commands {
 }
 
 /* 13 November 2024 - Created File. Added code to move player
- * 14 November 2024 - Added code to handed in/out/up/down at certain locations
- */
+ * 14 November 2042 - Added code to handle special movement commands
  * 
  */
