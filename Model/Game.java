@@ -186,6 +186,11 @@ public class Game {
 	public Item getItem(int itemNumber) {		
 		return itemList[itemNumber];
 	}
+	
+	//Gets the sum of the item's flag and location
+	public int getItemFlagSum(int itemNumber) {
+		return itemList[itemNumber].getFlag() + itemList[itemNumber].getLocation();
+	}
 }
 
 /* 30 October 2024 - Created File

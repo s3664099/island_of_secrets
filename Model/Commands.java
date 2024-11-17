@@ -38,6 +38,7 @@ public class Commands {
 			direction = this.noun-Constants.noItems;
 		}
 		
+		//Sets direction for specific movement command
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
 			direction = 4;
 		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
@@ -50,6 +51,7 @@ public class Commands {
 			direction = 3;
 		}
 		
+		//Checks if player able to move
 		//Prevents Player from leaving is Omegan present
 		if (player.getRoom() == game.getItem(39).getLocation() && 
 			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
@@ -69,26 +71,18 @@ public class Commands {
 		//Snake at grandpa's Shack
 		} else if (player.getRoom()==45 && game.getItem(40).getFlag()==0 && direction == 4) {
 			game.setMessage("Hisss!");
-		} 
 		
-		/*
-			
-			
-			
-			940 IF R=25 AND F(16)+L(16)<>-1 AND D=3 THEN LET F$="TOO STEEP TO CLIMB":RETURN
-			950 IF R=51 AND D=3 THEN LET F$="THE DOOR IS BARRED!":RETURN */		
+		//Looks like need canyon beast to climb the path	
+		} else if (player.getRoom() == 25 && game.getItemFlagSum(16) != -1 && direction ==3) {
+			game.setMessage("Too steep to climb");
 		
-			
-			
-
-			
-
-			
-			
-			
-			
+		
+		} else if (player.getRoom() == 51 && direction == 3) {
+			game.setMessage("The door is barred!");
+		
 		//Can move
-		else {
+		} else {
+			
 			if (direction>4) {
 				direction = 0;
 			}
