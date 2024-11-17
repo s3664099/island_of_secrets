@@ -148,7 +148,7 @@ public class RawData {
 	private static final String[] nouns = {
 		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",
 		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits",
-		"mushrooms","bottle","flagon","sap","water","boatman","chest","column","opening",
+		"mushrooms","bottle","flagon","sap","water","boat","chest","column","opening",
 		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
 		"up","down","in","out"

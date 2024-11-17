@@ -2,23 +2,25 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.1
-Date: 14 November 2024
+Version: 1.2
+Date: 17 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 //880 IF B$="490051" AND F(29)=0 THEN GOSUB 2110:RETURN - Poisonous Waters Minigame
-//Have code to change u & d to go up & go down. Also enter and exit to go in and out
+//Add method to create a Frame that is designed to just display messages
 
 package Model;
 
 import Data.Constants;
+import java.util.Random;
 
 public class Commands {
 	
 	private int verb;
 	private int noun;
 	private String code;
+	private Random rand = new Random();
 	
 	public Commands(int verb,int noun, String code) {
 		this.verb = verb;
@@ -100,26 +102,45 @@ public class Commands {
 			if (direction<1 || !haveMoved) {
 				game.setMessage("You can't go that way");
 			}
+			
+			if (player.getRoom() == 33 && game.getItem(16).getLocation()==0) {
+				game.getItem(16).setLocation(rand.nextInt(4)+1);
+				game.getItem(16).setFlag(0);
+				game.setMessage("The beast runs away");
+			}
+			
+			//Handling the ferry man (this would be go boat)
+			if (player.getRoom()==game.getItem(25).getLocation() && this.noun == 25) {
+				
+				//Probably need to move this out to a separate method
+				game.setMessage("You board the craft ");
+				
+				if (player.getWisdom()<60) {
+					game.addMessage("falling under the spell of the boatman ");
+				}
+				
+				game.addMessage("and are taken to the Island of Secrets.");
+				
+				//Displays message on screen, and pauses for 10 seconds
+				
+				game.setMessage("");
+				
+				if (player.getWisdom()<60) {
+					game.addMessage("to serve Omega forever!");
+					game.getItem(direction).setFlag(Constants.noNouns-1);
+				} else {
+					game.addMessage("the boat skims the dark and silent waters.");
+					player.setRoom(57);
+				}
+				
+				//Do the same as the above
+			}
 		}
-
-
-
-		
-			/*990 IF R=33 AND L(16)=0 THEN L(16)=FNR(4):F(16)=0:F$="THE BEAST RUNS AWAY"
-			1000 IF R<>L(25) OR O<>25 THEN RETURN
-			1010 LET F$="":LET A$="#YOU BOARD THE CRAFT "
-			1020 IF X<60 THEN LET A$=A$+S$
-			1030 LET A$=A$+T$
-			1040 GOSUB2740:GOSUB2760:GOSUB2760
-			1050 IF X<60 THEN LET A$="#TO SERVE OMEGAN FOREVER!":LET F(W)=1
-			1060 IF X>59 THEN LET A$="#THE BOAT SKIMS THE DARK SILENT WATERS":LET R=57
-			1070 GOSUB2750:GOSUB2760:GOSUB2760:RETURN
-		 */
 		
 	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
- * 14 November 2042 - Added code to handle special movement commands
- * 
+ * 14 November 2024 - Added code to handle special movement commands
+ * 17 November 2024 - completed the movement method
  */

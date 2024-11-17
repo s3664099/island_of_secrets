@@ -2,8 +2,8 @@
 Title: Island of Secrets Item Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 10 November 2024
+Version: 1.4
+Date: 17 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -52,6 +52,14 @@ public class Item {
 	public int getLocation() {
 		return this.itemLocation;
 	}
+	
+	public void setLocation(int newLocation) {
+		this.itemLocation = newLocation;
+	}
+	
+	public void setFlag(int flag) {
+		this.itemFlag = flag;
+	}
 
 }
 /*
@@ -60,4 +68,5 @@ public class Item {
  * 5 November 2024 - Added section to retrieve item flag
  * 10 November 2024 - Removed description field
  * 11 November 2024 - Added method to retrieve the item location
+ * 17 November 2024 - Added setters for location & flag
  */

@@ -1,3 +1,8 @@
+TODO
+Move Function - Create method do display a message on the screen and pauses for 5 seconds
+			  - Will need to divide the size of the message
+
+A$	- Normally used to display the place location
 A	- Verb Chosen
 B$	- Coded Noun
 B	- ??
@@ -23,7 +28,7 @@ L	- Time Remaining
 O	- Noun Chosen
 Q$	- Item Code
 R	- Current Room
-W	- number of objects (Constant 51)
+W	- number of nouns (Constant 51)
 V$	- Verbs
 V	- number of verbs (Constant 42)
 X	- Wisdom
@@ -102,7 +107,7 @@ Locations
 3) 7A PATH OF OUT THE OVERGROWN DEPTHS1000 
 4) 6A CARNIVEROUS TREE1000 
 5) 4A CORRAL BENEATH THE CRIMSON CANYON1110 
-6) 7THE TOP OF A STEEP CLIFF1011 
+6) 7THE TOP OF A STEEP CLI1000 IF R<>L(25) OR O<>25 THEN RETURNFF1011 
 7) 4THE MARSH FACTORY1001 
 8) 4THE SLUDGE FERMATION VATS1110 
 9) 7THE UPPERMOST BATTLEMENTS1001 

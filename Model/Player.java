@@ -69,6 +69,10 @@ public class Player {
 		return this.strength+this.wisdom;
 	}
 	
+	public int getWisdom() {
+		return this.wisdom;
+	}
+	
 }
 
 /* 2 November 2024 - Create File
