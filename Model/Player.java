@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 13 November 2024
+Version: 1.4
+Date: 17 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -28,11 +28,7 @@ public class Player {
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
 	}
-	
-	public int getRoom() {
-		return this.room;
-	}
-	
+		
 	public int updateDisplayRoom() {
 		
 		this.roomToDisplay = this.room;
@@ -60,17 +56,34 @@ public class Player {
 		this.timeRemaining --;
 		this.strength = (float) (this.strength-(this.weight/Constants.noItems+.1));
 	}
+		
+	public float getStrengthWisdon() {
+		return this.strength+this.wisdom;
+	}
+	
+	//Getters & Setters
+	public int getRoom() {
+		return this.room;
+	}
 	
 	public void setRoom(int newRoom) {
 		this.room = newRoom;
 	}
 	
-	public float getStrengthWisdon() {
-		return this.strength+this.wisdom;
-	}
-	
 	public int getWisdom() {
 		return this.wisdom;
+	}
+	
+	public float getStrength() {
+		return this.strength;
+	}
+	
+	public void setWisdom(int newWisdom) {
+		this.wisdom = newWisdom;
+	}
+	
+	public void setStrength(float newStrength) {
+		this.strength = newStrength;
 	}
 	
 }
@@ -80,4 +93,5 @@ public class Player {
  * 				   - Added method to return the player status as a string
  * 5 November 2024 - Added code to randomise location is at room 20
  * 13 November 2024 - Added method to update current room
+ * 17 November 2024 - Added getters & setters
  */

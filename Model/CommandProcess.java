@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 14 November 2024
+Version: 1.6
+Date: 17 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -116,8 +116,12 @@ public class CommandProcess {
 		this.command = new Commands(verbNo,nounNumber,codedCommand);
 		
 		//Movement Command
-		if ((verbNo>0 || verbNo<6)) {
+		if ((verbNo>0 && verbNo<6)) {
 			this.command.move(game,player);
+			
+		//Take Command (pick & catch included)
+		} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
+			this.command.take(game,player);
 		}
 		
 	}
@@ -131,4 +135,5 @@ public class CommandProcess {
  * 12 November 2024 - Completed the codeCommand method
  * 13 November 2024 - Stored the variables 
  * 14 November 2024 - Added more options for movement
+ * 17 November 2024 - Added call to take method
  */

@@ -136,11 +136,61 @@ public class Commands {
 				//Do the same as the above
 			}
 		}
+	}
+	
+	public void take(Game game,Player player) {
 		
+		//Is the item present, and can it be taken?
+		if (((game.getItem(noun).getFlag()>0 && game.getItem(noun).getFlag()<9) ||
+			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.carriableItems) {
+			game.setMessage("What "+game.getItem(noun).getItem()+"?");
+		} else {
+			
+			//Evil books in library
+			if (this.code.equals("3450050")) {
+			
+				player.setWisdom(player.getWisdom()-5);
+				player.setStrength(player.getStrength()-8);
+				game.setMessage("They are cursed");
+			} else {
+
+				//Omegan's Cloak
+				if (this.code.equals("3450050")) {
+					
+					//Add special lightning Flashes screen
+					game.setMessage("Lightning Flashes");
+					//1370 FOR K=1 TO 30:GOSUB2770 :PRINT"///LIGHTNING FLASHES!":NEXT K
+					
+					game.getItem(39).setLocation(player.getRoom());
+					player.setWisdom(player.getWisdom()-2);
+					player.setStrength(player.getStrength()-8);	
+				}
+				
+				
+			}
+		}
+		
+		/*
+		  
+		  
+		  1110 IF(A=15ANDO<>20ANDO<>1)OR(A=29ANDO<>16)ORO>C3THENF$=W$+C$+" "+X$:RETURN
+		  1120 IF L(O)=R AND (F(O)<1 OR F(O)=9)AND O<C3 THEN LET L(O)=0:LET A=-1
+		  1130 IF O=16 AND L(10)<>0 THEN LET L(O)=R:LET F$="IT ESCAPED":LET A=0
+		  1140 IF O>C1 AND O<C2 THEN LET F=F+2:LET A=-1
+		  1150 IF O>=C2 AND O<=C3 THEN LET G=G+2:LET A=-1
+		  1160 IF O>C1 AND O<C3 THEN LET L(O)=-81
+		  1170 IF A=-1 THEN LET F$="TAKEN":LET X=X+4:LET E=E+1:IF F(O)>1 THEN LET F(O)=0
+		  1180 IF B$<>"246046"OR L(11)=0 THEN RETURN
+		  1190 LET F$=U$:LET L(O)=R:IF FNR(3)<3 THEN RETURN
+		  1200 LET A$="#"+U$+R$
+		  1210 LET R=63+FNR(6):LET L(16)=1:LET F$=""
+		  1220 GOSUB2740:RETURN
+		*/
 	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
  * 14 November 2024 - Added code to handle special movement commands
  * 17 November 2024 - completed the movement method
+ * 					- Started working on the take method
  */

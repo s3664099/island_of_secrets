@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.8
-Date: 13 November 2024
+Version: 1.9
+Date: 17 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -204,4 +204,5 @@ public class Game {
  * 10 November 2024 - Removed Description for location & items
  * 11 November 2024 - Added second method so that only some messages are extended.
  * 13 November 2024 - Added method to check if exit available
+ * 17 November 2024 - Added code to retrieve flag and location sum
  */
