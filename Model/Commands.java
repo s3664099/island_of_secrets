@@ -21,11 +21,13 @@ public class Commands {
 	private int noun;
 	private String code;
 	private Random rand = new Random();
+	private String command;
 	
-	public Commands(int verb,int noun, String code) {
+	public Commands(int verb,int noun, String code, String command) {
 		this.verb = verb;
 		this.noun = noun;
 		this.code = code;
+		this.command = command;
 	}
 	
 	public void move(Game game,Player player) {
@@ -166,6 +168,25 @@ public class Commands {
 					player.setStrength(player.getStrength()-8);	
 				}
 				
+				//1st - pick mushrooms or apple
+				//2nd - catch canyon beast
+				//3rd - noun not an item
+				if ((verb == 15 && noun != 20 && noun != 1) || (verb == 29 && noun !=16) ||
+					noun > Constants.carriableItems) {
+					game.setMessage("You can't "+command);
+				} else {
+					
+					int weight = 0;
+					
+					//picks up item
+					if (game.getItem(noun).getLocation()== player.getRoom() && (
+						game.getItem(noun).getFlag()<0 || game.getItem(noun).getFlag()==9)
+						&& noun<Constants.carriableItems) {
+							game.getItem(noun).setLocation(0);
+							weight = -1;
+					}
+				}
+				
 				
 			}
 		}
@@ -173,8 +194,8 @@ public class Commands {
 		/*
 		  
 		  
-		  1110 IF(A=15ANDO<>20ANDO<>1)OR(A=29ANDO<>16)ORO>C3THENF$=W$+C$+" "+X$:RETURN
-		  1120 IF L(O)=R AND (F(O)<1 OR F(O)=9)AND O<C3 THEN LET L(O)=0:LET A=-1
+		  
+		  
 		  1130 IF O=16 AND L(10)<>0 THEN LET L(O)=R:LET F$="IT ESCAPED":LET A=0
 		  1140 IF O>C1 AND O<C2 THEN LET F=F+2:LET A=-1
 		  1150 IF O>=C2 AND O<=C3 THEN LET G=G+2:LET A=-1

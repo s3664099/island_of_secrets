@@ -3,6 +3,7 @@ Move Function - Create method do display a message on the screen and pauses for 
 			  - Will need to divide the size of the message
 Poisoned Water Mini Game
 Omegan's Cloak - Lighting Flashes special display
+With some commands (when object not in room) have different noun to retrieve (142 - Commands)
 
 A$	- Normally used to display the place location
 A	- Verb Chosen
@@ -89,7 +90,7 @@ H$="STONY WORDS"
 28) SCR
 29) CAT 
 30) RUB
-31) POL 
+31) POL code
 32) REA 
 33) EXA
 34) FIL

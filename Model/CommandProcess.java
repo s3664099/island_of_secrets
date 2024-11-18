@@ -17,6 +17,7 @@ public class CommandProcess {
 	
 	private String[] splitCommand = {"",""};
 	private String[] commands;
+	private String originalCommand;
 	private int verbNo;
 	private int nounNo;
 	private String codedCommand;
@@ -28,6 +29,7 @@ public class CommandProcess {
 		command = fixCommand(command);
 		commands = command.split(" ");
 		splitCommand[0] = commands[0];
+		this.originalCommand = command;
 		
 		if (commands.length>1) {
 			splitCommand[1] = command.substring(commands[0].length()).trim();
@@ -113,7 +115,7 @@ public class CommandProcess {
 	public void executeCommand(Game game,Player player,int nounNumber) {
 		
 		nounNo = nounNumber;
-		this.command = new Commands(verbNo,nounNumber,codedCommand);
+		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		
 		//Movement Command
 		if ((verbNo>0 && verbNo<6)) {
