@@ -198,32 +198,46 @@ public class Commands {
 						game.getItem(noun).setLocation(-18);
 					}
 					
-					if (noun>Constants.drinkLine && noun<Constants.carriableItems) {
+					if (noun>=Constants.drinkLine && noun<Constants.carriableItems) {
 						weight = -1;
 						player.adjustDrink(2);
 						game.getItem(noun).setLocation(-18);
 					}
+					
+					if (weight == -1) {
+						game.setMessage("Taken");
+						player.setWisdom(player.getWisdom()+4);
+						player.setWeight(player.getWeight()+1);
+						
+						if (game.getItem(noun).getFlag()>1) {
+							game.getItem(noun).setFlag(0);
+						}
+					}
+					
+					//Handles the bird (though the coded noun is odd)
+					if (code.equals("246046") && game.getItem(11).getLocation() != 0) {
+						game.setMessage("You anger the bird");
+						game.getItem(noun).setLocation(player.getRoom());
+						
+						if (rand.nextInt(3)>2) {
+							game.addMessage(" which flies you to a remote place.");
+							player.setRoom(63+rand.nextInt(6));
+							game.getItem(16).setLocation(1);
+						}
+					}
 				}	
 			}
 		}
-		
-		/*
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  1170 IF A=-1 THEN LET F$="TAKEN":LET X=X+4:LET E=E+1:IF F(O)>1 THEN LET F(O)=0
-		  1180 IF B$<>"246046"OR L(11)=0 THEN RETURN
-		  1190 LET F$=U$:LET L(O)=R:IF FNR(3)<3 THEN RETURN
-		  1200 LET A$="#"+U$+R$
-		  1210 LET R=63+FNR(6):LET L(16)=1:LET F$=""
-		  1220 GOSUB2740:RETURN
-		*/
 	}
+
+	public void drop(Game game,Player player) {
+		
+	}
+	
+	/*
+	
+	*/
+	
 }
 
 /* 13 November 2024 - Created File. Added code to move player

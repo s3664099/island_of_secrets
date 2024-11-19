@@ -78,12 +78,20 @@ public class Player {
 		return this.strength;
 	}
 	
+	public int getWeight() {
+		return this.weight;
+	}
+	
 	public void setWisdom(int newWisdom) {
 		this.wisdom = newWisdom;
 	}
-	
+		
 	public void setStrength(float newStrength) {
 		this.strength = newStrength;
+	}
+
+	public void setWeight(int newWeight) {
+		this.weight = weight;
 	}
 	
 	public void adjustFood(int change) {
