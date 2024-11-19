@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.2
-Date: 17 November 2024
+Version: 1.3
+Date: 19 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -185,9 +185,25 @@ public class Commands {
 							game.getItem(noun).setLocation(0);
 							weight = -1;
 					}
-				}
-				
-				
+					
+					if (noun == 16 && game.getItem(10).getLocation()!=0) {
+						game.getItem(noun).setLocation(player.getRoom());
+						game.setMessage("It escaped");
+						weight = 0;
+					}
+					
+					if (noun>Constants.foodLine && noun<Constants.drinkLine) {
+						weight = -1;
+						player.adjustFood(2);
+						game.getItem(noun).setLocation(-18);
+					}
+					
+					if (noun>Constants.drinkLine && noun<Constants.carriableItems) {
+						weight = -1;
+						player.adjustDrink(2);
+						game.getItem(noun).setLocation(-18);
+					}
+				}	
 			}
 		}
 		
@@ -196,10 +212,10 @@ public class Commands {
 		  
 		  
 		  
-		  1130 IF O=16 AND L(10)<>0 THEN LET L(O)=R:LET F$="IT ESCAPED":LET A=0
-		  1140 IF O>C1 AND O<C2 THEN LET F=F+2:LET A=-1
-		  1150 IF O>=C2 AND O<=C3 THEN LET G=G+2:LET A=-1
-		  1160 IF O>C1 AND O<C3 THEN LET L(O)=-81
+		  
+		  
+		  
+		  
 		  1170 IF A=-1 THEN LET F$="TAKEN":LET X=X+4:LET E=E+1:IF F(O)>1 THEN LET F(O)=0
 		  1180 IF B$<>"246046"OR L(11)=0 THEN RETURN
 		  1190 LET F$=U$:LET L(O)=R:IF FNR(3)<3 THEN RETURN
@@ -214,4 +230,5 @@ public class Commands {
  * 14 November 2024 - Added code to handle special movement commands
  * 17 November 2024 - completed the movement method
  * 					- Started working on the take method
+ * 19 November 2024 - Added the code to increase food & drink
  */

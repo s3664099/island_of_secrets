@@ -86,6 +86,14 @@ public class Player {
 		this.strength = newStrength;
 	}
 	
+	public void adjustFood(int change) {
+		this.food += change;
+	}
+	
+	public void adjustDrink(int change) {
+		this.drink += change;
+	}
+	
 }
 
 /* 2 November 2024 - Create File
