@@ -4,6 +4,7 @@ Move Function - Create method do display a message on the screen and pauses for 
 Poisoned Water Mini Game
 Omegan's Cloak - Lighting Flashes special display
 With some commands (when object not in room) have different noun to retrieve (142 - Commands)
+Give - have to have special view and controller for the give command
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

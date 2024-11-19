@@ -124,6 +124,8 @@ public class CommandProcess {
 		//Take Command (pick & catch included)
 		} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
 			this.command.take(game,player);
+		} else if (verbNo == 8) {
+			this.command.give(game, player);
 		}
 		
 	}
