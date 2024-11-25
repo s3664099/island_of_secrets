@@ -26,16 +26,20 @@ public class LightningPanel extends JPanel {
 
 	private int number = 0;
 	private JLabel label;
+	private GamePanel game;
+	private GameEngine engine;
 	
-    public LightningPanel(int initialNumber) {
+    public LightningPanel(int initialNumber,GamePanel game,GameEngine engine) {
         this.number = initialNumber;
+        this.game = game;
+        this.engine = engine;
 
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
 
         // Create and add the label to the center
-        label = new JLabel("Lightning Flashes", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Customize the font
+        label = new JLabel("⚡⚡ Lightning Flashes ⚡⚡", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 36)); // Optional: Customize the font
         label.setForeground(Color.WHITE); // Optional: Text color
         add(label, BorderLayout.CENTER);
 
@@ -58,8 +62,10 @@ public class LightningPanel extends JPanel {
             number++;
 
             // Optional: Stop the timer after 10 iterations
+            // Returns to original panel
             if (number > 10) {
                 ((Timer) e.getSource()).stop();
+                resetPanel(game);
             }
             
             JLabel label = new JLabel("Lightning Flashes!!");
@@ -71,6 +77,13 @@ public class LightningPanel extends JPanel {
 
         timer.start();
     }
+    
+	private void resetPanel(GamePanel game) {
+		game.removeAll();
+		game.add(this.engine);
+		game.revalidate();
+		game.repaint();
+	}
 }
 /* 25 November 2024 - Created File
  * 

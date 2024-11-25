@@ -21,10 +21,13 @@ public class GivePanel extends JPanel {
 
 	public GivePanel() {
 		
+		//Display Label 'Give to Whom' and section to take command
+		//Once done, then runs rest of script
+		
 	}
 	
 }
 
-/*25 November 2024 - Created File
+/* 25 November 2024 - Created File
  * 
- * /
+ */
