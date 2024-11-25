@@ -2,16 +2,20 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.9
-Date: 13 November 2024
+Version: 1.10
+Date: 25 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import javax.swing.JPanel;
+
 import Data.Constants;
 import Data.Item;
 import View.GamePanel;
+import View.GivePanel;
+import View.LightningPanel;
 
 public class GameEngine {
 	
@@ -101,15 +105,34 @@ public class GameEngine {
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
 		
+		player.setPanelFlag(2);
+		
+		if (player.getPanelFlag()==1) {
+			setPanel(game, new GivePanel());
+			player.setPanelFlag(0);
+		} else if (player.getPanelFlag()==2) {
+			
+			setPanel(game, new LightningPanel(0));
+			
+		} else {
+			resetPanel(game);
+		}
+	}
+	
+	private void setPanel(JPanel game,JPanel panel) {
+		game.removeAll();
+		game.add(panel);
+		game.revalidate();
+		game.repaint();
+	}
+	
+	private void resetPanel(GamePanel game) {
 		game.removeAll();
 		game.add(this);
 		game.revalidate();
 		game.repaint();
 	}
 	
-	
-
-
 	/*
 
 	
@@ -885,7 +908,7 @@ public class GameEngine {
 			} else if (nounChosen == 32) {
 				this.message = "THE SWAMPMAN IS UNMOVED";
 			} else if (nounChosen == 33) {
-				this.message = "YOU CAN'T TOUCH HER!";
+				this.message = "YOUnoun CAN'T TOUCH HER!";
 				this.itemLocation.updateIntData(3, 81);
 			} else if (nounChosen == 41) {
 				this.message = "THEY THINK THAT'S FUNNY!";
@@ -1080,4 +1103,6 @@ public class GameEngine {
 11 November 2024 - Got the command processing working and now working on coding the command
 12 November 2024 - Added extra parameter to create coded command being noun number
 13 November 2024 - Added code to execute the command
+25 November 2024 - Added new panel for handling the give command.
+				   Moved panel generating functions into new methods
 */

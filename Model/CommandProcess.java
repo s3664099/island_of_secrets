@@ -12,6 +12,7 @@ package Model;
 import Data.Constants;
 import Data.Item;
 import Data.RawData;
+import View.GamePanel;
 
 public class CommandProcess {
 	
@@ -103,8 +104,9 @@ public class CommandProcess {
 	}
 	
 	public String codeCommand(int room, int nounNumber, Item item) {
-		
-		String codedNoun = String.format("%d%d%d%d",nounNumber,item.getLocation(),item.getFlag(),room);
+			
+		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getLocation()),
+										 item.getFlag(),room);
 		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
 		this.codedCommand = codedNoun;
 				
@@ -127,7 +129,6 @@ public class CommandProcess {
 		} else if (verbNo == 8) {
 			this.command.give(game, player);
 		}
-		
 	}
 }
 

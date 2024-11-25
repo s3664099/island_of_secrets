@@ -47,7 +47,6 @@ public class GamePanel extends JPanel {
 		//Need to do what they did in the game, namely go through each of the lines and
 		//work out the size, and then add to the grid.
 		
-		
 		// Top section for status and label panels
 		JPanel topPanel = new JPanel(new GridLayout(1, 1)); // Adjust as necessary
 		topPanel.add(CreateStatusPanel(game));
@@ -100,7 +99,10 @@ public class GamePanel extends JPanel {
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 		this.add(bottomPanel,BorderLayout.SOUTH);
-		
+	}
+	
+	public void addPanel(JPanel panel) {
+		this.add(panel);
 	}
 	
 	private JPanel CreateStatusPanel(GameEngine game) {

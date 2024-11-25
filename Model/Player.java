@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.4
-Date: 17 November 2024
+Version: 1.5
+Date: 25 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,6 +24,7 @@ public class Player {
 	private int food = 2;
 	private int drink = 2;
 	private Random rand = new Random();
+	private int panelFlag = 0;
 	
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
@@ -102,6 +103,19 @@ public class Player {
 		this.drink += change;
 	}
 	
+	/*     Flag Settings:
+	 * 		0 - Normal Screen
+	 * 		1 - Give Screen
+	 * 		2 - Lightning Flashes 
+	 */
+	public void setPanelFlag(int panelFlag) {
+		this.panelFlag = panelFlag;
+	}
+	
+	public int getPanelFlag() {
+		return this.panelFlag;
+	}
+	
 }
 
 /* 2 November 2024 - Create File
@@ -110,4 +124,5 @@ public class Player {
  * 5 November 2024 - Added code to randomise location is at room 20
  * 13 November 2024 - Added method to update current room
  * 17 November 2024 - Added getters & setters
+ * 25 November 2024 - Added flag for give (though will need to be changed for other screens)
  */
