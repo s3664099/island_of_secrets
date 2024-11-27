@@ -94,6 +94,7 @@ public class GamePanel extends JPanel {
 		bottomPanel.add(CreateLabelPanel(commands[2],1));
 		JTextField commandField = new JTextField(2);
 		commandField.addKeyListener(new CommandListener(commandField,game,this));
+		commandField.requestFocusInWindow();
 		bottomPanel.add(commandField);
 				
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout

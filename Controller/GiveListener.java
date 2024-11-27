@@ -18,16 +18,10 @@ import Model.GameEngine;
 import View.GamePanel;
 import View.GivePanel;
 
-public class GiveListener implements KeyListener {
-
-	JTextField text;
-	GameEngine game;
-	GivePanel gamePanel;
+public class GiveListener extends CommandListener implements KeyListener {
 	
 	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame) {
-		this.text = text;
-		this.game = game;
-		this.gamePanel = gameFrame;
+		super(text,game,gameFrame);
 	}
 	
 	@Override
@@ -36,7 +30,7 @@ public class GiveListener implements KeyListener {
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			String command = this.text.getText();
-			//game.processGive(command, gamePanel);
+			game.processGive(command, gamePanel);
 		}
 	}
 

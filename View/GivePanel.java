@@ -21,11 +21,11 @@ import Controller.CommandListener;
 import Controller.GiveListener;
 import Model.GameEngine;
 
-public class GivePanel extends JPanel {
-
-	Color background;
+public class GivePanel extends GamePanel {
 
 	public GivePanel(GameEngine game) {
+		
+		super(game,null);
 		
 		JPanel mainPanel = new JPanel(new GridLayout(2,1));
 				

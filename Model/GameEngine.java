@@ -116,6 +116,10 @@ public class GameEngine {
 		}
 	}
 	
+	public void processGive(String object,JPanel game) {
+		
+	}
+	
 	private void setPanel(JPanel game,JPanel panel) {
 		game.removeAll();
 		game.add(panel);
