@@ -86,16 +86,16 @@ public class GamePanel extends JPanel {
 		//Creates the command field
 		String[] commands = game.getCommands();
 		JPanel bottomPanel = new JPanel(new GridLayout(7,1));
+		
+		//Command Field includes four labels above which contain the last three commands.
+		//Also one for a blank spot
 		bottomPanel.add(CreateLabelPanel(commands[0],1));
 		bottomPanel.add(CreateLabelPanel(commands[1],1));
 		bottomPanel.add(CreateLabelPanel(commands[2],1));
 		JTextField commandField = new JTextField(2);
 		commandField.addKeyListener(new CommandListener(commandField,game,this));
 		bottomPanel.add(commandField);
-		
-		//Command Field includes four labels above which contain the last three commands.
-		//Also one for a blank spot
-		
+				
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 		this.add(bottomPanel,BorderLayout.SOUTH);

@@ -104,16 +104,13 @@ public class GameEngine {
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
-		
-		player.setPanelFlag(2);
-		
+				
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel());
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==2) {
-			
 			setPanel(game, new LightningPanel(0,game,this));
-			
+			player.setPanelFlag(0);			
 		} else {
 			resetPanel(game);
 		}

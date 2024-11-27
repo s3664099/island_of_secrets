@@ -243,9 +243,7 @@ public class Commands {
 			game.setMessage("You don't have the "+itemName);
 
 		} else {
-			player.setPanelFlag(1);
-			//1400 PRINT"GIVE THE ";X$;" TO WHOM";:INPUT X$
-			//We need a special option to get the object of give			
+			player.setPanelFlag(1);			
 		}
 		
 	}
