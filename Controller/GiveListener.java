@@ -1,9 +1,9 @@
 /*
-Title: Island of Secrets Command Listener
+Title: Island of Secrets Give Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 5 November 2024
+Version: 1.0
+Date: 27 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -16,14 +16,15 @@ import javax.swing.JTextField;
 
 import Model.GameEngine;
 import View.GamePanel;
+import View.GivePanel;
 
-public class CommandListener implements KeyListener {
+public class GiveListener implements KeyListener {
 
 	JTextField text;
 	GameEngine game;
-	GamePanel gamePanel;
+	GivePanel gamePanel;
 	
-	public CommandListener(JTextField text, GameEngine game, GamePanel gameFrame) {
+	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame) {
 		this.text = text;
 		this.game = game;
 		this.gamePanel = gameFrame;
@@ -34,12 +35,9 @@ public class CommandListener implements KeyListener {
 		
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-			
 			String command = this.text.getText();
-			this.text.setText("");
-			game.processCommand(command, gamePanel);
+			//game.processGive(command, gamePanel);
 		}
-		
 	}
 
 	@Override
@@ -56,6 +54,6 @@ public class CommandListener implements KeyListener {
 
 }
 
-/* 6 November 2024 - Created File
+/* 27 November 2024 - Created File
  * 
  */

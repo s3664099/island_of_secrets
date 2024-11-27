@@ -18,13 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controller.CommandListener;
+import Controller.GiveListener;
 import Model.GameEngine;
 
 public class GivePanel extends JPanel {
 
 	Color background;
 
-	public GivePanel() {
+	public GivePanel(GameEngine game) {
 		
 		JPanel mainPanel = new JPanel(new GridLayout(2,1));
 				
@@ -36,7 +37,9 @@ public class GivePanel extends JPanel {
 		
         //Adds text area.
 		JTextField commandField = new JTextField(2);
-		//commandField.addKeyListener(new CommandListener(commandField,game,this));
+		commandField.grabFocus();
+		commandField.requestFocusInWindow();
+		commandField.addKeyListener(new GiveListener(commandField,game,this));
 		mainPanel.add(commandField);
 		
 		//Once done, then runs rest of script

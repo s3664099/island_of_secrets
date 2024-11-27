@@ -106,7 +106,7 @@ public class GameEngine {
 		processCommands.executeCommand(this.game, player, nounNumber);
 				
 		if (player.getPanelFlag()==1) {
-			setPanel(game, new GivePanel());
+			setPanel(game, new GivePanel(this));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==2) {
 			setPanel(game, new LightningPanel(0,game,this));
