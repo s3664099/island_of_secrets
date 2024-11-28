@@ -20,8 +20,11 @@ import View.GivePanel;
 
 public class GiveListener extends CommandListener implements KeyListener {
 	
-	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame) {
+	private int nounNumber;
+	
+	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame,int nounNumber) {
 		super(text,game,gameFrame);
+		this.nounNumber = nounNumber;
 	}
 	
 	@Override
@@ -30,7 +33,7 @@ public class GiveListener extends CommandListener implements KeyListener {
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			String command = this.text.getText();
-			game.processGive(command, gamePanel);
+			game.processGive(command, gamePanel,nounNumber);
 		}
 	}
 
@@ -49,5 +52,5 @@ public class GiveListener extends CommandListener implements KeyListener {
 }
 
 /* 27 November 2024 - Created File
- * 28 November 2024 - Sent text to command processing
+ * 28 November 2024 - Sent text to command processing. Passed through nounNumber
  */

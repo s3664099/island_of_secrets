@@ -23,6 +23,8 @@ public class CommandProcess {
 	private int nounNo;
 	private String codedCommand;
 	private Commands command;
+	private int nounNumber;
+	private Game game;
 	
 	public CommandProcess(String command,Game game) {
 				
@@ -38,6 +40,8 @@ public class CommandProcess {
 			game.setMessage("Most commands need two words");
 		}
 	}
+	
+	public CommandProcess() {}
 	
 	private String fixCommand(String command) {
 		
@@ -131,12 +135,11 @@ public class CommandProcess {
 		}
 	}
 	
-	public void executeGive() {
+	public void executeGive(int nounNumber, String subject) {
 		
 	}
 	/*
-	
-	1410 LET Q=O:GOSUB760:LET N=O:LET O=Q
+	1410 LET Q=O:GOSUB760:LET N=O:LET O=Q - Get the subject
 	1420 IF R<>L(N) LEN LET F$="THE "+X$+" IS NOT HERE":RETURN
 	1430 IF B$="10045" AND N=40 THEN L(O)=81:F(40)=1:F$="THE SNAKE UNCURLS"
 	1440 IFB$="2413075"ANDN=30ANDG>1THENF(11)=0:F$="HE OFFERS HIS STAFF":G=G-1
