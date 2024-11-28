@@ -29,11 +29,9 @@ public class GamePanel extends JPanel {
 	
 	Color background;
 	GameEngine game;
-	GameFrame frame;
 
-	public GamePanel(GameEngine game,GameFrame frame) {
+	public GamePanel(GameEngine game) {
 		
-		this.frame = frame;
 		add(game);
 	}
 	

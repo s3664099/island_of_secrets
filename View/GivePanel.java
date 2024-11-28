@@ -25,7 +25,7 @@ public class GivePanel extends GamePanel {
 
 	public GivePanel(GameEngine game) {
 		
-		super(game,null);
+		super(game);
 		
 		JPanel mainPanel = new JPanel(new GridLayout(2,1));
 				
@@ -45,9 +45,6 @@ public class GivePanel extends GamePanel {
 		//Once done, then runs rest of script
 		add(mainPanel);
 		repaint();
-		
-		//1400 PRINT"GIVE THE ";X$;" TO WHOM";:INPUT X$
-		//We need a special option to get the object of give
 	}
 	
 }

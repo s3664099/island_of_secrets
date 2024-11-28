@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import Data.Constants;
 import Data.Item;
+import View.GameFrame;
 import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
@@ -22,6 +23,7 @@ public class GameEngine {
 	private Game game;
 	private Player player;
 	private String[] commands = {"","",""};
+	private GameFrame frame;
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -116,8 +118,9 @@ public class GameEngine {
 		}
 	}
 	
-	public void processGive(String object,JPanel game) {
+	public void processGive(String object,GamePanel game) {
 		
+		resetPanel(game);
 	}
 	
 	private void setPanel(JPanel game,JPanel panel) {

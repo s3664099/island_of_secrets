@@ -2,8 +2,8 @@
 Title: Island of Secrets Give Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 27 November 2024
+Version: 1.1
+Date: 28 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -49,5 +49,5 @@ public class GiveListener extends CommandListener implements KeyListener {
 }
 
 /* 27 November 2024 - Created File
- * 
+ * 28 November 2024 - Sent text to command processing
  */

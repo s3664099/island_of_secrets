@@ -21,7 +21,7 @@ public class GameFrame extends JFrame {
 		//kills the window when the 'x' is clicked at the top
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		GamePanel gamePanel = new GamePanel(game,this);
+		GamePanel gamePanel = new GamePanel(game);
 		this.add(gamePanel);
 		
 		//sets the boundaries of the frame.
