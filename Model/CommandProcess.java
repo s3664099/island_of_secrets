@@ -156,13 +156,20 @@ public class CommandProcess {
 		}
 	}
 	
-	public void executeGive(int nounNumber, String subject) {
+	public void executeGive(Game game,Player player,int nounNumber, String subject) {
 		
 		int objNumber = getNounNum(subject);
 		
+		if (subject.length()==0) {
+			String itemName = game.getItem(objNumber).getItem();
+			game.setMessage("Please enter who you will be giving the "+itemName+" to.");
+		} else if (player.getRoom() != game.getItem(objNumber).getLocation()) {
+			game.setMessage("The "+subject+" is not here.");
+		} else {
+
+		}
 	}
 	/*
-	1410 LET Q=O:GOSUB760:LET N=O:LET O=Q - Get the subject
 	1420 IF R<>L(N) LEN LET F$="THE "+X$+" IS NOT HERE":RETURN
 	1430 IF B$="10045" AND N=40 THEN L(O)=81:F(40)=1:F$="THE SNAKE UNCURLS"
 	1440 IFB$="2413075"ANDN=30ANDG>1THENF(11)=0:F$="HE OFFERS HIS STAFF":G=G-1

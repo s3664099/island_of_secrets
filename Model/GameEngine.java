@@ -120,7 +120,7 @@ public class GameEngine {
 	
 	public void processGive(String object,GamePanel game,int nounNumber) {
 		CommandProcess processCommands = new CommandProcess();
-		processCommands.executeGive(nounNumber,object);
+		processCommands.executeGive(this.game,this.player,nounNumber,object);
 		resetPanel(game);
 	}
 	
