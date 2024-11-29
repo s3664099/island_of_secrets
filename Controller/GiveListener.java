@@ -2,8 +2,8 @@
 Title: Island of Secrets Give Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.1
-Date: 28 November 2024
+Version: 1.2
+Date: 29 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,10 +21,13 @@ import View.GivePanel;
 public class GiveListener extends CommandListener implements KeyListener {
 	
 	private int nounNumber;
+	private String codedNoun;
 	
-	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame,int nounNumber) {
+	public GiveListener(JTextField text, GameEngine game, GivePanel gameFrame,
+						int nounNumber,String codedNoun) {
 		super(text,game,gameFrame);
 		this.nounNumber = nounNumber;
+		this.codedNoun = codedNoun;
 	}
 	
 	@Override
@@ -33,7 +36,7 @@ public class GiveListener extends CommandListener implements KeyListener {
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			String command = this.text.getText();
-			game.processGive(command, gamePanel,nounNumber);
+			game.processGive(command, gamePanel,nounNumber,codedNoun);
 		}
 	}
 
@@ -53,4 +56,5 @@ public class GiveListener extends CommandListener implements KeyListener {
 
 /* 27 November 2024 - Created File
  * 28 November 2024 - Sent text to command processing. Passed through nounNumber
+ * 29 November 2024 - Added codedNoun
  */

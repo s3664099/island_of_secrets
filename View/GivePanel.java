@@ -3,7 +3,7 @@ Title: Island of Secrets Give Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 1.2
-Date: 28 November 2024
+Date: 29 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -23,7 +23,7 @@ import Model.GameEngine;
 
 public class GivePanel extends GamePanel {
 
-	public GivePanel(GameEngine game,int nounNumber) {
+	public GivePanel(GameEngine game,int nounNumber,String codedNoun) {
 		
 		super(game);
 		
@@ -39,7 +39,7 @@ public class GivePanel extends GamePanel {
 		JTextField commandField = new JTextField(2);
 		commandField.grabFocus();
 		commandField.requestFocusInWindow();
-		commandField.addKeyListener(new GiveListener(commandField,game,this,nounNumber));
+		commandField.addKeyListener(new GiveListener(commandField,game,this,nounNumber,codedNoun));
 		mainPanel.add(commandField);
 		
 		//Once done, then runs rest of script
@@ -52,4 +52,5 @@ public class GivePanel extends GamePanel {
 /* 25 November 2024 - Created File
  * 27 November 2024 - Built Panel
  * 28 November 2024 - Added noun number. Added link to gamePanel
+ * 29 November 2024 - Added codedNoun to give listener
  */

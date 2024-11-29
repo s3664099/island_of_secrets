@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.10
-Date: 25 November 2024
+Version: 1.11
+Date: 29 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -108,7 +108,7 @@ public class GameEngine {
 		processCommands.executeCommand(this.game, player, nounNumber);
 				
 		if (player.getPanelFlag()==1) {
-			setPanel(game, new GivePanel(this,nounNumber));
+			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==2) {
 			setPanel(game, new LightningPanel(0,game,this));
@@ -118,9 +118,9 @@ public class GameEngine {
 		}
 	}
 	
-	public void processGive(String object,GamePanel game,int nounNumber) {
+	public void processGive(String object,GamePanel game,int nounNumber,String codedNoun) {
 		CommandProcess processCommands = new CommandProcess();
-		processCommands.executeGive(this.game,this.player,nounNumber,object);
+		processCommands.executeGive(this.game,this.player,nounNumber,object,codedNoun);
 		resetPanel(game);
 	}
 	
@@ -1110,4 +1110,5 @@ public class GameEngine {
 13 November 2024 - Added code to execute the command
 25 November 2024 - Added new panel for handling the give command.
 				   Moved panel generating functions into new methods
+29 November 2024 - Passed coded command to GivePanel
 */
