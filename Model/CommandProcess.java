@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 17 November 2024
+Version: 1.7
+Date: 29 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -88,22 +88,31 @@ public class CommandProcess {
 	public int getNounNumber() {
 		
 		int nounNumber = 52;
-		int nounCount = 0;
 				
 		//Only called if more than two words
 		if (commands.length>1) {
-			for (String command:RawData.getNouns()) {
-				nounCount ++;
-								
-				if (splitCommand[1].toLowerCase().equals(command)) {
-					nounNumber = nounCount;
-					this.nounNo = nounCount;
-				}
-			}
+			nounNumber = getNounNum(splitCommand[1].toLowerCase());
+			this.nounNo = nounNumber;
 		} else {
 			nounNumber = -1;
 		}
 		
+		return nounNumber;
+	}
+	
+	private int getNounNum(String noun) {
+		
+		int nounCount = 0;
+		int nounNumber = 52;
+		
+		for (String command:RawData.getNouns()) {
+			nounCount ++;
+							
+			if (noun.equals(command)) {
+				nounNumber = nounCount;
+			}
+		}
+				
 		return nounNumber;
 	}
 	
@@ -123,19 +132,33 @@ public class CommandProcess {
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		
-		//Movement Command
-		if ((verbNo>0 && verbNo<6)) {
+		System.out.println(verbNo);
+		
+		//Movement Command (verb only)
+		if ((verbNo>0 && verbNo<5)) {
 			this.command.move(game,player);
+		
+		//More than one verb
+		} else if(commands.length>1) {
 			
-		//Take Command (pick & catch included)
-		} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
-			this.command.take(game,player);
-		} else if (verbNo == 8) {
-			this.command.give(game, player);
+			//Go
+			if (verbNo==5) {
+				this.command.move(game,player);
+
+			//Take Command (pick & catch included)
+			} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
+				this.command.take(game,player);
+			
+			//Give
+			} else if (verbNo == 8) {
+				this.command.give(game, player);
+			}
 		}
 	}
 	
 	public void executeGive(int nounNumber, String subject) {
+		
+		int objNumber = getNounNum(subject);
 		
 	}
 	/*
@@ -163,4 +186,6 @@ public class CommandProcess {
  * 13 November 2024 - Stored the variables 
  * 14 November 2024 - Added more options for movement
  * 17 November 2024 - Added call to take method
+ * 29 November 2024 - moved script to get noun value to separate script.
+ * 					- Fixed problem with only verb command not displaying properly
  */
