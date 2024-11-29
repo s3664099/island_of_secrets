@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
-Date: 29 November 2024
+Version: 1.8
+Date: 30 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -131,9 +131,7 @@ public class CommandProcess {
 		
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
-		
-		System.out.println(verbNo);
-		
+				
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
 			this.command.move(game,player);
@@ -168,17 +166,65 @@ public class CommandProcess {
 			game.setMessage("The "+subject+" is not here.");
 		} else {
 			
+			game.setMessage("It is refused.");
+			
+			//Removes the snake from the hut by giving it an apple
+			if (codedNoun.equals("10045") && objNumber==40) {
+				game.getItem(nounNumber).setLocation(81);
+				game.getItem(objNumber).setFlag(1);
+				game.setMessage("The snake uncoils");
+			
+			//Giving water to a villager (but must have some drink)
+			} else if (codedNoun.equals("2413075") && objNumber==30 && player.getDrink()>1) {
+				game.getItem(11).setFlag(0);
+				game.setMessage("He offers his staff");
+				player.adjustDrink(1);
+			
+			
+			} else {
+				
+				//Give Lilyflower/Marble Chip to scavenger	
+				if ((codedNoun.substring(0,3).equals("300") || 
+					 codedNoun.substring(0,3).equals("120")) &&
+					 objNumber == 42) {
+					player.setWisdom(player.getWisdom()+10);
+					game.getItem(nounNumber).setLocation(81);
+				
+				//Give jug to swampman
+				} else if (codedNoun.substring(0,2).equals("40") && 
+						   game.getItem(4).getFlag()<0 && objNumber == 32) {
+					game.getItem(objNumber).setFlag(1);
+					game.getItem(nounNumber).setLocation(81);
+				
+				//Give pebble to Median
+				} else if (codedNoun.substring(0,2).equals("80") &&
+						   objNumber == 43) {
+					game.getItem(nounNumber).setLocation(81);
+					//Gosub 1560
+					/*
+					 * 1560 LET A$="*HE TAKES IT ":IF R<>8 THEN LET A$+A$+"RUNS DOWN THE CORRIDOR,"
+					 * 1570 GOSUB2740:A$="*AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH"
+					 * 1580 A$=A$+" A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND"
+					 * 1590 LET F(8)=-1:GOSUB2750:GOSUB2760:GOSUB2760:RETURN
+					 */
+					
+				}
+			
+			//We want the first three characters of codedNoun
+			}
+				
+			
 		}
 	}
 	/*
 	
-	1430 IF B$="10045" AND N=40 THEN L(O)=81:F(40)=1:F$="THE SNAKE UNCURLS"
-	1440 IFB$="2413075"ANDN=30ANDG>1THENF(11)=0:F$="HE OFFERS HIS STAFF":G=G-1
+	
+	
 	1450 LET B$=LEFT$(B$,3):LET F$="IT IS REFUSED"
-	1460 IF B$="300" AND N=42 THEN LET X=X+10:LET L(O)=81
-	1470 IF B$="120" AND N=42 THEN LET X=X+10:LET L(O)=81
-	1480 IF B$="40" AND F(4)<0 AND N=32 THEN LET F(N)=1:LET L(O)=81
-	1490 IF LEFT(B$,2)="80"AND N=43 THEN LET L(O)=81:GOSUB1560
+	
+	
+	
+	
 	1500 IF L(O)=81 OR (O=24 AND L(11)>0 AND G>0)THEN LET F$="IT IS ACCEPTED"
 	1510 IF N=41 THEN LET L(O)=51:LET F$="IT IS TAKEN"
 	1520 RETURN
@@ -196,4 +242,5 @@ public class CommandProcess {
  * 17 November 2024 - Added call to take method
  * 29 November 2024 - moved script to get noun value to separate script.
  * 					- Fixed problem with only verb command not displaying properly
+ * 30 November 2024 - Continued building the give functionality
  */

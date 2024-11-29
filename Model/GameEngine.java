@@ -132,6 +132,7 @@ public class GameEngine {
 	}
 	
 	private void resetPanel(GamePanel game) {
+
 		game.removeAll();
 		game.add(this);
 		game.revalidate();
