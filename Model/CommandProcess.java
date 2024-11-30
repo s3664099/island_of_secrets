@@ -200,20 +200,14 @@ public class CommandProcess {
 				} else if (codedNoun.substring(0,2).equals("80") &&
 						   objNumber == 43) {
 					game.getItem(nounNumber).setLocation(81);
-					//Gosub 1560
-					/*
-					 * 1560 LET A$="*HE TAKES IT ":IF R<>8 THEN LET A$+A$+"RUNS DOWN THE CORRIDOR,"
-					 * 1570 GOSUB2740:A$="*AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH"
-					 * 1580 A$=A$+" A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND"
-					 * 1590 LET F(8)=-1:GOSUB2750:GOSUB2760:GOSUB2760:RETURN
-					 */
-					
+					player.setPanelFlag(3);
+					game.getItem(8).setFlag(-1);					
 				}
-			
-			//We want the first three characters of codedNoun
-			}
 				
-			
+				if (game.getItem(nounNumber).getLocation() == 81) {
+					game.setMessage("It is accepted");
+				}
+			}
 		}
 	}
 	/*
@@ -225,7 +219,7 @@ public class CommandProcess {
 	
 	
 	
-	1500 IF L(O)=81 OR (O=24 AND L(11)>0 AND G>0)THEN LET F$="IT IS ACCEPTED"
+	
 	1510 IF N=41 THEN LET L(O)=51:LET F$="IT IS TAKEN"
 	1520 RETURN
 	*/

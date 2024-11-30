@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.11
-Date: 29 November 2024
+Version: 1.12
+Date: 30 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -17,6 +17,7 @@ import View.GameFrame;
 import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
+import View.MessagePanel;
 
 public class GameEngine {
 	
@@ -106,13 +107,23 @@ public class GameEngine {
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
-				
+			
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==2) {
 			setPanel(game, new LightningPanel(0,game,this));
-			player.setPanelFlag(0);			
+			player.setPanelFlag(0);
+		
+		//Messageing Panel for Median & Shining Pebble
+		} else if (player.getPanelFlag()==3) {
+			
+			boolean room = false;
+			if (player.getRoom() == 8) {
+				room = true;
+			}
+			setPanel(game,new MessagePanel(game,this,room));
+			player.setPanelFlag(0);
 		} else {
 			resetPanel(game);
 		}
@@ -162,43 +173,13 @@ public class GameEngine {
 	
 	private void processAction(String action,String exits) {
 		
-		String[] actions = {"",""};
-		action = action.toUpperCase();
-		String[] noWords = action.split(" ");
-		actions[0] = noWords[0];
-		String response = "";
+
 		
-		if (noWords.length>1) {
-			actions[1] = action.substring(actions[0].length()+1);
-			System.out.println(actions[1]);
-		} else {
-			actions[1] = "???";
-		}
-				
-		int verbFound = getWords(actions[0],this.noVerbs,this.verbs);
-		int nounFound = getWords(actions[1],this.noNouns,this.nouns);
-		
-		if (actions[1].equals("???")) {
-			response = "MOST ACTIONS NEED TWO WORDS";
-		} else if ((verbFound>this.noVerbs) && (nounFound>this.noNouns)) {
-			response = "WHAT!";
-		} else if ((verbFound>this.noVerbs) || (nounFound>this.noNouns)) {
-			response = String.format("%s%s %s", "YOU CAN'T ",actions[0],actions[1]);
-		}
-		
-		String codedNoun = codeNoun(nounFound);
-		
-		System.out.println(verbFound);
+
 		
 
 
-		//1080
-		} else if (verbFound == 6 || verbFound == 7 || verbFound == 15 || verbFound == 29) {
-			take(nounFound,codedNoun,verbFound,actions);
 
-		//1390
-		} else if (verbFound == 8) {
-			give(nounFound,codedNoun,actions);
 		
 		//1530 (1540)
 		} else if (verbFound == 9 || verbFound == 10) {
@@ -485,228 +466,14 @@ public class GameEngine {
 		this.room = 30+rand.nextInt(3)+1;
 	}
 	
-	private void move(String codedNoun, int nounChosen, int verbChosen,String exits) {
-		
-		int direction = 0;
-		boolean moved=false;
-		
-		if (nounChosen == 52) {
-			direction = verbChosen;
-		} else if (nounChosen > this.noItems && nounChosen<this.noNouns) {
-			direction = nounChosen-this.noItems;
-		} else if (codedNoun.equals("500012") || codedNoun.equals("500053") ||
-				codedNoun.equals("500045")) {
-			direction = 4;
-		} else if (codedNoun.equals("500070") || codedNoun.equals("500037") ||
-				codedNoun.equals("510011") || codedNoun.equals("510041")) {
-			direction = 1;
-		} else if (codedNoun.equals("510043") || codedNoun.equals("490066") ||
-				codedNoun.equals("490051")) {
-			direction = 1;
-		} else if (codedNoun.equals("510060") || codedNoun.equals("480056")) {
-			direction = 2;
-		} else if (codedNoun.equals("510044") || codedNoun.equals("510052")) {
-			direction = 3;
-		}
-				
-		if (codedNoun.equals("490051") && this.itemFlag.getIntData(29) == 0) {
-			poisonWater();
-		} else {
-			if(this.room == this.itemLocation.getIntData(39) && 
-				(this.strength+this.wisdom<180 || this.room == 10)) {
-				this.message = "YOU CAN'T LEAVE!";
-			} else if (this.room == this.itemLocation.getIntData(32) &&
-					this.itemFlag.getIntData(32)<1 && direction ==3) {
-				this.message = "HE WILL NOT LET YOU PASS";
-			} else if (this.room == 47 && this.itemFlag.getIntData(44) == 0) {
-				this.message = "THE ROCKS MOVE TO PREVENT YOU";
-			} else if (this.room == 28 && this.itemFlag.getIntData(7) != 1) {
-				this.message = "THE ARMS HOLD YOU FAST";
-			} else if (this.room == 45 && this.itemFlag.getIntData(40) == 0 &&
-					direction == 4) {
-				this.message = "HISSSS!";
-			} else if (this.room == 42 && this.itemFlag.getIntData(16) + 
-					this.itemLocation.getIntData(16) != -1 && direction ==3) {
-				this.message = "TOO STEEP TO CLIMB";
-			} else if (this.room == 51 && direction == 3) {
-				this.message = "THE DOOR IS BARRED!";
-			} else {
-								
-				if (this.room == 33 && this.itemLocation.getIntData(16) == 0) {
-					this.itemLocation.updateIntData(16, rand.nextInt(4));
-					this.itemFlag.updateIntData(15,0);
-					this.message = "THE BEAST RUNS AWAY";
-				}
-				
-				if (this.room == this.itemLocation.getIntData(25) || 
-					nounChosen == 25) {
-					this.message = "";
-					String noun = "#YOU BOARD THE CRAFT ";
-					
-					if (this.room<60) {
-						noun = String.format("%s%s",noun,"FALLING UNDER THE SPELL OF THE BOATMAN ");
-						
-					}
-					
-					noun = String.format("%s%s",noun,"AND ARE TAKEN TO THE ISLAND OF SECRETS");
-					
-					//Line 720
-					System.out.println(noun.substring(1,noun.length()));
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					
-					if (this.room<60) {
-						System.out.println("TO SERVE OMEGAN FOREVER!");
-					} else {
-						System.out.println("THE BOAT SKIMS THE DARK SILENT WATERS");
-						this.room=57;
-					}
-				}
-			}
-		}
-	}
-	
-	private void take(int nounNumber, String codedNoun, int verbNumber, String[] actions) {
-		
-		boolean takeSuccessful = false;
-		
-		if (((this.itemFlag.getIntData(nounNumber)>0 && 
-			this.itemFlag.getIntData(nounNumber)<9) ||
-			this.itemLocation.getIntData(nounNumber) != this.room) &&
-			nounNumber < this.carriableItems) {
-			
-			this.message = "WHAT "+this.objects.getStringData(nounNumber)+"?";			
-		} else if (codedNoun.equals("3450050")) {
-			this.strength = this.strength-8;
-			this.wisdom = this.wisdom-5;
-			this.message = "THEY ARE CURSED";
-		} else if (codedNoun.equals("3810010")) {
-			
-			//Give it better effects
-			this.message = "///Lightning Flashes";
-			this.itemLocation.updateIntData(nounNumber, this.room);
-			this.strength = this.strength-8;
-			this.wisdom = this.wisdom-2;
-			
-		} else if ((verbNumber == 15 && nounNumber !=20 && nounNumber != 1) || 
-				nounNumber > this.carriableItems) {
-			this.message = "YOU CAN'T "+actions[0]+" "+actions[1];
-		} else if ((this.itemLocation.getIntData(nounNumber) == this.room) &&
-				(this.itemFlag.getIntData(nounNumber)<1 ||
-				 this.itemFlag.getIntData(nounNumber)==0) && nounNumber<
-				 this.carriableItems) {
-			this.itemFlag.updateIntData(nounNumber,0);
-			takeSuccessful = true;
-		} else if (nounNumber == 16 && this.itemLocation.getIntData(10) != 0) {
-			this.itemLocation.updateIntData(nounNumber, this.room);
-			this.message = "IT ESCAPED";
-			verbNumber = 0;
-		}
-		
-		if (takeSuccessful) {
-			if (nounNumber > this.foodLine && nounNumber <this.foodLine) {
-				this.food += 2;
-				verbNumber = -1;
-			} else if (nounNumber >= this.drinkLine && nounNumber <=this.carriableItems) {
-				this.drink += 2;
-				verbNumber = -1;
-			}
-			
-			if (nounNumber>this.foodLine && nounNumber<this.carriableItems) {
-				this.itemLocation.updateIntData(nounNumber,-81);
-			}
-			
-			this.message = "TAKEN";
-			this.wisdom += 4;
-			this.weight += 1;
-			
-			if (this.itemFlag.getIntData(nounNumber)>1) {
-				this.itemFlag.updateIntData(nounNumber, 0);
-			}
-			
-			//Bird Section (Stealing egg)
-			if (codedNoun.equals("246046") || this.itemLocation.getIntData(11) != 0) {
-				this.message = "YOU ANGER THE BIRD";
-				
-				if(rand.nextInt(3)>2) {
-					flyRandom();
-				};
-			}
-		}
-	}
+
 	
 	private void flyRandom() {
 		this.message = "#YOU ANGER THE BIRD WHICH FLIES YOU TO A REMOTE PLACE";
 		this.room = 63+rand.nextInt(6);
 	}
 	
-	private void give(int nounNumber,String codedNoun,String[] actions) {
-		
-		String message = "";
-		
-		if ((nounNumber != 24 && this.itemLocation.getIntData(nounNumber)>0) ||
-			nounNumber >= 52) {
-			this.message = "YOU DON'T HAVE THE "+actions[1];
-		} else {
-			String action = getAction("GIVE THE "+actions[1]+" TO WHOM ");
-			action = action.toUpperCase();
-			int objectNumber = getWords(action, this.noNouns,this.nouns);
-			
-			if (this.room != this.itemLocation.getIntData(objectNumber)) {
-				this.message = "THE "+action+" IS NOT HERE";
-			} else if (codedNoun.equals("10045") && objectNumber ==40) {
-				this.itemLocation.updateIntData(nounNumber, 81);
-				this.itemFlag.updateIntData(40,1);
-				this.message = "THE SNAKE UNCURLS";
-			} else if (codedNoun.equals("2413075") && objectNumber == 40 && this.drink>1) {
-				this.itemFlag.updateIntData(11,0);
-				this.message = "HE OFFERS HIS STAFF";
-				this.drink --;
-			} else {
-				this.message = "IT IS REFUSED";
-				codedNoun = codedNoun.substring(0,3);
-				
-				if ((codedNoun.equals("300") || codedNoun.equals("120")) && objectNumber == 42) {
-					this.wisdom += 10;
-					this.itemLocation.updateIntData(nounNumber,81);
-				}
-				
-				if (codedNoun.equals("40") && this.itemFlag.getIntData(4)<0 && objectNumber == 32) {
-					this.itemFlag.updateIntData(objectNumber,1);
-					this.itemLocation.updateIntData(nounNumber,81);
-				}
-				
-				if (codedNoun.substring(0,2).equalsIgnoreCase("80") && objectNumber == 43) {
-					this.itemLocation.updateIntData(objectNumber,81);
-					
-					message = "HE TAKES IT ";
-					
-					if (this.room != 8) {
-						message += "RUNS DOWN THE CORRIDOR, ";
-					}
-					
-					System.out.println(message);
-					System.out.println("AND CASTS IT INTO THE CHEMICAL VATS, PURIFYING THEM WITH");
-					System.out.println("A CLEAR BLUE LIGHT REACHING FAR INTO THE LAKES AND RIVERS BEYOND");
-					this.itemFlag.updateIntData(8,-1);		
-				}
-				
-				if (this.itemLocation.getIntData(nounNumber) == 81 ||
-					(nounNumber == 24 && this.itemLocation.getIntData(11)>0 &&
-					 this.drink>0)) {
-					this.message = "IT IS ACCEPTED";
-				}
-				
-				if (objectNumber == 41) {
-					this.itemLocation.updateIntData(nounNumber,51);
-					this.message = "IT IS TAKEN";
-				}
-			}
-		}
-	}
+
 	
 	private void drop(int nounFound,int verbFound) {
 		
@@ -1112,4 +879,5 @@ public class GameEngine {
 25 November 2024 - Added new panel for handling the give command.
 				   Moved panel generating functions into new methods
 29 November 2024 - Passed coded command to GivePanel
+30 November 2024 - Added message panel for response to giving Median a shiny pebble
 */
