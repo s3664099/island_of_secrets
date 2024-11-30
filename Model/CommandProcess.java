@@ -204,25 +204,19 @@ public class CommandProcess {
 					game.getItem(8).setFlag(-1);					
 				}
 				
+				//Successfully given
 				if (game.getItem(nounNumber).getLocation() == 81) {
 					game.setMessage("It is accepted");
+				}
+				
+				//Giving 
+				if (objNumber == 41) {
+					game.setMessage("It is taken");
+					game.getItem(nounNumber).setLocation(51);
 				}
 			}
 		}
 	}
-	/*
-	
-	
-	
-	1450 LET B$=LEFT$(B$,3):LET F$="IT IS REFUSED"
-	
-	
-	
-	
-	
-	1510 IF N=41 THEN LET L(O)=51:LET F$="IT IS TAKEN"
-	1520 RETURN
-	*/
 }
 
 /* 9 November 2024 - Created method
