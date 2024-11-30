@@ -150,6 +150,10 @@ public class CommandProcess {
 			//Give
 			} else if (verbNo == 8) {
 				this.command.give(game, player);
+
+			//Drop
+			} else if (verbNo == 9||verbNo ==10) {
+				this.command.drop(game,player);
 			}
 		}
 	}

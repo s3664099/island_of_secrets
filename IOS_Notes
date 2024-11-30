@@ -32,7 +32,7 @@ Q$	- Item Code
 R	- Current Room
 W	- number of nouns (Constant 51)
 V$	- Verbs
-V	- number of verbs (Constant 42)
+V	- number of verbs (Constant 42)noun
 X	- Wisdom
 X$	- Noun
 Y	- Strength

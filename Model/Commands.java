@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 19 November 2024
+Version: 1.4
+Date: 30 November 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -141,7 +141,7 @@ public class Commands {
 	}
 	
 	public void take(Game game,Player player) {
-		
+				
 		//Is the item present, and can it be taken?
 		if (((game.getItem(noun).getFlag()>0 && game.getItem(noun).getFlag()<9) ||
 			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.carriableItems) {
@@ -177,13 +177,14 @@ public class Commands {
 				} else {
 					
 					int weight = 0;
-					
+										
 					//picks up item
 					if (game.getItem(noun).getLocation()== player.getRoom() && (
-						game.getItem(noun).getFlag()<0 || game.getItem(noun).getFlag()==9)
+						game.getItem(noun).getFlag()<1 || game.getItem(noun).getFlag()==9)
 						&& noun<Constants.carriableItems) {
 							game.getItem(noun).setLocation(0);
 							weight = -1;
+							System.out.println("Hello");
 					}
 					
 					if (noun == 16 && game.getItem(10).getLocation()!=0) {
@@ -241,9 +242,29 @@ public class Commands {
 			}
 			
 			game.setMessage("You don't have the "+itemName);
-
+			
 		} else {
 			player.setPanelFlag(1);			
+		}
+	}
+	
+	public void drop(Game game, Player player) {
+		
+		//Dropping the Earthenware Jug
+		if (noun == 4 && game.getItem(noun).getLocation()==0 && verb==9) {
+			game.getItem(noun).setLocation(81);
+			player.setWisdom(player.getWisdom()-1);
+			game.setMessage("It breaks!");
+		
+		//Dropping other items
+		} else {
+			if (game.getItem(noun).getLocation()==0 && noun<Constants.foodLine) {
+				game.getItem(noun).setLocation(player.getRoom());
+				player.setWeight(player.getWeight()-1);
+				game.setMessage("Done");
+			} else {
+				game.setMessage("I can't. Sorry.");
+			}
 		}
 	}	
 }
@@ -253,4 +274,5 @@ public class Commands {
  * 17 November 2024 - completed the movement method
  * 					- Started working on the take method
  * 19 November 2024 - Added the code to increase food & drink
+ * 30 November 2024 - Added drop command
  */
