@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.8
-Date: 30 November 2024
+Version: 1.9
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -134,7 +134,12 @@ public class CommandProcess {
 				
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
-			this.command.move(game,player);
+			this.command.move(game,player);//More than one verb
+		
+		//Eat
+		} else if (verbNo==11) {
+			
+			this.command.eat(game,player,splitCommand[1]);
 		
 		//More than one verb
 		} else if(commands.length>1) {
@@ -154,6 +159,10 @@ public class CommandProcess {
 			//Drop
 			} else if (verbNo == 9||verbNo ==10) {
 				this.command.drop(game,player);
+			//Eat
+			} else if (verbNo==11) {
+			
+			//Drink
 			}
 		}
 	}
@@ -235,4 +244,5 @@ public class CommandProcess {
  * 29 November 2024 - moved script to get noun value to separate script.
  * 					- Fixed problem with only verb command not displaying properly
  * 30 November 2024 - Continued building the give functionality
+ * 1 December 2024 - Added Eat Functionality
  */

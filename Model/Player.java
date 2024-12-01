@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 29 November 2024
+Version: 1.7
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -80,6 +80,10 @@ public class Player {
 		this.wisdom = newWisdom;
 	}
 	
+	public void adjustWisdom(int change) {
+		this.wisdom += change;
+	}
+	
 	//Strength getter/setter
 	public float getStrength() {
 		return this.strength;
@@ -87,6 +91,10 @@ public class Player {
 
 	public void setStrength(float newStrength) {
 		this.strength = newStrength;
+	}
+	
+	public void adjustStrength(float change) {
+		this.strength += change;
 	}
 	
 	//Weight getter/setter
@@ -98,10 +106,20 @@ public class Player {
 		this.weight = weight;
 	}
 	
+	public void adjustWeight(int change) {
+		this.weight += change;
+	}
+	
+	//Food getter/setter
 	public void adjustFood(int change) {
 		this.food += change;
 	}
+
+	public int getFood() {
+		return this.food;
+	}
 	
+	//drink getter/setter
 	public void adjustDrink(int change) {
 		this.drink += change;
 	}
@@ -133,4 +151,5 @@ public class Player {
  * 17 November 2024 - Added getters & setters
  * 25 November 2024 - Added flag for give (though will need to be changed for other screens)
  * 29 November 2024 - Added getter for drink
+ * 1 December 2024 - Added adjust function for strength/wisdom/food/drink
  */

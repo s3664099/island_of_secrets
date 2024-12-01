@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.4
-Date: 30 November 2024
+Version: 1.5
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -266,7 +266,33 @@ public class Commands {
 				game.setMessage("I can't. Sorry.");
 			}
 		}
-	}	
+	}
+	
+	public void eat(Game game, Player player,String nounStr) {
+
+		//Eating lillies (moved here since in original game code wouldn't reach)
+		if (noun == 3 && game.getItem(3).getLocation()==0) {
+			player.adjustWisdom(-5);
+			player.adjustStrength(-2);
+			game.setMessage("They make you very ill");
+		
+		//Item unedible
+		} else if ((noun<Constants.foodLine || noun>Constants.carriableItems) 
+			&& nounStr.length()>0) {
+			game.setMessage("You can't "+command);
+			player.setWisdom(player.getWisdom()-1);
+		
+		//Eat
+		} else {
+			game.setMessage("You have no food");
+			
+			if (player.getFood()>0) {
+				player.adjustFood(-1);
+				player.adjustStrength(10);
+				game.setMessage("Ok");
+			}
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -275,4 +301,5 @@ public class Commands {
  * 					- Started working on the take method
  * 19 November 2024 - Added the code to increase food & drink
  * 30 November 2024 - Added drop command
+ * 1 December 2024 - Added eat functionality
  */
