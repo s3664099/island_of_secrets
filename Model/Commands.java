@@ -293,6 +293,44 @@ public class Commands {
 			}
 		}
 	}
+	
+	public void drink(Game game, Player player,String nounStr) {
+		
+		//Drinking green liquid
+		if (noun==31) {
+			
+			if (game.getItemFlagSum(4)!=-1) {
+				game.setMessage("You don't have the "+game.getItem(noun).getItem());
+			} else {
+				game.setMessage("Ouch!");
+				player.adjustStrength(-4);
+				player.adjustWisdom(-7);
+				player.setPanelFlag(4);
+				int count = game.getItem(36).getFlag()+3;
+				
+				for (int i=1;i<count;i++) {
+					player.reduceTime();
+					if (player.getStrength()<100 || game.getItem(22).getFlag()==(player.getRoom()*-1)) {
+						player.adjustStrength(1);
+					}
+				}
+			}
+			
+		//Item undrinkable
+		} else if ((noun<Constants.drinkLine || noun>Constants.carriableItems) 
+				&& nounStr.length()>0) {
+				game.setMessage("You can't "+command);
+				player.setWisdom(player.getWisdom()-1);
+		} else {
+			
+			game.setMessage("You have no drink.");
+			if (player.getDrink()>0) {
+				player.adjustDrink(-1);
+				player.adjustStrength(7);
+				game.setMessage("Ok");
+			}
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -301,5 +339,5 @@ public class Commands {
  * 					- Started working on the take method
  * 19 November 2024 - Added the code to increase food & drink
  * 30 November 2024 - Added drop command
- * 1 December 2024 - Added eat functionality
+ * 1 December 2024 - Added eat & drink functionality
  */

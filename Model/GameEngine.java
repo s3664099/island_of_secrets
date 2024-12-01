@@ -17,7 +17,7 @@ import View.GameFrame;
 import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
-import View.MessagePanel;
+import View.MedianPanel;
 
 public class GameEngine {
 	
@@ -115,15 +115,26 @@ public class GameEngine {
 			setPanel(game, new LightningPanel(0,game,this));
 			player.setPanelFlag(0);
 		
-		//Messageing Panel for Median & Shining Pebble
+		//Green Liquid Panel
 		} else if (player.getPanelFlag()==3) {
+		
+			//See if we can create a panel for generic messaging
+			/* 2390 GOSUB2770:PRINT"YOU TASTE A DROP AND..":GOSUB2760 -  message one
+			   2400 GOSUB2770:(does it count number times
+			   2420 PRINT"TIME PASSES":GOSUB2760 - message two
+			   2430 NEXT I
+			 */	
+			
+		//Messageing Panel for Median & Shining Pebble
+		} else if (player.getPanelFlag()==4) {
 			
 			boolean room = false;
 			if (player.getRoom() == 8) {
 				room = true;
 			}
-			setPanel(game,new MessagePanel(game,this,room));
+			setPanel(game,new MedianPanel(game,this,room));
 			player.setPanelFlag(0);
+			
 		} else {
 			resetPanel(game);
 		}

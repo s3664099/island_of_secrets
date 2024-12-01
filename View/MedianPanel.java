@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 30 November 2024
+Version: 1.1
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -23,14 +23,14 @@ import javax.swing.Timer;
 
 import Model.GameEngine;
 
-public class MessagePanel extends JPanel {
+public class MedianPanel extends JPanel {
 
 	private JLabel label;
 	private GamePanel game;
 	private GameEngine engine;
 	private boolean room;
 	
-    public MessagePanel(GamePanel game,GameEngine engine,boolean room) {
+    public MedianPanel(GamePanel game,GameEngine engine,boolean room) {
     	
         this.game = game;
         this.engine = engine;
@@ -91,5 +91,5 @@ public class MessagePanel extends JPanel {
 	}
 }
 /* 30 November 2024 - Created File
- * 
+ * 1 December 2024 - Change name of class to specific name
  */

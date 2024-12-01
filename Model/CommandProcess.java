@@ -213,7 +213,7 @@ public class CommandProcess {
 				} else if (codedNoun.substring(0,2).equals("80") &&
 						   objNumber == 43) {
 					game.getItem(nounNumber).setLocation(81);
-					player.setPanelFlag(3);
+					player.setPanelFlag(4);
 					game.getItem(8).setFlag(-1);					
 				}
 				
@@ -244,5 +244,6 @@ public class CommandProcess {
  * 29 November 2024 - moved script to get noun value to separate script.
  * 					- Fixed problem with only verb command not displaying properly
  * 30 November 2024 - Continued building the give functionality
- * 1 December 2024 - Added Eat Functionality
+ * 1 December 2024 - Added Eat Functionality. Added Drink Functionality. Changed Median
+ * 					 panel to four.
  */

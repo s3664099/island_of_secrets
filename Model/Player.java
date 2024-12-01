@@ -44,10 +44,6 @@ public class Player {
 	public void changeRoom(int room) {
 		this.room = room;
 	}
-
-	public String getTime() {
-		return String.format("Time Remaining: %d",this.timeRemaining);
-	}
 	
 	public String getStatus() {
 		return String.format("Strength: %.2f         wisdom: %d", this.strength,this.wisdom);
@@ -61,7 +57,7 @@ public class Player {
 	public float getStrengthWisdon() {
 		return this.strength+this.wisdom;
 	}
-	
+
 	//Getters & Setters
 	public int getRoom() {
 		return this.room;
@@ -69,6 +65,15 @@ public class Player {
 	
 	public void setRoom(int newRoom) {
 		this.room = newRoom;
+	}
+	
+	//Time getter/setter
+	public String getTime() {
+		return String.format("Time Remaining: %d",this.timeRemaining);
+	}
+	
+	public void reduceTime() {
+		this.timeRemaining--;
 	}
 
 	//Wisdom getter/Setter
