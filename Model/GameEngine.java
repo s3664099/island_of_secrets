@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.12
-Date: 30 November 2024
+Version: 1.13
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
 import View.MedianPanel;
+import View.MessagePanel;
 
 public class GameEngine {
 	
@@ -107,7 +108,11 @@ public class GameEngine {
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
-			
+		
+		//Use this to test the median one
+		//this.game.setPanelMessages("You taste a drop and ...", "Time passes ...", 4);
+		//player.setPanelFlag(3);
+		
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
@@ -117,15 +122,12 @@ public class GameEngine {
 		
 		//Green Liquid Panel
 		} else if (player.getPanelFlag()==3) {
-		
-			//See if we can create a panel for generic messaging
-			/* 2390 GOSUB2770:PRINT"YOU TASTE A DROP AND..":GOSUB2760 -  message one
-			   2400 GOSUB2770:(does it count number times
-			   2420 PRINT"TIME PASSES":GOSUB2760 - message two
-			   2430 NEXT I
-			 */	
+
+			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
+										   this.game.getMsgTwo(),this.game.getLoop()));
+			player.setPanelFlag(0);
 			
-		//Messageing Panel for Median & Shining Pebble
+		//Messageing Panel for Median & Shining Pebble - move this to message panel and get rid of MedianPanel
 		} else if (player.getPanelFlag()==4) {
 			
 			boolean room = false;
@@ -891,4 +893,5 @@ public class GameEngine {
 				   Moved panel generating functions into new methods
 29 November 2024 - Passed coded command to GivePanel
 30 November 2024 - Added message panel for response to giving Median a shiny pebble
+1 December 2024 - Added panel to display messages.
 */

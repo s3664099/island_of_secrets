@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.9
-Date: 17 November 2024
+Version: 1.10
+Date: 1 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,9 @@ public class Game {
 	private String message = "Let your quest begin!";
 	private String[] commands = {"","",""};
 	private Random rand = new Random();
+	private String panelMessageOne;
+	private String panelMessageTwo;
+	private int panelLoop;
 
 	public Game() {
 				
@@ -191,6 +194,25 @@ public class Game {
 	public int getItemFlagSum(int itemNumber) {
 		return itemList[itemNumber].getFlag() + itemList[itemNumber].getLocation();
 	}
+	
+	//Sets up and gets the panel messages
+	public void setPanelMessages(String messageOne,String messageTwo,int loop) {
+		this.panelMessageOne = messageOne;
+		this.panelMessageTwo = messageTwo;
+		this.panelLoop = loop;
+	}
+	
+	public String getMsgOne() {
+		return this.panelMessageOne;
+	}
+	
+	public String getMsgTwo() {
+		return this.panelMessageTwo;
+	}
+	
+	public int getLoop() {
+		return this.panelLoop;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -205,4 +227,5 @@ public class Game {
  * 11 November 2024 - Added second method so that only some messages are extended.
  * 13 November 2024 - Added method to check if exit available
  * 17 November 2024 - Added code to retrieve flag and location sum
+ * 1 December 2024 - Added variables to hold messages to go into the panel.
  */

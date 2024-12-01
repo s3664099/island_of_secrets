@@ -314,6 +314,9 @@ public class Commands {
 						player.adjustStrength(1);
 					}
 				}
+				
+				//Sets messages
+				game.setPanelMessages("You taste a drop and ...", "Time passes ...", count);
 			}
 			
 		//Item undrinkable
