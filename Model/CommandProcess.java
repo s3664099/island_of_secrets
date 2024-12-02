@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.9
-Date: 1 December 2024
+Version: 1.10
+Date: 2 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -161,9 +161,10 @@ public class CommandProcess {
 			//Drop
 			} else if (verbNo == 9||verbNo ==10) {
 				this.command.drop(game,player);
-			//Drink
-			} else if (verbNo==12) {
-				this.command.drink(game, player, codedCommand);
+				
+			//Ride
+			} else if (verbNo==13) {
+				this.command.ride(game);
 			}
 		}
 	}
@@ -259,4 +260,5 @@ public class CommandProcess {
  * 30 November 2024 - Continued building the give functionality
  * 1 December 2024 - Added Eat Functionality. Added Drink Functionality. Changed Median
  * 					 panel to four.
+ * 2 December 2024 - Moved drink command to single command and added call to method
  */

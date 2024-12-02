@@ -91,7 +91,7 @@ public class GameEngine {
 		//Either verb or noun doesn't exist
 		if (verbNumber>Constants.noVerbs || nounNumber == 52) {
 			this.game.setMessage("You can't "+command);
-		} code
+		}
 
 		//Neither exists
 		if (verbNumber>Constants.noVerbs && nounNumber == 52) {
