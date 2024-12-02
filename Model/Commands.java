@@ -344,12 +344,23 @@ public class Commands {
 		}
 	}
 	
-	/*
-
-		1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
-		1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
-		1750 RETURN
-	 */
+	public void open(Game game,Player player) {
+		
+		//Open chest in grandpa's shack
+		if (this.code.equals("2644044")) {
+			game.setMessage("The chest opens");
+			game.getItem(6).setFlag(9);
+			game.getItem(5).setFlag(9);
+			game.getItem(15).setFlag(9);
+		}
+		
+		//Open trapdoor in refuse filled room
+		if (this.code.equals("2951151")) {
+			game.setMessage("The trapdoor creaks");
+			game.getItem(29).setFlag(0);
+			player.adjustWisdom(3);
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
