@@ -138,9 +138,11 @@ public class CommandProcess {
 		
 		//Eat
 		} else if (verbNo==11) {
-			
 			this.command.eat(game,player,splitCommand[1]);
 		
+		//Drink
+		} else if (verbNo==12) {
+			this.command.drink(game,player,splitCommand[1]);
 		//More than one verb
 		} else if(commands.length>1) {
 			
@@ -159,10 +161,9 @@ public class CommandProcess {
 			//Drop
 			} else if (verbNo == 9||verbNo ==10) {
 				this.command.drop(game,player);
-			//Eat
-			} else if (verbNo==11) {
-			
 			//Drink
+			} else if (verbNo==12) {
+				this.command.drink(game, player, codedCommand);
 			}
 		}
 	}

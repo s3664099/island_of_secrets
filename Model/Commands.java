@@ -334,6 +334,15 @@ public class Commands {
 			}
 		}
 	}
+	
+	/*
+	 * 1710 IF LEFT$(B$,4)="1600" THEN LET F(O)=-1:LET F$="IT ALLOWS YOU TO RIDE"
+	   1720 RETURN
+
+		1730 IF B$="2644044" THEN LET F$="CHEST OPEN":LET F(6)=9:LET F(5)=9:LET F(15)=9
+		1740 IF B$="2951151" THEN LET F$="THE TRAPDOOR CREAKS":LET F(29)=0:LET X=X+3
+		1750 RETURN
+	 */
 }
 
 /* 13 November 2024 - Created File. Added code to move player
