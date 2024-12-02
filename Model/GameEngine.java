@@ -17,7 +17,6 @@ import View.GameFrame;
 import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
-import View.MedianPanel;
 import View.MessagePanel;
 
 public class GameEngine {
@@ -109,34 +108,18 @@ public class GameEngine {
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
 		
-		//Use this to test the median one
-		//this.game.setPanelMessages("You taste a drop and ...", "Time passes ...", 4);
-		//player.setPanelFlag(3);
-		
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==2) {
 			setPanel(game, new LightningPanel(0,game,this));
 			player.setPanelFlag(0);
-		
-		//Green Liquid Panel
 		} else if (player.getPanelFlag()==3) {
-
 			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
 										   this.game.getMsgTwo(),this.game.getLoop()));
 			player.setPanelFlag(0);
 			
 		//Messageing Panel for Median & Shining Pebble - move this to message panel and get rid of MedianPanel
-		} else if (player.getPanelFlag()==4) {
-			
-			boolean room = false;
-			if (player.getRoom() == 8) {
-				room = true;
-			}
-			setPanel(game,new MedianPanel(game,this,room));
-			player.setPanelFlag(0);
-			
 		} else {
 			resetPanel(game);
 		}

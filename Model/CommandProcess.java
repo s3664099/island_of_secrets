@@ -213,8 +213,20 @@ public class CommandProcess {
 				} else if (codedNoun.substring(0,2).equals("80") &&
 						   objNumber == 43) {
 					game.getItem(nounNumber).setLocation(81);
-					player.setPanelFlag(4);
-					game.getItem(8).setFlag(-1);					
+					player.setPanelFlag(3);
+					game.getItem(8).setFlag(-1);
+					
+					if (player.getRoom()==8) {
+						game.setPanelMessages("He takes it ...", 
+											  "and casts it into the chemical vats, purifying them with"
+											  + "a clear blue light reaching far into the lakes and rivers "
+											  + "beyond.", 2);
+					} else {
+						game.setPanelMessages("He takes it, runs down the corridor, ...", 
+											  "and casts it into the chemical vats, purifying them with"
+											  + "a clear blue light reaching far into the lakes and rivers "
+										      + "beyond.", 2);
+					}
 				}
 				
 				//Successfully given
