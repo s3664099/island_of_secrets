@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 1 December 2024
+Version: 1.6
+Date: 3 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -361,6 +361,44 @@ public class Commands {
 			player.adjustWisdom(3);
 		}
 	}
+	
+	public void chip(Game game,Player player) {
+		
+		player.adjustStrength(-2);
+
+		//Carrying Hammer or Axe
+		if (game.getItem(9).getLocation()==0 || game.getItem(15).getLocation()==0) {
+			game.setMessage("Ok");
+		}
+		
+		//Chopping roots with Axe
+		if (this.code.equals("3577077") && game.getItem(9).getLocation()==0) {
+			game.getItem(23).setFlag(0);
+			game.getItem(23).setLocation(player.getRoom());
+		}
+		
+		//Break the column
+		if (this.code.equals("1258158") || this.code.equals("2758158") && 
+			game.getItem(15).getLocation()==0) {
+				game.getItem(12).setFlag(0);
+				game.getItem(27).setFlag(0);
+				game.setMessage("Crack");
+		}
+		
+		//Break the staff
+		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
+			//GOSUB 1980 - have it occur here
+		}
+		
+		//Tap a person (and the still for some odd reason)
+		if (this.verb==18 && (this.noun>29 && this.noun<34) || 
+			(this.noun>38 && this.noun<44) || this.noun==16) {
+			//GOSUB 1900 - this is game ending - need to change it a bit though
+		}
+	}
+	/*
+	 * 
+	 */
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -370,4 +408,5 @@ public class Commands {
  * 19 November 2024 - Added the code to increase food & drink
  * 30 November 2024 - Added drop command
  * 1 December 2024 - Added eat & drink functionality
+ * 3 December 2024 - Started on the break functionality
  */
