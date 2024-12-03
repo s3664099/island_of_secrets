@@ -305,7 +305,7 @@ public class Commands {
 				game.setMessage("Ouch!");
 				player.adjustStrength(-4);
 				player.adjustWisdom(-7);
-				player.setPanelFlag(4);
+				player.setPanelFlag(3);
 				int count = game.getItem(36).getFlag()+3;
 				
 				for (int i=1;i<count;i++) {
@@ -387,7 +387,22 @@ public class Commands {
 		
 		//Break the staff
 		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
-			//GOSUB 1980 - have it occur here
+			player.adjustWisdom(10);
+			game.getItem(noun).setLocation(81);
+			game.getItem(noun).setFlag(-1);
+			player.setPanelFlag(3);
+			
+			if (game.getItem(2).getLocation() != player.getRoom()) {
+				game.setPanelMessages("It shatters releasing a rainbow of colours!", "", 1);
+			} else {
+				game.setPanelMessages("It shatters releasing a rainbow of colours!", 
+									  "The egg hatches into a baby dactyl which takes"+
+									  " Omegan in its claws and flies away", 2);
+				game.getItem(39).setLocation(81);
+				game.getItem(2).setLocation(2);
+				game.getItem(2).setFlag(-1);
+				player.adjustStrength(40);
+			}
 		}
 		
 		//Tap a person (and the still for some odd reason)

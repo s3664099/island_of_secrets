@@ -107,7 +107,7 @@ public class GameEngine {
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
-		
+
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
