@@ -421,9 +421,9 @@ public class Commands {
 				if (game.getItem(noun).getLocation() == player.getRoom()) {
 					game.getItem(Constants.noItems).setFlag(1);
 					player.setPanelFlag(3);
-					game.setPanelMessages("Thunder splits the sky! It is the triumphant"
-							+ " voice of Omega.", "Well done Alphan! The means becomes the"
-									+ "end. I claim you as my own! Ha Ha Hah!",2);
+					game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
+							+ " voice of Omegan.|Well done Alphan!|The means becomes the"
+									+ " end.|I claim you as my own!|Ha Ha Hah!",6);
 					player.setStrength(0);
 					player.setWisdom(0);
 					player.setTime(0);
@@ -431,10 +431,6 @@ public class Commands {
 			}
 		}
 	}
-	/*
-1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
-	 * 
-	 */
 }
 
 /* 13 November 2024 - Created File. Added code to move player

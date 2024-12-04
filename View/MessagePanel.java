@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.1
-Date: 2 December 2024
+Version: 1.2
+Date: 4 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -41,8 +41,17 @@ public class MessagePanel extends JPanel {
         
         label = createLabel("<html>"+messageOne+"</html>");
         add(label, BorderLayout.CENTER);
+
+        //Splits the second message to create multiple messages
+        String[] messages = messageTwo.split("\\|");
         
-        messageOne = messageOne+"<br>"+messageTwo;
+        if (messages.length == 1) {
+        	messageOne = messageOne+"<br>"+messageTwo;
+        } else {
+        	messageOne = messageOne+"<br>"+messages[0];
+        	messageTwo = messageTwo.substring(messages[0].length()+1);
+        }
+        
         startSequence(noMessages,messageOne,messageTwo);
 
     }
@@ -96,4 +105,5 @@ public class MessagePanel extends JPanel {
 /* 30 November 2024 - Created File
  * 1 December 2024 - Change name of class to specific name
  * 2 December 2024 - Added longer delay for last display
+ * 4 December 2024 - Added code to have different messages appear if repeating
  */
