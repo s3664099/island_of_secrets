@@ -166,9 +166,17 @@ public class CommandProcess {
 			} else if (verbNo==13) {
 				this.command.ride(game);
 			
+			//Open
+			} else if (verbNo==14) {
+				this.command.open(game, player);
+			
 			//Break
-			} else if (verbNo>14 && verbNo<19) {
+			} else if (verbNo>15 && verbNo<20) {
 				this.command.chip(game, player);
+			
+			//Attack
+			} else if (verbNo>19 && verbNo<24) {
+				
 			}
 		}
 	}

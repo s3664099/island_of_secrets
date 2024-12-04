@@ -412,6 +412,8 @@ public class Commands {
 			//Carrying the axe?
 			if (game.getItem(9).getLocation()<1) {
 				
+				//-- This will need to be moved to a separate method due to use elsewhere
+				
 				//Take a hit if the object isn't present
 				player.adjustStrength(-12);
 				player.adjustWisdom(-10);
@@ -430,6 +432,35 @@ public class Commands {
 				}
 			}
 		}
+	}
+	
+	public void attack() {
+		
+		/*
+		 * 1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
+1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
+1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
+1850 IF O=33 THEN LET F$=W$+"TOUCH HER!":LET L(3)=81
+1860 IF O=41 THEN LET F$="THEY THINK THAT'S FUNNY!"
+1870 IF O=46 THEN GOSUB1200
+
+1200 LET A$="#"+U$+R$
+1210 LET R=63+FNR(6):LET L(16)=1:LET F$=""
+1220 GOSUB2740:RETURN
+
+1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
+1890 LET Y=Y-8:LET X=X-5:RETURN
+
+1980 GOSUB2770:ON O-10 GOSUB 2010,2060,2060,2060
+1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB720:GOSUB2760:GOSUB2760
+2000 RETURN
+
+2060 IF L(31)<>R THEN RETURN
+2070 LET A$="*THE COAL BURNS WITH A WARM RED FLAME":LET F(13)=-1
+2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
+2090 RETURN
+		 */
+		
 	}
 }
 
