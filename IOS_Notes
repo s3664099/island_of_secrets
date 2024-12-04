@@ -22,7 +22,7 @@ F	- Food
 F()	- Array holding item flags
 	- Is the ASCII value of each of the characters in Q$
 G	- Drink
-H$	- Item Locations coded (but single)
+H$	- Item Locationounns coded (but single)
 I$  - Array of particaples (7)
 L() - Array holding item locations
 	- Is the ASCII value of each of the characters in H$
@@ -220,7 +220,7 @@ Items
 30) A PARCHED, DESSICATED VILLAGER 
 31) A STILL OF BUBBLING GREEN LIQUID 
 32) A TOUGH SKINNED SWAMPMAN 
-33) THE SAGE OF THE LILLIES 
+33) THE SAGE OF THE LILLIES 15
 34) WALL AFTER WALL OF EVIL BOOKS 
 35) A NUMBER OF SOFTER ROOTS 
 36) FIERCE LIVING STORM THAT FOLLOWS YOU 

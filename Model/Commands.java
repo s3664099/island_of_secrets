@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 3 December 2024
+Version: 1.7
+Date: 4 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -377,7 +377,7 @@ public class Commands {
 			game.getItem(23).setLocation(player.getRoom());
 		}
 		
-		//Break the column
+		//Break the column with hammer
 		if (this.code.equals("1258158") || this.code.equals("2758158") && 
 			game.getItem(15).getLocation()==0) {
 				game.getItem(12).setFlag(0);
@@ -408,10 +408,31 @@ public class Commands {
 		//Tap a person (and the still for some odd reason)
 		if (this.verb==18 && (this.noun>29 && this.noun<34) || 
 			(this.noun>38 && this.noun<44) || this.noun==16) {
-			//GOSUB 1900 - this is game ending - need to change it a bit though
+			
+			//Carrying the axe?
+			if (game.getItem(9).getLocation()<1) {
+				
+				//Take a hit if the object isn't present
+				player.adjustStrength(-12);
+				player.adjustWisdom(-10);
+				game.setMessage("That would be unwise");
+				
+				//Is object present - ends game
+				if (game.getItem(noun).getLocation() == player.getRoom()) {
+					game.getItem(Constants.noItems).setFlag(1);
+					player.setPanelFlag(3);
+					game.setPanelMessages("Thunder splits the sky! It is the triumphant"
+							+ " voice of Omega.", "Well done Alphan! The means becomes the"
+									+ "end. I claim you as my own! Ha Ha Hah!",2);
+					player.setStrength(0);
+					player.setWisdom(0);
+					player.setTime(0);
+				}
+			}
 		}
 	}
 	/*
+1970 GOSUB2760:LET X=0:LET L=0:LET Y=0:RETURN
 	 * 
 	 */
 }
@@ -424,4 +445,5 @@ public class Commands {
  * 30 November 2024 - Added drop command
  * 1 December 2024 - Added eat & drink functionality
  * 3 December 2024 - Started on the break functionality
+ * 4 December 2024 - Completed the break method
  */

@@ -108,6 +108,11 @@ public class GameEngine {
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
 
+		this.game.setPanelMessages("Thunder splits the sky! It is the triumphant"
+				+ " voice of Omega.", "Well done Alphan! The means becomes the"
+						+ " end. I claim you as my own! Ha Ha Hah!",2);
+		this.player.setPanelFlag(3);
+		
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);

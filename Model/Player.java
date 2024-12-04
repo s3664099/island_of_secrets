@@ -75,6 +75,10 @@ public class Player {
 	public void reduceTime() {
 		this.timeRemaining--;
 	}
+	
+	public void setTime(int newTime) {
+		this.timeRemaining = newTime;
+	}
 
 	//Wisdom getter/Setter
 	public int getWisdom() {
