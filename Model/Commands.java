@@ -468,28 +468,29 @@ public class Commands {
 				player.setRoom(rand.nextInt(6)+63);
 				game.getItem(16).setLocation(1);
 				game.setMessage("");
+			
+			//Strike Flint
+			} else if (code.substring(0,4).equals("1400")) {
+
+				//Coal in room
+				if (player.getRoom()==game.getItem(13).getLocation()) {
+					game.getItem(13).setFlag(-1);
+					game.getItem(noun).setFlag(-1);
+					game.getItem(noun).setLocation(81);
+					
+					//Omegan's Cloak present
+					if (player.getRoom()==game.getItem(39).getLocation()) {
+						game.setPanelMessages("The coal burns with a red flame",
+								"Which dissolves Omegan's Cloak",2);
+						player.adjustWisdom(20);
+					} else {
+						game.setPanelMessages("The coal burns with a red flame","",1);					
+					}
+				}
 			}
-		}
-		
-		/*
-		 * 
-
-
-
-
-1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
-1890 LET Y=Y-8:LET X=X-5:RETURN
-
-1980 GOSUB2770:ON O-10 GOSUB 2010,2060,2060,2060
-1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB720:GOSUB2760:GOSUB2760
-2000 RETURN
-
-2060 IF L(13)<>R THEN RETURN
-2070 LET A$="*THE COAL BURNS WITH A WARM RED FLAME":LET F(13)=-1
-2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
-2090 RETURN
-		 */
-		
+			player.adjustStrength(-8);
+			player.adjustWisdom(-5);
+		}		
 	}
 }
 
