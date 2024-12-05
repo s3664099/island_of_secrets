@@ -176,7 +176,7 @@ public class CommandProcess {
 			
 			//Attack
 			} else if (verbNo>19 && verbNo<24) {
-				
+				this.command.attack(game, player);
 			}
 		}
 	}

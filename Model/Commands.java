@@ -413,6 +413,7 @@ public class Commands {
 			if (game.getItem(9).getLocation()<1) {
 				
 				//-- This will need to be moved to a separate method due to use elsewhere
+				//Kill section
 				
 				//Take a hit if the object isn't present
 				player.adjustStrength(-12);
@@ -434,19 +435,47 @@ public class Commands {
 		}
 	}
 	
-	public void attack() {
+	public void attack(Game game, Player player) {
+		
+		player.adjustStrength(-2);
+		player.adjustWisdom(-2);
+		
+		if (game.getItem(noun).getLocation() == player.getRoom() || 
+			game.getItem(noun).getLocation() ==0) {
+			
+			//Omegan the evil one
+			if (noun==39) {
+				game.setMessage("He laughs dangerously.");
+			
+			//Swampman
+			} else if (noun==32) {
+				game.setMessage("The swampman is unmoved.");
+			
+			//Sage of the Lilies
+			} else if (noun==33) {
+				game.setMessage("You can't touch her");
+			
+			//Logmen
+			} else if (noun==41) {
+				game.setMessage("They think that's funny!");
+
+			//In the Dactyl's Nest
+			} else if (player.getRoom()==46) {
+				
+				player.setPanelFlag(3);
+				game.setPanelMessages("You anger the bird!",
+									  "Which flies you to a remote place",2);
+				player.setRoom(rand.nextInt(6)+63);
+				game.getItem(16).setLocation(1);
+				game.setMessage("");
+			}
+		}
 		
 		/*
-		 * 1820 LET Y=Y-2:LET X=X-2:IF R<>L(O) AND L(O)<>0THE RETURN
-1830 IF O=39 THEN LET F$="HE LAUGHS DANGEROUSLY"
-1840 IF O=32 THEN LET F$="THE SWAMPMAN IS UNMOVED"
-1850 IF O=33 THEN LET F$=W$+"TOUCH HER!":LET L(3)=81
-1860 IF O=41 THEN LET F$="THEY THINK THAT'S FUNNY!"
-1870 IF O=46 THEN GOSUB1200
+		 * 
 
-1200 LET A$="#"+U$+R$
-1210 LET R=63+FNR(6):LET L(16)=1:LET F$=""
-1220 GOSUB2740:RETURN
+
+
 
 1880 IF LEFT$(B$,4)="1400"AND R=L(39)THEN GOSUB1980
 1890 LET Y=Y-8:LET X=X-5:RETURN
@@ -455,7 +484,7 @@ public class Commands {
 1990 LET X=X+10:LET L(O)=81:LET F(O)=-1:GOSUB720:GOSUB2760:GOSUB2760
 2000 RETURN
 
-2060 IF L(31)<>R THEN RETURN
+2060 IF L(13)<>R THEN RETURN
 2070 LET A$="*THE COAL BURNS WITH A WARM RED FLAME":LET F(13)=-1
 2080 IF R=10 AND R=L(39)THEN A$=A$+" WHICH DISOLVES OMEGAN'S CLOAK":Y=Y+20
 2090 RETURN
