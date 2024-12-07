@@ -177,7 +177,12 @@ public class CommandProcess {
 			//Attack
 			} else if (verbNo>19 && verbNo<24) {
 				this.command.attack(game, player);
+			
+			//Kill
+			} else if (verbNo==24) {
+				this.command.kill(player, game);
 			}
+			
 		}
 	}
 	

@@ -411,27 +411,28 @@ public class Commands {
 			
 			//Carrying the axe?
 			if (game.getItem(9).getLocation()<1) {
-				
-				//-- This will need to be moved to a separate method due to use elsewhere
-				//Kill section
-				
-				//Take a hit if the object isn't present
-				player.adjustStrength(-12);
-				player.adjustWisdom(-10);
-				game.setMessage("That would be unwise");
-				
-				//Is object present - ends game
-				if (game.getItem(noun).getLocation() == player.getRoom()) {
-					game.getItem(Constants.noItems).setFlag(1);
-					player.setPanelFlag(3);
-					game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
-							+ " voice of Omegan.|Well done Alphan!|The means becomes the"
-									+ " end.|I claim you as my own!|Ha Ha Hah!",6);
-					player.setStrength(0);
-					player.setWisdom(0);
-					player.setTime(0);
-				}
+				kill(player,game);
 			}
+		}
+	}
+	
+	public void kill(Player player, Game game) {
+		
+		//Take a hit even if the object isn't present
+		player.adjustStrength(-12);
+		player.adjustWisdom(-10);
+		game.setMessage("That would be unwise");
+		
+		//Is object present - ends game
+		if (game.getItem(noun).getLocation() == player.getRoom()) {
+			game.getItem(Constants.noItems).setFlag(1);
+			player.setPanelFlag(3);
+			game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
+					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
+							+ " end.|I claim you as my own!|Ha Ha Hah!",6);
+			player.setStrength(0);
+			player.setWisdom(0);
+			player.setTime(0);
 		}
 	}
 	
