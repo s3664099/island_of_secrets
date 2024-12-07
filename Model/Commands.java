@@ -504,6 +504,23 @@ public class Commands {
 			player.setPanelFlag(5);
 		}
 	}
+	
+	public void help(Player player, Game game) {
+		
+		game.setMessage("???");
+		
+		//Help Villager or Sage
+		if (code.equals("3075075") || code.equals("3371071")) {
+			game.setMessage("How will you do that?");
+			
+			//Scratch the Sage
+			if (code.equals("3371071") && verb == 28) {
+				game.getItem(3).setFlag(0);
+				game.setMessage("She nods slowly.");
+				player.adjustWisdom(5);
+			}
+		} 
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player

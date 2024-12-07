@@ -188,6 +188,10 @@ public class CommandProcess {
 			
 			//Shelter
 			} else if (verbNo==26) {
+				this.command.shelter(player, game);
+
+			//Help & Scratch (!?!)
+			} else if (verbNo==27||verbNo==28) {
 				
 			}
 			
