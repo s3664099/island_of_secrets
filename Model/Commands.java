@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
-Date: 4 December 2024
+Version: 1.8
+Date: 7 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -115,31 +115,21 @@ public class Commands {
 				game.setMessage("The beast runs away");
 			}
 			
-			//Handling the ferry man (this would be go boat)
+			//Handling the ferry man
 			if (player.getRoom()==game.getItem(25).getLocation() && this.noun == 25) {
 				
-				//Probably need to move this out to a separate method
-				game.setMessage("You board the craft ");
-				
 				if (player.getWisdom()<60) {
-					game.addMessage("falling under the spell of the boatman ");
-				}
-				
-				game.addMessage("and are taken to the Island of Secrets.");
-				
-				//Displays message on screen, and pauses for 10 seconds
-				
-				game.setMessage("");
-				
-				if (player.getWisdom()<60) {
-					game.addMessage("to serve Omega forever!");
+					game.setPanelMessages("You board the craft ...",
+										  "falling under the spell of the boatman|"
+										  + "and are taken to the Island of Secrets ...|"
+										  + "to serve Omegan forever.",4);
 					game.getItem(direction).setFlag(Constants.noNouns-1);
 				} else {
-					game.addMessage("the boat skims the dark and silent waters.");
+					game.setPanelMessages("You board the craft ...",
+							  "and are taken to the Island of Secrets.",2);
 					player.setRoom(57);
 				}
-				
-				//Do the same as the above
+				game.setMessage("The boat skims the dark and silent waters.");
 			}
 		}
 	}
@@ -518,4 +508,6 @@ public class Commands {
  * 1 December 2024 - Added eat & drink functionality
  * 3 December 2024 - Started on the break functionality
  * 4 December 2024 - Completed the break method
+ * 7 December 2024 - Completed Kill & Swim method. Updated move for poisonous waters subgame
+ * 					 Completed the panel message of go boat.
  */

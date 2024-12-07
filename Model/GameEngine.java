@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.13
-Date: 1 December 2024
+Version: 1.14
+Date: 7 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -634,4 +634,5 @@ public class GameEngine {
 29 November 2024 - Passed coded command to GivePanel
 30 November 2024 - Added message panel for response to giving Median a shiny pebble
 1 December 2024 - Added panel to display messages.
+7 December 2024 - Added stub for poisonous waters subgame
 */
