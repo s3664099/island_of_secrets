@@ -53,6 +53,10 @@ public class Commands {
 			direction = 2;
 		} else if (code.equals("510044")||code.equals("510052")) {
 			direction = 3;
+		
+		//Poisoned waters
+		} else if (code.equals("490051") && game.getItem(29).getFlag()==0) {
+			player.setPanelFlag(4);
 		}
 		
 		//Checks if player able to move
@@ -492,6 +496,16 @@ public class Commands {
 			player.adjustStrength(-8);
 			player.adjustWisdom(-5);
 		}		
+	}
+	
+	public void swim(Player player,Game game) {
+
+		if (player.getRoom()!=51 || game.getItem(29).getFlag()>0) {
+			game.setMessage("You can't swim here!");
+			player.adjustWisdom(1);
+		} else {
+			player.setPanelFlag(4);
+		}
 	}
 }
 
