@@ -497,6 +497,13 @@ public class Commands {
 			player.setPanelFlag(4);
 		}
 	}
+	
+	public void shelter(Player player,Game game) {
+		
+		if (game.getItem(36).getFlag()<0) {
+			player.setPanelFlag(5);
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player

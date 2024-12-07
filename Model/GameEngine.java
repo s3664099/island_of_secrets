@@ -107,11 +107,6 @@ public class GameEngine {
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
-
-		this.game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
-				+ " voice of Omega.|Well done Alphan!|The means becomes the"
-						+ "end.|I claim you as my own!|Ha Ha Hah!",6);
-		this.player.setPanelFlag(3);
 		
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
@@ -123,12 +118,16 @@ public class GameEngine {
 			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
 										   this.game.getMsgTwo(),this.game.getLoop()));
 			player.setPanelFlag(0);
-			
-		//Messageing Panel for Median & Shining Pebble - move this to message panel and get rid of MedianPanel
+		
+		//Swimming in poisonous waters - 2110
 		} else if (player.getPanelFlag()==4) {
 
-			//Swimming in poisonous waters - 2110
-			player.setPanelFlag(0);
+			player.setPanelFlag(0);			
+
+		//Shelter - 2220
+		} else if (player.getPanelFlag()==5) {
+			
+			player.setPanelFlag(0);	
 			
 		} else {
 			resetPanel(game);
