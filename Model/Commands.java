@@ -178,7 +178,6 @@ public class Commands {
 						&& noun<Constants.carriableItems) {
 							game.getItem(noun).setLocation(0);
 							weight = -1;
-							System.out.println("Hello");
 					}
 					
 					if (noun == 16 && game.getItem(10).getLocation()!=0) {
@@ -507,7 +506,7 @@ public class Commands {
 	
 	public void help(Player player, Game game) {
 		
-		game.setMessage("???");
+		game.setMessage("?!?");
 		
 		//Help Villager or Sage
 		if (code.equals("3075075") || code.equals("3371071")) {
@@ -520,6 +519,24 @@ public class Commands {
 				player.adjustWisdom(5);
 			}
 		} 
+	}
+	
+	public void polish(Player player, Game game) {
+		
+		game.setMessage("A-dub-dub");
+		
+		//Rub the mouth at the crystal stone
+		if (code.substring(0,4).equals("2815") && player.getRoom()==15) {
+			if (game.getItem(noun).getFlag()==1) {
+				game.getItem(noun).setFlag(1);
+				game.setMessage("Reflections stir within.");
+			} else if (game.getItem(5).getLocation()==0) {
+				game.getItem(8).setFlag(0);
+				take(game,player); //Not sure why this is here
+				game.setMessage("The stone utters 'Stony Words'");
+			}
+		}
+		
 	}
 }
 
@@ -534,4 +551,5 @@ public class Commands {
  * 4 December 2024 - Completed the break method
  * 7 December 2024 - Completed Kill & Swim method. Updated move for poisonous waters subgame
  * 					 Completed the panel message of go boat.
+ * 					 Completed shelter,help,scratch,rub & polish
  */

@@ -190,8 +190,12 @@ public class CommandProcess {
 			} else if (verbNo==26) {
 				this.command.shelter(player, game);
 
-			//Help & Scratch (!?!)
+			//Help & Scratch
 			} else if (verbNo==27||verbNo==28) {
+				this.command.help(player, game);
+
+			//Rub & Polish
+			} else if (verbNo==30||verbNo==31) {
 				
 			}
 			
