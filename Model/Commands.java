@@ -536,7 +536,15 @@ public class Commands {
 				game.setMessage("The stone utters 'Stony Words'");
 			}
 		}
+	}
+	
+	public void examine(Game game) {
+		game.setMessage("Examine the book for clues");
 		
+		//Read the parchment
+		if (code.substring(0,3).equals("600")) {
+			game.setMessage("Remember Aladin. It Worked for him.");
+		}
 	}
 }
 

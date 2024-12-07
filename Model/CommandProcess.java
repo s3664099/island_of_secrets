@@ -196,7 +196,11 @@ public class CommandProcess {
 
 			//Rub & Polish
 			} else if (verbNo==30||verbNo==31) {
-				
+				this.command.help(player, game);
+
+			//Read & Examine
+			} else if (verbNo==32||verbNo==33) {
+				this.command.examine(game);
 			}
 			
 		}
