@@ -618,34 +618,27 @@ public class Commands {
 		
 		boolean hasItem = false;
 		
-		game.setMessage("Info - Items carried");
-		game.addMessage(" Food: "+player.getFood());
-		game.addMessage("      Drink: "+player.getDrink());
+		game.setMessage("Info - Items carried|");
+		game.addMessage("Food: "+player.getFood());
+		game.addMessage("      Drink: "+player.getDrink()+"|");
+		
+		int msglen = 0;
 		
 		for (int i=1;i<Constants.carriableItems+1;i++) {
-			
-			game.addMessage("Place Holder, ");
 			
 			if (game.getItem(i).checkLocation(0)) {
 				
 				if (!hasItem) {
-					game.addMessage(" Items:");
+					game.addMessage("|Items: ");
 					hasItem = true;
+					msglen += 7;
 				}
 				
+				msglen += game.getItem(i).getItem().length();
 				game.addMessage(" "+game.getItem(i).getItem());
 			}
-		}
-		
+		}	
 	}
-	/*
-	 * 2540 GOSUB2770 :PRINT" INFO - ITEMS CARRIED":GOSUB2780
-2550 PRINT G$:TAB(0);" FOOD=";F;TAB(23);"DRINK=";G:PRINT G$;:LET F$="OK"
-2560 FOR I=1 TO C4
-2570 READ Y$:IF L(I)=0 THEN PRINT Y$
-2580 NEXT I
-2590 PRINT G$;:GOSUB2730:RETURN
-	 */
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -660,5 +653,5 @@ public class Commands {
  * 7 December 2024 - Completed Kill & Swim method. Updated move for poisonous waters subgame
  * 					 Completed the panel message of go boat.
  * 					 Completed shelter,help,scratch,rub,polish,fill
- * 8 December 2024 - Completed say, wait, wave
+ * 8 December 2024 - Completed say, wait, wave and info
  */

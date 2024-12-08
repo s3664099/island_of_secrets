@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.10
-Date: 1 December 2024
+Version: 1.11
+Date: 8 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -176,8 +176,13 @@ public class Game {
 	public void addMessage(String message) {
 		
 		if (this.message.length()>0) {
-			this.message = String.format("%s, %s", this.message, message);
-		} else {
+			
+			if (this.message.endsWith("|")) {
+				this.message = String.format("%s %s", this.message, message);
+			} else {
+				this.message = String.format("%s, %s", this.message, message);
+			}
+		}  else {
 			this.message = message;
 		}		
 	}
@@ -228,4 +233,5 @@ public class Game {
  * 13 November 2024 - Added method to check if exit available
  * 17 November 2024 - Added code to retrieve flag and location sum
  * 1 December 2024 - Added variables to hold messages to go into the panel.
+ * 8 December 2024 - Updated the add message method so comma doesn't appear at start
  */

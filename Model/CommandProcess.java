@@ -150,7 +150,6 @@ public class CommandProcess {
 		
 		//Wave
 		} else if (verbNo==38) {
-			System.out.println(player.getRoom());
 			this.command.wave(game, player);
 			
 		//More than one verb
