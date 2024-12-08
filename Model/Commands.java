@@ -299,14 +299,8 @@ public class Commands {
 				player.adjustStrength(-4);
 				player.adjustWisdom(-7);
 				player.setPanelFlag(3);
-				int count = game.getItem(36).getFlag()+3;
 				
-				for (int i=1;i<count;i++) {
-					player.reduceTime();
-					if (player.getStrength()<100 || game.getItem(22).getFlag()==(player.getRoom()*-1)) {
-						player.adjustStrength(1);
-					}
-				}
+				int count = rest(game,player,true);
 				
 				//Sets messages
 				game.setPanelMessages("You taste a drop and ...", "Time passes ...", count);
@@ -577,6 +571,32 @@ public class Commands {
 			game.getItem(42).setFlag(1);
 			game.getItem(43).setFlag(0);
 		}
+	}
+	
+	public int rest(Game game, Player player, boolean msgSet) {
+		
+		//Randomly selects time to wait based on Living Storm
+		int count = game.getItem(36).getFlag()+3;
+		
+		//Waits and increases strength
+		for (int i=1;i<count;i++) {
+			player.reduceTime();
+			if (player.getStrength()<100 || game.getItem(22).getFlag()==(player.getRoom()*-1)) {
+				player.adjustStrength(1);
+			}
+		}
+		
+		if (player.getTime()>100 || game.getItem(36).getFlag()<1) {
+			player.adjustWisdom(2);
+			game.getItem(36).setFlag(1);
+		}
+		
+		if (!msgSet) {
+			game.setPanelMessages("Time passes ...", "Time passes ...", count);
+			game.setMessage("Ok");
+		}
+		
+		return count;		
 	}
 }
 

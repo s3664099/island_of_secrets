@@ -209,6 +209,10 @@ public class CommandProcess {
 			//Say
 			} else if (verbNo==35) {
 				this.command.say(game, splitCommand[1], player);
+			
+			//Wait/Rest
+			} else if (verbNo==36 || verbNo==37) {
+				
 			}
 		}
 	}
