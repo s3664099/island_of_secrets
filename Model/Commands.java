@@ -602,7 +602,7 @@ public class Commands {
 	public void wave(Game game,Player player) {
 		
 		//Wave to boatman
-		if (player.getRoom()==25) {
+		if (game.getItem(25).checkLocation(player.getRoom())) {
 			game.setMessage("The boatman waves back.");
 		}
 		
@@ -613,6 +613,39 @@ public class Commands {
 			player.adjustWisdom(8);
 		}
 	}
+	
+	public void info (Game game, Player player) {
+		
+		boolean hasItem = false;
+		
+		game.setMessage("Info - Items carried");
+		game.addMessage(" Food: "+player.getFood());
+		game.addMessage("      Drink: "+player.getDrink());
+		
+		for (int i=1;i<Constants.carriableItems+1;i++) {
+			
+			game.addMessage("Place Holder, ");
+			
+			if (game.getItem(i).checkLocation(0)) {
+				
+				if (!hasItem) {
+					game.addMessage(" Items:");
+					hasItem = true;
+				}
+				
+				game.addMessage(" "+game.getItem(i).getItem());
+			}
+		}
+		
+	}
+	/*
+	 * 2540 GOSUB2770 :PRINT" INFO - ITEMS CARRIED":GOSUB2780
+2550 PRINT G$:TAB(0);" FOOD=";F;TAB(23);"DRINK=";G:PRINT G$;:LET F$="OK"
+2560 FOR I=1 TO C4
+2570 READ Y$:IF L(I)=0 THEN PRINT Y$
+2580 NEXT I
+2590 PRINT G$;:GOSUB2730:RETURN
+	 */
 }
 
 /* 13 November 2024 - Created File. Added code to move player

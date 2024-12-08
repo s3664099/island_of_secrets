@@ -53,9 +53,7 @@ public class GamePanel extends JPanel {
 		JPanel middlePanel = new JPanel(new GridLayout(18,1));
 		middlePanel.add(CreateLabelPanel(game.getRoom(), 1));
 		middlePanel.add(CreateLabelPanel("", 1));
-		
-		//Add the the description
-		
+				
 		//Add the items to the room panel
 		String itemString = game.getItems();
 		
@@ -75,8 +73,9 @@ public class GamePanel extends JPanel {
 		//Add exits
 		middlePanel.add(CreateLabelPanel(game.getExits(),1));
 		middlePanel.add(CreateLabelPanel("",2));
-		
-		//Display message
+				
+		//Display message - We need to add code here to split the get message so it
+		//doesn't go over the edge
 		middlePanel.add(CreateLabelPanel("", 1));
 		middlePanel.add(CreateLabelPanel(game.getMessage(), 1));
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));

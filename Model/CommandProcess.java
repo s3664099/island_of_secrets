@@ -143,6 +143,16 @@ public class CommandProcess {
 		//Drink
 		} else if (verbNo==12) {
 			this.command.drink(game,player,splitCommand[1]);
+		
+		//Info
+		} else if (verbNo==39) {
+			this.command.info(game, player);
+		
+		//Wave
+		} else if (verbNo==38) {
+			System.out.println(player.getRoom());
+			this.command.wave(game, player);
+			
 		//More than one verb
 		} else if(commands.length>1) {
 			
@@ -214,9 +224,6 @@ public class CommandProcess {
 			} else if (verbNo==36 || verbNo==37) {
 				this.command.rest(game, player, false);
 
-			//Wave
-			} else if (verbNo==38) {
-				this.command.wave(game, player);
 			}
 		}
 	}
