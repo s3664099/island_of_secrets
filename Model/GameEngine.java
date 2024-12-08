@@ -32,7 +32,7 @@ public class GameEngine {
 	}
 		
 	public String getTime() {
-		return player.getTime();
+		return player.getTimeDetails();
 	}
 	
 	public String getStatus() {

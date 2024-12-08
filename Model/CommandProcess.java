@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.12
-Date: 7 December 2024
+Version: 1.13
+Date: 8 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -201,8 +201,15 @@ public class CommandProcess {
 			//Read & Examine
 			} else if (verbNo==32||verbNo==33) {
 				this.command.examine(game);
-			}
 			
+			//Fill
+			} else if (verbNo==34) {
+				this.command.fill(game);
+
+			//Say
+			} else if (verbNo==35) {
+				this.command.say(game, splitCommand[1], player);
+			}
 		}
 	}
 	
@@ -299,5 +306,6 @@ public class CommandProcess {
  * 					 panel to four.
  * 2 December 2024 - Moved drink command to single command and added call to method
  * 3 December 2024 - Added break command
- * 7 December 2024 - Added kill,swim,shelter
+ * 7 December 2024 - Added kill,swim,shelter, examine, fill and others
+ * 8 December 2024 - Added say
  */

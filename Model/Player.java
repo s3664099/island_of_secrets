@@ -68,8 +68,12 @@ public class Player {
 	}
 	
 	//Time getter/setter
-	public String getTime() {
+	public String getTimeDetails() {
 		return String.format("Time Remaining: %d",this.timeRemaining);
+	}
+	
+	public int getTime() {
+		return this.timeRemaining;
 	}
 	
 	public void reduceTime() {

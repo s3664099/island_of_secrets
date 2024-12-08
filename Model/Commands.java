@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.8
-Date: 7 December 2024
+Version: 1.9
+Date: 8 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -546,6 +546,38 @@ public class Commands {
 			game.setMessage("Remember Aladin. It Worked for him.");
 		}
 	}
+	
+	public void fill(Game game) {
+		
+		game.setMessage("Not sure that can be done.");
+		
+		//Fill Earthenware Jug
+		if (code.equals("40041")) {
+			game.getItem(4).setFlag(-1);
+			game.setMessage("Filled");
+		}
+	}
+	
+	public void say(Game game, String noun,Player player) {
+		game.setMessage(noun);
+		
+		//Speaking to the clashing rocks
+		if (noun.toLowerCase().equals("stony words") && player.getRoom()==47 &&
+			game.getItem(8).getFlag()==0) {
+			game.setMessage("The stones are fixed.");
+			game.getItem(44).setFlag(1);
+		}
+		
+		//Speaking to the scavenger -has flowers and pebble
+		if (noun.toLowerCase().equals("remember old times") && 
+			player.getRoom()==game.getItem(42).getLocation() && 
+			game.getItem(3).getLocation()==81 &&
+			game.getItem(12).getLocation()==81) {
+			game.setMessage("He eats the flowers - and changes");
+			game.getItem(42).setFlag(1);
+			game.getItem(43).setFlag(0);
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -559,5 +591,6 @@ public class Commands {
  * 4 December 2024 - Completed the break method
  * 7 December 2024 - Completed Kill & Swim method. Updated move for poisonous waters subgame
  * 					 Completed the panel message of go boat.
- * 					 Completed shelter,help,scratch,rub & polish
+ * 					 Completed shelter,help,scratch,rub,polish,fill
+ * 8 December 2024 - Completed say function
  */
