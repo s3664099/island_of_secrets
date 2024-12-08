@@ -212,7 +212,11 @@ public class CommandProcess {
 			
 			//Wait/Rest
 			} else if (verbNo==36 || verbNo==37) {
-				
+				this.command.rest(game, player, false);
+
+			//Wave
+			} else if (verbNo==38) {
+				this.command.wave(game, player);
 			}
 		}
 	}
@@ -311,5 +315,5 @@ public class CommandProcess {
  * 2 December 2024 - Moved drink command to single command and added call to method
  * 3 December 2024 - Added break command
  * 7 December 2024 - Added kill,swim,shelter, examine, fill and others
- * 8 December 2024 - Added say
+ * 8 December 2024 - Added say, rest, wave
  */

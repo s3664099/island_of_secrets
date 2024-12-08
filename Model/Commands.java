@@ -598,6 +598,21 @@ public class Commands {
 		
 		return count;		
 	}
+	
+	public void wave(Game game,Player player) {
+		
+		//Wave to boatman
+		if (player.getRoom()==25) {
+			game.setMessage("The boatman waves back.");
+		}
+		
+		//Wave torch
+		if (code.substring(0,3).equals("700")) {
+			game.getItem(7).setFlag(1);
+			game.setMessage("The torch brightens.");
+			player.adjustWisdom(8);
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -612,5 +627,5 @@ public class Commands {
  * 7 December 2024 - Completed Kill & Swim method. Updated move for poisonous waters subgame
  * 					 Completed the panel message of go boat.
  * 					 Completed shelter,help,scratch,rub,polish,fill
- * 8 December 2024 - Completed say function
+ * 8 December 2024 - Completed say, wait, wave
  */
