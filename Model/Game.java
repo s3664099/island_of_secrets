@@ -2,13 +2,14 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.11
-Date: 8 December 2024
+Version: 1.12
+Date: 9 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import Data.Constants;
@@ -16,7 +17,7 @@ import Data.Item;
 import Data.Location;
 import Data.RawData;
 
-public class Game {
+public class Game implements Serializable {
 	
 	private int noRooms = Constants.noRooms;
 	private int noItems = Constants.noNouns;
@@ -234,4 +235,5 @@ public class Game {
  * 17 November 2024 - Added code to retrieve flag and location sum
  * 1 December 2024 - Added variables to hold messages to go into the panel.
  * 8 December 2024 - Updated the add message method so comma doesn't appear at start
+ * 9 December 2024 - Made class serializable
  */

@@ -2,14 +2,16 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 10 November 2024
+Version: 1.6
+Date: 9 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Data;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 	
 	private String name;
 	private int[] exits = new int[4];
@@ -38,4 +40,5 @@ public class Location {
  * 1 November 2024 - Removed testing lines
  * 3 November 2024 - Added method to retrieve the location name & exits
  * 10 November 2024 - Removed description field
+ * 9 December 2024 - Made class serializable
 */

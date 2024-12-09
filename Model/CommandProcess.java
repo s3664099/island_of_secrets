@@ -131,7 +131,9 @@ public class CommandProcess {
 		
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
-				
+		
+		System.out.println(verbNo);
+		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
 			this.command.move(game,player);//More than one verb
@@ -151,7 +153,14 @@ public class CommandProcess {
 		//Wave
 		} else if (verbNo==38) {
 			this.command.wave(game, player);
+		
+		//Load
+		} else if (verbNo==40) {
 			
+		//Save
+		} else if (verbNo==41) {
+			this.command.save(game, player, "savegame");
+
 		//More than one verb
 		} else if(commands.length>1) {
 			
@@ -222,7 +231,6 @@ public class CommandProcess {
 			//Wait/Rest
 			} else if (verbNo==36 || verbNo==37) {
 				this.command.rest(game, player, false);
-
 			}
 		}
 	}

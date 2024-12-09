@@ -2,18 +2,19 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
-Date: 1 December 2024
+Version: 1.8
+Date: 9 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import Data.Constants;
 
-public class Player {
+public class Player implements Serializable {
 	
 	private int room = 23;
 	private int roomToDisplay = this.room;
@@ -165,4 +166,5 @@ public class Player {
  * 25 November 2024 - Added flag for give (though will need to be changed for other screens)
  * 29 November 2024 - Added getter for drink
  * 1 December 2024 - Added adjust function for strength/wisdom/food/drink
+ * 9 December 2024 - Made class serializable
  */

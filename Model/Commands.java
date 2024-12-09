@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.9
-Date: 8 December 2024
+Version: 1.10
+Date: 9 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,11 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import Data.Constants;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 public class Commands {
@@ -639,6 +644,55 @@ public class Commands {
 			}
 		}	
 	}
+	
+	public void save(Game game, Player player, String saveName) {
+		
+		boolean writeFile = false;
+				
+		File saveGameDirectory = new File("savegames");
+				
+		//Checks to see if the directory exists. If it doesn't it creates the directory
+		if(!saveGameDirectory.exists()) {
+			saveGameDirectory.mkdir();
+		}
+				
+		File saveFile = new File(saveGameDirectory+"/"+saveName+".sav");
+				
+		//Checks to see if the file exists
+		/*
+		if (saveFile.exists()) {
+					
+			//If it is, asks if the user would like to overwrite it
+			//System.out.printf("The file %s already exists, do you wish to overwrite it (Y/n)? ",saveName);
+			game.setMessage("File already exists. ");
+			writeFile = false;
+			
+		} else {
+			writeFile = true;
+		}
+		*/
+		writeFile = true;
+		
+		//Writes file	
+		if (writeFile) {
+			
+			try {
+				FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+saveName+".sav");
+				ObjectOutputStream out = new ObjectOutputStream(file);
+				out.writeObject(game);
+				out.writeObject(player);
+				out.close();
+				file.close();
+				game.setMessage("Save successful");
+
+			} catch (IOException e) {
+				game.setMessage("Game failed to save");
+				e.printStackTrace();
+			}
+		} else {
+			game.addMessage("Game not saved");
+		}	
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -654,4 +708,5 @@ public class Commands {
  * 					 Completed the panel message of go boat.
  * 					 Completed shelter,help,scratch,rub,polish,fill
  * 8 December 2024 - Completed say, wait, wave and info
+ * 9 December 2024 - Added save method
  */
