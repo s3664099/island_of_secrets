@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.13
-Date: 8 December 2024
+Version: 1.14
+Date: 4 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,8 @@ public class CommandProcess {
 	private Commands command;
 	private int nounNumber;
 	private Game game;
+	private Player player;
+	private boolean loadedGame = false;
 	
 	public CommandProcess(String command,Game game) {
 				
@@ -42,6 +44,18 @@ public class CommandProcess {
 	}
 	
 	public CommandProcess() {}
+	
+	public Game getGame() {
+		return this.game;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public boolean checkLoadedGame() {
+		return loadedGame;
+	}
 	
 	private String fixCommand(String command) {
 		
@@ -132,8 +146,6 @@ public class CommandProcess {
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		
-		System.out.println(verbNo);
-		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
 			this.command.move(game,player);//More than one verb
@@ -156,6 +168,10 @@ public class CommandProcess {
 		
 		//Load
 		} else if (verbNo==40) {
+			this.command.load(game, player, "savegame");
+			this.game = command.getGame();
+			this.player = command.getPlayer();
+			loadedGame = true;
 			
 		//Save
 		} else if (verbNo==41) {
@@ -330,4 +346,5 @@ public class CommandProcess {
  * 3 December 2024 - Added break command
  * 7 December 2024 - Added kill,swim,shelter, examine, fill and others
  * 8 December 2024 - Added say, rest, wave
+ * 9 December 2024 - Added save & load, also getter to retrieve loaded game details.
  */

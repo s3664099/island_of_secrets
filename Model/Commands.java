@@ -15,8 +15,10 @@ package Model;
 import Data.Constants;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
@@ -27,12 +29,22 @@ public class Commands {
 	private String code;
 	private Random rand = new Random();
 	private String command;
+	private Game game;
+	private Player player;
 	
 	public Commands(int verb,int noun, String code, String command) {
 		this.verb = verb;
 		this.noun = noun;
 		this.code = code;
 		this.command = command;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public Game getGame() {
+		return this.game;
 	}
 	
 	public void move(Game game,Player player) {
@@ -693,6 +705,47 @@ public class Commands {
 			game.addMessage("Game not saved");
 		}	
 	}
+	
+	public void load(Game game, Player player, String gameName) {
+		
+		boolean loadFile = false;
+				
+		//Checks to see if the file exists
+		File saveGameDirectory = new File("savegames");				
+		File saveFile = new File(saveGameDirectory+"/"+gameName+".sav");		
+		
+		//If not available
+		if (!saveFile.exists()) {			
+			game.setMessage("Sorry, the saved game does not exist");
+		} else {
+			loadFile = true;
+		}
+		
+		this.game = game;
+		this.player = player;
+				
+		if (loadFile) {
+		
+			//Attempts to load the file
+			try {
+				FileInputStream file = new FileInputStream(saveGameDirectory+"/"+gameName+".sav");
+				ObjectInputStream fileIn = new ObjectInputStream(file);
+				
+				//Load successful. Update the objects
+				this.game = (Game) fileIn.readObject();
+				this.player = (Player) fileIn.readObject();
+				
+				fileIn.close();
+				file.close();
+				this.game.setMessage("Game successfully loaded");
+							
+			//Location failed to load
+			} catch (IOException|ClassNotFoundException e) {
+				this.game.setMessage("Game failed to load");
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -708,5 +761,5 @@ public class Commands {
  * 					 Completed the panel message of go boat.
  * 					 Completed shelter,help,scratch,rub,polish,fill
  * 8 December 2024 - Completed say, wait, wave and info
- * 9 December 2024 - Added save method
+ * 9 December 2024 - Added save & load method. Added getters to retrieve saved details
  */

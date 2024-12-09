@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.14
-Date: 7 December 2024
+Version: 1.15
+Date: 8 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -108,6 +108,11 @@ public class GameEngine {
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
 		
+		if (processCommands.checkLoadedGame()) {
+			this.game = processCommands.getGame();
+			this.player = processCommands.getPlayer();
+		}
+		
 		if (player.getPanelFlag()==1) {
 			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
 			player.setPanelFlag(0);
@@ -187,45 +192,7 @@ public class GameEngine {
 
 		
 
-		//2100
-		} else if (verbFound == 25) {
-			swim(actions[0]);
-		
-		//2210
-		} else if (verbFound == 26) {
-			shelter();
-		
-		//2270
-		} else if (verbFound == 27 || verbFound == 28) {
-			help(codedNoun,verbFound);
-			
-		//2500
-		} else if (verbFound == 30 || verbFound == 31) {
-			rub(codedNoun,nounFound,verbFound,actions);
-		//2300
-		} else if (verbFound == 32 || verbFound == 33) {
-			examine(codedNoun);
-		//2330
-		} else if (verbFound == 34) {
-			fill(codedNoun);
-		//2350
-		} else if (verbFound == 35) {
-			say(actions[1]);
-		//2400
-		} else if (verbFound == 36 || verbFound == 37) {
-			rest(verbFound);
-		//2470
-		} else if (verbFound == 38) {
-			wave(codedNoun);
-		//2450
-		} else if (verbFound == 39) {
-			info();
-		//2600
-		} else if (verbFound == 40) {
-			//Load
-		//2600
-		} else if (verbFound == 41) {
-			//Save
+
 		} else if (verbFound == 42) {
 
 			//Quit Game
@@ -449,147 +416,7 @@ public class GameEngine {
 	
 
 	
-	private void swim(String verb) {
-		
-		if (this.room != 51 || this.itemFlag.getIntData(28)>0) {
-			this.message = "YOU CAN'T "+verb+" HERE";
-			this.wisdom += 1;
-		}
-	}
-	
-	private void shelter() {
-		
-		if (this.itemFlag.getIntData(36)<0) {
-			
-			//Clear the screen
-			
-			System.out.println("YOU CAN SHELTER IN:");
-			System.out.println("1) GRANDPA'S SHACK");
-			System.out.println("2) CAVE OF SNELM");
-			System.out.println("3) LOG CABIN");
-			System.out.println("CHOOSE FROM 1-3");
-			
-			this.room = getIntInput();
-			this.itemFlag.updateIntData(22,this.room*-1);
-			System.out.println("YOU BLINDLY RUN THROUGH THE STORM");
-			this.message = "YOU REACH SHELTER";
-			
-			//Pause
-		}
-	}
-	
-	private void help(String codedNoun, int verbChosen) {
-		
-		if (codedNoun.equals("3075075") ||codedNoun.equals("3075075")) {
-			this.message = "HOW WILL YOU DO THAT";
-		}
-		
-		if (codedNoun.equals("3371071") && verbChosen == 28) {
-			this.itemFlag.updateIntData(3,0);
-			this.message = "SHE NODS SLOWLY";
-			this.wisdom += 5;
-		}
-	}
-	
-	private void rub(String codedNoun,int nounFound,int verbFound, String[] actions) {
-		this.message = "A-DUB-DUB";
-		
-		if (codedNoun.substring(0,4).equals("2815")) {
-			if(this.itemFlag.getIntData(nounFound) == 1) {
-				this.itemFlag.updateIntData(nounFound, 0);
-				this.message = "REFLECTIONS STIR WITHIN";
-			}
-		} else if (this.itemLocation.getIntData(5)==0) {
-			this.itemFlag.updateIntData(8,0);
-			take(nounFound,codedNoun,verbFound,actions);
-			this.message = "THE STONE UTTERS STONY WORDS";
-		}
-	}
-	
-	private void examine(String codedNoun) {
-		this.message = "EXAMINE THE BOOK FOR CLUES";
-		if (codedNoun.substring(0,2).equals("600")) {
-			this.message = "REMEMBER ALADIN IT WORKED FOR HIM";
-		}
-	}
-	
-	private void fill(String codedNoun) {
-		if (codedNoun.equals("40041")) {
-			this.itemFlag.updateIntData(4,-1);
-			this.message = "FILLED";
-		}
-	}
-	
-	private void say(String noun) {
-		this.message = noun;
-		
-		if (noun.equals("STONEY WORDS") && this.room == 47 && this.itemFlag.getIntData(8) == 0) {
-			this.itemFlag.updateIntData(44,1);
-			this.message = "THE STONES ARE FIXED";
-		} 
-		
-		if (noun.equals("REMEMBER OLD TIMES") && this.itemLocation.getIntData(3)>80 &&
-			this.room == this.itemLocation.getIntData(42) && this.itemLocation.getIntData(12)>17) {
-			this.message = "HE EATS THE FLOWERS- AND CHANGES";
-			this.itemFlag.updateIntData(42,1);
-			this.itemFlag.updateIntData(43,0);
-		}	
-	}
-	
-	private void rest(int verbFound) {
-		
-		//Clear Screen
-		
-		for(int i=0;i<Math.abs(this.itemFlag.getIntData(36))+3;i++) {
-			this.timeRemaining--;
-			if (this.strength<100 || this.itemFlag.getIntData(22)==-this.room) {
-				this.strength ++;
-			}
-			System.out.println("TIME PASSES");
-			//Pause
-		}
-		if (this.strength>100 || this.itemFlag.getIntData(36)<1) {
-			this.wisdom+=2;
-			this.itemFlag.updateIntData(36,1);
-		}
-		
-		if (verbFound == 37 || verbFound == 36) {
-			this.message = "OK";
-		}
-	}
-	
-	private void wave(String codedNoun) {
-		if (this.room == this.itemLocation.getIntData(25)) {
-			this.message = "THE BOATMAN WAVES BACK";
-		}
-		
-		if (codedNoun.substring(0,3).equals("700")) {
-			this.itemFlag.updateIntData(7,1);
-			this.message = "THE TORCH BRIGHTENS";
-			this.wisdom += 8;
-		}
-	}
-	
-	private void info() {
-		System.out.println("INFO - ITEMS CARRIED");
-		System.out.println("----------------------------------------");
-		System.out.printf("FOOD=%d                        DRINK=%d%n",this.food,this.drink);
-		System.out.println("----------------------------------------");
 
-		int noItems = 0;
-		for (int x=0;x<this.carriableItems;x++) {
-			if (this.itemLocation.getIntData(x+1)==0) {
-				System.out.println(this.objects.getStringData(x+1));
-				noItems++;
-			}
-		}
-		
-		if (noItems>0) {
-			System.out.println("----------------------------------------");
-		}
-		
-		this.message = "OK";
-	}
 	*/
 } 
 /*
@@ -634,4 +461,5 @@ public class GameEngine {
 30 November 2024 - Added message panel for response to giving Median a shiny pebble
 1 December 2024 - Added panel to display messages.
 7 December 2024 - Added stub for poisonous waters subgame
+8 December 2024 - Added code to retrieve loaded game details.
 */
