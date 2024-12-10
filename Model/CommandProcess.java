@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.util.Random;
+
 import Data.Constants;
 import Data.Item;
 import Data.RawData;
@@ -27,6 +29,7 @@ public class CommandProcess {
 	private Game game;
 	private Player player;
 	private boolean loadedGame = false;
+	private Random rand = new Random();
 	
 	public CommandProcess(String command,Game game) {
 				
@@ -251,8 +254,59 @@ public class CommandProcess {
 			//Say
 			} else if (verbNo==35) {
 				this.command.say(game, splitCommand[1], player);
-			} 
+			}
 		}
+		
+		postUpdates(game,player);
+	}
+	
+	public void postUpdates(Game game, Player player) {
+		
+		//Orchards
+		if (player.getRoom()==61) {
+			player.adjustWisdom(rand.nextInt(2)+1);
+		}
+		
+		//Thicket of biting bushes
+		if (player.getRoom()==14 && rand.nextInt(3)==1) {
+			player.adjustStrength(-1);
+			game.addMessage("You are bitten.");
+		}
+		
+		//Adjusting flag of living storm
+		if (game.getItem(36).getFlag()<1 && game.getItem(22).getFlag() != -player.getRoom()) {
+			game.getItem(36).setFlag(game.getItem(36).getFlag()+1);
+			game.getItem(36).setLocation(player.getRoom());
+			player.adjustStrength(-1);
+		}
+		
+		
+		/*
+		 * 
+
+
+380 IF R<>L(16) AND L(16)>0 THEN LET L(16)=1+FNR(4)
+390 IF R<>L(39) THEN LET L(39)=10*(FNR(5)+1)+7*FNR(3)
+400 IF R=L(39) AND R<>L(43) AND F(13)>-1 THEN LET Y=Y-2:LET X=X-2
+410 IF R<78 THEN LET L(32)=76+FNR(2)
+420 IF R=33 OR R=57 OR R=73 AND FNR(2)=1 THEN LET L(25)=R
+430 IF R=L(32) AND FNR(2)=1 AND F(32)=0 THEN GOSUB 1310
+440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
+450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
+460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
+470 IF F(43)=0 THEN LET L(43)=R
+480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
+490 IF R=18 THEN LET Y=Y-1
+500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
+510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
+520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
+530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
+540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
+550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
+560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
+570 PRINT:PRINT:PRINT "GAME OVER"
+580 END
+		 */
 	}
 	
 	public void executeGive(Game game,Player player,int nounNumber, String subject,
