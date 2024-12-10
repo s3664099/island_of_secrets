@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.10
-Date: 9 December 2024
+Version: 1.11
+Date: 10 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -746,6 +746,13 @@ public class Commands {
 			}
 		}
 	}
+	
+	public void quit(Player player, Game game) {
+		
+		game.setMessage("You relinquish your quest");
+		game.getItem(Constants.noNouns).setFlag(-1);
+		player.setTime(1);
+	}
 }
 
 /* 13 November 2024 - Created File. Added code to move player
@@ -762,4 +769,5 @@ public class Commands {
  * 					 Completed shelter,help,scratch,rub,polish,fill
  * 8 December 2024 - Completed say, wait, wave and info
  * 9 December 2024 - Added save & load method. Added getters to retrieve saved details
+ * 10 December 2024 - Added quit method
  */

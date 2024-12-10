@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.14
-Date: 4 December 2024
+Version: 1.15
+Date: 10 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -176,7 +176,15 @@ public class CommandProcess {
 		//Save
 		} else if (verbNo==41) {
 			this.command.save(game, player, "savegame");
-
+		
+		//Wait/Rest
+		} else if (verbNo==36 || verbNo==37) {
+			this.command.rest(game, player, false);
+		
+		//Quit
+		} else if (verbNo==42) {
+			this.command.quit(player,game);
+		
 		//More than one verb
 		} else if(commands.length>1) {
 			
@@ -243,11 +251,7 @@ public class CommandProcess {
 			//Say
 			} else if (verbNo==35) {
 				this.command.say(game, splitCommand[1], player);
-			
-			//Wait/Rest
-			} else if (verbNo==36 || verbNo==37) {
-				this.command.rest(game, player, false);
-			}
+			} 
 		}
 	}
 	
@@ -347,4 +351,5 @@ public class CommandProcess {
  * 7 December 2024 - Added kill,swim,shelter, examine, fill and others
  * 8 December 2024 - Added say, rest, wave
  * 9 December 2024 - Added save & load, also getter to retrieve loaded game details.
+ * 10 December 2024 - Added Quit Method
  */
