@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.15
-Date: 10 December 2024
+Version: 1.16
+Date: 11 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -312,6 +312,23 @@ public class CommandProcess {
 			game.getItem(25).setLocation(player.getRoom());
 		}
 		
+		//Swampman with the player?
+		if (game.getItem(32).checkLocation(player.getRoom()) && rand.nextInt(2)==1 &&
+			game.getItem(32).getFlag()==0) {
+			
+			game.getItem(32).setFlag(-1);
+			String swampMan = "The swampman tells his tale";
+			String message = "Median can disable the equipment";
+			int loop = 2;
+			
+			if (game.getItem(8).checkLocation(0)) {
+				message+="|and asks you for the pebble you carry.";
+				loop++;
+			}
+			player.setPanelFlag(3);
+			game.setPanelMessages(swampMan, message, loop);
+		}
+		
 		
 		/*
 		 * 
@@ -322,7 +339,7 @@ public class CommandProcess {
 
 
 
-430 IF R=L(32) AND FNR(2)=1 AND F(32)=0 THEN GOSUB 1310
+
 440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
 450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
 460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
@@ -438,4 +455,5 @@ public class CommandProcess {
  * 8 December 2024 - Added say, rest, wave
  * 9 December 2024 - Added save & load, also getter to retrieve loaded game details.
  * 10 December 2024 - Added Quit Method
+ * 11 December 2024 - Continued working on after game processing
  */
