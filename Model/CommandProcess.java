@@ -280,16 +280,48 @@ public class CommandProcess {
 			player.adjustStrength(-1);
 		}
 		
+		//Location of the wild canyon beast
+		if (!game.getItem(16).checkLocation(player.getRoom()) && 
+			game.getItem(16).getLocation()>0) {
+			game.getItem(16).setLocation(rand.nextInt(4)+1);
+		}
+		
+		//Location of Omegan
+		if (!game.getItem(39).checkLocation(player.getRoom())) {
+			int part1 = 10 * rand.nextInt(5)+2;
+			int part2 = 7 *rand.nextInt(3)+1;
+			int newLocation = Math.min(part1+part2, 80);
+			game.getItem(39).setLocation(newLocation);
+		
+		//Is Omegan with player?
+		} else if (game.getItem(39).checkLocation(player.getRoom()) &&
+				   !game.getItem(43).checkLocation(player.getRoom()) &&
+				   game.getItem(13).getFlag()>-1) {
+			player.adjustStrength(-2);
+			player.adjustWisdom(-2);
+		}
+		
+		//Swampman's Position
+		if (player.getRoom()<78) {
+			game.getItem(32).setLocation(76+rand.nextInt(2));
+		}
+		
+		//Does the boatman appear?
+		if ((player.getRoom()==33 || player.getRoom()==57 || player.getRoom()==73) &&
+			game.getItem(2).getFlag()==1) {
+			game.getItem(25).setLocation(player.getRoom());
+		}
+		
 		
 		/*
 		 * 
 
 
-380 IF R<>L(16) AND L(16)>0 THEN LET L(16)=1+FNR(4)
-390 IF R<>L(39) THEN LET L(39)=10*(FNR(5)+1)+7*FNR(3)
-400 IF R=L(39) AND R<>L(43) AND F(13)>-1 THEN LET Y=Y-2:LET X=X-2
-410 IF R<78 THEN LET L(32)=76+FNR(2)
-420 IF R=33 OR R=57 OR R=73 AND FNR(2)=1 THEN LET L(25)=R
+
+
+
+
+
 430 IF R=L(32) AND FNR(2)=1 AND F(32)=0 THEN GOSUB 1310
 440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
 450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
