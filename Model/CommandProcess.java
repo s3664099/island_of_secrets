@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.16
-Date: 11 December 2024
+Version: 1.17
+Date: 12 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -329,21 +329,27 @@ public class CommandProcess {
 			game.setPanelMessages(swampMan, message, loop);
 		}
 		
+		//Check if pushed into well - not sure who
+		if (player.getRoom()==19 && player.getStrength()<70 && 
+			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
+			game.setMessage("Pushed into the pit");
+			game.getItem(Constants.noNouns).setFlag(1);
+		}
+		
+		//Movement of the logmen if player not present
+		if (!game.getItem(41).checkLocation(player.getRoom())) {
+			game.getItem(41).setLocation(21+(rand.nextInt(3)*10)+rand.nextInt(2));
+		} else {
+			game.getItem(41).setFlag(game.getItem(41).getFlag()-1);
+		}
+		
+		//Move Median to player location is condition correct
+		if (game.getItem(43).getFlag()==0) {
+			game.getItem(43).setLocation(player.getRoom());
+		}
 		
 		/*
 		 * 
-
-
-
-
-
-
-
-
-440 IFR=19ANDY<70ANDF(43)=0ANDFNR(4)=1THENF$="PUSHED INTO THE PIT":F(W)=1
-450 IF R<>L(41) THEN LET L(41)=21+(FNR(3)*10)+FNR(2)
-460 IF R=L(41) THEN LET F(41)=F(41)-1:IF F(41)<-4 THEN GOSUB 1230
-470 IF F(43)=0 THEN LET L(43)=R
 480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
 490 IF R=18 THEN LET Y=Y-1
 500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
@@ -356,6 +362,18 @@ public class CommandProcess {
 570 PRINT:PRINT:PRINT "GAME OVER"
 580 END
 		 */
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	
 	public void executeGive(Game game,Player player,int nounNumber, String subject,
@@ -455,5 +473,6 @@ public class CommandProcess {
  * 8 December 2024 - Added say, rest, wave
  * 9 December 2024 - Added save & load, also getter to retrieve loaded game details.
  * 10 December 2024 - Added Quit Method
- * 11 December 2024 - Continued working on after game processing
+ * 11 December 2024 - Continued working on post-command processing
+ * 12 December 2024 - Continued with the post-command processing
  */
