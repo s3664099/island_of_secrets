@@ -348,10 +348,24 @@ public class CommandProcess {
 			game.getItem(43).setLocation(player.getRoom());
 		}
 		
+		//Replays notice re: Median
+		if (game.getItem(43).getLocation()<18 && player.getRoom() != 9 && 
+			player.getRoom() != 10 && game.getItem(49).getFlag()<1) {
+			
+			String messageOne = "Median can disable the equipment";
+			player.setPanelFlag(3);
+			game.setPanelMessages(messageOne,"",1);
+		}
+		
+		//Player in the room of the Storage Casks?
+		if (player.getRoom()==18) {
+			player.adjustStrength(-1);
+		}
+		
 		/*
 		 * 
-480 IF L(43)<18 AND R<>9 AND R<>10 AND F(W-2)<1 THEN GOSUB 1330
-490 IF R=18 THEN LET Y=Y-1
+
+
 500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
 510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
 520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
