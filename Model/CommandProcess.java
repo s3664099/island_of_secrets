@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.17
-Date: 12 December 2024
+Version: 1.19
+Date: 15 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -362,32 +362,44 @@ public class CommandProcess {
 			player.adjustStrength(-1);
 		}
 		
-		/*
-		 * 
-
-
-500 IF Y<50 THEN LET O=FNR(9):GOSUB 1530:IF L(O)=R THEN F$="YOU DROP SOMETHING"
-510 IF L<900 AND R=23 AND F(36)>0 AND FNR(3)=3 THEN GOSUB 1360
-520 IF R=47 AND F(8)>0 THEN LET F$=F$+" YOU CAN GO NO FURTHER"
-530 IF F(8)+F(11)+F(13)=-3 THEN LET F(W)=1:GOSUB 2800
-540 IF F(W)=0 AND L>0 AND Y>1 AND X>1 THEN GOTO 30
-550 IF L<1 OR Y<1 THEN LET F$="YOU HAVE FAILED, THE EVIL ONE SUCCEEDS"
-560 PRINT:PRINT F$:PRINT "YOUR FINAL SCORE=";INT(X+Y+(ABS(L/7*(L<640))))
-570 PRINT:PRINT:PRINT "GAME OVER"
-580 END
-		 */
-
-
-
-
-
-
-
-
-
-
-
-
+		//Too weak to carry something
+		if (player.getStrength()<50) {
+			int object = rand.nextInt(9);
+			if (game.getItem(object).checkLocation(0)) {
+				game.getItem(object).setLocation(player.getRoom());
+				game.addMessage(" You drop something.");
+			}
+		}
+		
+		//Does the living storm appear
+		if (player.getTime()<900 && player.getRoom()==23 && 
+			game.getItem(36).getFlag()>0 && rand.nextInt(3)==3) {
+			game.getItem(36).setFlag(-(rand.nextInt(4)+6));
+			game.addMessage(" A storm breaks overhead!");
+		}
+		
+		//Near the clashing stones
+		if (player.getRoom()==47 && game.getItem(8).getFlag()>0) {
+			game.addMessage(" You can go no further");
+		}
+		
+		//Involving staff, pebble & coal - seems like a win condition
+		if (game.getItem(8).getFlag()+game.getItem(11).getFlag()+game.getItem(13).getFlag()==-3) {
+			game.getItem(Constants.noNouns).setFlag(1);
+			
+			//The flags of the above must total -3
+			String messageOne = "The world lives with new hope!";
+			player.setPanelFlag(3);
+			game.setPanelMessages(messageOne,"",1);
+			game.addMessage("Your quest is over!");
+			game.endGame();
+		}
+		
+		//Fail Quest conditions
+		if (player.getTime()<0 || player.getStrength()<0) {
+			game.addMessage( "You have failed, the evil one succeeds.");
+			game.endGame();
+		}
 	}
 	
 	public void executeGive(Game game,Player player,int nounNumber, String subject,
@@ -489,4 +501,6 @@ public class CommandProcess {
  * 10 December 2024 - Added Quit Method
  * 11 December 2024 - Continued working on post-command processing
  * 12 December 2024 - Continued with the post-command processing
+ * 14 December 2024 - Continued with the post-command processing
+ * 15 December 2024 - Finished the post-command processing with end game conditions
  */

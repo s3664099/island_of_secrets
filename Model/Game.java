@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.12
-Date: 9 December 2024
+Version: 1.13
+Date: 15 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -29,6 +29,7 @@ public class Game implements Serializable {
 	private String panelMessageOne;
 	private String panelMessageTwo;
 	private int panelLoop;
+	private boolean endGame = false;
 
 	public Game() {
 				
@@ -219,6 +220,16 @@ public class Game implements Serializable {
 	public int getLoop() {
 		return this.panelLoop;
 	}
+	
+	
+	//Flag to determine whether the game has ended.
+	public void endGame() {
+		this.endGame = true;
+	}
+	
+	public boolean checkEndGame() {
+		return this.endGame;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -236,4 +247,5 @@ public class Game implements Serializable {
  * 1 December 2024 - Added variables to hold messages to go into the panel.
  * 8 December 2024 - Updated the add message method so comma doesn't appear at start
  * 9 December 2024 - Made class serializable
+ * 15 December 2024 - Added flag to end game
  */

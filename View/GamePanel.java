@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 8 December 2024
+Version: 1.6
+Date: 15 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -78,9 +78,16 @@ public class GamePanel extends JPanel {
 		middlePanel.add(CreateLabelPanel("", 1));
 		String message = game.getMessage();
 		String[] messages = message.split("\\|");
-		
+				
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
+		}
+
+		if (game.checkEndGame()) {
+			
+			String gameScore = String.format("Your Final Score = %s", game.getFinalScore());
+			middlePanel.add(CreateLabelPanel(gameScore, 1));
+			middlePanel.add(CreateLabelPanel("Game Over!", 1));
 		}
 		
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -195,4 +202,5 @@ public class GamePanel extends JPanel {
  * 8 November 2024 - Change from Frame to Panel and created an add method
  * 8 December 2024 - Updated code so that messages will split with pipe and add
  * 					 to new line.
+ * 15 December 2024 - Added final score display
  */
