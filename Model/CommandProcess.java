@@ -342,17 +342,29 @@ public class CommandProcess {
 		} else {
 			game.getItem(41).setFlag(game.getItem(41).getFlag()-1);
 			
+			//Upset the logmen
 			if (game.getItem(41).getFlag()<-4) {
-				/*
-				 * 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
-1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
-1250 IF R<34 THEN LET A$=A$+"THROW YOU IN THE WATER":LET R=32
-1260 IF R>33 THEN LET A$=A$+"TIE YOU UP IN A STOREROOM":LET R=51
-1270 GOSUB2750:GOSUB2760
-1280 FOR I=3 TO 4
-1290 IF L(I)=0 THEN LET L(I)=42
-1300 NEXT I:RETURN
-				 */
+				
+				String message = "The Logmen decide to have a little fun and";
+				String messageTwo = "tie you up in a storeroom";
+				game.getItem(41).setFlag(0);
+				player.adjustStrength(-4);
+				player.adjustWisdom(-4);
+				
+				//Player located determines where end up
+				if (player.getRoom()<34) {
+					messageTwo = "throw you in the water";
+					player.setRoom(32);
+				} else {
+					player.setRoom(51);
+				}
+				
+				//Do you lose items
+				for (int i=3;i<5;i++) {
+					if (game.getItem(i).getLocation()==0) {
+						game.getItem(i).setLocation(42);
+					}
+				}
 			}
 		}
 		
@@ -516,4 +528,5 @@ public class CommandProcess {
  * 12 December 2024 - Continued with the post-command processing
  * 14 December 2024 - Continued with the post-command processing
  * 15 December 2024 - Finished the post-command processing with end game conditions
+ *					  Added the logmen respose
  */
