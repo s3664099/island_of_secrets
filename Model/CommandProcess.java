@@ -341,6 +341,19 @@ public class CommandProcess {
 			game.getItem(41).setLocation(21+(rand.nextInt(3)*10)+rand.nextInt(2));
 		} else {
 			game.getItem(41).setFlag(game.getItem(41).getFlag()-1);
+			
+			if (game.getItem(41).getFlag()<-4) {
+				/*
+				 * 1230 GOSUB2770:LET F$="":LET A$="#THE LOGMEN "+M$
+1240 LET F(41)=0:LET Y=Y-4:LET X=X-4
+1250 IF R<34 THEN LET A$=A$+"THROW YOU IN THE WATER":LET R=32
+1260 IF R>33 THEN LET A$=A$+"TIE YOU UP IN A STOREROOM":LET R=51
+1270 GOSUB2750:GOSUB2760
+1280 FOR I=3 TO 4
+1290 IF L(I)=0 THEN LET L(I)=42
+1300 NEXT I:RETURN
+				 */
+			}
 		}
 		
 		//Move Median to player location is condition correct
