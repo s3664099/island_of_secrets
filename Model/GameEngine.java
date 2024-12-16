@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.15
-Date: 8 December 2024
+Version: 1.16
+Date: 16 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import View.GamePanel;
 import View.GivePanel;
 import View.LightningPanel;
 import View.MessagePanel;
+import java.util.Random;
 
 public class GameEngine {
 	
@@ -41,20 +42,52 @@ public class GameEngine {
 	
 	public String getRoom() {
 		
-		player.updateDisplayRoom();
-		int room = player.getDisplayRoom();
-		return String.format("You are %s",game.getRoomName(room));
+		String description = "";
+		
+		if (player.getPanelFlag()==4) {
+			description = "You are swimming in poisoned waters";
+		} else {
+			player.updateDisplayRoom();
+			int room = player.getDisplayRoom();		
+			description = String.format("You are %s",game.getRoomName(room));
+		}
+		
+		return description;
 	}
 	
 	public String getItems() {
-		return game.getItems(player.getDisplayRoom());
+		
+		String itemDisplay = "";
+		
+		if (player.getPanelFlag()==0) {
+			itemDisplay = game.getItems(player.getDisplayRoom());
+		}
+		
+		return itemDisplay;
 	}
 	
 	public String getExits() {
-		return game.getExits(player.getRoom());
+		
+		String exitDisplay = "";
+		
+		if (player.getPanelFlag()==0) {
+			exitDisplay = game.getExits(player.getRoom());
+		}		
+		
+		return exitDisplay;
 	}
 	
 	public String getMessage() {
+		
+		if (player.getPanelFlag()==4) {
+			game.addMessage(String.format("|Your Strength = %s", player.getStrength()));
+			
+			if (player.getStrength()<15) {
+				game.addMessage("|You are very weak!");
+			}
+			
+			game.addMessage("|||Which Way?");
+		}
 		
 		String message = game.getMessage();
 		game.clearMessage();
@@ -84,57 +117,81 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
-		CommandProcess processCommands = new CommandProcess(command,this.game);
-		int verbNumber = processCommands.getVerbNumber();
-		int nounNumber = processCommands.getNounNumber();
+		if (player.getPanelFlag()!=4) {
+			CommandProcess processCommands = new CommandProcess(command,this.game);
+			int verbNumber = processCommands.getVerbNumber();
+			int nounNumber = processCommands.getNounNumber();
 		
-		//Either verb or noun doesn't exist
-		if (verbNumber>Constants.noVerbs || nounNumber == 52) {
-			this.game.setMessage("You can't "+command);
-		}
+			//Either verb or noun doesn't exist
+			if (verbNumber>Constants.noVerbs || nounNumber == 52) {
+				this.game.setMessage("You can't "+command);
+			}
 
-		//Neither exists
-		if (verbNumber>Constants.noVerbs && nounNumber == 52) {
-			this.game.setMessage("What!!");
-		}
+			//Neither exists
+			if (verbNumber>Constants.noVerbs && nounNumber == 52) {
+				this.game.setMessage("What!!");
+			}
 		
-		//No second word move to end
-		if (nounNumber == -1) {
-			nounNumber = 52;
-		}
+			//No second word move to end
+			if (nounNumber == -1) {
+				nounNumber = 52;
+			}
 		
-		this.player.update();
-		Item item = this.game.getItem(nounNumber);
-		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-		processCommands.executeCommand(this.game, player, nounNumber);
+			this.player.update();
+			Item item = this.game.getItem(nounNumber);
+			String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
+			processCommands.executeCommand(this.game, player, nounNumber);
 		
-		if (processCommands.checkLoadedGame()) {
-			this.game = processCommands.getGame();
-			this.player = processCommands.getPlayer();
-		}
-		
-		if (player.getPanelFlag()==1) {
-			setPanel(game, new GivePanel(this,nounNumber,codedCommand));
-			player.setPanelFlag(0);
-		} else if (player.getPanelFlag()==2) {
-			setPanel(game, new LightningPanel(0,game,this));
-			player.setPanelFlag(0);
-		} else if (player.getPanelFlag()==3) {
-			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
-										   this.game.getMsgTwo(),this.game.getLoop()));
-			player.setPanelFlag(0);
-		
-		//Swimming in poisonous waters - 2110
-		} else if (player.getPanelFlag()==4) {
-
-			player.setPanelFlag(0);			
-
-		//Shelter - 2220
-		} else if (player.getPanelFlag()==5) {
+			if (processCommands.checkLoadedGame()) {
+				this.game = processCommands.getGame();
+				this.player = processCommands.getPlayer();
+			}
 			
-			player.setPanelFlag(0);	
+			if (player.getPanelFlag()==1) {
+				setPanel(game, new GivePanel(this,nounNumber,codedCommand));
+				player.setPanelFlag(0);
+			} else if (player.getPanelFlag()==2) {
+				setPanel(game, new LightningPanel(0,game,this));
+				player.setPanelFlag(0);
+			} else if (player.getPanelFlag()==3) {
+				setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
+						 this.game.getMsgTwo(),this.game.getLoop()));
+				player.setPanelFlag(0);
+		
+			//Shelter - 2220
+			} else if (player.getPanelFlag()==5) {
 			
+				player.setPanelFlag(0);	
+			
+			} else {
+				resetPanel(game);
+			}
 		} else {
+			
+			this.game.setMessage("Ok");
+			
+			if (command.substring(0,1).equals("n")) {
+				player.adjustPosition();
+			} else if (!command.substring(0,1).equals("s") &&
+					   !command.substring(0,1).equals("e") &&
+					   !command.substring(0,1).equals("w")) {
+				this.game.setMessage("I do not understand");
+			}
+			
+			float strengthAdj = (float) ((player.getWeight()/Constants.noNouns+0.1)-3);
+			player.adjustStrength(strengthAdj);
+			
+			if (player.checkPosition()) {
+				player.setPanelFlag(0);
+				this.game.setMessage("You surface");
+				Random rand = new Random();
+				player.setRoom(rand.nextInt(3)+30);
+				player.resetPosition();
+			} else if (player.getStrength()<1) {
+				this.game.setMessage("You get lost and drown");
+				player.setPanelFlag(0);
+			}
+			
 			resetPanel(game);
 		}
 	}
@@ -216,4 +273,5 @@ public class GameEngine {
 1 December 2024 - Added panel to display messages.
 7 December 2024 - Added stub for poisonous waters subgame
 8 December 2024 - Added code to retrieve loaded game details.
+16 December 2024 - Added code to handle swimming in poisoned waters
 */

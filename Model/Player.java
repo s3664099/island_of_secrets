@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.8
-Date: 9 December 2024
+Version: 1.9
+Date: 16 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,6 +26,9 @@ public class Player implements Serializable {
 	private int drink = 2;
 	private Random rand = new Random();
 	private int panelFlag = 0;
+	private int swimming = 0;
+	private int swimPosition = 0;
+	private int swimTarget = 0;
 	
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
@@ -155,6 +158,31 @@ public class Player implements Serializable {
 		return this.panelFlag;
 	}
 	
+	//Methods for handling the swimming in poisoned waters
+	public void setSwimming() {
+		this.swimming = this.room;
+	}
+		
+	public void adjustPosition() {
+		this.swimPosition++;
+	}
+	
+	public void resetPosition() {
+		this.swimPosition = 0;
+	}
+	
+	public boolean checkPosition() {
+		
+		boolean checked = false;
+		
+		if ((this.swimming/2)<this.swimPosition && this.strength>0) {
+			checked = true;
+		}
+		
+		return checked;
+	}
+
+	
 }
 
 /* 2 November 2024 - Create File
@@ -167,4 +195,5 @@ public class Player implements Serializable {
  * 29 November 2024 - Added getter for drink
  * 1 December 2024 - Added adjust function for strength/wisdom/food/drink
  * 9 December 2024 - Made class serializable
+ * 16 December 2024 - Added methods to handle swimming in poisoned waters section
  */

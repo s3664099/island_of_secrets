@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.19
-Date: 15 December 2024
+Version: 1.20
+Date: 16 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -528,5 +528,6 @@ public class CommandProcess {
  * 12 December 2024 - Continued with the post-command processing
  * 14 December 2024 - Continued with the post-command processing
  * 15 December 2024 - Finished the post-command processing with end game conditions
- *					  Added the logmen respose
+ *					  Added the logmen response
+ * 16 December 2024 - Added code to handle the swimming in poisoned waters section 
  */

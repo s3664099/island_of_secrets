@@ -505,6 +505,7 @@ public class Commands {
 			player.adjustWisdom(1);
 		} else {
 			player.setPanelFlag(4);
+			player.setSwimming();
 		}
 	}
 	
