@@ -171,14 +171,14 @@ public class CommandProcess {
 		
 		//Load
 		} else if (verbNo==40) {
-			this.command.load(game, player, "savegame");
+			this.command.load(game, player);
 			this.game = command.getGame();
 			this.player = command.getPlayer();
 			loadedGame = true;
 			
 		//Save
 		} else if (verbNo==41) {
-			this.command.save(game, player, "savegame");
+			this.command.save(game, player);
 		
 		//Wait/Rest
 		} else if (verbNo==36 || verbNo==37) {
