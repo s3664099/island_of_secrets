@@ -17,7 +17,7 @@ public class Constants {
 	public static final int noRooms = 80;
 	public static final int noItems = 43;
 	public static final int noVerbs = 42;
-	public static final int noNouns = 53;
+	public static final int noNouns = 52;
 	public static final int carriableItems = 24;
 	public static final int foodLine = 16;
 	public static final int drinkLine = 21;

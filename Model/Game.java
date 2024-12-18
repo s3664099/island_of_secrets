@@ -45,7 +45,7 @@ public class Game implements Serializable {
 		}
 		
 		//Builds the item objects
-		for (int itemNumber=1;itemNumber<noItems;itemNumber++) {
+		for (int itemNumber=1;itemNumber<noItems+1;itemNumber++) {
 			
 			String item = "";
 			

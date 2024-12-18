@@ -165,10 +165,7 @@ public class GameEngine {
 			
 			} else {
 				resetPanel(game);
-			}
-		
-		//The Shelter Here
-						
+			}						
 		} else {
 			
 			this.game.setMessage("Ok");

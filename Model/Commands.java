@@ -709,45 +709,53 @@ public class Commands {
 		}
 	}
 	
-	public void load(Game game, Player player) {
+	public boolean load(Game game, Player player) {
 		
 		boolean loadFile = false;
-				
-		//Checks to see if the file exists
-		File saveGameDirectory = new File("savegames");				
-		File saveFile = new File(saveGameDirectory+"/savegame.sav");		
+		String[] commands = command.split(" ");
 		
-		//If not available
-		if (!saveFile.exists()) {			
-			game.setMessage("Sorry, the saved game does not exist");
+		if (commands.length==1) {
+			game.setMessage("Please include the name of your game.");
 		} else {
-			loadFile = true;
-		}
 		
-		this.game = game;
-		this.player = player;
-				
-		if (loadFile) {
+			//Checks to see if the file exists
+			File saveGameDirectory = new File("savegames");				
+			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");		
 		
-			//Attempts to load the file
-			try {
-				FileInputStream file = new FileInputStream(saveGameDirectory+"/savegame.sav");
-				ObjectInputStream fileIn = new ObjectInputStream(file);
+			//If not available
+			if (!saveFile.exists()) {			
+				game.setMessage("Sorry, the saved game does not exist. Type 'games' to list games.|");
+			} else {
+				loadFile = true;
+			}
+		
+			this.game = game;
+			this.player = player;
 				
-				//Load successful. Update the objects
-				this.game = (Game) fileIn.readObject();
-				this.player = (Player) fileIn.readObject();
+			if (loadFile) {
+		
+				//Attempts to load the file
+				try {
+					FileInputStream file = new FileInputStream(saveGameDirectory+"/"+commands[1]+".sav");
+					ObjectInputStream fileIn = new ObjectInputStream(file);
 				
-				fileIn.close();
-				file.close();
-				this.game.setMessage("Game successfully loaded");
+					//Load successful. Update the objects
+					this.game = (Game) fileIn.readObject();
+					this.player = (Player) fileIn.readObject();
+				
+					fileIn.close();
+					file.close();
+					this.game.setMessage("Game successfully loaded");
 							
-			//Location failed to load
-			} catch (IOException|ClassNotFoundException e) {
-				this.game.setMessage("Game failed to load");
-				e.printStackTrace();
+					//Location failed to load
+				} catch (IOException|ClassNotFoundException e) {
+					this.game.setMessage("Game failed to load");
+					e.printStackTrace();
+				}
 			}
 		}
+		
+		return loadFile;
 	}
 	
 	public void quit(Player player, Game game) {
