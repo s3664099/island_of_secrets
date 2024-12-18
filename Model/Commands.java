@@ -677,19 +677,15 @@ public class Commands {
 			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");
 				
 			//Checks to see if the file exists
-			/*
-			if (saveFile.exists()) {
+			if (saveFile.exists() && (commands.length<3 || !commands[2].equals("o"))) {
 					
-				//If it is, asks if the user would like to overwrite it
-				//System.out.printf("The file %s already exists, do you wish to overwrite it (Y/n)? ",saveName);
-				game.setMessage("File already exists. ");
+				//If file exists tells user how to overwrite it
+				game.setMessage("File already exists. Please add 'o' to the end to overwrite.|");
 				writeFile = false;
 			
 			} else {
 				writeFile = true;
 			}
-			 */
-			writeFile = true;
 		
 			//Writes file	
 			if (writeFile) {
@@ -779,5 +775,5 @@ public class Commands {
  * 9 December 2024 - Added save & load method. Added getters to retrieve saved details
  * 10 December 2024 - Added quit method
  * 15 December 2024 - Added end game flag
- * 18 December 2024 - Added game name with save command.
+ * 18 December 2024 - Added game name with save command. Added overwrite handling for save game.
  */
