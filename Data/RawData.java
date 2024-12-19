@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 3 November 2024
+Version: 1.6
+Date: 19 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package Data;
@@ -151,7 +151,7 @@ public class RawData {
 		"mushrooms","bottle","flagon","sap","water","boat","chest","column","opening",
 		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
-		"up","down","in","out"
+		"up","down","in","out","games"
 	};
 			
 	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
@@ -198,4 +198,5 @@ public class RawData {
  * 1 November 2024 - Added the code to handle the items
  * 2 November 2024 - Added arrays to hold verbs & nouns
  * 2 November 2024 - Started fixing up the data so it isn't all caps
+ * 19 December 2024 - Added the games command
 */
