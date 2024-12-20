@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 19 December 2024
+Version: 1.7
+Date: 20 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 package Data;
@@ -142,7 +142,7 @@ public class RawData {
 		"n","s","e","w","go","get","take","give","drop","leave","eat","drink","ride",
 		"open","pick","chop","chip","tap","break","fight","strike","attack","hit",
 		"kill","swim","shelter","help","scratch","catch","rub","polish","read",
-		"examine","fill","say","wait","rest","wave","info","load","save","quit"
+		"examine","fill","say","wait","rest","wave","info","load","save","quit","games"
 	};
 	
 	private static final String[] nouns = {
@@ -151,7 +151,7 @@ public class RawData {
 		"mushrooms","bottle","flagon","sap","water","boat","chest","column","opening",
 		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
-		"up","down","in","out","games"
+		"up","down","in","out"
 	};
 			
 	private static String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
@@ -199,4 +199,5 @@ public class RawData {
  * 2 November 2024 - Added arrays to hold verbs & nouns
  * 2 November 2024 - Started fixing up the data so it isn't all caps
  * 19 December 2024 - Added the games command
+ * 20 December 2024 - Moved the games command
 */

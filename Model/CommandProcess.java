@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.21
-Date: 19 December 2024
+Version: 1.22
+Date: 20 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -145,9 +145,11 @@ public class CommandProcess {
 	
 	//Executes the command
 	public void executeCommand(Game game,Player player,int nounNumber) {
-			
+		
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
+		System.out.println(verbNo);
+		
 		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
@@ -192,9 +194,9 @@ public class CommandProcess {
 			this.command.quit(player,game);
 		
 		//Display list of saved games
-		} else if (verbNo==52) {
+		} else if (verbNo==43) {
+			this.command.displayGames(game);
 			
-		
 		//More than one verb
 		} else if(commands.length>1) {
 			
@@ -538,4 +540,5 @@ public class CommandProcess {
  *					  Added the logmen response
  * 16 December 2024 - Added code to handle the swimming in poisoned waters section
  * 19 December 2024 - Added command to display list of saved games
+ * 20 December 2024 - Added the display games command
  */
