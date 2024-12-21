@@ -17,6 +17,7 @@ import Data.Constants;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -763,10 +764,19 @@ public class Commands {
 		//Checks to see if the file exists
 		File saveGameDirectory = new File("savegames");
 		
+		//Retrieves the saved games
+		File[] savFiles = saveGameDirectory.listFiles( new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".sav");
+			};
+		});
+		
+		//Sets variables to list set number of game names
 		game.setMessage("Games Saves");
-		int noGames=24;
+		int noGames=savFiles.length;
 		int gameStart = 0;
 		int totalDisplayed = 9;
+		boolean moreGames = false;
 				
 		//Check with number of games and determine which games are displayed
 		if (noGames>9) {
@@ -774,18 +784,23 @@ public class Commands {
 			if (noGames-gameStart>9) {
 				game.setCount();
 				totalDisplayed = gameStart+9;
+				moreGames = true;
 			} else {
 				totalDisplayed += noGames-gameStart;
 				game.resetCount();
 			}
+		} else {
+			totalDisplayed  = noGames;
 		}
 				
 		//Display the games selected
 		for (int i = gameStart; i<totalDisplayed;i++ ) {
-			game.addMessage("|game "+i);
+			game.addMessage(String.format("|%s",savFiles[i].getName()));
 		}
 		
-		game.addMessage("|Type 'games' for more");		
+		if (moreGames) {
+			game.addMessage("|Type 'games' for more");
+		}
 	}
 	
 	public void quit(Player player, Game game) {

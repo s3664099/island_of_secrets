@@ -148,7 +148,6 @@ public class CommandProcess {
 		
 		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
-		System.out.println(verbNo);
 		
 		if (verbNo != 43) {
 			game.resetCount();
