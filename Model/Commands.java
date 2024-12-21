@@ -764,15 +764,28 @@ public class Commands {
 		File saveGameDirectory = new File("savegames");
 		
 		game.setMessage("Games Saves");
-		
-		//If more than 10 saved games the have two at a time, 20 four etc
-		//Add a delete game function to delete a game
-		//Order games by date
-		
-		for (int i = 0; i<10;i++ ) {
+		int noGames=12;
+		int gameStart = 0;
+		int totalDisplayed = 9;
+				
+		//Check with number of games and determine which games are displayed
+		if (noGames>9) {
+			gameStart = game.getCount()*9;
+			if (noGames-gameStart>9) {
+				game.setCount();
+				totalDisplayed = gameStart+9;
+			} else {
+				totalDisplayed += noGames-gameStart;
+				game.resetCount();
+			}
+		}
+				
+		//Display the games selected
+		for (int i = gameStart; i<totalDisplayed;i++ ) {
 			game.addMessage("|game "+i);
 		}
 		
+		game.addMessage("|Type 'games' for more");		
 	}
 	
 	public void quit(Player player, Game game) {

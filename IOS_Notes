@@ -1,10 +1,18 @@
 TODO
-Shelter panel - user buttons
+Shelter - Just set a flag in game to ask for a location in a main script and errors when incorrect
+		- Reset the flag afterwards.
+Give    - Ask for a person in the main input and errors if unknown
+		- Reset the flag afterwards
 Nothing seems to happen when you disolve Omegan's Cloak - does a flag need to be set
-Games - Command to list the available saved games
+Games - Command to list the available saved games - actually get games from directory
+	  - Reset the counter if any command other than 'games' is typed
 End Game - Game has an end game flag. Added check that includes changing the input to a
 		button that closes the window.
 		 - place score & game over statement if end game set. Add below message
+V2.0
+Map Screen
+Buttons for shelter
+Buttons for load game and remove the list. Bottom button will recycle through next lot if any
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

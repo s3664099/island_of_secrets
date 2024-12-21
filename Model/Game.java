@@ -30,6 +30,7 @@ public class Game implements Serializable {
 	private String panelMessageTwo;
 	private int panelLoop;
 	private boolean endGame = false;
+	private int saveGameCount = 0;
 
 	public Game() {
 				
@@ -230,6 +231,19 @@ public class Game implements Serializable {
 	public boolean checkEndGame() {
 		return this.endGame;
 	}
+	
+	//Cycle through number of save games
+	public int getCount() {
+		return this.saveGameCount;
+	}
+	
+	public void setCount() {
+		this.saveGameCount++;
+	}
+	
+	public void resetCount() {
+		this.saveGameCount=0;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -248,4 +262,5 @@ public class Game implements Serializable {
  * 8 December 2024 - Updated the add message method so comma doesn't appear at start
  * 9 December 2024 - Made class serializable
  * 15 December 2024 - Added flag to end game
+ * 21 December 2024 - Added 
  */
