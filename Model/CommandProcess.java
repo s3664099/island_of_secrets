@@ -150,6 +150,9 @@ public class CommandProcess {
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		System.out.println(verbNo);
 		
+		if (verbNo != 43) {
+			game.resetCount();
+		}
 		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {

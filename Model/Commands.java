@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.14
-Date: 20 December 2024
+Version: 1.15
+Date: 21 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -764,7 +764,7 @@ public class Commands {
 		File saveGameDirectory = new File("savegames");
 		
 		game.setMessage("Games Saves");
-		int noGames=12;
+		int noGames=24;
 		int gameStart = 0;
 		int totalDisplayed = 9;
 				
@@ -815,4 +815,5 @@ public class Commands {
  * 15 December 2024 - Added end game flag
  * 18 December 2024 - Added game name with save command. Added overwrite handling for save game.
  * 20 December 2024 - Started working on the display saved game function
+ * 21 December 2024 - The display game function works where there are more than 8 games
  */
