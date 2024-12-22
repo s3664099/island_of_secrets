@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.16
-Date: 16 December 2024
+Version: 1.17
+Date: 22 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,8 @@ public class GameEngine {
 	private Player player;
 	private String[] commands = {"","",""};
 	private GameFrame frame;
+	private String codedCommand;
+	private int nounNum;
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -140,6 +142,9 @@ public class GameEngine {
 			Item item = this.game.getItem(nounNumber);
 			String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 			processCommands.executeCommand(this.game, player, nounNumber);
+			
+			this.codedCommand = codedCommand;
+			this.nounNum = nounNumber;
 		
 			if (processCommands.checkLoadedGame()) {
 				this.game = processCommands.getGame();
@@ -187,14 +192,20 @@ public class GameEngine {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);
 			}
-			
 			resetPanel(game);
 		}
 	}
 	
-	public void processGive(String object,GamePanel game,int nounNumber,String codedNoun) {
+	public int getResponseType() {
+		return game.getResponse();
+	}
+	
+	public void processGive(String object,GamePanel game) {
+
+		//Need to check if it is more than two words - if it is, errors and resets response type
+		
 		CommandProcess processCommands = new CommandProcess();
-		processCommands.executeGive(this.game,this.player,nounNumber,object,codedNoun);
+		processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
 		resetPanel(game);
 	}
 	
@@ -270,4 +281,5 @@ public class GameEngine {
 7 December 2024 - Added stub for poisonous waters subgame
 8 December 2024 - Added code to retrieve loaded game details.
 16 December 2024 - Added code to handle swimming in poisoned waters
+22 December 2024 - Added check to determine response type
 */

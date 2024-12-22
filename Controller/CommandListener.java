@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.3
-Date: 5 November 2024
+Version: 1.4
+Date: 22 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,7 +37,12 @@ public class CommandListener implements KeyListener {
 			
 			String command = this.text.getText();
 			this.text.setText("");
-			game.processCommand(command, gamePanel);
+			
+			if (game.getResponseType()==1) {
+				game.processGive(command, gamePanel);
+			} else {
+				game.processCommand(command, gamePanel);
+			}
 		}
 		
 	}
@@ -57,5 +62,5 @@ public class CommandListener implements KeyListener {
 }
 
 /* 6 November 2024 - Created File
- * 
+ * 22 December 2024 - Added check for special response requests
  */
