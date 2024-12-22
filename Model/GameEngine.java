@@ -15,7 +15,6 @@ import Data.Constants;
 import Data.Item;
 import View.GameFrame;
 import View.GamePanel;
-import View.GivePanel;
 import View.LightningPanel;
 import View.MessagePanel;
 import java.util.Random;
@@ -147,10 +146,7 @@ public class GameEngine {
 				this.player = processCommands.getPlayer();
 			}
 			
-			if (player.getPanelFlag()==1) {
-				setPanel(game, new GivePanel(this,nounNumber,codedCommand));
-				player.setPanelFlag(0);
-			} else if (player.getPanelFlag()==2) {
+			if (player.getPanelFlag()==2) {
 				setPanel(game, new LightningPanel(0,game,this));
 				player.setPanelFlag(0);
 			} else if (player.getPanelFlag()==3) {

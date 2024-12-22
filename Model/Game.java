@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.13
-Date: 15 December 2024
+Version: 1.14
+Date: 22 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -31,6 +31,7 @@ public class Game implements Serializable {
 	private int panelLoop;
 	private boolean endGame = false;
 	private int saveGameCount = 0;
+	private int responseRequired = 0;
 
 	public Game() {
 				
@@ -244,6 +245,18 @@ public class Game implements Serializable {
 	public void resetCount() {
 		this.saveGameCount=0;
 	}
+	
+	//Set the response required for the input
+	//0 - Standard Response
+	//1 - Give Response
+	//2 - Shelter Response
+	public void setResponse(int responseType) {
+		this.responseRequired = responseType;
+	}
+	
+	public int getResponse() {
+		return this.responseRequired;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -262,5 +275,6 @@ public class Game implements Serializable {
  * 8 December 2024 - Updated the add message method so comma doesn't appear at start
  * 9 December 2024 - Made class serializable
  * 15 December 2024 - Added flag to end game
- * 21 December 2024 - Added 
+ * 20 December 2024 - Added count for displaying saved games available.
+ * 22 December 2024 - Added response required for give and shelter
  */

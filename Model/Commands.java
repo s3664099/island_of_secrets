@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.15
-Date: 21 December 2024
+Version: 1.16
+Date: 22 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -255,7 +255,8 @@ public class Commands {
 			game.setMessage("You don't have the "+itemName);
 			
 		} else {
-			player.setPanelFlag(1);			
+			game.setMessage("Give to whom?");
+			game.setResponse(1);		
 		}
 	}
 	
@@ -831,4 +832,5 @@ public class Commands {
  * 18 December 2024 - Added game name with save command. Added overwrite handling for save game.
  * 20 December 2024 - Started working on the display saved game function
  * 21 December 2024 - The display game function works where there are more than 8 games
+ * 22 December 2024 - Change the give command so that a new screen isn't required
  */
