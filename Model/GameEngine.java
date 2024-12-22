@@ -202,10 +202,21 @@ public class GameEngine {
 	
 	public void processGive(String object,GamePanel game) {
 
-		//Need to check if it is more than two words - if it is, errors and resets response type
+		//Checks if the response is 'to xxxx'
+		String[] instructions = object.split(" ");
+		if (instructions[0].equals("to") && instructions.length==2) {
+			object = instructions[1];
+		}
 		
-		CommandProcess processCommands = new CommandProcess();
-		processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
+		//Is the reponse correct for a give command?
+		if (object.split(" ").length==1) {
+			CommandProcess processCommands = new CommandProcess();
+			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
+		} else {
+			this.game.addMessage("I'm sorry, I don't understand.");
+		}
+		
+		this.game.setResponse(0);
 		resetPanel(game);
 	}
 	
