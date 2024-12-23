@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.0
-Date: 25 November 2024
+Version: 2.0
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -86,5 +86,5 @@ public class LightningPanel extends JPanel {
 	}
 }
 /* 25 November 2024 - Created File
- * 
+ * 23 December 2024 - Updated to version 2.
 */

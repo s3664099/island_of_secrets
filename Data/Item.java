@@ -2,8 +2,8 @@
 Title: Island of Secrets Item Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.5
-Date: 9 December 2024
+Version: 2.0
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -64,6 +64,7 @@ public class Item implements Serializable {
 	}
 
 }
+
 /*
  * 31 October 2024 - Created File
  * 4 November 2024 - Added code to retrieve name & location
@@ -72,4 +73,5 @@ public class Item implements Serializable {
  * 11 November 2024 - Added method to retrieve the item location
  * 17 November 2024 - Added setters for location & flag
  * 9 December 2024 - Made class serializable
+ * 23 December 2024 - Updated to version 2.
  */

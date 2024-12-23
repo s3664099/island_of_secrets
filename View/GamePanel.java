@@ -2,7 +2,7 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
+Version: 2.0
 Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -221,4 +221,5 @@ public class GamePanel extends JPanel {
  * 					 to new line.
  * 15 December 2024 - Added final score display
  * 23 December 2024 - Added quit function
+ * 					- Updated to version 2.
  */

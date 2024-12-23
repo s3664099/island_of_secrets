@@ -2,8 +2,8 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 9 December 2024
+Version: 2.0
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -41,4 +41,5 @@ public class Location implements Serializable {
  * 3 November 2024 - Added method to retrieve the location name & exits
  * 10 November 2024 - Removed description field
  * 9 December 2024 - Made class serializable
+ * 23 December 2024 - Updated to version 2.
 */

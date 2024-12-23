@@ -2,10 +2,11 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.7
-Date: 20 December 2024
+Version: 2.0
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package Data;
 
 public class RawData {
@@ -200,4 +201,5 @@ public class RawData {
  * 2 November 2024 - Started fixing up the data so it isn't all caps
  * 19 December 2024 - Added the games command
  * 20 December 2024 - Moved the games command
+ * 23 December 2024 - Updated to version 2.
 */

@@ -2,7 +2,7 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.23
+Version: 2.0
 Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -553,4 +553,5 @@ public class CommandProcess {
  * 19 December 2024 - Added command to display list of saved games
  * 20 December 2024 - Added the display games command
  * 23 December 2024 - Added process shelter method
+ * 					- Updated to version 2.
  */
