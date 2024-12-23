@@ -29,11 +29,17 @@ Line 4110 reads through all of the objects and discards them
 With regards to coding the location of the objects, this is store in the string H$, which are symbols, but the ascii characters
 represent a location. The next line, Q$ is a flag that is set on each of the objects, which are used throughout the game.
 
+A file containing noted code outlining what each section of the basic code does. The notes file have also been completed outlining
+what each of the variables do, and also listing each of the items, locations, verbs and nouns.
+
+Another note is that the game is a 10x10 grid, and the map is determined by whether there is a wall between nodes or not. As such,
+moving between nodes is either adding or subtracting 1 (going east or west) or adding or substracting 10 (going north or south).
+
 ## Executing the Game
 
 To compile the game you need to do the following:
 
-*javac \*.java*
+*javac* \*.*java*
 
 Once it has compiled then you can run the game as follows:
 
@@ -55,4 +61,45 @@ in the game method (and are stored in set arrays). The commands are once again s
 I have decided to use the whole words as opposed to the first three letters. I note that this method was originally
 for making the code less complicated on older computers, but it can cause confusion (as well as being lazy). These
 are also stored in arrays, and since they do not change they have been marked as final.
+
+*v02*
+
+I have completed a version that doesn't run on the command line through the use of swing. There are a few styling
+issues that need to be fixed, as well as thorough testing is required to make sure that the game works as it is
+supposed to work. The other aspect is that I should be able to use the same structure to quickly build a similar game.
+However, before I do this I made some further additions.
+
+## Program Structure ##
+
+### Data ###
+
+**Constants**
+
+**Raw Data**
+
+**Location**
+
+**Item**
+
+### Model ###
+
+**Main**
+
+**Game Engine**
+
+**Game**
+
+**Player**
+
+**CommandProcess**
+
+**Commands**
+
+### View ###
+
+### Controller ###
+
+
+
+
 
