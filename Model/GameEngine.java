@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.17
-Date: 22 December 2024
+Version: 1.18
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -220,6 +220,21 @@ public class GameEngine {
 		resetPanel(game);
 	}
 	
+	public void processShelter(String object,GamePanel game) {
+		
+		//Checks if response is 1,2,or 3
+		if (object.equals("1") || object.equals("2") || object.equals("3")) {
+			CommandProcess processCommands = new CommandProcess();
+			processCommands.executeShelter(this.game, this.player,Integer.parseInt(object));
+		} else {
+			this.game.addMessage("Please enter either 1,2 or 3");
+		}
+		
+		this.game.setResponse(0);
+		resetPanel(game);
+		
+	}
+	
 	private void setPanel(JPanel game,JPanel panel) {
 		game.removeAll();
 		game.add(panel);
@@ -293,4 +308,5 @@ public class GameEngine {
 8 December 2024 - Added code to retrieve loaded game details.
 16 December 2024 - Added code to handle swimming in poisoned waters
 22 December 2024 - Added check to determine response type
+23 December 2024 - Added shelter process
 */

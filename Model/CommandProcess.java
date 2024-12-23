@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.22
-Date: 20 December 2024
+Version: 1.23
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -513,6 +513,15 @@ public class CommandProcess {
 			}
 		}
 	}
+	
+	public void executeShelter(Game game, Player player, int location) {
+		
+		player.setRoom(location);
+		game.getItem(22).setFlag(-location);
+		game.addMessage("You reach shelter.");
+		game.setPanelMessages("You blindly run through the storm","",1);
+
+	}
 }
 
 /* 9 November 2024 - Created method
@@ -543,4 +552,5 @@ public class CommandProcess {
  * 16 December 2024 - Added code to handle the swimming in poisoned waters section
  * 19 December 2024 - Added command to display list of saved games
  * 20 December 2024 - Added the display games command
+ * 23 December 2024 - Added process shelter method
  */

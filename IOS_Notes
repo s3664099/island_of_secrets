@@ -1,6 +1,4 @@
 TODO
-Shelter - Just set a flag in game to ask for a location in a main script and errors when incorrect
-		- Reset the flag afterwards.
 Nothing seems to happen when you disolve Omegan's Cloak - does a flag need to be set
 End Game - Game has an end game flag. Added check that includes changing the input to a
 		button that closes the window.

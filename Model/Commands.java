@@ -512,9 +512,13 @@ public class Commands {
 	}
 	
 	public void shelter(Player player,Game game) {
-		
+				
 		if (game.getItem(36).getFlag()<0) {
-			player.setPanelFlag(5);
+			game.setMessage("You can shelyer in|1) Grandpa's Shack|2)Cave of Snelm|3)Log Cabin");
+			game.addMessage("|Choose from 1-3");
+			game.setResponse(2);	
+		} else {
+			game.setMessage("Not possible at the moment.");
 		}
 	}
 	
