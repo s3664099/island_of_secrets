@@ -158,12 +158,6 @@ public class GameEngine {
 				setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
 						 this.game.getMsgTwo(),this.game.getLoop()));
 				player.setPanelFlag(0);
-		
-			//Shelter - 2220
-			} else if (player.getPanelFlag()==5) {
-			
-				player.setPanelFlag(0);	
-			
 			} else {
 				resetPanel(game);
 			}						

@@ -1,15 +1,15 @@
 TODO
 Nothing seems to happen when you disolve Omegan's Cloak - does a flag need to be set
-End Game - Game has an end game flag. Added check that includes changing the input to a
-		button that closes the window.
-		 - place score & game over statement if end game set. Add below message
 Write the document outlining way the game is structured.
 
 V2.0
 Create a Test Document and test each of the functions
+Fix Styling of Command input and button
 Map Screen
 Buttons for shelter
 Buttons for load game and remove the list. Bottom button will recycle through next lot if any
+Commands above are buttons that if you click them, the command is repeated
+End game buttons - play again?
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

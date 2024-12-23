@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.6
-Date: 15 December 2024
+Version: 1.7
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,9 +13,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,16 +26,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Controller.CommandListener;
+import Controller.QuitButton;
 import Model.GameEngine;
 
 public class GamePanel extends JPanel {
 	
 	Color background;
 	GameEngine game;
+	GameFrame frame;
 
-	public GamePanel(GameEngine game) {
+	public GamePanel(GameEngine game,GameFrame frame) {
 		
 		add(game);
+		this.frame = frame;
 	}
 	
 	public void add(GameEngine game) {
@@ -101,10 +107,21 @@ public class GamePanel extends JPanel {
 		bottomPanel.add(CreateLabelPanel(commands[0],1));
 		bottomPanel.add(CreateLabelPanel(commands[1],1));
 		bottomPanel.add(CreateLabelPanel(commands[2],1));
-		JTextField commandField = new JTextField(2);
-		commandField.addKeyListener(new CommandListener(commandField,game,this));
-		commandField.requestFocusInWindow();
-		bottomPanel.add(commandField);
+		
+		if (!game.checkEndGame()) {
+			JTextField commandField = new JTextField(2);
+			commandField.addKeyListener(new CommandListener(commandField,game,this));
+			commandField.requestFocusInWindow();
+			bottomPanel.add(commandField);
+		} else {
+			
+			//Create Exit Button
+			JButton button = new JButton("Exit");
+			bottomPanel.add(button);
+			
+			//Closes frame when clicked
+		    button.addActionListener(new QuitButton(this.frame));
+		}
 				
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
@@ -203,4 +220,5 @@ public class GamePanel extends JPanel {
  * 8 December 2024 - Updated code so that messages will split with pipe and add
  * 					 to new line.
  * 15 December 2024 - Added final score display
+ * 23 December 2024 - Added quit function
  */

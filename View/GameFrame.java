@@ -2,10 +2,11 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 1.4
-Date: 8 November 2024
+Version: 1.5
+Date: 23 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
+
 package View;
 
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ public class GameFrame extends JFrame {
 		//kills the window when the 'x' is clicked at the top
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		GamePanel gamePanel = new GamePanel(game);
+		GamePanel gamePanel = new GamePanel(game,this);
 		this.add(gamePanel);
 		
 		//sets the boundaries of the frame.
@@ -30,5 +31,5 @@ public class GameFrame extends JFrame {
 	}
 }
 /* 8 November 2024 - Created File
- * 
+ * 23 December 2024 - Passed frame to panel to enable quit function
  */
