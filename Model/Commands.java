@@ -88,6 +88,8 @@ public class Commands {
 		//The Rocks
 		} else if (player.getRoom() == 47 && game.getItem(44).getFlag()==1) {
 			game.setMessage("The rocks move to prevent you");
+		
+		//Room with Arms
 		} else if (player.getRoom() == 28 && game.getItem(7).getFlag()!=1) {
 			game.setMessage("The arms hold you fast");
 		

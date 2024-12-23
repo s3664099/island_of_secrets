@@ -1,0 +1,44 @@
+Test Document
+
+To Test
+Move Command
+	- In 12 becomes west
+	- In 53 becomes west
+	- Out 52 becomes east
+	- In 45 becomes west
+	- Out 44 becomes east
+	- In 70 becomes north
+	- Out 60 becomes south
+	- In 37 becomes north
+	- Out 11 becomes north
+	- Out 41 becomes north
+	- Out 43 becomes north
+	- Down 66 becomes north
+	- Up 56 becomes south
+	- Down 51 becomes north
+
+	- Down 51 when Trap Door flag = 0 goes to poisoned water
+	- Omegan is in player location, strength+wisdom<180 or room=10 - cannot leave (and displays)
+	- Player in room with Swampman, tries to go east, and swampman flag<1 - can't move (otherwise can)
+		- Check how to allow swampman to let you move and test that
+	- Rooms with arms (28) and torch (item 7) flag != 1 - Can't move
+		- Check how to change the torch flag and check
+	- Grandpa's Shack snake flag =0 can't move
+		- Check how to make snake flag not 0
+	- Canyon Canyon Beast flag sum !=-1 east can't move
+		- Check how to make the Canyon Beast flag sum =-1
+	- Storeroom go east door is barred
+	- If have canyon beast and on log pier (33) - runs away to random place (1-4)
+	- Check can move & can't
+	- The Ferry Man - Go Boat (might not work).
+		- Have to be in same room as boatman and type 'go boat'
+		- If less than 60 - go to serve Omegan forever
+		- If greater, goes to Island of Secrets
+	
+	
+	
+	
+	
+
+
+Passed
