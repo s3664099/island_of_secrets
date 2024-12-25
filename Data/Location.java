@@ -2,8 +2,8 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 25 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
