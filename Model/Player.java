@@ -16,7 +16,7 @@ import Data.Constants;
 
 public class Player implements Serializable {
 	
-	private int room = 23;
+	private int room = 23; //23
 	private int roomToDisplay = this.room;
 	private float strength = 100;
 	private int wisdom = 35;

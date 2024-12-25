@@ -11,6 +11,9 @@ Buttons for load game and remove the list. Bottom button will recycle through ne
 Commands above are buttons that if you click them, the command is repeated
 End game buttons - play again?
 
+Need to have a look/search command to offer clues (examine room?)
+	- There is no way to know there is a trapdoor in the refuse strewn room - so look to locate it
+
 A$	- Normally used to display the place location
 A	- Verb Chosen
 B$	- Coded Noun

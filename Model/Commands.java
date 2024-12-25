@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 25 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -57,6 +57,8 @@ public class Commands {
 			direction = this.noun-Constants.noItems;
 		}
 		
+		System.out.println(code);
+		
 		//Sets direction for specific movement command
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
 			direction = 4;
@@ -68,9 +70,10 @@ public class Commands {
 			direction = 2;
 		} else if (code.equals("510044")||code.equals("510052")) {
 			direction = 3;
-		
+		}
+			
 		//Poisoned waters
-		} else if (code.equals("490051") && game.getItem(29).getFlag()==0) {
+		if (code.equals("490051") && game.getItem(29).getFlag()==0) {
 			player.setPanelFlag(4);
 		}
 		
@@ -358,6 +361,7 @@ public class Commands {
 			game.getItem(15).setFlag(9);
 		}
 		
+		//Works
 		//Open trapdoor in refuse filled room
 		if (this.code.equals("2951151")) {
 			game.setMessage("The trapdoor creaks");
@@ -498,6 +502,7 @@ public class Commands {
 		}		
 	}
 	
+	//Works
 	public void swim(Player player,Game game) {
 
 		if (player.getRoom()!=51 || game.getItem(29).getFlag()>0) {
@@ -836,4 +841,5 @@ public class Commands {
  * 21 December 2024 - The display game function works where there are more than 8 games
  * 22 December 2024 - Change the give command so that a new screen isn't required
  * 23 December 2024 - Updated to version 2.
+ * 25 December 2024 - Moved the code that takes player to poisoned waters if trapdoor is open
  */

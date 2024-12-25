@@ -198,6 +198,10 @@ public class CommandProcess {
 		//Display list of saved games
 		} else if (verbNo==43) {
 			this.command.displayGames(game);
+		
+		//Swim
+		} else if (verbNo==25) {
+			this.command.swim(player, game);
 			
 		//More than one verb
 		} else if(commands.length>1) {
@@ -237,10 +241,6 @@ public class CommandProcess {
 			//Kill
 			} else if (verbNo==24) {
 				this.command.kill(player, game);
-			
-			//Swim
-			} else if (verbNo==25) {
-				this.command.swim(player, game);
 			
 			//Shelter
 			} else if (verbNo==26) {
