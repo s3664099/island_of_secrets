@@ -73,11 +73,31 @@ However, before I do this I made some further additions.
 
 ### Data ###
 
+This package hold classes that simply carry data. Well that and the two classes - Location & Item - that are used to hold the main
+objects that run the game.
+
 **Constants**
+
+This class holds a number of variables that do not change. These variables are used so that numbers are hardcoded into the game
+(though I suspect that there are still some there). As such, the class is able to be accessed from across the program, and each
+of the variable are listed as final (meaning that it cannot be changed) and static (meaning that it can be accessed without 
+instanstatiating a class.
 
 **Raw Data**
 
+This class basically holds the raw data for the game. While it could be stored in a database, the fact that it does not change, and is
+only used while the game is running, storing it in a file is much easier (and it can be ported as well since a database doesn't need to be
+built to run the game).
+
+Anyway, this file is only read once during the set up phase to build the locations, the items, the verbs, nouns, and codes for setting
+the item flags and location. Also, unlike the *Constants* class, this one isn't static, so it needs to be instantiated to access the data.
+
 **Location**
+
+This class holds the details of the locations. The variables that are in the class are as follows:
+
+- name - A string. The name of the locations
+- exits - an array of 4 bools. Where the exits are located.
 
 **Item**
 

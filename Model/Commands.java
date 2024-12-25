@@ -161,7 +161,6 @@ public class Commands {
 			
 			//Evil books in library
 			if (this.code.equals("3450050")) {
-			
 				player.setWisdom(player.getWisdom()-5);
 				player.setStrength(player.getStrength()-8);
 				game.setMessage("They are cursed");

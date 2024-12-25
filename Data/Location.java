@@ -14,15 +14,24 @@ import java.io.Serializable;
 public class Location implements Serializable {
 	
 	private String name;
-	private int[] exits = new int[4];
+	private boolean[] exits = new boolean[4];
 	private boolean visited = false;
+	private int roomType;
 	
 	public Location(String name, String[] prepositions) {		
+
 		int prep = Integer.parseInt(name.substring(0,1));
 		this.name = String.format("%s %s",prepositions[prep-1],name.substring(1,name.length()-4));
 		int x=0;
+
+		//Determines the exits from the room
 		for (int i=name.length()-4;i<name.length();i++) {
-			exits[x] = Integer.parseInt(name.substring(i,i+1));
+			
+			if (name.substring(i,i+1).equals("0")) {
+				exits[x] = true;
+			} else {
+				exits[x] = false;
+			}
 			x++;
 		}
 	}
@@ -31,7 +40,7 @@ public class Location implements Serializable {
 		return this.name;
 	}
 	
-	public int[] getExits() {
+	public boolean[] getExits() {
 		return this.exits;
 	}
 }
@@ -42,4 +51,5 @@ public class Location implements Serializable {
  * 10 November 2024 - Removed description field
  * 9 December 2024 - Made class serializable
  * 23 December 2024 - Updated to version 2.
+ * 25 December 2024 - Added roomType variable for the map. Changed the exits to booleans
 */

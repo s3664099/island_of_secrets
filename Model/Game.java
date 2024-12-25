@@ -99,12 +99,12 @@ public class Game implements Serializable {
 	//Returns a display of the available exits.
 	public String getExits(int roomNumber) {
 		
-		int[] exitNumbers = locationList[roomNumber].getExits();
+		boolean[] exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
 		
 		if (roomNumber == 39) {
 			int randExit = rand.nextInt(5);
-			int[] exitArray = {1,0,1,1,1,0,1,0,0};
+			boolean[] exitArray = {false,true,false,false,false,true,false,true,true};
 			int count = 0;
 			
 			for (int x=randExit;x<randExit+4;x++) {
@@ -113,19 +113,19 @@ public class Game implements Serializable {
 			}
 		}
 		
-		if (exitNumbers[0] == 0) {
+		if (exitNumbers[0]) {
 			exits = addExit("North",exits);
 		}
 		
-		if (exitNumbers[1] == 0) {
+		if (exitNumbers[1]) {
 			exits = addExit("South",exits);
 		}
 		
-		if (exitNumbers[2] == 0) {
+		if (exitNumbers[2]) {
 			exits = addExit("East",exits);
 		}
 		
-		if (exitNumbers[3] == 0) {
+		if (exitNumbers[3]) {
 			exits = addExit("West",exits);
 		}
 		
@@ -138,14 +138,8 @@ public class Game implements Serializable {
 	
 	//Checks if it is possible to move through the exit
 	public boolean checkExit(int room, int direction) {
-		
-		boolean open = false;
-		
-		if (locationList[room].getExits()[direction]==0) {
-			open = true;
-		}
-		
-		return open;
+	
+		return locationList[room].getExits()[direction];
 	}
 	
 	//Checks to see if an exit has already been added
