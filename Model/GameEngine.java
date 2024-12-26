@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 26 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -80,6 +80,7 @@ public class GameEngine {
 	
 	public String getMessage() {
 		
+		//Swimming in poisoned Waters?
 		if (player.getPanelFlag()==4) {
 			
 			if (player.getStrength()<15) {
@@ -95,10 +96,7 @@ public class GameEngine {
 		return message;
 	}
 	
-	public String getCommand(int number) {
-		return game.getCommand(number);
-	}
-	
+	//Passes three previous commands to Panel.
 	public String[] getCommands() {
 		return this.commands;
 	}
@@ -120,12 +118,13 @@ public class GameEngine {
 		
 		//Checks if player 'Swimming in Poisoned Waters'
 		if (player.getPanelFlag()!=4) {
+			
 			CommandProcess processCommands = new CommandProcess(command,this.game);
 			int verbNumber = processCommands.getVerbNumber();
 			int nounNumber = processCommands.getNounNumber();
 		
 			//Either verb or noun doesn't exist
-			if (verbNumber>Constants.noVerbs || nounNumber == 52) {
+			if (verbNumber>Constants.noVerbs || nounNumber == Constants.noNouns) {
 				this.game.setMessage("You can't "+command);
 			}
 
@@ -136,7 +135,7 @@ public class GameEngine {
 		
 			//No second word move to end
 			if (nounNumber == -1) {
-				nounNumber = 52;
+				nounNumber = Constants.noNouns;
 			}
 		
 			this.player.update();
@@ -305,4 +304,5 @@ public class GameEngine {
 22 December 2024 - Added check to determine response type
 23 December 2024 - Added shelter process
 				 - Updated to version 2.
+26 December 2024 - Removed the strength display, and added some comments
 */

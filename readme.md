@@ -161,6 +161,9 @@ methods in the object as well.
 	     exits, which are displayed as a string and are the exits based on the room the player is viewing.
 
 
+- processCommand
+
+
 **Game**
 
 **Player**
