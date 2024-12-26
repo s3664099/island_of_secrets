@@ -21,7 +21,7 @@ public class RawData {
 		"4the marsh factory1001",
 		"4the sludge fermation vats1110",
 		"7the uppermost battlements1001",
-		"4OMegan's sanctum1110",
+		"4Omegan's sanctum1110",
 		"4Snelm's lair0001",
 		"2a dark cave0000",
 		"1broken branches0100",

@@ -2,23 +2,9 @@ Test Document
 
 To Test
 Move Command
-	- In 12 becomes west
-	- In 53 becomes west
-	- Out 52 becomes east
-	- In 45 becomes west
-	- Out 44 becomes east
-	- In 70 becomes north
-	- Out 60 becomes south
-	- In 37 becomes north
-	- Out 11 becomes north
-	- Out 41 becomes north
-	- Out 43 becomes north
-	- Down 66 becomes north
-	- Up 56 becomes south
-	- Down 51 becomes north
 
-	- Down 51 when Trap Door flag = 0 goes to poisoned water
-	- Omegan is in player location, strength+wisdom<180 or room=10 - cannot leave (and displays)
+	
+
 	- Player in room with Swampman, tries to go east, and swampman flag<1 - can't move (otherwise can)
 		- Check how to allow swampman to let you move and test that
 	- Rooms with arms (28) and torch (item 7) flag != 1 - Can't move
@@ -42,3 +28,26 @@ Move Command
 
 
 Passed
+
+Go Command
+- In 12 becomes west
+- In 53 becomes west
+- Out 52 becomes east
+- In 45 becomes west
+- Out 44 becomes east
+- In 70 becomes north
+- Out 60 becomes south
+- In 37 becomes north
+- Out 11 becomes north
+- Out 41 becomes north
+- Out 43 becomes north
+- Down 66 becomes north
+- Up 56 becomes south
+- Down 51 becomes north
+
+- Down 51 when Trap Door flag = 0 goes to poisoned water - You have to be in the room and type 'open trapdoor' for this to activate
+  Considering adding a command to examine (and adding it without having to make any significant changes to the code - will probably have
+  to tack it onto the end and increase the number of verbs).
+ - Omegan is in player location, strength+wisdom<180 or room=10 - cannot leave (and displays)
+
+

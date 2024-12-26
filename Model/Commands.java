@@ -57,8 +57,6 @@ public class Commands {
 			direction = this.noun-Constants.noItems;
 		}
 		
-		System.out.println(code);
-		
 		//Sets direction for specific movement command
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
 			direction = 4;
@@ -78,8 +76,8 @@ public class Commands {
 		}
 		
 		//Checks if player able to move
-		//Prevents Player from leaving is Omegan present
-		if (player.getRoom() == game.getItem(39).getLocation() && 
+		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
+		if (game.getItem(39).checkLocation(player.getRoom()) && 
 			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
 			game.setMessage("You can't leave!");
 		
@@ -517,7 +515,7 @@ public class Commands {
 	public void shelter(Player player,Game game) {
 				
 		if (game.getItem(36).getFlag()<0) {
-			game.setMessage("You can shelyer in|1) Grandpa's Shack|2)Cave of Snelm|3)Log Cabin");
+			game.setMessage("You can shelter in|1) Grandpa's Shack|2)Cave of Snelm|3)Log Cabin");
 			game.addMessage("|Choose from 1-3");
 			game.setResponse(2);	
 		} else {
