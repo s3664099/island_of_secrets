@@ -160,6 +160,11 @@ methods in the object as well.
 - getExits - The original game doesn't display the exits, though maybe there was a reason for this. Anyway, I have added the
 	     exits, which are displayed as a string and are the exits based on the room the player is viewing.
 
+- getMessage - the message for the previous move is retrieved. However, special message is retrieved if the player is swimming
+	       in poisoned waters, so that are added here, which includes a warning if the player has a strength less than 15.
+	       The message is retrieved from the game object and then cleared before being passed to the panel.
+
+- getCommands - The retrieves the previous three commands that the player has executed and passes them through to the GamePanel.
 
 - processCommand
 
