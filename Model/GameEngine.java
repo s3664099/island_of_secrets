@@ -81,7 +81,6 @@ public class GameEngine {
 	public String getMessage() {
 		
 		if (player.getPanelFlag()==4) {
-			game.addMessage(String.format("|Your Strength = %s", player.getStrength()));
 			
 			if (player.getStrength()<15) {
 				game.addMessage("|You are very weak!");
@@ -106,6 +105,7 @@ public class GameEngine {
 	
 	public void processCommand(String command,GamePanel game) {
 		
+		//Saves the commands into the previous command list
 		if (this.commands[0].equals("")) {
 			this.commands[0] = command;
 		} else if (this.commands[1].equals("")) {
@@ -118,6 +118,7 @@ public class GameEngine {
 			this.commands[2] = command;
 		}
 		
+		//Checks if player 'Swimming in Poisoned Waters'
 		if (player.getPanelFlag()!=4) {
 			CommandProcess processCommands = new CommandProcess(command,this.game);
 			int verbNumber = processCommands.getVerbNumber();

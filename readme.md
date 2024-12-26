@@ -120,13 +120,46 @@ This class contains three variables and is the details of the game's items. The 
 The class consists of a constructor that sets the flag and location and saves the name of the items.
 
 Methods include a method to retrieve the name and getters and setters for the location and the flag. 
-There is also a method that compares an int passed to it (which is a location) with the item's location, and returns a true or a false.
+There is also a method that compares an int passed to it (which is a location) with the item's location, and returns a 
+true or a false.
 
 ### Model ###
 
+So, as it turns out, the only real pattern that I seem to use after uni is the MVC pattern, and that is basically for my
+own projects. Then again, I basically work on legacy systems, so I guess there is that (they existed long before patterns
+were a thing).
+
+Anyway, this package holds the guts of the game, and is where pretty much everything occurs. Then again I suspect that that
+is the purpose of the model package. 
+
 **Main**
 
+While the start class actually fires up the game, this class builds the game and the executes it. Initially is generates
+a Game object, which holds all of the data pertaining to the game, a Player object, which holds the data for the player
+(though, unfortunately, they do end up criss-crossing a bit). Finally the GameEngine object is generated which is the
+guts of the game. Onse that has happened, the SwingUtilities is invokes to launch a GUI version of the game.
+
 **Game Engine**
+
+The engine provides the link between the Game/Player classes and the View/Controller packages. The constructor takes 
+a Game object and a Player object and sets them to the corresponding objects in this class. There are a number of other
+methods in the object as well.
+
+- getTime - this method retrieves the amount of time that has passed since the beginning of the game, or rather how many
+	    moves are left.
+
+- getStatus - this retrieves the player's strength and wisdom as a string.
+
+- getRoom - the name of the room is retrieved and passed through the the graphical display. However, first of all it
+	    determines whether the player is in the 'poisoned waters' and displays that instead. Else, it will check
+	    what description is displayed. We then retrieve the room number and pass a string through to the front end
+	    after retrieving the description from the game object.
+
+- getItems - a list if the visible items are displayed as a string based upon the room the player happens to be in (or viewing).
+
+- getExits - The original game doesn't display the exits, though maybe there was a reason for this. Anyway, I have added the
+	     exits, which are displayed as a string and are the exits based on the room the player is viewing.
+
 
 **Game**
 
