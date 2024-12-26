@@ -73,13 +73,54 @@ However, before I do this I made some further additions.
 
 ### Data ###
 
+This package hold classes that simply carry data. Well that and the two classes - Location & Item - that are used to
+hold the main objects that run the game.
+
 **Constants**
+
+This class holds a number of variables that do not change. These variables are used so that numbers are hardcoded into
+the game (though I suspect that there are still some there). As such, the class is able to be accessed from across the
+program, and each of the variable are listed as final (meaning that it cannot be changed) and static (meaning that it 
+can be accessed without instanstatiating a class.
 
 **Raw Data**
 
+This class basically holds the raw data for the game. While it could be stored in a database, the fact that it does not 
+change, and is only used while the game is running, storing it in a file is much easier (and it can be ported as well 
+since a database doesn't need to be built to run the game).
+
+Anyway, this file is only read once during the set up phase to build the locations, the items, the verbs, nouns, and 
+codes for setting the item flags and location. Also, unlike the Constants class, this one isn't static, so it needs 
+to be instantiated to access the data.
+
 **Location**
 
+This class holds the details of the locations. The variables that are in the class are as follows:
+
+- name - A string. The name of the locations
+- exits - an array of 4 bools. Where the exits are located.
+- visited - boolean. Has the player visited this location (not currently used, but to be used for the map).
+- roomType - int. The type of room. Used to display an icon on the map when created.
+
+The only value that is changed is the visit boolean, which goes from False to True. The rest will remain as they are.
+The class consists of the constructor which builds the name of the location and the exits.
+
+It also has a method that retrieves the name of the location, and retrieves the exit array.
+
 **Item**
+
+This class contains three variables and is the details of the game's items. The variables are as follows:
+
+- itemFlag - an integer. this is a flag that is used for the running of the game. Among other things, the 
+	     flag determines whether an item is visible to the player. If the flag is less that 1, then it is visible.
+- itemLocation - an integer. This is where the items is located. 0 indicates that the player is carrying 
+             the item, while 81 indicate that the item has been destroyed.
+- item - a string. This is the name of the item.
+
+The class consists of a constructor that sets the flag and location and saves the name of the items.
+
+Methods include a method to retrieve the name and getters and setters for the location and the flag. 
+There is also a method that compares an int passed to it (which is a location) with the item's location, and returns a true or a false.
 
 ### Model ###
 
