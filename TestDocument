@@ -5,10 +5,8 @@ Move Command
 
 	
 
-	- Player in room with Swampman, tries to go east, and swampman flag<1 - can't move (otherwise can)
-		- Check how to allow swampman to let you move and test that
-	- Rooms with arms (28) and torch (item 7) flag != 1 - Can't move
-		- Check how to change the torch flag and check
+
+
 	- Grandpa's Shack snake flag =0 can't move
 		- Check how to make snake flag not 0
 	- Canyon Canyon Beast flag sum !=-1 east can't move
@@ -21,6 +19,12 @@ Move Command
 		- If less than 60 - go to serve Omegan forever
 		- If greater, goes to Island of Secrets
 	
+	
+Rub - This is used to stop the stones from preventing you from moving
+	- Need to work out how to get here and then to the stones to test it works.
+	- So, rub opening with the rag and the flags are set (and you hear the word as well).
+Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
+	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
 	
 	
 	
@@ -49,5 +53,9 @@ Go Command
   Considering adding a command to examine (and adding it without having to make any significant changes to the code - will probably have
   to tack it onto the end and increase the number of verbs).
  - Omegan is in player location, strength+wisdom<180 or room=10 - cannot leave (and displays)
+ - Player in room with Swampman, tries to go east, and swampman flag<1 - can't move (otherwise can)
+	- Check how to allow swampman to let you move and test that
+	- Works - When tells his tale the flag is set to -1, which means he will block your way east.
+		- If you are in the room and the flag is 0, then he tells his tale.
 
 

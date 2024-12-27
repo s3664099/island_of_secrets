@@ -75,6 +75,10 @@ public class Commands {
 			player.setPanelFlag(4);
 		}
 		
+		//System.out.println(game.getItem(28).getLocation());
+		//System.out.println(game.getItem(28).getFlag());
+		//System.out.println(player.getRoom());
+		
 		//Checks if player able to move
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
 		if (game.getItem(39).checkLocation(player.getRoom()) && 
@@ -87,7 +91,7 @@ public class Commands {
 			game.setMessage("He will not let you pass.");
 		
 		//The Rocks
-		} else if (player.getRoom() == 47 && game.getItem(44).getFlag()==1) {
+		} else if (player.getRoom() == 47 && game.getItem(44).getFlag()==0) {
 			game.setMessage("The rocks move to prevent you");
 		
 		//Room with Arms
