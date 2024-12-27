@@ -145,12 +145,14 @@ public class GameEngine {
 			
 			this.codedCommand = codedCommand;
 			this.nounNum = nounNumber;
-		
+			
+			//Has a game been loaded?
 			if (processCommands.checkLoadedGame()) {
 				this.game = processCommands.getGame();
 				this.player = processCommands.getPlayer();
 			}
 			
+			//What panel is to be displayed after the command is executed.
 			if (player.getPanelFlag()==2) {
 				setPanel(game, new LightningPanel(0,game,this));
 				player.setPanelFlag(0);

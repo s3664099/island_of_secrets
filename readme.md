@@ -166,9 +166,39 @@ methods in the object as well.
 
 - getCommands - The retrieves the previous three commands that the player has executed and passes them through to the GamePanel.
 
-- processCommand
+- processCommand - This is where the command is passed when the player enters it. First it adds the command to the previous command
+		   list (which lists the previous three commands). Then it determines which panel is displayed (namely not swimming
+		   in poisoned waters). The processCommand object is created to determine the verb/noun numbers and then sets the
+		   error response based on the number selected. If there is no noun, it is set to the end afterwards. Finally the
+		   related item is retrieved (which includes some blank items which relate to noun with no matching item), and the
+		   command is coded (which is a means of checking a number of varibles all at once).
+		   
+		   The command is then executed. After this the response is determined, namely if a game has been loaded (meaning
+		   that the current player/game classes are reset to the new ones from the loaded game). Finally, the panel response is
+		   determined, and the game panel is reloaded.
+		   
+		   As for the poisoned water section, this is basically a minigame where the player needs to escape from the poisoned
+		   waters without dying (running out of strength).
 
+- getResponseType - This is method determines the responmse type. Namely there are three types - the normal command process, the Give
+		   Item response, and the Shelter response.
 
+- processGive - This determines whether a response to a give command is correct. Namely it should be a single noun representing
+		somebody present. If a new command is typed then an error response is sent. If the first word is 'to' then that is
+		dropped. At the end of the process, the response type is reset to a normal response.
+
+- processShelter - This is for the shelter command, which one option of three is selected. If the correct response is not selected
+		   then an error is reported. Like the above, once the process is completed the response type is set to normal.
+
+- setPanel - This sets the panel to a specific panel that is passed through. This is not the standard game panel.
+
+- resetPanel - This method resets the current gamePanel, which basically updates the display (but for some reason when it is updated
+	       the cursor does not go back to the input).
+
+- checkEndGame - this checks whether the endGame flag has been set in the Game object.
+
+- getFinalScore - this calculates the player's final score.	       
+		    
 **Game**
 
 **Player**
