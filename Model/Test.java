@@ -12,7 +12,7 @@ package Model;
 public class Test {
 
 	public void setTest(Game game, Player player) {
-		//player.setRoom(1);
+		//player.setRoom(51);
 	}
 	
 	public void displayValue(Game game, Player player) {

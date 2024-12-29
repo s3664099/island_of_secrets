@@ -16,6 +16,9 @@ Need to have a look/search command to offer clues (examine room?)
 	  to be called - will change that and check it out - also look at the original code.
 	- Thing about the torch - wave it to allow pass arms - no way to know how to do it - also can drop the torch
 	  and it still allows it - though will need to check that in the code.
+	- Maybe indicate that there is an exit to the east in the storeroom - then again in the original game the
+	  exits aren't displayed.
+ 	- Change the cardinals to directions that are flagged in the move
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

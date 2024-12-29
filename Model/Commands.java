@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.2
-Date: 27 December 2024
+Version: 2.3
+Date: 29 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -56,7 +56,7 @@ public class Commands {
 		} else if (this.noun>Constants.noItems && this.noun<Constants.noNouns) {
 			direction = this.noun-Constants.noItems;
 		}
-		
+				
 		//Sets direction for specific movement command
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
 			direction = 4;
@@ -109,10 +109,12 @@ public class Commands {
 		//Can move
 		} else {
 			
+			//Sets direction to 0 if not cardinal
 			if (direction>4) {
 				direction = 0;
 			}
-		
+					
+			//Is direction a cardinal?
 			if (direction>0) {
 				if (game.checkExit(player.getRoom(),direction-1)) {
 					int newRoom = player.getRoom() + Integer.parseInt(
@@ -122,11 +124,14 @@ public class Commands {
 					haveMoved = true;
 				}
 			}
-		
+			
+			//Otherwise can't move
 			if (direction<1 || !haveMoved) {
 				game.setMessage("You can't go that way");
 			}
 			
+			
+			//Does the player have the beast and is on the jetty
 			if (player.getRoom() == 33 && game.getItem(16).getLocation()==0) {
 				game.getItem(16).setLocation(rand.nextInt(4)+1);
 				game.getItem(16).setFlag(0);
@@ -841,4 +846,5 @@ public class Commands {
  * 23 December 2024 - Updated to version 2.
  * 25 December 2024 - Moved the code that takes player to poisoned waters if trapdoor is open
  * 27 December 2024 - Fixed problem with rocks preventing movement
+ * 29 December 2024 - Added further notes for movement allowability
  */

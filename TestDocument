@@ -9,8 +9,8 @@ Move Command
 
 
 
-	- Storeroom go east door is barred
-	- Check can move & can't
+	
+	
 	- The Ferry Man - Go Boat (might not work).
 		- Have to be in same room as boatman and type 'go boat'
 		- If less than 60 - go to serve Omegan forever
@@ -58,5 +58,7 @@ Go Command
 	- Check how to allow swampman to let you move and test that
 	- Works - When tells his tale the flag is set to -1, which means he will block your way east.
 		- If you are in the room and the flag is 0, then he tells his tale.
+- Check can move & can't - I know this works.
+
 
 
