@@ -90,8 +90,8 @@ change, and is only used while the game is running, storing it in a file is much
 since a database doesn't need to be built to run the game).
 
 Anyway, this file is only read once during the set up phase to build the locations, the items, the verbs, nouns, and 
-codes for setting the item flags and location. Also, unlike the Constants class, this one isn't static, so it needs 
-to be instantiated to access the data.
+codes for setting the item flags and location. Like the Constants class, this one is also static, meaning that it can be
+read without needing to instansiate the object. Further, it is only read at the beginning of the game.
 
 **Location**
 
@@ -171,12 +171,10 @@ methods in the object as well.
 		   in poisoned waters). The processCommand object is created to determine the verb/noun numbers and then sets the
 		   error response based on the number selected. If there is no noun, it is set to the end afterwards. Finally the
 		   related item is retrieved (which includes some blank items which relate to noun with no matching item), and the
-		   command is coded (which is a means of checking a number of varibles all at once).
-		   
+		   command is coded (which is a means of checking a number of varibles all at once).		   
 		   The command is then executed. After this the response is determined, namely if a game has been loaded (meaning
 		   that the current player/game classes are reset to the new ones from the loaded game). Finally, the panel response is
 		   determined, and the game panel is reloaded.
-		   
 		   As for the poisoned water section, this is basically a minigame where the player needs to escape from the poisoned
 		   waters without dying (running out of strength).
 
@@ -200,6 +198,29 @@ methods in the object as well.
 - getFinalScore - this calculates the player's final score.	       
 		    
 **Game**
+
+This object stores everything related to the game that isn't player specific (though there are some elements that are actually player
+specific, such as where the items are located). The variables include the following:
+
+- noRooms - int - the number of rooms, and is based on the constant.
+- noItems - int -  the number of items, and is also based on the constant.
+- locationList - Array of Location objects - holds all of the locations.
+- itemList - Array of Item objects - holds all of the items.
+- message - String - holds the response to the player's previous action
+- commands - Array of Strings - holds the player's last three commands.
+- rand - Random - Java standard object for generating random numbers.
+- panelMessageOne & panelMessageTwo - String - These are for displaying special messages in response to specific actions.
+- panelLoop - int - This is how many times the panel message display will loop.
+- endGame - boolean - a flag to advise whether the game has come to an end or not.
+- saveGameCount - int - counts the number of save games that are on file.
+- responseRequired - int - a flag for the type of response that is required from the player.
+
+The constructor is executed when the game starts, and this object will exist for as long as the game is being played. The constructor
+will build the list of locations and objects, and sets the initial values for each of the. The location section will go through each
+of the locations in the RawData class and instansiate it as a new location object and add it to a list. The same is done for the items.
+
+
+
 
 **Player**
 

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 25 December 2024
+Version: 2.2
+Date: 27 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -844,4 +844,5 @@ public class Commands {
  * 22 December 2024 - Change the give command so that a new screen isn't required
  * 23 December 2024 - Updated to version 2.
  * 25 December 2024 - Moved the code that takes player to poisoned waters if trapdoor is open
+ * 27 December 2024 - Fixed problem with rocks preventing movement
  */
