@@ -163,6 +163,8 @@ methods in the object as well.
 
 - getExits - The original game doesn't display the exits, though maybe there was a reason for this. Anyway, I have added the
 	     exits, which are displayed as a string and are the exits based on the room the player is viewing.
+	     
+- getSpecialExits - Displays any special exists
 
 - getMessage - the message for the previous move is retrieved. However, special message is retrieved if the player is swimming
 	       in poisoned waters, so that are added here, which includes a warning if the player has a strength less than 15.
@@ -228,6 +230,8 @@ of the locations in the RawData class and instansiate it as a new location objec
 - getItems
 
 - getExits
+
+- getSpecialExits
 
 - checkExit
 

@@ -3,7 +3,7 @@ Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 2.1
-Date: 25 December 2024
+Date: 29 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -112,7 +112,7 @@ public class Game implements Serializable {
 				count ++;
 			}
 		}
-		
+				
 		if (exitNumbers[0]) {
 			exits = addExit("North",exits);
 		}
@@ -134,6 +134,28 @@ public class Game implements Serializable {
 		}
 		
 		return exits;
+	}
+	
+	public String getSpecialExits(int roomNumber) {
+		
+		String exit = "";
+		
+		/*
+		 * 		//Sets direction for specific movement command
+		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
+			direction = 4;
+		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
+				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
+				   code.equals("490051")) {
+			direction = 1;
+		} else if (code.equals("510060")||code.equals("480056")) {
+			direction = 2;
+		} else if (code.equals("510044")||code.equals("510052")) {
+			direction = 3;
+		}
+		 */
+		
+		return exit;
 	}
 	
 	//Checks if it is possible to move through the exit
@@ -273,4 +295,5 @@ public class Game implements Serializable {
  * 22 December 2024 - Added response required for give and shelter
  * 23 December 2024 - Updated to version 2.
  * 25 December 2024 - Changed exits to boolean
+ * 29 December 2024 - Added function for getting special exits
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 29 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -78,6 +78,7 @@ public class GamePanel extends JPanel {
 		
 		//Add exits
 		middlePanel.add(CreateLabelPanel(game.getExits(),1));
+		middlePanel.add(CreateLabelPanel(game.getSpecialExits(),1));
 		middlePanel.add(CreateLabelPanel("",2));
 				
 		//Display message
@@ -222,4 +223,5 @@ public class GamePanel extends JPanel {
  * 15 December 2024 - Added final score display
  * 23 December 2024 - Added quit function
  * 					- Updated to version 2.
+ * 29 December 2024 - Added entry for special exits
  */

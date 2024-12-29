@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.2
-Date: 28 December 2024
+Version: 2.3
+Date: 29 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -78,6 +78,18 @@ public class GameEngine {
 		}		
 		
 		return exitDisplay;
+	}
+	
+	public String getSpecialExits() {
+
+		String exitDisplay = "";
+		
+		if (player.getPanelFlag()==0) {
+			exitDisplay = game.getSpecialExits(player.getRoom());
+		}		
+		
+		return exitDisplay;		
+		
 	}
 	
 	public String getMessage() {
@@ -313,4 +325,5 @@ public class GameEngine {
 				 - Updated to version 2.
 26 December 2024 - Removed the strength display, and added some comments
 29 December 2024 - Added calls to the test object
+				 - Added call to the special exits in the room
 */
