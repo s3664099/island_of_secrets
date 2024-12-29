@@ -1,9 +1,7 @@
 TODO
 Nothing seems to happen when you disolve Omegan's Cloak - does a flag need to be set
-Write the document outlining way the game is structured.
 
 V2.0
-Create a Test Document and test each of the functions
 Fix Styling of Command input and button
 Map Screen
 Buttons for shelter
@@ -11,8 +9,13 @@ Buttons for load game and remove the list. Bottom button will recycle through ne
 Commands above are buttons that if you click them, the command is repeated
 End game buttons - play again?
 
+Changes to be noted
 Need to have a look/search command to offer clues (examine room?)
 	- There is no way to know there is a trapdoor in the refuse strewn room - so look to locate it
+	- There is a weight functionality, and code where the player will randomly drop items, however no way for it
+	  to be called - will change that and check it out - also look at the original code.
+	- Thing about the torch - wave it to allow pass arms - no way to know how to do it - also can drop the torch
+	  and it still allows it - though will need to check that in the code.
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

@@ -74,11 +74,7 @@ public class Commands {
 		if (code.equals("490051") && game.getItem(29).getFlag()==0) {
 			player.setPanelFlag(4);
 		}
-		
-		//System.out.println(game.getItem(28).getLocation());
-		//System.out.println(game.getItem(28).getFlag());
-		//System.out.println(player.getRoom());
-		
+				
 		//Checks if player able to move
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
 		if (game.getItem(39).checkLocation(player.getRoom()) && 

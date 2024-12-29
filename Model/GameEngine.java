@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 26 December 2024
+Version: 2.2
+Date: 28 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,10 +27,12 @@ public class GameEngine {
 	private GameFrame frame;
 	private String codedCommand;
 	private int nounNum;
+	private Test test = new Test();
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
 		this.player = player;
+		this.test.setTest(this.game, this.player);
 	}
 		
 	public String getTime() {
@@ -152,6 +154,8 @@ public class GameEngine {
 				this.player = processCommands.getPlayer();
 			}
 			
+			test.displayValue(this.game, this.player);
+			
 			//What panel is to be displayed after the command is executed.
 			if (player.getPanelFlag()==2) {
 				setPanel(game, new LightningPanel(0,game,this));
@@ -188,6 +192,7 @@ public class GameEngine {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);
 			}
+			test.displayValue(this.game, this.player);
 			resetPanel(game);
 		}
 	}
@@ -307,4 +312,5 @@ public class GameEngine {
 23 December 2024 - Added shelter process
 				 - Updated to version 2.
 26 December 2024 - Removed the strength display, and added some comments
+29 December 2024 - Added calls to the test object
 */

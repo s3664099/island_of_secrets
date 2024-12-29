@@ -69,6 +69,10 @@ issues that need to be fixed, as well as thorough testing is required to make su
 supposed to work. The other aspect is that I should be able to use the same structure to quickly build a similar game.
 However, before I do this I made some further additions.
 
+29 December 2024 - I have added a class specifically for testing purposes. This will contain a method where I can set
+specific variables before the game starts and after the classes have been instansiated, and a second one that will print
+details to the console. The idea is that I should be able to keep them there without affecting the game.
+
 ## Program Structure ##
 
 ### Data ###
@@ -233,7 +237,7 @@ of the locations in the RawData class and instansiate it as a new location objec
 
 - clearMessage
 
-- setMessage
+- setMessageGame
 
 - addMessage
 
@@ -270,6 +274,8 @@ of the locations in the RawData class and instansiate it as a new location objec
 **CommandProcess**
 
 **Commands**
+
+**Test**
 
 ### View ###
 
