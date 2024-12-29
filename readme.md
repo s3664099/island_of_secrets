@@ -219,8 +219,51 @@ The constructor is executed when the game starts, and this object will exist for
 will build the list of locations and objects, and sets the initial values for each of the. The location section will go through each
 of the locations in the RawData class and instansiate it as a new location object and add it to a list. The same is done for the items.
 
+- getRoomName
 
+- getItems
 
+- getExits
+
+- checkExit
+
+- addExit
+
+- getMessage
+
+- clearMessage
+
+- setMessage
+
+- addMessage
+
+- getCommand
+
+- getItem
+
+- getItemFlagSum
+
+- setPanelMessages
+
+- getMsgOne
+
+- getMsgTwo
+
+- getLoop
+
+- endGame
+
+- checkEndGame
+
+- getCount
+
+- setCount
+
+- resetCount
+
+- setResponse
+
+- getResponse
 
 **Player**
 
