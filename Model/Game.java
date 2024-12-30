@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 29 December 2024
+Version: 2.2
+Date: 30 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -113,19 +113,20 @@ public class Game implements Serializable {
 			}
 		}
 				
-		if (exitNumbers[0]) {
+		if (exitNumbers[0] && (roomNumber != 70 && roomNumber != 37 && roomNumber != 11 &&
+							   roomNumber != 41 && roomNumber != 43 && roomNumber != 66)) {
 			exits = addExit("North",exits);
 		}
 		
-		if (exitNumbers[1]) {
+		if (exitNumbers[1] && (roomNumber != 60 && roomNumber !=56)) {
 			exits = addExit("South",exits);
 		}
 		
-		if (exitNumbers[2]) {
+		if (exitNumbers[2] && (roomNumber != 44 && roomNumber != 52)) {
 			exits = addExit("East",exits);
 		}
 		
-		if (exitNumbers[3]) {
+		if (exitNumbers[3] && (roomNumber !=12 && roomNumber !=53 && roomNumber !=45)) {
 			exits = addExit("West",exits);
 		}
 		
@@ -140,21 +141,36 @@ public class Game implements Serializable {
 		
 		String exit = "";
 		
-		/*
-		 * 		//Sets direction for specific movement command
-		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
-			direction = 4;
-		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
-				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
-				   code.equals("490051")) {
-			direction = 1;
-		} else if (code.equals("510060")||code.equals("480056")) {
-			direction = 2;
-		} else if (code.equals("510044")||code.equals("510052")) {
-			direction = 3;
-		}
-		 */
-		
+		if (roomNumber == 51) {
+			exit = "There is a door to the east";
+			if (itemList[29].getFlag()!=0) {
+				exit += " and a closed trapdoor in the floor";
+			}
+		} else if (roomNumber == 12) {
+			exit = "You can also go west into the cave";
+		} else if (roomNumber == 53 || roomNumber == 45) {
+			exit = "You can also go west into the hut";
+		} else if (roomNumber == 70) {
+			exit = "You can also go north into the hut";
+		} else if (roomNumber == 37) {
+			exit = "You can also go north into the portal";
+		} else if (roomNumber == 11) {
+			exit = "You can also go north out of the lair";
+		} else if (roomNumber == 41) {
+			exit = "You can also go north out of the hut";
+		} else if (roomNumber == 43) {
+			exit = "You can also go north out of the cabin";
+		} else if (roomNumber == 66) {
+			exit = "You can also go north down of the pyramid";
+		} else if (roomNumber == 60) {
+			exit = "You can also go south out of the hut";
+		} else if (roomNumber == 56) {
+			exit = "You can also go south up the pyramid";
+		} else if (roomNumber == 44) {
+			exit = "You can go east out of the shack";
+		} else if (roomNumber == 52) {
+			exit = "You can go east out of the hall";
+		}		
 		return exit;
 	}
 	
@@ -296,4 +312,5 @@ public class Game implements Serializable {
  * 23 December 2024 - Updated to version 2.
  * 25 December 2024 - Changed exits to boolean
  * 29 December 2024 - Added function for getting special exits
+ * 30 December 2024 - Added more detail for some of the directions, and removed them from the main direction list.
  */

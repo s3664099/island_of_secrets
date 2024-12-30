@@ -73,6 +73,9 @@ However, before I do this I made some further additions.
 specific variables before the game starts and after the classes have been instansiated, and a second one that will print
 details to the console. The idea is that I should be able to keep them there without affecting the game.
 
+30 December 2024 - Added further description to the store room to flag a door to the east & the trapdoor. Added the further
+descriptions for the 'special' directions, or the ones that need further detail. Better than not displaying them at all.
+
 ## Program Structure ##
 
 ### Data ###

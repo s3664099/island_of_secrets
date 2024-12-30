@@ -35,20 +35,20 @@ Wave - Wave the torch and then use it to pass the hands (though you should be ho
 Passed
 
 Go Command
-- In 12 becomes west
-- In 53 becomes west
-- Out 52 becomes east
-- In 45 becomes west
-- Out 44 becomes east
-- In 70 becomes north
-- Out 60 becomes south
-- In 37 becomes north
-- Out 11 becomes north
-- Out 41 becomes north
-- Out 43 becomes north
-- Down 66 becomes north
-- Up 56 becomes south
-- Down 51 becomes north
+- In 12 becomes west - Done
+- In 53 becomes west - Done
+- Out 52 becomes east - Done
+- In 45 becomes west - Done
+- Out 44 becomes east - Done
+- In 70 becomes north - Done
+- Out 60 becomes south - Done 
+- In 37 becomes north - Done
+- Out 11 becomes north - Done
+- Out 41 becomes north - Done
+- Out 43 becomes north - Done
+- Down 66 becomes north - Done
+- Up 56 becomes south - Done
+- Down 51 becomes north - Done
 
 - Down 51 when Trap Door flag = 0 goes to poisoned water - You have to be in the room and type 'open trapdoor' for this to activate
   Considering adding a command to examine (and adding it without having to make any significant changes to the code - will probably have

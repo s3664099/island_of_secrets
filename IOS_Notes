@@ -11,7 +11,6 @@ End game buttons - play again?
 
 Changes to be noted
 Need to have a look/search command to offer clues (examine room?)
-	- There is no way to know there is a trapdoor in the refuse strewn room - so look to locate it
 	- There is a weight functionality, and code where the player will randomly drop items, however no way for it
 	  to be called - will change that and check it out - also look at the original code.
 	- Thing about the torch - wave it to allow pass arms - no way to know how to do it - also can drop the torch
