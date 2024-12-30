@@ -258,7 +258,6 @@ public class Game implements Serializable {
 		return this.panelLoop;
 	}
 	
-	
 	//Flag to determine whether the game has ended.
 	public void endGame() {
 		this.endGame = true;

@@ -275,9 +275,9 @@ of the locations in the RawData class and instansiate it as a new location objec
 - resetCount - the number of saved games are reset to 0.
 
 - setResponse - the response type is set. These are the response types the player should give. The response types are as follows:
-	- 0) Standard Response.
-	- 1) Give Response.
-	- 2) Shelter Response.
+	- 0 Standard Response.
+	- 1 Give Response.
+	- 2 Shelter Response.
 
 - getResponse - the response type is returned.
 

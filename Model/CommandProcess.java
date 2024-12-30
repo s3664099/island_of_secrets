@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 30 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -421,7 +421,7 @@ public class CommandProcess {
 		
 		//Involving staff, pebble & coal - seems like a win condition
 		if (game.getItem(8).getFlag()+game.getItem(11).getFlag()+game.getItem(13).getFlag()==-3) {
-			game.getItem(Constants.noNouns).setFlag(1);
+			//game.getItem(Constants.noNouns).setFlag(1);
 			
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";
@@ -432,7 +432,7 @@ public class CommandProcess {
 		}
 		
 		//Fail Quest conditions
-		if (player.getTime()<0 || player.getStrength()<0) {
+		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.noNouns).getFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.");
 			game.endGame();
 		}
@@ -554,4 +554,5 @@ public class CommandProcess {
  * 20 December 2024 - Added the display games command
  * 23 December 2024 - Added process shelter method
  * 					- Updated to version 2.
+ * 30 December 2024 - Added lose game test in case of specific event.
  */

@@ -11,10 +11,7 @@ Move Command
 
 	
 	
-	- The Ferry Man - Go Boat (might not work).
-		- Have to be in same room as boatman and type 'go boat'
-		- If less than 60 - go to serve Omegan forever
-		- If greater, goes to Island of Secrets
+
 	
 Give - Give the shiny apple to the snake and it moves and allows entry to the hut	
 Rub - This is used to stop the stones from preventing you from moving
@@ -59,6 +56,9 @@ Go Command
 	- Works - When tells his tale the flag is set to -1, which means he will block your way east.
 		- If you are in the room and the flag is 0, then he tells his tale.
 - Check can move & can't - I know this works.
-
+- The Ferry Man - Go Boat - works
+	- Have to be in same room as boatman and type 'go boat'
+	- If less than 60 - go to serve Omegan forever
+	- If greater, goes to Island of Secrets
 
 

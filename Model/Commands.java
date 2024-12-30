@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.3
-Date: 29 December 2024
+Version: 2.4
+Date: 30 December 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -142,17 +142,20 @@ public class Commands {
 			if (player.getRoom()==game.getItem(25).getLocation() && this.noun == 25) {
 				
 				if (player.getWisdom()<60) {
+					
 					game.setPanelMessages("You board the craft ...",
 										  "falling under the spell of the boatman|"
 										  + "and are taken to the Island of Secrets ...|"
 										  + "to serve Omegan forever.",4);
-					game.getItem(direction).setFlag(Constants.noNouns-1);
+					game.getItem(Constants.noNouns).setFlag(1);
 				} else {
+					
 					game.setPanelMessages("You board the craft ...",
 							  "and are taken to the Island of Secrets.",2);
 					player.setRoom(57);
 				}
 				game.setMessage("The boat skims the dark and silent waters.");
+				player.setPanelFlag(3);
 			}
 		}
 	}
@@ -177,7 +180,6 @@ public class Commands {
 					
 					//Add special lightning Flashes screen
 					game.setMessage("Lightning Flashes");
-					//1370 FOR K=1 TO 30:GOSUB2770 :PRINT"///LIGHTNING FLASHES!":NEXT K
 					
 					game.getItem(39).setLocation(player.getRoom());
 					player.setWisdom(player.getWisdom()-2);
@@ -847,4 +849,5 @@ public class Commands {
  * 25 December 2024 - Moved the code that takes player to poisoned waters if trapdoor is open
  * 27 December 2024 - Fixed problem with rocks preventing movement
  * 29 December 2024 - Added further notes for movement allowability
+ * 30 December 2024 - Fixed the go boat section so it now works (and ends the game if applicable).
  */
