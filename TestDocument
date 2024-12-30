@@ -1,10 +1,41 @@
 Test Document
 
 To Test
-Move Command
+Take Command
+ - Item not in location
+ - Item is in location, but flag between 0 & 9
+ - Take evil books in library
+ 	- Room 50
+ 	- Removes 4 wis & 8 str
+ - Omegan's cloak (The code looks wrong - check it)
+	- Displays the lightning flashes panel
+	- loose 2 wis & 8 str
+- Pick mushrooms or Apples
+- Catch Canyon Beast
+- carriable items (location 0, weight -1)
+- canyon beast - unless have rope, it escapes (weight resets to 0)
+- Food & Drink - weight set to -1, item goes to -18
+- Take an item - increases widsom by 4 and weight by one. Item flag set to 0, if greater than 1
+- Look at the bird section
 
-	
+Give
+- Complains if don't have the item (no item name should be considered and fixed)
+- Complain if wrong command, or subject not present (two different types)
+- Standard response - it is refused (if not specil cage)
+- Villager offers Staff if condition met (looks like have to offer drink).
+- give lilyflower or marble chip to scavenger - is there a proper response?
+	- wisdom increases by ten
+- Give jug to swampman (Doesn't seem to have proper response either)
+- Give pebble to Median - response depends on the room, and also Median's location
+	- this is one of the end game requirements.
+- Response is 'it is accepted' if the location of object now 81.
+- response us 'it is taken' if object is 41
 
+Drop 
+- Dropping the jug breaks and destroys it
+	- lose 1 wisdom
+- Otherwise object now in location and lose 1 weight - responds with 'done'
+- if can't says so.
 
 
 
