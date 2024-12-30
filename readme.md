@@ -228,53 +228,58 @@ The constructor is executed when the game starts, and this object will exist for
 will build the list of locations and objects, and sets the initial values for each of the. The location section will go through each
 of the locations in the RawData class and instansiate it as a new location object and add it to a list. The same is done for the items.
 
-- getRoomName
+- getRoomName - This returns the name of the room from the specific location that corresponds to the number that is passed
+	through to it.
 
-- getItems
+- getItems - This returns a string of the names of all of the items in the location corresponding to the room number passed.
 
-- getExits
+- getExits - This returns the exits corresponding to the room number passed. However it checks if there are special exits,
+	and if they are, they are excluded.
 
-- getSpecialExits
+- getSpecialExits - These are the special exits. Each of them are listed individually. If a room corresponds, the string is returned.
 
-- checkExit
+- checkExit - returns a boolean with flags where it is possible to move in that direction.
 
-- addExit
+- addExit - This private method simply checks whether there is an exit, and adds a dividing comma if there is.
 
-- getMessage
+- getMessage - Retrieves the stored message.
 
-- clearMessage
+- clearMessage - Removes any stored message.
 
-- setMessageGame
+- setMessageGame - Sets the message that is displayed to advise the player the result of the action.
 
-- addMessage
+- addMessage - Checks if the message variable is blank, and if it isn't, adds the string to the end of it. Otherwise sets a new message.
 
-- getCommand
+- getCommand - Retrieves the command that corresponds to the number passed through.
 
-- getItem
+- getItem - Returns the item from the item list that corresponds to the number passed through.
 
-- getItemFlagSum
+- getItemFlagSum - Returns the sum of the item flag and location from the item list corresponding to the number passed through.
 
-- setPanelMessages
+- setPanelMessages - This sets the special messages that are displayed to the special message panel, which includes the number of loops.
 
-- getMsgOne
+- getMsgOne - This gets the first message from the special message panel.
 
-- getMsgTwo
+- getMsgTwo - this retrieves the second message from the special message panel.
 
-- getLoop
+- getLoop - this returns the loop, or the number of times that the special messages will be displayed. (It will reset and display further info).
 
-- endGame
+- endGame - this sets the endGame flag. Set to true, the game has ended (it will only be set to true, never to false).
 
-- checkEndGame
+- checkEndGame - The endGame flag is returned.
 
-- getCount
+- getCount - the number of save games are returned.
 
-- setCount
+- setCount - the number of save games are increased by one.
 
-- resetCount
+- resetCount - the number of saved games are reset to 0.
 
-- setResponse
+- setResponse - the response type is set. These are the response types the player should give. The response types are as follows:
+	- 0) Standard Response.
+	- 1) Give Response.
+	- 2) Shelter Response.
 
-- getResponse
+- getResponse - the response type is returned.
 
 **Player**
 

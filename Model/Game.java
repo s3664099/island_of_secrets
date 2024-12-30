@@ -112,7 +112,8 @@ public class Game implements Serializable {
 				count ++;
 			}
 		}
-				
+		
+		//Checks if the exit is a special exit. If not, displays it normally.
 		if (exitNumbers[0] && (roomNumber != 70 && roomNumber != 37 && roomNumber != 11 &&
 							   roomNumber != 41 && roomNumber != 43 && roomNumber != 66)) {
 			exits = addExit("North",exits);
@@ -137,10 +138,12 @@ public class Game implements Serializable {
 		return exits;
 	}
 	
+	//Displays the special location.
 	public String getSpecialExits(int roomNumber) {
 		
 		String exit = "";
 		
+		//Checks the room number, and displays the special location.
 		if (roomNumber == 51) {
 			exit = "There is a door to the east";
 			if (itemList[29].getFlag()!=0) {
