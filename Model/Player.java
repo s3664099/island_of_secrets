@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 1 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -43,10 +43,6 @@ public class Player implements Serializable {
 		}
 		
 		return this.roomToDisplay;
-	}
-	
-	public void changeRoom(int room) {
-		this.room = room;
 	}
 	
 	public String getStatus() {
@@ -120,7 +116,7 @@ public class Player implements Serializable {
 	}
 	
 	public void setWeight(int newWeight) {
-		this.weight = weight;
+		this.weight = newWeight;
 	}
 	
 	public void adjustWeight(int change) {
@@ -181,8 +177,6 @@ public class Player implements Serializable {
 		
 		return checked;
 	}
-
-	
 }
 
 /* 2 November 2024 - Create File
@@ -197,4 +191,5 @@ public class Player implements Serializable {
  * 9 December 2024 - Made class serializable
  * 16 December 2024 - Added methods to handle swimming in poisoned waters section
  * 23 December 2024 - Updated to version 2.
+ * 1 January 2025 - Removed the changeRoom method as duplicates setRoom.
  */

@@ -307,13 +307,62 @@ it will exists for the entire game. As such, a constructor does not need to be s
 
 - updateDisplayRoom - sets the room that is to be displayed. Specifically, if the player's room is 20, then a random room is displayed.
 
-- changeRoom - this setter changes the room that the player is in by the new room that is passed to it.
-
-- getStatus - a string that outlines the player's strength and wisdom is returned.
+- getStatus - String - a string that outlines the player's strength and wisdom is returned.
 
 - update - the method is called once a turn, and reduces the time remaining, and the player's strength based on the number of items
 	   the player is carrying.
 
+- getStrengthWisdom - float - returns the sum of the player's strength and wisdom.
+
+- getRoom - int - returns the room that the player is currently in
+
+- setRoom - this setter changes the room that the player is in by the new room that is passed to it.
+
+- getTimeDetails - String - returns the time remaining as a string for display
+
+- getTime - int - returns the time remainging
+
+- reduceTime - deducts on from timeRemaining
+
+- setTime - changes timeRemaining to a new time passed through it.
+
+- getWisdom - int - returns the player's current wisdom
+
+- setWisdom - changes the player's wisdom to the new wisdom that is passed through to it.
+
+- adjustWisdom - changes the wisdom by the amount passed through it the method.
+
+- getStrength - float - returns the strength of the player.
+
+- setStrength -  changes the player's strength to the new strength that is passed through to it.
+
+- adjustStrength - changes the strength by the amount passed through it the method.
+
+- getWeight - int - returns the weight of the amount of stuff the player is carrying.
+
+- setWeight -  changes the player's weight to the new weight that is passed through to it.
+
+- adjustWeight - changes the weight by the amount passed through it the method.
+
+- adjustFood
+
+- getFood
+
+- adjustDrink
+
+- getDrink
+
+- setPanelFlag
+
+- getPanelFlag
+
+- setSwimming
+
+- adjustPosition
+
+- resetPosition
+
+- checkPosition
 
 **CommandProcess**
 
