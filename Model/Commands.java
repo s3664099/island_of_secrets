@@ -174,16 +174,17 @@ public class Commands {
 				player.setStrength(player.getStrength()-8);
 				game.setMessage("They are cursed");
 			} else {
-
+				
 				//Omegan's Cloak
-				if (this.code.equals("3450050")) {
+				if (this.code.equals("3810010")) {
 					
 					//Add special lightning Flashes screen
 					game.setMessage("Lightning Flashes");
 					
 					game.getItem(39).setLocation(player.getRoom());
 					player.setWisdom(player.getWisdom()-2);
-					player.setStrength(player.getStrength()-8);	
+					player.setStrength(player.getStrength()-8);
+					player.setPanelFlag(2);
 				}
 				
 				//1st - pick mushrooms or apple
@@ -191,7 +192,12 @@ public class Commands {
 				//3rd - noun not an item
 				if ((verb == 15 && noun != 20 && noun != 1) || (verb == 29 && noun !=16) ||
 					noun > Constants.carriableItems) {
-					game.setMessage("You can't "+command);
+					
+					//Makes sure that the cloak section is not overwritten
+					if (!this.code.equals("3810010")) {
+						game.setMessage("You can't "+command);
+					}
+					
 				} else {
 					
 					int weight = 0;
@@ -232,12 +238,17 @@ public class Commands {
 						}
 					}
 					
-					//Handles the bird (though the coded noun is odd)
+					System.out.println(code);
+					
+					//Handles the bird when attempting to take the egg without the staff
 					if (code.equals("246046") && game.getItem(11).getLocation() != 0) {
+
 						game.setMessage("You anger the bird");
 						game.getItem(noun).setLocation(player.getRoom());
 						
-						if (rand.nextInt(3)>2) {
+						//One in three bird takes you to random spot & replaces wild canyon beast
+						//Needed beast to actually get here
+						if (rand.nextInt(3)>1) {
 							game.addMessage(" which flies you to a remote place.");
 							player.setRoom(63+rand.nextInt(6));
 							game.getItem(16).setLocation(1);

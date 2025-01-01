@@ -18,7 +18,7 @@ public class Item implements Serializable {
 	String item;
 	
 	public Item(char flag,char location, String item) {
-		
+				
 		//Converts the strings to the appropriate int
 		this.itemFlag = ((int) flag)-48;
 		this.itemLocation = ((int) location)-32;

@@ -19,6 +19,8 @@ Need to have a look/search command to offer clues (examine room?)
 	  and it still allows it - though will need to check that in the code.
 	- Maybe indicate that there is an exit to the east in the storeroom - then again in the original game the
 	  exits aren't displayed.
+	- The apple is in the same room as the snake, but there is no indication that it is there, and no hints.
+	  Giving the apple to the snake removes it. I need to consider the apple - probably add something to the title
 
 A$	- Normally used to display the place location
 A	- Verb Chosen
