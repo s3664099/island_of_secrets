@@ -283,6 +283,38 @@ of the locations in the RawData class and instansiate it as a new location objec
 
 **Player**
 
+This object stores the details that relates to the player, which includes the room, the stats and others
+that are detailed below.
+
+- room - int - the room number the player is currently in
+- roomToDisplay - int - the room that is displayed to the player (not necessarily the same).
+- strength - float
+- wisdom - int
+- timeRemaining - int
+- weight - int - the amount of stuff the player is carrying
+- food - int - the amount of food the player is carrying
+- drink - int - the amount of drink the player is carrying
+- rand - Random - an object that generates a random number
+- panelFlag - int - a number that tells the computer what panel to use after the command has been processed.
+- swimming - int - The is one of the three variables for handling the swimming in poisoned waters
+- swimPosition - int - the position the player is in for swimming
+- swimTarget - int - where the player needs to reach for swimming.
+
+There is not set constructor for this class since the starting variables are hardcoded, there will only be one of these classes created and
+it will exists for the entire game. As such, a constructor does not need to be specified.
+
+- getDisplayRoom - this returns the number of the room that is to be displayed when the details of the location is displayed.
+
+- updateDisplayRoom - sets the room that is to be displayed. Specifically, if the player's room is 20, then a random room is displayed.
+
+- changeRoom - this setter changes the room that the player is in by the new room that is passed to it.
+
+- getStatus - a string that outlines the player's strength and wisdom is returned.
+
+- update - the method is called once a turn, and reduces the time remaining, and the player's strength based on the number of items
+	   the player is carrying.
+
+
 **CommandProcess**
 
 **Commands**
