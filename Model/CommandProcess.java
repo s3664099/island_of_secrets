@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 30 December 2024
+Version: 2.2
+Date: 2 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -134,9 +134,15 @@ public class CommandProcess {
 	}
 	
 	public String codeCommand(int room, int nounNumber, Item item) {
-			
+		
+		int flag = item.getFlag();
+		
+		if (flag<0) {
+			flag = 0;
+		}
+		
 		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getLocation()),
-										 item.getFlag(),room);
+										 flag,room);
 		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
 		this.codedCommand = codedNoun;
 				
@@ -313,7 +319,7 @@ public class CommandProcess {
 		}
 		
 		//Swampman's Position
-		if (player.getRoom()<78) {
+		if (player.getRoom()<78 && game.getResponse()==0) {
 			game.getItem(32).setLocation(76+rand.nextInt(2));
 		}
 		
@@ -466,8 +472,6 @@ public class CommandProcess {
 			
 			
 			} else {
-				
-				//Give Lilyflower/Marble Chip to scavenger	
 				if ((codedNoun.substring(0,3).equals("300") || 
 					 codedNoun.substring(0,3).equals("120")) &&
 					 objNumber == 42) {
@@ -555,4 +559,6 @@ public class CommandProcess {
  * 23 December 2024 - Added process shelter method
  * 					- Updated to version 2.
  * 30 December 2024 - Added lose game test in case of specific event.
+ * 2 January 2025 - Set flag to 0 if it is less than 0 to prevent NumberFormatException.
+ * 				  - Skips the swampman move if the player is giving it an item
  */

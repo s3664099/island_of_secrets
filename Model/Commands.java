@@ -237,9 +237,7 @@ public class Commands {
 							game.getItem(noun).setFlag(0);
 						}
 					}
-					
-					System.out.println(code);
-					
+										
 					//Handles the bird when attempting to take the egg without the staff
 					if (code.equals("246046") && game.getItem(11).getLocation() != 0) {
 
@@ -267,9 +265,9 @@ public class Commands {
 			
 			if (itemName.length()==0) {
 				itemName = "that";
-			}
+			} 
 			
-			game.setMessage("You don't have the "+itemName);
+			game.setMessage("You don't have "+itemName);
 			
 		} else {
 			game.setMessage("Give to whom?");
