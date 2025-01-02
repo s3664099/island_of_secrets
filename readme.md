@@ -344,25 +344,26 @@ it will exists for the entire game. As such, a constructor does not need to be s
 
 - adjustWeight - changes the weight by the amount passed through it the method.
 
-- adjustFood
+- adjustFood -  changes the the amount of food the player has by the value passed through.
 
-- getFood
+- getFood - int - returns the amount of food the player currently has.
 
-- adjustDrink
+- adjustDrink - changes the amount of drink the player has by the value passed through.
 
-- getDrink
+- getDrink - int - returns the amount of drink the player currently has.
 
-- setPanelFlag
+- setPanelFlag - Sets panelFlag by the value passed through: 0 - normal, 2 - Lightning, 3 - message. 
 
-- getPanelFlag
+- getPanelFlag - int - returns the current value of the panelFlag.
 
-- setSwimming
+- setSwimming - sets the value of swimming to the current room the player is in.
 
-- adjustPosition
+- adjustPosition - changes the swimming position of the player by one.
 
-- resetPosition
+- resetPosition - returns the position of the player to the beginning of the swim.
 
-- checkPosition
+- checkPosition - Checks the position of the player and returns a boolean. Used to determine whether the
+		  player has successfully escaped the poisoned waters.
 
 **CommandProcess**
 
