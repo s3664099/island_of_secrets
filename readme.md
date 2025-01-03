@@ -367,6 +367,23 @@ it will exists for the entire game. As such, a constructor does not need to be s
 
 **CommandProcess**
 
+This class is designed to process the player's commands. So, it takes it, splits it, encodes it, and then sends it to 
+where it needs to go, if the command is valid. If it isn't then the class will advise the player that the command is invalid
+(and sort of give a reason why).
+
+- splitCommand - Array of Two Strings - Stores the verb and the noun. Is created with blank strings.
+- commands - Array of strings - Ideally this will have only two strings (though it might be more).
+- originalCommand - string - the is the command that the player entered.
+- verbNo - int - This is the number of the matching verb in the data (if there is one).
+- nounNo - int - This is the number of the matching noun (if there is one).
+- codedCommand - String - this is a code designed to make checking multiple variables easier. It consists of
+		(in this order); noun number, noun location, noun flag, player location.
+- nounNumber - int - this is for holding a second noun, such as giving something to somebody
+- game - Game - this is the game object (as identified above).
+- player - Player - this is the player object (as identified above).
+- loadedGame - boolean - a flag that is set to advise the engine as to whether a game has been loaded.
+- rand - Random - a class used to select a random number.
+
 **Commands**
 
 **Test**
