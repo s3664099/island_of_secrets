@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.2
-Date: 2 January 2025
+Version: 2.3
+Date: 3 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -493,14 +493,14 @@ public class CommandProcess {
 					
 					if (player.getRoom()==8) {
 						game.setPanelMessages("He takes it ...", 
-											  "and casts it into the chemical vats, purifying them with"
-											  + "a clear blue light reaching far into the lakes and rivers "
-											  + "beyond.", 2);
+											  "and casts it into the chemical vats, |purifying them with"
+											  + " a clear blue light reaching far into the lakes and rivers "
+											  + "beyond.", 3);
 					} else {
-						game.setPanelMessages("He takes it, runs down the corridor, ...", 
-											  "and casts it into the chemical vats, purifying them with"
-											  + "a clear blue light reaching far into the lakes and rivers "
-										      + "beyond.", 2);
+						game.setPanelMessages("He takes it,", 
+											  "runs down the corridor, ...|and casts it into the chemical vats,"+
+											  " |purifying them with a clear blue light reaching far into the "+
+											  "lakes and rivers beyond.", 4);
 					}
 				}
 				
@@ -509,7 +509,7 @@ public class CommandProcess {
 					game.setMessage("It is accepted");
 				}
 				
-				//Giving 
+				//Giving to logmen
 				if (objNumber == 41) {
 					game.setMessage("It is taken");
 					game.getItem(nounNumber).setLocation(51);
@@ -561,4 +561,5 @@ public class CommandProcess {
  * 30 December 2024 - Added lose game test in case of specific event.
  * 2 January 2025 - Set flag to 0 if it is less than 0 to prevent NumberFormatException.
  * 				  - Skips the swampman move if the player is giving it an item
+ * 3 January 2025 - Got the issue with the panel not displaying with a give
  */

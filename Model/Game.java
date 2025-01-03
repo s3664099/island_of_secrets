@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.2
-Date: 30 December 2024
+Version: 2.3
+Date: 3 January 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,7 +51,7 @@ public class Game implements Serializable {
 			
 			String item = "";
 			
-			if(itemNumber<Constants.noItems) {
+			if(itemNumber<=Constants.noItems) {
 				item = RawData.getObjects(itemNumber);
 			}
 			
@@ -315,4 +315,5 @@ public class Game implements Serializable {
  * 25 December 2024 - Changed exits to boolean
  * 29 December 2024 - Added function for getting special exits
  * 30 December 2024 - Added more detail for some of the directions, and removed them from the main direction list.
+ * 3 January 2024 - Fixed problem where Median wasn't being loaded.
  */

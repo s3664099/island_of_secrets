@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.3
-Date: 29 December 2024
+Version: 2.4
+Date: 3 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -168,17 +168,8 @@ public class GameEngine {
 			
 			test.displayValue(this.game, this.player);
 			
-			//What panel is to be displayed after the command is executed.
-			if (player.getPanelFlag()==2) {
-				setPanel(game, new LightningPanel(0,game,this));
-				player.setPanelFlag(0);
-			} else if (player.getPanelFlag()==3) {
-				setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
-						 this.game.getMsgTwo(),this.game.getLoop()));
-				player.setPanelFlag(0);
-			} else {
-				resetPanel(game);
-			}						
+			determinePanel(game);
+			
 		} else {
 			
 			this.game.setMessage("Ok");
@@ -230,7 +221,7 @@ public class GameEngine {
 		}
 		
 		this.game.setResponse(0);
-		resetPanel(game);
+		determinePanel(game);
 	}
 	
 	public void processShelter(String object,GamePanel game) {
@@ -273,6 +264,21 @@ public class GameEngine {
 		double timeScore = player.getTime()/7.0;
 		double applyTimeBonus = timeBonus ? -timeScore:0;
 		return (int) ((int) player.getStrength()+player.getWisdom()+applyTimeBonus);
+	}
+	
+	//What panel is to be displayed after the command is executed.
+	private void determinePanel(GamePanel game) {
+		
+		if (player.getPanelFlag()==2) {
+			setPanel(game, new LightningPanel(0,game,this));
+			player.setPanelFlag(0);
+		} else if (player.getPanelFlag()==3) {
+			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
+					 this.game.getMsgTwo(),this.game.getLoop()));
+			player.setPanelFlag(0);
+		} else {
+			resetPanel(game);
+		}	
 	}
 } 
 
@@ -326,4 +332,5 @@ public class GameEngine {
 26 December 2024 - Removed the strength display, and added some comments
 29 December 2024 - Added calls to the test object
 				 - Added call to the special exits in the room
+3 January 2025 - Moved the panel determination to separate function
 */

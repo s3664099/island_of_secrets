@@ -3,14 +3,12 @@ Test Document
 To Test
 
 
-Give
 
 
-- Give jug to swampman (Doesn't seem to have proper response either) - sets the jug flag to 1 - check it out
-- Give pebble to Median - response depends on the room, and also Median's location
-	- this is one of the end game requirements.
-- Response is 'it is accepted' if the location of object now 81.
-- response us 'it is taken' if object is 41 - Logmen
+
+
+
+
 
 Drop 
 - Dropping the jug breaks and destroys it
@@ -98,4 +96,12 @@ Give command
 - Villager offers Staff if condition met (looks like have to offer drink).
 - give lilyflower or marble chip to scavenger - is there a proper response?
 	- wisdom increases by ten - Looks like it is a way of increasing wisdom
-	
+- Give jug to swampman (Doesn't seem to have proper response either) - sets the swampman flag to 1 
+	- If the swampman flag is 0 - he won't let you leave.
+	- Need to give him a jug that is full (ie the flag is -1)
+- Give pebble to Median - response depends on the room, and also Median's location
+	- this is one of the end game requirements.
+- Response is 'it is accepted' if the location of object now 81.
+- response us 'it is taken' if object is 41 - Logmen
+
+Drop Command	

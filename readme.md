@@ -424,6 +424,6 @@ There is a second constructors which, well, just creates a shell of the class fo
 ### Controller ###
 
 
-
+-- Add the determinePanel method in GameEngine
 
 
