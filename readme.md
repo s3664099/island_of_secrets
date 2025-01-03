@@ -384,6 +384,37 @@ where it needs to go, if the command is valid. If it isn't then the class will a
 - loadedGame - boolean - a flag that is set to advise the engine as to whether a game has been loaded.
 - rand - Random - a class used to select a random number.
 
+The constructor takes the the command (a string) and the game object. This is where the command is processed to determine where to send it.
+Firstly it is made all lower case, then split, and the original command is store in the appropriate variable. The constructor then checks
+if there are more than two commands, and trims them, otherwise sets the response advising the player that two words are required.
+The fix command method is also called to further process the command (see below).
+
+There is a second constructors which, well, just creates a shell of the class for the give command.
+
+- getGame - Game - 
+
+- getPlayer - Player - 
+
+- checkLoadedGame - boolean - 
+
+- fixCommand - String - (private) - 
+
+- getVerbNumber - int -
+
+- getNounNumber - int - 
+
+- getNounNum - int -
+
+- codeCommand - String - 
+
+- executeCommand -  
+
+- postUpdates - 
+
+- executeGive - 
+
+- executeShelter - 
+
 **Commands**
 
 **Test**
