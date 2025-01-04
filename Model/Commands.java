@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.4
-Date: 30 December 2024
+Version: 2.5
+Date: 4 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -297,8 +297,6 @@ public class Commands {
 	}
 	
 	public void eat(Game game, Player player,String nounStr) {
-
-		System.out.println(noun);
 		
 		//Eating lillies (moved here since in original game code wouldn't reach)
 		if (noun == 3 && game.getItem(3).getLocation()==0) {
@@ -307,7 +305,7 @@ public class Commands {
 			game.setMessage("They make you very ill");
 		
 		//Item unedible
-		} else if ((noun<Constants.foodLine || noun>Constants.carriableItems) 
+		} else if ((noun<=Constants.foodLine || noun>=Constants.drinkLine) 
 			&& nounStr.length()>0) {
 			game.setMessage("You can't "+command);
 			player.setWisdom(player.getWisdom()-1);
@@ -332,7 +330,7 @@ public class Commands {
 		if (noun==31) {
 			
 			if (game.getItemFlagSum(4)!=-1) {
-				game.setMessage("You don't have the "+game.getItem(noun).getItem());
+				game.setMessage("You don't have "+game.getItem(noun).getItem());
 			} else {
 				game.setMessage("Ouch!");
 				player.adjustStrength(-4);
@@ -864,4 +862,5 @@ public class Commands {
  * 27 December 2024 - Fixed problem with rocks preventing movement
  * 29 December 2024 - Added further notes for movement allowability
  * 30 December 2024 - Fixed the go boat section so it now works (and ends the game if applicable).
+ * 4 January 2025 - Changed so that can only eat food, not drink.
  */

@@ -3,6 +3,7 @@ Nothing seems to happen when you disolve Omegan's Cloak - does a flag need to be
 
 V2.0
 Fix Styling of Command input and button
+Fix problem where a comma appears with the info command.
 Map Screen
 Buttons for shelter
 Buttons for load game and remove the list. Bottom button will recycle through next lot if any

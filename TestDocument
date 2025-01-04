@@ -1,27 +1,9 @@
 Test Document
 
 To Test
-Eat Command
-- if eat lillies - makes sick and lose wisdom and strength
-- Eat one word command
-- if no food says so
-- can also eat based on noun - unless doesn't fall into the food group
-	16 -
-	17 - loaf
-	18 - melon
-	19 - biscuits
-	20 - mushrooms
-	21 - bottle
 
-Drink command
-- green liquid
-	- Jug flag not -1 - don't have it
-	- otherwise lose Str & Wisdom and displays panel message
-- if not drink flags it and lose wisdom
-	21 - bottle
-	22 - flagon
-	23 - sap
-	24 - water
+
+
 
 Ride - Need Canyon Beast, and can only take beast if have the rope.
 	- When have the rope, the beast will allow you to ride it, and will set the beast flag to -1
@@ -133,3 +115,24 @@ Drop Command
 	- lose 1 wisdom
 - Otherwise object now in location and lose 1 weight - responds with 'done'
 - if can't says so.
+
+Eat Command
+- if eat lillies - makes sick and lose wisdom and strength
+- Eat one word command
+- if no food says so
+- can also eat based on noun - unless doesn't fall into the food group
+	17 - loaf
+	18 - melon
+	19 - biscuits
+	20 - mushrooms
+
+Drink command
+- green liquid
+	- Jug flag not -1 - don't have it
+	- otherwise lose Str & Wisdom and displays panel message
+- if not drink flags it and lose wisdom
+	21 - bottle
+	22 - flagon
+	23 - sap
+	24 - water
+	31 - liquor
