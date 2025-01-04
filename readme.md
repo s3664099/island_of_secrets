@@ -205,7 +205,11 @@ methods in the object as well.
 - checkEndGame - this checks whether the endGame flag has been set in the Game object.
 
 - getFinalScore - this calculates the player's final score.	       
-		    
+
+- determinePanel - this determine what panel will display after the command processing is complete.
+    		   2 - the lightning panel
+    		   3 - the message panle
+    		   Otherwise just a normal panel
 **Game**
 
 This object stores everything related to the game that isn't player specific (though there are some elements that are actually player
@@ -391,25 +395,40 @@ The fix command method is also called to further process the command (see below)
 
 There is a second constructors which, well, just creates a shell of the class for the give command.
 
-- getGame - Game - 
+- getGame - Game - returns the current version of the game object.
 
-- getPlayer - Player - 
+- getPlayer - Player - returns the current version of the player object
 
-- checkLoadedGame - boolean - 
+- checkLoadedGame - boolean - returns a boolean to advise whether a game has been loaded or not
 
-- fixCommand - String - (private) - 
+- fixCommand - String - (private) - The method is designed to convert commands into commands that can be read by the programe.
+				    The main ones are for directions, such as n,s,e,w, as well as some other specific ones.
 
-- getVerbNumber - int -
+- getVerbNumber - int - This method will compare the verb entered with the list of verbs and will return the number the 
+			corresponding verb that is on the list.
 
-- getNounNumber - int - 
+- getNounNumber - int - This method compares the noun entered with a list of nouns, and returns the number of the
+			corresponding noun on the list. It sets the number as the total number of nouns, however
+			if there is only a verb, then the nounNumber is set to -1. If the corresponding noun cannot be
+			found, then it is set to the max number.
 
-- getNounNum - int -
+- getNounNum - int - (private) - this private method is called from getNounNumber and is where the correct noun number
+			is located, and is only called if there is a noun.
 
-- codeCommand - String - 
+- codeCommand - String - This method is where the code is commanded, and allows for multiple checks, though I suspect
+			 this was mainly for the computers with limited memory at the time (though it is a nice short-cut
+			 for where there are multiple areas where all the same variables are being checked). The variables
+			 in order at the nounNumber, the location, the flag, and the room the player is in.
 
-- executeCommand -  
+- executeCommand - This is the method where the command is executed. First a command object is created and then the
+		   method checks the verbNumber with the corresponding command and executes the method in the command object.
+		   The first 11 commands are only one word, and the remainder require two words (and this is checked to
+		   make sure that only commands with two words go there. There is also a section that resets a count
+		   and this is for the display command which displays a list of saved games.
 
-- postUpdates - 
+- postUpdates - This method is executed after the commands have been processed and handles any updates to the game
+		that occur after the command has been executed, whether the player has intervened or not. The last
+		section of this method deals with the end game processes.
 
 - executeGive - 
 
@@ -423,7 +442,5 @@ There is a second constructors which, well, just creates a shell of the class fo
 
 ### Controller ###
 
-
--- Add the determinePanel method in GameEngine
 
 

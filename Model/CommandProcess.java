@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.3
-Date: 3 January 2025
+Version: 2.4
+Date: 4 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -104,7 +104,7 @@ public class CommandProcess {
 	
 	public int getNounNumber() {
 		
-		int nounNumber = 52;
+		int nounNumber = Constants.noNouns;
 				
 		//Only called if more than two words
 		if (commands.length>1) {
@@ -120,7 +120,7 @@ public class CommandProcess {
 	private int getNounNum(String noun) {
 		
 		int nounCount = 0;
-		int nounNumber = 52;
+		int nounNumber = Constants.noNouns;
 		
 		for (String command:RawData.getNouns()) {
 			nounCount ++;
@@ -135,14 +135,8 @@ public class CommandProcess {
 	
 	public String codeCommand(int room, int nounNumber, Item item) {
 		
-		int flag = item.getFlag();
-		
-		if (flag<0) {
-			flag = 0;
-		}
-		
 		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getLocation()),
-										 flag,room);
+										 Math.abs(item.getFlag()),room);
 		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
 		this.codedCommand = codedNoun;
 				
@@ -561,5 +555,6 @@ public class CommandProcess {
  * 30 December 2024 - Added lose game test in case of specific event.
  * 2 January 2025 - Set flag to 0 if it is less than 0 to prevent NumberFormatException.
  * 				  - Skips the swampman move if the player is giving it an item
- * 3 January 2025 - Got the issue with the panel not displaying with a give
+ * 3 January 2025 - Got the issue with the panel not displaying with a give.
+ * 4 January 2025 - added an abs method call for the flag as well. Changed the hardcoded noun numbers to constant.
  */

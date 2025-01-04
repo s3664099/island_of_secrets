@@ -21,6 +21,7 @@ Need to have a look/search command to offer clues (examine room?)
 	  exits aren't displayed.
 	- The apple is in the same room as the snake, but there is no indication that it is there, and no hints.
 	  Giving the apple to the snake removes it. I need to consider the apple - probably add something to the title
+	- Well, actually, turns out that there are lots of hints in the book, so yeah, I might just refer to player there
 
 A$	- Normally used to display the place location
 A	- Verb Chosen
