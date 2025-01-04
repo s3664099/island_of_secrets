@@ -281,6 +281,7 @@ public class Commands {
 		if (noun == 4 && game.getItem(noun).getLocation()==0 && verb==9) {
 			game.getItem(noun).setLocation(81);
 			player.setWisdom(player.getWisdom()-1);
+			player.setWeight(player.getWeight()-1);
 			game.setMessage("It breaks!");
 		
 		//Dropping other items
@@ -297,6 +298,8 @@ public class Commands {
 	
 	public void eat(Game game, Player player,String nounStr) {
 
+		System.out.println(noun);
+		
 		//Eating lillies (moved here since in original game code wouldn't reach)
 		if (noun == 3 && game.getItem(3).getLocation()==0) {
 			player.adjustWisdom(-5);
@@ -322,6 +325,8 @@ public class Commands {
 	}
 	
 	public void drink(Game game, Player player,String nounStr) {
+		
+		System.out.println(noun);
 		
 		//Drinking green liquid
 		if (noun==31) {
