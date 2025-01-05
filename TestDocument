@@ -5,10 +5,7 @@ To Test
 
 
 
-Ride - Need Canyon Beast, and can only take beast if have the rope.
-	- When have the rope, the beast will allow you to ride it, and will set the beast flag to -1
-	  Which allows you to climb the path.
-	- If have canyon beast and on log pier (33) - runs away to random place (1-4)
+
 
 Open - 
 
@@ -136,3 +133,8 @@ Drink command
 	23 - sap
 	24 - water
 	31 - liquor
+
+Ride - Need Canyon Beast, and can only take beast if have the rope.
+	- When have the rope, the beast will allow you to ride it, and will set the beast flag to -1
+	  Which allows you to climb the path.
+	- If have canyon beast and on log pier (33) - runs away to random place (1-4)

@@ -3,7 +3,7 @@ Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 2.5
-Date: 4 January 2025
+Date: 5 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -365,6 +365,10 @@ public class Commands {
 		if (this.code.substring(0,4).equals("1600")) {
 			game.getItem(noun).setFlag(-1);
 			game.setMessage("It allows you to ride.");
+		} else if (this.code.substring(0,4).equals("1601")) {
+			game.setMessage("You are already riding the beast.");
+		} else {
+			game.setMessage("How?");
 		}
 	}
 	
@@ -863,4 +867,5 @@ public class Commands {
  * 29 December 2024 - Added further notes for movement allowability
  * 30 December 2024 - Fixed the go boat section so it now works (and ends the game if applicable).
  * 4 January 2025 - Changed so that can only eat food, not drink.
+ * 5 January 2025 - tested ride command, and added further responses if the instruction is not strict,
  */

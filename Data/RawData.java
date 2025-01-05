@@ -73,7 +73,7 @@ public class RawData {
 		"7an expanse of cracked, baked earth1100",
 		"4a deserted abode hut1010",
 		"4a livid growth of mad orchids1011",
-		"4a corner strewn with broker chairs0111",
+		"4a corner strewn with broken chairs0111",
 		"7the bridge near to a log settlement0011",
 		"1a crumbling mass of petrified trees1011",
 		"3the edge of the pyramid1101",
