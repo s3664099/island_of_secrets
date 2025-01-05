@@ -7,9 +7,19 @@ To Test
 
 
 
-Open - 
+Open - Open chest in Granpa's Shack
+     - Open trapdoor in refuse filled rooms
+     - Add further details to chest
+     - Add an 'unable to do this' or similar response - need to only do it if you are carrying the object
 
-Chip -
+Chip - verb 16,17,18,19 - needs two words
+	If carrying hammer or ax then says ok
+	chop roots get sap - should be infinite as long as player taken it
+	Column - need to work how it is done - looks like you break chip or crack, as opposed to column
+		- really should be 'break column' or the like, and checks if either of these are
+		visible
+	Breaking the staff - response changes based on whether in the same room as the egg.
+			- need to check if Omegan stays dead once this happens.
 
 Attack - 
 

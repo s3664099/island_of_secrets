@@ -382,7 +382,6 @@ public class Commands {
 			game.getItem(15).setFlag(9);
 		}
 		
-		//Works
 		//Open trapdoor in refuse filled room
 		if (this.code.equals("2951151")) {
 			game.setMessage("The trapdoor creaks");
