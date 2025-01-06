@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.5
-Date: 5 January 2025
+Version: 2.6
+Date: 6 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -374,12 +374,13 @@ public class Commands {
 	
 	public void open(Game game,Player player) {
 		
+		game.setMessage("I'm unable to do that");
 		//Open chest in grandpa's shack
 		if (this.code.equals("2644044")) {
-			game.setMessage("The chest opens");
-			game.getItem(6).setFlag(9);
+			game.setMessage("The chest opens. There is something inside");
+			game.getItem(6).setFlag(0);
 			game.getItem(5).setFlag(9);
-			game.getItem(15).setFlag(9);
+			game.getItem(15).setFlag(0);
 		}
 		
 		//Open trapdoor in refuse filled room
@@ -867,4 +868,6 @@ public class Commands {
  * 30 December 2024 - Fixed the go boat section so it now works (and ends the game if applicable).
  * 4 January 2025 - Changed so that can only eat food, not drink.
  * 5 January 2025 - tested ride command, and added further responses if the instruction is not strict,
+ * 6 January 2025 - Changed the flags for the items in the chest since the book might not be used.
+ * 				  - Added error response if unable to open something (ie not trapdoor/chest).
  */

@@ -7,10 +7,7 @@ To Test
 
 
 
-Open - Open chest in Granpa's Shack
-     - Open trapdoor in refuse filled rooms
-     - Add further details to chest
-     - Add an 'unable to do this' or similar response - need to only do it if you are carrying the object
+
 
 Chip - verb 16,17,18,19 - needs two words
 	If carrying hammer or ax then says ok
@@ -22,6 +19,8 @@ Chip - verb 16,17,18,19 - needs two words
 			- need to check if Omegan stays dead once this happens.
 
 Attack - 
+
+kill - ??
 
 Swim - 
 
@@ -148,3 +147,8 @@ Ride - Need Canyon Beast, and can only take beast if have the rope.
 	- When have the rope, the beast will allow you to ride it, and will set the beast flag to -1
 	  Which allows you to climb the path.
 	- If have canyon beast and on log pier (33) - runs away to random place (1-4)
+
+Open - Open chest in Granpa's Shack
+     - Open trapdoor in refuse filled rooms
+     - Add further details to chest
+     - Add an 'unable to do this' or similar response - need to only do it if you are carrying the object
