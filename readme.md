@@ -430,9 +430,14 @@ There is a second constructors which, well, just creates a shell of the class fo
 		that occur after the command has been executed, whether the player has intervened or not. The last
 		section of this method deals with the end game processes.
 
-- executeGive - 
+- executeGive - This is a special method since the player is asked who they wish to give the item to, at which point this
+		method is called instead of the standard command process method. Initially the method checks that something
+		was entered, and also confirms whether the subject is present. The initial state is that the object is
+		refused, but it then, using the codes, goes through each of the potential people that will respond and
+		processes it that way. 
 
-- executeShelter - 
+- executeShelter - Similarly to the above, but this is processing the shelter command. Basically the player is asked
+		where they wish to shelter, and that are taken there. The storm flag is then reset.
 
 **Commands**
 
