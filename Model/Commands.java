@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.6
-Date: 6 January 2025
+Version: 2.7
+Date: 7 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -394,6 +394,7 @@ public class Commands {
 	public void chip(Game game,Player player) {
 		
 		player.adjustStrength(-2);
+		game.setMessage("Nothing happens");
 
 		//Carrying Hammer or Axe
 		if (game.getItem(9).getLocation()==0 || game.getItem(15).getLocation()==0) {
@@ -432,6 +433,13 @@ public class Commands {
 				game.getItem(2).setFlag(-1);
 				player.adjustStrength(40);
 			}
+		
+		//Response if player uses the staff without meeting the conditions above
+		} else if (this.code.substring(0,4).equals("1100") && verb == 19) {
+			game.getItem(noun).setLocation(81);
+			game.getItem(noun).setFlag(-1);
+			player.setPanelFlag(3);
+			game.setPanelMessages("It shatters releasing a rainbow of colours!", "", 1);
 		}
 		
 		//Tap a person (and the still for some odd reason)
@@ -441,8 +449,10 @@ public class Commands {
 			//Carrying the axe?
 			if (game.getItem(9).getLocation()<1) {
 				kill(player,game);
+			} else {
+				game.setMessage("You annoy the "+game.getItem(noun).getItem());
 			}
-		}
+		} 
 	}
 	
 	public void kill(Player player, Game game) {
@@ -870,4 +880,5 @@ public class Commands {
  * 5 January 2025 - tested ride command, and added further responses if the instruction is not strict,
  * 6 January 2025 - Changed the flags for the items in the chest since the book might not be used.
  * 				  - Added error response if unable to open something (ie not trapdoor/chest).
+ * 7 January 2025 - Added responses in the break section for when no other responses occur.
  */

@@ -22,6 +22,7 @@ Need to have a look/search command to offer clues (examine room?)
 	  Giving the apple to the snake removes it. I need to consider the apple - probably add something to the title
 	- Chest - change the name when opened. Indicate the note in the chest as well.
 	- Well, actually, turns out that there are lots of hints in the book, so yeah, I might just refer to player there
+	- choping a thing doesn't returns to the command line as opposed to ending the game - need to look into that
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

@@ -12,10 +12,10 @@ package Model;
 public class Test {
 
 	public void setTest(Game game, Player player) {
-		//player.setRoom(51);
-		//game.getItem(10).setLocation(0);
-		//game.getItem(4).setFlag(-1);
-		//game.getItem(43).setLocation(7);
+		//player.setRoom(10);
+		//game.getItem(11).setLocation(0);
+		//game.getItem(11).setFlag(0);
+		//game.getItem(2).setLocation(10);
 		//game.getItem(12).setLocation(0);
 		//player.setWisdom(80);
 	}
@@ -24,12 +24,12 @@ public class Test {
 
 		//System.out.println(player.getWisdom());
 		//System.out.println(game.getItem(6).getItem());
-		//System.out.println(game.getItem(6).getLocation());
+		//System.out.println(game.getItem(9).getLocation());
 		//System.out.println(game.getItem(6).getFlag());
 		//System.out.println(game.getRoomName(62));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());
-		//System.out.println(player.getRoom());
+		System.out.println(player.getRoom());
 		
 	}
 	
