@@ -441,6 +441,73 @@ There is a second constructors which, well, just creates a shell of the class fo
 
 **Commands**
 
+This class is where all of the commands (except for give and shelter which require and extra entry) are processed. This
+is created everytime a command is entered and processes the command. The variables are as follows:
+
+- verb - int - holds the verb number.
+- noun - int - holds the noun number.
+- code - String - holds the command's code
+- rand - an object that produces a random number.
+- command - String - holds the command the player entered.
+- game - Game - the game object.
+- player - Player - the player object.
+
+The constructor takes the verb and noun number, the code, and the command.
+
+- getPlayer - Player - returns the player object. This is used for the load and save game functions.
+
+- getGame - Game - returns the game object. This is used for the load and save game functions.
+
+- move
+
+- take
+
+- give
+
+- drop
+
+- eat
+
+- drink
+
+- ride
+
+- open
+
+- chip
+
+- kill
+
+- attack
+
+- swim
+
+- shelter
+
+- help
+
+- polish
+
+- examine
+
+- fill
+
+- say
+
+- rest
+
+- wave
+
+- info
+
+- save
+
+- load
+
+- display
+
+- quit
+
 **Test**
 
 ### View ###
