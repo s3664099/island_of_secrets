@@ -323,9 +323,7 @@ public class Commands {
 	}
 	
 	public void drink(Game game, Player player,String nounStr) {
-		
-		System.out.println(noun);
-		
+				
 		//Drinking green liquid
 		if (noun==31) {
 			

@@ -458,19 +458,34 @@ The constructor takes the verb and noun number, the code, and the command.
 
 - getGame - Game - returns the game object. This is used for the load and save game functions.
 
-- move
+- move - This moves the player from one spot to another. The first section handles special directions (namely in, out,
+	 up and down) and converts them to normal directions. The next section looks to see if there are any directions
+	 that are blocked and prevents movement. If it isn't a listed blocked direction, the movement is handled by looking
+	 if the direction is marked as available. As the rooms are set in a 10x10 square, north reduces the room by 10, south
+	 increases by 10, east adds 1 and west subtracts 1. Finally, the game determines if the move results in a special
+	 event.
 
-- take
+- take - this method moves an item from the room into the player's inventory. It checks if the item is in the room the 
+	 player is in, and if so takes it. Then the game handles any special events, and specific commands (such
+	 as picking an apple. It handles the food and drink by removing the item and then increasing the player's
+	 food and drink value.
 
-- give
+- give - This involves the player giving an item to a specific person. The main function is elsewhere as it will
+	 ask the player who they are giving the item to, however it will check if the player is currently
+	 carrying the item.
 
-- drop
+- drop - This command puts an item in the player's inventory into the room the player is currently in. Initially checks
+	 if the item is fragile (and the player has it). If it is, it breaks. Otherwise it checks if the player is
+	 carrying the item, and if so puts it in the room the player is in.
 
-- eat
+- eat - This will have the player eat food, as long as the player has more than 0 food. It checks if it is poisonous
+	and if it, it will reduce the food by 1 and increase strength by 10. If the food is poisonous then the 
+	appropriate damage is done (less 2 strength and 5 wisdom).
 
-- drink
+- drink - This does the same as the eat, except that it does it for liquid.
 
-- ride
+- ride - This basically will set a flag that will allow the player to enter a location. The player needs to 
+	have the correct item, and if so the flag will be set.
 
 - open
 
