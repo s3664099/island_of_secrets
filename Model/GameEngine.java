@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.4
-Date: 3 January 2025
+Version: 2.5
+Date: 11 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -194,6 +194,7 @@ public class GameEngine {
 			} else if (player.getStrength()<1) {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);
+				this.game.endGame();
 			}
 			test.displayValue(this.game, this.player);
 			resetPanel(game);
@@ -333,4 +334,5 @@ public class GameEngine {
 29 December 2024 - Added calls to the test object
 				 - Added call to the special exits in the room
 3 January 2025 - Moved the panel determination to separate function
+11 January 2025 - Added the end game flag to when the player runs out of strength while swimming.
 */

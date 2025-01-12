@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.7
-Date: 7 January 2025
+Version: 2.8
+Date: 11 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -470,6 +470,7 @@ public class Commands {
 			player.setStrength(0);
 			player.setWisdom(0);
 			player.setTime(0);
+			game.endGame();	
 		}
 	}
 	
@@ -538,6 +539,7 @@ public class Commands {
 			game.setMessage("You can't swim here!");
 			player.adjustWisdom(1);
 		} else {
+			game.setMessage("You dive into the water");
 			player.setPanelFlag(4);
 			player.setSwimming();
 		}
@@ -879,4 +881,5 @@ public class Commands {
  * 6 January 2025 - Changed the flags for the items in the chest since the book might not be used.
  * 				  - Added error response if unable to open something (ie not trapdoor/chest).
  * 7 January 2025 - Added responses in the break section for when no other responses occur.
+ * 11 January 2025 - Added a set end-game for when player attempts to kill something. Added message for when swimming.
  */
