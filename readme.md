@@ -487,19 +487,27 @@ The constructor takes the verb and noun number, the code, and the command.
 - ride - This basically will set a flag that will allow the player to enter a location. The player needs to 
 	have the correct item, and if so the flag will be set.
 
-- open
+- open - Executes the open command, which is used twice in the game. The settings are checked and if they match
+	 then the message is displayed and the changes are made. Otherwise the error message is displayed.
 
-- chip
+- chip - This is one of four commands - tap, break, chip, or chop. I originally had break but that is a reserved word so
+	 I used chip instead. Like the other commands this check if the settings and the command is correct and if
+	 so the command is executed. If the settings aren't correct then an error message is produced.
 
-- kill
+- kill - This executes the kill command, which checks if the subject is present, and then responds appropriately.
 
-- attack
+- attack - The attack command is executed. Differently the command checks which noun is being used, if the resultant
+	   object (creature) is present, and responds appropriately. There is a special command at the end which is 
+	   specifically for striking something that appears to produce an end game flag.
 
-- swim
+- swim - This command checks the player's location (and flag of specific item) and moves the player to the swimming
+	 section.
 
-- shelter
+- shelter - This checks if a flag is correct and then sets the response up to get a choice of the player to where
+	 they wich to shelter.
 
-- help
+- help - The help command is executed. Unlike a lot of other games, this is to help an individual as opposed to
+	 asking the computer for help. Once again it checks the flags and produces a response based on it.
 
 - polish
 
