@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.8
-Date: 11 January 2025
+Version: 2.9
+Date: 13 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -476,6 +476,8 @@ public class Commands {
 	
 	public void attack(Game game, Player player) {
 		
+		game.setMessage("That would be unwise");
+		
 		player.adjustStrength(-2);
 		player.adjustWisdom(-2);
 		
@@ -511,14 +513,17 @@ public class Commands {
 			//Strike Flint
 			} else if (code.substring(0,4).equals("1400")) {
 
+				game.setMessage("Sparks fly");
+				
 				//Coal in room
 				if (player.getRoom()==game.getItem(13).getLocation()) {
 					game.getItem(13).setFlag(-1);
 					game.getItem(noun).setFlag(-1);
-					game.getItem(noun).setLocation(81);
+					game.getItem(13).setLocation(81);
+					player.setPanelFlag(3);
 					
-					//Omegan's Cloak present
-					if (player.getRoom()==game.getItem(39).getLocation()) {
+					//Omegan's present in his sanctum
+					if (player.getRoom()==game.getItem(39).getLocation() && player.getRoom()==10) {
 						game.setPanelMessages("The coal burns with a red flame",
 								"Which dissolves Omegan's Cloak",2);
 						player.adjustWisdom(20);
@@ -882,4 +887,5 @@ public class Commands {
  * 				  - Added error response if unable to open something (ie not trapdoor/chest).
  * 7 January 2025 - Added responses in the break section for when no other responses occur.
  * 11 January 2025 - Added a set end-game for when player attempts to kill something. Added message for when swimming.
+ * 13 January 2025 - Added extra responses to attack and made coal disappear instead of flint. 
  */

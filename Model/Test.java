@@ -13,9 +13,10 @@ public class Test {
 
 	public void setTest(Game game, Player player) {
 		//player.setRoom(10);
-		//game.getItem(11).setLocation(0);
-		//game.getItem(11).setFlag(0);
-		//game.getItem(2).setLocation(10);
+		//game.getItem(14).setLocation(0);
+		//game.getItem(14).setFlag(0);
+		//game.getItem(13).setLocation(player.getRoom());
+		//game.getItem(39).setLocation(player.getRoom());
 		//game.getItem(12).setLocation(0);
 		//player.setWisdom(80);
 	}

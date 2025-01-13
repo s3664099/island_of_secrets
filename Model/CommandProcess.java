@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.4
-Date: 4 January 2025
+Version: 2.5
+Date: 13 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -400,7 +400,7 @@ public class CommandProcess {
 		
 		//Too weak to carry something
 		if (player.getStrength()<50) {
-			int object = rand.nextInt(9);
+			int object = rand.nextInt(9)+1;
 			if (game.getItem(object).checkLocation(0)) {
 				game.getItem(object).setLocation(player.getRoom());
 				game.addMessage(" You drop something.");
@@ -557,4 +557,5 @@ public class CommandProcess {
  * 				  - Skips the swampman move if the player is giving it an item
  * 3 January 2025 - Got the issue with the panel not displaying with a give.
  * 4 January 2025 - added an abs method call for the flag as well. Changed the hardcoded noun numbers to constant.
+ * 13 January 2025 - Made sure a 0 isn't selected when selecting a random item to drop
  */

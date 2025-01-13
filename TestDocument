@@ -13,13 +13,7 @@ To Test
 
 
 
-Attack - Does the player's stats go down?
-	- check Omegan
-	- Swampman
-	- sage
-	- logmen
-	- dactyl
-	- Strike Flint is coal in room & cloak present
+
 
 Swim - Can swim here
 	- swimming in poisoned waters
@@ -188,3 +182,11 @@ Chip - verb 16,17,18,19 - needs two words
 			- need to check if Omegan stays dead once this happens.
 Kill - Checks if the player takes a hit if they attack a random object
 	- Has response if item present and ends game.
+
+Attack - Does the player's stats go down?
+	- check Omegan
+	- Swampman
+	- sage
+	- logmen
+	- dactyl
+	- Strike Flint is coal in room & cloak present
