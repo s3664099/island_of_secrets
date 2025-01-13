@@ -501,27 +501,29 @@ The constructor takes the verb and noun number, the code, and the command.
 - help - The help command is executed. Unlike a lot of other games, this is to help an individual as opposed to
 	 asking the computer for help. Once again it checks the flags and produces a response based on it.
 
-- polish
+- polish - A command that is used in a couple of specific locations to advance the game.
 
-- examine
+- examine - Either sets an error message, or if the flags are correct, then it responds with a hint. Could be used better.
 
-- fill
+- fill - Used to fill the Earthwenware jug in a specific location.
 
-- say
+- say - This is different to the normal verb-noun command. Instead everything after 'say' is what is said.
+	If a specific phrase is said at a specific location then the game is advance. Otherwise the phrase is repeated.
 
-- rest
+- rest - Based on some factors, a random amount of time is spent resting, and for every period strength and wisdom are increased.
 
-- wave
+- wave - There are two events, one which advances the game, the other which is a response from the boatman.
 
-- info
+- info - This displays the player's inventory.
 
-- save
+- save - The status of the current game is written to file. The file name needs to be stated after save. It checks
+	 if the filename has already been used and advises the player how to overwrite.
 
-- load
+- load - The named file (if it exists) is loaded into the game.
 
-- display
+- display - Displays a list of saved files.
 
-- quit
+- quit - Brings the game to an end.
 
 **Test**
 
