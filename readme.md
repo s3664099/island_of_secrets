@@ -1,80 +1,72 @@
 # Island of Secrets
 
-This is an attempt to translate the game Island of Secrets to a modern computer. The game appeared as a basic
-listing in a book of the same name and the idea was that you would type the game in and play it. The
-problem with adventure games is that if you type it in then you can fairly easily work out the solution
-to the game, so the authors made it as difficult as possible for somebody to be able to read the code.
-While this meant that you would have a game that was playable, there was also issues with errors creeping
-in, and it also made it difficult for users to learn some of the tricks of the basic language, namely
-because there aren't any notes telling you what the functions did. Also, the readability is notoriously
-bad.
+This project is a modern translation of the game *Island of Secrets*, originally published as a BASIC listing in a book of the same name. Players would type the game into their computers to play it. However, the authors intentionally obfuscated the code to make it difficult for users to deduce the game’s solution, while still leaving the game playable. 
 
-[Anyway, you can find a copy of the book here.](https://archive.org/details/island-of-secrets_202303)
-(It looks like they have all been moved to the Internet Archive).
+This approach came with challenges: errors often crept in during transcription, and the lack of comments or documentation made it hard for users to learn the tricks of the BASIC language. The code’s readability was also notoriously poor, adding to the difficulty.
 
-[You can find the basic version of the game here.](https://github.com/s3664099/basic_scripts/tree/master/Island%20of%20Secrets)
-(The various different basic versions are here).
+- [Read the book on the Internet Archive](https://archive.org/details/island-of-secrets_202303)  
+- [View the original BASIC version on GitHub](https://github.com/s3664099/basic_scripts/tree/master/Island%20of%20Secrets)
 
 ## Notes on the Basic Code
 
-*Reading the Data*
+### Reading the Data
+Unlike many other games, this program doesn't load all data into memory at once, likely due to memory constraints of early computers. Instead, it reads one item at a time, which slows down the game as data must be read repeatedly.  
 
-This is different to what I have seen in other games, and no doubt this is due to memory restrictions in some
-of the computers. Instead of reading all of the data into the memory, it will only read one at a time (which will
-be slower as it will need to do it for every item as well). 
+- **Line 2780**: Repositions the pointer to the beginning of the data and iterates through all locations, discarding each one.  
+- **Line 4110**: Iterates through and discards all objects.
 
-Line 2780 repositions the pointer at the begining of the data and will read through all of the locations, discarding each one.
-Line 4110 reads through all of the objects and discards them
+Object locations are stored in a string `H$`, where ASCII symbols represent specific locations. The next line uses the string `Q$` as a flag for each object, influencing gameplay throughout.
 
-With regards to coding the location of the objects, this is store in the string H$, which are symbols, but the ascii characters
-represent a location. The next line, Q$ is a flag that is set on each of the objects, which are used throughout the game.
+The game operates on a 10x10 grid, with movement between nodes determined by:
+- Adding or subtracting **1** (east or west movement)
+- Adding or subtracting **10** (north or south movement)
 
-A file containing noted code outlining what each section of the basic code does. The notes file have also been completed outlining
-what each of the variables do, and also listing each of the items, locations, verbs and nouns.
-
-Another note is that the game is a 10x10 grid, and the map is determined by whether there is a wall between nodes or not. As such,
-moving between nodes is either adding or subtracting 1 (going east or west) or adding or substracting 10 (going north or south).
+### Documentation
+A supplementary file contains detailed notes on:
+- The BASIC code sections and their functions
+- Variables, items, locations, verbs, and nouns
 
 ## Executing the Game
+To compile and run the game, follow these steps:
 
-To compile the game you need to do the following:
-
-*javac* \*.*java*
-
-Once it has compiled then you can run the game as follows:
-
-*java Start*
+1. Compile the Java files:
+   ```bash
+   javac *.java
+   ```
+2. Run the game:
+   ```bash
+   java Start
+   ```
 
 ## Development Notes ##
-*v01*
 
-Okay, it works, but there are some issues with it. However I won't be fulling testing it as yet since
-I am looking to upgrade it future and make the code readable. Also, I want to move it away from the
-command line so that it can be played in a window environment, and that the game runs smoother.
+### Version 1 (v01)
+- **Status**: The game works but has some issues. 
+- **Goals**:
+  - Upgrade the game for better readability.
+  - Transition from a command-line interface to a windowed environment for smoother gameplay.
+  - Refine and organize the notes file.
 
-Also, I need to go over the code again and make further notes, and also tidy up the notes that I have
-added to the notes file.
+**2 November 2024**:  
+- Completed initialization classes.
+- Segregated locations and objects into dedicated methods within the game class.  
+- Adopted full words for commands instead of truncating to the first three letters, a practice originally used for simplicity on older systems. Commands are stored in immutable arrays.
 
-2 November 2024
-Finished the initialisation classes. Moved the locations and objects into separate methods which are contained
-in the game method (and are stored in set arrays). The commands are once again split into nouns and verbs, however
-I have decided to use the whole words as opposed to the first three letters. I note that this method was originally
-for making the code less complicated on older computers, but it can cause confusion (as well as being lazy). These
-are also stored in arrays, and since they do not change they have been marked as final.
+### Version 2 (v02)
+- **Status**: Transitioned to a Swing-based UI.  
+- **Challenges**:
+  - Styling issues need resolution.
+  - Extensive testing required to ensure functionality.
+  - Aim to reuse the structure for future similar games.
 
-*v02*
+**29 December 2024**:  
+- Added a dedicated testing class:
+  - Allows setting variables before the game starts.
+  - Includes methods to output details to the console for debugging.
 
-I have completed a version that doesn't run on the command line through the use of swing. There are a few styling
-issues that need to be fixed, as well as thorough testing is required to make sure that the game works as it is
-supposed to work. The other aspect is that I should be able to use the same structure to quickly build a similar game.
-However, before I do this I made some further additions.
-
-29 December 2024 - I have added a class specifically for testing purposes. This will contain a method where I can set
-specific variables before the game starts and after the classes have been instansiated, and a second one that will print
-details to the console. The idea is that I should be able to keep them there without affecting the game.
-
-30 December 2024 - Added further description to the store room to flag a door to the east & the trapdoor. Added the further
-descriptions for the 'special' directions, or the ones that need further detail. Better than not displaying them at all.
+**30 December 2024**:  
+- Enhanced store room descriptions to include a door to the east and a trapdoor.  
+- Added detailed descriptions for special directions, improving clarity compared to earlier iterations where these were missing.
 
 ## Program Structure ##
 
