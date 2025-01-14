@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.9
-Date: 13 January 2025
+Version: 2.10
+Date: 14 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -546,6 +546,7 @@ public class Commands {
 		} else {
 			game.setMessage("You dive into the water");
 			player.setPanelFlag(4);
+			player.setRoom(rand.nextInt(5)+1);
 			player.setSwimming();
 		}
 	}
@@ -887,5 +888,6 @@ public class Commands {
  * 				  - Added error response if unable to open something (ie not trapdoor/chest).
  * 7 January 2025 - Added responses in the break section for when no other responses occur.
  * 11 January 2025 - Added a set end-game for when player attempts to kill something. Added message for when swimming.
- * 13 January 2025 - Added extra responses to attack and made coal disappear instead of flint. 
+ * 13 January 2025 - Added extra responses to attack and made coal disappear instead of flint.
+ * 14 January 2025 - Changed room allocation when swimming so not swimming in poisoned waters for too long (as per game).
  */

@@ -30,7 +30,7 @@ public class Test {
 		//System.out.println(game.getRoomName(62));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());
-		System.out.println(player.getRoom());
+		//System.out.println(player.getRoom());
 		
 	}
 	

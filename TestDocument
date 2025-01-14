@@ -15,8 +15,7 @@ To Test
 
 
 
-Swim - Can swim here
-	- swimming in poisoned waters
+
 
 Shelter - can only do it when flag certain number
 	- Does it occur when the flag is correct
@@ -190,3 +189,5 @@ Attack - Does the player's stats go down?
 	- logmen
 	- dactyl
 	- Strike Flint is coal in room & cloak present
+Swim - Can swim here
+	- swimming in poisoned waters
