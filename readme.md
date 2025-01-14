@@ -546,9 +546,26 @@ The constructor takes the verb and noun number, the code, and the command.
 
 **Test**
 
+This class is used primarily for testing and has two methods, one for setting variables when the game starts and one for displaying values when the game is running.
+
+- setTest - this takes the game and player object and will set varibales in it to make testing easier.
+
+- displayValue - this also takes the game and player objects and are used to display variables in them.
+
 ### View ###
+
+**GameFrame**
+
+**GamePanel**
+
+**LightningPanel**
+
+**MessagePanel**
 
 ### Controller ###
 
+**CommandListener**
+
+**QuitButton**
 
 
