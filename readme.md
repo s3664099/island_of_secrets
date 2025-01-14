@@ -70,57 +70,76 @@ To compile and run the game, follow these steps:
 
 ## Program Structure ##
 
-### Data ###
+### Data
 
-This package hold classes that simply carry data. Well that and the two classes - Location & Item - that are used to
-hold the main objects that run the game.
+This package contains classes designed primarily to carry data. Two key classes, **Location** and **Item**, serve as the backbone of the game, holding the objects and locations that drive the gameplay.
 
-**Constants**
+---
 
-This class holds a number of variables that do not change. These variables are used so that numbers are hardcoded into
-the game (though I suspect that there are still some there). As such, the class is able to be accessed from across the
-program, and each of the variable are listed as final (meaning that it cannot be changed) and static (meaning that it 
-can be accessed without instanstatiating a class.
+#### **Constants**
 
-**Raw Data**
+The `Constants` class stores immutable variables used throughout the game. These variables prevent the need for hardcoding numbers into the game logic (although there may still be some lingering instances). 
 
-This class basically holds the raw data for the game. While it could be stored in a database, the fact that it does not 
-change, and is only used while the game is running, storing it in a file is much easier (and it can be ported as well 
-since a database doesn't need to be built to run the game).
+- **Purpose**: Provides a centralized location for unchanging values.  
+- **Key Features**:
+  - Variables are declared as `final` (immutable) and `static` (accessible without instantiating the class).
+  - The class is accessible across the entire program, ensuring consistent reference to these constants.
 
-Anyway, this file is only read once during the set up phase to build the locations, the items, the verbs, nouns, and 
-codes for setting the item flags and location. Like the Constants class, this one is also static, meaning that it can be
-read without needing to instansiate the object. Further, it is only read at the beginning of the game.
+---
 
-**Location**
+#### **Raw Data**
 
-This class holds the details of the locations. The variables that are in the class are as follows:
+The `RawData` class holds the game's foundational data, such as item details, locations, verbs, and nouns. While this data could be stored in a database, the simplicity and portability of file-based storage make it the preferred choice here.  
 
-- name - A string. The name of the locations
-- exits - an array of 4 bools. Where the exits are located.
-- visited - boolean. Has the player visited this location (not currently used, but to be used for the map).
-- roomType - int. The type of room. Used to display an icon on the map when created.
+- **Purpose**: Stores the game's raw, unchanging data, read once during the setup phase.  
+- **Key Features**:
+  - Data is read at the start of the game and used to initialize locations, items, and other elements.
+  - The class is `static`, so its contents can be accessed without creating an instance.
+  - Eliminates the need for a database, making the game easier to distribute and run.
 
-The only value that is changed is the visit boolean, which goes from False to True. The rest will remain as they are.
-The class consists of the constructor which builds the name of the location and the exits.
+---
 
-It also has a method that retrieves the name of the location, and retrieves the exit array.
+#### **Location**
 
-**Item**
+The `Location` class manages details about the game's various locations.  
 
-This class contains three variables and is the details of the game's items. The variables are as follows:
+- **Variables**:
+  - `name` (`String`): The name of the location.  
+  - `exits` (`boolean[]`): An array of four booleans indicating the presence of exits in the cardinal directions.  
+  - `visited` (`boolean`): Tracks whether the player has visited this location (planned for map functionality).  
+  - `roomType` (`int`): Represents the type of room, used to display an icon on the map.
 
-- itemFlag - an integer. this is a flag that is used for the running of the game. Among other things, the 
-	     flag determines whether an item is visible to the player. If the flag is less that 1, then it is visible.
-- itemLocation - an integer. This is where the items is located. 0 indicates that the player is carrying 
-             the item, while 81 indicate that the item has been destroyed.
-- item - a string. This is the name of the item.
+- **Key Features**:
+  - Only the `visited` variable changes during gameplay, transitioning from `false` to `true` when a player enters a location.
+  - Includes methods to:
+    - Retrieve the name of the location.
+    - Access the array of exits.
 
-The class consists of a constructor that sets the flag and location and saves the name of the items.
+- **Constructor**: Initializes the location's name and exit configuration.
 
-Methods include a method to retrieve the name and getters and setters for the location and the flag. 
-There is also a method that compares an int passed to it (which is a location) with the item's location, and returns a 
-true or a false.
+---
+
+#### **Item**
+
+The `Item` class encapsulates the details of in-game items.  
+
+- **Variables**:
+  - `itemFlag` (`int`): A flag determining item visibility and status. Items with a flag less than `1` are visible to the player.  
+  - `itemLocation` (`int`): Indicates where the item is located:
+    - `0`: The player is carrying the item.
+    - `81`: The item has been destroyed.
+  - `item` (`String`): The item's name.
+
+- **Key Features**:
+  - Constructor initializes the item's flag, location, and name.  
+  - Methods include:
+    - Getters and setters for the item's flag and location.
+    - A method to retrieve the item's name.
+    - A method to compare the item's location with a given integer, returning `true` or `false` based on the match.
+
+---
+
+This structure ensures that both `Location` and `Item` classes serve as efficient containers for data, with minimal but effective methods for retrieving and manipulating that data where necessary.
 
 ### Model ###
 
