@@ -143,84 +143,100 @@ This structure ensures that both `Location` and `Item` classes serve as efficien
 
 ### Model ###
 
-So, as it turns out, the only real pattern that I seem to use after uni is the MVC pattern, and that is basically for my
-own projects. Then again, I basically work on legacy systems, so I guess there is that (they existed long before patterns
-were a thing).
+The **Model** package serves as the core of the game, containing the primary logic and data structures. It connects the game's data, operations, and presentation layers, aligning with the Model-View-Controller (MVC) design pattern. While I primarily use this pattern in my personal projects, it has proven reliable, even when working with legacy systems that predate widespread adoption of design patterns.
 
-Anyway, this package holds the guts of the game, and is where pretty much everything occurs. Then again I suspect that that
-is the purpose of the model package. 
+#### **Main**
 
-**Main**
+The `Main` class is responsible for initializing and launching the game. While the `Start` class fires up the application, `Main` handles the setup and execution of the game.
 
-While the start class actually fires up the game, this class builds the game and the executes it. Initially is generates
-a Game object, which holds all of the data pertaining to the game, a Player object, which holds the data for the player
-(though, unfortunately, they do end up criss-crossing a bit). Finally the GameEngine object is generated which is the
-guts of the game. Onse that has happened, the SwingUtilities is invokes to launch a GUI version of the game.
+- **Workflow**:
+  1. Creates a `Game` object, which holds all the game's data.
+  2. Creates a `Player` object, which contains player-specific data (though some overlap with the `Game` object exists).
+  3. Instantiates a `GameEngine` object, which drives the game's logic.
+  4. Uses `SwingUtilities` to launch a GUI-based version of the game.
 
-**Game Engine**
+#### **Game Engine**
 
-The engine provides the link between the Game/Player classes and the View/Controller packages. The constructor takes 
-a Game object and a Player object and sets them to the corresponding objects in this class. There are a number of other
-methods in the object as well.
+The `GameEngine` class bridges the `Game` and `Player` objects with the View and Controller components. It serves as the primary logic layer, managing gameplay flow and interaction.
 
-- getTime - this method retrieves the amount of time that has passed since the beginning of the game, or rather how many
-	    moves are left.
+##### Key Methods:
 
-- getStatus - this retrieves the player's strength and wisdom as a string.
+- **`getTime()`**  
+  Retrieves the number of moves remaining, representing the time left in the game.
 
-- getRoom - the name of the room is retrieved and passed through the the graphical display. However, first of all it
-	    determines whether the player is in the 'poisoned waters' and displays that instead. Else, it will check
-	    what description is displayed. We then retrieve the room number and pass a string through to the front end
-	    after retrieving the description from the game object.
+- **`getStatus()`**  
+  Returns the player's current strength and wisdom as a formatted string.
 
-- getItems - a list if the visible items are displayed as a string based upon the room the player happens to be in (or viewing).
+- **`getRoom()`**  
+  Retrieves the name of the current room or provides special descriptions, such as for "poisoned waters."  
+  - Checks for special conditions like poisoned waters.  
+  - Retrieves and formats the room description from the `Game` object.
 
-- getExits - The original game doesn't display the exits, though maybe there was a reason for this. Anyway, I have added the
-	     exits, which are displayed as a string and are the exits based on the room the player is viewing.
-	     
-- getSpecialExits - Displays any special exists
+- **`getItems()`**  
+  Lists visible items in the current room as a formatted string.
 
-- getMessage - the message for the previous move is retrieved. However, special message is retrieved if the player is swimming
-	       in poisoned waters, so that are added here, which includes a warning if the player has a strength less than 15.
-	       The message is retrieved from the game object and then cleared before being passed to the panel.
+- **`getExits()`**  
+  Displays available exits in the current room.  
+  - Note: The original game didn’t show exits, but they have been added for clarity.
 
-- getCommands - The retrieves the previous three commands that the player has executed and passes them through to the GamePanel.
+- **`getSpecialExits()`**  
+  Displays any special exits for the current room.
 
-- processCommand - This is where the command is passed when the player enters it. First it adds the command to the previous command
-		   list (which lists the previous three commands). Then it determines which panel is displayed (namely not swimming
-		   in poisoned waters). The processCommand object is created to determine the verb/noun numbers and then sets the
-		   error response based on the number selected. If there is no noun, it is set to the end afterwards. Finally the
-		   related item is retrieved (which includes some blank items which relate to noun with no matching item), and the
-		   command is coded (which is a means of checking a number of varibles all at once).		   
-		   The command is then executed. After this the response is determined, namely if a game has been loaded (meaning
-		   that the current player/game classes are reset to the new ones from the loaded game). Finally, the panel response is
-		   determined, and the game panel is reloaded.
-		   As for the poisoned water section, this is basically a minigame where the player needs to escape from the poisoned
-		   waters without dying (running out of strength).
+- **`getMessage()`**  
+  Retrieves the message for the player's previous move.  
+  - Includes special warnings if the player is in poisoned waters, such as low strength warnings.
 
-- getResponseType - This is method determines the responmse type. Namely there are three types - the normal command process, the Give
-		   Item response, and the Shelter response.
+- **`getCommands()`**  
+  Retrieves the last three commands entered by the player for display in the UI.
 
-- processGive - This determines whether a response to a give command is correct. Namely it should be a single noun representing
-		somebody present. If a new command is typed then an error response is sent. If the first word is 'to' then that is
-		dropped. At the end of the process, the response type is reset to a normal response.
+- **`processCommand(String command)`**  
+  Processes player input and executes game logic.  
+  - Adds the command to the recent command list.  
+  - Determines the current panel (e.g., normal gameplay or special scenarios like poisoned waters).  
+  - Parses the command to determine the verb and noun.  
+  - Executes the command and updates game state.  
+  - Handles special scenarios, such as loading a game or navigating poisoned waters.  
+  - Determines the appropriate panel to display after command execution.
 
-- processShelter - This is for the shelter command, which one option of three is selected. If the correct response is not selected
-		   then an error is reported. Like the above, once the process is completed the response type is set to normal.
+- **`getResponseType()`**  
+  Determines the type of response expected:  
+  - Normal command processing.  
+  - `Give` item response.  
+  - `Shelter` response.
 
-- setPanel - This sets the panel to a specific panel that is passed through. This is not the standard game panel.
+- **`processGive(String input)`**  
+  Handles the "give" command.  
+  - Validates the input to ensure it refers to an NPC present in the current room.  
+  - If the input is invalid, it generates an error response.  
+  - Resets the response type to normal after processing.
 
-- resetPanel - This method resets the current gamePanel, which basically updates the display (but for some reason when it is updated
-	       the cursor does not go back to the input).
+- **`processShelter(String input)`**  
+  Manages the shelter command, requiring the player to choose one of three options.  
+  - If the input is invalid, an error is returned.  
+  - Resets the response type to normal after processing.
 
-- checkEndGame - this checks whether the endGame flag has been set in the Game object.
+- **`setPanel(int panelId)`**  
+  Switches the displayed panel to the one specified by `panelId`.
 
-- getFinalScore - this calculates the player's final score.	       
+- **`resetPanel()`**  
+  Refreshes the current game panel to update the display.  
+  - Note: After updating, the cursor does not return to the input field.
 
-- determinePanel - this determine what panel will display after the command processing is complete.
-    		   2 - the lightning panel
-    		   3 - the message panle
-    		   Otherwise just a normal panel
+- **`checkEndGame()`**  
+  Checks if the `endGame` flag has been triggered in the `Game` object.
+
+- **`getFinalScore()`**  
+  Calculates the player's final score at the end of the game.
+
+- **`determinePanel()`**  
+  Determines which panel should display after processing the player's command:  
+  - `2`: Lightning panel.  
+  - `3`: Message panel.  
+  - Otherwise: Normal gameplay panel.
+
+---
+
+The **GameEngine** class is the game's powerhouse, managing both logic and interaction seamlessly. It allows the game to dynamically adapt to player input and ensures a smooth gameplay experience.
 **Game**
 
 This object stores everything related to the game that isn't player specific (though there are some elements that are actually player
