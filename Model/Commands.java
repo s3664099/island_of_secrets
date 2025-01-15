@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.10
-Date: 14 January 2025
+Version: 2.11
+Date: 15 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -554,7 +554,7 @@ public class Commands {
 	public void shelter(Player player,Game game) {
 				
 		if (game.getItem(36).getFlag()<0) {
-			game.setMessage("You can shelter in|1) Grandpa's Shack|2)Cave of Snelm|3)Log Cabin");
+			game.setMessage("You can shelter in|1) Grandpa's Shack|2) Cave of Snelm|3) Log Cabin");
 			game.addMessage("|Choose from 1-3");
 			game.setResponse(2);	
 		} else {
@@ -890,4 +890,5 @@ public class Commands {
  * 11 January 2025 - Added a set end-game for when player attempts to kill something. Added message for when swimming.
  * 13 January 2025 - Added extra responses to attack and made coal disappear instead of flint.
  * 14 January 2025 - Changed room allocation when swimming so not swimming in poisoned waters for too long (as per game).
+ * 15 January 2025 - Fixed the shelter options to appear nicer
  */

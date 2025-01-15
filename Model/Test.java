@@ -13,8 +13,9 @@ public class Test {
 
 	public void setTest(Game game, Player player) {
 		//player.setRoom(10);
+		//player.setTime(900);
 		//game.getItem(14).setLocation(0);
-		//game.getItem(14).setFlag(0);
+		//game.getItem(36).setFlag(-1);
 		//game.getItem(13).setLocation(player.getRoom());
 		//game.getItem(39).setLocation(player.getRoom());
 		//game.getItem(12).setLocation(0);
@@ -24,9 +25,9 @@ public class Test {
 	public void displayValue(Game game, Player player) {
 
 		//System.out.println(player.getWisdom());
-		//System.out.println(game.getItem(6).getItem());
+		//System.out.println(game.getItem(22).getItem());
 		//System.out.println(game.getItem(9).getLocation());
-		//System.out.println(game.getItem(6).getFlag());
+		//System.out.println(game.getItem(36).getFlag());
 		//System.out.println(game.getRoomName(62));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());

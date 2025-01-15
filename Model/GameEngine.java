@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.5
-Date: 11 January 2025
+Version: 2.6
+Date: 15 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -230,7 +230,16 @@ public class GameEngine {
 		//Checks if response is 1,2,or 3
 		if (object.equals("1") || object.equals("2") || object.equals("3")) {
 			CommandProcess processCommands = new CommandProcess();
-			processCommands.executeShelter(this.game, this.player,Integer.parseInt(object));
+			
+			//Determines the room the player goes to
+			int room = 44;
+			if (object.equals("2")) {
+				room = 11;
+			} else if (object.equals("3"))  {
+				room = 41;
+			}
+			
+			processCommands.executeShelter(this.game, this.player,room);
 		} else {
 			this.game.addMessage("Please enter either 1,2 or 3");
 		}
@@ -335,4 +344,5 @@ public class GameEngine {
 				 - Added call to the special exits in the room
 3 January 2025 - Moved the panel determination to separate function
 11 January 2025 - Added the end game flag to when the player runs out of strength while swimming.
+15 January 2025 - Added code so shelter goes to the correct place.
 */

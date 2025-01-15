@@ -202,6 +202,11 @@ public class CommandProcess {
 		//Swim
 		} else if (verbNo==25) {
 			this.command.swim(player, game);
+		
+
+		//Shelter
+		} else if (verbNo==26) {
+			this.command.shelter(player, game);
 			
 		//More than one verb
 		} else if(commands.length>1) {
@@ -242,10 +247,6 @@ public class CommandProcess {
 			} else if (verbNo==24) {
 				this.command.kill(player, game);
 			
-			//Shelter
-			} else if (verbNo==26) {
-				this.command.shelter(player, game);
-
 			//Help & Scratch
 			} else if (verbNo==27||verbNo==28) {
 				this.command.help(player, game);
@@ -407,9 +408,12 @@ public class CommandProcess {
 			}
 		}
 		
+		int stormRand = rand.nextInt(3);
+		System.out.println(stormRand);
+		
 		//Does the living storm appear
 		if (player.getTime()<900 && player.getRoom()==23 && 
-			game.getItem(36).getFlag()>0 && rand.nextInt(3)==3) {
+			game.getItem(36).getFlag()>0 && stormRand ==2) {
 			game.getItem(36).setFlag(-(rand.nextInt(4)+6));
 			game.addMessage(" A storm breaks overhead!");
 		}

@@ -17,9 +17,7 @@ To Test
 
 
 
-Shelter - can only do it when flag certain number
-	- Does it occur when the flag is correct
-	- How does the flag get there?
+
 
 Help - Respond with villager & Sage
 	- flag set when sage scratched
@@ -191,3 +189,6 @@ Attack - Does the player's stats go down?
 	- Strike Flint is coal in room & cloak present
 Swim - Can swim here
 	- swimming in poisoned waters
+Shelter - can only do it when flag certain number
+	- Does it occur when the flag is correct
+	- How does the flag get there?
