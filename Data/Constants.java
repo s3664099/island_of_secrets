@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 15 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -22,10 +22,12 @@ public class Constants {
 	public static final int foodLine = 16;
 	public static final int drinkLine = 21;
 	public static String line = "----------------------------------------------------------------";
+	public static final int lineLength = 90;
 }
 
 /* 1 November 2024 - Created File
  * 2 November 2024 - Added the line
  * 11 November 2024 - Updated noNoun
  * 23 December 2024 - Updated to version 2.
+ * 15 January 2025  - Added a constant for the line length
 */

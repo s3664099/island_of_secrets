@@ -571,8 +571,26 @@ This class is used primarily for testing and has two methods, one for setting va
 ### View ###
 
 **GameFrame**
+This sets up the frame for the GUI. It sets the title at the top, sets the exit, builds the GamePabel, sets the bounds, and sets it visible.
 
 **GamePanel**
+This class creates the main panel for running the game. The variables are as follows:
+
+- Color - sets the backgroun color.
+- GameEngine - holds the GameEngine object.
+- GameFrame - holds the GameFrame object.
+
+The constructor takes the game engine and the frame and adds the engine and sets the Frame to the game Frame.
+
+- add - Takes the GameEngine object and sets up the panel. It sets the layout as a BorderLayout, and then creates the topPanel, middlePanel, and bottemPanel, which are all JPanels. All these panels use a GridLayout. The top panel add a status Panel. The middlePanel details the room, and will display the room name in a LabelPanel. The items are then loaded, spilt so that all will be displayed (with a max of all items) and displayed in LabelPanels. The same is done for the exits, and then the message is displayed. Finally, the End Game flag is checked, and if it is true will display the final score. The bottonPanel displays the last three commands, and then will either display a text field or an exit button if the end game flag is true.
+
+- addPanel - this takes a JPanel and adds it to the frame.
+
+- CreatePanel - this method takes an int which outlines the flow type. A FlowLayout is created with centre being standard, but if the type is 1 or 2 it is then left.
+
+- CreateLabelPanel - This takes the labelString and the flowType. The panel is created based on the flowType, the label is created and added to the panel. The final panel is returned.
+
+- getLineLength - takes the string which is the line to be divided. If the length is greater than a certain number, it will then go back and find the previous white space, and then return an int where the line will be cut.
 
 **LightningPanel**
 

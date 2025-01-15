@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 29 December 2024
+Version: 2.2
+Date: 15 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,24 +13,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Controller.CommandListener;
 import Controller.QuitButton;
+import Data.Constants;
 import Model.GameEngine;
 
 public class GamePanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	Color background;
 	GameEngine game;
 	GameFrame frame;
@@ -173,28 +170,9 @@ public class GamePanel extends JPanel {
         return panel;
 	}
 	
-	private JPanel CreateTextPanel(String text) {
-		
-		JPanel panel = CreatePanel(1);
-		JTextArea textArea = new JTextArea(text);
-		textArea.setColumns(70);
-		textArea.setRows(7);
-		textArea.setEditable(false);  // This makes the JTextArea read-only
-		textArea.setLineWrap(true);   // Optional: Wrap lines if text is too long
-		textArea.setWrapStyleWord(true);  // Optional: Wrap at word boundaries
-		textArea.setBackground(background);
-		
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(textArea);
-		
-		panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-		textArea.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.red));
-		return panel;
-	}
-	
 	private int getLineLength(String line) {
 		
-		int lineLength = 90;
+		int lineLength = Constants.lineLength;
 		
 		if (lineLength>line.length()) {
 			lineLength = line.length();
@@ -224,4 +202,5 @@ public class GamePanel extends JPanel {
  * 23 December 2024 - Added quit function
  * 					- Updated to version 2.
  * 29 December 2024 - Added entry for special exits
+ * 15 January 2025 - Removed extraneous methods and moved the lineLength to a constant.
  */
