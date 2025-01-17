@@ -237,80 +237,114 @@ The `GameEngine` class bridges the `Game` and `Player` objects with the View and
 ---
 
 The **GameEngine** class is the game's powerhouse, managing both logic and interaction seamlessly. It allows the game to dynamically adapt to player input and ensures a smooth gameplay experience.
-**Game**
 
-This object stores everything related to the game that isn't player specific (though there are some elements that are actually player
-specific, such as where the items are located). The variables include the following:
+### **Game**
 
-- noRooms - int - the number of rooms, and is based on the constant.
-- noItems - int -  the number of items, and is also based on the constant.
-- locationList - Array of Location objects - holds all of the locations.
-- itemList - Array of Item objects - holds all of the items.
-- message - String - holds the response to the player's previous action
-- commands - Array of Strings - holds the player's last three commands.
-- rand - Random - Java standard object for generating random numbers.
-- panelMessageOne & panelMessageTwo - String - These are for displaying special messages in response to specific actions.
-- panelLoop - int - This is how many times the panel message display will loop.
-- endGame - boolean - a flag to advise whether the game has come to an end or not.
-- saveGameCount - int - counts the number of save games that are on file.
-- responseRequired - int - a flag for the type of response that is required from the player.
+The `Game` class is responsible for storing and managing all game-related data that is not strictly player-specific (though it does include some player-related elements, such as item locations). It plays a central role in maintaining the state of the game and provides essential methods for interacting with locations, items, and game messages. Below is a detailed breakdown of its attributes and methods:
 
-The constructor is executed when the game starts, and this object will exist for as long as the game is being played. The constructor
-will build the list of locations and objects, and sets the initial values for each of the. The location section will go through each
-of the locations in the RawData class and instansiate it as a new location object and add it to a list. The same is done for the items.
+- **Variables**
+  - `noRooms` ('int'): The total number of rooms in the game, derived from a constant.
+  - `noItems` ('int'): The total number of items in the game, also derived from a constant.
+  - `locationList` (Array of `Location` objects): Contains all the locations in the game.
+  - `itemList` (Array of `Item` objects): Contains all the items in the game.
+  - `message` ('String'): Stores the response to the player’s most recent action.
+  - `commands` (Array of Strings): Keeps track of the player’s last three commands.
+  - `rand` (Random): A Java `Random` object used for generating random numbers.
+  - `panelMessageOne` (String): The first message displayed on the special message panel.
+  - `panelMessageTwo` (String): The second message displayed on the special message panel.
+  - `panelLoop` (int): Specifies how many times the special message panel will loop.
+  - `endGame` (boolean): A flag indicating whether the game has ended.
+  - `saveGameCount` (int): Tracks the number of save games currently available.
+  - `responseRequired` (int): Indicates the type of response required from the player. 
+  
+#### **Constructor**
 
-- getRoomName - This returns the name of the room from the specific location that corresponds to the number that is passed
-	through to it.
+The constructor initializes the game state when it starts. It:
+- Creates and populates the list of `Location` and `Item` objects by iterating through the `RawData` class.
+- Sets initial values for attributes, ensuring the game is ready to run.
 
-- getItems - This returns a string of the names of all of the items in the location corresponding to the room number passed.
+---
 
-- getExits - This returns the exits corresponding to the room number passed. However it checks if there are special exits,
-	and if they are, they are excluded.
+#### **Key Methods**
 
-- getSpecialExits - These are the special exits. Each of them are listed individually. If a room corresponds, the string is returned.
+- **`getRoomName(int)`**  
+  Returns the name of the room corresponding to the given room number.
 
-- checkExit - returns a boolean with flags where it is possible to move in that direction.
+- **`getItems(int)`**  
+  Retrieves a string listing the names of all items in the specified room.  
 
-- addExit - This private method simply checks whether there is an exit, and adds a dividing comma if there is.
+- **`getExits(int)`**  
+  Returns the exits available for the given room, excluding special exits.  
 
-- getMessage - Retrieves the stored message.
+- **`getSpecialExits(int)`**  
+  Returns the special exits for the specified room, if any.  
 
-- clearMessage - Removes any stored message.
+- **`checkExit(int)`**  
+  Checks whether movement in a specified direction is possible.  
 
-- setMessageGame - Sets the message that is displayed to advise the player the result of the action.
+- **`addExit(String)`** *(private)*  
+  Appends an exit to the list of exits, adding a comma if necessary.  
 
-- addMessage - Checks if the message variable is blank, and if it isn't, adds the string to the end of it. Otherwise sets a new message.
+- **`getMessage()`**  
+  Retrieves the stored message for the player's previous action.  
 
-- getCommand - Retrieves the command that corresponds to the number passed through.
+- **`clearMessage()`**  
+  Clears the current stored message.  
 
-- getItem - Returns the item from the item list that corresponds to the number passed through.
+- **`setMessageGame(String)`**  
+  Sets the message to describe the outcome of a player's action.  
 
-- getItemFlagSum - Returns the sum of the item flag and location from the item list corresponding to the number passed through.
+- **`addMessage(String)`**  
+  Appends a string to the current message if it isn’t blank; otherwise, sets a new message.  
 
-- setPanelMessages - This sets the special messages that are displayed to the special message panel, which includes the number of loops.
+- **`getCommand(int)`**  
+  Retrieves a command from the history by index.  
 
-- getMsgOne - This gets the first message from the special message panel.
+- **`getItem(int)`**  
+  Returns the `Item` object corresponding to the specified item number.  
 
-- getMsgTwo - this retrieves the second message from the special message panel.
+- **`getItemFlagSum(int)`**  
+  Calculates and returns the sum of the flag and location for a given item.  
 
-- getLoop - this returns the loop, or the number of times that the special messages will be displayed. (It will reset and display further info).
+- **`setPanelMessages(String)`**  
+  Updates the special message panel with new messages and loop count.  
 
-- endGame - this sets the endGame flag. Set to true, the game has ended (it will only be set to true, never to false).
+- **`getMsgOne(String)`**  
+  Retrieves the first special panel message.  
 
-- checkEndGame - The endGame flag is returned.
+- **`getMsgTwo(String)`**  
+  Retrieves the second special panel message.  
 
-- getCount - the number of save games are returned.
+- **`getLoop()`**  
+  Retrieves the loop count for the special panel messages.  
 
-- setCount - the number of save games are increased by one.
+- **`endGame()`**  
+  Sets the `endGame` flag to true, signaling that the game has ended.  
 
-- resetCount - the number of saved games are reset to 0.
+- **`checkEndGame()`**  
+  - Returns the value of the `endGame` flag.  
 
-- setResponse - the response type is set. These are the response types the player should give. The response types are as follows:
-	- 0 Standard Response.
-	- 1 Give Response.
-	- 2 Shelter Response.
+- **`getCount()`**  
+  Returns the number of save games currently on file.  
 
-- getResponse - the response type is returned.
+- **`setCount()`**  
+  Increments the save game count by one.  
+
+- **`resetCount()`**  
+  Resets the save game count to zero.  
+
+- **`setResponse(int)`**  
+  Sets the type of response required from the player.  
+  - Input Response type *(int)*:
+    - `0`: Standard response.
+    - `1`: "Give" response.
+    - `2`: "Shelter" response.  
+
+- **`getResponse(int)`**  
+  Retrieves the current response type.  
+  
+---
+
 
 **Player**
 
