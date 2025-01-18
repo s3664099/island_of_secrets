@@ -7,6 +7,8 @@ This approach came with challenges: errors often crept in during transcription, 
 - [Read the book on the Internet Archive](https://archive.org/details/island-of-secrets_202303)  
 - [View the original BASIC version on GitHub](https://github.com/s3664099/basic_scripts/tree/master/Island%20of%20Secrets)
 
+- Redo the classes using the same style as Command Process 
+
 ## Notes on the Basic Code
 
 ### Reading the Data
@@ -371,6 +373,8 @@ The `Player` class represents all player-specific details, including the player'
 
 #### **Constructor**
 
+This class processes the player's commands, breaking them into components, encoding them, and determining their validity. If the command is invalid, the class provides feedback to the player, explaining why it couldn't be processed.
+
 The class does not have an explicit constructor. Starting variables are hardcoded, and the `Player` object is initialized once when the game begins. This single instance remains active throughout the game.
 
 #### **Methods**
@@ -469,76 +473,130 @@ The class does not have an explicit constructor. Starting variables are hardcode
 
 ---
 
+### **CommandProcess**
 
-**CommandProcess**
+This class processes the player's commands, breaking them into components, encoding them, and determining their validity. If the command is invalid, the class provides feedback to the player, explaining why it couldn't be processed.
 
-This class is designed to process the player's commands. So, it takes it, splits it, encodes it, and then sends it to 
-where it needs to go, if the command is valid. If it isn't then the class will advise the player that the command is invalid
-(and sort of give a reason why).
+#### **Attributes**
 
-- splitCommand - Array of Two Strings - Stores the verb and the noun. Is created with blank strings.
-- commands - Array of strings - Ideally this will have only two strings (though it might be more).
-- originalCommand - string - the is the command that the player entered.
-- verbNo - int - This is the number of the matching verb in the data (if there is one).
-- nounNo - int - This is the number of the matching noun (if there is one).
-- codedCommand - String - this is a code designed to make checking multiple variables easier. It consists of
-		(in this order); noun number, noun location, noun flag, player location.
-- nounNumber - int - this is for holding a second noun, such as giving something to somebody
-- game - Game - this is the game object (as identified above).
-- player - Player - this is the player object (as identified above).
-- loadedGame - boolean - a flag that is set to advise the engine as to whether a game has been loaded.
-- rand - Random - a class used to select a random number.
+- **splitCommand** *(Array of Strings)*  
+  Stores the verb and noun from the player's command, initialized as blank strings.
 
-The constructor takes the the command (a string) and the game object. This is where the command is processed to determine where to send it.
-Firstly it is made all lower case, then split, and the original command is store in the appropriate variable. The constructor then checks
-if there are more than two commands, and trims them, otherwise sets the response advising the player that two words are required.
-The fix command method is also called to further process the command (see below).
+- **commands** *(Array of Strings)*  
+  Typically contains two elements but can hold more if the input is malformed.
 
-There is a second constructors which, well, just creates a shell of the class for the give command.
+- **originalCommand** *(String)*  
+  Stores the exact command entered by the player before processing.
 
-- getGame - Game - returns the current version of the game object.
+- **verbNo** *(int)*  
+  The index of the verb that matches one from the game's predefined list.
 
-- getPlayer - Player - returns the current version of the player object
+- **nounNo** *(int)*  
+  The index of the noun that matches one from the game's predefined list.
 
-- checkLoadedGame - boolean - returns a boolean to advise whether a game has been loaded or not
+- **codedCommand** *(String)*  
+  Encodes command details to simplify checks. The format includes:
+  - Noun number  
+  - Noun location  
+  - Noun flag  
+  - Player's current room
 
-- fixCommand - String - (private) - The method is designed to convert commands into commands that can be read by the programe.
-				    The main ones are for directions, such as n,s,e,w, as well as some other specific ones.
+- **nounNumber** *(int)*  
+  Holds a secondary noun for commands like "give" (e.g., giving an item to someone).
 
-- getVerbNumber - int - This method will compare the verb entered with the list of verbs and will return the number the 
-			corresponding verb that is on the list.
+- **game** *(Game)*  
+  The game object managing non-player-specific aspects of the game.
 
-- getNounNumber - int - This method compares the noun entered with a list of nouns, and returns the number of the
-			corresponding noun on the list. It sets the number as the total number of nouns, however
-			if there is only a verb, then the nounNumber is set to -1. If the corresponding noun cannot be
-			found, then it is set to the max number.
+- **player** *(Player)*  
+  The player object representing the current player's stats and location.
 
-- getNounNum - int - (private) - this private method is called from getNounNumber and is where the correct noun number
-			is located, and is only called if there is a noun.
+- **loadedGame** *(boolean)*  
+  A flag indicating whether a saved game has been loaded.
 
-- codeCommand - String - This method is where the code is commanded, and allows for multiple checks, though I suspect
-			 this was mainly for the computers with limited memory at the time (though it is a nice short-cut
-			 for where there are multiple areas where all the same variables are being checked). The variables
-			 in order at the nounNumber, the location, the flag, and the room the player is in.
+- **rand** *(Random)*  
+  A utility for generating random numbers.
 
-- executeCommand - This is the method where the command is executed. First a command object is created and then the
-		   method checks the verbNumber with the corresponding command and executes the method in the command object.
-		   The first 11 commands are only one word, and the remainder require two words (and this is checked to
-		   make sure that only commands with two words go there. There is also a section that resets a count
-		   and this is for the display command which displays a list of saved games.
+### **Constructors**
 
-- postUpdates - This method is executed after the commands have been processed and handles any updates to the game
-		that occur after the command has been executed, whether the player has intervened or not. The last
-		section of this method deals with the end game processes.
+1. **CommandProcess(String command, Game game)**  
+   Processes the player's command:  
+   - Converts it to lowercase.  
+   - Splits it into components (verb and noun).  
+   - Stores the original command.  
+   - Checks if the command has more than two components and trims it.  
+   - If invalid, sets a response advising that two words are required.  
+   - Calls the private `fixCommand()` method to normalize certain inputs (e.g., abbreviations).
 
-- executeGive - This is a special method since the player is asked who they wish to give the item to, at which point this
-		method is called instead of the standard command process method. Initially the method checks that something
-		was entered, and also confirms whether the subject is present. The initial state is that the object is
-		refused, but it then, using the codes, goes through each of the potential people that will respond and
-		processes it that way. 
+2. **CommandProcess()**  
+   Creates an empty instance for special cases like handling "give" commands.
 
-- executeShelter - Similarly to the above, but this is processing the shelter command. Basically the player is asked
-		where they wish to shelter, and that are taken there. The storm flag is then reset.
+### **Methods**
+
+- **getGame() → Game**  
+  Returns the current `Game` object.
+
+- **getPlayer() → Player**  
+  Returns the current `Player` object.
+
+- **checkLoadedGame() → boolean**  
+  Checks if a saved game has been loaded.
+
+- **fixCommand() → String** *(private)*  
+  Normalizes commands for processing. For example:  
+  - Converts directional inputs like "n" to "north."  
+  - Maps common abbreviations to full commands.
+
+- **getVerbNumber() → int**  
+  Matches the verb from the player's command to the predefined list and returns its index.
+
+- **getNounNumber() → int**  
+  Matches the noun from the player's command to the predefined list and returns its index.  
+  - If only a verb is present, sets `nounNumber` to -1.  
+  - If no match is found, sets `nounNumber` to the maximum value.
+
+- **getNounNum() → int** *(private)*  
+  A helper method used by `getNounNumber()` to locate the correct noun.
+
+- **codeCommand() → String**  
+  Encodes the command details into a single string for efficient processing.  
+  The code includes:  
+  - Noun index  
+  - Noun location  
+  - Noun flag  
+  - Player's current room
+
+- **executeCommand()**  
+  Processes and executes the player's command:  
+  - Creates a `Command` object based on the verb number.  
+  - Executes the appropriate method within the `Command` object.  
+  - Verifies whether the command requires one or two words and validates accordingly.  
+  - Handles special cases like displaying saved games.
+
+- **postUpdates()**  
+  Handles game updates after processing the player's command:  
+  - Applies automatic changes to the game state.  
+  - Processes endgame events if triggered.
+
+- **executeGive(String recipient)**  
+  Handles the "give" command:  
+  - Confirms the player entered a valid recipient.  
+  - Verifies the recipient is present in the current location.  
+  - Uses the encoded command to determine how the recipient reacts.  
+  - If conditions are met, completes the "give" action; otherwise, refuses the request.
+
+- **executeShelter(String location)**  
+  Handles the "shelter" command:  
+  - Moves the player to the specified shelter location.  
+  - Resets the storm flag.
+
+### **Key Notes**
+
+- This class ensures the command is valid before executing it.  
+- Commands with specific responses ("give" or "shelter") have dedicated methods for additional processing.  
+- The `codedCommand` string simplifies complex multi-variable checks, improving efficiency.  
+- Feedback is provided when commands are invalid or incomplete.
+
+---
 
 **Commands**
 
