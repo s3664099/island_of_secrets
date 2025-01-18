@@ -709,8 +709,8 @@ This class is to place a panel that will flash when the 'lightning flashes' func
 
 This contains the following attributes:
 
-- label Jlabel - A class that will display a text label on a JFrame
 - game GamePanel - the main panel for holding the game engine and running the game
+- label Jlabel - A class that will display a text label on a JFrame
 - engine GameEngine - the class that runs the game
 - long serialVersonUID - not sure, but this was added automatically
 - int number - this defines the number of time the display runs.
@@ -723,9 +723,25 @@ The constructor takes the starting number, the game and the engine and sets up t
  - **resetPanel(GamePanel)**
    This method resents the panel back to the initial panel that runs the game engine.
 
-
-
 **MessagePanel**
+
+This class is used to display special messages that have their own panel. This is based on the original game where some messages would be displayed immediately. This overwrites the standard panel to display the message for a period before returning to the standard GamePanel.
+
+- long serialVersonUID - not sure, but this was added automatically
+- label Jlabel - A class that will display a text label on a JFrame
+- game GamePanel - the main panel for holding the game engine and running the game
+- engine GameEngine - the class that runs the game
+
+The constructor takes the game panel, enginger, and details of the messages. It will set up the messages (and split them so if there are multiple ones they will be displayed in order). The messages are passed through with a pipe '|' to tell where they should be split. One set up the sequence is started.
+
+- **createLabel(String) → JPanel**
+  This method sets up the label with the message that will be displayed
+  
+- **startSequence(int,String,String)**
+  This method creates a thread and sets the delay to two seconds, which is the time it takes for the next message to be displayed. After that it will check to see if there are anymore messages. If there are none, then it will wait for 5 seconds instead if two, and then return to the origin panel. Otherwise the panel will be set with a new panel with the next part of the message.
+  
+- **setPanel(JPanel,JPanel)**
+  This method basically sets the new panel.
 
 ### Controller ###
 
