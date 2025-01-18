@@ -705,6 +705,26 @@ The constructor takes the game engine and the frame and adds the engine and sets
 
 **LightningPanel**
 
+This class is to place a panel that will flash when the 'lightning flashes' function is called.
+
+This contains the following attributes:
+
+- label Jlabel - A class that will display a text label on a JFrame
+- game GamePanel - the main panel for holding the game engine and running the game
+- engine GameEngine - the class that runs the game
+- long serialVersonUID - not sure, but this was added automatically
+- int number - this defines the number of time the display runs.
+
+The constructor takes the starting number, the game and the engine and sets up the panel text before starting the effect by calling the method.
+
+- **startLightningEffect**
+  This method sets a time and then will check the number to see whether the background will be yellow or back, and sets it. The number will be increased and if it is the it will end it.
+  
+ - **resetPanel(GamePanel)**
+   This method resents the panel back to the initial panel that runs the game engine.
+
+
+
 **MessagePanel**
 
 ### Controller ###
