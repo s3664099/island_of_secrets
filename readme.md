@@ -346,89 +346,129 @@ The constructor initializes the game state when it starts. It:
 ---
 
 
-**Player**
+### **Player**
 
-This object stores the details that relates to the player, which includes the room, the stats and others
-that are detailed below.
+The `Player` class represents all player-specific details, including the player's location, stats, and gameplay-related variables. This class is instantiated once and persists throughout the entire game. Below is a breakdown of its attributes and methods.
 
-- room - int - the room number the player is currently in
-- roomToDisplay - int - the room that is displayed to the player (not necessarily the same).
-- strength - float
-- wisdom - int
-- timeRemaining - int
-- weight - int - the amount of stuff the player is carrying
-- food - int - the amount of food the player is carrying
-- drink - int - the amount of drink the player is carrying
-- rand - Random - an object that generates a random number
-- panelFlag - int - a number that tells the computer what panel to use after the command has been processed.
-- swimming - int - The is one of the three variables for handling the swimming in poisoned waters
-- swimPosition - int - the position the player is in for swimming
-- swimTarget - int - where the player needs to reach for swimming.
+#### **Attributes**
 
-There is not set constructor for this class since the starting variables are hardcoded, there will only be one of these classes created and
-it will exists for the entire game. As such, a constructor does not need to be specified.
+- `room` (int): The room number where the player is currently located.  
+- `roomToDisplay` (int): The room number displayed to the player, which may differ from the actual room.  
+- `strength` (float): The player’s current strength.  
+- `wisdom` (int): The player’s current wisdom.  
+- `timeRemaining` (int): The remaining time in the game.  
+- `weight` (int): The total weight of items the player is carrying.  
+- `food` (int): The amount of food the player has.  
+- `drink` (int): The amount of drink the player has.  
+- `rand` (Random): A `Random` object for generating random numbers.  
+- `panelFlag` (int): Indicates the panel to display after a command is processed:
+  - `0`: Normal panel.  
+  - `2`: Lightning panel.  
+  - `3`: Message panel.  
+- `swimming` (int): Tracks if the player is swimming in poisoned waters.  
+- `swimPosition` (int): The player’s current position while swimming.  
+- `swimTarget` (int): The target position the player must reach while swimming.
 
-- getDisplayRoom - this returns the number of the room that is to be displayed when the details of the location is displayed.
+#### **Constructor**
 
-- updateDisplayRoom - sets the room that is to be displayed. Specifically, if the player's room is 20, then a random room is displayed.
+The class does not have an explicit constructor. Starting variables are hardcoded, and the `Player` object is initialized once when the game begins. This single instance remains active throughout the game.
 
-- getStatus - String - a string that outlines the player's strength and wisdom is returned.
+#### **Methods**
 
-- update - the method is called once a turn, and reduces the time remaining, and the player's strength based on the number of items
-	   the player is carrying.
+- **`getDisplayRoom()`**  
+  Retrieves the room number to display to the player.  
 
-- getStrengthWisdom - float - returns the sum of the player's strength and wisdom.
+- **`updateDisplayRoom(int roomNumber)`**  
+  Updates the room number displayed to the player. For example, if the player’s room is 20, this may set a random room to display.  
 
-- getRoom - int - returns the room that the player is currently in
+- **`getStatus()`**  
+  Returns the player's current stats as a string summarizing strength and wisdom.  
 
-- setRoom - this setter changes the room that the player is in by the new room that is passed to it.
+- **`update()`**  
+  Processes the passage of time for the player. Reduces the remaining time and adjusts strength based on the weight of items carried.
 
-- getTimeDetails - String - returns the time remaining as a string for display
+- **`getStrengthWisdom()`**  
+  Calculates the sum of the player’s strength and wisdom.  
 
-- getTime - int - returns the time remainging
+- **`getRoom()`**  
+  Retrieves the room the player is currently in.  
 
-- reduceTime - deducts on from timeRemaining
+- **`setRoom(int roomNumber)`**  
+  Updates the player’s current room to the specified room.  
 
-- setTime - changes timeRemaining to a new time passed through it.
+- **`getTimeDetails()`**  
+  Formats the remaining time as a string for display purposes.  
 
-- getWisdom - int - returns the player's current wisdom
+- **`getTime()`**  
+  Retrieves the remaining time as an integer.  
 
-- setWisdom - changes the player's wisdom to the new wisdom that is passed through to it.
+- **`reduceTime()`**  
+  Reduces the remaining time by one unit.
 
-- adjustWisdom - changes the wisdom by the amount passed through it the method.
+- **`setTime(int newTime)`**  
+  Updates the remaining time to the specified value.  
 
-- getStrength - float - returns the strength of the player.
+- **`getWisdom()`**  
+  Retrieves the player’s current wisdom.  
 
-- setStrength -  changes the player's strength to the new strength that is passed through to it.
+- **`setWisdom(int newWisdom)`**  
+  Updates the player’s wisdom to the specified value.  
 
-- adjustStrength - changes the strength by the amount passed through it the method.
+- **`adjustWisdom(int adjustment)`**  
+  Adjusts the player’s wisdom by the specified amount.  
 
-- getWeight - int - returns the weight of the amount of stuff the player is carrying.
+- **`getStrength()`**  
+  Retrieves the player’s current strength.  
 
-- setWeight -  changes the player's weight to the new weight that is passed through to it.
+- **`setStrength(float newStrength)`**  
+  Updates the player’s strength to the specified value.  
 
-- adjustWeight - changes the weight by the amount passed through it the method.
+- **`adjustStrength(float adjustment)`**  
+  Adjusts the player’s strength by the specified amount.  
 
-- adjustFood -  changes the the amount of food the player has by the value passed through.
+- **`getWeight()`**  
+  Retrieves the total weight of items the player is carrying.  
 
-- getFood - int - returns the amount of food the player currently has.
+- **`setWeight(int newWeight)`**  
+  Updates the player’s weight to the specified value.  
 
-- adjustDrink - changes the amount of drink the player has by the value passed through.
+- **`adjustWeight(int adjustment)`**  
+  Adjusts the player’s weight by the specified amount.  
 
-- getDrink - int - returns the amount of drink the player currently has.
+- **`adjustFood(int adjustment)`**  
+  Adjusts the amount of food the player has by the specified value.  
 
-- setPanelFlag - Sets panelFlag by the value passed through: 0 - normal, 2 - Lightning, 3 - message. 
+- **`getFood()`**  
+  Retrieves the amount of food the player currently has.  
 
-- getPanelFlag - int - returns the current value of the panelFlag.
+- **`adjustDrink(int adjustment)`**  
+  Adjusts the amount of drink the player has by the specified value.  
 
-- setSwimming - sets the value of swimming to the current room the player is in.
+- **`getDrink()`**  
+  Retrieves the amount of drink the player currently has.  
 
-- adjustPosition - changes the swimming position of the player by one.
+- **`setPanelFlag(int panelId)`**  
+  Switches the displayed panel to the one specified by `panelId`.  
+  The panel to display (`0`, `2`, or `3`).
 
-- resetPosition - returns the position of the player to the beginning of the swim.
+- **`getPanelFlag()`**  
+  Retrieves the current value of the `panelFlag`.  
 
-- checkPosition - Checks the position of the player and returns a boolean. Used to determine whether the
-		  player has successfully escaped the poisoned waters.
+- **`setSwimming()`**  
+  Activates swimming mode, using the player’s current room as the starting point.
+
+- **`adjustPosition()`**  
+  Advances the player’s swimming position by one.
+
+- **`resetPosition()`**  
+  Resets the player’s swimming position to the start.
+
+- **`checkPosition()`**  
+  Checks if the player has reached the swimming target.  
+  `true` if the target has been reached, `false` otherwise.
+
+---
+
 
 **CommandProcess**
 
