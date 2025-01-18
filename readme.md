@@ -379,31 +379,31 @@ The class does not have an explicit constructor. Starting variables are hardcode
 
 #### **Methods**
 
-- **`getDisplayRoom()`**  
+- **`getDisplayRoom() → int`**  
   Retrieves the room number to display to the player.  
 
-- **`updateDisplayRoom(int roomNumber)`**  
+- **`updateDisplayRoom(int roomNumber) → int`**  
   Updates the room number displayed to the player. For example, if the player’s room is 20, this may set a random room to display.  
 
-- **`getStatus()`**  
+- **`getStatus() → String`**  
   Returns the player's current stats as a string summarizing strength and wisdom.  
 
 - **`update()`**  
   Processes the passage of time for the player. Reduces the remaining time and adjusts strength based on the weight of items carried.
 
-- **`getStrengthWisdom()`**  
+- **`getStrengthWisdom() → float`**  
   Calculates the sum of the player’s strength and wisdom.  
 
-- **`getRoom()`**  
+- **`getRoom() → int`**  
   Retrieves the room the player is currently in.  
 
 - **`setRoom(int roomNumber)`**  
   Updates the player’s current room to the specified room.  
 
-- **`getTimeDetails()`**  
+- **`getTimeDetails() → String`**  
   Formats the remaining time as a string for display purposes.  
 
-- **`getTime()`**  
+- **`getTime() → int`**  
   Retrieves the remaining time as an integer.  
 
 - **`reduceTime()`**  
@@ -412,7 +412,7 @@ The class does not have an explicit constructor. Starting variables are hardcode
 - **`setTime(int newTime)`**  
   Updates the remaining time to the specified value.  
 
-- **`getWisdom()`**  
+- **`getWisdom() → int`**  
   Retrieves the player’s current wisdom.  
 
 - **`setWisdom(int newWisdom)`**  
@@ -421,7 +421,7 @@ The class does not have an explicit constructor. Starting variables are hardcode
 - **`adjustWisdom(int adjustment)`**  
   Adjusts the player’s wisdom by the specified amount.  
 
-- **`getStrength()`**  
+- **`getStrength() → float`**  
   Retrieves the player’s current strength.  
 
 - **`setStrength(float newStrength)`**  
@@ -430,7 +430,7 @@ The class does not have an explicit constructor. Starting variables are hardcode
 - **`adjustStrength(float adjustment)`**  
   Adjusts the player’s strength by the specified amount.  
 
-- **`getWeight()`**  
+- **`getWeight() → int`**  
   Retrieves the total weight of items the player is carrying.  
 
 - **`setWeight(int newWeight)`**  
@@ -442,20 +442,20 @@ The class does not have an explicit constructor. Starting variables are hardcode
 - **`adjustFood(int adjustment)`**  
   Adjusts the amount of food the player has by the specified value.  
 
-- **`getFood()`**  
+- **`getFood() → int`**  
   Retrieves the amount of food the player currently has.  
 
 - **`adjustDrink(int adjustment)`**  
   Adjusts the amount of drink the player has by the specified value.  
 
-- **`getDrink()`**  
+- **`getDrink() → int`**  
   Retrieves the amount of drink the player currently has.  
 
 - **`setPanelFlag(int panelId)`**  
   Switches the displayed panel to the one specified by `panelId`.  
   The panel to display (`0`, `2`, or `3`).
 
-- **`getPanelFlag()`**  
+- **`getPanelFlag() → int`**  
   Retrieves the current value of the `panelFlag`.  
 
 - **`setSwimming()`**  
@@ -467,7 +467,7 @@ The class does not have an explicit constructor. Starting variables are hardcode
 - **`resetPosition()`**  
   Resets the player’s swimming position to the start.
 
-- **`checkPosition()`**  
+- **`checkPosition() → boolean`**  
   Checks if the player has reached the swimming target.  
   `true` if the target has been reached, `false` otherwise.
 
@@ -479,42 +479,21 @@ This class processes the player's commands, breaking them into components, encod
 
 #### **Attributes**
 
-- **splitCommand** *(Array of Strings)*  
-  Stores the verb and noun from the player's command, initialized as blank strings.
-
-- **commands** *(Array of Strings)*  
-  Typically contains two elements but can hold more if the input is malformed.
-
-- **originalCommand** *(String)*  
-  Stores the exact command entered by the player before processing.
-
-- **verbNo** *(int)*  
-  The index of the verb that matches one from the game's predefined list.
-
-- **nounNo** *(int)*  
-  The index of the noun that matches one from the game's predefined list.
-
-- **codedCommand** *(String)*  
-  Encodes command details to simplify checks. The format includes:
+- splitCommand (Array of Strings): Stores the verb and noun from the player's command, initialized as blank strings.
+- commands (Array of Strings): Typically contains two elements but can hold more if the input is malformed.
+- originalCommand (String): Stores the exact command entered by the player before processing.
+- verbNo (int): The index of the verb that matches one from the game's predefined list.
+- nounNo (int): The index of the noun that matches one from the game's predefined list.
+- codedCommand (String): Encodes command details to simplify checks. The format includes:
   - Noun number  
   - Noun location  
   - Noun flag  
   - Player's current room
-
-- **nounNumber** *(int)*  
-  Holds a secondary noun for commands like "give" (e.g., giving an item to someone).
-
-- **game** *(Game)*  
-  The game object managing non-player-specific aspects of the game.
-
-- **player** *(Player)*  
-  The player object representing the current player's stats and location.
-
-- **loadedGame** *(boolean)*  
-  A flag indicating whether a saved game has been loaded.
-
-- **rand** *(Random)*  
-  A utility for generating random numbers.
+- nounNumber (int): Holds a secondary noun for commands like "give" (e.g., giving an item to someone).
+- game (Game): The game object managing non-player-specific aspects of the game.
+- player (Player): The player object representing the current player's stats and location.
+- loadedGame (boolean); A flag indicating whether a saved game has been loaded.
+- rand (Random): A utility for generating random numbers.
 
 ### **Constructors**
 
