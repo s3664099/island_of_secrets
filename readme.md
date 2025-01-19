@@ -495,7 +495,7 @@ This class processes the player's commands, breaking them into components, encod
 - loadedGame (boolean); A flag indicating whether a saved game has been loaded.
 - rand (Random): A utility for generating random numbers.
 
-### **Constructors**
+#### **Constructors**
 
 1. **CommandProcess(String command, Game game)**  
    Processes the player's command:  
@@ -509,7 +509,7 @@ This class processes the player's commands, breaking them into components, encod
 2. **CommandProcess()**  
    Creates an empty instance for special cases like handling "give" commands.
 
-### **Methods**
+#### **Methods**
 
 - **getGame() → Game**  
   Returns the current `Game` object.
@@ -568,7 +568,7 @@ This class processes the player's commands, breaking them into components, encod
   - Moves the player to the specified shelter location.  
   - Resets the storm flag.
 
-### **Key Notes**
+#### **Key Notes**
 
 - This class ensures the command is valid before executing it.  
 - Commands with specific responses ("give" or "shelter") have dedicated methods for additional processing.  
@@ -577,107 +577,153 @@ This class processes the player's commands, breaking them into components, encod
 
 ---
 
-**Commands**
+### **Commands**
 
-This class is where all of the commands (except for give and shelter which require and extra entry) are processed. This
-is created everytime a command is entered and processes the command. The variables are as follows:
+This class handles most game commands, excluding *give* and *shelter*, which require special handling. It is instantiated whenever a command is entered and is responsible for processing and executing that command.
 
-- verb - int - holds the verb number.
-- noun - int - holds the noun number.
-- code - String - holds the command's code
-- rand - an object that produces a random number.
-- command - String - holds the command the player entered.
-- game - Game - the game object.
-- player - Player - the player object.
+#### **Attributes**
 
-The constructor takes the verb and noun number, the code, and the command.
+- verb (int): Holds the verb's number from the predefined list.
+- noun (int): Holds the noun's number from the predefined list.
+- code (String): Encodes the command details into a concise format.
+- rand (Random): Generates random numbers for use in the game.
+- command (String): Stores the full command entered by the player.
+- game (Game): The game object representing the current game state.
+- player (Player): The player object containing details about the player's stats and inventory.
 
-- getPlayer - Player - returns the player object. This is used for the load and save game functions.
+#### **Constructor**
 
-- getGame - Game - returns the game object. This is used for the load and save game functions.
+1. **Commands(int verb, int noun, String code, String command, Game game, Player player)**  
+   Initializes the class with the given verb, noun, code, and command, linking it to the game and player objects.
 
-- move - This moves the player from one spot to another. The first section handles special directions (namely in, out,
-	 up and down) and converts them to normal directions. The next section looks to see if there are any directions
-	 that are blocked and prevents movement. If it isn't a listed blocked direction, the movement is handled by looking
-	 if the direction is marked as available. As the rooms are set in a 10x10 square, north reduces the room by 10, south
-	 increases by 10, east adds 1 and west subtracts 1. Finally, the game determines if the move results in a special
-	 event.
+#### **Methods**
 
-- take - this method moves an item from the room into the player's inventory. It checks if the item is in the room the 
-	 player is in, and if so takes it. Then the game handles any special events, and specific commands (such
-	 as picking an apple. It handles the food and drink by removing the item and then increasing the player's
-	 food and drink value.
+- **getPlayer() → Player**  
+  Returns the `Player` object. Used primarily for *save* and *load* functions.
 
-- give - This involves the player giving an item to a specific person. The main function is elsewhere as it will
-	 ask the player who they are giving the item to, however it will check if the player is currently
-	 carrying the item.
+- **getGame() → Game**  
+  Returns the `Game` object. Used primarily for *save* and *load* functions.
 
-- drop - This command puts an item in the player's inventory into the room the player is currently in. Initially checks
-	 if the item is fragile (and the player has it). If it is, it breaks. Otherwise it checks if the player is
-	 carrying the item, and if so puts it in the room the player is in.
+#### **Command-Specific Methods**
 
-- eat - This will have the player eat food, as long as the player has more than 0 food. It checks if it is poisonous
-	and if it, it will reduce the food by 1 and increase strength by 10. If the food is poisonous then the 
-	appropriate damage is done (less 2 strength and 5 wisdom).
+#### **Movement Commands**
+- **move()**  
+  Moves the player between locations:  
+  - Converts special directions (*in, out, up, down*) to standard directions.  
+  - Checks for blocked paths and prevents movement if a direction is unavailable.  
+  - Updates the player's location based on the direction (e.g., north decreases room number by 10, east increases by 1).  
+  - Handles special events triggered by movement.
 
-- drink - This does the same as the eat, except that it does it for liquid.
 
-- ride - This basically will set a flag that will allow the player to enter a location. The player needs to 
-	have the correct item, and if so the flag will be set.
+#### **Item Interaction Commands**
+- **take()**  
+  Moves an item from the current room to the player's inventory:  
+  - Checks if the item is present in the room.  
+  - Updates the game state for special events triggered by the action.  
+  - Handles specific cases like consuming food or drink.
 
-- open - Executes the open command, which is used twice in the game. The settings are checked and if they match
-	 then the message is displayed and the changes are made. Otherwise the error message is displayed.
+- **drop()**  
+  Places an item from the player's inventory into the current room:  
+  - Checks if the item is fragile and breaks it if applicable.  
+  - Otherwise, places the item in the room.
 
-- chip - This is one of four commands - tap, break, chip, or chop. I originally had break but that is a reserved word so
-	 I used chip instead. Like the other commands this check if the settings and the command is correct and if
-	 so the command is executed. If the settings aren't correct then an error message is produced.
+- **eat()**  
+  Consumes food from the player's inventory:  
+  - Increases strength by 10 if the food is safe.  
+  - If poisonous, applies appropriate penalties (e.g., reduces strength and wisdom).
 
-- kill - This executes the kill command, which checks if the subject is present, and then responds appropriately.
+- **drink()**  
+  Similar to *eat()*, but for liquids.
 
-- attack - The attack command is executed. Differently the command checks which noun is being used, if the resultant
-	   object (creature) is present, and responds appropriately. There is a special command at the end which is 
-	   specifically for striking something that appears to produce an end game flag.
+- **ride()**  
+  Sets a flag allowing the player to access specific locations, provided the correct item is available.
 
-- swim - This command checks the player's location (and flag of specific item) and moves the player to the swimming
-	 section.
+- **open()**  
+  Handles the *open* command:  
+  - Checks for required conditions (e.g., specific flags or items).  
+  - Updates the game state if conditions are met; otherwise, displays an error message.
 
-- shelter - This checks if a flag is correct and then sets the response up to get a choice of the player to where
-	 they wich to shelter.
+- **fill()**  
+  Fills a specific item (e.g., an Earthware jug) at a designated location.
 
-- help - The help command is executed. Unlike a lot of other games, this is to help an individual as opposed to
-	 asking the computer for help. Once again it checks the flags and produces a response based on it.
+#### **Combat Commands**
+- **kill()**  
+  Executes the *kill* command:  
+  - Checks if the target is present in the room.  
+  - Produces an appropriate response based on the game state.
 
-- polish - A command that is used in a couple of specific locations to advance the game.
+- **attack()**  
+  Executes the *attack* command:  
+  - Checks the target noun and its presence in the room.  
+  - Triggers specific events for certain targets, including endgame conditions.
 
-- examine - Either sets an error message, or if the flags are correct, then it responds with a hint. Could be used better.
+#### **Other Commands**
+- **chip()**  
+  A multipurpose command (*tap, break, chip, chop*):  
+  - Executes specific actions based on the settings.  
+  - Displays an error message if conditions aren't met.
 
-- fill - Used to fill the Earthwenware jug in a specific location.
+- **swim()**  
+  Moves the player to a designated swimming area, provided conditions are met.
 
-- say - This is different to the normal verb-noun command. Instead everything after 'say' is what is said.
-	If a specific phrase is said at a specific location then the game is advance. Otherwise the phrase is repeated.
+- **shelter()**  
+  Checks the relevant flags and prompts the player to select a shelter location.
 
-- rest - Based on some factors, a random amount of time is spent resting, and for every period strength and wisdom are increased.
+- **help()**  
+  Provides help to another character rather than asking for game hints:  
+  - Produces context-specific responses based on game flags.
 
-- wave - There are two events, one which advances the game, the other which is a response from the boatman.
+- **polish()**  
+  Advances the game in specific locations where polishing is required.
 
-- info - This displays the player's inventory.
+- **examine()**  
+  Examines an object:  
+  - Provides a hint if conditions are met.  
+  - Displays an error message otherwise.
 
-- save - The status of the current game is written to file. The file name needs to be stated after save. It checks
-	 if the filename has already been used and advises the player how to overwrite.
+- **say()**  
+  Executes the *say* command:  
+  - Takes everything after *say* as the input.  
+  - Advances the game if the correct phrase is spoken in the right location.  
+  - Otherwise, repeats the phrase.
 
-- load - The named file (if it exists) is loaded into the game.
+- **rest()**  
+  Causes the player to rest for a random duration:  
+  - Increases strength and wisdom proportionally to the time spent resting.
 
-- display - Displays a list of saved files.
+- **wave()**  
+  Executes the *wave* command:  
+  - Produces one of two outcomes: advancing the game or triggering a response from the boatman.
 
-- quit - Brings the game to an end.
+- **info()**  
+  Displays the player's inventory.
+  
+#### **File Management Commands**
+- **save(String filename)**  
+  Saves the current game state to a file:  
+  - Checks if the file already exists.  
+  - Advises the player on how to overwrite an existing file.
 
-**Test**
+- **load(String filename)**  
+  Loads a saved game state from a file if it exists.
 
-This class is used primarily for testing and has two methods, one for setting variables when the game starts and one for displaying values when the game is running.
+- **display()**  
+  Displays a list of saved game files.
 
-- setTest - this takes the game and player object and will set varibales in it to make testing easier.
+#### **Game Termination Command**
+- **quit()**  
+  Ends the game session.
 
-- displayValue - this also takes the game and player objects and are used to display variables in them.
+### **Key Notes**
+
+- The class supports a wide range of commands, each tied to specific in-game actions or responses.  
+- Commands are validated before execution, ensuring proper feedback for invalid inputs.  
+- Special handling for commands like *give*, *shelter*, and *say* ensures context-sensitive outcomes.  
+- The design supports flexibility for future expansion or additional commands.
+
+---
+
+
 
 ### View ###
 
