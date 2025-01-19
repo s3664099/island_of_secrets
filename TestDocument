@@ -19,13 +19,9 @@ To Test
 
 
 
-Help - Respond with villager & Sage
-	- flag set when sage scratched
-	- (what does the flag do?)
 
-Polish - Response is nothing
-	- Rubbing Crystal Stone
-	- Rubbing stone (what is the take for?)
+
+
 
 Examine - standard response
 	- When examine the parchment
@@ -192,3 +188,9 @@ Swim - Can swim here
 Shelter - can only do it when flag certain number
 	- Does it occur when the flag is correct
 	- How does the flag get there?
+Help - Respond with villager & Sage
+	- flag set when sage scratched
+	- (what does the flag do?) - reveals Lily
+Polish - Response is nothing
+	- Rubbing Crystal Stone
+	- Rubbing stone (what is the take for?)

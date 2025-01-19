@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.11
-Date: 15 January 2025
+Version: 2.12
+Date: 19 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -79,7 +79,7 @@ public class Commands {
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
 		if (game.getItem(39).checkLocation(player.getRoom()) && 
 			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
-			game.setMessage("You can't leave!");
+			game.setMessage("Omegan's presence prevents you from leaving!");
 		
 		//Swampman blocks
 		} else if (player.getRoom() == game.getItem(32).getLocation() && 
@@ -579,20 +579,20 @@ public class Commands {
 		} 
 	}
 	
-	public void polish(Player player, Game game) {
+	public void polish(Player player, Game game,String noun) {
 		
 		game.setMessage("A-dub-dub");
-		
-		//Rub the mouth at the crystal stone
-		if (code.substring(0,4).equals("2815") && player.getRoom()==15) {
-			if (game.getItem(noun).getFlag()==1) {
-				game.getItem(noun).setFlag(1);
-				game.setMessage("Reflections stir within.");
-			} else if (game.getItem(5).getLocation()==0) {
-				game.getItem(8).setFlag(0);
-				take(game,player); //Not sure why this is here
-				game.setMessage("The stone utters 'Stony Words'");
-			}
+				
+		//Rub the stone
+		if (noun.equals("stone") && player.getRoom()==15 && game.getItem(28).getFlag()==1
+			&& game.getItem(5).getLocation()==0) {
+			game.getItem(28).setFlag(0);
+			game.setMessage("Reflections stir within.");			
+		} else if (code.substring(0,4).equals("2815") && player.getRoom()==15
+				&& game.getItem(28).getFlag()==0) {
+			game.getItem(8).setFlag(0);
+			take(game,player);
+			game.setMessage("The stone utters 'Stony Words'");
 		}
 	}
 	
@@ -891,4 +891,5 @@ public class Commands {
  * 13 January 2025 - Added extra responses to attack and made coal disappear instead of flint.
  * 14 January 2025 - Changed room allocation when swimming so not swimming in poisoned waters for too long (as per game).
  * 15 January 2025 - Fixed the shelter options to appear nicer
+ * 19 January 2025 - Updated the polish/rub command to make more sense
  */

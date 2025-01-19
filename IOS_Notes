@@ -23,6 +23,8 @@ Need to have a look/search command to offer clues (examine room?)
 	- Chest - change the name when opened. Indicate the note in the chest as well.
 	- Well, actually, turns out that there are lots of hints in the book, so yeah, I might just refer to player there
 	- choping a thing doesn't returns to the command line as opposed to ending the game - need to look into that
+	- There is something about the mouth-like opening in the stone - do we know it is there.
+		- Actually, maybe start by rubbing the stone to reveal the mounth, and then rub mouth (with rag)
 
 A$	- Normally used to display the place location
 A	- Verb Chosen

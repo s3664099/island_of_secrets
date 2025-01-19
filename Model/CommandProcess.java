@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.5
-Date: 13 January 2025
+Version: 2.6
+Date: 19 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,7 +14,6 @@ import java.util.Random;
 import Data.Constants;
 import Data.Item;
 import Data.RawData;
-import View.GamePanel;
 
 public class CommandProcess {
 	
@@ -22,10 +21,8 @@ public class CommandProcess {
 	private String[] commands;
 	private String originalCommand;
 	private int verbNo;
-	private int nounNo;
 	private String codedCommand;
 	private Commands command;
-	private int nounNumber;
 	private Game game;
 	private Player player;
 	private boolean loadedGame = false;
@@ -109,7 +106,6 @@ public class CommandProcess {
 		//Only called if more than two words
 		if (commands.length>1) {
 			nounNumber = getNounNum(splitCommand[1].toLowerCase());
-			this.nounNo = nounNumber;
 		} else {
 			nounNumber = -1;
 		}
@@ -146,7 +142,6 @@ public class CommandProcess {
 	//Executes the command
 	public void executeCommand(Game game,Player player,int nounNumber) {
 		
-		nounNo = nounNumber;
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		
 		if (verbNo != 43) {
@@ -253,7 +248,7 @@ public class CommandProcess {
 
 			//Rub & Polish
 			} else if (verbNo==30||verbNo==31) {
-				this.command.help(player, game);
+				this.command.polish(player, game,splitCommand[1]);
 
 			//Read & Examine
 			} else if (verbNo==32||verbNo==33) {
@@ -409,7 +404,6 @@ public class CommandProcess {
 		}
 		
 		int stormRand = rand.nextInt(3);
-		System.out.println(stormRand);
 		
 		//Does the living storm appear
 		if (player.getTime()<900 && player.getRoom()==23 && 
@@ -467,8 +461,6 @@ public class CommandProcess {
 				game.getItem(11).setFlag(0);
 				game.setMessage("He offers his staff");
 				player.adjustDrink(1);
-			
-			
 			} else {
 				if ((codedNoun.substring(0,3).equals("300") || 
 					 codedNoun.substring(0,3).equals("120")) &&
@@ -562,4 +554,5 @@ public class CommandProcess {
  * 3 January 2025 - Got the issue with the panel not displaying with a give.
  * 4 January 2025 - added an abs method call for the flag as well. Changed the hardcoded noun numbers to constant.
  * 13 January 2025 - Made sure a 0 isn't selected when selecting a random item to drop
+ * 19 January 2025 - Directed rub & polish to correct method.
  */
