@@ -723,7 +723,30 @@ This class handles most game commands, excluding *give* and *shelter*, which req
 
 ---
 
+### **Test**
 
+The **Test** class is designed specifically to assist with testing the game. It provides two primary methods: one for setting up variables at the start of the game and another for displaying values during runtime to validate game logic.
+
+#### **Methods**
+
+- **setTest(Game game, Player player)**  
+  This method initializes the game and player objects with predefined values to simplify testing.  
+  - Used to bypass certain setups or advance the game state directly for debugging purposes.
+
+- **displayValue(Game game, Player player)**  
+  Displays key variables from the game and player objects.  
+  - Useful for monitoring the state of the game during runtime and verifying that changes are applied as expected.  
+  - Ideal for debugging issues related to gameplay mechanics or player actions.
+
+#### **Purpose**
+
+The **Test** class is intended as a development tool, streamlining the debugging process by:  
+- Reducing the need for manual setup during repetitive tests.  
+- Providing a quick way to monitor and validate game states, player attributes, and other key variables.  
+
+This class is not intended for use in the final release version of the game.
+
+---
 
 ### View ###
 
