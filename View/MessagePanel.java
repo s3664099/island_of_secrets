@@ -2,16 +2,14 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 18 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.concurrent.TimeUnit;
 
@@ -19,16 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 import Model.GameEngine;
 
 public class MessagePanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel label;
 	private GamePanel game;
 	private GameEngine engine;
-	private boolean room;
 	
     public MessagePanel(GamePanel game,GameEngine engine,String messageOne,String messageTwo,int noMessages) {
     	
@@ -107,4 +104,5 @@ public class MessagePanel extends JPanel {
  * 2 December 2024 - Added longer delay for last display
  * 4 December 2024 - Added code to have different messages appear if repeating
  * 23 December 2024 - Updated to version 2.
+ * 18 January 2025 - Removed the unused includes and added a serializable section to get rid of warnings.
  */

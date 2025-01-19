@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 19 January 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,14 +51,12 @@ public class CommandListener implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	    // Method required by KeyListener but not used
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	    // Method required by KeyListener but not used		
 	}
 
 }
@@ -67,4 +65,5 @@ public class CommandListener implements KeyListener {
  * 22 December 2024 - Added check for special response requests
  * 23 December 2024 - Added process for sheltering
  * 					  Updated to version 2.
+ * 19 January 2025 - Added notes for unused methods.
  */

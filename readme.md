@@ -814,7 +814,53 @@ The constructor takes the game panel, enginger, and details of the messages. It 
 
 ### Controller ###
 
-**CommandListener**
+## **CommandListener**
+
+### **Overview**
+
+The `CommandListener` class is part of the **Controller** package and implements the `KeyListener` interface. It is responsible for handling user input via a `JTextField` and processing commands entered into the text field. This class connects the **View** (`GamePanel`) and the **Model** (`GameEngine`) by ensuring commands are properly forwarded to the game logic and updates are reflected in the interface.
+
+### **Key Responsibilities**
+
+1. **Captures Player Input**  
+   - Listens for key presses, specifically the `Enter` key, and retrieves the text input entered by the player.
+
+2. **Delegates Command Processing**  
+   - Directs commands to the appropriate method in `GameEngine` based on the current `responseType`.
+
+3. **Integrates with View and Model**  
+   - Uses the `GamePanel` for displaying results and `GameEngine` for executing game logic.
+
+### **Class Structure**
+
+#### **Instance Variables**
+
+- `JTextField text`: Holds the reference to the input field for player commands.
+- `GameEngine game`: Represents the core game logic.
+- `GamePanel gamePanel`: Represents the UI component for displaying game output.
+
+### **Constructor**
+
+- Initializes the `CommandListener` with references to the `JTextField`, `GameEngine`, and `GamePanel`.
+- Ensures that the necessary components for user input, game logic, and UI updates are properly connected.
+
+### **Methods**
+
+- **`keyPressed(KeyEvent evt)`**
+  Captures the event when a key is pressed.
+  Checks if the `Enter` key is pressed (`KeyEvent.VK_ENTER`):
+  1. Retrieves the command text from the input field.
+  2. Clears the text field for new input.
+  3. Routes the command to one of the following methods in `GameEngine`:
+   - `processGive` (when `responseType == 1`).
+   - `processShelter` (when `responseType == 2`).
+   - `processCommand` (default behavior for other commands).
+
+#### **`keyReleased(KeyEvent evt)`**
+- Not implemented. Required for KeyListener.
+
+#### **`keyTyped(KeyEvent evt)`**
+- Not implemented. Required for KeyListener.
 
 **QuitButton**
 
