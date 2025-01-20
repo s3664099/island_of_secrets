@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.0
-Date: 23 December 2024
+Version: 2.1
+Date: 20 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -150,7 +150,7 @@ public class RawData {
 		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",
 		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits",
 		"mushrooms","bottle","flagon","sap","water","boat","chest","column","opening",
-		"trapdoor","villager","liquor","swampman","sage","books","roots","storm","wraiths",
+		"trapdoor","villager","liquid","swampman","sage","books","roots","storm","wraiths",
 		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
 		"up","down","in","out"
 	};
@@ -202,4 +202,5 @@ public class RawData {
  * 19 December 2024 - Added the games command
  * 20 December 2024 - Moved the games command
  * 23 December 2024 - Updated to version 2.
+ * 20 January 2025 - Change liquid to liquor
 */

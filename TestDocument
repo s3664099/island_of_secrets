@@ -23,17 +23,16 @@ To Test
 
 
 
-Examine - standard response
-	- When examine the parchment
 
-Fill - Standard Response
-	- The earthenware jug
+
+
 
 Speak - Stony Words - How to set it, and then get there
 
 Rest - 
 
-Wave - 
+Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
+	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
 
 Info -
 
@@ -51,12 +50,9 @@ Post Command Responses -
 
 	
 	
-Rub - This is used to stop the stones from preventing you from moving
-	- Need to work out how to get here and then to the stones to test it works.
-	- So, rub opening with the rag and the flags are set (and you hear the word as well).
 
-Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
-	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
+
+
 	
 	
 	
@@ -194,3 +190,10 @@ Help - Respond with villager & Sage
 Polish - Response is nothing
 	- Rubbing Crystal Stone
 	- Rubbing stone (what is the take for?)
+Rub - This is used to stop the stones from preventing you from moving
+	- Need to work out how to get here and then to the stones to test it works.
+	- So, rub opening with the rag and the flags are set (and you hear the word as well).
+Examine - standard response
+	- When examine the parchment
+Fill - Standard Response
+	- The earthenware jug

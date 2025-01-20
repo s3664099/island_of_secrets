@@ -25,8 +25,8 @@ public class Test {
 	public void displayValue(Game game, Player player) {
 
 		//System.out.println(player.getWisdom());
-		//System.out.println(game.getItem(5).getItem());
-		//System.out.println(game.getItem(5).getLocation());
+		//System.out.println(game.getItem(6).getItem());
+		//System.out.println(game.getItem(6).getLocation());
 		//System.out.println(game.getItem(5).getFlag());
 		//System.out.println(game.getRoomName(62));
 		//System.out.println(game.getItem(43).getFlag());
