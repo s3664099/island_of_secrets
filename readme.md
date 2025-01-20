@@ -862,6 +862,23 @@ The `CommandListener` class is part of the **Controller** package and implements
 #### **`keyTyped(KeyEvent evt)`**
 - Not implemented. Required for KeyListener.
 
-**QuitButton**
+## **QuitButton Class ReadMe**
+
+### **Overview**
+The `QuitButton` class is part of the `Controller` package and is responsible for handling the quit action in the game. It listens for the "quit" button press and performs the necessary operation to close the game window. This class ensures a seamless user experience when exiting the game by disposing of the main game frame (`GameFrame`).
+
+### **Key Responsibilities**
+1. Listens for user interaction with the "Quit" button.
+2. Disposes of the `GameFrame` instance to close the game window.
+3. Simple and lightweight design for ease of use.
+
+### **Constructor**
+
+- Stores the reference to the `GameFrame` to dispose of it upon triggering the quit action.
+
+### ** Methods**
+- **actionPerformed(ActionEvent arg0)**
+- Executes when the quit button is pressed. It closes the game window by calling the `dispose()` method on the `GameFrame`.
+
 
 
