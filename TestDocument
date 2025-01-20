@@ -29,20 +29,31 @@ To Test
 
 Speak - Stony Words - How to set it, and then get there
 
-Rest - 
+Rest - gets a count based on the living storm flage
+	- reduces time by count
+	- if time greater than 100 & living storm flag less than 1 increases wisdom and resets living storm flag
+	- displays Time Passes based on count
 
 Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
 	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
 
-Info -
+Info - Displays the player's inventory
 
-Save - 
+Save - save the game
 
-Load -
+Load - load the game
 
-Display - 
+Display - display the saved games
 
-Post Command Responses - 
+Post Command Responses:
+- in Grove of Orchids (61) - Wisdom increased between 1-3
+- Biting Bushes - one in three lose 1 strength
+- Living Storm Flag less than 1 & wine flag isn't room - increases storm flag by one, puts it in player's room, and increase strength by 1
+- Canyon Beast - if not being carried - random room 1-5
+- Omegan - if not in same room as player - random place based on strange calculation
+- Swampman - position changes 76,77 or 78
+- Boatman - Room either 33,57 or 73 - if egg flag 1 - appears at player's location
+- Swampman - with player, 1 in 2 changes, flag is 0 - tells tale - if have pebble asks for it
 
 
 	
