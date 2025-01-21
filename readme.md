@@ -862,7 +862,7 @@ The `CommandListener` class is part of the **Controller** package and implements
 #### **`keyTyped(KeyEvent evt)`**
 - Not implemented. Required for KeyListener.
 
-## **QuitButton Class ReadMe**
+## **QuitButton**
 
 ### **Overview**
 The `QuitButton` class is part of the `Controller` package and is responsible for handling the quit action in the game. It listens for the "quit" button press and performs the necessary operation to close the game window. This class ensures a seamless user experience when exiting the game by disposing of the main game frame (`GameFrame`).
