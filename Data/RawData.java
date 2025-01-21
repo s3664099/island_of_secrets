@@ -202,5 +202,5 @@ public class RawData {
  * 19 December 2024 - Added the games command
  * 20 December 2024 - Moved the games command
  * 23 December 2024 - Updated to version 2.
- * 20 January 2025 - Change liquid to liquor
+ * 20 January 2025 - Change liqupr to liquid
 */

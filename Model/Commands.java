@@ -495,6 +495,7 @@ public class Commands {
 			//Sage of the Lilies
 			} else if (noun==33) {
 				game.setMessage("You can't touch her");
+				game.getItem(3).setLocation(81);
 			
 			//Logmen
 			} else if (noun==41) {

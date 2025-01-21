@@ -462,6 +462,7 @@ public class CommandProcess {
 				game.setMessage("He offers his staff");
 				player.adjustDrink(1);
 			} else {
+				
 				if ((codedNoun.substring(0,3).equals("300") || 
 					 codedNoun.substring(0,3).equals("120")) &&
 					 objNumber == 42) {

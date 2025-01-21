@@ -15,6 +15,14 @@ To Test
 
 
 
+- Stoney Words - Go to Hut, get apple & give to snake. Go hut & open chest
+		- get hammer and rag - also get any food on the way
+		- Go to the Sage of the Lilly - scratch her and take the lillies
+		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
+		- go to leafy path and then snelms lair - get parchment & read parchment
+		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
+		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
+		(Need to get past arms - get torch and wave it)
 
 
 
@@ -27,7 +35,6 @@ To Test
 
 
 
-Speak - Stony Words - How to set it, and then get there
 
 Rest - gets a count based on the living storm flage
 	- reduces time by count
@@ -208,3 +215,8 @@ Examine - standard response
 	- When examine the parchment
 Fill - Standard Response
 	- The earthenware jug
+Speak - Stony Words - How to set it, and then get there
+	- Room is 47 & Blistering pebble flag is 0 (you read the parchment)
+	- wisdom needs to be 60 or above as you need to use the boatman to get there
+	- Scavenger - be in same room - Lily & Chip must be gone
+		- Give the lillies & the stone to the scavenger (He is in the castle)

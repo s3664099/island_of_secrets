@@ -25,6 +25,11 @@ Need to have a look/search command to offer clues (examine room?)
 	- choping a thing doesn't returns to the command line as opposed to ending the game - need to look into that
 	- There is something about the mouth-like opening in the stone - do we know it is there.
 		- Actually, maybe start by rubbing the stone to reveal the mounth, and then rub mouth (with rag)
+	- logmen seem to be going to odd places (the cave & forest). Need to confirm where they need to go.
+	- Rag needs to be displayed in hut
+	- Should only get wisdom bonus for taking an object once - each object has a wisdom flag - if checked do not get bonus. If not checked get bonus and flag checked
+	- need to check what to do with the lillies - then disappearing when you attack the sage is rather odd.
+	- Have lilly special flag if attack the sage so the lillies disappearing do not cross with ancient sage
 
 A$	- Normally used to display the place location
 A	- Verb Chosen
