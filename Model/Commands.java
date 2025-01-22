@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.12
-Date: 19 January 2025
+Version: 2.13
+Date: 22 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -642,7 +642,7 @@ public class Commands {
 		
 		//Randomly selects time to wait based on Living Storm
 		int count = game.getItem(36).getFlag()+3;
-		
+				
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
 			player.reduceTime();
@@ -655,10 +655,11 @@ public class Commands {
 			player.adjustWisdom(2);
 			game.getItem(36).setFlag(1);
 		}
-		
+				
 		if (!msgSet) {
 			game.setPanelMessages("Time passes ...", "Time passes ...", count);
 			game.setMessage("Ok");
+			player.setPanelFlag(3);
 		}
 		
 		return count;		
@@ -893,4 +894,5 @@ public class Commands {
  * 14 January 2025 - Changed room allocation when swimming so not swimming in poisoned waters for too long (as per game).
  * 15 January 2025 - Fixed the shelter options to appear nicer
  * 19 January 2025 - Updated the polish/rub command to make more sense
+ * 22 January 2025 - Fixed problem with display not displaying on rest
  */

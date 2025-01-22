@@ -40,6 +40,9 @@ Rest - gets a count based on the living storm flage
 	- reduces time by count
 	- if time greater than 100 & living storm flag less than 1 increases wisdom and resets living storm flag
 	- displays Time Passes based on count
+	- Check Wine flags and if causes str to increase
+	- Check storm flags and see what causes it as well.
+	
 
 Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
 	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
