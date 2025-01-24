@@ -22,7 +22,11 @@ To Test
 		- go to leafy path and then snelms lair - get parchment & read parchment
 		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
 		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
-		(Need to get past arms - get torch and wave it)
+		- Torch is at entrance, so take it and wave it
+
+When you shelter, the flag on the wine is set to -R (This is where you shelter)
+So, if you are where you are sheltering, your strength will increase when resting.
+Ideally you can't rest while the storm is raging, though by sheltering you don't lose strength.
 
 
 
@@ -36,12 +40,6 @@ To Test
 
 
 
-Rest - gets a count based on the living storm flage
-	- reduces time by count
-	- if time greater than 100 & living storm flag less than 1 increases wisdom and resets living storm flag
-	- displays Time Passes based on count
-	- Check Wine flags and if causes str to increase
-	- Check storm flags and see what causes it as well.
 	
 
 Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
@@ -223,3 +221,9 @@ Speak - Stony Words - How to set it, and then get there
 	- wisdom needs to be 60 or above as you need to use the boatman to get there
 	- Scavenger - be in same room - Lily & Chip must be gone
 		- Give the lillies & the stone to the scavenger (He is in the castle)
+Rest - gets a count based on the living storm flage
+	- reduces time by count
+	- if time greater than 100 & living storm flag less than 1 increases wisdom and resets living storm flag
+	- displays Time Passes based on count
+	- Check Wine flags and if causes str to increase
+	- Check storm flags and see what causes it as well.

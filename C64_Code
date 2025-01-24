@@ -98,7 +98,7 @@
 660 FOR I=1 TO D:READ A$:NEXT I
 680 LET D$=RIGHT$(A$,4):LET A$=LEFT$(A$,LEN(A$)-4) - Retrieves the exists
 690 IF R=39 THEN LET D$=MID$("101110100",FNR(5),4) - The exits are randomised
-700 IF R=20 THEN LET D$="1110"					   - Makes sure the exits for room 20 same
+700 IF R=20 THEN LET D$="1110"					   - Makes sure the exits for room 20 sameF(7)
 710 GOSUB 2780:RETURN
 
 -- Checks if the text exceeds the size of the screen and wraps it to the next line

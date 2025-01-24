@@ -640,9 +640,9 @@ public class Commands {
 	
 	public int rest(Game game, Player player, boolean msgSet) {
 		
-		//Randomly selects time to wait based on Living Storm
+		//Bases time to wait based on Living Storm flag
 		int count = game.getItem(36).getFlag()+3;
-				
+						
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
 			player.reduceTime();
