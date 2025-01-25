@@ -46,11 +46,7 @@ Ideally you can't rest while the storm is raging, though by sheltering you don't
 
 
 
-Save - save the game
 
-Load - load the game
-
-Display - display the saved games
 
 Post Command Responses:
 - in Grove of Orchids (61) - Wisdom increased between 1-3
@@ -230,3 +226,9 @@ Wave - Wave the torch and then use it to pass the hands (though you should be ho
 	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
 	
 Info - Displays the player's inventory
+
+Save - save the game
+
+Load - load the game
+
+Display - display the saved games

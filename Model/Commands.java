@@ -815,18 +815,19 @@ public class Commands {
 		});
 		
 		//Sets variables to list set number of game names
-		game.setMessage("Games Saves");
+		String gameMessage = "Games Saves|";
 		int noGames=savFiles.length;
 		int gameStart = 0;
-		int totalDisplayed = 9;
+		int totalDisplayed = 6;
+		int maxDisplay = 5;
 		boolean moreGames = false;
 				
 		//Check with number of games and determine which games are displayed
 		if (noGames>9) {
-			gameStart = game.getCount()*9;
-			if (noGames-gameStart>9) {
+			gameStart = game.getCount()*maxDisplay;
+			if (noGames-gameStart>maxDisplay) {
 				game.setCount();
-				totalDisplayed = gameStart+9;
+				totalDisplayed = gameStart+maxDisplay;
 				moreGames = true;
 			} else {
 				totalDisplayed += noGames-gameStart;
@@ -838,12 +839,14 @@ public class Commands {
 				
 		//Display the games selected
 		for (int i = gameStart; i<totalDisplayed;i++ ) {
-			game.addMessage(String.format("|%s",savFiles[i].getName()));
+			gameMessage = String.format("%s|%s",gameMessage,savFiles[i].getName());
 		}
 		
 		if (moreGames) {
-			game.addMessage("|Type 'games' for more");
+			gameMessage = String.format("%s||Type 'games' for more",gameMessage);
 		}
+		
+		game.setMessage(gameMessage);
 	}
 	
 	public void quit(Player player, Game game) {
@@ -891,5 +894,6 @@ public class Commands {
  * 15 January 2025 - Fixed the shelter options to appear nicer
  * 19 January 2025 - Updated the polish/rub command to make more sense
  * 22 January 2025 - Fixed problem with display not displaying on rest
- * 25 January 2025 - got rid of initial comma for info
+ * 25 January 2025 - Fixed problem with the comma appearing at beginning of items in inventory.
+ * 
  */
