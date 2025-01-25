@@ -19,6 +19,7 @@ import Data.RawData;
 
 public class Game implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private int noRooms = Constants.noRooms;
 	private int noItems = Constants.noNouns;
 	private Location[] locationList = new Location[noRooms+1];

@@ -17,7 +17,8 @@ Need to have a look/search command to offer clues (examine room?)
 	  if strength is less than 50 it drops one of the first 9 items) - update will reduce the player's strength
 	  based on the number of items carried (the weight) but I need to check out the 9 items problem.
 	- Thing about the torch - wave it to allow pass arms - no way to know how to do it - also can drop the torch
-	  and it still allows it - though will need to check that in the code.
+	  and it still allows it - though will need to check that in the code - response when the torch is bright in
+	  the arms room.
 	- The apple is in the same room as the snake, but there is no indication that it is there, and no hints.
 	  Giving the apple to the snake removes it. I need to consider the apple - probably add something to the title
 	- Chest - change the name when opened. Indicate the note in the chest as well.

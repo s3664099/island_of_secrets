@@ -42,10 +42,9 @@ Ideally you can't rest while the storm is raging, though by sheltering you don't
 
 	
 
-Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
-	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
 
-Info - Displays the player's inventory
+
+
 
 Save - save the game
 
@@ -227,3 +226,7 @@ Rest - gets a count based on the living storm flage
 	- displays Time Passes based on count
 	- Check Wine flags and if causes str to increase
 	- Check storm flags and see what causes it as well.
+Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
+	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
+	
+Info - Displays the player's inventory

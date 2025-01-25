@@ -77,7 +77,7 @@ public class CommandProcess {
 			command = "e";
 		} else if (command.equals("west")) {
 			command = "w";
-		}
+		} 
 		
 		return command;	
 	}

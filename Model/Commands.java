@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.13
-Date: 22 January 2025
+Version: 2.14
+Date: 25 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -687,21 +687,17 @@ public class Commands {
 		game.setMessage("Info - Items carried|");
 		game.addMessage("Food: "+player.getFood());
 		game.addMessage("      Drink: "+player.getDrink()+"|");
-		
-		int msglen = 0;
-		
+				
 		for (int i=1;i<Constants.carriableItems+1;i++) {
 			
 			if (game.getItem(i).checkLocation(0)) {
 				
 				if (!hasItem) {
-					game.addMessage("|Items: ");
+					game.addMessage("|Items: "+game.getItem(i).getItem());
 					hasItem = true;
-					msglen += 7;
+				} else {
+					game.addMessage(" "+game.getItem(i).getItem());
 				}
-				
-				msglen += game.getItem(i).getItem().length();
-				game.addMessage(" "+game.getItem(i).getItem());
 			}
 		}	
 	}
@@ -895,4 +891,5 @@ public class Commands {
  * 15 January 2025 - Fixed the shelter options to appear nicer
  * 19 January 2025 - Updated the polish/rub command to make more sense
  * 22 January 2025 - Fixed problem with display not displaying on rest
+ * 25 January 2025 - got rid of initial comma for info
  */
