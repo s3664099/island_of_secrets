@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.6
-Date: 19 January 2025
+Version: 2.7
+Date: 26 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -279,12 +279,21 @@ public class CommandProcess {
 			player.adjustStrength(-1);
 			game.addMessage("You are bitten.");
 		}
-		
+			
 		//Adjusting flag of living storm
 		if (game.getItem(36).getFlag()<1 && game.getItem(22).getFlag() != -player.getRoom()) {
 			game.getItem(36).setFlag(game.getItem(36).getFlag()+1);
 			game.getItem(36).setLocation(player.getRoom());
 			player.adjustStrength(-1);
+		}
+
+		int stormRand = rand.nextInt(3);
+
+		//Does the living storm appear
+		if (player.getTime()<900 && player.getRoom()==23 && 
+			game.getItem(36).getFlag()>0 && stormRand ==2) {
+			game.getItem(36).setFlag(-(rand.nextInt(4)+6));
+			game.addMessage(" A storm breaks overhead!");
 		}
 		
 		//Location of the wild canyon beast
@@ -307,16 +316,10 @@ public class CommandProcess {
 			player.adjustStrength(-2);
 			player.adjustWisdom(-2);
 		}
-		
+		//<-----	
 		//Swampman's Position
 		if (player.getRoom()<78 && game.getResponse()==0) {
 			game.getItem(32).setLocation(76+rand.nextInt(2));
-		}
-		
-		//Does the boatman appear?
-		if ((player.getRoom()==33 || player.getRoom()==57 || player.getRoom()==73) &&
-			game.getItem(2).getFlag()==1) {
-			game.getItem(25).setLocation(player.getRoom());
 		}
 		
 		//Swampman with the player?
@@ -336,6 +339,12 @@ public class CommandProcess {
 			game.setPanelMessages(swampMan, message, loop);
 		}
 		
+		//Does the boatman appear?
+		if ((player.getRoom()==33 || player.getRoom()==57 || player.getRoom()==73) &&
+			game.getItem(2).getFlag()==1) {
+			game.getItem(25).setLocation(player.getRoom());
+		}
+				
 		//Check if pushed into well - not sure who
 		if (player.getRoom()==19 && player.getStrength()<70 && 
 			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
@@ -402,16 +411,7 @@ public class CommandProcess {
 				game.addMessage(" You drop something.");
 			}
 		}
-		
-		int stormRand = rand.nextInt(3);
-		
-		//Does the living storm appear
-		if (player.getTime()<900 && player.getRoom()==23 && 
-			game.getItem(36).getFlag()>0 && stormRand ==2) {
-			game.getItem(36).setFlag(-(rand.nextInt(4)+6));
-			game.addMessage(" A storm breaks overhead!");
-		}
-		
+				
 		//Near the clashing stones
 		if (player.getRoom()==47 && game.getItem(8).getFlag()>0) {
 			game.addMessage(" You can go no further");
@@ -556,4 +556,5 @@ public class CommandProcess {
  * 4 January 2025 - added an abs method call for the flag as well. Changed the hardcoded noun numbers to constant.
  * 13 January 2025 - Made sure a 0 isn't selected when selecting a random item to drop
  * 19 January 2025 - Directed rub & polish to correct method.
+ * 26 January 2025 - Moved the living storm post command ifs together.
  */

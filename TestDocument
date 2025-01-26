@@ -24,10 +24,14 @@ To Test
 		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
 		- Torch is at entrance, so take it and wave it
 
+The storm breaks on the following settings - Time is less than 900
+					   - Player at starting location
+					   - Storm Flag greater than 0
+					   - 1 in 3 change
+	- When it happens the flag is set to a -ve between 4 and 10
 When you shelter, the flag on the wine is set to -R (This is where you shelter)
 So, if you are where you are sheltering, your strength will increase when resting.
 Ideally you can't rest while the storm is raging, though by sheltering you don't lose strength.
-
 
 
 
@@ -50,13 +54,12 @@ Ideally you can't rest while the storm is raging, though by sheltering you don't
 
 Post Command Responses:
 
-- Living Storm Flag less than 1 & wine flag isn't room - increases storm flag by one, puts it in player's room, and increase strength by 1
-- Canyon Beast - if not being carried - random room 1-5
-- Omegan - if not in same room as player - random place based on strange calculation
-- Swampman - position changes 76,77 or 78
+
+
 - Boatman - Room either 33,57 or 73 - if egg flag 1 - appears at player's location
 - Swampman - with player, 1 in 2 changes, flag is 0 - tells tale - if have pebble asks for it
-
+		- Looks like if you haven't given him the pebble he won't let you pass.
+		- Need to check this further - it is a red herring making the game uncompletable
 
 	
 	
@@ -235,3 +238,7 @@ Display - display the saved games
 Post Command
 - in Grove of Orchids (61) - Wisdom increased between 1-3
 - Biting Bushes - one in three lose 1 strength
+- Living Storm Flag less than 1 & wine flag isn't room - increases storm flag by one, puts it in player's room, and increase strength by 1
+- Canyon Beast - if not being carried - random room 1-5
+- Omegan - if not in same room as player - random place based on strange calculation
+- Swampman - position changes 76,77 or 78

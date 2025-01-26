@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.14
-Date: 25 January 2025
+Version: 2.15
+Date: 26 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -641,7 +641,7 @@ public class Commands {
 	public int rest(Game game, Player player, boolean msgSet) {
 		
 		//Bases time to wait based on Living Storm flag
-		int count = game.getItem(36).getFlag()+3;
+		int count = Math.abs(game.getItem(36).getFlag()+3);
 						
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
@@ -895,5 +895,6 @@ public class Commands {
  * 19 January 2025 - Updated the polish/rub command to make more sense
  * 22 January 2025 - Fixed problem with display not displaying on rest
  * 25 January 2025 - Fixed problem with the comma appearing at beginning of items in inventory.
- * 
+ * 					 Stylised 
+ * 26 January 2025 - Made the count for rest absolute value
  */

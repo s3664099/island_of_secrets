@@ -13,7 +13,7 @@ public class Test {
 
 	public void setTest(Game game, Player player) {
 		//player.setRoom(38);
-		//player.setTime(900);
+		player.setTime(900);
 		//game.getItem(3).setLocation(0);
 		//game.getItem(12).setLocation(0);
 		//game.getItem(3).setFlag(0);
@@ -29,8 +29,11 @@ public class Test {
 		//System.out.println(player.getWisdom());
 		//System.out.println(game.getItem(22).getItem());
 		//System.out.println(game.getItem(7).getLocation());
-		//System.out.println(game.getItem(7).getFlag());
-		//System.out.println(game.getRoomName(27));
+		//System.out.println(game.getItem(36).getFlag());
+		//System.out.println(game.getItem(22).getFlag());
+		//System.out.println(game.getRoomName(33));
+		//System.out.println(game.getRoomName(33));
+		//System.out.println(game.getRoomName(33));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());
 		//System.out.println(player.getRoom());
