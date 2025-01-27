@@ -316,7 +316,7 @@ public class CommandProcess {
 			player.adjustStrength(-2);
 			player.adjustWisdom(-2);
 		}
-		//<-----	
+			
 		//Swampman's Position
 		if (player.getRoom()<78 && game.getResponse()==0) {
 			game.getItem(32).setLocation(76+rand.nextInt(2));
@@ -341,10 +341,10 @@ public class CommandProcess {
 		
 		//Does the boatman appear?
 		if ((player.getRoom()==33 || player.getRoom()==57 || player.getRoom()==73) &&
-			game.getItem(2).getFlag()==1) {
+			rand.nextInt(2)==1) {
 			game.getItem(25).setLocation(player.getRoom());
 		}
-				
+		//<-----		
 		//Check if pushed into well - not sure who
 		if (player.getRoom()==19 && player.getStrength()<70 && 
 			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {

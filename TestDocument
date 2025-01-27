@@ -21,8 +21,11 @@ To Test
 		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
 		- go to leafy path and then snelms lair - get parchment & read parchment
 		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
+		
 		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
 		- Torch is at entrance, so take it and wave it
+
+
 
 The storm breaks on the following settings - Time is less than 900
 					   - Player at starting location
@@ -56,10 +59,15 @@ Post Command Responses:
 
 
 
-- Boatman - Room either 33,57 or 73 - if egg flag 1 - appears at player's location
-- Swampman - with player, 1 in 2 changes, flag is 0 - tells tale - if have pebble asks for it
-		- Looks like if you haven't given him the pebble he won't let you pass.
-		- Need to check this further - it is a red herring making the game uncompletable
+
+
+- Median - does he follow you when his flag is 0 - how to get his flag to 0?
+	- also look at the notice and the special flags that trigger it
+- Storage Casks - Room 18 - lose 1 str
+- Too weak to carry something - test that
+- Near Clashing stones - cannot move further
+
+- Finally End Game - Staff, Pebble & Coal all -1 - need to see how that is set.
 
 	
 	
@@ -242,3 +250,10 @@ Post Command
 - Canyon Beast - if not being carried - random room 1-5
 - Omegan - if not in same room as player - random place based on strange calculation
 - Swampman - position changes 76,77 or 78
+- Boatman - Room either 33,57 or 73 - if egg flag 1 - appears at player's location
+		- Supposed to just appear at these locations on a 1 in 2 chance - nothing to do with the egg.
+- Swampman - with player, 1 in 2 changes, flag is 0 - tells tale - if have pebble asks for it
+		- Looks like if you haven't given him the pebble he won't let you pass.
+		- Need to check this further - it is a red herring making the game uncompletable
+		- Not the pebble but the jug full of green liquid - he disappears
+		
