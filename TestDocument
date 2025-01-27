@@ -17,11 +17,12 @@ To Test
 
 - Stoney Words - Go to Hut, get apple & give to snake. Go hut & open chest
 		- get hammer and rag - also get any food on the way
+		- go to cave, get and fill jug
+		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
 		- Go to the Sage of the Lilly - scratch her and take the lillies
+		- give jub to swampman to make him go away
 		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
 		- go to leafy path and then snelms lair - get parchment & read parchment
-		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
-		
 		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
 		- Torch is at entrance, so take it and wave it
 
@@ -38,7 +39,10 @@ Ideally you can't rest while the storm is raging, though by sheltering you don't
 
 
 
-
+game1 - hut
+game2 - jug
+game3 - pebble & Sage
+game4 - Island
 
 
 
@@ -61,8 +65,7 @@ Post Command Responses:
 
 
 
-- Median - does he follow you when his flag is 0 - how to get his flag to 0?
-	- also look at the notice and the special flags that trigger it
+
 - Storage Casks - Room 18 - lose 1 str
 - Too weak to carry something - test that
 - Near Clashing stones - cannot move further
@@ -256,4 +259,5 @@ Post Command
 		- Looks like if you haven't given him the pebble he won't let you pass.
 		- Need to check this further - it is a red herring making the game uncompletable
 		- Not the pebble but the jug full of green liquid - he disappears
-		
+- Median - does he follow you when his flag is 0 - how to get his flag to 0?
+	- also look at the notice and the special flags that trigger it
