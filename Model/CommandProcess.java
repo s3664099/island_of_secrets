@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.7
-Date: 26 January 2025
+Version: 2.8
+Date: 27 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -354,7 +354,7 @@ public class CommandProcess {
 		
 		//Movement of the logmen if player not present
 		if (!game.getItem(41).checkLocation(player.getRoom())) {
-			game.getItem(41).setLocation(21+(rand.nextInt(3)*10)+rand.nextInt(2));
+			game.getItem(41).setLocation(21+((rand.nextInt(3)+1)*10)+(rand.nextInt(2)+1));
 		} else {
 			game.getItem(41).setFlag(game.getItem(41).getFlag()-1);
 			
@@ -374,6 +374,9 @@ public class CommandProcess {
 				} else {
 					player.setRoom(51);
 				}
+				
+				player.setPanelFlag(3);
+				game.setPanelMessages(message, messageTwo,2);
 				
 				//Do you lose items
 				for (int i=3;i<5;i++) {
@@ -557,4 +560,6 @@ public class CommandProcess {
  * 13 January 2025 - Made sure a 0 isn't selected when selecting a random item to drop
  * 19 January 2025 - Directed rub & polish to correct method.
  * 26 January 2025 - Moved the living storm post command ifs together.
+ * 27 January 2025 - Fixed problem with boatman not moving
+ * 				   - Fixed the logmen movement to be correct. Added the message that is displayed when they have fun
  */
