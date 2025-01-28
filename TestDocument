@@ -20,7 +20,6 @@ To Test
 		- go to cave, get and fill jug
 		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
 		- Go to the Sage of the Lilly - scratch her and take the lillies
-		- Go to the desicated villager and give him drink - take staff
 		- give jub to swampman to make him go away
 		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
 		- go to leafy path and then snelms lair - get parchment & read parchment
@@ -65,12 +64,14 @@ Post Command Responses:
 
 
 
-- Check with the logmen - that you lose the lilly flower and the jug
-- giving water to villager
 
-- Storage Casks - Room 18 - lose 1 str
+- work out how to get the egg
+
+
+
 - Too weak to carry something - test that
-- Near Clashing stones - cannot move further
+- Pushed into the Pit
+
 
 - Finally End Game - Staff, Pebble & Coal all -1 - need to see how that is set.
 
@@ -263,3 +264,9 @@ Post Command
 		- Not the pebble but the jug full of green liquid - he disappears
 - Median - does he follow you when his flag is 0 - how to get his flag to 0?
 	- also look at the notice and the special flags that trigger it
+- Check with the logmen - that you lose the lilly flower and the jug
+- Near Clashing stones - cannot move further!!
+	- Item 8? Where flag changed (Blistering Pebble)
+- what is HERE!! for - the directions randomly change, which allows access to different parts
+- where you change locations in the castle
+- Storage Casks - Room 18 - lose 1 str
