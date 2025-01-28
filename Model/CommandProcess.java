@@ -423,7 +423,6 @@ public class CommandProcess {
 		
 		//Involving staff, pebble & coal - seems like a win condition
 		if (game.getItem(8).getFlag()+game.getItem(11).getFlag()+game.getItem(13).getFlag()==-3) {
-			//game.getItem(Constants.noNouns).setFlag(1);
 			
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";

@@ -32,14 +32,14 @@ public class Test {
 
 		//System.out.println(player.getWisdom());
 		//System.out.println(game.getItem(3).getItem());
-		//System.out.println(game.getItem(43).getItem());
+		//System.out.println(game.getItem(16).getItem());
 		//System.out.println(game.getItem(4).getLocation());
-		//System.out.println(game.getItem(43).getFlag());
+		//System.out.println(game.getItem(16).getFlag());
 		//System.out.println(game.getItem(22).getFlag());
 		//System.out.println(game.getRoomName(33));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());
-		player.setStrength(40);
+		//player.setStrength(40);
 		System.out.println(player.getRoom());
 		
 	}

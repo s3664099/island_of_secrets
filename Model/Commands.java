@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.15
-Date: 26 January 2025
+Version: 2.16
+Date: 28 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -250,6 +250,7 @@ public class Commands {
 							game.addMessage(" which flies you to a remote place.");
 							player.setRoom(63+rand.nextInt(6));
 							game.getItem(16).setLocation(1);
+							game.getItem(16).setFlag(0);
 						}
 					}
 				}	
@@ -290,6 +291,12 @@ public class Commands {
 				game.getItem(noun).setLocation(player.getRoom());
 				player.setWeight(player.getWeight()-1);
 				game.setMessage("Done");
+				
+				//Dropping the beast
+				if (noun == 16) {
+					game.getItem(noun).setFlag(0);
+				}
+				
 			} else {
 				game.setMessage("I can't. Sorry.");
 			}
@@ -509,6 +516,7 @@ public class Commands {
 									  "Which flies you to a remote place",2);
 				player.setRoom(rand.nextInt(6)+63);
 				game.getItem(16).setLocation(1);
+				game.getItem(16).setFlag(0);
 				game.setMessage("");
 			
 			//Strike Flint
@@ -897,4 +905,5 @@ public class Commands {
  * 25 January 2025 - Fixed problem with the comma appearing at beginning of items in inventory.
  * 					 Stylised 
  * 26 January 2025 - Made the count for rest absolute value
+ * 28 January 2025 - Reset the best flag if it is no longer in your possession
  */
