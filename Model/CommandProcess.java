@@ -344,7 +344,7 @@ public class CommandProcess {
 			rand.nextInt(2)==1) {
 			game.getItem(25).setLocation(player.getRoom());
 		}
-		//<-----		
+				
 		//Check if pushed into well - not sure who
 		if (player.getRoom()==19 && player.getStrength()<70 && 
 			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
@@ -409,6 +409,7 @@ public class CommandProcess {
 		//Too weak to carry something
 		if (player.getStrength()<50) {
 			int object = rand.nextInt(9)+1;
+			
 			if (game.getItem(object).checkLocation(0)) {
 				game.getItem(object).setLocation(player.getRoom());
 				game.addMessage(" You drop something.");

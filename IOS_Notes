@@ -38,6 +38,8 @@ Need to have a look/search command to offer clues (examine room?)
 	- When filling the jug with water (where the spring is) have reference to it being unable to hold water.
 	- Also, like, have where you can go into places (like go hut at Grandpa's hut).
 	- Where there is only a 'special' exit - don't display also.
+	- Dessicated villager - can only give drink once - should change name
+	- Reason why suffer damage in the clone room - should say something
 
 A$	- Normally used to display the place location
 A	- Verb Chosen
