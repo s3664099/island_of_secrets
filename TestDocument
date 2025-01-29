@@ -17,14 +17,27 @@ To Test
 
 - Stoney Words - Go to Hut, get apple & give to snake. Go hut & open chest
 		- get hammer and rag - also get any food on the way
+		- go to top of pyramid and get flint
 		- go to cave, get and fill jug
+		- go to logman's hut and get rope
 		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
 		- Go to the Sage of the Lilly - scratch her and take the lillies
-		- give jub to swampman to make him go away
+		- go to villager and give water and take staff
+		- give jug to swampman to make him go away
 		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
 		- go to leafy path and then snelms lair - get parchment & read parchment
+		- get the canyon beast and ride it
+		- go to dactyl nest and get the egg
 		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
 		- Torch is at entrance, so take it and wave it
+		- go to scavenger and give chip and lillies (Why the chip?)
+		- say 'remember old times'
+		- go to here and wait til either north or east appears
+		- give pebble to Median
+		- go to Omegan's sanctum and take cloak
+		- drop coal and strike flint
+		- drop egg and break staff
+		- Game Over successfully.
 
 
 
@@ -43,6 +56,7 @@ game1 - hut
 game2 - jug
 game3 - pebble & Sage
 game4 - Island
+game7 - At the end part
 
 
 
@@ -67,13 +81,15 @@ Post Command Responses:
 
 
 
+- Swampman shouldn't move if in the room with you to prevent you from passing unless you give him the slimes
+- The egg should open when breaking the staff if carrying it
+	- if Omegan not present the dactyl hatches and flies off removing egg & staff
+	- The cloak can be burnt if in the room - omegan should not need to be present
+	- If not in Omegan's sanctum - dactyl fails to take him and flies off - omegan flees
 
 
 
 
-Blistering Pebble 8 - Give to Median to throw into Vat
-Staff 11 - Break the staff where the egg is located and it turns into a baby dactyl (Located in Omegan's Sanctum)
-Coal 13 - Set it on fire (Supposed to destroy the cloak).
 
 
 
@@ -276,3 +292,6 @@ Post Command
 - Too weak to carry something - test that
 - work out how to get the egg - you need the staff
 - Finally End Game - Staff, Pebble & Coal all -1 - need to see how that is set.
+Blistering Pebble 8 - Give to Median to throw into Vat
+Staff 11 - Break the staff where the egg is located and it turns into a baby dactyl (Located in Omegan's Sanctum)
+Coal 13 - Set it on fire (Supposed to destroy the cloak).

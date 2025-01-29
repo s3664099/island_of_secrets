@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class Test {
 
 	public void setTest(Game game, Player player) {
-		//player.setRoom(38);
+		//player.setRoom(43);
 		//player.setTime(900);
 		//player.setWisdom(80);
 		//game.getItem(3).setLocation(0);
@@ -34,9 +34,9 @@ public class Test {
 		//System.out.println(game.getItem(3).getItem());
 		//System.out.println(game.getItem(16).getItem());
 		//System.out.println(game.getItem(14).getLocation());
-		System.out.println(game.getItem(8).getFlag());
-		System.out.println(game.getItem(11).getFlag());
-		System.out.println(game.getItem(13).getFlag());
+		//System.out.println(game.getItem(8).getFlag());
+		//System.out.println(game.getItem(11).getFlag());
+		//System.out.println(game.getItem(13).getFlag());
 		//System.out.println(game.getRoomName(33));
 		//System.out.println(game.getItem(43).getFlag());
 		//System.out.println(game.getItem(16).getLocation());
