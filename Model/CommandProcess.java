@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.8
-Date: 27 January 2025
+Version: 2.9
+Date: 29 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -427,7 +427,7 @@ public class CommandProcess {
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";
 			player.setPanelFlag(3);
-			game.setPanelMessages(messageOne,"",1);
+			game.setPanelMessages(game.getMsgOne(),game.getMsgTwo()+"|"+messageOne,game.getLoop()+1);
 			game.addMessage("Your quest is over!");
 			game.endGame();
 		}
@@ -562,4 +562,5 @@ public class CommandProcess {
  * 26 January 2025 - Moved the living storm post command ifs together.
  * 27 January 2025 - Fixed problem with boatman not moving
  * 				   - Fixed the logmen movement to be correct. Added the message that is displayed when they have fun
+ * 29 January 2025 - Changed the message for the game finish to display everything after dealing with Omegan
  */

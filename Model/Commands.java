@@ -3,7 +3,7 @@ Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 2.16
-Date: 28 January 2025
+Date: 29 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -526,7 +526,7 @@ public class Commands {
 				
 				//Coal in room
 				if (player.getRoom()==game.getItem(13).getLocation()) {
-					game.getItem(13).setFlag(-1);
+					
 					game.getItem(noun).setFlag(-1);
 					game.getItem(13).setLocation(81);
 					player.setPanelFlag(3);
@@ -536,6 +536,7 @@ public class Commands {
 						game.setPanelMessages("The coal burns with a red flame",
 								"Which dissolves Omegan's Cloak",2);
 						player.adjustWisdom(20);
+						game.getItem(13).setFlag(-1);
 					} else {
 						game.setPanelMessages("The coal burns with a red flame","",1);					
 					}
@@ -763,6 +764,8 @@ public class Commands {
 	
 	public boolean load(Game game, Player player) {
 		
+		//Prevent saves from having more than one word (Same with save)
+		
 		boolean loadFile = false;
 		String[] commands = command.split(" ");
 		
@@ -906,4 +909,5 @@ public class Commands {
  * 					 Stylised 
  * 26 January 2025 - Made the count for rest absolute value
  * 28 January 2025 - Reset the best flag if it is no longer in your possession
+ * 29 January 2025 - Moved the flag for the coal to where it is only triggered when the cloak is present
  */
