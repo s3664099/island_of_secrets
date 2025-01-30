@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.3
-Date: 3 January 2024
+Version: 2.4
+Date: 30 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -33,6 +33,7 @@ public class Game implements Serializable {
 	private boolean endGame = false;
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
+	private int appleCount = 3;
 
 	public Game() {
 				
@@ -73,6 +74,11 @@ public class Game implements Serializable {
 		int count = 0;
 		String items = "";
 		
+		if (roomNumber == 45) {
+			items = "A tree bristling with apples";
+			count ++;
+		}
+		
 		//Goes through each of the items
 		for (Item item:itemList) {
 			if(item != null) {
@@ -89,7 +95,7 @@ public class Game implements Serializable {
 				}
 			}
 		}
-		
+
 		if (count>0) {
 			items = String.format("%s %s","You see:",items);
 		}
@@ -292,6 +298,19 @@ public class Game implements Serializable {
 	public int getResponse() {
 		return this.responseRequired;
 	}
+	
+	//Checks how many apples left
+	public boolean checkApples() {
+		
+		boolean applesLeft = false;
+		
+		if (appleCount>0) {
+			appleCount --;
+			applesLeft = true;
+		}
+		
+		return applesLeft;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -317,4 +336,5 @@ public class Game implements Serializable {
  * 29 December 2024 - Added function for getting special exits
  * 30 December 2024 - Added more detail for some of the directions, and removed them from the main direction list.
  * 3 January 2024 - Fixed problem where Median wasn't being loaded.
+ * 30 January 2025 - Added code for number of apples. Also added code to display apple tree.
  */

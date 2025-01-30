@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.16
-Date: 29 January 2025
+Version: 2.17
+Date: 30 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -165,7 +165,18 @@ public class Commands {
 		//Is the item present, and can it be taken?
 		if (((game.getItem(noun).getFlag()>0 && game.getItem(noun).getFlag()<9) ||
 			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.carriableItems) {
-			game.setMessage("What "+game.getItem(noun).getItem()+"?");
+			
+			//Pick more apples and add to food.
+			if (player.getRoom()==45 && game.checkApples() && noun==1) {
+				player.adjustFood(1);
+				game.setMessage("You pick an apple from the tree");
+				player.setWeight(player.getWeight()+1);
+			} else if (player.getRoom()==45 && noun ==1) {
+				game.setMessage("There are no more apples within reach");
+			} else {
+				game.setMessage("What "+game.getItem(noun).getItem()+"?");
+			}
+			
 		} else {
 			
 			//Evil books in library
@@ -227,7 +238,7 @@ public class Commands {
 						player.adjustDrink(2);
 						game.getItem(noun).setLocation(-18);
 					}
-					
+										
 					if (weight == -1) {
 						game.setMessage("Taken");
 						player.setWisdom(player.getWisdom()+4);
@@ -237,7 +248,7 @@ public class Commands {
 							game.getItem(noun).setFlag(0);
 						}
 					}
-										
+																				
 					//Handles the bird when attempting to take the egg without the staff
 					if (code.equals("246046") && game.getItem(11).getLocation() != 0) {
 
@@ -910,4 +921,5 @@ public class Commands {
  * 26 January 2025 - Made the count for rest absolute value
  * 28 January 2025 - Reset the best flag if it is no longer in your possession
  * 29 January 2025 - Moved the flag for the coal to where it is only triggered when the cloak is present
+ * 30 January 2025 - Added code to pick apples for food.
  */
