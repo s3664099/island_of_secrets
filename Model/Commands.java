@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.17
-Date: 30 January 2025
+Version: 2.18
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -173,6 +173,8 @@ public class Commands {
 				player.setWeight(player.getWeight()+1);
 			} else if (player.getRoom()==45 && noun ==1) {
 				game.setMessage("There are no more apples within reach");
+			} else if (player.getRoom()==27 && noun == 7) {
+				game.setMessage("There are no more within reach");
 			} else {
 				game.setMessage("What "+game.getItem(noun).getItem()+"?");
 			}
@@ -922,4 +924,5 @@ public class Commands {
  * 28 January 2025 - Reset the best flag if it is no longer in your possession
  * 29 January 2025 - Moved the flag for the coal to where it is only triggered when the cloak is present
  * 30 January 2025 - Added code to pick apples for food.
+ * 31 January 2025 - Added code to display response when torch already taken.
  */

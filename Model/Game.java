@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.4
-Date: 30 January 2025
+Version: 2.5
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -76,6 +76,13 @@ public class Game implements Serializable {
 		
 		if (roomNumber == 45) {
 			items = "A tree bristling with apples";
+			count ++;
+		} else if (roomNumber == 27) {
+			
+			items = "Torches illuminating the room";
+			if (itemList[7].getLocation()==27 && itemList[7].getFlag()==9) {
+				items += ", one of which is within reach";
+			}
 			count ++;
 		}
 		
@@ -337,4 +344,5 @@ public class Game implements Serializable {
  * 30 December 2024 - Added more detail for some of the directions, and removed them from the main direction list.
  * 3 January 2024 - Fixed problem where Median wasn't being loaded.
  * 30 January 2025 - Added code for number of apples. Also added code to display apple tree.
+ * 31 January 2025 - Added code to display torches in room.
  */
