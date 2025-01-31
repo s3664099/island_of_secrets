@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 1 January 2025
+Version: 3.0
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -192,4 +192,5 @@ public class Player implements Serializable {
  * 16 December 2024 - Added methods to handle swimming in poisoned waters section
  * 23 December 2024 - Updated to version 2.
  * 1 January 2025 - Removed the changeRoom method as duplicates setRoom.
+ * 31 January 2025 - Completed Testing and increased version
  */

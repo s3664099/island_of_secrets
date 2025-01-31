@@ -70,6 +70,12 @@ To compile and run the game, follow these steps:
 - Enhanced store room descriptions to include a door to the east and a trapdoor.  
 - Added detailed descriptions for special directions, improving clarity compared to earlier iterations where these were missing.
 
+### Version 3 (v03)
+- **Status**: Completed testing and are able to complete Game without errors or changing any variables.
+- **Challenges**:
+  - Numerous Issues with regards to being able to solve the game without help or knowing the code
+  - Styling of command input and button need to be fixed
+
 ## Program Structure ##
 
 ### Data

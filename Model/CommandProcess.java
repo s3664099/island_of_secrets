@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.9
-Date: 29 January 2025
+Version: 3.0
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -563,4 +563,5 @@ public class CommandProcess {
  * 27 January 2025 - Fixed problem with boatman not moving
  * 				   - Fixed the logmen movement to be correct. Added the message that is displayed when they have fun
  * 29 January 2025 - Changed the message for the game finish to display everything after dealing with Omegan
+ * 31 January 2025 - Completed Testing and increased version
  */

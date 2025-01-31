@@ -2,7 +2,7 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.5
+Version: 3.0
 Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -344,5 +344,6 @@ public class Game implements Serializable {
  * 30 December 2024 - Added more detail for some of the directions, and removed them from the main direction list.
  * 3 January 2024 - Fixed problem where Median wasn't being loaded.
  * 30 January 2025 - Added code for number of apples. Also added code to display apple tree.
- * 31 January 2025 - Added code to display torches in room.
+ * 31 January 2025 - Completed Testing and increased version
+ *                   Added code to display torches in room.
  */

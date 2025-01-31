@@ -2,7 +2,7 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.18
+Version: 3.0
 Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -924,5 +924,6 @@ public class Commands {
  * 28 January 2025 - Reset the best flag if it is no longer in your possession
  * 29 January 2025 - Moved the flag for the coal to where it is only triggered when the cloak is present
  * 30 January 2025 - Added code to pick apples for food.
- * 31 January 2025 - Added code to display response when torch already taken.
+ * 31 January 2025 - Completed Testing and increased version
+ * 					 Added code to display response when torch already taken.
  */

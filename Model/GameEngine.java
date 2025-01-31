@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.6
-Date: 15 January 2025
+Version: 3.0
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -345,4 +345,5 @@ public class GameEngine {
 3 January 2025 - Moved the panel determination to separate function
 11 January 2025 - Added the end game flag to when the player runs out of strength while swimming.
 15 January 2025 - Added code so shelter goes to the correct place.
+31 January 2025 - Completed Testing and increased version
 */

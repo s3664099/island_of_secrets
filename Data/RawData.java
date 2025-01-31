@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 2.1
-Date: 20 January 2025
+Version: 3.0
+Date: 31 January 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -203,4 +203,5 @@ public class RawData {
  * 20 December 2024 - Moved the games command
  * 23 December 2024 - Updated to version 2.
  * 20 January 2025 - Change liqupr to liquid
+ * 31 January 2025 - Completed Testing and increased version
 */
