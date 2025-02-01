@@ -226,7 +226,7 @@ public class Game implements Serializable {
 		
 		if (this.message.length()>0) {
 			
-			if (this.message.endsWith("|")) {
+			if (this.message.endsWith("|") || this.message.endsWith(".")) {
 				this.message = String.format("%s %s", this.message, message);
 			} else {
 				this.message = String.format("%s, %s", this.message, message);

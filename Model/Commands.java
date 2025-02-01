@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -298,6 +298,13 @@ public class Commands {
 			player.setWeight(player.getWeight()-1);
 			game.setMessage("It breaks!");
 		
+		//Dropping a brightly glowing torch
+		} else if (code.substring(0,3).equals("701")) {
+			game.getItem(noun).setLocation(player.getRoom());
+			game.setMessage("The torch dims when you drop it.");
+			game.getItem(7).setFlag(0);
+			game.getItem(7).setDescription("a flickering torch");
+			
 		//Dropping other items
 		} else {
 			if (game.getItem(noun).getLocation()==0 && noun<Constants.foodLine) {
@@ -698,6 +705,12 @@ public class Commands {
 		if (code.substring(0,3).equals("700")) {
 			game.getItem(7).setFlag(1);
 			game.setMessage("The torch brightens.");
+			
+			if (player.getRoom()==28) {
+				game.addMessage("The hands release you and retreat into the wall.");
+			}
+			
+			game.getItem(7).setDescription("a brightly glowing torch");
 			player.adjustWisdom(8);
 		}
 	}
@@ -926,4 +939,5 @@ public class Commands {
  * 30 January 2025 - Added code to pick apples for food.
  * 31 January 2025 - Completed Testing and increased version
  * 					 Added code to display response when torch already taken.
+ * 1 February 2025 - Added code to change description of torch when waved, and to 
  */
