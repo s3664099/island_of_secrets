@@ -17,6 +17,7 @@ public class Item implements Serializable {
 	int itemFlag;
 	int itemLocation;
 	String item;
+	boolean wisdomGained = false;
 	
 	public Item(char flag,char location, String item) {
 				
@@ -67,6 +68,14 @@ public class Item implements Serializable {
 	public void setDescription(String description) {
 		this.item = description;
 	}
+	
+	public void setWisdomGain() {
+		this.wisdomGained = !this.wisdomGained;
+	}
+	
+	public boolean checkWisdomGain() {
+		return this.wisdomGained;
+	}
 
 }
 
@@ -81,4 +90,5 @@ public class Item implements Serializable {
  * 23 December 2024 - Updated to version 2.
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added serialisable id and also option to change item description
+ * 				   - Added flag to make sure wisdom is only gained once.
  */

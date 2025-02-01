@@ -250,7 +250,13 @@ public class Commands {
 										
 					if (weight == -1) {
 						game.setMessage("Taken");
-						player.setWisdom(player.getWisdom()+4);
+						
+						//Makes sure that wisdom increase only happens once
+						if (!game.getItem(noun).checkWisdomGain()) {
+							player.setWisdom(player.getWisdom()+4);
+							game.getItem(noun).setWisdomGain();
+						}
+						
 						player.setWeight(player.getWeight()+1);
 						
 						if (game.getItem(noun).getFlag()>1) {
@@ -1009,4 +1015,5 @@ public class Commands {
  * 1 February 2025 - Added code to change description of torch when waved, and also when dropped.
  * 				   - Added responses of the arms based on whether the torch is bright or not.
  * 				   - Updated Grandpa's shack to reveal items without needing the book
+ * 				   - Added check to make sure wisdom increase for taking items only occurs once
  */
