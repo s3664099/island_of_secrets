@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -16,6 +16,7 @@ import Data.Constants;
 
 public class Player implements Serializable {
 	
+	private static final long serialVersionUID = 495300605316911022L;
 	private int room = 23; //23
 	private int roomToDisplay = this.room;
 	private float strength = 100;
@@ -28,7 +29,6 @@ public class Player implements Serializable {
 	private int panelFlag = 0;
 	private int swimming = 0;
 	private int swimPosition = 0;
-	private int swimTarget = 0;
 	
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
@@ -193,4 +193,5 @@ public class Player implements Serializable {
  * 23 December 2024 - Updated to version 2.
  * 1 January 2025 - Removed the changeRoom method as duplicates setRoom.
  * 31 January 2025 - Completed Testing and increased version
+ * 1 February 2025 - Added serializable ID and removed unused variables.
  */

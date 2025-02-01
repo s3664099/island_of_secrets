@@ -2,8 +2,8 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 public class Location implements Serializable {
 	
+	private static final long serialVersionUID = 7421397108414613755L;
 	private String name;
 	private boolean[] exits = new boolean[4];
 	private boolean visited = false;
@@ -53,4 +54,5 @@ public class Location implements Serializable {
  * 23 December 2024 - Updated to version 2.
  * 25 December 2024 - Added roomType variable for the map. Changed the exits to booleans
  * 31 January 2025 - Completed Testing and increased version
+ * 1 February 2025 - Added serialisable Id
 */

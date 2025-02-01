@@ -77,12 +77,8 @@ public class Game implements Serializable {
 		if (roomNumber == 45) {
 			items = "A tree bristling with apples";
 			count ++;
-		} else if (roomNumber == 27) {
-			
-			items = "Torches illuminating the room";
-			if (itemList[7].getLocation()==27 && itemList[7].getFlag()==9) {
-				items += ", one of which is within reach";
-			}
+		} else if (roomNumber == 27 && itemList[7].getLocation()==27 && itemList[7].getFlag()==9 ) {
+			items = "A torch hanging in a bracket on the wall";
 			count ++;
 		}
 		

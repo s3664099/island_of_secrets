@@ -2,8 +2,8 @@
 Title: Island of Secrets Item Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
 	
+	private static final long serialVersionUID = -2697850646469797958L;
 	int itemFlag;
 	int itemLocation;
 	String item;
@@ -62,6 +63,10 @@ public class Item implements Serializable {
 	public void setFlag(int flag) {
 		this.itemFlag = flag;
 	}
+	
+	public void setDescription(String description) {
+		this.item = description;
+	}
 
 }
 
@@ -75,4 +80,5 @@ public class Item implements Serializable {
  * 9 December 2024 - Made class serializable
  * 23 December 2024 - Updated to version 2.
  * 31 January 2025 - Completed Testing and increased version
+ * 1 February 2025 - Added serialisable id and also option to change item description
  */
