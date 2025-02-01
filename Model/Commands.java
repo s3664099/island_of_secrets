@@ -411,12 +411,14 @@ public class Commands {
 	public void open(Game game,Player player) {
 		
 		game.setMessage("I'm unable to do that");
+		
 		//Open chest in grandpa's shack
 		if (this.code.equals("2644044")) {
 			game.setMessage("The chest opens. There is something inside");
-			game.getItem(6).setFlag(0);
+			game.getItem(6).setFlag(9);
 			game.getItem(5).setFlag(9);
-			game.getItem(15).setFlag(0);
+			game.getItem(15).setFlag(9);
+			game.getItem(26).setFlag(1);
 		}
 		
 		//Open trapdoor in refuse filled room
@@ -637,12 +639,66 @@ public class Commands {
 		}
 	}
 	
-	public void examine(Game game) {
+	public void examine(Player player, Game game, String[] command) {
 		game.setMessage("Examine the book for clues");
-		
+				
 		//Read the parchment
 		if (code.substring(0,3).equals("600")) {
 			game.setMessage("Remember Aladin. It Worked for him.");
+			
+		//Examining the chest
+		} else if (code.equals("2644044") && command[0].equals("examine")) {
+			game.setMessage("The chest is closed");
+		} else if (code.equals("2644144") && command[0].equals("examine")) {
+			game.setMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says |"
+					+ "'Use the rag if it looks a bit dim'");
+			
+			boolean ragSeen = false;
+			
+			if (game.getItem(5).getLocation()==44 && game.getItem(5).getFlag()==9) {
+				game.addMessage("|The chest contains a dirty old rag");
+				game.getItem(5).setFlag(0);
+				ragSeen = true;
+			}
+			
+			if (game.getItem(15).getLocation()==44 && game.getItem(15).getFlag()==9) {
+				
+				String hammer = "";
+
+				if (!ragSeen) {
+					hammer = "|On the table is";
+				} else {
+					hammer = " and";
+				}	
+				
+				game.addMessage(hammer+" a geologist's hammer");
+				game.getItem(15).setFlag(0);
+			}
+		} else if (command[1].equals("table") && player.getRoom()==44 && command[0].equals("examine")) {
+			
+			game.setMessage("The coffee table looks like it has been better days.");
+			boolean breadSeen = false;
+			
+			if (game.getItem(17).getLocation()==44 && game.getItem(17).getFlag()==9) {
+				game.addMessage("|On the table is a loaf of bread");
+				game.getItem(17).setFlag(0);
+				breadSeen = true;
+			}
+			
+			if (game.getItem(21).getLocation()==44 && game.getItem(21).getFlag()==9) {
+				
+				String water = "";
+				
+				if (!breadSeen) {
+					water = "|On the table is";
+				} else {
+					water = " and";
+				}
+				
+				game.addMessage(water+" a bottle of water");
+				game.getItem(21).setFlag(0);
+			}
+			
 		}
 	}
 	
@@ -952,4 +1008,5 @@ public class Commands {
  * 					 Added code to display response when torch already taken.
  * 1 February 2025 - Added code to change description of torch when waved, and also when dropped.
  * 				   - Added responses of the arms based on whether the torch is bright or not.
+ * 				   - Updated Grandpa's shack to reveal items without needing the book
  */

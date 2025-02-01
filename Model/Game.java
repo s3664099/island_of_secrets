@@ -57,6 +57,8 @@ public class Game implements Serializable {
 				item = RawData.getObjects(itemNumber);
 			}
 			
+			System.out.printf("%s %s %s %s%n",item, RawData.getItemLocation(itemNumber),RawData.getItemFlag(itemNumber),itemNumber);
+			
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
 									item);			
@@ -80,6 +82,13 @@ public class Game implements Serializable {
 		} else if (roomNumber == 27 && itemList[7].getLocation()==27 && itemList[7].getFlag()==9 ) {
 			items = "A torch hanging in a bracket on the wall";
 			count ++;
+		} else if (roomNumber == 44) {
+			items = "A coffee table against the wall";
+			count ++;
+			
+			if (itemList[26].getFlag() == 1) {
+				items += ", an open oak chest";
+			}
 		}
 		
 		//Goes through each of the items
@@ -342,4 +351,5 @@ public class Game implements Serializable {
  * 30 January 2025 - Added code for number of apples. Also added code to display apple tree.
  * 31 January 2025 - Completed Testing and increased version
  *                   Added code to display torches in room.
+ *                   Updated the description in Grandpa's shack.
  */

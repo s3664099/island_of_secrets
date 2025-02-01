@@ -75,6 +75,7 @@ To compile and run the game, follow these steps:
 - **Challenges**:
   - Numerous Issues with regards to being able to solve the game without help or knowing the code
   - Styling of command input and button need to be fixed
+  - Errors produced when save game using more than one word
 
 ## Program Structure ##
 

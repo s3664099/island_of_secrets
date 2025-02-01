@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -252,7 +252,7 @@ public class CommandProcess {
 
 			//Read & Examine
 			} else if (verbNo==32||verbNo==33) {
-				this.command.examine(game);
+				this.command.examine(player,game,splitCommand);
 			
 			//Fill
 			} else if (verbNo==34) {
@@ -564,4 +564,5 @@ public class CommandProcess {
  * 				   - Fixed the logmen movement to be correct. Added the message that is displayed when they have fun
  * 29 January 2025 - Changed the message for the game finish to display everything after dealing with Omegan
  * 31 January 2025 - Completed Testing and increased version
+ * 1 February 2025 - Added extra parameter to the examine function
  */

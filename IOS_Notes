@@ -14,14 +14,14 @@ Need to have a look/search command to offer clues (examine room?)
 	  to be called - will change that and check it out - also look at the original code (there is a section where
 	  if strength is less than 50 it drops one of the first 9 items) - update will reduce the player's strength
 	  based on the number of items carried (the weight) but I need to check out the 9 items problem.
-	- response when the torch is bright in the arms room.
-	- Chest - change the name when opened. Indicate the note in the chest as well.
+	
+	
 	- Well, actually, turns out that there are lots of hints in the book, so yeah, I might just refer to player there
 	- choping a thing doesn't returns to the command line as opposed to ending the game - need to look into that
 
 
 
-	- Rag needs to be displayed in hut
+	
 	- Should only get wisdom bonus for taking an object once - each object has a wisdom flag - if checked do not get bonus. If not checked get bonus and flag checked
 	- need to check what to do with the lillies - then disappearing when you attack the sage is rather odd.
 	- Have lilly special flag if attack the sage so the lillies disappearing do not cross with ancient sage
