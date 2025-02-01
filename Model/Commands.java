@@ -130,6 +130,13 @@ public class Commands {
 				game.setMessage("You can't go that way");
 			}
 			
+			//Room with the hands
+			if (player.getRoom()==28 && game.getItem(7).getFlag()!=1) {
+				game.setMessage("You enter the room and giant hands grab you and hold you fast");
+			} else if (player.getRoom()==28) {
+				game.setMessage("You enter the room and brightly shining torch force the arms to retreat to the walls");
+			}
+			
 			
 			//Does the player have the beast and is on the jetty
 			if (player.getRoom() == 33 && game.getItem(16).getLocation()==0) {
@@ -301,9 +308,13 @@ public class Commands {
 		//Dropping a brightly glowing torch
 		} else if (code.substring(0,3).equals("701")) {
 			game.getItem(noun).setLocation(player.getRoom());
-			game.setMessage("The torch dims when you drop it.");
+			game.setMessage("The torch dims when you drop it.");	
 			game.getItem(7).setFlag(0);
 			game.getItem(7).setDescription("a flickering torch");
+			
+			if (player.getRoom()==28) {
+				game.addMessage("|Upon dropping the torch the arms reach out and grab you, preventing you from moving.");
+			}
 			
 		//Dropping other items
 		} else {
@@ -939,5 +950,6 @@ public class Commands {
  * 30 January 2025 - Added code to pick apples for food.
  * 31 January 2025 - Completed Testing and increased version
  * 					 Added code to display response when torch already taken.
- * 1 February 2025 - Added code to change description of torch when waved, and to 
+ * 1 February 2025 - Added code to change description of torch when waved, and also when dropped.
+ * 				   - Added responses of the arms based on whether the torch is bright or not.
  */
