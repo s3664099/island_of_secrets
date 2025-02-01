@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 31 January 2025
+Version: 3.2
+Date: 1 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -98,8 +99,13 @@ public class GamePanel extends JPanel {
 		
 		//Creates the command field
 		String[] commands = game.getCommands();
-		JPanel bottomPanel = new JPanel(new GridLayout(5,1));
+		JPanel bottomPanel = new JPanel(new GridLayout(6,1));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); //Top, Left, Bottom, Right
+		
+		//Button to display the map
+		JPanel inputPanel = new JPanel(new GridLayout(1,1));
+		addButton(inputPanel,"Map",new QuitButton(this.frame));
+		bottomPanel.add(inputPanel);
 		
 		//Command Field includes four labels above which contain the last three commands.
 		//Also one for a blank spot
@@ -107,8 +113,7 @@ public class GamePanel extends JPanel {
 		bottomPanel.add(CreateLabelPanel(commands[1],1));
 		bottomPanel.add(CreateLabelPanel(commands[2],1));
 				
-		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		
+		inputPanel = new JPanel(new GridLayout(1,1));
 		
 		if (!game.checkEndGame()) {
 			
@@ -119,14 +124,7 @@ public class GamePanel extends JPanel {
 			inputPanel.add(commandField);
 			
 		} else {
-			
-			//Create Exit Button
-			JButton button = new JButton("Exit");
-			inputPanel.add(button);
-			
-			//Closes frame when clicked
-			inputPanel.setBorder(BorderFactory.createEmptyBorder(0,270,0,270));
-		    button.addActionListener(new QuitButton(this.frame));
+			addButton(inputPanel,"Exit",new QuitButton(this.frame));
 		}
 		
 		bottomPanel.add(inputPanel);
@@ -134,6 +132,18 @@ public class GamePanel extends JPanel {
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 		this.add(bottomPanel,BorderLayout.SOUTH);
+	}
+	
+	//Creates a button and adds it to the panel.
+	private void addButton(JPanel panel,String buttonName,ActionListener action) {
+		
+		//Create Exit Button
+		JButton button = new JButton(buttonName);
+		panel.add(button);
+		
+		//Closes frame when clicked
+		panel.setBorder(BorderFactory.createEmptyBorder(0,320,0,320));
+	    button.addActionListener(action);
 	}
 	
 	public void addPanel(JPanel panel) {
@@ -215,4 +225,5 @@ public class GamePanel extends JPanel {
  * 15 January 2025 - Removed extraneous methods and moved the lineLength to a constant.
  * 31 January 2025 - Completed Testing and increased version
  * 				   - Fixed the styling for the input section.
+ * 1 February 2025 - Added the map display button
  */

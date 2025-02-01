@@ -1,7 +1,7 @@
 TODO
 
 - Change the torch to there only being one so description disappears when player takes it.
-Fix Styling of Command input and button
+
 Map Screen
 Buttons for shelter
 Buttons for load game and remove the list. Bottom button will recycle through next lot if any
