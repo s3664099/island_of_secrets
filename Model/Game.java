@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 2 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -44,7 +44,7 @@ public class Game implements Serializable {
 		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
 			
 			Location newLocation = new Location(RawData.getLocation(roomNumber),
-												RawData.getPrepositions());
+												RawData.getPrepositions(),0);
 			locationList[roomNumber+1] = newLocation;
 		}
 		
@@ -57,7 +57,7 @@ public class Game implements Serializable {
 				item = RawData.getObjects(itemNumber);
 			}
 			
-			System.out.printf("%s %s %s %s%n",item, RawData.getItemLocation(itemNumber),RawData.getItemFlag(itemNumber),itemNumber);
+			//System.out.printf("%s %s %s %s%n",item, RawData.getItemLocation(itemNumber),RawData.getItemFlag(itemNumber),itemNumber);
 			
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
@@ -185,7 +185,7 @@ public class Game implements Serializable {
 		} else if (roomNumber == 66) {
 			exit = "You can also go north down of the pyramid";
 		} else if (roomNumber == 60) {
-			exit = "You can also go south out of the hut";
+			exit = "You can go south out of the hut";
 		} else if (roomNumber == 56) {
 			exit = "You can also go south up the pyramid";
 		} else if (roomNumber == 44) {
@@ -352,4 +352,5 @@ public class Game implements Serializable {
  * 31 January 2025 - Completed Testing and increased version
  *                   Added code to display torches in room.
  *                   Updated the description in Grandpa's shack.
+ * 2 February 2025 - Added int to outlines the location type
  */

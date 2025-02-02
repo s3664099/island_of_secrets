@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 2 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import Model.GameEngine;
 
 public class GameFrame extends JFrame {
+
+	private static final long serialVersionUID = -5095376582483866399L;
 
 	public GameFrame(GameEngine game) {
 		
@@ -34,4 +36,5 @@ public class GameFrame extends JFrame {
  * 23 December 2024 - Passed frame to panel to enable quit function
  * 					- Updated to version 2.
  * 31 January 2025 - Completed Testing and increased version
+ * 2 February 2025 - Added generated serial ID
  */

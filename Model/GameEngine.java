@@ -15,6 +15,7 @@ import Data.Constants;
 import Data.Item;
 import View.GamePanel;
 import View.LightningPanel;
+import View.MapPanel;
 import View.MessagePanel;
 import java.util.Random;
 
@@ -246,7 +247,7 @@ public class GameEngine {
 		resetPanel(game);
 		
 	}
-	
+
 	private void setPanel(JPanel game,JPanel panel) {
 		game.removeAll();
 		game.add(panel);
@@ -287,6 +288,11 @@ public class GameEngine {
 		} else {
 			resetPanel(game);
 		}	
+	}
+	
+	//Displays the map panel
+	public void setMapPanel(GamePanel game) {
+		setPanel(game,new MapPanel(game,this));
 	}
 } 
 

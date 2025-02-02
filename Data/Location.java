@@ -2,8 +2,8 @@
 Title: Island of Secrets Location Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 3.2
+Date: 2 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -19,11 +19,12 @@ public class Location implements Serializable {
 	private boolean visited = false;
 	private int roomType;
 	
-	public Location(String name, String[] prepositions) {		
+	public Location(String name, String[] prepositions, int roomType) {		
 
 		int prep = Integer.parseInt(name.substring(0,1));
 		this.name = String.format("%s %s",prepositions[prep-1],name.substring(1,name.length()-4));
 		int x=0;
+		this.roomType = roomType;
 
 		//Determines the exits from the room
 		for (int i=name.length()-4;i<name.length();i++) {
@@ -44,6 +45,14 @@ public class Location implements Serializable {
 	public boolean[] getExits() {
 		return this.exits;
 	}
+	
+	public boolean getVisited() {
+		return this.visited;
+	}
+	
+	public int getRoomType() {
+		return this.roomType;
+	}
 }
 /* 30 October 2024 - Created File
  * 31 October 2024 - Added description
@@ -55,4 +64,5 @@ public class Location implements Serializable {
  * 25 December 2024 - Added roomType variable for the map. Changed the exits to booleans
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added serialisable Id
+ * 2 February 2025 - Added methods for the map panel.
 */

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controller.CommandListener;
+import Controller.MapButton;
 import Controller.QuitButton;
 import Data.Constants;
 import Model.GameEngine;
@@ -40,14 +41,11 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void add(GameEngine game) {
-		
+				
 		//Gets the background colour for the frame
 		background = this.getBackground();
 
 		this.setLayout (new BorderLayout()); 
-        
-		//Need to do what they did in the game, namely go through each of the lines and
-		//work out the size, and then add to the grid.
 		
 		// Top section for status and label panels
 		JPanel topPanel = new JPanel(new GridLayout(1, 1)); // Adjust as necessary
@@ -104,7 +102,7 @@ public class GamePanel extends JPanel {
 		
 		//Button to display the map
 		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		addButton(inputPanel,"Map",new QuitButton(this.frame));
+		addButton(inputPanel,"Map",new MapButton(game,this));
 		bottomPanel.add(inputPanel);
 		
 		//Command Field includes four labels above which contain the last three commands.
@@ -205,8 +203,7 @@ public class GamePanel extends JPanel {
 		}
 		
 		return lineLength;
-	}
-	
+	}	
 }
 
 /* 2 November 2024 - Created File

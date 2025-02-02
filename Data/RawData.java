@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 3.1
+Date: 2 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -70,8 +70,8 @@ public class RawData {
 		"7the steps of an ancient pyramid1010",				//56
 		"7the Island of Secrets0111",						//57
 		"1a broken marble column1001",						//58
-		"7an expanse of cracked, baked earth1100",			//59
-		"4a deserted abode hut1010",						//60
+		"7an expanse of cracked, baked earth1110",			//59
+		"4a deserted abode hut1011",						//60
 		"4a livid growth of mad orchids1011",				//61
 		"4a corner strewn with broken chairs0111",			//62
 		"7the bridge near to a log settlement0011",			//63
@@ -204,4 +204,6 @@ public class RawData {
  * 23 December 2024 - Updated to version 2.
  * 20 January 2025 - Change liqupr to liquid
  * 31 January 2025 - Completed Testing and increased version
+ * 2 February 2025 - Added comments to outline Location and Item numbers.
+ * 				   - Removed one of the exits to the abode hut.
 */
