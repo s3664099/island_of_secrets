@@ -12,131 +12,131 @@ package Data;
 public class RawData {
 	
 	private static String[] locations = {
-		"4the furthest depth of the forest1001",
-		"4the depths of the mutant forest1000",
-		"7a path out of the overground depths1000",
-		"6a carniverous tree1000",
-		"4a corral beneath the Crimson Canyon1110",
-		"7the top of a steep cliff1011",
-		"4the marsh factory1001",
-		"4the sludge fermation vats1110",
-		"7the uppermost battlements1001",
-		"4Omegan's sanctum1110",
-		"4Snelm's lair0001",
-		"2a dark cave0000",
-		"1broken branches0100",
-		"1a thicket of biting bushes0000",
-		"1a huge glassy stone1110",
-		"7the edge of the Crimson Canyon0011",
-		"4the clone factory0101",
-		"4a corridor of clone storage casks1100",
-		"7edge of the well0000",
-		"4the Room of Secret Visions1110",
-		"4Snelm's inner chamber0111",
-		"3the southern edge of the forest0101",
-		"7a leafy path1000",
-		"3a fork in the path0100",
-		"7an apparently unclimable rocky path1100",
-		"7a ledge atop the Crimson Canyon0010",
-		"4a tall entrance chamber1101",
-		"4a low passage with arms reaching from the wall1010",
-		"7the approach to the Well of Despair0001",
-		"4a dim corridor deep in the castle1010",
-		"4the stagnant waters of the crawling creek1001",
-		"4a shallow pool off the creek1100",
-		"7a log pier, jutting out over the creek0000",
-		"4a stretch of featureless dunes1100",
-		"1a group of tall trees1010",
-		"7a narrow ledge at the summit of the canyon0011",
-		"2a monsterous portal in the castle wall0011",
-		"4a chamber inches deep with dust0001",
-		"4here!!!!!1111",
-		"2a carved archway0010",
-		"4a small hut in the log settlement0111",
-		"1a huge split-log table1001",
-		"4the porch of the logman's cabin0110",
-		"4grandpa's shack1101",
-		"3a clearing in the trees by a rickety shack0010",
-		"4the nest of a huge dactyl0111",
-		"6the Castle of Dark Secrets by two huge stones0011",
-		"4a room littered with bones0111",
-		"4the Cell of Whispered Secrets0111",
-		"4the Library of Written Secrets0111",
-		"4a refuse strewn storeroom1111",
-		"4the Logmen's hall0000",
-		"5a log building1000",
-		"7a rutted hillside1100",
-		"7a windswept plain amongst stone megaliths0100",
-		"7the steps of an ancient pyramid1010",
-		"7the Island of Secrets0111",
-		"1a broken marble column1001",
-		"7an expanse of cracked, baked earth1100",
-		"4a deserted abode hut1010",
-		"4a livid growth of mad orchids1011",
-		"4a corner strewn with broken chairs0111",
-		"7the bridge near to a log settlement0011",
-		"1a crumbling mass of petrified trees1011",
-		"3the edge of the pyramid1101",
-		"7the roof of the ancient pyramid0100",
-		"3an impassable split in the pyramid1110",
-		"7a barren blasted wasteland0001",
-		"4an expanse of bleak, burnt land1100",
-		"5a delapidated abode hut0110",
-		"4the heart of the lillies0101",
-		"4the midst of the lillies1100",
-		"3a river's edge by a log bridge0100",
-		"3a petrified village by a river crowded with lillies0100",
-		"4the remains of a village1100",
-		"3the entrance to a petrified village1100",
-		"4a swamp matted with fibrous roots1100",
-		"2a village of hollow stumps defying the swamp0100",
-		"4a tunnel into one of the tree stumps1100",
-		"4a hollow chamber many meters in diameter1110"		
+		"4the furthest depth of the forest1001",			// 1
+		"4the depths of the mutant forest1000",				// 2
+		"7a path out of the overground depths1000",			// 3
+		"6a carniverous tree1000",							// 4
+		"4a corral beneath the Crimson Canyon1110",			// 5
+		"7the top of a steep cliff1011",					// 6
+		"4the marsh factory1001",							// 7
+		"4the sludge fermation vats1110",					// 8
+		"7the uppermost battlements1001",					// 9
+		"4Omegan's sanctum1110",							//10
+		"4Snelm's lair0001",								//11
+		"2a dark cave0000",									//12
+		"1broken branches0100",								//13
+		"1a thicket of biting bushes0000",					//14
+		"1a huge glassy stone1110",							//15
+		"7the edge of the Crimson Canyon0011",				//16
+		"4the clone factory0101",							//17
+		"4a corridor of clone storage casks1100",			//18
+		"7edge of the well0000",							//19
+		"4the Room of Secret Visions1110",					//20
+		"4Snelm's inner chamber0111",						//21
+		"3the southern edge of the forest0101",				//22
+		"7a leafy path1000",								//23
+		"3a fork in the path0100",							//24
+		"7an apparently unclimable rocky path1100",			//25
+		"7a ledge atop the Crimson Canyon0010",				//26	
+		"4a tall entrance chamber1101",						//27
+		"4a low passage with arms reaching from the wall1010",//28
+		"7the approach to the Well of Despair0001",			//29
+		"4a dim corridor deep in the castle1010",			//30
+		"4the stagnant waters of the crawling creek1001",	//31
+		"4a shallow pool off the creek1100",				//32
+		"7a log pier, jutting out over the creek0000",		//33
+		"4a stretch of featureless dunes1100",				//34
+		"1a group of tall trees1010",						//35
+		"7a narrow ledge at the summit of the canyon0011",	//36
+		"2a monsterous portal in the castle wall0011",		//37
+		"4a chamber inches deep with dust0001",				//38
+		"4here!!!!!1111",									//39
+		"2a carved archway0010",							//40
+		"4a small hut in the log settlement0111",			//41
+		"1a huge split-log table1001",						//42
+		"4the porch of the logman's cabin0110",				//43
+		"4grandpa's shack1101",								//44
+		"3a clearing in the trees by a rickety shack0010",	//45
+		"4the nest of a huge dactyl0111",					//46
+		"6the Castle of Dark Secrets by two huge stones0011",//47
+		"4a room littered with bones0111",					//48
+		"4the Cell of Whispered Secrets0111",				//49
+		"4the Library of Written Secrets0111",				//50
+		"4a refuse strewn storeroom1111",					//51
+		"4the Logmen's hall0000",							//52
+		"5a log building1000",								//53
+		"7a rutted hillside1100",							//54
+		"7a windswept plain amongst stone megaliths0100",	//55
+		"7the steps of an ancient pyramid1010",				//56
+		"7the Island of Secrets0111",						//57
+		"1a broken marble column1001",						//58
+		"7an expanse of cracked, baked earth1100",			//59
+		"4a deserted abode hut1010",						//60
+		"4a livid growth of mad orchids1011",				//61
+		"4a corner strewn with broken chairs0111",			//62
+		"7the bridge near to a log settlement0011",			//63
+		"1a crumbling mass of petrified trees1011",			//64
+		"3the edge of the pyramid1101",						//65
+		"7the roof of the ancient pyramid0100",				//66
+		"3an impassable split in the pyramid1110",			//67
+		"7a barren blasted wasteland0001",					//68
+		"4an expanse of bleak, burnt land1100",				//69
+		"5a delapidated abode hut0110",						//70
+		"4the heart of the lillies0101",					//71
+		"4the midst of the lillies1100",					//72
+		"3a river's edge by a log bridge0100",				//73
+		"3a petrified village by a river crowded with lillies0100",//74
+		"4the remains of a village1100",					//75
+		"3the entrance to a petrified village1100",			//76
+		"4a swamp matted with fibrous roots1100",			//77
+		"2a village of hollow stumps defying the swamp0100",//78
+		"4a tunnel into one of the tree stumps1100",		//79
+		"4a hollow chamber many meters in diameter1110"		//80
 	};
 		
 	private static String[] objects = {
-		"a shiny apple",
-		"a fossilised egg",
-		"a lily flower",
-		"an earthenware jug",
-		"a dirty old rag",
-		"a ragged parchment",
-		"a flickering torch",
-		"a blistering pebble",
-		"a woodman's axe",
-		"a coil of rope",
-		"a rugged staff",
-		"a chip of marble",
-		"a polished coal",
-		"a piece of flint",
-		"a geologist's hammer",
-		"a wild canyon beast",
-		"a grain loaf",
-		"a juicy melon",
-		"some biscuits",
-		"a growth of mushrooms",
-		"a bottle of water",
-		"a flagon of wine",
-		"a flowing sap",
-		"a sparkling freshwater spring",
-		"the Boatman",
-		"a strapped oak chest",
-		"a fracture in the column",
-		"a mouth-like opening",
-		"an open trapdoor",
-		"a parched, dessicated villager",
-		"a still of bubbling green liquid",
-		"a tough skinned swampman",
-		"the Sage of the Lillies",
-		"wall after wall of evil books",
-		"a number of softer roots",
-		"fierce living storm that follows you",
-		"malevolent wraiths who push you towards the well",
-		"his dreaded cloak of entropy",
-		"Omegan the evil one",
-		"an immense snake wound around the hut",
-		"a group of aggressive logmen",
-		"the ancient scavenger","Median"
+		"a shiny apple",									// 1
+		"a fossilised egg",									// 2
+		"a lily flower",									// 3
+		"an earthenware jug",								// 4
+		"a dirty old rag",									// 5
+		"a ragged parchment",								// 6
+		"a flickering torch",								// 7
+		"a blistering pebble",								// 8
+		"a woodman's axe",									// 9
+		"a coil of rope",									//10
+		"a rugged staff",									//11
+		"a chip of marble",									//12
+		"a polished coal",									//13
+		"a piece of flint",									//14
+		"a geologist's hammer",								//15
+		"a wild canyon beast",								//16
+		"a grain loaf",										//17
+		"a juicy melon",									//18
+		"some biscuits",									//19
+		"a growth of mushrooms",							//20
+		"a bottle of water",								//21
+		"a flagon of wine",									//22
+		"a flowing sap",									//23
+		"a sparkling freshwater spring",					//24
+		"the Boatman",										//25
+		"a strapped oak chest",								//26
+		"a fracture in the column",							//27
+		"a mouth-like opening",								//28
+		"an open trapdoor",									//29
+		"a parched, dessicated villager",					//30
+		"a still of bubbling green liquid",					//31
+		"a tough skinned swampman",							//32
+		"the Sage of the Lillies",							//33
+		"wall after wall of evil books",					//34
+		"a number of softer roots",							//35
+		"fierce living storm that follows you",				//36
+		"malevolent wraiths who push you towards the well",	//37
+		"his dreaded cloak of entropy",						//38
+		"Omegan the evil one",								//39
+		"an immense snake wound around the hut",			//40
+		"a group of aggressive logmen",						//41
+		"the ancient scavenger","Median"					//42,43
 	};
 		
 	private static final String[] verbs = {
