@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 2 February 2025
+Version: 3.2
+Date: 3 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -89,6 +89,9 @@ public class Game implements Serializable {
 			if (itemList[26].getFlag() == 1) {
 				items += ", an open oak chest";
 			}
+		} else if (roomNumber == 67 && itemList[14].getLocation() == 67 && itemList[14].getFlag()==9) {
+			items += "A piece of flint stuck in the crack";
+			count++;
 		}
 		
 		//Goes through each of the items
@@ -353,4 +356,5 @@ public class Game implements Serializable {
  *                   Added code to display torches in room.
  *                   Updated the description in Grandpa's shack.
  * 2 February 2025 - Added int to outlines the location type
+ * 3 February 2025 - Added description for flint
  */

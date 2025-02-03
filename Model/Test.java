@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class Test {
 
 	public void setTest(Game game, Player player) {
-		//player.setRoom(59);
+		player.setRoom(67);
 		//player.setTime(900);
 		//player.setWisdom(80);
 		//game.getItem(3).setLocation(0);
