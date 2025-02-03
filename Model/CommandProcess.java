@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 3.2
+Date: 3 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -345,7 +345,7 @@ public class CommandProcess {
 			game.getItem(25).setLocation(player.getRoom());
 		}
 				
-		//Check if pushed into well - not sure who
+		//Check if pushed into well
 		if (player.getRoom()==19 && player.getStrength()<70 && 
 			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
 			game.setMessage("Pushed into the pit");
@@ -401,9 +401,10 @@ public class CommandProcess {
 			game.setPanelMessages(messageOne,"",1);
 		}
 		
-		//Player in the room of the Storage Casks?
+		//Player in the clone vat room
 		if (player.getRoom()==18) {
 			player.adjustStrength(-1);
+			game.addMessage("The gas leaking from the vats burns your lungs!");
 		}
 		
 		//Too weak to carry something
@@ -565,4 +566,5 @@ public class CommandProcess {
  * 29 January 2025 - Changed the message for the game finish to display everything after dealing with Omegan
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added extra parameter to the examine function
+ * 3 February 2025 - Added description for damage in clone vat room.
  */
