@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 3.2
+Date: 4 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -708,7 +708,7 @@ public class Commands {
 		}
 	}
 	
-	public void fill(Game game) {
+	public void fill(Game game,Player player) {
 		
 		game.setMessage("Not sure that can be done.");
 		
@@ -717,6 +717,15 @@ public class Commands {
 			game.getItem(4).setFlag(-1);
 			game.setMessage("Filled");
 			game.getItem(4).setDescription("A jug full of bubbling green liquid");
+		} else if (code.equals("40013")) {
+			game.setMessage("The water streams out of the jug");
+		} else if (code.substring(0,2).equals("40")) {
+			
+			if (game.getItem(4).getFlag()==-1)  {
+				if (player.getRoom()==41 || player.getRoom()==13) {
+					game.setMessage("The jug is already full");
+				}
+			}
 		}
 	}
 	
@@ -1017,4 +1026,5 @@ public class Commands {
  * 				   - Added responses of the arms based on whether the torch is bright or not.
  * 				   - Updated Grandpa's shack to reveal items without needing the book
  * 				   - Added check to make sure wisdom increase for taking items only occurs once
+ * 4 February 2025 - Updated the fill command
  */

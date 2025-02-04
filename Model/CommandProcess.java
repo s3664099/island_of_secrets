@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.2
-Date: 3 February 2025
+Version: 3.3
+Date: 4 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -256,7 +256,7 @@ public class CommandProcess {
 			
 			//Fill
 			} else if (verbNo==34) {
-				this.command.fill(game);
+				this.command.fill(game,player);
 
 			//Say
 			} else if (verbNo==35) {
@@ -571,4 +571,5 @@ public class CommandProcess {
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added extra parameter to the examine function
  * 3 February 2025 - Added description for damage in clone vat room.
+ * 4 Fenruary 2025 - Updated scavenger and the fill command
  */
