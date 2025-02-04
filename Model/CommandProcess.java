@@ -317,8 +317,8 @@ public class CommandProcess {
 			player.adjustWisdom(-2);
 		}
 			
-		//Swampman's Position
-		if (player.getRoom()<78 && game.getResponse()==0) {
+		//Swampman's Position if not with player
+		if (!game.getItem(32).checkLocation(player.getRoom()) && game.getResponse()==0) {
 			game.getItem(32).setLocation(76+rand.nextInt(2));
 		}
 		
@@ -444,6 +444,7 @@ public class CommandProcess {
 							String codedNoun) {
 		
 		int objNumber = getNounNum(subject);
+		boolean alreadyMessage = false;
 		
 		if (subject.length()==0) {
 			String itemName = game.getItem(objNumber).getItem();
@@ -467,6 +468,7 @@ public class CommandProcess {
 				player.adjustDrink(1);
 			} else {
 				
+				//Giving items to the ancient scavenger
 				if ((codedNoun.substring(0,3).equals("300") || 
 					 codedNoun.substring(0,3).equals("120")) &&
 					 objNumber == 42) {
@@ -478,6 +480,8 @@ public class CommandProcess {
 						   game.getItem(4).getFlag()<0 && objNumber == 32) {
 					game.getItem(objNumber).setFlag(1);
 					game.getItem(nounNumber).setLocation(81);
+					game.setMessage("The Swampman takes the jug and leaves");
+					alreadyMessage = true;
 				
 				//Give pebble to Median
 				} else if (codedNoun.substring(0,2).equals("80") &&
@@ -500,7 +504,7 @@ public class CommandProcess {
 				}
 				
 				//Successfully given
-				if (game.getItem(nounNumber).getLocation() == 81) {
+				if (game.getItem(nounNumber).getLocation() == 81 && !alreadyMessage) {
 					game.setMessage("It is accepted");
 				}
 				

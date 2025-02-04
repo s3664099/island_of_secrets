@@ -716,6 +716,7 @@ public class Commands {
 		if (code.equals("40041")) {
 			game.getItem(4).setFlag(-1);
 			game.setMessage("Filled");
+			game.getItem(4).setDescription("A jug full of bubbling green liquid");
 		}
 	}
 	
