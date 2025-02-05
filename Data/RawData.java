@@ -11,62 +11,69 @@ package Data;
 
 public class RawData {
 	
+	private static String[] locationTypes = {"F","F","F","CT","P","CL","Fc","V","Bt","Sm",
+											 "C","C","F","B","St","Cl","Fc","P","W","Cl",
+											 "C","F","P","P","CL","CL","R","H","W","R",
+											 "Cr","Cr","Br","SD","F","CL","Bt","R","!","Ar",
+											 "H","Tb","H","H","F","N","Cs","Bn","R","Bk",
+											 "R","H","H","Hl","SH"};
+	
 	private static String[] locations = {
-		"4the furthest depth of the forest1001",			// 1
-		"4the depths of the mutant forest1000",				// 2
-		"7a path out of the overground depths1000",			// 3
-		"6a carniverous tree1000",							// 4
-		"4a corral beneath the Crimson Canyon1110",			// 5
-		"7the top of a steep cliff1011",					// 6
-		"4the marsh factory1001",							// 7
-		"4the sludge fermation vats1110",					// 8
-		"7the uppermost battlements1001",					// 9
-		"4Omegan's sanctum1110",							//10
-		"4Snelm's lair0001",								//11
-		"2a dark cave0000",									//12
-		"1broken branches0100",								//13
-		"1a thicket of biting bushes0000",					//14
-		"1a huge glassy stone1110",							//15
-		"7the edge of the Crimson Canyon0011",				//16
-		"4the clone factory0101",							//17
-		"4a corridor of clone storage casks1100",			//18
-		"7edge of the well0000",							//19
-		"4the Room of Secret Visions1110",					//20
-		"4Snelm's inner chamber0111",						//21
-		"3the southern edge of the forest0101",				//22
-		"7a leafy path1000",								//23
-		"3a fork in the path0100",							//24
-		"7an apparently unclimable rocky path1100",			//25
-		"7a ledge atop the Crimson Canyon0010",				//26	
-		"4a tall entrance chamber1101",						//27
-		"4a low passage with arms reaching from the wall1010",//28
-		"7the approach to the Well of Despair0001",			//29
-		"4a dim corridor deep in the castle1010",			//30
-		"4the stagnant waters of the crawling creek1001",	//31
-		"4a shallow pool off the creek1100",				//32
-		"7a log pier, jutting out over the creek0000",		//33
-		"4a stretch of featureless dunes1100",				//34
-		"1a group of tall trees1010",						//35
-		"7a narrow ledge at the summit of the canyon0011",	//36
-		"2a monsterous portal in the castle wall0011",		//37
-		"4a chamber inches deep with dust0001",				//38
-		"4here!!!!!1111",									//39
-		"2a carved archway0010",							//40
-		"4a small hut in the log settlement0111",			//41
-		"1a huge split-log table1001",						//42
-		"4the porch of the logman's cabin0110",				//43
-		"4grandpa's shack1101",								//44
-		"3a clearing in the trees by a rickety shack0010",	//45
-		"4the nest of a huge dactyl0111",					//46
-		"6the Castle of Dark Secrets by two huge stones0011",//47
-		"4a room littered with bones0111",					//48
-		"4the Cell of Whispered Secrets0111",				//49
-		"4the Library of Written Secrets0111",				//50
-		"4a refuse strewn storeroom1111",					//51
-		"4the Logmen's hall0000",							//52
-		"5a log building1000",								//53
-		"7a rutted hillside1100",							//54
-		"7a windswept plain amongst stone megaliths0100",	//55
+		"4the furthest depth of the forest1001",			// 1  F
+		"4the depths of the mutant forest1000",				// 2  F
+		"7a path out of the overground depths1000",			// 3  F
+		"6a carniverous tree1000",							// 4  CT
+		"4a corral beneath the Crimson Canyon1110",			// 5  P (Paddock/Corral)
+		"7the top of a steep cliff1011",					// 6  CL
+		"4the marsh factory1001",							// 7  Fc (Factory)
+		"4the sludge fermation vats1110",					// 8  V
+		"7the uppermost battlements1001",					// 9  Bt (Battlements)
+		"4Omegan's sanctum1110",							//10  Sm (Sanctum
+		"4Snelm's lair0001",								//11  C (Cave)
+		"2a dark cave0000",									//12  C (Cave)
+		"1broken branches0100",								//13  B
+		"1a thicket of biting bushes0000",					//14  B
+		"1a huge glassy stone1110",							//15  St
+		"7the edge of the Crimson Canyon0011",				//16  CL
+		"4the clone factory0101",							//17  Fc
+		"4a corridor of clone storage casks1100",			//18  P (Pod)
+		"7edge of the well0000",							//19  W
+		"4the Room of Secret Visions1110",					//20  Cl (Cloud)
+		"4Snelm's inner chamber0111",						//21  C
+		"3the southern edge of the forest0101",				//22  F
+		"7a leafy path1000",								//23  P
+		"3a fork in the path0100",							//24  P
+		"7an apparently unclimable rocky path1100",			//25  CL
+		"7a ledge atop the Crimson Canyon0010",				//26  CL	 
+		"4a tall entrance chamber1101",						//27  R (Room)
+		"4a low passage with arms reaching from the wall1010",//28 H (Hands)
+		"7the approach to the Well of Despair0001",			//29  W
+		"4a dim corridor deep in the castle1010",			//30  R
+		"4the stagnant waters of the crawling creek1001",	//31  Cr (Creek)
+		"4a shallow pool off the creek1100",				//32  Cr (Creek)
+		"7a log pier, jutting out over the creek0000",		//33  Br (Bridge)
+		"4a stretch of featureless dunes1100",				//34  SD (Sand Dunes)
+		"1a group of tall trees1010",						//35  F
+		"7a narrow ledge at the summit of the canyon0011",	//36  CL
+		"2a monsterous portal in the castle wall0011",		//37  Bt
+		"4a chamber inches deep with dust0001",				//38  R
+		"4here!!!!!1111",									//39  !
+		"2a carved archway0010",							//40  Ar (Archway)
+		"4a small hut in the log settlement0111",			//41  H
+		"1a huge split-log table1001",						//42  Tb (Table)
+		"4the porch of the logman's cabin0110",				//43  H
+		"4grandpa's shack1101",								//44  H
+		"3a clearing in the trees by a rickety shack0010",	//45  F
+		"4the nest of a huge dactyl0111",					//46  N
+		"6the Castle of Dark Secrets by two huge stones0011",//47 Cs (Castle)
+		"4a room littered with bones0111",					//48  Bn (Bones)
+		"4the Cell of Whispered Secrets0111",				//49  R
+		"4the Library of Written Secrets0111",				//50  Bk (Bookshelf)
+		"4a refuse strewn storeroom1111",					//51  R
+		"4the Logmen's hall0000",							//52  H
+		"5a log building1000",								//53  H
+		"7a rutted hillside1100",							//54  Hl
+		"7a windswept plain amongst stone megaliths0100",	//55  SH (Stonehenge)
 		"7the steps of an ancient pyramid1010",				//56
 		"7the Island of Secrets0111",						//57
 		"1a broken marble column1001",						//58
