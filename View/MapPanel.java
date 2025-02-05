@@ -2,14 +2,13 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 4 February 2025
+Version: 3.2
+Date: 5 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 
@@ -35,8 +34,6 @@ public class MapPanel extends JPanel {
 			
 			JPanel roomPanel = new JPanel();
 			
-			roomPanel.add(new JLabel(""+x));
-			
 			if (x<10 && x>1) {
 				roomPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
 			} else if (x==1) {
@@ -55,13 +52,18 @@ public class MapPanel extends JPanel {
 				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
 			}
 			
+			if (x<80 && engine.getGame().getRoom(x).getVisited()) {
+				roomPanel.add(new JLabel(""+x));
+				//Gets exits and sets the walls based on where the rooms
+			}
+			
 			add(roomPanel);
 		}
 	}
-
 }
 
 /*
  * 2 February 2025 - Created File
  * 4 February 2025 - Added Borders to the map panel.
+ * 5 February 2025 - Added code to only set label when room entered.
  */

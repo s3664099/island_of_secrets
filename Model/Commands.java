@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.2
-Date: 4 February 2025
+Version: 3.3
+Date: 5 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -122,6 +122,7 @@ public class Commands {
 					player.setRoom(newRoom);
 					game.setMessage("Ok");
 					haveMoved = true;
+					game.getRoom(newRoom).setVisited();
 				}
 			}
 			
@@ -1027,4 +1028,5 @@ public class Commands {
  * 				   - Updated Grandpa's shack to reveal items without needing the book
  * 				   - Added check to make sure wisdom increase for taking items only occurs once
  * 4 February 2025 - Updated the fill command
+ * 5 February 2025 - Added code to flag visited when move into room.
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.2
-Date: 3 February 2025
+Version: 3.3
+Date: 5 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -47,6 +47,8 @@ public class Game implements Serializable {
 												RawData.getPrepositions(),0);
 			locationList[roomNumber+1] = newLocation;
 		}
+		
+		locationList[23].setVisited();
 		
 		//Builds the item objects
 		for (int itemNumber=1;itemNumber<noItems+1;itemNumber++) {
@@ -205,6 +207,11 @@ public class Game implements Serializable {
 		return locationList[room].getExits()[direction];
 	}
 	
+	//Returns the room based on the number passed through
+	public Location getRoom(int roomNumber) {
+		return locationList[roomNumber];
+	}
+	
 	//Checks to see if an exit has already been added
 	private String addExit(String exit, String exits) {
 		
@@ -357,4 +364,5 @@ public class Game implements Serializable {
  *                   Updated the description in Grandpa's shack.
  * 2 February 2025 - Added int to outlines the location type
  * 3 February 2025 - Added description for flint
+ * 5 February 2025 - Added getter for specific room. Set the visited flag for initial room
  */

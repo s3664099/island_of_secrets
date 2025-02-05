@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 3.2
+Date: 5 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -66,6 +66,10 @@ public class GameEngine {
 		}
 		
 		return itemDisplay;
+	}
+	
+	public Game getGame() {
+		return this.game;
 	}
 	
 	public String getExits() {
@@ -351,4 +355,5 @@ public class GameEngine {
 15 January 2025 - Added code so shelter goes to the correct place.
 31 January 2025 - Completed Testing and increased version
 1 February 2025 - Removed unused variables
+5 February 2025 - Added getter for the game
 */
