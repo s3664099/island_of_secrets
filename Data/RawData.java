@@ -11,15 +11,24 @@ package Data;
 
 public class RawData {
 	
-	private static String[] locationTypes = {"F","F","F","CT","P","CL","Fc","V","Bt","Sm",
-											 "C","C","F","B","St","Cl","Fc","P","W","Cl",
-											 "C","F","P","P","CL","CL","R","H","W","R",
-											 "Cr","Cr","Br","SD","F","CL","Bt","R","!","Ar",
-											 "H","Tb","H","H","F","N","Cs","Bn","R","Bk",
+	
+	private static Integer[] locationTypes = {1,1,1,2,13,4,5,6,7,8,
+											  9,9,1,10,11,12,5,3,14,12,
+											  9,1,3,3,4,4,16,15,14,16,
+											  17,17,18,19,1,4,12,16,20,21,
+											  22,23,22,22,1,24,25,26,16,27,
+	};
+	/*
+	private static String[] locationTypes = {"F 1","F 1","F 1","CT 2","P 13","CL 4","Fc 5","V 6","Bt 7","Sm 8",
+											 "C 9","C 9","F 1","B 10","St 11","Cl 12","Fc 5","P 3","W 14","Cl 12",
+											 "C 9","F 1","P 3","P 3","CL 4","CL 4","R 16","H 15","W 14","R 16",
+											 "Cr 17","Cr 17","Br 18","SD 19","F 1","CL 4","Bt 12","R 16","! 20","Ar 21",
+											 "H 22","Tb 23","H 22","H 22","F 1","N 24","Cs 25","Bn 26","R 16","Bk 27",
 											 "R","H","H","Hl","SH","Py","Is","Co","Ds","H",
 											 "Fl","Ch","Br","Fs","Py","Py","Py","Ds","Ds","F",
 											 "Fl","Fl","Br","V","V","V","S","SV","C","C"};
-	
+											 */
+		
 	private static String[] locations = {
 		"4the furthest depth of the forest1001",			// 1  F
 		"4the depths of the mutant forest1000",				// 2  F
