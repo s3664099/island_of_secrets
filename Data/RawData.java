@@ -16,7 +16,9 @@ public class RawData {
 											 "C","F","P","P","CL","CL","R","H","W","R",
 											 "Cr","Cr","Br","SD","F","CL","Bt","R","!","Ar",
 											 "H","Tb","H","H","F","N","Cs","Bn","R","Bk",
-											 "R","H","H","Hl","SH"};
+											 "R","H","H","Hl","SH","Py","Is","Co","Ds","H",
+											 "Fl","Ch","Br","Fs","Py","Py","Py","Ds","Ds","F",
+											 "Fl","Fl","Br","V","V","V","S","SV","C","C"};
 	
 	private static String[] locations = {
 		"4the furthest depth of the forest1001",			// 1  F
@@ -74,31 +76,31 @@ public class RawData {
 		"5a log building1000",								//53  H
 		"7a rutted hillside1100",							//54  Hl
 		"7a windswept plain amongst stone megaliths0100",	//55  SH (Stonehenge)
-		"7the steps of an ancient pyramid1010",				//56
-		"7the Island of Secrets0111",						//57
-		"1a broken marble column1001",						//58
-		"7an expanse of cracked, baked earth1110",			//59
-		"4a deserted abode hut1011",						//60
-		"4a livid growth of mad orchids1011",				//61
-		"4a corner strewn with broken chairs0111",			//62
-		"7the bridge near to a log settlement0011",			//63
-		"1a crumbling mass of petrified trees1011",			//64
-		"3the edge of the pyramid1101",						//65
-		"7the roof of the ancient pyramid0100",				//66
-		"3an impassable split in the pyramid1110",			//67
-		"7a barren blasted wasteland0001",					//68
-		"4an expanse of bleak, burnt land1100",				//69
-		"5a delapidated abode hut0110",						//70
-		"4the heart of the lillies0101",					//71
-		"4the midst of the lillies1100",					//72
-		"3a river's edge by a log bridge0100",				//73
-		"3a petrified village by a river crowded with lillies0100",//74
-		"4the remains of a village1100",					//75
-		"3the entrance to a petrified village1100",			//76
-		"4a swamp matted with fibrous roots1100",			//77
-		"2a village of hollow stumps defying the swamp0100",//78
-		"4a tunnel into one of the tree stumps1100",		//79
-		"4a hollow chamber many meters in diameter1110"		//80
+		"7the steps of an ancient pyramid1010",				//56  Py
+		"7the Island of Secrets0111",						//57  Is
+		"1a broken marble column1001",						//58  Co
+		"7an expanse of cracked, baked earth1110",			//59  Ds
+		"4a deserted abode hut1011",						//60  H
+		"4a livid growth of mad orchids1011",				//61  Fl
+		"4a corner strewn with broken chairs0111",			//62  Ch
+		"7the bridge near to a log settlement0011",			//63  Br
+		"1a crumbling mass of petrified trees1011",			//64  Fs
+		"3the edge of the pyramid1101",						//65  Py
+		"7the roof of the ancient pyramid0100",				//66  Py
+		"3an impassable split in the pyramid1110",			//67  Py
+		"7a barren blasted wasteland0001",					//68  Ds
+		"4an expanse of bleak, burnt land1100",				//69  Ds
+		"5a delapidated abode hut0110",						//70  H
+		"4the heart of the lillies0101",					//71  Fl
+		"4the midst of the lillies1100",					//72  Fl
+		"3a river's edge by a log bridge0100",				//73  Br
+		"3a petrified village by a river crowded with lillies0100",//74 Vi
+		"4the remains of a village1100",					//75  Vi
+		"3the entrance to a petrified village1100",			//76  Vi
+		"4a swamp matted with fibrous roots1100",			//77  Sw
+		"2a village of hollow stumps defying the swamp0100",//78  SV
+		"4a tunnel into one of the tree stumps1100",		//79  Cv
+		"4a hollow chamber many meters in diameter1110"		//80  Cv
 	};
 		
 	private static String[] objects = {
