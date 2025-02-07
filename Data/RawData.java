@@ -21,18 +21,20 @@ public class RawData {
 											  35,36,18,39,30,30,30,33,33,22,
 											  35,35,18,37,37,37,38,40,9,9};
 	
-    private static String[] locationImage = {};
+    private static String[] locationImage = {"forest","eviltree","pods","cliff","factory",
+    										 "vat","battlement","sanctum","cave","bush",
+    										 };
 		
-	/* 1 (Forest)
-	   2 (Carniverous Tree)
-	   3 (Pod)
-	   4 (Cliff) 
-	   5 (Factory)
-	   6 (Vat)
-	   7 (Battlements)
-	   8 (Sanctum
-	   9 (Cave)
-      10 (Bush)
+	/* 
+	   
+	   
+	    
+	   
+	   
+	   
+	   
+	   
+      
       11 (Stone)
 	  12 (Cloud)
 	  13 (Paddock/Corral)
