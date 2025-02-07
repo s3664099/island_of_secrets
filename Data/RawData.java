@@ -17,16 +17,19 @@ public class RawData {
 											  9,1,3,3,4,4,16,15,14,16,
 											  17,17,18,19,1,4,12,16,20,21,
 											  22,23,22,22,1,24,25,26,16,27,
-	};
+											  16,15,15,28,29,30,31,32,33,15,
+											  35,36,18,39,30,30,30,33,33,1,
+											  35,35,18,40,40,40,41,42,9,9};
+	
 	/*
-	private static String[] locationTypes = {"F 1","F 1","F 1","CT 2","P 13","CL 4","Fc 5","V 6","Bt 7","Sm 8",
+	private static String[] locationTypes = {"F 1","F 1","F 1","CT 2","P 13","CL 4","Fc 5","Vt 6","Bt 7","Sm 8",
 											 "C 9","C 9","F 1","B 10","St 11","Cl 12","Fc 5","P 3","W 14","Cl 12",
 											 "C 9","F 1","P 3","P 3","CL 4","CL 4","R 16","H 15","W 14","R 16",
 											 "Cr 17","Cr 17","Br 18","SD 19","F 1","CL 4","Bt 12","R 16","! 20","Ar 21",
 											 "H 22","Tb 23","H 22","H 22","F 1","N 24","Cs 25","Bn 26","R 16","Bk 27",
-											 "R","H","H","Hl","SH","Py","Is","Co","Ds","H",
-											 "Fl","Ch","Br","Fs","Py","Py","Py","Ds","Ds","F",
-											 "Fl","Fl","Br","V","V","V","S","SV","C","C"};
+											 "R 16","H 15","H 15","Hl 28","SH 29","Py 30","Is 31","Co 32","Ds 33","H 34",
+											 "Fl 35","Ch 36","Br 18","Fs 39","Py 30","Py 30","Py 30","Ds 33","Ds 33","F 1",
+											 "Fl 35","Fl 35","Br 18","V 40","V 40","V 40","Sw 41","SV 42","C 9","C 9"};
 											 */
 		
 	private static String[] locations = {
@@ -37,7 +40,7 @@ public class RawData {
 		"4a corral beneath the Crimson Canyon1110",			// 5  P (Paddock/Corral)
 		"7the top of a steep cliff1011",					// 6  CL
 		"4the marsh factory1001",							// 7  Fc (Factory)
-		"4the sludge fermation vats1110",					// 8  V
+		"4the sludge fermation vats1110",					// 8  Vt
 		"7the uppermost battlements1001",					// 9  Bt (Battlements)
 		"4Omegan's sanctum1110",							//10  Sm (Sanctum
 		"4Snelm's lair0001",								//11  C (Cave)
