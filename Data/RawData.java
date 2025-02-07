@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 2 February 2025
+Version: 3.2
+Date: 7 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,30 +14,21 @@ public class RawData {
 	
 	private static Integer[] locationTypes = {1,1,1,2,13,4,5,6,7,8,
 											  9,9,10,10,11,12,5,3,14,12,
-											  9,1,3,3,4,4,16,15,14,16,
-											  17,17,18,19,1,4,12,16,20,21,
+											  9,1,43,43,4,4,16,15,14,16,
+											  17,17,18,19,1,4,34,16,20,21,
 											  22,23,22,22,1,24,25,26,16,27,
-											  16,15,15,28,29,30,31,32,33,15,
-											  35,36,18,39,30,30,30,33,33,1,
+											  16,15,15,28,29,30,31,32,33,22,
+											  35,36,18,39,30,30,30,33,33,22,
 											  35,35,18,40,40,40,41,42,9,9};
 	
-	/*
-	private static String[] locationTypes = {
-											 
-											 "C 9","F 1","P 3","P 3","CL 4","CL 4","R 16","H 15","W 14","R 16",
-											 "Cr 17","Cr 17","Br 18","SD 19","F 1","CL 4","Bt 12","R 16","! 20","Ar 21",
-											 "H 22","Tb 23","H 22","H 22","F 1","N 24","Cs 25","Bn 26","R 16","Bk 27",
-											 "R 16","H 15","H 15","Hl 28","SH 29","Py 30","Is 31","Co 32","Ds 33","H 34",
-											 "Fl 35","Ch 36","Br 18","Fs 39","Py 30","Py 30","Py 30","Ds 33","Ds 33","F 1",
-											 "Fl 35","Fl 35","Br 18","V 40","V 40","V 40","Sw 41","SV 42","C 9","C 9"};
-											 13*/
+    private static String[] locationImage = {};
 		
 	private static String[] locations = {
 		"4the furthest depth of the forest1001",			// 1  F    1 (Forest)
 		"4the depths of the mutant forest1000",				// 2  F    1 (Forest)
 		"7a path out of the overground depths1000",			// 3  F    1 (Forest)
 		"6a carniverous tree1000",							// 4  CT   2 (Carniverous Tree)
-		"4a corral beneath the Crimson Canyon1110",			// 5  P   13 (Paddock/Corral)
+		"4a corral beneath the Crimson Canyon1110",			// 5  Pk  13 (Paddock/Corral)
 		"7the top of a steep cliff1011",					// 6  CL   4 (Cliff)  
 		"4the marsh factory1001",							// 7  Fc   5 (Factory)
 		"4the sludge fermation vats1110",					// 8  Vt   6 (Vat)
@@ -53,66 +44,66 @@ public class RawData {
 		"4a corridor of clone storage casks1100",			//18  Pd   3 (Pod)
 		"7edge of the well0000",							//19  W   14 (Well)
 		"4the Room of Secret Visions1110",					//20  Cl  12 (Cloud)
-		"4Snelm's inner chamber0111",						//21  C
-		"3the southern edge of the forest0101",				//22  F
-		"7a leafy path1000",								//23  P
-		"3a fork in the path0100",							//24  P
-		"7an apparently unclimable rocky path1100",			//25  CL
-		"7a ledge atop the Crimson Canyon0010",				//26  CL	 
-		"4a tall entrance chamber1101",						//27  R (Room)
-		"4a low passage with arms reaching from the wall1010",//28 H (Hands)
-		"7the approach to the Well of Despair0001",			//29  W
-		"4a dim corridor deep in the castle1010",			//30  R
-		"4the stagnant waters of the crawling creek1001",	//31  Cr (Creek)
-		"4a shallow pool off the creek1100",				//32  Cr (Creek)
-		"7a log pier, jutting out over the creek0000",		//33  Br (Bridge)
-		"4a stretch of featureless dunes1100",				//34  SD (Sand Dunes)
-		"1a group of tall trees1010",						//35  F
-		"7a narrow ledge at the summit of the canyon0011",	//36  CL
-		"2a monsterous portal in the castle wall0011",		//37  Bt
-		"4a chamber inches deep with dust0001",				//38  R
-		"4here!!!!!1111",									//39  !
-		"2a carved archway0010",							//40  Ar (Archway)
-		"4a small hut in the log settlement0111",			//41  H
-		"1a huge split-log table1001",						//42  Tb (Table)
-		"4the porch of the logman's cabin0110",				//43  H
-		"4grandpa's shack1101",								//44  H
-		"3a clearing in the trees by a rickety shack0010",	//45  F
-		"4the nest of a huge dactyl0111",					//46  N
-		"6the Castle of Dark Secrets by two huge stones0011",//47 Cs (Castle)
-		"4a room littered with bones0111",					//48  Bn (Bones)
-		"4the Cell of Whispered Secrets0111",				//49  R
-		"4the Library of Written Secrets0111",				//50  Bk (Bookshelf)
-		"4a refuse strewn storeroom1111",					//51  R
-		"4the Logmen's hall0000",							//52  H
-		"5a log building1000",								//53  H
-		"7a rutted hillside1100",							//54  Hl
-		"7a windswept plain amongst stone megaliths0100",	//55  SH (Stonehenge)
-		"7the steps of an ancient pyramid1010",				//56  Py
-		"7the Island of Secrets0111",						//57  Is
-		"1a broken marble column1001",						//58  Co
-		"7an expanse of cracked, baked earth1110",			//59  Ds
-		"4a deserted abode hut1011",						//60  H
-		"4a livid growth of mad orchids1011",				//61  Fl
-		"4a corner strewn with broken chairs0111",			//62  Ch
-		"7the bridge near to a log settlement0011",			//63  Br
-		"1a crumbling mass of petrified trees1011",			//64  Fs
-		"3the edge of the pyramid1101",						//65  Py
-		"7the roof of the ancient pyramid0100",				//66  Py
-		"3an impassable split in the pyramid1110",			//67  Py
-		"7a barren blasted wasteland0001",					//68  Ds
-		"4an expanse of bleak, burnt land1100",				//69  Ds
-		"5a delapidated abode hut0110",						//70  H
-		"4the heart of the lillies0101",					//71  Fl
-		"4the midst of the lillies1100",					//72  Fl
-		"3a river's edge by a log bridge0100",				//73  Br
-		"3a petrified village by a river crowded with lillies0100",//74 Vi
-		"4the remains of a village1100",					//75  Vi
-		"3the entrance to a petrified village1100",			//76  Vi
-		"4a swamp matted with fibrous roots1100",			//77  Sw
-		"2a village of hollow stumps defying the swamp0100",//78  SV
-		"4a tunnel into one of the tree stumps1100",		//79  Cv
-		"4a hollow chamber many meters in diameter1110"		//80  Cv
+		"4Snelm's inner chamber0111",						//21  C    9 (Cave)
+		"3the southern edge of the forest0101",				//22  F    1 (Forest)
+		"7a leafy path1000",								//23  P   43 (Path)
+		"3a fork in the path0100",							//24  P   43 (Path)
+		"7an apparently unclimable rocky path1100",			//25  CL   4 (Cliff)
+		"7a ledge atop the Crimson Canyon0010",				//26  CL   4 (Cliff)
+		"4a tall entrance chamber1101",						//27  R   16 (Room)
+		"4a low passage with arms reaching from the wall1010",//28 H  15 (Hands)
+		"7the approach to the Well of Despair0001",			//29  W   14 (Well)
+		"4a dim corridor deep in the castle1010",			//30  R   16 (Room)
+		"4the stagnant waters of the crawling creek1001",	//31  Cr  17 (Creek)
+		"4a shallow pool off the creek1100",				//32  Cr  17 (Creek)
+		"7a log pier, jutting out over the creek0000",		//33  Br  18 (Bridge)
+		"4a stretch of featureless dunes1100",				//34  SD  19 (Sand Dunes)
+		"1a group of tall trees1010",						//35  F    1 (Forest)
+		"7a narrow ledge at the summit of the canyon0011",	//36  CL   4 (Cliff)
+		"2a monsterous portal in the castle wall0011",		//37  Bt  34 (Castle Door) 
+		"4a chamber inches deep with dust0001",				//38  R   16 (Room)
+		"4here!!!!!1111",									//39  !   20 (Exclamation Mark)
+		"2a carved archway0010",							//40  Ar  21 (Archway)
+		"4a small hut in the log settlement0111",			//41  H   22 (Hut)
+		"1a huge split-log table1001",						//42  Tb  23 (Table)
+		"4the porch of the logman's cabin0110",				//43  H   22 (Hut)
+		"4grandpa's shack1101",								//44  H   22 (Hut)
+		"3a clearing in the trees by a rickety shack0010",	//45  F    1 (Forest)
+		"4the nest of a huge dactyl0111",					//46  N   24 (Nest)
+		"6the Castle of Dark Secrets by two huge stones0011",//47 Cs  25 (Castle)
+		"4a room littered with bones0111",					//48  Bn  26 (Bones)
+		"4the Cell of Whispered Secrets0111",				//49  R   16 (Room)
+		"4the Library of Written Secrets0111",				//50  Bk  27 (Bookshelf)
+		"4a refuse strewn storeroom1111",					//51  R   16 (Room)
+		"4the Logmen's hall0000",							//52  H   22 (Hut)
+		"5a log building1000",								//53  H   22 (Hut)
+		"7a rutted hillside1100",							//54  Hl  28 (Hill)
+		"7a windswept plain amongst stone megaliths0100",	//55  SH  29 (Stonehenge)
+		"7the steps of an ancient pyramid1010",				//56  Py  30 (Pyramid)
+		"7the Island of Secrets0111",						//57  Is  31 (Island)
+		"1a broken marble column1001",						//58  Co  32 (Column)
+		"7an expanse of cracked, baked earth1110",			//59  Ds  33 (Desert)
+		"4a deserted abode hut1011",						//60  H   22 (Hut)
+		"4a livid growth of mad orchids1011",				//61  Fl  35 (Flowers)
+		"4a corner strewn with broken chairs0111",			//62  Ch  36 (Broken Chair)
+		"7the bridge near to a log settlement0011",			//63  Br  18 (Bridge)
+		"1a crumbling mass of petrified trees1011",			//64  Fs  39 (Stone Trees)
+		"3the edge of the pyramid1101",						//65  Py  30 (Pyramid)
+		"7the roof of the ancient pyramid0100",				//66  Py  30 (Pyramid)
+		"3an impassable split in the pyramid1110",			//67  Py  30 (Pyramid)
+		"7a barren blasted wasteland0001",					//68  Ds  33 (Desert)
+		"4an expanse of bleak, burnt land1100",				//69  Ds  33 (Desert)
+		"5a delapidated abode hut0110",						//70  H   22 (Hut)
+		"4the heart of the lillies0101",					//71  Fl  35 (Flowers)
+		"4the midst of the lillies1100",					//72  Fl  35 (Flowers)
+		"3a river's edge by a log bridge0100",				//73  Br  18 (Bridge)
+		"3a petrified village by a river crowded with lillies0100",//74 40 (Village)
+		"4the remains of a village1100",					//75  Vi  40 (Village)
+		"3the entrance to a petrified village1100",			//76  Vi  40 (Village)
+		"4a swamp matted with fibrous roots1100",			//77  Sw  41 (Swamp)
+		"2a village of hollow stumps defying the swamp0100",//78  SV  42 (Stump Village)
+		"4a tunnel into one of the tree stumps1100",		//79  Cv   9 (Cave)
+		"4a hollow chamber many meters in diameter1110"		//80  Cv   9 (Cave)
 	};
 		
 	private static String[] objects = {
@@ -227,4 +218,5 @@ public class RawData {
  * 31 January 2025 - Completed Testing and increased version
  * 2 February 2025 - Added comments to outline Location and Item numbers.
  * 				   - Removed one of the exits to the abode hut.
+ * 7 February 2025 - Added the arrays for location images
 */
