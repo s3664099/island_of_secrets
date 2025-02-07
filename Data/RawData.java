@@ -14,15 +14,58 @@ public class RawData {
 	
 	private static Integer[] locationTypes = {1,1,1,2,13,4,5,6,7,8,
 											  9,9,10,10,11,12,5,3,14,12,
-											  9,1,43,43,4,4,16,15,14,16,
+											  9,1,41,41,4,4,16,15,14,16,
 											  17,17,18,19,1,4,34,16,20,21,
 											  22,23,22,22,1,24,25,26,16,27,
 											  16,15,15,28,29,30,31,32,33,22,
 											  35,36,18,39,30,30,30,33,33,22,
-											  35,35,18,40,40,40,41,42,9,9};
+											  35,35,18,37,37,37,38,40,9,9};
 	
     private static String[] locationImage = {};
 		
+	/* 1 (Forest)
+	   2 (Carniverous Tree)
+	   3 (Pod)
+	   4 (Cliff) 
+	   5 (Factory)
+	   6 (Vat)
+	   7 (Battlements)
+	   8 (Sanctum
+	   9 (Cave)
+      10 (Bush)
+      11 (Stone)
+	  12 (Cloud)
+	  13 (Paddock/Corral)
+	  14 (Well)
+	  15 (Hands)
+	  16 (Room)
+	  17 (Creek)
+	  18 (Bridge)
+	  19 (Sand Dunes)
+	  20 (Exclamation Mark)
+	  21 (Archway)
+	  22 (Hut)
+	  23 (Table)
+	  24 (Nest)
+	  25 (Castle)
+	  26 (Bones)
+	  27 (Bookshelf)
+	  28 (Hill)
+	  29 (Stonehenge)
+	  30 (Pyramid)
+	  31 (Island)
+	  32 (Column)
+	  33 (Desert)
+	  34 (Castle Door) 
+	  35 (Flowers)
+	  36 (Broken Chair)
+	  37 (Village)
+	  38 (Swamp)
+	  39 (Stone Trees)
+	  40 (Stump Village)
+	  41 (Path)
+		};*/
+    
 	private static String[] locations = {
 		"4the furthest depth of the forest1001",			// 1  F    1 (Forest)
 		"4the depths of the mutant forest1000",				// 2  F    1 (Forest)
