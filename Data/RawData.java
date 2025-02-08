@@ -26,15 +26,6 @@ public class RawData {
     										 };
 		
 	/* 
-	   
-	   
-	    
-	   
-	   
-	   
-	   
-	   
-      
       11 (Stone)
 	  12 (Cloud)
 	  13 (Paddock/Corral)

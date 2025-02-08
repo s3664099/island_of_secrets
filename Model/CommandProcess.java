@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 4 February 2025
+Version: 3.4
+Date: 8 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -463,8 +463,15 @@ public class CommandProcess {
 			
 			//Giving water to a villager (but must have some drink)
 			} else if (codedNoun.equals("2413075") && objNumber==30 && player.getDrink()>1) {
+
+				if (game.getItem(11).getFlag() != 0) {
+					game.setMessage("He drinks the water and offers his staff");
+					game.getItem(30).setDescription("A villager");
+				} else {
+					game.setMessage("He drinks the water");
+				}
+				
 				game.getItem(11).setFlag(0);
-				game.setMessage("He offers his staff");
 				player.adjustDrink(1);
 			} else {
 				
@@ -571,5 +578,6 @@ public class CommandProcess {
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added extra parameter to the examine function
  * 3 February 2025 - Added description for damage in clone vat room.
- * 4 Fenruary 2025 - Updated scavenger and the fill command
+ * 4 February 2025 - Updated scavenger and the fill command
+ * 8 February 2025 - Updated villager taking water
  */
