@@ -23,19 +23,20 @@ public class RawData {
 	
     private static String[] locationImage = {"forest","eviltree","pods","cliff","factory",
     										 "vat","battlement","sanctum","cave","bush",
-    										 };
+    										 "stone","cloud","paddock","well","hand",
+    										 "room","creek","bridge","dunes","here"};
 		
 	/* 
-      11 (Stone)
-	  12 (Cloud)
-	  13 (Paddock/Corral)
-	  14 (Well)
-	  15 (Hands)
-	  16 (Room)
-	  17 (Creek)
-	  18 (Bridge)
-	  19 (Sand Dunes)
-	  20 (Exclamation Mark)
+      
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  21 (Archway)
 	  22 (Hut)
 	  23 (Table)
