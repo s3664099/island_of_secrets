@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 5 February 2025
+Version: 3.4
+Date: 8 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -279,6 +279,8 @@ public class Commands {
 							game.getItem(16).setLocation(1);
 							game.getItem(16).setFlag(0);
 						}
+					} else if (code.equals("246046") && game.getItem(11).getLocation() == 0) {
+						game.setMessage("You use the staff to keep the Dactyl away and take the egg");
 					}
 				}	
 			}
@@ -1029,4 +1031,5 @@ public class Commands {
  * 				   - Added check to make sure wisdom increase for taking items only occurs once
  * 4 February 2025 - Updated the fill command
  * 5 February 2025 - Added code to flag visited when move into room.
+ * 8 February 2025 - Added description for when you take the egg
  */
