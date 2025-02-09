@@ -24,7 +24,9 @@ public class RawData {
     private static String[] locationImage = {"forest","eviltree","pods","cliff","factory",
     										 "vat","battlement","sanctum","cave","bush",
     										 "stone","cloud","paddock","well","hand",
-    										 "room","creek","bridge","dunes","here"};
+    										 "room","creek","bridge","dunes","here",
+    										 "archway","hut","table","nest","castle",
+    										 "bones","bookshelf","hill","stonehenge","pyramid"};
 		
 	/* 
       
@@ -37,16 +39,16 @@ public class RawData {
 	  
 	  
 	  
-	  21 (Archway)
-	  22 (Hut)
-	  23 (Table)
-	  24 (Nest)
-	  25 (Castle)
-	  26 (Bones)
-	  27 (Bookshelf)
-	  28 (Hill)
-	  29 (Stonehenge)
-	  30 (Pyramid)
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  31 (Island)
 	  32 (Column)
 	  33 (Desert)
