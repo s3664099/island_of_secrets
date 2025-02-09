@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.2
-Date: 7 February 2025
+Version: 3.3
+Date: 9 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,42 +26,11 @@ public class RawData {
     										 "stone","cloud","paddock","well","hand",
     										 "room","creek","bridge","dunes","here",
     										 "archway","hut","table","nest","castle",
-    										 "bones","bookshelf","hill","stonehenge","pyramid"};
-		
-	/* 
-      
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  31 (Island)
-	  32 (Column)
-	  33 (Desert)
-	  34 (Castle Door) 
-	  35 (Flowers)
-	  36 (Broken Chair)
-	  37 (Village)
-	  38 (Swamp)
-	  39 (Stone Trees)
-	  40 (Stump Village)
-	  41 (Path)
-		};*/
-    
+    										 "bones","bookshelf","hill","stonehenge","pyramid",
+    										 "island","column","desert","castledoor","flowers",
+    										 "brokenchair","village","swamp","stonetree","stumphouse",
+    										 "path"};
+		    
 	private static String[] locations = {
 		"4the furthest depth of the forest1001",			// 1  F    1 (Forest)
 		"4the depths of the mutant forest1000",				// 2  F    1 (Forest)
@@ -258,4 +227,5 @@ public class RawData {
  * 2 February 2025 - Added comments to outline Location and Item numbers.
  * 				   - Removed one of the exits to the abode hut.
  * 7 February 2025 - Added the arrays for location images
+ * 9 February 2025 - Added image names
 */

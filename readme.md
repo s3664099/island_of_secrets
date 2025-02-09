@@ -918,4 +918,14 @@ bookshelf - <a href="https://www.flaticon.com/free-icons/bookshelf" title="books
 hill - <a href="https://www.flaticon.com/free-icons/hills" title="hills icons">Hills icons created by mnauliady - Flaticon</a>
 stonehenge - <a href="https://www.flaticon.com/free-icons/stonehenge" title="stonehenge icons">Stonehenge icons created by Freepik - Flaticon</a>
 pyramid - <a href="https://www.flaticon.com/free-icons/landmark" title="landmark icons">Landmark icons created by Eucalyp - Flaticon</a>
-
+island - <a href="https://www.flaticon.com/free-icons/island" title="island icons">Island icons created by Freepik - Flaticon</a>
+column - <a href="https://www.flaticon.com/free-icons/pillar" title="pillar icons">Pillar icons created by Freepik - Flaticon</a>
+desert - <a href="https://www.flaticon.com/free-icons/desert" title="desert icons">Desert icons created by Flat Icons - Flaticon</a>
+castledoor - <a href="https://www.flaticon.com/free-icons/magic" title="magic icons">Magic icons created by Freepik - Flaticon</a>
+flowers - <a href="https://www.flaticon.com/free-icons/flower" title="flower icons">Flower icons created by Freepik - Flaticon</a>
+brokenchair - <a href="https://www.flaticon.com/free-icons/damaged" title="Damaged icons">Damaged icons created by juicy_fish - Flaticon</a>
+village - <a href="https://www.flaticon.com/free-icons/neighborhood" title="neighborhood icons">Neighborhood icons created by itim2101 - Flaticon</a>
+swamp - <a href="https://www.flaticon.com/free-icons/grass" title="grass icons">Grass icons created by Freepik - Flaticon</a>
+stonetree - <a href="https://www.flaticon.com/free-icons/trees" title="trees icons">Trees icons created by BabyCorn - Flaticon</a>
+stumphouse - <a href="https://www.flaticon.com/free-icons/tree-stump" title="tree stump icons">Tree stump icons created by Freepik - Flaticon</a>
+path - <a href="https://www.flaticon.com/free-icons/path" title="path icons">Path icons created by Freepik - Flaticon</a>
