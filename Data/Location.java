@@ -17,9 +17,9 @@ public class Location implements Serializable {
 	private String name;
 	private boolean[] exits = new boolean[4];
 	private boolean visited = false;
-	private int roomType;
+	private String roomType;
 	
-	public Location(String name, String[] prepositions, int roomType) {		
+	public Location(String name, String[] prepositions, String roomType) {		
 
 		int prep = Integer.parseInt(name.substring(0,1));
 		this.name = String.format("%s %s",prepositions[prep-1],name.substring(1,name.length()-4));
@@ -54,7 +54,7 @@ public class Location implements Serializable {
 		return this.visited;
 	}
 	
-	public int getRoomType() {
+	public String getRoomType() {
 		return this.roomType;
 	}
 }

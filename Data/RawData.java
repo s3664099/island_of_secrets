@@ -186,6 +186,10 @@ public class RawData {
 		return locations[number];
 	}
 	
+	public static String getImage(int number) {
+		return locationImage[locationTypes[number]-1];
+	}
+	
 	public static String getObjects(int number) {
 		return objects[number-1];
 	}
@@ -227,5 +231,5 @@ public class RawData {
  * 2 February 2025 - Added comments to outline Location and Item numbers.
  * 				   - Removed one of the exits to the abode hut.
  * 7 February 2025 - Added the arrays for location images
- * 9 February 2025 - Added image names
+ * 9 February 2025 - Added image names & function to retrieve the relevant name for location
 */
