@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 5 February 2025
+Version: 3.4
+Date: 10 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,10 +11,16 @@ package View;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 import Model.GameEngine;
 
@@ -53,9 +59,24 @@ public class MapPanel extends JPanel {
 			}
 			
 			if (x<80 && engine.getGame().getRoom(x).getVisited()) {
-				roomPanel.add(new JLabel(""+engine.getGame().getRoom(x).getRoomType()));
-				//Gets exits and sets the walls based on where the rooms
+				
+				String imageName = engine.getGame().getRoom(x).getRoomType();
+				try {
+					BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream("/Images/" + imageName + ".png"));
+					
+					int width = 50;
+				    int height = 50;
+				    
+				    // Scale the image
+				    Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+					
+					JLabel picLabel = new JLabel(new ImageIcon(image));
+				    roomPanel.add(picLabel);
+				} catch (IOException e) {
+				    e.printStackTrace();
+				}
 			}
+
 			
 			add(roomPanel);
 		}
@@ -67,4 +88,5 @@ public class MapPanel extends JPanel {
  * 4 February 2025 - Added Borders to the map panel.
  * 5 February 2025 - Added code to only set label when room entered.
  * 9 February 2025 - Retrieve and add room type to the panel
+ * 10 February 2025 - Added the images to the map
  */
