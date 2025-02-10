@@ -61,6 +61,30 @@ public class MapPanel extends JPanel {
 			if (x<80 && engine.getGame().getRoom(x).getVisited()) {
 				
 				String imageName = engine.getGame().getRoom(x).getRoomType();
+				boolean[] exits = engine.getGame().getRoom(x).getExits();
+				
+				int north = 0;
+				if (!exits[0]) {
+					north = 2;
+				}
+				
+				int south = 0;
+				if (!exits[1]) {
+					south = 2;
+				}
+				
+				int east = 0;
+				if (!exits[2]) {
+					east = 2 ;
+				}
+				
+				int west = 0;
+				if (!exits[3]) {
+					west = 2;
+				}
+				
+				roomPanel.setBorder(BorderFactory.createMatteBorder(north, west, south, east, Color.BLACK));
+				
 				try {
 					BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream("/Images/" + imageName + ".png"));
 					
@@ -88,5 +112,5 @@ public class MapPanel extends JPanel {
  * 4 February 2025 - Added Borders to the map panel.
  * 5 February 2025 - Added code to only set label when room entered.
  * 9 February 2025 - Retrieve and add room type to the panel
- * 10 February 2025 - Added the images to the map
+ * 10 February 2025 - Added the images to the map. Added the walls
  */
