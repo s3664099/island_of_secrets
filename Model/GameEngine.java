@@ -298,6 +298,11 @@ public class GameEngine {
 	public void setMapPanel(GamePanel game) {
 		setPanel(game,new MapPanel(game,this));
 	}
+	
+	//Displays the game panel
+	public void setGamePanel(GamePanel game) {
+		resetPanel(game);
+	}
 } 
 
 /*

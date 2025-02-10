@@ -12,15 +12,19 @@ package View;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import Controller.GameButton;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import Model.GameEngine;
 
@@ -101,9 +105,26 @@ public class MapPanel extends JPanel {
 				}
 			}
 
+			if (x==85) {
+				JPanel inputPanel = new JPanel(new GridLayout(1,1));
+				addButton(inputPanel,"Game",new GameButton(this.engine,this.game));
+				roomPanel.add(inputPanel);
+			}
 			
 			add(roomPanel);
 		}
+	}
+	
+	//Creates a button and adds it to the panel.
+	private void addButton(JPanel panel,String buttonName,ActionListener action) {
+		
+		//Create Exit Button
+		JButton button = new JButton(buttonName);
+		panel.add(button);
+		
+		//Closes frame when clicked
+		panel.setBorder(BorderFactory.createEmptyBorder(0,320,0,320));
+	    button.addActionListener(action);
 	}
 }
 
