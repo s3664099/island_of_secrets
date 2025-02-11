@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 9 February 2025
+Version: 3.4
+Date: 11 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -17,7 +17,7 @@ public class RawData {
 											  9,1,41,41,4,4,16,15,14,16,
 											  17,17,18,19,1,4,34,16,20,21,
 											  22,23,22,22,1,24,25,26,16,27,
-											  16,15,15,28,29,30,31,32,33,22,
+											  16,22,22,28,29,30,31,32,33,22,
 											  35,36,18,39,30,30,30,33,33,22,
 											  35,35,18,37,37,37,38,40,9,9};
 	
@@ -232,4 +232,5 @@ public class RawData {
  * 				   - Removed one of the exits to the abode hut.
  * 7 February 2025 - Added the arrays for location images
  * 9 February 2025 - Added image names & function to retrieve the relevant name for location
+ * 11 February 2025 - Fixed incorrect images on map
 */

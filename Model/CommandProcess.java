@@ -150,7 +150,7 @@ public class CommandProcess {
 		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {
-			this.command.move(game,player);//More than one verb
+			this.command.move(game,player,splitCommand[1]);//More than one verb
 		
 		//Eat
 		} else if (verbNo==11) {
@@ -208,7 +208,7 @@ public class CommandProcess {
 			
 			//Go
 			if (verbNo==5) {
-				this.command.move(game,player);
+				this.command.move(game,player,splitCommand[1]);
 
 			//Take Command (pick & catch included)
 			} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {

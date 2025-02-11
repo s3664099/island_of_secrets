@@ -2,7 +2,7 @@ TODO
 
 
 
-Map Screen
+
 Buttons for shelter
 Buttons for load game and remove the list. Bottom button will recycle through next lot if any
 Commands above are buttons that if you click them, the command is repeated
@@ -17,7 +17,7 @@ Need to have a look/search command to offer clues (examine room?)
 	
 	
 	- Well, actually, turns out that there are lots of hints in the book, so yeah, I might just refer to player there
-	- choping a thing doesn't returns to the command line as opposed to ending the game - need to look into that
+	
 
 
 
@@ -29,7 +29,7 @@ Need to have a look/search command to offer clues (examine room?)
 	
 	
 	
-	- Also, like, have where you can go into places (like go hut at Grandpa's hut).
+	
 	
 	
 	

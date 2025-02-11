@@ -45,7 +45,7 @@ public class Commands {
 		return this.game;
 	}
 	
-	public void move(Game game,Player player) {
+	public void move(Game game,Player player,String noun) {
 		
 		int direction = 0;
 		boolean haveMoved=false;
@@ -56,7 +56,17 @@ public class Commands {
 		} else if (this.noun>Constants.noItems && this.noun<Constants.noNouns) {
 			direction = this.noun-Constants.noItems;
 		}
-				
+		
+		if (player.getRoom()==12 && noun.equals("cave")) {
+			direction=4;
+		} else if (player.getRoom()==45 && noun.equals("hut")) {
+			direction=4;
+		} else if (player.getRoom()==53 && noun.equals("hut")) {
+			direction=4;
+		} else if (player.getRoom()==70 && noun.equals("hut") ) {
+			direction=1;
+		}
+						
 		//Sets direction for specific movement command
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
 			direction = 4;
