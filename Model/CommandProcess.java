@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 8 February 2025
+Version: 3.5
+Date: 11 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -580,4 +580,5 @@ public class CommandProcess {
  * 3 February 2025 - Added description for damage in clone vat room.
  * 4 February 2025 - Updated scavenger and the fill command
  * 8 February 2025 - Updated villager taking water
+ * 11 February 2025 - Added string paramater to pass the noun into movement
  */

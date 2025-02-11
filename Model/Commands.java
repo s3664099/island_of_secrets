@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 8 February 2025
+Version: 3.5
+Date: 11 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1042,4 +1042,5 @@ public class Commands {
  * 4 February 2025 - Updated the fill command
  * 5 February 2025 - Added code to flag visited when move into room.
  * 8 February 2025 - Added description for when you take the egg
+ * 11 February 2025 - Added entry using specific names
  */
