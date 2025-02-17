@@ -815,6 +815,9 @@ public class Commands {
 	public void info (Game game, Player player) {
 		
 		boolean hasItem = false;
+		int lineLength = Constants.lineLength;
+		int itemLength = 0;
+		String items = "";
 		
 		game.setMessage("Info - Items carried|");
 		game.addMessage("Food: "+player.getFood());
@@ -824,14 +827,33 @@ public class Commands {
 			
 			if (game.getItem(i).checkLocation(0)) {
 				
+				//Checks the length of the string and adds a break if too long
+				if (itemLength+game.getItem(i).getItem().length()+1>lineLength) {
+					items = items +"|";
+					itemLength = 0;
+				}
+				
+				//First item recorded
 				if (!hasItem) {
-					game.addMessage("|Items: "+game.getItem(i).getItem());
+					items = "|Items: "+game.getItem(i).getItem();
 					hasItem = true;
+					itemLength = items.length()-1;
+				
+				//Subsequent items
 				} else {
-					game.addMessage(" "+game.getItem(i).getItem());
+					
+					//Adds the item and counts the length of the string
+					int extraLength = 1;
+					if (itemLength > 0) {
+						items = items +", ";
+						extraLength = 2;
+					}
+					items = items+game.getItem(i).getItem();
+					itemLength += game.getItem(i).getItem().length()+extraLength;
 				}
 			}
-		}	
+		}
+		game.addMessage(items);
 	}
 	
 	public void save(Game game, Player player) {
