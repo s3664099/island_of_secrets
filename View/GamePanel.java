@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.2
-Date: 1 February 2025
+Version: 3.3
+Date: 17 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel {
 		
 		//Button to display the map
 		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		addButton(inputPanel,"Map",new MapButton(game,this));
+		addButton(inputPanel,"Map",new MapButton(game,this),320);
 		bottomPanel.add(inputPanel);
 		
 		//Command Field includes four labels above which contain the last three commands.
@@ -122,7 +122,8 @@ public class GamePanel extends JPanel {
 			inputPanel.add(commandField);
 			
 		} else {
-			addButton(inputPanel,"Exit",new QuitButton(this.frame));
+			addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+			addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
 		}
 		
 		bottomPanel.add(inputPanel);
@@ -133,14 +134,14 @@ public class GamePanel extends JPanel {
 	}
 	
 	//Creates a button and adds it to the panel.
-	private void addButton(JPanel panel,String buttonName,ActionListener action) {
+	private void addButton(JPanel panel,String buttonName,ActionListener action,int size) {
 		
 		//Create Exit Button
 		JButton button = new JButton(buttonName);
 		panel.add(button);
 		
 		//Closes frame when clicked
-		panel.setBorder(BorderFactory.createEmptyBorder(0,320,0,320));
+		panel.setBorder(BorderFactory.createEmptyBorder(0,size,0,size));
 	    button.addActionListener(action);
 	}
 	
@@ -223,4 +224,5 @@ public class GamePanel extends JPanel {
  * 31 January 2025 - Completed Testing and increased version
  * 				   - Fixed the styling for the input section.
  * 1 February 2025 - Added the map display button
+ * 17 February 2025 - Added restart button when game ends
  */
