@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.5
-Date: 11 February 2025
+Version: 3.6
+Date: 17 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -717,7 +717,8 @@ public class Commands {
 				game.addMessage(water+" a bottle of water");
 				game.getItem(21).setFlag(0);
 			}
-			
+		} else if (command[1].equals("column") && player.getRoom()==58 && command[0].equals("examine")) {
+			game.addMessage("At the bottom of the column are the words 'remember old times'");
 		}
 	}
 	
@@ -1043,4 +1044,5 @@ public class Commands {
  * 5 February 2025 - Added code to flag visited when move into room.
  * 8 February 2025 - Added description for when you take the egg
  * 11 February 2025 - Added entry using specific names
+ * 17 February 2025 - Added examine column
  */
