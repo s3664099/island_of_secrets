@@ -659,6 +659,7 @@ public class Commands {
 	}
 	
 	public void examine(Player player, Game game, String[] command) {
+		
 		game.setMessage("Examine the book for clues");
 				
 		//Read the parchment
@@ -718,7 +719,9 @@ public class Commands {
 				game.getItem(21).setFlag(0);
 			}
 		} else if (command[1].equals("column") && player.getRoom()==58 && command[0].equals("examine")) {
-			game.addMessage("At the bottom of the column are the words 'remember old times'");
+			game.setMessage("At the bottom of the column are the words 'remember old times'");
+		} else if (command[0].equals("examine") && command[1].equals("room")) {
+			game.setMessage("There doesn't seem anything out of the ordinary here");
 		}
 	}
 	

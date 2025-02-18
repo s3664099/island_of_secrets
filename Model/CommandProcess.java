@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.5
-Date: 11 February 2025
+Version: 3.6
+Date: 17 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -77,8 +77,8 @@ public class CommandProcess {
 			command = "e";
 		} else if (command.equals("west")) {
 			command = "w";
-		} 
-		
+		}
+				
 		return command;	
 	}
 	
@@ -143,9 +143,22 @@ public class CommandProcess {
 	public void executeCommand(Game game,Player player,int nounNumber) {
 		
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
+		int commandLength = this.commands.length;
+		
 		
 		if (verbNo != 43) {
 			game.resetCount();
+		}
+		
+		//Sets look to examine
+		if (this.commands[0].equals("look") && commandLength==1) {
+			verbNo = 33;
+			this.splitCommand[0] = "examine";
+			this.splitCommand[1] = "room";
+			commandLength = 2;
+		} else if (this.commands[0].equals("look")) {
+			this.splitCommand[0] = "examine";
+			verbNo = 33;
 		}
 		
 		//Movement Command (verb only)
@@ -204,7 +217,7 @@ public class CommandProcess {
 			this.command.shelter(player, game);
 			
 		//More than one verb
-		} else if(commands.length>1) {
+		} else if(commandLength>1) {
 			
 			//Go
 			if (verbNo==5) {
@@ -581,4 +594,5 @@ public class CommandProcess {
  * 4 February 2025 - Updated scavenger and the fill command
  * 8 February 2025 - Updated villager taking water
  * 11 February 2025 - Added string paramater to pass the noun into movement
+ * 17 February 2025 - Added code to transform look command to enable looking at room.
  */
