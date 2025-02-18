@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 9 February 2025
+Version: 3.5
+Date: 18 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,7 +24,7 @@ public class Game implements Serializable {
 	private int noItems = Constants.noNouns;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
-	private String message = "Let your quest begin!";
+	private String message = "Let your quest begin!|Visit https://archive.org/details/island-of-secrets_202303 for more clues";
 	private String[] commands = {"","",""};
 	private Random rand = new Random();
 	private String panelMessageOne;
@@ -366,4 +366,5 @@ public class Game implements Serializable {
  * 3 February 2025 - Added description for flint
  * 5 February 2025 - Added getter for specific room. Set the visited flag for initial room
  * 9 February 2025 - Added room type to the room.
+ * 18 February 2025 - Added link to book in first message
  */
