@@ -3,7 +3,7 @@ Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 3.6
-Date: 17 February 2025
+Date: 18 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
