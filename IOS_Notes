@@ -42,8 +42,8 @@ Changes to be noted
 	  based on the number of items carried (the weight) but I need to check out the 9 items problem.	
 	- Have a look command but changes it to Examine and sets a flag - after it will reset it, but will reveal more
 	  information about the room (if there is any).
-	  	- Top of Pyramid
-	  	- Well of Weakness
+	  	
+	  	
 	  	- Petrified Village
 	  	- Clone Factory
 	  	- Abode Hut - When look reveals map - sets flag and if look map reveal details of island
@@ -52,6 +52,7 @@ Changes to be noted
 	  	- Marble Column
 	  	- Omegan's Sanctum
 	- With the give - if include 'to xxx' skip the other one and just go straight through to it
+	- Can you noun to say where to shelter
 	- Have 'eat food' work
 	- Median should probably disappear after he has done his work.
 	- When go through portal on island - should slam shut - or at least say it.

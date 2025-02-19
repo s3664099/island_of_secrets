@@ -661,6 +661,10 @@ public class Commands {
 	public void examine(Player player, Game game, String[] command) {
 		
 		game.setMessage("Examine the book for clues");
+		
+		if (command[1].equals("well") && player.getRoom()==19) {
+			command[1]="room";
+		}
 				
 		//Read the parchment
 		if (code.substring(0,3).equals("600")) {
@@ -722,6 +726,17 @@ public class Commands {
 			game.setMessage("At the bottom of the column are the words 'remember old times'");
 		} else if (command[0].equals("examine") && command[1].equals("room")) {
 			game.setMessage("There doesn't seem anything out of the ordinary here");
+			
+			if (player.getRoom()==65 || player.getRoom()==66 || player.getRoom()==67) {
+				game.setMessage("You can see quite a distance from here. To the north a forest rises into ragged peaks|");
+				game.addMessage("while to the west you can see a log village on a lake. The the south is a swamp, while|");
+				game.addMessage("blasted lands disappear to the east. In the middle of a lake, shrouded in mist, appears|");
+				game.addMessage("to be an ancient castle.");
+			} else if (player.getRoom()==19) {
+				game.setMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting|");
+				game.addMessage("to add you to their number");
+			}
+			
 		}
 	}
 	
