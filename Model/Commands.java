@@ -735,6 +735,19 @@ public class Commands {
 			} else if (player.getRoom()==19) {
 				game.setMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting|");
 				game.addMessage("to add you to their number");
+			} else if (player.getRoom()==74 || player.getRoom()==75||player.getRoom()==76) {
+				game.setMessage("You see a village that appears to have been frozen in time, with buildings and|");
+				game.addMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp|");
+				game.addMessage("seems to be ever so slowly enveloping it.");
+			} else if (player.getRoom()==17) {
+				game.setMessage("This room has rows and rows of pods with glass lids containing what appears|");
+				game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number|");
+				game.addMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or|");
+				game.addMessage("have rotted away. A foul, almost toxic, smell seems to be present.");
+			} else if (player.getRoom()==10) {
+				game.setMessage("This room has an evil presence in it, with strange symbols on the floor and wall|");
+				game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from|");
+				game.addMessage("long forgotten family. A crystaline glass window looks out over the island.");
 			}
 			
 		}
