@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.7
-Date: 18 February 2025
+Version: 3.8
+Date: 20 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1099,4 +1099,5 @@ public class Commands {
  * 11 February 2025 - Added entry using specific names
  * 17 February 2025 - Added examine column
  * 18 February 2025 - Added look room functions
+ * 20 February 2025 - Added further room descriptions
  */

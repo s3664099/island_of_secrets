@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.6
-Date: 18 February 2025
+Version: 3.7
+Date: 20 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -317,8 +317,8 @@ public class CommandProcess {
 		
 		//Location of Omegan
 		if (!game.getItem(39).checkLocation(player.getRoom())) {
-			int part1 = 10 * rand.nextInt(5)+2;
-			int part2 = 7 *rand.nextInt(3)+1;
+			int part1 = 10 * (rand.nextInt(5)+1);
+			int part2 = 7 * (rand.nextInt(3)+1);
 			int newLocation = Math.min(part1+part2, 80);
 			game.getItem(39).setLocation(newLocation);
 		
@@ -595,4 +595,5 @@ public class CommandProcess {
  * 8 February 2025 - Updated villager taking water
  * 11 February 2025 - Added string paramater to pass the noun into movement
  * 17 February 2025 - Added code to transform look command to enable looking at room.
+ * 20 February 2025 - Fixed Omegan movement
  */
