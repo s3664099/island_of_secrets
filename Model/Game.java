@@ -94,6 +94,8 @@ public class Game implements Serializable {
 		} else if (roomNumber == 67 && itemList[14].getLocation() == 67 && itemList[14].getFlag()==9) {
 			items += "A piece of flint stuck in the crack";
 			count++;
+		} else if (roomNumber == 60 && locationList[roomNumber].getViewed()) {
+			items += "A map, along with a collection of papers which seem to make up a diary";
 		}
 		
 		//Goes through each of the items

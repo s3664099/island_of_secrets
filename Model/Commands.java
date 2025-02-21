@@ -756,7 +756,7 @@ public class Commands {
 				game.setMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.|");
 				game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,|");
 				game.addMessage("considering the contents. There is a desk that is covered in papers, which includes|"); 
-				game.addMessage("sort of map.");
+				game.addMessage("what looks like a map.");
 				game.getRoom(player.getRoom()).setViewed();
 			} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
 				
