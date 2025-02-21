@@ -752,6 +752,20 @@ public class Commands {
 				game.setMessage("The column looks like it has seen better days. It is crumbling and appears that a|");
 				game.addMessage("peice could easily be removed if you had the right equipment. There is a message|");
 				game.addMessage("inscribed at the base of the column.");
+			} else if (player.getRoom()==60) {
+				game.setMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.|");
+				game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,|");
+				game.addMessage("considering the contents. There is a desk that is covered in papers, which includes|"); 
+				game.addMessage("sort of map.");
+				game.getRoom(player.getRoom()).setViewed();
+			} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
+				
+				//Outlines map and displays rooms on map
+				
+			} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
+				
+				//Mentions Median and provides a number of possible hints (Random)
+				
 			}
 			
 		}
@@ -1105,4 +1119,5 @@ public class Commands {
  * 18 February 2025 - Added look room functions
  * 20 February 2025 - Added further room descriptions
  * 21 February 2025 - Added comment when examining marble column.
+ * 					- Started working on the abode hut
  */
