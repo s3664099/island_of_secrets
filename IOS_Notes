@@ -44,13 +44,14 @@ Changes to be noted
 	  information about the room (if there is any).
 	  	
 	  	
-	  	- Petrified Village
-	  	- Clone Factory
+	  	
+	  	
 	  	- Abode Hut - When look reveals map - sets flag and if look map reveal details of island
 	  		- Reveal it is Median's Hut
 	  		- Also Diary with some hints
-	  	- Marble Column
-	  	- Omegan's Sanctum
+	  			- Has randomn hints that are displayed whenever examined
+	  	
+	  	
 	- With the give - if include 'to xxx' skip the other one and just go straight through to it
 	- Can you noun to say where to shelter
 	- Have 'eat food' work

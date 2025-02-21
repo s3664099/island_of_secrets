@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.8
-Date: 20 February 2025
+Version: 3.9
+Date: 21 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -748,6 +748,10 @@ public class Commands {
 				game.setMessage("This room has an evil presence in it, with strange symbols on the floor and wall|");
 				game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from|");
 				game.addMessage("long forgotten family. A crystaline glass window looks out over the island.");
+			} else if (player.getRoom()==58) {
+				game.setMessage("The column looks like it has seen better days. It is crumbling and appears that a|");
+				game.addMessage("peice could easily be removed if you had the right equipment. There is a message|");
+				game.addMessage("inscribed at the base of the column.");
 			}
 			
 		}
@@ -1100,4 +1104,5 @@ public class Commands {
  * 17 February 2025 - Added examine column
  * 18 February 2025 - Added look room functions
  * 20 February 2025 - Added further room descriptions
+ * 21 February 2025 - Added comment when examining marble column.
  */
