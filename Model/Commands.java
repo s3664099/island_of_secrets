@@ -146,6 +146,8 @@ public class Commands {
 				game.setMessage("You enter the room and giant hands grab you and hold you fast");
 			} else if (player.getRoom()==28) {
 				game.setMessage("You enter the room and brightly shining torch force the arms to retreat to the walls");
+			} else if (player.getRoom()==27 && direction==1) {
+				game.setMessage("The doors slam shut behind you preventing you from leaving");
 			}
 			
 			
@@ -1161,4 +1163,5 @@ public class Commands {
  * 21 February 2025 - Added comment when examining marble column.
  * 					- Started working on the abode hut
  * 22 February 2025 - Finished the diary and the map in the hut
+ * 					- Added eat food, and response to entering castle of secrets
  */
