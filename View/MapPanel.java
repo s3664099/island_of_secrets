@@ -62,7 +62,7 @@ public class MapPanel extends JPanel {
 				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
 			}
 			
-			if (x<80 && engine.getGame().getRoom(x).getVisited()) {
+			if (x<81 && engine.getGame().getRoom(x).getVisited()) {
 				
 				String imageName = engine.getGame().getRoom(x).getRoomType();
 				boolean[] exits = engine.getGame().getRoom(x).getExits();
