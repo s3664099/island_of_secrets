@@ -355,6 +355,11 @@ public class Commands {
 	
 	public void eat(Game game, Player player,String nounStr) {
 		
+		//Allows 'Eat Food' to work
+		if (nounStr.equals("food")) {
+			noun = 17;
+		}
+		
 		//Eating lillies (moved here since in original game code wouldn't reach)
 		if (noun == 3 && game.getItem(3).getLocation()==0) {
 			player.adjustWisdom(-5);
