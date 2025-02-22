@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 17 February 2025
+Version: 3.4
+Date: 22 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,7 +27,6 @@ public class GameEngine {
 	private String codedCommand;
 	private int nounNum;
 	private Test test = new Test();
-	private boolean restart = false;
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -71,6 +70,10 @@ public class GameEngine {
 	
 	public Game getGame() {
 		return this.game;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
 	}
 	
 	public String getExits() {
@@ -372,4 +375,5 @@ public class GameEngine {
 1 February 2025 - Removed unused variables
 5 February 2025 - Added getter for the game
 17 February 2025 - Added restart function
+22 February 2025 - Added a getPlayer function
 */

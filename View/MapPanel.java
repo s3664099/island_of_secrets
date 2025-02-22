@@ -67,6 +67,10 @@ public class MapPanel extends JPanel {
 				String imageName = engine.getGame().getRoom(x).getRoomType();
 				boolean[] exits = engine.getGame().getRoom(x).getExits();
 				
+				if (engine.getPlayer().getRoom()==x) {
+					imageName = "adventurer";
+				}
+				
 				int north = 0;
 				if (!exits[0]) {
 					north = 2;
