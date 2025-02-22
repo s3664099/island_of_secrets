@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.9
-Date: 21 February 2025
+Version: 3.10
+Date: 22 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -758,16 +758,51 @@ public class Commands {
 				game.addMessage("considering the contents. There is a desk that is covered in papers, which includes|"); 
 				game.addMessage("what looks like a map.");
 				game.getRoom(player.getRoom()).setViewed();
-			} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
-				
-				//Outlines map and displays rooms on map
-				
-			} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
-				
-				//Mentions Median and provides a number of possible hints (Random)
-				
 			}
+		} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
+				
+			game.setMessage("The map looks like it is of a castle located on an island");
+			game.getRoom(57).setVisited();
 			
+			for (int x=0;x<5;x++) {
+				for (int y=7;y<11;y++) {
+					game.getRoom((x*10)+y).setVisited();
+				}
+			}
+				
+		} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
+		
+			game.setMessage("The papers look like the belong to somebody by the name Median. It chronicles his search|");
+			game.addMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure|");
+			game.addMessage("for this poison. In addition, you notice the following|");
+			
+			int x=rand.nextInt(10);			
+
+			switch (x) {
+				case 0:
+					game.addMessage("'Only those of strong will can resist the boatman'");
+					break;
+				case 1:
+					game.addMessage("'The Sagemaster rewards those who help her'");
+					break;
+				case 2:
+					game.addMessage("'The stone's mouth needs some polishing'");
+					break;
+				case 3:
+					game.addMessage("'The hands fear bright light'");
+					break;
+				case 4:
+					game.addMessage("'Words will stop the stone'");
+					break;
+				case 5:
+					game.addMessage("'Omegan's Cloak is his strength'");
+					break;
+				case 6:
+					game.addMessage("'The Dactyl could be useful'");
+					break;
+				default:
+					game.addMessage("'I think it is time to head to the island. I hope I remember.'");
+			}	
 		}
 	}
 	
@@ -1120,4 +1155,5 @@ public class Commands {
  * 20 February 2025 - Added further room descriptions
  * 21 February 2025 - Added comment when examining marble column.
  * 					- Started working on the abode hut
+ * 22 February 2025 - Finished the diary and the map in the hut
  */

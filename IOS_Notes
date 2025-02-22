@@ -46,11 +46,7 @@ Changes to be noted
 	  	
 	  	
 	  	
-	  	- Abode Hut - When look reveals map - sets flag and if look map reveal details of island
-	  		- Reveal it is Median's Hut
-	  		- Also Diary with some hints
-	  			- Has randomn hints that are displayed whenever examined
-	  		- After viewed, map and diary appear as items
+
 	  	
 	- With the give - if include 'to xxx' skip the other one and just go straight through to it
 	- Can you noun to say where to shelter
