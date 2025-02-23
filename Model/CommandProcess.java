@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.7
-Date: 20 February 2025
+Version: 3.8
+Date: 23 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,7 +37,12 @@ public class CommandProcess {
 		this.originalCommand = command;
 		
 		if (commands.length>1) {
-			splitCommand[1] = command.substring(commands[0].length()).trim();
+			
+			if (splitCommand[0].equals("give")) {
+				splitCommand[1] = commands[1];
+			} else {
+				splitCommand[1] = command.substring(commands[0].length()).trim();
+			}
 		} else {
 			game.setMessage("Most commands need two words");
 		}
@@ -145,7 +150,6 @@ public class CommandProcess {
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		int commandLength = this.commands.length;
 		
-		
 		if (verbNo != 43) {
 			game.resetCount();
 		}
@@ -214,7 +218,11 @@ public class CommandProcess {
 
 		//Shelter
 		} else if (verbNo==26) {
-			this.command.shelter(player, game);
+			int location = this.command.shelter(player, game, commands);
+			
+			if (location != -1) {
+				executeShelter(game,player,location);
+			}
 			
 		//More than one verb
 		} else if(commandLength>1) {
@@ -229,7 +237,11 @@ public class CommandProcess {
 			
 			//Give
 			} else if (verbNo == 8) {
-				this.command.give(game, player);
+				String object = this.command.give(game, player,this.commands);
+				
+				if (object.length()>0) {
+					executeGive(game,player,nounNumber,object,codedCommand);
+				}
 
 			//Drop
 			} else if (verbNo == 9||verbNo ==10) {
@@ -456,6 +468,8 @@ public class CommandProcess {
 	public void executeGive(Game game,Player player,int nounNumber, String subject,
 							String codedNoun) {
 		
+		System.out.println(subject);
+		
 		int objNumber = getNounNum(subject);
 		boolean alreadyMessage = false;
 		
@@ -596,4 +610,5 @@ public class CommandProcess {
  * 11 February 2025 - Added string paramater to pass the noun into movement
  * 17 February 2025 - Added code to transform look command to enable looking at room.
  * 20 February 2025 - Fixed Omegan movement
+ * 23 February 2025 - Added multi word command so can use give & shelter with one commands
  */

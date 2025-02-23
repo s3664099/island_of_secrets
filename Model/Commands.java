@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.10
-Date: 22 February 2025
+Version: 3.11
+Date: 23 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -299,7 +299,9 @@ public class Commands {
 		}
 	}
 
-	public void give(Game game,Player player) {
+	public String give(Game game,Player player,String[] commands) {
+		
+		String object = "";
 				
 		if ((noun != 24 && game.getItem(noun).getLocation()>0) || noun == 52) {
 			
@@ -312,9 +314,21 @@ public class Commands {
 			game.setMessage("You don't have "+itemName);
 			
 		} else {
-			game.setMessage("Give to whom?");
-			game.setResponse(1);		
+			
+			if (commands.length<3) {
+				game.setMessage("Give to whom?");
+				game.setResponse(1);
+			} else {
+				
+				if (commands[2].equals("to") && commands.length>3) {
+					object = commands[3];
+				} else {
+					game.setMessage("I don't understand");
+				}
+			}
 		}
+		
+		return object;
 	}
 	
 	public void drop(Game game, Player player) {
@@ -620,15 +634,34 @@ public class Commands {
 		}
 	}
 	
-	public void shelter(Player player,Game game) {
-				
+	public int shelter(Player player,Game game, String[] commands) {
+		
+		int location = -1;
+		
 		if (game.getItem(36).getFlag()<0) {
-			game.setMessage("You can shelter in|1) Grandpa's Shack|2) Cave of Snelm|3) Log Cabin");
-			game.addMessage("|Choose from 1-3");
-			game.setResponse(2);	
+			
+			if (commands[2].equals("in") && commands.length>3) {
+				
+				if (commands[3].equals("shack")) {
+					location = 44;
+				} else if (commands[3].equals("cave")) {
+					location = 9;
+				} else if (commands[3].equals("cabin")) {
+					location = 41;
+				} else {
+					game.setMessage("I'm sorry, I do not know that place");
+				}
+				
+			} else {
+				game.setMessage("You can shelter in|1) Grandpa's Shack|2) Cave of Snelm|3) Log Cabin");
+				game.addMessage("|Choose from 1-3");
+				game.setResponse(2);
+			}
 		} else {
 			game.setMessage("Not possible at the moment.");
 		}
+		
+		return location;
 	}
 	
 	public void help(Player player, Game game) {
@@ -1164,4 +1197,5 @@ public class Commands {
  * 					- Started working on the abode hut
  * 22 February 2025 - Finished the diary and the map in the hut
  * 					- Added eat food, and response to entering castle of secrets
+ * 23 February 2025 - Made possible for give & shelter to work with single command
  */

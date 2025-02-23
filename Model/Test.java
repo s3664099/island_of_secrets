@@ -34,7 +34,7 @@ public class Test {
 		//System.out.println(game.getItem(3).getItem());
 		//System.out.println(game.getItem(16).getItem());
 		//System.out.println(game.getItem(7).getLocation());
-		//System.out.println(game.getItem(7).getFlag());
+		//System.out.println(game.getItem(36).getFlag());
 		//System.out.println(game.getItem(11).getFlag());
 		//System.out.println(game.getItem(13).getFlag());
 		//System.out.println(game.getRoomName(33));
