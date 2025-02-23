@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.3
-Date: 17 February 2025
+Version: 3.4
+Date: 23 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -99,11 +99,13 @@ public class GamePanel extends JPanel {
 		String[] commands = game.getCommands();
 		JPanel bottomPanel = new JPanel(new GridLayout(6,1));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); //Top, Left, Bottom, Right
+		JPanel inputPanel = new JPanel(new GridLayout(1,1));
 		
 		//Button to display the map
-		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		addButton(inputPanel,"Map",new MapButton(game,this),320);
-		bottomPanel.add(inputPanel);
+		if (game.getPlayer().getPanelFlag()!=4) {
+			addButton(inputPanel,"Map",new MapButton(game,this),320);
+			bottomPanel.add(inputPanel);
+		}
 		
 		//Command Field includes four labels above which contain the last three commands.
 		//Also one for a blank spot
@@ -225,4 +227,5 @@ public class GamePanel extends JPanel {
  * 				   - Fixed the styling for the input section.
  * 1 February 2025 - Added the map display button
  * 17 February 2025 - Added restart button when game ends
+ * 23 February 2025 - Hid map button if swimming in poisoned waters.
  */

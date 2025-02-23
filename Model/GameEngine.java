@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 22 February 2025
+Version: 3.5
+Date: 23 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -196,7 +196,7 @@ public class GameEngine {
 				player.setPanelFlag(0);
 				this.game.setMessage("You surface");
 				Random rand = new Random();
-				player.setRoom(rand.nextInt(3)+30);
+				player.setRoom(rand.nextInt(3)+31);
 				player.resetPosition();
 			} else if (player.getStrength()<1) {
 				this.game.setMessage("You get lost and drown");
@@ -376,4 +376,5 @@ public class GameEngine {
 5 February 2025 - Added getter for the game
 17 February 2025 - Added restart function
 22 February 2025 - Added a getPlayer function
+23 February 2025 - Fixed surfacing for the swimming in poisoned waters
 */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 10 February 2025
+Version: 3.5
+Date: 22 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -138,4 +138,5 @@ public class MapPanel extends JPanel {
  * 5 February 2025 - Added code to only set label when room entered.
  * 9 February 2025 - Retrieve and add room type to the panel
  * 10 February 2025 - Added the images to the map. Added the walls
+ * 22 February 2025 - Added image for player
  */
