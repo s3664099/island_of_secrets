@@ -640,13 +640,20 @@ public class Commands {
 		
 		if (game.getItem(36).getFlag()<0) {
 			
-			if (commands[2].equals("in") && commands.length>3) {
+			if (commands.length>1) {
 				
-				if (commands[3].equals("shack")) {
+				String shelterLocation = commands[1];
+				game.setMessage("");
+				
+				if (commands.length>2 && commands[1].equals("in")) {
+					shelterLocation = commands[2];
+				}
+				
+				if (shelterLocation.equals("shack")) {
 					location = 44;
-				} else if (commands[3].equals("cave")) {
+				} else if (shelterLocation.equals("cave")) {
 					location = 9;
-				} else if (commands[3].equals("cabin")) {
+				} else if (shelterLocation.equals("cabin")) {
 					location = 41;
 				} else {
 					game.setMessage("I'm sorry, I do not know that place");
