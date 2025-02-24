@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.11
-Date: 23 February 2025
+Version: 3.12
+Date: 24 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -660,8 +660,7 @@ public class Commands {
 				}
 				
 			} else {
-				game.setMessage("You can shelter in|1) Grandpa's Shack|2) Cave of Snelm|3) Log Cabin");
-				game.addMessage("|Choose from 1-3");
+				game.setMessage("You can shelter in:");
 				game.setResponse(2);
 			}
 		} else {
@@ -1205,4 +1204,5 @@ public class Commands {
  * 22 February 2025 - Finished the diary and the map in the hut
  * 					- Added eat food, and response to entering castle of secrets
  * 23 February 2025 - Made possible for give & shelter to work with single command
+ * 24 February 2025 - Removed shelter options in replace for buttons
  */

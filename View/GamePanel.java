@@ -3,7 +3,7 @@ Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 3.4
-Date: 23 February 2025
+Date: 24 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -85,6 +85,18 @@ public class GamePanel extends JPanel {
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
 		}
+		
+		if (game.getResponseType()==2) {
+			
+			String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
+			
+			for (int i=0;i<3;i++) {
+				JPanel inputPanel = new JPanel(new GridLayout(1,1));
+				addButton(inputPanel,shelters[i],new MapButton(game,this),320);
+				middlePanel.add(inputPanel);
+			}
+			
+		}
 
 		if (game.checkEndGame()) {
 			
@@ -117,11 +129,14 @@ public class GamePanel extends JPanel {
 		
 		if (!game.checkEndGame()) {
 			
-			JTextField commandField = new JTextField(2);
-			commandField.addKeyListener(new CommandListener(commandField,game,this));
-			commandField.requestFocusInWindow();
-			inputPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
-			inputPanel.add(commandField);
+			//If selecting shelter, does not display input field
+			if (game.getResponseType()!=2) {
+				JTextField commandField = new JTextField(2);
+				commandField.addKeyListener(new CommandListener(commandField,game,this));
+				commandField.requestFocusInWindow();
+				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
+				inputPanel.add(commandField);
+			}
 			
 		} else {
 			addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
@@ -228,4 +243,5 @@ public class GamePanel extends JPanel {
  * 1 February 2025 - Added the map display button
  * 17 February 2025 - Added restart button when game ends
  * 23 February 2025 - Hid map button if swimming in poisoned waters.
+ * 24 February 2025 - Added buttons for Shelter
  */

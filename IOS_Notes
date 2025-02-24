@@ -29,7 +29,7 @@ TODO
 	
 	
 	
-Buttons for shelter
+
 Buttons for load game and remove the list. Bottom button will recycle through next lot if any
 Commands above are buttons that if you click them, the command is repeated
 
@@ -48,7 +48,7 @@ Changes to be noted
 
 	  	
 	
-	- Shelter should work with just verb/noun
+	
 	
 	- Median should probably disappear after he has done his work.
 	
