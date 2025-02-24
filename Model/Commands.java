@@ -652,7 +652,7 @@ public class Commands {
 				if (shelterLocation.equals("shack")) {
 					location = 44;
 				} else if (shelterLocation.equals("cave")) {
-					location = 9;
+					location = 11;
 				} else if (shelterLocation.equals("cabin")) {
 					location = 41;
 				} else {

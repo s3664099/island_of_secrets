@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import Controller.CommandListener;
 import Controller.MapButton;
 import Controller.QuitButton;
+import Controller.ShelterButton;
 import Data.Constants;
 import Model.GameEngine;
 
@@ -89,10 +90,11 @@ public class GamePanel extends JPanel {
 		if (game.getResponseType()==2) {
 			
 			String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
+			Integer[] shelterLocations = {44,11,41};
 			
 			for (int i=0;i<3;i++) {
 				JPanel inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,shelters[i],new MapButton(game,this),320);
+				addButton(inputPanel,shelters[i],new ShelterButton(game,this,shelterLocations[i]),320);
 				middlePanel.add(inputPanel);
 			}
 			
