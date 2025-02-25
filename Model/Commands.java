@@ -1140,6 +1140,8 @@ public class Commands {
 			game.setLessGames(true);
 		}
 		
+		game.setGameDisplay(true);
+		game.setDisplayedGames(gameDisplayed);
 		game.setMessage(gameMessage);
 	}
 	

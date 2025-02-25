@@ -99,6 +99,14 @@ public class GamePanel extends JPanel {
 				middlePanel.add(inputPanel);
 			}
 			
+		} else if (game.getGame().getGameDisplay()==true) {
+			
+			for (String gameName:game.getGame().getDisplayedGames()) {
+				JPanel inputPanel = new JPanel(new GridLayout(1,1));
+				addButton(inputPanel,gameName,new MapButton(game,this),320);
+				middlePanel.add(inputPanel);
+			}
+			
 		}
 
 		if (game.checkEndGame()) {
@@ -143,8 +151,8 @@ public class GamePanel extends JPanel {
 		
 		if (!game.checkEndGame()) {
 			
-			//If selecting shelter, does not display input field
-			if (game.getResponseType()!=2) {
+			//If selecting shelter or load game, does not display input field
+			if (game.getResponseType()!=2 || game.getGame().getGameDisplay()==false) {
 				JTextField commandField = new JTextField(2);
 				commandField.addKeyListener(new CommandListener(commandField,game,this));
 				commandField.requestFocusInWindow();
