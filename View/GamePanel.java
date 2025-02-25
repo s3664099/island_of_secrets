@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.CommandButton;
 import Controller.CommandListener;
 import Controller.MapButton;
 import Controller.QuitButton;
@@ -132,7 +133,7 @@ public class GamePanel extends JPanel {
 			//Otherwise add button with command
 			} else {
 				inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,commands[i],new MapButton(game,this),320);
+				addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
 				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,50,0,520));
 				bottomPanel.add(inputPanel);
 			}
