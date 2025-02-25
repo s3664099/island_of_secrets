@@ -107,6 +107,8 @@ public class GamePanel extends JPanel {
 				middlePanel.add(inputPanel);
 			}
 			
+			//Checks if move forward/back and adds buttons for that.
+			
 		}
 
 		if (game.checkEndGame()) {
@@ -123,49 +125,57 @@ public class GamePanel extends JPanel {
 		JPanel bottomPanel = new JPanel(new GridLayout(6,1));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); //Top, Left, Bottom, Right
 		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		
-		//Button to display the map
-		if (game.getPlayer().getPanelFlag()!=4) {
-			addButton(inputPanel,"Map",new MapButton(game,this),320);
-			bottomPanel.add(inputPanel);
-		}
-		
-		//Command Field includes four labels above which contain the last three commands.
-		//Also one for a blank spot
-		for (int i=0;i<commands.length;i++) {
-			
-			//If blank, adds blank label
-			if (commands[i].length()==0 || game.getResponseType() !=0) {
-				bottomPanel.add(CreateLabelPanel(commands[i],1));
-			
-			//Otherwise add button with command
-			} else {
-				inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
-				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,50,0,520));
+
+		//Checks if displaying load games or shelter locations
+		if (!game.getGame().getGameDisplay() && game.getResponseType()!=2) {
+
+			//Button to display the map
+			if (game.getPlayer().getPanelFlag()!=4) {
+				addButton(inputPanel,"Map",new MapButton(game,this),320);
 				bottomPanel.add(inputPanel);
 			}
-		}
-				
-		inputPanel = new JPanel(new GridLayout(1,1));
-		
-		if (!game.checkEndGame()) {
 			
-			//If selecting shelter or load game, does not display input field
-			if (game.getResponseType()!=2 || game.getGame().getGameDisplay()==false) {
+			//Command Field includes four labels above which contain the last three commands.
+			//Also one for a blank spot
+			for (int i=0;i<commands.length;i++) {
+			
+				//If blank, adds blank label
+				if (commands[i].length()==0 || game.getResponseType() !=0) {
+					bottomPanel.add(CreateLabelPanel(commands[i],1));
+			
+					//Otherwise add button with command
+				} else {
+					inputPanel = new JPanel(new GridLayout(1,1));
+					addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
+					inputPanel.setBorder(BorderFactory.createEmptyBorder(0,50,0,520));
+					bottomPanel.add(inputPanel);
+				}
+			}
+				
+			inputPanel = new JPanel(new GridLayout(1,1));
+		
+			if (!game.checkEndGame()) {
+			
 				JTextField commandField = new JTextField(2);
 				commandField.addKeyListener(new CommandListener(commandField,game,this));
 				commandField.requestFocusInWindow();
 				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
 				inputPanel.add(commandField);
+				
+			} else {
+				addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+				addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
 			}
-			
-		} else {
-			addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
-			addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
-		}
 		
-		bottomPanel.add(inputPanel);
+			bottomPanel.add(inputPanel);
+			
+		} else if (game.getGame().getGameDisplay()) {
+			
+			//Add Escape save game button here and hide map
+			game.getGame().setGameDisplay(false);
+
+			//Button to escape shelter
+		} else {}
 				
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
