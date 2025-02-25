@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.8
-Date: 23 February 2025
+Version: 3.9
+Date: 25 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -206,10 +206,6 @@ public class CommandProcess {
 		//Quit
 		} else if (verbNo==42) {
 			this.command.quit(player,game);
-		
-		//Display list of saved games
-		} else if (verbNo==43) {
-			this.command.displayGames(game);
 		
 		//Swim
 		} else if (verbNo==25) {
@@ -611,4 +607,5 @@ public class CommandProcess {
  * 17 February 2025 - Added code to transform look command to enable looking at room.
  * 20 February 2025 - Fixed Omegan movement
  * 23 February 2025 - Added multi word command so can use give & shelter with one commands
+ * 25 February 2025 - Removed display games function call
  */

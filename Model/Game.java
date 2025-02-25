@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.5
-Date: 18 February 2025
+Version: 3.6
+Date: 25 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,6 +34,10 @@ public class Game implements Serializable {
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
 	private int appleCount = 3;
+	private boolean displayGames = false;
+	private boolean moreGames = false;
+	private boolean lessGames = false;
+	private String[] gameDisplayed = {"","","","",""};
 
 	public Game() {
 				
@@ -335,6 +339,40 @@ public class Game implements Serializable {
 		
 		return applesLeft;
 	}
+	
+	//Getters & Setters for displaying games
+	public void setGameDisplay(boolean display) {
+		this.displayGames = display;
+	}
+	
+	public boolean getGameDisplay() {
+		return this.displayGames;
+	}
+	
+	public void setMoreGames(boolean moreGames) {
+		this.moreGames = moreGames;
+	}
+	
+	public boolean getMoreGames() {
+		return this.moreGames;
+	}
+	
+	public void setLessGames(boolean lessGames) {
+		this.lessGames = lessGames;
+	}
+	
+	public boolean getLessGames() {
+		return this.lessGames;
+	}
+	
+	public String[] getDisplayedGames() {
+		return this.gameDisplayed;
+	}
+	
+	public void setDisplayedGames(String[] gameDisplayed) {
+		this.gameDisplayed = gameDisplayed;
+	}
+	
 }
 
 /* 30 October 2024 - Created File
@@ -369,4 +407,5 @@ public class Game implements Serializable {
  * 5 February 2025 - Added getter for specific room. Set the visited flag for initial room
  * 9 February 2025 - Added room type to the room.
  * 18 February 2025 - Added link to book in first message
+ * 25 February 2025 - Started working on displaying saved games as buttons
  */

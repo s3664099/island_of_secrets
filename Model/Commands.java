@@ -1045,7 +1045,7 @@ public class Commands {
 		String[] commands = command.split(" ");
 		
 		if (commands.length==1) {
-			game.setMessage("Please include the name of your game.");
+			displayGames(game);
 		} else {
 		
 			//Checks to see if the file exists
@@ -1100,16 +1100,20 @@ public class Commands {
 			};
 		});
 		
-		//Sets variables to list set number of game names
-		String gameMessage = "Games Saves|";
+		//Sets variables to list set number of game names		
+		String gameMessage = "Games Saves";
+		String[] gameDisplayed = game.getDisplayedGames();
 		int noGames=savFiles.length;
 		int gameStart = 0;
-		int totalDisplayed = 6;
+		int totalDisplayed = 5;
 		int maxDisplay = 5;
 		boolean moreGames = false;
+		
+		game.setMoreGames(false);
+		game.setLessGames(false);
 				
 		//Check with number of games and determine which games are displayed
-		if (noGames>9) {
+		if (noGames>5) {
 			gameStart = game.getCount()*maxDisplay;
 			if (noGames-gameStart>maxDisplay) {
 				game.setCount();
@@ -1125,11 +1129,15 @@ public class Commands {
 				
 		//Display the games selected
 		for (int i = gameStart; i<totalDisplayed;i++ ) {
-			gameMessage = String.format("%s|%s",gameMessage,savFiles[i].getName());
+			gameDisplayed[i-gameStart] = savFiles[i].getName();
 		}
 		
 		if (moreGames) {
-			gameMessage = String.format("%s||Type 'games' for more",gameMessage);
+			game.setMoreGames(true);
+		}
+		
+		if (gameStart>0) {
+			game.setLessGames(true);
 		}
 		
 		game.setMessage(gameMessage);
@@ -1205,4 +1213,5 @@ public class Commands {
  * 					- Added eat food, and response to entering castle of secrets
  * 23 February 2025 - Made possible for give & shelter to work with single command
  * 24 February 2025 - Removed shelter options in replace for buttons
+ * 25 February 2025 - Started working on displaying the saved games as buttons
  */
