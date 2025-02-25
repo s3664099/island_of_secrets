@@ -127,7 +127,7 @@ public class GamePanel extends JPanel {
 		for (int i=0;i<commands.length;i++) {
 			
 			//If blank, adds blank label
-			if (commands[i].length()==0) {
+			if (commands[i].length()==0 || game.getResponseType() !=0) {
 				bottomPanel.add(CreateLabelPanel(commands[i],1));
 			
 			//Otherwise add button with command

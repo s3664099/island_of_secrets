@@ -21,7 +21,7 @@ public class Test {
 		//game.getItem(3).setLocation(0);
 		//game.getItem(12).setLocation(0);
 		//game.getItem(3).setFlag(0);
-		game.getItem(36).setFlag(-1);
+		//game.getItem(36).setFlag(-1);
 		//game.getItem(13).setLocation(player.getRoom());
 		//game.getItem(39).setLocation(player.getRoom());
 		//game.getItem(12).setLocation(0);
