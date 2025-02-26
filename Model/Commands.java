@@ -1107,7 +1107,8 @@ public class Commands {
 		int gameStart = 0;
 		int totalDisplayed = 5;
 		int maxDisplay = 5;
-		boolean moreGames = false;
+		
+		System.out.println(game.getCount());
 		
 		game.setMoreGames(false);
 		game.setLessGames(false);
@@ -1116,9 +1117,8 @@ public class Commands {
 		if (noGames>5) {
 			gameStart = game.getCount()*maxDisplay;
 			if (noGames-gameStart>maxDisplay) {
-				game.setCount();
 				totalDisplayed = gameStart+maxDisplay;
-				moreGames = true;
+				game.setMoreGames(true);
 			} else {
 				totalDisplayed += noGames-gameStart;
 				game.resetCount();
@@ -1130,10 +1130,6 @@ public class Commands {
 		//Display the games selected
 		for (int i = gameStart; i<totalDisplayed;i++ ) {
 			gameDisplayed[i-gameStart] = savFiles[i].getName();
-		}
-		
-		if (moreGames) {
-			game.setMoreGames(true);
 		}
 		
 		if (gameStart>0) {

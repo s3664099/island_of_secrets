@@ -23,8 +23,10 @@ import javax.swing.JTextField;
 
 import Controller.CommandButton;
 import Controller.CommandListener;
+import Controller.LoadGameButton;
 import Controller.MapButton;
 import Controller.QuitButton;
+import Controller.SearchGameButton;
 import Controller.ShelterButton;
 import Data.Constants;
 import Model.GameEngine;
@@ -103,11 +105,22 @@ public class GamePanel extends JPanel {
 			
 			for (String gameName:game.getGame().getDisplayedGames()) {
 				JPanel inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,gameName,new MapButton(game,this),320);
+				addButton(inputPanel,gameName,new LoadGameButton(game,this,gameName),320);
 				middlePanel.add(inputPanel);
 			}
 			
 			//Checks if move forward/back and adds buttons for that.
+			if (game.getGame().getLessGames()) {
+				JPanel inputPanel = new JPanel(new GridLayout(1,1));
+				addButton(inputPanel,"Previous",new SearchGameButton(game,this,false),320);
+				middlePanel.add(inputPanel);
+			}
+			
+			if (game.getGame().getMoreGames()) {
+				JPanel inputPanel = new JPanel(new GridLayout(1,1));
+				addButton(inputPanel,"Next",new SearchGameButton(game,this,true),320);
+				middlePanel.add(inputPanel);
+			}
 			
 		}
 

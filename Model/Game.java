@@ -19,7 +19,7 @@ import Data.RawData;
 
 public class Game implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3473676803014192040L;
 	private int noRooms = Constants.noRooms;
 	private int noItems = Constants.noNouns;
 	private Location[] locationList = new Location[noRooms+1];
@@ -307,8 +307,12 @@ public class Game implements Serializable {
 		return this.saveGameCount;
 	}
 	
-	public void setCount() {
+	public void increaseCount() {
 		this.saveGameCount++;
+	}
+	
+	public void descreaseCount() {
+		this.saveGameCount--;
 	}
 	
 	public void resetCount() {
@@ -371,8 +375,7 @@ public class Game implements Serializable {
 	
 	public void setDisplayedGames(String[] gameDisplayed) {
 		this.gameDisplayed = gameDisplayed;
-	}
-	
+	}	
 }
 
 /* 30 October 2024 - Created File
