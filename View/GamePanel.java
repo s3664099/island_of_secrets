@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import Controller.CommandButton;
 import Controller.CommandListener;
+import Controller.GameButton;
 import Controller.LoadGameButton;
 import Controller.MapButton;
 import Controller.QuitButton;
@@ -104,9 +105,13 @@ public class GamePanel extends JPanel {
 		} else if (game.getGame().getGameDisplay()==true) {
 			
 			for (String gameName:game.getGame().getDisplayedGames()) {
-				JPanel inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,gameName,new LoadGameButton(game,this,gameName),320);
-				middlePanel.add(inputPanel);
+				
+				//Is there a saved game?
+				if (gameName.length()>0) {
+					JPanel inputPanel = new JPanel(new GridLayout(1,1));
+					addButton(inputPanel,gameName,new LoadGameButton(game,this,gameName),320);
+					middlePanel.add(inputPanel);
+				}
 			}
 			
 			//Checks if move forward/back and adds buttons for that.
@@ -122,6 +127,9 @@ public class GamePanel extends JPanel {
 				middlePanel.add(inputPanel);
 			}
 			
+			JPanel inputPanel = new JPanel(new GridLayout(1,1));
+			addButton(inputPanel,"Back to Game",new GameButton(game,this),320);
+			middlePanel.add(inputPanel);
 		}
 
 		if (game.checkEndGame()) {
@@ -290,4 +298,5 @@ public class GamePanel extends JPanel {
  * 23 February 2025 - Hid map button if swimming in poisoned waters.
  * 24 February 2025 - Added buttons for Shelter
  * 25 February 2025 - Changed previous commands to buttons
+ * 26 February 2025 - Added the load game buttons
  */

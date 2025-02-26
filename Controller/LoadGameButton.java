@@ -24,7 +24,7 @@ public class LoadGameButton implements ActionListener {
 	public LoadGameButton(GameEngine game, GamePanel panel,String gameName) {
 		this.panel = panel;
 		this.game = game;
-		this.gameName = gameName;
+		this.gameName = gameName.substring(0,gameName.length()-4);
 	}
 	
 	@Override

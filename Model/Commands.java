@@ -1107,38 +1107,41 @@ public class Commands {
 		int gameStart = 0;
 		int totalDisplayed = 5;
 		int maxDisplay = 5;
-		
-		System.out.println(game.getCount());
-		
+
 		game.setMoreGames(false);
 		game.setLessGames(false);
-				
-		//Check with number of games and determine which games are displayed
-		if (noGames>5) {
-			gameStart = game.getCount()*maxDisplay;
-			if (noGames-gameStart>maxDisplay) {
-				totalDisplayed = gameStart+maxDisplay;
-				game.setMoreGames(true);
-			} else {
-				totalDisplayed += noGames-gameStart;
-				game.resetCount();
-			}
+		
+		if (noGames==0) {
+			game.setMessage("There are no saved games to display");
 		} else {
-			totalDisplayed  = noGames;
-		}
+
+			//Check with number of games and determine which games are displayed
+			if (noGames>5) {
+				gameStart = game.getCount()*maxDisplay;
+				if (noGames-gameStart>maxDisplay) {
+					totalDisplayed = gameStart+maxDisplay;
+					game.setMoreGames(true);
+				} else {
+					totalDisplayed += noGames-gameStart;
+					game.resetCount();
+				}
+			} else {
+				totalDisplayed  = noGames;
+			}
 				
-		//Display the games selected
-		for (int i = gameStart; i<totalDisplayed;i++ ) {
-			gameDisplayed[i-gameStart] = savFiles[i].getName();
-		}
+			//Display the games selected
+			for (int i = gameStart; i<totalDisplayed;i++ ) {
+				gameDisplayed[i-gameStart] = savFiles[i].getName();
+			}
 		
-		if (gameStart>0) {
-			game.setLessGames(true);
-		}
+			if (gameStart>0) {
+				game.setLessGames(true);
+			}
 		
-		game.setGameDisplay(true);
-		game.setDisplayedGames(gameDisplayed);
-		game.setMessage(gameMessage);
+			game.setGameDisplay(true);
+			game.setDisplayedGames(gameDisplayed);
+			game.setMessage(gameMessage);
+		}
 	}
 	
 	public void quit(Player player, Game game) {
