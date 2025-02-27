@@ -122,6 +122,18 @@ public class GameEngine {
 		return this.commands;
 	}
 	
+	//Used if more than 5 saved games
+	public void increaseLoad(GamePanel game) {
+		this.game.increaseCount();
+		System.out.println(this.game.getCount());
+		processCommand("load",game);
+	}
+	
+	public void decreaseLoad(GamePanel game) {
+		this.game.descreaseCount();
+		processCommand("load",game);
+	}
+	
 	public void processCommand(String command,GamePanel game) {
 		
 		//Saves the commands into the previous command list

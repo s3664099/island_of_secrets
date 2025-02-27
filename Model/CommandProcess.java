@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.9
-Date: 25 February 2025
+Version: 3.4
+Date: 26 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -29,7 +29,7 @@ public class CommandProcess {
 	private Random rand = new Random();
 	
 	public CommandProcess(String command,Game game) {
-				
+		
 		command = command.toLowerCase();
 		command = fixCommand(command);
 		commands = command.split(" ");
@@ -150,10 +150,6 @@ public class CommandProcess {
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		int commandLength = this.commands.length;
 		
-		if (verbNo != 43) {
-			game.resetCount();
-		}
-		
 		//Sets look to examine
 		if (this.commands[0].equals("look") && commandLength==1) {
 			verbNo = 33;
@@ -187,6 +183,7 @@ public class CommandProcess {
 		
 		//Load
 		} else if (verbNo==40) {
+			
 			boolean loadGame = this.command.load(game, player);
 			
 			if (loadGame) {
@@ -608,4 +605,6 @@ public class CommandProcess {
  * 20 February 2025 - Fixed Omegan movement
  * 23 February 2025 - Added multi word command so can use give & shelter with one commands
  * 25 February 2025 - Removed display games function call
+ * 26 February 2025 - Removed the reset for the counts for load game display
+ * 28 February 2025 - Removed Stack Trace from Load & Save
  */

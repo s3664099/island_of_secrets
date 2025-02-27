@@ -31,12 +31,10 @@ public class SearchGameButton implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if (next) {
-			game.getGame().increaseCount();
+			game.increaseLoad(panel);;
 		} else {
-			game.getGame().descreaseCount();
+			game.decreaseLoad(panel);
 		}
-				
-		game.processCommand("load", panel);
 	}
 
 }

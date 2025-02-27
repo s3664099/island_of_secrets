@@ -2,7 +2,7 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.12
+Version: 3.13
 Date: 24 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -1029,7 +1029,7 @@ public class Commands {
 
 				} catch (IOException e) {
 					game.setMessage("Game failed to save");
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			} else {
 				game.addMessage("Game not saved");
@@ -1076,11 +1076,12 @@ public class Commands {
 					fileIn.close();
 					file.close();
 					this.game.setMessage("Game successfully loaded");
+					game.resetCount();
 							
 					//Location failed to load
 				} catch (IOException|ClassNotFoundException e) {
 					this.game.setMessage("Game failed to load");
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		}
@@ -1107,7 +1108,7 @@ public class Commands {
 		int gameStart = 0;
 		int totalDisplayed = 5;
 		int maxDisplay = 5;
-
+		
 		game.setMoreGames(false);
 		game.setLessGames(false);
 		
@@ -1123,7 +1124,6 @@ public class Commands {
 					game.setMoreGames(true);
 				} else {
 					totalDisplayed += noGames-gameStart;
-					game.resetCount();
 				}
 			} else {
 				totalDisplayed  = noGames;
