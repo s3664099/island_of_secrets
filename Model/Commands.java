@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.13
-Date: 24 February 2025
+Version: 3.14
+Date: 28 February 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1215,4 +1215,5 @@ public class Commands {
  * 23 February 2025 - Made possible for give & shelter to work with single command
  * 24 February 2025 - Removed shelter options in replace for buttons
  * 25 February 2025 - Started working on displaying the saved games as buttons
+ * 28 February 2025 - Removed Stack Trace from Load & Save
  */

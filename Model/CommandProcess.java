@@ -516,6 +516,10 @@ public class CommandProcess {
 					game.getItem(nounNumber).setLocation(81);
 					player.setPanelFlag(3);
 					game.getItem(8).setFlag(-1);
+
+					//Removes Median from Game
+					game.getItem(43).setLocation(81);
+					game.getItem(43).setFlag(1);
 					
 					if (player.getRoom()==8) {
 						game.setPanelMessages("He takes it ...", 
@@ -606,5 +610,5 @@ public class CommandProcess {
  * 23 February 2025 - Added multi word command so can use give & shelter with one commands
  * 25 February 2025 - Removed display games function call
  * 26 February 2025 - Removed the reset for the counts for load game display
- * 28 February 2025 - Removed Stack Trace from Load & Save
+ * 28 February 2025 - Removed Median after giving him the stone
  */
