@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.5
-Date: 25 February 2025
+Version: 3.6
+Date: 2 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.BookButton;
 import Controller.CommandButton;
 import Controller.CommandListener;
 import Controller.GameButton;
@@ -89,6 +90,12 @@ public class GamePanel extends JPanel {
 				
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
+		}
+				
+		if (game.getGame().checkStart()) {
+			JPanel inputPanel = new JPanel(new GridLayout(1,1));
+			addButton(inputPanel,"Click for Clues & Hints",new BookButton(game,this),260);
+			middlePanel.add(inputPanel);
 		}
 		
 		if (game.getResponseType()==2) {
@@ -299,4 +306,5 @@ public class GamePanel extends JPanel {
  * 24 February 2025 - Added buttons for Shelter
  * 25 February 2025 - Changed previous commands to buttons
  * 26 February 2025 - Added the load game buttons
+ * 2 March 2025 - Added button to open browser to book
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.6
-Date: 25 February 2025
+Version: 3.7
+Date: 2 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,7 +24,7 @@ public class Game implements Serializable {
 	private int noItems = Constants.noNouns;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
-	private String message = "Let your quest begin!|Visit https://archive.org/details/island-of-secrets_202303 for more clues";
+	private String message = "Let your quest begin!";
 	private String[] commands = {"","",""};
 	private Random rand = new Random();
 	private String panelMessageOne;
@@ -37,6 +37,7 @@ public class Game implements Serializable {
 	private boolean displayGames = false;
 	private boolean moreGames = false;
 	private boolean lessGames = false;
+	private boolean start = true;
 	private String[] gameDisplayed = {"","","","",""};
 
 	public Game() {
@@ -376,6 +377,20 @@ public class Game implements Serializable {
 	public void setDisplayedGames(String[] gameDisplayed) {
 		this.gameDisplayed = gameDisplayed;
 	}	
+	
+	//Checks if the start of game
+	public boolean checkStart() {
+		
+		boolean start = true;
+		
+		if (this.start) {
+			this.start = false;
+		} else {
+			start = false;
+		}
+		
+		return start;
+	}
 }
 
 /* 30 October 2024 - Created File
@@ -411,4 +426,5 @@ public class Game implements Serializable {
  * 9 February 2025 - Added room type to the room.
  * 18 February 2025 - Added link to book in first message
  * 25 February 2025 - Started working on displaying saved games as buttons
+ * 2 March 2025 - Added variable to confirm start of game
  */
