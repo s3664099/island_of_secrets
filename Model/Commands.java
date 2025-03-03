@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.14
-Date: 28 February 2025
+Version: 3.15
+Date: 3 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -605,11 +605,12 @@ public class Commands {
 					player.setPanelFlag(3);
 					
 					//Omegan's present in his sanctum
-					if (player.getRoom()==game.getItem(39).getLocation() && player.getRoom()==10) {
+					if (player.getRoom()==game.getItem(38).getLocation() && player.getRoom()==10) {
 						game.setPanelMessages("The coal burns with a red flame",
 								"Which dissolves Omegan's Cloak",2);
 						player.adjustWisdom(20);
 						game.getItem(13).setFlag(-1);
+						game.getItem(38).setLocation(81);
 					} else {
 						game.setPanelMessages("The coal burns with a red flame","",1);					
 					}
@@ -1216,4 +1217,6 @@ public class Commands {
  * 24 February 2025 - Removed shelter options in replace for buttons
  * 25 February 2025 - Started working on displaying the saved games as buttons
  * 28 February 2025 - Removed Stack Trace from Load & Save
+ * 3 March 2025 - Added section to remove cloak when destroyed
+ * 
  */

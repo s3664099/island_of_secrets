@@ -460,9 +460,7 @@ public class CommandProcess {
 	
 	public void executeGive(Game game,Player player,int nounNumber, String subject,
 							String codedNoun) {
-		
-		System.out.println(subject);
-		
+				
 		int objNumber = getNounNum(subject);
 		boolean alreadyMessage = false;
 		
