@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.6
-Date: 2 March 2025
+Version: 3.7
+Date: 3 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,6 +39,7 @@ public class GamePanel extends JPanel {
 	Color background;
 	GameEngine game;
 	GameFrame frame;
+	JTextField commandField;
 
 	public GamePanel(GameEngine game,GameFrame frame) {
 		
@@ -186,9 +187,9 @@ public class GamePanel extends JPanel {
 			
 				JTextField commandField = new JTextField(2);
 				commandField.addKeyListener(new CommandListener(commandField,game,this));
-				commandField.requestFocusInWindow();
 				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
 				inputPanel.add(commandField);
+				this.commandField = commandField;
 				
 			} else {
 				addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
@@ -208,6 +209,10 @@ public class GamePanel extends JPanel {
 		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
 		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 		this.add(bottomPanel,BorderLayout.SOUTH);
+	}
+	
+	public void setCommandField() {
+		this.commandField.requestFocusInWindow();
 	}
 	
 	//Creates a button and adds it to the panel.
@@ -307,4 +312,5 @@ public class GamePanel extends JPanel {
  * 25 February 2025 - Changed previous commands to buttons
  * 26 February 2025 - Added the load game buttons
  * 2 March 2025 - Added button to open browser to book
+ * 3 March 2025 - Added code to focus on the command line.
  */
