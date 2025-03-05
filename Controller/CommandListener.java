@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2024
+Version: 4.0
+Date: 5 March 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -69,4 +69,5 @@ public class CommandListener implements KeyListener {
  * 					  Updated to version 2.
  * 19 January 2025 - Added notes for unused methods.
  * 31 January 2025 - Completed Testing and increased version
+ * 5 March 2025 - Increased to v4.0
  */

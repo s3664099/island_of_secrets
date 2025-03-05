@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 2 February 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,5 +35,5 @@ public class MapButton implements ActionListener {
 }
 
 /* 2 February 2025 - Created Class
- * 
+ * 5 March 2025 - Increased to v4.0
  */

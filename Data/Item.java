@@ -2,8 +2,8 @@
 Title: Island of Secrets Item Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -91,4 +91,5 @@ public class Item implements Serializable {
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added serialisable id and also option to change item description
  * 				   - Added flag to make sure wisdom is only gained once.
+ * 5 March 2025 - Increased to v4.0
  */

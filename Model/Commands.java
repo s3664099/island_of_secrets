@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.15
-Date: 3 March 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1218,5 +1218,5 @@ public class Commands {
  * 25 February 2025 - Started working on displaying the saved games as buttons
  * 28 February 2025 - Removed Stack Trace from Load & Save
  * 3 March 2025 - Added section to remove cloak when destroyed
- * 
+ * 5 March 2025 - Increased to v4.0
  */

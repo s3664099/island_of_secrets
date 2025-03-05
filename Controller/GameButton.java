@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 26 February 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -36,5 +36,6 @@ public class GameButton implements ActionListener {
 }
 
 /* 10 February 2025 - Created Class
- * 26 February 2025 - Added code to 
+ * 26 February 2025 - Added code to
+ * 5 March 2025 - Increased to v4.0
  */

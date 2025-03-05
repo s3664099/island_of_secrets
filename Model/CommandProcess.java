@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.5
-Date: 3 March 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -610,4 +610,5 @@ public class CommandProcess {
  * 26 February 2025 - Removed the reset for the counts for load game display
  * 28 February 2025 - Removed Median after giving him the stone
  * 3 March 2025 - Added code to include weight in calculation for dropping items.
+ * 5 March 2025 - Increased to v4.0
  */

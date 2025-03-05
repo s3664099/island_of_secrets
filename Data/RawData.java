@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.4
-Date: 11 February 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -233,4 +233,5 @@ public class RawData {
  * 7 February 2025 - Added the arrays for location images
  * 9 February 2025 - Added image names & function to retrieve the relevant name for location
  * 11 February 2025 - Fixed incorrect images on map
+ * 5 March 2025 - Increased to v4.0
 */

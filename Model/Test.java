@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Test Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.0
-Date: 31 January 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -65,4 +65,5 @@ public class Test {
 
 /* 29 December 2024 - Created file.
  * 31 January 2025 - Completed Testing and increased version
+ * 5 March 2025 - Increased to v4.0
  */

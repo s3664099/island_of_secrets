@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.1
-Date: 1 February 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -194,4 +194,5 @@ public class Player implements Serializable {
  * 1 January 2025 - Removed the changeRoom method as duplicates setRoom.
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added serializable ID and removed unused variables.
+ * 5 March 2025 - Increased to v4.0
  */

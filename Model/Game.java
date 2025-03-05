@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 3.7
-Date: 2 March 2025
+Version: 4.0
+Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -427,4 +427,5 @@ public class Game implements Serializable {
  * 18 February 2025 - Added link to book in first message
  * 25 February 2025 - Started working on displaying saved games as buttons
  * 2 March 2025 - Added variable to confirm start of game
+ * 5 March 2025 - Increased to v4.0
  */
