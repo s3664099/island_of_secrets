@@ -76,7 +76,20 @@ To compile and run the game, follow these steps:
   - Numerous Issues with regards to being able to solve the game without help or knowing the code
   - Styling of command input and button need to be fixed
   - Errors produced when save game using more than one word
-  
+
+### Version 4 (v04)
+- **Status**: Completed Game
+- **Additions**:
+  - Map screen added that user can toggle between main game and map
+  - Image folder added to hold images for the map
+  - Linked images to locations
+  - Added buttons to repeat previous commands (Last three)
+  - Made it possible to execute give and shelter in single command
+  - Added buttons for loading saved games and removed display command
+  - Added a restart game button
+  - Added extra sections to examine so book isn't relied upon
+  - Added link to open up book in Internet Archive
+
 ## Program Structure ##
 
 ### Data
