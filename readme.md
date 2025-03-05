@@ -70,6 +70,9 @@ To compile and run the game, follow these steps:
 - Enhanced store room descriptions to include a door to the east and a trapdoor.  
 - Added detailed descriptions for special directions, improving clarity compared to earlier iterations where these were missing.
 
+**5 March 2025**
+- Completed v4 (as listed below). Redoing the program structure by having ChatGPT write and and provide recommendations for changing the code.
+
 ### Version 3 (v03)
 - **Status**: Completed testing and are able to complete Game without errors or changing any variables.
 - **Challenges**:
@@ -91,6 +94,111 @@ To compile and run the game, follow these steps:
   - Added link to open up book in Internet Archive
 
 ## Program Structure ##
+
+### Default Package
+
+This package is only used to start the game, and only holds the class that launches the game.
+
+## **Start**  
+
+### **Overview**  
+The `Start` class serves as the entry point for the application. It initializes the game and starts execution by invoking the main game logic.  
+
+### **Key Responsibilities**  
+1. Initializes the `Main` game object.  
+2. Calls the `startGame()` method to begin the game.  
+
+### **Constructor**  
+- **`Start()`**  
+  - The class does not define an explicit constructor since it only contains the `main` method.  
+
+### **Methods**  
+1. **`main(String[] args)`**  
+   - Entry point of the application.  
+   - Creates an instance of `Main` and starts the game by calling `startGame()`.
+
+### Controller Package
+
+The controller package is a part of the MVP pattern and holds all of the classes that execute the commands. This does not process the commands but are rather classes that are tied to buttons or text input boxes, and basically retrieve the action and interpretates it, and then sends it to the specific model class.
+
+## **BookButton**  
+
+### **Overview**  
+The `BookButton` class is responsible for handling button actions that open an external webpage and update the game's display.  
+
+### **Key Responsibilities**  
+1. Opens a specified webpage in the user's default web browser.  
+2. Updates the game display state.  
+3. Changes the current game panel to a new one.  
+
+### **Constructor**  
+- **`BookButton(GameEngine game, GamePanel panel)`**  
+  - Initializes the `game` and `panel` objects.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - Checks if the system supports the `Desktop` class.  
+   - Attempts to open a specific webpage (`https://archive.org/details/island-of-secrets_202303`) in the default web browser.  
+   - Updates the game display state.  
+   - Changes the game panel to a new one.  
+
+### **Potential Flaws and Possible Changes**  
+- **Lack of user feedback:** If an error occurs while opening the URL, the exception is only printed to the console. A user-friendly error message could be displayed instead.  
+- **Platform dependency:** `Desktop.getDesktop()` is not supported on all platforms, especially in some Linux environments. Consider handling this case more gracefully.  
+- **Hardcoded URL:** The URL is hardcoded, which reduces flexibility. It could be moved to a configuration file or passed as a parameter for easier modification.
+
+## **CommandButton**  
+
+### **Overview**  
+The `CommandButton` class handles button actions that trigger a specific in-game command.  
+
+### **Key Responsibilities**  
+1. Stores a predefined command string.  
+2. Processes the command when the button is clicked.  
+3. Passes the game panel to the command processor.  
+
+### **Constructor**  
+- **`CommandButton(GameEngine game, GamePanel panel, String command)`**  
+  - Initializes the game engine, game panel, and the command string.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - Calls `game.processCommand(command, panel)`, triggering the command when the button is clicked.  
+
+### **Potential Flaws and Possible Changes**  
+- **Lack of command validation:** The command is passed directly to `processCommand()`, which could lead to unexpected behavior if it is invalid. Consider adding validation.  
+- **Hardcoded command:** Since the command is set at instantiation, this button cannot change its behavior dynamically. A more flexible approach might involve user input or a mapping system.  
+- **Potential for null values:** If the `command` string is `null`, it might cause errors in `processCommand()`. Consider adding a null check before execution.
+
+
+
+
+## **Class Name**
+
+### **Overview**
+
+### **Key Responsibilities**
+1. 
+2. 
+3. 
+etc
+
+### **Constructor**
+- 
+
+### ** Methods**
+1. **Method Name**
+  - Description
+2. **Method Name**
+  - Description
+3. **Method Name**
+  - Description
+etc
+
+### ** Potential flaws and possible changes
+
+
+
 
 ### Data
 
@@ -899,6 +1007,11 @@ The `QuitButton` class is part of the `Controller` package and is responsible fo
 ### ** Methods**
 - **actionPerformed(ActionEvent arg0)**
 - Executes when the quit button is pressed. It closes the game window by calling the `dispose()` method on the `GameFrame`.
+
+
+
+
+
 
 ## Image Acknowledgements ##
 forest <a href="https://www.flaticon.com/free-icons/forest" title="forest icons">Forest icons created by Smashicons - Flaticon</a>
