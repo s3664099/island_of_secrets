@@ -170,6 +170,130 @@ The `CommandButton` class handles button actions that trigger a specific in-game
 - **Hardcoded command:** Since the command is set at instantiation, this button cannot change its behavior dynamically. A more flexible approach might involve user input or a mapping system.  
 - **Potential for null values:** If the `command` string is `null`, it might cause errors in `processCommand()`. Consider adding a null check before execution.
 
+## **CommandListener**  
+
+### **Overview**  
+The `CommandListener` class listens for keyboard input in a text field and processes the entered command when the Enter key is pressed.  
+
+### **Key Responsibilities**  
+1. Captures user input from a `JTextField`.  
+2. Detects when the Enter key is pressed.  
+3. Sends the command to the game engine for processing based on the game’s response type.  
+
+### **Constructor**  
+- **`CommandListener(JTextField text, GameEngine game, GamePanel gameFrame)`**  
+  - Initializes the text field, game engine, and game panel.  
+
+### **Methods**  
+1. **`keyPressed(KeyEvent evt)`**  
+   - Checks if the Enter key is pressed.  
+   - Retrieves and clears the text field input.  
+   - Calls the appropriate game processing method based on `game.getResponseType()`.  
+2. **`keyReleased(KeyEvent arg0)`**  
+   - Required by `KeyListener`, but not implemented.  
+3. **`keyTyped(KeyEvent arg0)`**  
+   - Required by `KeyListener`, but not implemented.  
+
+### **Potential Flaws and Possible Changes**  
+- **No validation on user input:** If the text field is empty, the command is still sent. Consider handling empty input.  
+- **Tightly coupled to response types:** The logic for selecting the processing method is hardcoded. A more flexible approach might use a strategy pattern or command mapping.  
+- **Hardcoded Enter key detection:** If different keybindings are needed in the future, consider allowing configurable key mappings.
+
+## **GameButton**  
+
+### **Overview**  
+The `GameButton` class handles button click events to switch the game display and update the game panel.  
+
+### **Key Responsibilities**  
+1. Handle button press events.  
+2. Hide the current game display.  
+3. Update the game panel with a new panel instance.  
+
+### **Constructor**  
+- `GameButton(GameEngine game, GamePanel panel)`: Initializes the button with the game engine and the new game panel.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - Called when the button is clicked.  
+   - Hides the current game display and sets the new game panel.  
+
+### **Potential Flaws and Possible Changes**  
+- **Lack of UI feedback:** The class updates the panel but does not provide any visual confirmation to the user. Consider adding animations or messages.  
+- **Limited functionality:** If additional behavior is needed (e.g., verifying conditions before switching the panel), this should be handled within `actionPerformed()`.  
+- **Hardcoded behavior:** Always sets the game display to `false`. If future functionality requires toggling or conditional behavior, modifications may be needed.
+
+## **LoadGameButton**  
+
+### **Overview**  
+The `LoadGameButton` class handles button click events to load a saved game by executing a load command.  
+
+### **Key Responsibilities**  
+1. Handle button press events.  
+2. Extract the game name from the provided filename.  
+3. Trigger the game's load functionality using the processed command.  
+
+### **Constructor**  
+- `LoadGameButton(GameEngine game, GamePanel panel, String gameName)`:  
+  - Initializes the button with the game engine, panel, and game name.  
+  - Strips the last four characters from `gameName` to remove a file extension.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - Executes the `"load <gameName>"` command through the game engine when the button is clicked.  
+
+### **Potential Flaws and Possible Changes**  
+- **String Manipulation Assumption:** The constructor removes the last four characters from `gameName`, assuming all game files have a four-character extension (e.g., `.sav`). If this assumption is incorrect, it may produce unexpected behavior.  
+- **Hardcoded Command Format:** Always executes `"load <gameName>"`, which may not be flexible enough if different loading mechanisms are required in the future.  
+- **No Error Handling:** If the game name is too short (fewer than four characters), an `IndexOutOfBoundsException` could occur. Adding validation would improve robustness.  
+- **Lack of UI Feedback:** No confirmation message is displayed to indicate whether the game was successfully loaded. Consider adding a message or visual indicator.
+
+## **MapButton**  
+
+### **Overview**  
+The `MapButton` class handles user interaction with a button designed to display the map panel in the game interface.  
+
+### **Key Responsibilities**  
+1. Detect button clicks.  
+2. Update the game engine to display the map panel.  
+
+### **Constructor**  
+- `MapButton(GameEngine game, GamePanel panel)`:  
+  - Initializes the button with the game engine and the panel that represents the map.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - Calls `setMapPanel(this.panel)` on the game engine to switch the display to the map panel.  
+
+### **Potential Flaws and Possible Changes**  
+- **Assumes Panel is a Map Panel:** The constructor accepts any `GamePanel` without verifying if it actually represents a map. If the wrong panel is passed, unexpected behavior may occur.  
+- **Lack of Confirmation or Feedback:** The method changes the panel but does not provide any confirmation to the user. Consider adding a visual indicator or a log message.  
+- **No Null Checks:** If `panel` or `game` is `null`, the program may crash. Adding a null check would improve robustness.  
+- **Limited Functionality:** This button only switches to the map panel. If additional actions (such as refreshing the map) are needed, the method might need to be extended.
+
+## **QuitButton**  
+
+### **Overview**  
+The `QuitButton` class handles user interaction with a button designed to either close the game or restart it, depending on the provided configuration.  
+
+### **Key Responsibilities**  
+1. Close the game window if restarting is not required.  
+2. Restart the game with a new game instance if the restart flag is `true`.  
+3. Update the game panel after restarting the game.  
+
+### **Constructor**  
+- `QuitButton(GameFrame frame, boolean restart, GameEngine game, GamePanel panel)`  
+  - Initializes the button with the game frame, a flag to determine whether to restart the game, the game engine, and a panel to display after restarting.  
+
+### **Methods**  
+1. **`actionPerformed(ActionEvent arg0)`**  
+   - If `restart` is `false`, disposes of the game window.  
+   - If `restart` is `true`, resets the game by creating a new `Game` and `Player` instance, then updates the panel.  
+
+### **Potential Flaws and Possible Changes**  
+- **Game Restart Logic Might Not Preserve Progress**: The restart process initializes a new `Game` and `Player` without saving any previous state. If saving game progress is needed, additional logic should be implemented.  
+- **No Confirmation Before Closing**: The game window closes immediately without asking the user for confirmation. Consider adding a confirmation dialog to prevent accidental closures.  
+- **Hardcoded `new Game()` and `new Player()`**: If a different method of resetting the game is needed in the future (e.g., loading a saved state), this approach may need modification.  
+- **Potential `null` Issues**: If `game` or `panel` is `null`, calling methods on them could cause a `NullPointerException`. Adding null checks would improve robustness.
 
 
 
