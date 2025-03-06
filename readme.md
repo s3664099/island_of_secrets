@@ -40,6 +40,8 @@ To compile and run the game, follow these steps:
    java Start
    ```
 
+---
+
 ## Development Notes ##
 
 ### Version 1 (v01)
@@ -93,6 +95,8 @@ To compile and run the game, follow these steps:
   - Added extra sections to examine so book isn't relied upon
   - Added link to open up book in Internet Archive
 
+---
+
 ## Program Structure ##
 
 ### Default Package
@@ -116,6 +120,8 @@ The `Start` class serves as the entry point for the application. It initializes 
 1. **`main(String[] args)`**  
    - Entry point of the application.  
    - Creates an instance of `Main` and starts the game by calling `startGame()`.
+
+---
 
 ### Controller Package
 
@@ -147,6 +153,8 @@ The `BookButton` class is responsible for handling button actions that open an e
 - **Platform dependency:** `Desktop.getDesktop()` is not supported on all platforms, especially in some Linux environments. Consider handling this case more gracefully.  
 - **Hardcoded URL:** The URL is hardcoded, which reduces flexibility. It could be moved to a configuration file or passed as a parameter for easier modification.
 
+---
+
 ## **CommandButton**  
 
 ### **Overview**  
@@ -169,6 +177,8 @@ The `CommandButton` class handles button actions that trigger a specific in-game
 - **Lack of command validation:** The command is passed directly to `processCommand()`, which could lead to unexpected behavior if it is invalid. Consider adding validation.  
 - **Hardcoded command:** Since the command is set at instantiation, this button cannot change its behavior dynamically. A more flexible approach might involve user input or a mapping system.  
 - **Potential for null values:** If the `command` string is `null`, it might cause errors in `processCommand()`. Consider adding a null check before execution.
+
+---
 
 ## **CommandListener**  
 
@@ -199,6 +209,8 @@ The `CommandListener` class listens for keyboard input in a text field and proce
 - **Tightly coupled to response types:** The logic for selecting the processing method is hardcoded. A more flexible approach might use a strategy pattern or command mapping.  
 - **Hardcoded Enter key detection:** If different keybindings are needed in the future, consider allowing configurable key mappings.
 
+---
+
 ## **GameButton**  
 
 ### **Overview**  
@@ -221,6 +233,8 @@ The `GameButton` class handles button click events to switch the game display an
 - **Lack of UI feedback:** The class updates the panel but does not provide any visual confirmation to the user. Consider adding animations or messages.  
 - **Limited functionality:** If additional behavior is needed (e.g., verifying conditions before switching the panel), this should be handled within `actionPerformed()`.  
 - **Hardcoded behavior:** Always sets the game display to `false`. If future functionality requires toggling or conditional behavior, modifications may be needed.
+
+---
 
 ## **LoadGameButton**  
 
@@ -247,6 +261,8 @@ The `LoadGameButton` class handles button click events to load a saved game by e
 - **No Error Handling:** If the game name is too short (fewer than four characters), an `IndexOutOfBoundsException` could occur. Adding validation would improve robustness.  
 - **Lack of UI Feedback:** No confirmation message is displayed to indicate whether the game was successfully loaded. Consider adding a message or visual indicator.
 
+---
+
 ## **MapButton**  
 
 ### **Overview**  
@@ -269,6 +285,8 @@ The `MapButton` class handles user interaction with a button designed to display
 - **Lack of Confirmation or Feedback:** The method changes the panel but does not provide any confirmation to the user. Consider adding a visual indicator or a log message.  
 - **No Null Checks:** If `panel` or `game` is `null`, the program may crash. Adding a null check would improve robustness.  
 - **Limited Functionality:** This button only switches to the map panel. If additional actions (such as refreshing the map) are needed, the method might need to be extended.
+
+---
 
 ## **QuitButton**  
 
@@ -319,6 +337,8 @@ The `SearchGameButton` class allows users to navigate through a list of availabl
 - **Button Behavior Not Explicitly Defined**: It is unclear what happens when no saves exist. Implementing proper UI feedback (e.g., disabling the button) would improve usability.  
 - **Panel May Not Need to Be Passed**: If `panel` is only used for updating the display, consider handling UI updates within `increaseLoad` and `decreaseLoad` instead of passing `panel` as a parameter.
 
+---
+
 ## **ShelterButton**  
 
 ### **Overview**  
@@ -343,6 +363,8 @@ The `ShelterButton` class handles user interaction for moving the player to a sp
 - **Lack of Validation on Location**: If `location` is invalid (e.g., out of bounds or null), it could cause unexpected behavior. Consider adding validation.  
 - **No Confirmation for Movement**: If the move is irreversible or important, a confirmation dialog could prevent accidental clicks.  
 - **Panel Update Assumes Immediate Transition**: If additional game logic is needed (e.g., animations or events triggering), consider handling this within `setGamePanel()`.
+
+---
 
 ### Data Package
 
@@ -409,8 +431,6 @@ The class does not define any methods. It only contains static fields.
 - **Flaw**: The class could become bloated if too many unrelated constants are added in the future.
 - **Change**: Split the class into multiple smaller classes or enums based on the context of the constants (e.g., `GameConstants`, `UIConstants`).
 
----
-
 ### **Improved Version of the Class**
 Here’s how the class could look after applying the suggested changes:
 
@@ -441,8 +461,6 @@ public final class Constants {
 }
 ```
 
----
-
 ### **Summary of Changes**
 1. Made `line` final and dynamically generated it.
 2. Grouped related constants (`foodLine` and `drinkLine`) into a nested class.
@@ -450,9 +468,539 @@ public final class Constants {
 4. Added a private constructor to prevent instantiation.
 5. Ensured all fields are `final` for immutability.
 
+Here’s the analysis of your `Item` class using the provided template:
+
 ---
 
-Let me know if you’d like further refinements or additional analysis! 😊
+## **Item**
+
+### **Overview**
+The `Item` class represents an item in the game. It stores information about the item, such as its description, location, and flags, and provides methods to manipulate and query this information. The class implements the `Serializable` interface, allowing instances of `Item` to be serialized and deserialized.
+
+### **Key Responsibilities**
+1. **Storing Item Information**: Holds data about the item, including its description, location, and flags.
+2. **Validating Item Location**: Provides a method to check if the item is present at a specific location.
+3. **Manipulating Item State**: Allows modification of the item's location, flag, description, and wisdom-gained status.
+4. **Serialization Support**: Implements `Serializable` to enable object serialization.
+
+### **Constructor**
+- **`Item(char flag, char location, String item)`**
+  - Initializes an `Item` object with the provided `flag`, `location`, and `description`.
+  - Converts the `flag` and `location` characters to integers using specific logic:
+    - `flag` is converted by subtracting `48` (ASCII value of `'0'`).
+    - `location` is converted by subtracting `32` (ASCII value of space). If the result is greater than `127`, it is further adjusted by subtracting `96`.
+  - Saves the item description.
+
+### **Methods**
+1. **`getItem()`**
+   - **Description**: Returns the item's description.
+   - **Usage**: Used to retrieve the textual representation of the item.
+
+2. **`checkLocation(int location)`**
+   - **Description**: Checks if the item is present at the specified location.
+   - **Usage**: Used to determine if the item is located at a given place in the game.
+
+3. **`getFlag()`**
+   - **Description**: Returns the item's flag.
+   - **Usage**: Retrieves the flag associated with the item.
+
+4. **`getLocation()`**
+   - **Description**: Returns the item's current location.
+   - **Usage**: Retrieves the location of the item.
+
+5. **`setLocation(int newLocation)`**
+   - **Description**: Updates the item's location.
+   - **Usage**: Used to move the item to a new location.
+
+6. **`setFlag(int flag)`**
+   - **Description**: Updates the item's flag.
+   - **Usage**: Modifies the flag associated with the item.
+
+7. **`setDescription(String description)`**
+   - **Description**: Updates the item's description.
+   - **Usage**: Changes the textual representation of the item.
+
+8. **`setWisdomGain()`**
+   - **Description**: Toggles the `wisdomGained` status of the item.
+   - **Usage**: Used to indicate whether wisdom has been gained from the item.
+
+9. **`checkWisdomGain()`**
+   - **Description**: Returns the current state of `wisdomGained`.
+   - **Usage**: Checks if wisdom has been gained from the item.
+
+### **Potential Flaws and Possible Changes**
+
+#### **1. Magic Numbers in Constructor**
+- **Flaw**: The constructor uses magic numbers (`48`, `32`, `127`, `96`) for character-to-integer conversion. This makes the code harder to understand and maintain.
+- **Change**: Replace magic numbers with named constants or provide comments explaining their purpose:
+  ```java
+  private static final int FLAG_OFFSET = 48; // ASCII value of '0'
+  private static final int LOCATION_OFFSET = 32; // ASCII value of space
+  private static final int LOCATION_ADJUSTMENT = 96; // Adjustment for values > 127
+  ```
+
+#### **2. Lack of Validation**
+- **Flaw**: The constructor and setter methods do not validate input values (e.g., negative locations or invalid flags).
+- **Change**: Add validation to ensure values are within expected ranges:
+  ```java
+  if (location < 0) {
+      throw new IllegalArgumentException("Location cannot be negative");
+  }
+  ```
+
+#### **3. Inconsistent Naming**
+- **Flaw**: The field `item` and method `getItem()` use inconsistent naming. The field should be renamed to `description` for clarity.
+- **Change**: Rename the field and update the method:
+  ```java
+  private String description;
+  public String getDescription() {
+      return this.description;
+  }
+  ```
+
+#### **4. Immutable Fields**
+- **Flaw**: The `itemFlag` and `itemLocation` fields are not `final`, meaning they can be modified after object creation. This reduces the predictability of the class.
+- **Change**: If these fields should not change after initialization, make them `final` and remove the setter methods.
+
+#### **5. Serialization Risks**
+- **Flaw**: The class implements `Serializable` but does not handle potential serialization issues (e.g., changes to the class structure over time).
+- **Change**: Ensure the `serialVersionUID` is updated if the class structure changes significantly. Consider adding custom serialization logic if needed.
+
+#### **6. Boolean Toggle Logic**
+- **Flaw**: The `setWisdomGain()` method toggles the `wisdomGained` field, which might be unintuitive for users of the class.
+- **Change**: Replace the toggle method with explicit `setWisdomGain(boolean)`:
+  ```java
+  public void setWisdomGain(boolean wisdomGained) {
+      this.wisdomGained = wisdomGained;
+  }
+  ```
+
+### **Improved Version of the Class**
+Here’s how the class could look after applying the suggested changes:
+
+```java
+import java.io.Serializable;
+
+public class Item implements Serializable {
+
+    private static final long serialVersionUID = -2697850646469797958L;
+
+    // Constants for character-to-integer conversion
+    private static final int FLAG_OFFSET = 48; // ASCII value of '0'
+    private static final int LOCATION_OFFSET = 32; // ASCII value of space
+    private static final int LOCATION_ADJUSTMENT = 96; // Adjustment for values > 127
+
+    private int itemFlag;
+    private int itemLocation;
+    private String description;
+    private boolean wisdomGained = false;
+
+    public Item(char flag, char location, String description) {
+        // Convert characters to integers
+        this.itemFlag = (int) flag - FLAG_OFFSET;
+        this.itemLocation = (int) location - LOCATION_OFFSET;
+
+        if (this.itemLocation > 127) {
+            this.itemLocation -= LOCATION_ADJUSTMENT;
+        }
+
+        // Validate input
+        if (this.itemLocation < 0) {
+            throw new IllegalArgumentException("Invalid location value");
+        }
+
+        // Save description
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public boolean checkLocation(int location) {
+        return location == this.itemLocation;
+    }
+
+    public int getFlag() {
+        return this.itemFlag;
+    }
+
+    public int getLocation() {
+        return this.itemLocation;
+    }
+
+    public void setLocation(int newLocation) {
+        if (newLocation < 0) {
+            throw new IllegalArgumentException("Location cannot be negative");
+        }
+        this.itemLocation = newLocation;
+    }
+
+    public void setFlag(int flag) {
+        this.itemFlag = flag;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setWisdomGain(boolean wisdomGained) {
+        this.wisdomGained = wisdomGained;
+    }
+
+    public boolean checkWisdomGain() {
+        return this.wisdomGained;
+    }
+}
+```
+
+### **Summary of Changes**
+1. Replaced magic numbers with named constants.
+2. Added input validation in the constructor and setter methods.
+3. Renamed the `item` field to `description` for clarity.
+4. Improved the `setWisdomGain()` method to accept a boolean parameter.
+5. Added comments to explain the purpose of constants and logic.
+
+---
+
+Understood! Here's the analysis of your `Location` class without introductory or concluding comments:
+
+---
+
+## **Location**
+
+### **Overview**
+
+### **Key Responsibilities**
+1. Stores information about a location, including its name, exits, visitation status, and type.
+2. Parses the location name to determine available exits.
+3. Tracks whether the location has been visited or viewed.
+4. Supports serialization for saving and loading game states.
+
+### **Constructor**
+- **`Location(String name, String[] prepositions, String roomType)`**
+  - Initializes a `Location` object with the provided `name`, `prepositions`, and `roomType`.
+  - Parses the `name` string to extract the preposition and determine the available exits.
+  - The `name` string is expected to have a specific format:
+    - The first character represents an index into the `prepositions` array.
+    - The last four characters represent the exits (e.g., `"0"` for an open exit, other values for closed exits).
+  - Sets the `roomType` and initializes the `exits` array based on the parsed data.
+
+### **Methods**
+1. **`getName()`**
+   - Returns the formatted name of the location.
+
+2. **`getExits()`**
+   - Returns an array of booleans representing the available exits.
+
+3. **`setVisited()`**
+   - Marks the location as visited.
+
+4. **`getVisited()`**
+   - Returns whether the location has been visited.
+
+5. **`setViewed()`**
+   - Marks the location as viewed.
+
+6. **`getViewed()`**
+   - Returns whether the location has been viewed.
+
+7. **`getRoomType()`**
+   - Returns the type of the room.
+
+### **Potential Flaws and Possible Changes**
+
+#### **1. Magic Numbers and String Manipulation**
+- The constructor uses hardcoded indices (`0`, `1`, `name.length()-4`) for string manipulation, which makes the code less readable and maintainable.
+- **Change**: Replace magic numbers with named constants:
+  ```java
+  private static final int PREPOSITION_INDEX = 0;
+  private static final int EXIT_START_INDEX = name.length() - 4;
+  ```
+
+#### **2. Lack of Input Validation**
+- The constructor does not validate the input parameters (e.g., `name`, `prepositions`, `roomType`). Invalid input could lead to runtime errors.
+- **Change**: Add validation:
+  ```java
+  if (name == null || name.length() < 5) {
+      throw new IllegalArgumentException("Invalid name format");
+  }
+  if (prepositions == null || prepositions.length == 0) {
+      throw new IllegalArgumentException("Prepositions array cannot be null or empty");
+  }
+  ```
+
+#### **3. Inefficient String Parsing**
+- The constructor uses `substring` multiple times to parse the `name` string, which can be inefficient.
+- **Change**: Use a single `substring` call:
+  ```java
+  String exitString = name.substring(name.length() - 4);
+  ```
+
+#### **4. Immutable Fields**
+- The `name` and `roomType` fields are not `final`, meaning they can be modified after object creation.
+- **Change**: Make them `final` if they should not change after initialization.
+
+#### **5. Boolean Array for Exits**
+- The `exits` array uses a boolean to represent each exit, which limits flexibility (e.g., cannot represent different types of exits).
+- **Change**: Use an `enum` to represent exit types:
+  ```java
+  public enum ExitType {
+      OPEN,
+      CLOSED,
+      LOCKED
+  }
+  private ExitType[] exits = new ExitType[4];
+  ```
+
+### **Improved Version of the Class**
+```java
+import java.io.Serializable;
+
+public class Location implements Serializable {
+
+    private static final long serialVersionUID = 7421397108414613755L;
+
+    private static final int PREPOSITION_INDEX = 0;
+    private static final int EXIT_START_INDEX = 4;
+
+    private final String name;
+    private final boolean[] exits = new boolean[4];
+    private boolean visited = false;
+    private boolean viewed = false;
+    private final String roomType;
+
+    public Location(String name, String[] prepositions, String roomType) {
+        if (name == null || name.length() < 5) {
+            throw new IllegalArgumentException("Invalid name format");
+        }
+        if (prepositions == null || prepositions.length == 0) {
+            throw new IllegalArgumentException("Prepositions array cannot be null or empty");
+        }
+
+        int prepIndex = Integer.parseInt(name.substring(PREPOSITION_INDEX, PREPOSITION_INDEX + 1)) - 1;
+        this.name = String.format("%s %s", prepositions[prepIndex], name.substring(1, name.length() - EXIT_START_INDEX));
+        this.roomType = roomType;
+
+        String exitString = name.substring(name.length() - EXIT_START_INDEX);
+        for (int i = 0; i < exits.length; i++) {
+            exits[i] = exitString.charAt(i) == '0';
+        }
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean[] getExits() {
+        return this.exits.clone();
+    }
+
+    public void setVisited() {
+        this.visited = true;
+    }
+
+    public boolean getVisited() {
+        return this.visited;
+    }
+
+    public void setViewed() {
+        this.viewed = true;
+    }
+
+    public boolean getViewed() {
+        return this.viewed;
+    }
+
+    public String getRoomType() {
+        return this.roomType;
+    }
+}
+```
+
+---
+
+## **RawData**
+
+### **Overview**
+
+### **Key Responsibilities**
+1. Stores static data for locations, objects, verbs, nouns, and prepositions.
+2. Provides methods to retrieve specific data based on indices or other criteria.
+3. Acts as a centralized repository for game-related constants and configurations.
+
+
+### **Constructor**
+- The class does not have an explicit constructor. It is a utility class with only static fields and methods.
+
+
+### **Methods**
+1. **`getLocation(int number)`**
+   - Returns the location string at the specified index from the `locations` array.
+
+2. **`getImage(int number)`**
+   - Returns the image string associated with the location type at the specified index.
+
+3. **`getObjects(int number)`**
+   - Returns the object string at the specified index from the `objects` array.
+
+4. **`getPrepositions()`**
+   - Returns the array of prepositions.
+
+5. **`getItemLocation(int number)`**
+   - Returns the character at the specified index from the `itemLocation` string.
+
+6. **`getItemFlag(int number)`**
+   - Returns the character at the specified index from the `itemFlag` string.
+
+7. **`getVerbs()`**
+   - Returns the array of verbs.
+
+8. **`getNouns()`**
+   - Returns the array of nouns.
+
+
+### **Potential Flaws and Possible Changes**
+
+#### **1. Magic Numbers and Hardcoded Data**
+- The class contains hardcoded data (e.g., `locationTypes`, `locations`, `objects`), which makes it inflexible and harder to maintain.
+- **Change**: Consider loading this data from an external file (e.g., JSON, XML) to make it easier to update and manage.
+
+#### **2. Lack of Encapsulation**
+- All fields are `static` and `public`, which exposes them to direct modification and reduces encapsulation.
+- **Change**: Make fields `private` and provide static getter methods for access.
+
+#### **3. Inefficient Data Retrieval**
+- The `getImage` method uses `locationTypes[number-1]` to index into `locationImage`, which could lead to confusion or errors if `number` is out of bounds.
+- **Change**: Add bounds checking to prevent `ArrayIndexOutOfBoundsException`.
+
+#### **4. Immutable Fields**
+- Some fields (e.g., `itemLocation`, `itemFlag`) are not `final`, meaning they can be modified after initialization.
+- **Change**: Make these fields `final` to ensure immutability.
+
+#### **5. Poor Readability**
+- The `locations` and `objects` arrays contain long strings with no comments or explanations, making it hard to understand their structure.
+- **Change**: Add comments or split the data into smaller, more manageable chunks.
+
+#### **6. No Input Validation**
+- Methods like `getLocation`, `getImage`, and `getObjects` do not validate the input `number`, which could lead to runtime errors.
+- **Change**: Add validation to ensure the input is within the valid range.
+
+
+### **Improved Version of the Class**
+```java
+public class RawData {
+
+    private static final Integer[] locationTypes = {
+        1, 1, 1, 2, 13, 4, 5, 6, 7, 8,
+        9, 9, 10, 10, 11, 12, 5, 3, 14, 12,
+        9, 1, 41, 41, 4, 4, 16, 15, 14, 16,
+        17, 17, 18, 19, 1, 4, 34, 16, 20, 21,
+        22, 23, 22, 22, 1, 24, 25, 26, 16, 27,
+        16, 22, 22, 28, 29, 30, 31, 32, 33, 22,
+        35, 36, 18, 39, 30, 30, 30, 33, 33, 22,
+        35, 35, 18, 37, 37, 37, 38, 40, 9, 9
+    };
+
+    private static final String[] locationImage = {
+        "forest", "eviltree", "pods", "cliff", "factory",
+        "vat", "battlement", "sanctum", "cave", "bush",
+        "stone", "cloud", "paddock", "well", "hand",
+        "room", "creek", "bridge", "dunes", "here",
+        "archway", "hut", "table", "nest", "castle",
+        "bones", "bookshelf", "hill", "stonehenge", "pyramid",
+        "island", "column", "desert", "castledoor", "flowers",
+        "brokenchair", "village", "swamp", "stonetree", "stumphouse",
+        "path"
+    };
+
+    private static final String[] locations = {
+        "4the furthest depth of the forest1001", // 1  F    1 (Forest)
+        "4the depths of the mutant forest1000", // 2  F    1 (Forest)
+        // ... (other locations)
+    };
+
+    private static final String[] objects = {
+        "a shiny apple", // 1
+        "a fossilised egg", // 2
+        // ... (other objects)
+    };
+
+    private static final String[] verbs = {
+        "n", "s", "e", "w", "go", "get", "take", "give", "drop", "leave", "eat", "drink", "ride",
+        "open", "pick", "chop", "chip", "tap", "break", "fight", "strike", "attack", "hit",
+        "kill", "swim", "shelter", "help", "scratch", "catch", "rub", "polish", "read",
+        "examine", "fill", "say", "wait", "rest", "wave", "info", "load", "save", "quit", "games"
+    };
+
+    private static final String[] nouns = {
+        "apple", "egg", "flower", "jug", "rag", "parchment", "torch", "pebble", "axe", "rope",
+        "staff", "chip", "coal", "flint", "hammer", "beast", "loaf", "melon", "biscuits",
+        "mushrooms", "bottle", "flagon", "sap", "water", "boat", "chest", "column", "opening",
+        "trapdoor", "villager", "liquid", "swampman", "sage", "books", "roots", "storm", "wraiths",
+        "cloak", "omegan", "snake", "logmen", "scavenger", "median", "north", "south", "east", "west",
+        "up", "down", "in", "out"
+    };
+
+    private static final String itemLocation = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
+    private static final String itemFlag = "90101191001109109000901000111000000100000010000000000";
+
+    private static final String[] prepositions = {
+        "by", "facing", "at", "in", "outside", "beneath", "on"
+    };
+
+    public static String getLocation(int number) {
+        if (number < 0 || number >= locations.length) {
+            throw new IllegalArgumentException("Invalid location index");
+        }
+        return locations[number];
+    }
+
+    public static String getImage(int number) {
+        if (number < 0 || number >= locationTypes.length) {
+            throw new IllegalArgumentException("Invalid location type index");
+        }
+        return locationImage[locationTypes[number] - 1];
+    }
+
+    public static String getObjects(int number) {
+        if (number < 1 || number > objects.length) {
+            throw new IllegalArgumentException("Invalid object index");
+        }
+        return objects[number - 1];
+    }
+
+    public static String[] getPrepositions() {
+        return prepositions.clone();
+    }
+
+    public static char getItemLocation(int number) {
+        if (number < 1 || number > itemLocation.length()) {
+            throw new IllegalArgumentException("Invalid item location index");
+        }
+        return itemLocation.charAt(number - 1);
+    }
+
+    public static char getItemFlag(int number) {
+        if (number < 1 || number > itemFlag.length()) {
+            throw new IllegalArgumentException("Invalid item flag index");
+        }
+        return itemFlag.charAt(number - 1);
+    }
+
+    public static String[] getVerbs() {
+        return verbs.clone();
+    }
+
+    public static String[] getNouns() {
+        return nouns.clone();
+    }
+}
+```
+
+---
+
+
 
 ### Model Package
 
