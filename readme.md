@@ -346,6 +346,114 @@ The `ShelterButton` class handles user interaction for moving the player to a sp
 
 ### Data Package
 
+## **Constants**
+
+### **Overview**
+The `Constants` class is a utility class that defines a set of **public static final** constants. These constants are used to store fixed values that are shared across the application, such as configuration values, limits, or identifiers. The class does not have any behavior (methods) or state (instance variables) and is intended to be used as a centralized place for constant values.
+
+### **Key Responsibilities**
+1. **Storing Game Configuration**: Holds constants related to the game's structure, such as the number of rooms, items, verbs, and nouns.
+2. **Defining Item Limits**: Stores thresholds or identifiers for specific item types (e.g., `foodLine` and `drinkLine`).
+3. **Providing UI Utilities**: Includes a string (`line`) and its length (`lineLength`) for use as a visual separator or divider in the UI.
+
+### **Constructor**
+- The class does not have an explicit constructor. Since all fields are `static`, there is no need to instantiate the class. It is intended to be used as a static utility class.
+
+### **Methods**
+The class does not define any methods. It only contains static fields.
+
+### **Potential Flaws and Possible Changes**
+
+#### **1. Non-Final `line` Field**
+- **Flaw**: The `line` field is not declared as `final`, which means it can be modified at runtime. This contradicts the purpose of a constants class, where all fields should be immutable.
+- **Change**: Declare `line` as `final` to ensure immutability:
+  ```java
+  public static final String line = "----------------------------------------------------------------";
+  ```
+
+#### **2. Hardcoded `line` String**
+- **Flaw**: The `line` string is hardcoded, which makes it less flexible. If `lineLength` changes, the `line` string will not automatically reflect the new length.
+- **Change**: Generate the `line` string dynamically based on `lineLength`:
+  ```java
+  public static final String line = "-".repeat(lineLength);
+  ```
+
+#### **3. Lack of Grouping for Related Constants**
+- **Flaw**: Constants like `foodLine` and `drinkLine` are related but are not grouped together. This can make the class harder to navigate and understand.
+- **Change**: Group related constants in a nested class or use an `enum` for better organization:
+  ```java
+  public static final class ItemLimits {
+      public static final int FOOD = 16;
+      public static final int DRINK = 21;
+  }
+  ```
+
+#### **4. Non-Descriptive Field Names**
+- **Flaw**: Some field names (e.g., `noRooms`, `noItems`) are not very descriptive and could be improved for better readability.
+- **Change**: Use more descriptive names:
+  ```java
+  public static final int NUMBER_OF_ROOMS = 80;
+  public static final int NUMBER_OF_ITEMS = 43;
+  ```
+
+#### **5. No Encapsulation**
+- **Flaw**: All fields are `public`, which exposes them to direct modification (if not `final`) and reduces encapsulation.
+- **Change**: While constants are typically `public`, consider using a private constructor to prevent instantiation of the class:
+  ```java
+  private Constants() {
+      throw new UnsupportedOperationException("Utility class");
+  }
+  ```
+
+#### **6. Potential for Overloading**
+- **Flaw**: The class could become bloated if too many unrelated constants are added in the future.
+- **Change**: Split the class into multiple smaller classes or enums based on the context of the constants (e.g., `GameConstants`, `UIConstants`).
+
+---
+
+### **Improved Version of the Class**
+Here’s how the class could look after applying the suggested changes:
+
+```java
+public final class Constants {
+
+    // Prevent instantiation
+    private Constants() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+    // Game-related constants
+    public static final int NUMBER_OF_ROOMS = 80;
+    public static final int NUMBER_OF_ITEMS = 43;
+    public static final int NUMBER_OF_VERBS = 42;
+    public static final int NUMBER_OF_NOUNS = 52;
+    public static final int CARRIABLE_ITEMS = 24;
+
+    // Item type limits
+    public static final class ItemLimits {
+        public static final int FOOD = 16;
+        public static final int DRINK = 21;
+    }
+
+    // UI-related constants
+    public static final int SEPARATOR_LINE_LENGTH = 90;
+    public static final String SEPARATOR_LINE = "-".repeat(SEPARATOR_LINE_LENGTH);
+}
+```
+
+---
+
+### **Summary of Changes**
+1. Made `line` final and dynamically generated it.
+2. Grouped related constants (`foodLine` and `drinkLine`) into a nested class.
+3. Improved field names for better readability.
+4. Added a private constructor to prevent instantiation.
+5. Ensured all fields are `final` for immutability.
+
+---
+
+Let me know if you’d like further refinements or additional analysis! 😊
+
 ### Model Package
 
 ### View Package
