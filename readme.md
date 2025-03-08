@@ -3257,7 +3257,225 @@ public class GamePanel extends JPanel {
 
 ---
 
+## **LightningPanel**
 
+### **Overview**
+The `LightningPanel` class is a custom `JPanel` that simulates a lightning effect by alternating the background color between yellow and black. It also displays a label with the text "⚡⚡ Lightning Flashes ⚡⚡" in the center of the panel. After a certain number of iterations, the panel resets and returns to the original `GamePanel`.
+
+### **Key Responsibilities**
+1. Simulate a lightning effect by alternating the background color.
+2. Display a label with a lightning-themed message.
+3. Reset the panel to its original state after the lightning effect completes.
+
+### **Instance Variables**
+- `private static final long serialVersionUID = 1L;`: A version control identifier for serialization.
+- `private int number = 0;`: A counter used to control the lightning effect.
+- `private JLabel label;`: A label to display the lightning-themed message.
+- `private GamePanel game;`: A reference to the `GamePanel` to which this panel belongs.
+- `private GameEngine engine;`: A reference to the `GameEngine` used to reset the panel.
+
+### **Constructor**
+- `public LightningPanel(int initialNumber, GamePanel game, GameEngine engine)`:
+  - Initializes the `LightningPanel` with an initial number, a reference to the `GamePanel`, and a reference to the `GameEngine`.
+  - Sets the layout to `BorderLayout` to center the label.
+  - Creates and configures the `JLabel` with a custom font and text color.
+  - Starts the lightning effect by calling `startLightningEffect()`.
+
+### **Methods**
+1. **`private void startLightningEffect()`**:
+   - Starts a `Timer` that alternates the background color between yellow and black every 200 milliseconds.
+   - Increments the `number` counter with each iteration.
+   - Stops the timer after 10 iterations and resets the panel by calling `resetPanel(game)`.
+   - Adds a new `JLabel` with the text "Lightning Flashes!!" during each iteration.
+   - Repaints the panel to reflect changes.
+
+2. **`private void resetPanel(GamePanel game)`**:
+   - Resets the `GamePanel` by removing all components and adding the `GameEngine` back to it.
+   - Calls `revalidate()` and `repaint()` to update the UI.
+
+### **Potential Flaws and Possible Changes**
+1. **Memory Leak from Repeated Label Addition**:
+   - In the `startLightningEffect()` method, a new `JLabel` is created and added to the panel during each iteration. This can lead to a memory leak as the old labels are not removed.
+   - **Fix**: Remove the line `this.add(label);` or clear the panel before adding a new label.
+
+2. **Hardcoded Iteration Limit**:
+   - The number of iterations (10) is hardcoded, which limits flexibility.
+   - **Fix**: Make the iteration limit configurable by adding a parameter to the constructor or method.
+
+3. **Unnecessary Repainting**:
+   - The `repaint()` method is called in every iteration, which may cause unnecessary performance overhead.
+   - **Fix**: Only call `repaint()` when the background color changes.
+
+4. **Lack of Error Handling**:
+   - The class does not handle cases where `game` or `engine` might be `null`.
+   - **Fix**: Add null checks in the constructor and methods to prevent `NullPointerException`.
+
+5. **Static Serialization ID**:
+   - The `serialVersionUID` is set to `1L`, but serialization is not used in the class. This is unnecessary unless the class is intended for serialization.
+   - **Fix**: Remove the `serialVersionUID` if serialization is not required.
+
+6. **Hardcoded Colors and Font**:
+   - The colors (yellow, black) and font (Arial, bold, size 36) are hardcoded, reducing flexibility.
+   - **Fix**: Make these configurable via constructor parameters or setter methods.
+
+7. **Potential UI Flickering**:
+   - Rapid changes in the background color and label addition might cause UI flickering.
+   - **Fix**: Use double buffering or optimize the repainting logic.
+
+---
+
+## **MapPanel**
+
+### **Overview**
+The `MapPanel` class is a custom `JPanel` that represents a grid-based map for a game. It displays a 11x10 grid of rooms, each represented by a `JPanel`. The rooms are dynamically configured based on their position, visited status, and exits. Additionally, it includes a button for returning to the game screen.
+
+### **Key Responsibilities**
+1. Display a grid of rooms, each with custom borders and images based on their properties.
+2. Handle the display of the player's current location and room types.
+3. Add a button to the panel for game-related actions.
+
+### **Instance Variables**
+- `private static final long serialVersionUID = -1097043236506747632L;`: A version control identifier for serialization.
+- `private GameEngine engine;`: A reference to the `GameEngine` to access game data and logic.
+- `private GamePanel game;`: A reference to the `GamePanel` to manage UI transitions.
+
+### **Constructor**
+- `public MapPanel(GamePanel game, GameEngine engine)`:
+  - Initializes the `MapPanel` with references to the `GamePanel` and `GameEngine`.
+  - Sets the layout to a `GridLayout` of size 11x10.
+  - Iterates through 110 rooms (1 to 109) and configures each room's appearance based on its position, visited status, and exits.
+  - Adds a button to the panel at a specific position (x=85).
+
+### **Methods**
+1. **`private void addButton(JPanel panel, String buttonName, ActionListener action)`**:
+   - Creates a button with the specified name and adds it to the given panel.
+   - Configures the button's action listener to handle click events.
+   - Sets an empty border around the button for spacing.
+
+### **Potential Flaws and Possible Changes**
+1. **Hardcoded Grid Size**:
+   - The grid size (11x10) and the number of rooms (110) are hardcoded, reducing flexibility.
+   - **Fix**: Make the grid size configurable via constructor parameters or configuration files.
+
+2. **Inefficient Room Border Logic**:
+   - The logic for setting room borders is repetitive and hardcoded, making it difficult to maintain or modify.
+   - **Fix**: Use a more modular approach, such as a helper method or a configuration map, to determine border styles based on room position.
+
+3. **Image Loading Errors**:
+   - The image loading logic does not handle missing or invalid images gracefully, potentially causing runtime errors.
+   - **Fix**: Add error handling for missing images and provide a default image or placeholder.
+
+4. **Hardcoded Button Position**:
+   - The button is added at a hardcoded position (x=85), which may not be intuitive or flexible.
+   - **Fix**: Make the button position configurable or dynamically determine its placement.
+
+5. **Lack of Encapsulation**:
+   - The `GameEngine` and `GamePanel` references are directly accessed and manipulated, which can lead to tight coupling.
+   - **Fix**: Use interfaces or dependency injection to decouple the `MapPanel` from specific implementations of `GameEngine` and `GamePanel`.
+
+6. **Performance Issues**:
+   - Loading and scaling images for each room during initialization can be slow, especially for larger grids.
+   - **Fix**: Preload and cache images to improve performance.
+
+7. **Static Serialization ID**:
+   - The `serialVersionUID` is set, but serialization is not used in the class. This is unnecessary unless the class is intended for serialization.
+   - **Fix**: Remove the `serialVersionUID` if serialization is not required.
+
+8. **Magic Numbers**:
+   - The code contains many magic numbers (e.g., `x==85`, `x==71`, `x==80`), which reduce readability and maintainability.
+   - **Fix**: Replace magic numbers with named constants or enums.
+
+9. **UI Scaling Issues**:
+   - The image size (50x50) and button border spacing (320) are hardcoded, which may not scale well on different screen sizes.
+   - **Fix**: Use dynamic sizing based on the screen resolution or user preferences.
+
+10. **Lack of Documentation**:
+    - The code lacks comments or documentation, making it difficult to understand the purpose of certain logic.
+    - **Fix**: Add comments to explain complex logic, especially for border configuration and image loading.
+
+---
+
+## **MessagePanel**
+
+### **Overview**
+The `MessagePanel` class is a custom `JPanel` designed to display messages in a game. It supports displaying multiple messages sequentially, with a delay between each message. After displaying all messages, it resets the panel to the original `GameEngine` view.
+
+### **Key Responsibilities**
+1. Display a primary message and optionally split and display a secondary message.
+2. Handle sequential message display with configurable delays.
+3. Reset the panel to the original `GameEngine` view after all messages are displayed.
+
+### **Instance Variables**
+- `private static final long serialVersionUID = 1L;`: A version control identifier for serialization.
+- `private JLabel label;`: A label to display the message.
+- `private GamePanel game;`: A reference to the `GamePanel` to manage UI transitions.
+- `private GameEngine engine;`: A reference to the `GameEngine` to reset the panel.
+
+### **Constructor**
+- `public MessagePanel(GamePanel game, GameEngine engine, String messageOne, String messageTwo, int noMessages)`:
+  - Initializes the `MessagePanel` with references to the `GamePanel` and `GameEngine`.
+  - Sets the layout to `BorderLayout` to center the label.
+  - Displays the first message (`messageOne`) in a `JLabel`.
+  - Splits the second message (`messageTwo`) using the `|` delimiter and starts a sequence to display messages with delays.
+
+### **Methods**
+1. **`private JLabel createLabel(String text)`**:
+   - Creates and configures a `JLabel` with the specified text, centered alignment, and a custom font.
+   - Returns the configured `JLabel`.
+
+2. **`private void startSequence(int noMessages, String messageOne, String messageTwo)`**:
+   - Starts a new thread to handle the sequential display of messages.
+   - Introduces a delay (2 seconds by default, or 5 seconds if `noMessages` is 0).
+   - After the delay, either resets the panel to the `GameEngine` view or creates a new `MessagePanel` to display the next message.
+
+3. **`private void setPanel(JPanel game, JPanel panel)`**:
+   - Replaces the current panel in the `GamePanel` with the specified panel.
+   - Calls `revalidate()` and `repaint()` to update the UI.
+
+4. **`private void resetPanel(GamePanel game)`**:
+   - Resets the `GamePanel` to the original `GameEngine` view.
+   - Calls `revalidate()` and `repaint()` to update the UI.
+
+### **Potential Flaws and Possible Changes**
+1. **Hardcoded Delays**:
+   - The delays (2 seconds and 5 seconds) are hardcoded, reducing flexibility.
+   - **Fix**: Make the delays configurable via constructor parameters or configuration files.
+
+2. **Thread Management**:
+   - The `startSequence` method creates a new thread for each message, which can lead to resource exhaustion if many messages are displayed.
+   - **Fix**: Use a single-threaded scheduler (e.g., `ScheduledExecutorService`) to manage delays more efficiently.
+
+3. **String Manipulation Complexity**:
+   - The logic for splitting and concatenating messages (`messageOne` and `messageTwo`) is complex and error-prone.
+   - **Fix**: Simplify the logic or use a list of messages to handle sequential display more cleanly.
+
+4. **Lack of Error Handling**:
+   - The code does not handle cases where `messageTwo` might be `null` or empty, which could cause issues during splitting.
+   - **Fix**: Add null checks and handle edge cases gracefully.
+
+5. **Static Serialization ID**:
+   - The `serialVersionUID` is set, but serialization is not used in the class. This is unnecessary unless the class is intended for serialization.
+   - **Fix**: Remove the `serialVersionUID` if serialization is not required.
+
+6. **Hardcoded Font and Alignment**:
+   - The font (Arial, bold, size 24) and alignment (center) are hardcoded, reducing flexibility.
+   - **Fix**: Make these configurable via constructor parameters or setter methods.
+
+7. **UI Update Logic**:
+   - The `setPanel` and `resetPanel` methods directly manipulate the `GamePanel`, which can lead to tight coupling.
+   - **Fix**: Use an interface or callback mechanism to decouple the `MessagePanel` from the `GamePanel`.
+
+8. **Potential Memory Leaks**:
+   - Each `MessagePanel` instance creates a new thread, which might not be properly cleaned up if the panel is removed or replaced.
+   - **Fix**: Ensure threads are properly terminated or use a managed threading approach.
+
+9. **Lack of Documentation**:
+   - The code lacks comments or documentation, making it difficult to understand the purpose of certain logic.
+   - **Fix**: Add comments to explain complex logic, especially for message splitting and thread handling.
+
+10. **Hardcoded Delimiter**:
+    - The delimiter (`|`) for splitting `messageTwo` is hardcoded, reducing flexibility.
+    - **Fix**: Make the delimiter configurable via constructor parameters or configuration files.
 
 ---
 
