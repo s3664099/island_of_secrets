@@ -1000,6 +1000,8 @@ public class RawData {
 
 ---
 
+### Model Package
+
 ## **CommandProcess**
 
 ### **Overview**
@@ -2787,13 +2789,477 @@ public class Test {
 
 ---
 
+### View Package
 
+## **Game**  
+
+### **Overview**  
+The `Game` class represents the core logic of the game, managing locations, items, messages, exits, and game state. It handles interactions such as movement, item visibility, and game progression.
+
+### **Key Responsibilities**  
+1. Initialize and manage locations and items.  
+2. Handle messages displayed to the player.  
+3. Manage game state, including exits, special exits, and item interactions.  
+4. Track saved games and responses required from the player.  
+5. Control the display of available games.  
+6. Manage game start and end conditions.  
+
+### **Instance Variables**  
+- `serialVersionUID`: Ensures compatibility during serialization.  
+- `noRooms`: Number of rooms, fetched from `Constants`.  
+- `noItems`: Number of items, fetched from `Constants`.  
+- `locationList`: Array storing `Location` objects.  
+- `itemList`: Array storing `Item` objects.  
+- `message`: Stores the current game message.  
+- `commands`: Array holding the last three commands entered.  
+- `rand`: Random number generator for certain game mechanics.  
+- `panelMessageOne`: First message for panel display.  
+- `panelMessageTwo`: Second message for panel display.  
+- `panelLoop`: Loop counter for panel messages.  
+- `endGame`: Flag indicating whether the game has ended.  
+- `saveGameCount`: Tracks the number of saved games.  
+- `responseRequired`: Indicates the type of response required.  
+- `appleCount`: Tracks the number of apples available.  
+- `displayGames`: Flag controlling game display.  
+- `moreGames`: Flag controlling additional game display.  
+- `lessGames`: Flag controlling reduced game display.  
+- `start`: Flag indicating if the game has just started.  
+- `gameDisplayed`: Array storing displayed game names.  
+
+### **Constructor**  
+- Initializes `locationList` and `itemList`.  
+- Populates `locationList` with `Location` objects from `RawData`.  
+- Populates `itemList` with `Item` objects from `RawData`.  
+- Sets room 23 as visited initially.  
+
+### **Methods**  
+
+1. **`getRoomName(int roomNumber)`**  
+   - Returns the name of the room based on its number.  
+
+2. **`getItems(int roomNumber)`**  
+   - Returns a string describing the items present in the specified room.  
+
+3. **`getExits(int roomNumber)`**  
+   - Returns a string listing available exits from the specified room.  
+
+4. **`getSpecialExits(int roomNumber)`**  
+   - Returns a string describing special exits from the specified room.  
+
+5. **`checkExit(int room, int direction)`**  
+   - Checks if an exit exists in a specific direction from a room.  
+
+6. **`getRoom(int roomNumber)`**  
+   - Returns the `Location` object for a given room number.  
+
+7. **`addExit(String exit, String exits)`**  
+   - Helper method to format and add an exit to the exits string.  
+
+8. **`getMessage()`**  
+   - Returns the current game message.  
+
+9. **`clearMessage()`**  
+   - Clears the current game message.  
+
+10. **`setMessage(String message)`**  
+    - Sets a new game message.  
+
+11. **`addMessage(String message)`**  
+    - Appends to the existing game message with proper formatting.  
+
+12. **`getCommand(int number)`**  
+    - Returns the command at the specified index.  
+
+13. **`getItem(int itemNumber)`**  
+    - Returns an `Item` object by index.  
+
+14. **`getItemFlagSum(int itemNumber)`**  
+    - Returns the sum of an item's flag and location.  
+
+15. **`setPanelMessages(String messageOne, String messageTwo, int loop)`**  
+    - Sets the panel messages and loop counter.  
+
+16. **`getMsgOne()`**  
+    - Returns the first panel message.  
+
+17. **`getMsgTwo()`**  
+    - Returns the second panel message.  
+
+18. **`getLoop()`**  
+    - Returns the loop count for panel messages.  
+
+19. **`endGame()`**  
+    - Sets the game end flag to `true`.  
+
+20. **`checkEndGame()`**  
+    - Returns `true` if the game has ended.  
+
+21. **`getCount()`**  
+    - Returns the number of saved games.  
+
+22. **`increaseCount()`**  
+    - Increases the saved game count.  
+
+23. **`decreaseCount()`**  
+    - Decreases the saved game count.  
+
+24. **`resetCount()`**  
+    - Resets the saved game count to zero.  
+
+25. **`setResponse(int responseType)`**  
+    - Sets the type of response required from the player.  
+
+26. **`getResponse()`**  
+    - Returns the required response type.  
+
+27. **`checkApples()`**  
+    - Decreases `appleCount` if apples are available and returns `true` if any remain.  
+
+28. **`setGameDisplay(boolean display)`**  
+    - Sets whether games should be displayed.  
+
+29. **`getGameDisplay()`**  
+    - Returns whether games should be displayed.  
+
+30. **`setMoreGames(boolean moreGames)`**  
+    - Sets the flag for displaying more games.  
+
+31. **`getMoreGames()`**  
+    - Returns the flag for displaying more games.  
+
+32. **`setLessGames(boolean lessGames)`**  
+    - Sets the flag for displaying fewer games.  
+
+33. **`getLessGames()`**  
+    - Returns the flag for displaying fewer games.  
+
+34. **`getDisplayedGames()`**  
+    - Returns the list of displayed games.  
+
+35. **`setDisplayedGames(String[] gameDisplayed)`**  
+    - Sets the list of displayed games.  
+
+36. **`checkStart()`**  
+    - Returns `true` if the game is starting for the first time; otherwise, sets `start` to `false`.  
+
+### **Potential Flaws and Possible Changes**  
+
+#### **1. Use of Magic Numbers**  
+- **Flaw**: Hardcoded room/item numbers make the code less readable and maintainable.  
+- **Change**: Replace hardcoded numbers with named constants.  
+
+#### **2. Inefficient String Concatenation**  
+- **Flaw**: Repeated use of `String.format()` for string concatenation can be inefficient.  
+- **Change**: Use `StringBuilder` for better performance when constructing messages.  
+
+#### **3. Mixed Responsibilities**  
+- **Flaw**: The class handles game state, UI messages, and item logic all in one place.  
+- **Change**: Consider refactoring into separate classes for game state management, message handling, and UI logic.  
+
+#### **4. Potentially Inefficient Item Lookups**  
+- **Flaw**: The `getItems()` method iterates over the entire `itemList` to check for items in a room.  
+- **Change**: Use a `Map<Integer, List<Item>>` to store items by location for faster lookups.  
+
+#### **5. Serialization Without Versioning Strategy**  
+- **Flaw**: The class implements `Serializable`, but future changes could break compatibility.  
+- **Change**: Implement custom serialization or version management strategies.  
 
 ---
 
-### Model Package
+## **GamePanel**
 
-### View Package
+### **Overview**
+The `GamePanel` class represents the main game interface within the game window. It extends `JPanel` and is responsible for organizing and displaying the game's UI components, including status information, room descriptions, items, exits, messages, and command input. It also handles user interactions through buttons and text fields.
+
+### **Key Responsibilities**
+1. **UI Layout Management**: Organizes the game interface into sections (top, middle, bottom) using `BorderLayout` and `GridLayout`.
+2. **Dynamic Content Display**: Displays room descriptions, items, exits, and messages dynamically based on the game state.
+3. **User Interaction**: Provides buttons and a text field for user input (e.g., commands, map, shelter selection).
+4. **Game State Integration**: Integrates with `GameEngine` to fetch and display game data.
+5. **Custom UI Components**: Creates custom panels and labels for displaying game information.
+
+### **Instance Variables**
+- **`private static final long serialVersionUID`**: Unique identifier for serialization.
+- **`Color background`**: The background color of the panel.
+- **`GameEngine game`**: The game engine providing game state data.
+- **`GameFrame frame`**: The parent frame containing the panel.
+- **`JTextField commandField`**: The text field for entering commands.
+
+### **Constructor**
+- **`GamePanel(GameEngine game, GameFrame frame)`**
+  - Initializes the panel with the game engine and parent frame.
+  - Calls the `add` method to set up the UI components.
+
+### **Methods**
+1. **`add(GameEngine game)`**
+   - Sets up the UI layout and adds components to the panel.
+   - Divides the panel into three sections: top (status), middle (room details), and bottom (commands).
+   - Dynamically generates content based on the game state.
+
+2. **`setCommandField()`**
+   - Sets focus on the command input field.
+
+3. **`addButton(JPanel panel, String buttonName, ActionListener action, int size)`**
+   - Creates a button with the specified name and action listener and adds it to the panel.
+
+4. **`addPanel(JPanel panel)`**
+   - Adds a custom panel to the main panel.
+
+5. **`CreateStatusPanel(GameEngine game)`**
+   - Creates and returns a panel displaying the player's status and time.
+
+6. **`CreatePanel(int flowType)`**
+   - Creates and returns a panel with a specified layout (centered or left-aligned).
+
+7. **`CreateLabelPanel(String labelString, int flowType)`**
+   - Creates and returns a panel containing a label with the specified text.
+
+8. **`getLineLength(String line)`**
+   - Calculates the appropriate line length for wrapping text based on the game's line length constant.
+
+### **Potential Flaws and Possible Changes**
+
+#### **1. Tight Coupling with `GameEngine`**
+- **Flaw**: The class is tightly coupled with `GameEngine`, making it difficult to reuse or test.
+- **Change**: Use an interface or abstract class to decouple the panel from the game engine.
+
+#### **2. Hardcoded Layout Logic**
+- **Flaw**: The layout logic is hardcoded, making it inflexible for different screen sizes or UI themes.
+- **Change**: Use a layout manager or configuration file to manage the UI layout dynamically.
+
+#### **3. Lack of Error Handling**
+- **Flaw**: The class does not handle potential errors (e.g., invalid game state or missing components).
+- **Change**: Add error handling to ensure the UI fails gracefully.
+
+#### **4. Inefficient String Manipulation**
+- **Flaw**: The `getLineLength` method uses inefficient string manipulation for text wrapping.
+- **Change**: Use a `StringBuilder` or dedicated text wrapping utility for better performance.
+
+#### **5. Magic Numbers**
+- **Flaw**: The class uses magic numbers (e.g., `flowType == 1`), making the code harder to understand.
+- **Change**: Replace magic numbers with named constants or enums.
+
+#### **6. Limited Scalability**
+- **Flaw**: The class assumes a fixed structure for the UI, which limits scalability.
+- **Change**: Use dynamic data structures (e.g., `List` instead of arrays) to allow for a variable number of UI components.
+
+### **Improved Version of the Class**
+Here’s a refactored version of the `GamePanel` class with some of the suggested changes applied:
+
+```java
+public class GamePanel extends JPanel {
+
+    private static final long serialVersionUID = 1L;
+    private Color background;
+    private GameEngine game;
+    private GameFrame frame;
+    private JTextField commandField;
+
+    public GamePanel(GameEngine game, GameFrame frame) {
+        this.game = game;
+        this.frame = frame;
+        initializeUI();
+    }
+
+    private void initializeUI() {
+        // Set layout and background
+        this.setLayout(new BorderLayout());
+        this.background = this.getBackground();
+
+        // Top section: Status panel
+        JPanel topPanel = new JPanel(new GridLayout(1, 1));
+        topPanel.add(createStatusPanel(game));
+        topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+
+        // Middle section: Room details
+        JPanel middlePanel = new JPanel(new GridLayout(18, 1));
+        middlePanel.add(createLabelPanel(game.getRoom(), 1));
+        middlePanel.add(createLabelPanel("", 1));
+
+        // Add items to the room panel
+        String itemString = game.getItems();
+        while (itemString.length() > 0) {
+            int lineLength = getLineLength(itemString);
+            String itemLine = itemString.substring(0, lineLength).trim();
+            itemString = itemString.substring(lineLength);
+            middlePanel.add(createLabelPanel(itemLine, 1));
+        }
+
+        if (game.getItems().length() > 0) {
+            middlePanel.add(createLabelPanel("", 1));
+        }
+
+        // Add exits and special exits
+        middlePanel.add(createLabelPanel(game.getExits(), 1));
+        middlePanel.add(createLabelPanel(game.getSpecialExits(), 1));
+        middlePanel.add(createLabelPanel("", 2));
+
+        // Display message
+        middlePanel.add(createLabelPanel("", 1));
+        String[] messages = game.getMessage().split("\\|");
+        for (String msg : messages) {
+            middlePanel.add(createLabelPanel(msg, 1));
+        }
+
+        // Add buttons for hints, shelters, or saved games
+        if (game.getGame().checkStart()) {
+            JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+            addButton(inputPanel, "Click for Clues & Hints", new BookButton(game, this), 260);
+            middlePanel.add(inputPanel);
+        }
+
+        if (game.getResponseType() == 2) {
+            String[] shelters = {"Grandpa's Shack", "Cave of Snelm", "Log Cabin"};
+            Integer[] shelterLocations = {44, 11, 41};
+            for (int i = 0; i < 3; i++) {
+                JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                addButton(inputPanel, shelters[i], new ShelterButton(game, this, shelterLocations[i]), 320);
+                middlePanel.add(inputPanel);
+            }
+        } else if (game.getGame().getGameDisplay()) {
+            for (String gameName : game.getGame().getDisplayedGames()) {
+                if (gameName.length() > 0) {
+                    JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                    addButton(inputPanel, gameName, new LoadGameButton(game, this, gameName), 320);
+                    middlePanel.add(inputPanel);
+                }
+            }
+
+            if (game.getGame().getLessGames()) {
+                JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                addButton(inputPanel, "Previous", new SearchGameButton(game, this, false), 320);
+                middlePanel.add(inputPanel);
+            }
+
+            if (game.getGame().getMoreGames()) {
+                JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                addButton(inputPanel, "Next", new SearchGameButton(game, this, true), 320);
+                middlePanel.add(inputPanel);
+            }
+
+            JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+            addButton(inputPanel, "Back to Game", new GameButton(game, this), 320);
+            middlePanel.add(inputPanel);
+        }
+
+        if (game.checkEndGame()) {
+            String gameScore = String.format("Your Final Score = %s", game.getFinalScore());
+            middlePanel.add(createLabelPanel(gameScore, 1));
+            middlePanel.add(createLabelPanel("Game Over!", 1));
+        }
+
+        middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+
+        // Bottom section: Command input
+        JPanel bottomPanel = new JPanel(new GridLayout(6, 1));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+
+        if (!game.getGame().getGameDisplay() && game.getResponseType() != 2) {
+            if (game.getPlayer().getPanelFlag() != 4) {
+                JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                addButton(inputPanel, "Map", new MapButton(game, this), 320);
+                bottomPanel.add(inputPanel);
+            }
+
+            String[] commands = game.getCommands();
+            for (int i = 0; i < commands.length; i++) {
+                if (commands[i].length() == 0 || game.getResponseType() != 0) {
+                    bottomPanel.add(createLabelPanel(commands[i], 1));
+                } else {
+                    JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+                    addButton(inputPanel, commands[i], new CommandButton(game, this, commands[i]), 320);
+                    inputPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 520));
+                    bottomPanel.add(inputPanel);
+                }
+            }
+
+            JPanel inputPanel = new JPanel(new GridLayout(1, 1));
+            if (!game.checkEndGame()) {
+                commandField = new JTextField(2);
+                commandField.addKeyListener(new CommandListener(commandField, game, this));
+                inputPanel.setBorder(BorderFactory.createEmptyBorder(0, 170, 0, 170));
+                inputPanel.add(commandField);
+                this.commandField = commandField;
+            } else {
+                addButton(inputPanel, "Exit", new QuitButton(frame, false, game, this), 280);
+                addButton(inputPanel, "Restart", new QuitButton(frame, true, game, this), 280);
+            }
+            bottomPanel.add(inputPanel);
+        }
+
+        // Add sections to the main panel
+        this.add(topPanel, BorderLayout.NORTH);
+        this.add(middlePanel, BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    public void setCommandField() {
+        if (commandField != null) {
+            commandField.requestFocusInWindow();
+        }
+    }
+
+    private void addButton(JPanel panel, String buttonName, ActionListener action, int size) {
+        JButton button = new JButton(buttonName);
+        panel.add(button);
+        panel.setBorder(BorderFactory.createEmptyBorder(0, size, 0, size));
+        button.addActionListener(action);
+    }
+
+    private JPanel createStatusPanel(GameEngine game) {
+        JPanel statusPanel = new JPanel(new GridLayout(2, 1));
+        statusPanel.add(createLabelPanel(game.getTime(), 0));
+        statusPanel.add(createLabelPanel(game.getStatus(), 0));
+        return statusPanel;
+    }
+
+    private JPanel createPanel(int flowType) {
+        FlowLayout flow = new FlowLayout(flowType == 1 || flowType == 2 ? FlowLayout.LEFT : FlowLayout.CENTER);
+        JPanel panel = new JPanel(flow);
+        if (flowType == 2) {
+            panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+        }
+        return panel;
+    }
+
+    private JPanel createLabelPanel(String labelString, int flowType) {
+        JPanel panel = createPanel(flowType);
+        JLabel label = new JLabel(labelString);
+        panel.add(label);
+        return panel;
+    }
+
+    private int getLineLength(String line) {
+        int lineLength = Constants.lineLength;
+        if (lineLength > line.length()) {
+            lineLength = line.length();
+        }
+        if (line.length() > 99) {
+            while (!Character.isWhitespace(line.charAt(lineLength))) {
+                lineLength--;
+            }
+        }
+        return lineLength;
+    }
+}
+```
+
+### **Summary of Changes**
+1. **Improved Encapsulation**: Moved UI initialization logic into a separate method (`initializeUI`).
+2. **Error Handling**: Added null checks and error handling for critical components (e.g., `commandField`).
+3. **Code Readability**: Improved method and variable names for better readability.
+4. **Dynamic Layout**: Used constants and dynamic layout management for better scalability.
+
+### **Additional Suggestions**
+1. **UI Themes**: Add support for customizable UI themes (e.g., light/dark mode).
+2. **Responsive Design**: Use a responsive layout manager to adapt the UI to different screen sizes.
+3. **Logging**: Add logging for debugging and tracking UI events.
+
+---
+
+
+
+---
 
 ## **Class Name**
 
