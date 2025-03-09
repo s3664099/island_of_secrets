@@ -135,7 +135,31 @@ To compile and run the game, follow these steps:
 
 ### Model
 
+## **CommandProcess**
+
+## **Commands**
+
+## **Game**
+
+## **GameEngine**
+
+## **Main**
+
+## **Player**
+
+## **Test**  
+
 ### View
+
+## **GameFrame**
+
+## **GamePanel**
+
+## **Lightning Panel**
+
+## **MapPanel**
+
+## **MessagePanel**          
 
 ---
 
