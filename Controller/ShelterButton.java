@@ -35,7 +35,6 @@ public class ShelterButton implements ActionListener {
 		game.getPlayer().setRoom(location);
 		game.setGamePanel(this.panel);
 	}
-
 }
 
 /* 24 February 2025 - Created Class

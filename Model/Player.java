@@ -17,7 +17,7 @@ import Data.Constants;
 public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 495300605316911022L;
-	private int room = 23; //23
+	private int room = 23;
 	private int roomToDisplay = this.room;
 	private float strength = 100;
 	private int wisdom = 35;

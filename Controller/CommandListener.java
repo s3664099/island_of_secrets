@@ -38,8 +38,6 @@ public class CommandListener implements KeyListener {
 			String command = this.text.getText();
 			this.text.setText("");
 			
-			
-			
 			if (game.getResponseType()==1) {
 				game.processGive(command, gamePanel);
 			} else if (game.getResponseType()==2) {

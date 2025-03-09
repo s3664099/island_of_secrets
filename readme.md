@@ -101,9 +101,39 @@ To compile and run the game, follow these steps:
 
 ### Default Package
 
-## **Start**
+This package is only used to start the game, and only holds the class that launches the game.
+
+#### **Start Class**
+
+The `Start` class serves as the **entry point** for the application. It initializes the game, starts its execution, and ensures errors are logged and handled gracefully.
+
+### **Key Responsibilities**
+1. **Initialize the Game**:
+   - Creates an instance of the `Main` class, which encapsulates the game logic.
+2. **Start the Game**:
+   - Calls the `startGame()` method to begin the game's execution.
+3. **Logging**:
+   - Logs key events, such as the start and successful initialization of the game.
+4. **Error Handling**:
+   - Catches and logs any exceptions that occur during game initialization or execution, ensuring a graceful failure.
+
+### **Constructor**
+- **None**:
+  - The class does not define an explicit constructor because it only contains the `main` method and does not require instance-specific initialization.
+
+### **Methods**
+1. **`main(String[] args)`**:
+   - **Description**: The entry point of the application. It initializes the game, starts its execution, and handles errors.
+   - **Steps**:
+     1. Logs the start of the application.
+     2. Creates an instance of the `Main` class.
+     3. Calls the `startGame()` method to begin the game.
+     4. Logs the successful start of the game.
+     5. Catches and logs any exceptions that occur during initialization or execution.
 
 ### Controller
+
+The controller package is a part of the MVP pattern and holds all of the classes that execute the commands. This does not process the commands but are rather classes that are tied to buttons or text input boxes, and basically retrieve the action and interpretates it, and then sends it to the specific model class.
 
 ## **BookButton**  
 
