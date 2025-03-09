@@ -273,7 +273,7 @@ public class GamePanel extends JPanel {
 	
 	private int getLineLength(String line) {
 		
-		int lineLength = Constants.lineLength;
+		int lineLength = Constants.LINE_LENGTH;
 		
 		if (lineLength>line.length()) {
 			lineLength = line.length();

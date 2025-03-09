@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 9 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -53,8 +53,8 @@ public class Commands {
 		//Verb only
 		if (this.noun == 52) {
 			direction = this.verb;
-		} else if (this.noun>Constants.noItems && this.noun<Constants.noNouns) {
-			direction = this.noun-Constants.noItems;
+		} else if (this.noun>Constants.NUMBER_OF_ITEMS && this.noun<Constants.NUMBER_OF_NOUNS) {
+			direction = this.noun-Constants.NUMBER_OF_ITEMS;
 		}
 		
 		if (player.getRoom()==12 && noun.equals("cave")) {
@@ -167,7 +167,7 @@ public class Commands {
 										  "falling under the spell of the boatman|"
 										  + "and are taken to the Island of Secrets ...|"
 										  + "to serve Omegan forever.",4);
-					game.getItem(Constants.noNouns).setFlag(1);
+					game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(1);
 				} else {
 					
 					game.setPanelMessages("You board the craft ...",
@@ -184,7 +184,7 @@ public class Commands {
 				
 		//Is the item present, and can it be taken?
 		if (((game.getItem(noun).getFlag()>0 && game.getItem(noun).getFlag()<9) ||
-			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.carriableItems) {
+			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.MAX_CARRIABLE_ITEMS) {
 			
 			//Pick more apples and add to food.
 			if (player.getRoom()==45 && game.checkApples() && noun==1) {
@@ -224,7 +224,7 @@ public class Commands {
 				//2nd - catch canyon beast
 				//3rd - noun not an item
 				if ((verb == 15 && noun != 20 && noun != 1) || (verb == 29 && noun !=16) ||
-					noun > Constants.carriableItems) {
+					noun > Constants.MAX_CARRIABLE_ITEMS) {
 					
 					//Makes sure that the cloak section is not overwritten
 					if (!this.code.equals("3810010")) {
@@ -238,7 +238,7 @@ public class Commands {
 					//picks up item
 					if (game.getItem(noun).getLocation()== player.getRoom() && (
 						game.getItem(noun).getFlag()<1 || game.getItem(noun).getFlag()==9)
-						&& noun<Constants.carriableItems) {
+						&& noun<Constants.MAX_CARRIABLE_ITEMS) {
 							game.getItem(noun).setLocation(0);
 							weight = -1;
 					}
@@ -249,13 +249,13 @@ public class Commands {
 						weight = 0;
 					}
 					
-					if (noun>Constants.foodLine && noun<Constants.drinkLine) {
+					if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
 						weight = -1;
 						player.adjustFood(2);
 						game.getItem(noun).setLocation(-18);
 					}
 					
-					if (noun>=Constants.drinkLine && noun<Constants.carriableItems) {
+					if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
 						weight = -1;
 						player.adjustDrink(2);
 						game.getItem(noun).setLocation(-18);
@@ -353,7 +353,7 @@ public class Commands {
 			
 		//Dropping other items
 		} else {
-			if (game.getItem(noun).getLocation()==0 && noun<Constants.foodLine) {
+			if (game.getItem(noun).getLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
 				game.getItem(noun).setLocation(player.getRoom());
 				player.setWeight(player.getWeight()-1);
 				game.setMessage("Done");
@@ -383,7 +383,7 @@ public class Commands {
 			game.setMessage("They make you very ill");
 		
 		//Item unedible
-		} else if ((noun<=Constants.foodLine || noun>=Constants.drinkLine) 
+		} else if ((noun<=Constants.FOOD_THRESHOLD || noun>=Constants.DRINK_THRESHOLD) 
 			&& nounStr.length()>0) {
 			game.setMessage("You can't "+command);
 			player.setWisdom(player.getWisdom()-1);
@@ -420,7 +420,7 @@ public class Commands {
 			}
 			
 		//Item undrinkable
-		} else if ((noun<Constants.drinkLine || noun>Constants.carriableItems) 
+		} else if ((noun<Constants.DRINK_THRESHOLD || noun>Constants.MAX_CARRIABLE_ITEMS) 
 				&& nounStr.length()>0) {
 				game.setMessage("You can't "+command);
 				player.setWisdom(player.getWisdom()-1);
@@ -542,7 +542,7 @@ public class Commands {
 		
 		//Is object present - ends game
 		if (game.getItem(noun).getLocation() == player.getRoom()) {
-			game.getItem(Constants.noItems).setFlag(1);
+			game.getItem(Constants.NUMBER_OF_ITEMS).setFlag(1);
 			player.setPanelFlag(3);
 			game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
 					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
@@ -946,7 +946,7 @@ public class Commands {
 	public void info (Game game, Player player) {
 		
 		boolean hasItem = false;
-		int lineLength = Constants.lineLength;
+		int lineLength = Constants.LINE_LENGTH;
 		int itemLength = 0;
 		String items = "";
 		
@@ -954,7 +954,7 @@ public class Commands {
 		game.addMessage("Food: "+player.getFood());
 		game.addMessage("      Drink: "+player.getDrink()+"|");
 				
-		for (int i=1;i<Constants.carriableItems+1;i++) {
+		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
 			
 			if (game.getItem(i).checkLocation(0)) {
 				
@@ -1148,7 +1148,7 @@ public class Commands {
 	public void quit(Player player, Game game) {
 		
 		game.setMessage("You relinquish your quest");
-		game.getItem(Constants.noNouns).setFlag(-1);
+		game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(-1);
 		player.setTime(1);
 		game.endGame();
 	}
@@ -1219,4 +1219,5 @@ public class Commands {
  * 28 February 2025 - Removed Stack Trace from Load & Save
  * 3 March 2025 - Added section to remove cloak when destroyed
  * 5 March 2025 - Increased to v4.0
+ * 9 March 2025 - Refactored constants
  */

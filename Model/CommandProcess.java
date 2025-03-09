@@ -89,7 +89,7 @@ public class CommandProcess {
 	
 	public int getVerbNumber() {
 		
-		int verbNumber = Constants.noVerbs+1;
+		int verbNumber = Constants.NUMBER_OF_VERBS+1;
 		int verbCount = 0;
 		
 		for (String command:RawData.getVerbs()) {
@@ -106,7 +106,7 @@ public class CommandProcess {
 	
 	public int getNounNumber() {
 		
-		int nounNumber = Constants.noNouns;
+		int nounNumber = Constants.NUMBER_OF_NOUNS;
 				
 		//Only called if more than two words
 		if (commands.length>1) {
@@ -121,7 +121,7 @@ public class CommandProcess {
 	private int getNounNum(String noun) {
 		
 		int nounCount = 0;
-		int nounNumber = Constants.noNouns;
+		int nounNumber = Constants.NUMBER_OF_NOUNS;
 		
 		for (String command:RawData.getNouns()) {
 			nounCount ++;
@@ -367,7 +367,7 @@ public class CommandProcess {
 		if (player.getRoom()==19 && player.getStrength()<70 && 
 			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
 			game.setMessage("Pushed into the pit");
-			game.getItem(Constants.noNouns).setFlag(1);
+			game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(1);
 		}
 		
 		//Movement of the logmen if player not present
@@ -452,7 +452,7 @@ public class CommandProcess {
 		}
 		
 		//Fail Quest conditions
-		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.noNouns).getFlag()==1) {
+		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.");
 			game.endGame();
 		}

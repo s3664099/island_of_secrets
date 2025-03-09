@@ -20,8 +20,8 @@ import Data.RawData;
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 3473676803014192040L;
-	private int noRooms = Constants.noRooms;
-	private int noItems = Constants.noNouns;
+	private int noRooms = Constants.NUMBER_OF_ROOMS;
+	private int noItems = Constants.NUMBER_OF_NOUNS;
 	private Location[] locationList = new Location[noRooms+1];
 	private Item[] itemList = new Item[noItems+1];
 	private String message = "Let your quest begin!";
@@ -60,7 +60,7 @@ public class Game implements Serializable {
 			
 			String item = "";
 			
-			if(itemNumber<=Constants.noItems) {
+			if(itemNumber<=Constants.NUMBER_OF_ITEMS) {
 				item = RawData.getObjects(itemNumber);
 			}
 			

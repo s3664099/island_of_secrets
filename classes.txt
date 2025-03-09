@@ -1,6 +1,6 @@
-## Program Structure ##
 
-### Controller
+
+
 
 ## **BookButton**  
 
@@ -22,7 +22,7 @@
 
 ### Data
 
-## **Constants**  
+ 
 
 ## **Item**
 
@@ -40,7 +40,7 @@
 
 ## **GameEngine**
 
-## **Main**
+
 
 ## **Player**
 
@@ -61,13 +61,6 @@
 ---
 
 
-## **Start**
-
-### **Potential Flaws and Possible Changes**
-
-2. **Tight Coupling**:
-   - The `Start` class is tightly coupled to the `Main` class, which reduces flexibility and makes testing harder.
-   - **Fix**: Use dependency injection or a factory pattern to decouple the `Start` class from the `Main` class.
 
 
 
@@ -79,9 +72,18 @@
 
 
 
-### Controller Package
 
-The controller package is a part of the MVP pattern and holds all of the classes that execute the commands. This does not process the commands but are rather classes that are tied to buttons or text input boxes, and basically retrieve the action and interpretates it, and then sends it to the specific model class.
+
+
+
+
+
+
+
+
+
+
+
 
 ## **BookButton**  
 
@@ -324,109 +326,17 @@ The `ShelterButton` class handles user interaction for moving the player to a sp
 
 ### Data Package
 
-## **Constants**
 
-### **Overview**
-The `Constants` class is a utility class that defines a set of **public static final** constants. These constants are used to store fixed values that are shared across the application, such as configuration values, limits, or identifiers. The class does not have any behavior (methods) or state (instance variables) and is intended to be used as a centralized place for constant values.
 
-### **Key Responsibilities**
-1. **Storing Game Configuration**: Holds constants related to the game's structure, such as the number of rooms, items, verbs, and nouns.
-2. **Defining Item Limits**: Stores thresholds or identifiers for specific item types (e.g., `foodLine` and `drinkLine`).
-3. **Providing UI Utilities**: Includes a string (`line`) and its length (`lineLength`) for use as a visual separator or divider in the UI.
 
-### **Constructor**
-- The class does not have an explicit constructor. Since all fields are `static`, there is no need to instantiate the class. It is intended to be used as a static utility class.
 
-### **Methods**
-The class does not define any methods. It only contains static fields.
 
-### **Potential Flaws and Possible Changes**
 
-#### **1. Non-Final `line` Field**
-- **Flaw**: The `line` field is not declared as `final`, which means it can be modified at runtime. This contradicts the purpose of a constants class, where all fields should be immutable.
-- **Change**: Declare `line` as `final` to ensure immutability:
-  ```java
-  public static final String line = "----------------------------------------------------------------";
-  ```
 
-#### **2. Hardcoded `line` String**
-- **Flaw**: The `line` string is hardcoded, which makes it less flexible. If `lineLength` changes, the `line` string will not automatically reflect the new length.
-- **Change**: Generate the `line` string dynamically based on `lineLength`:
-  ```java
-  public static final String line = "-".repeat(lineLength);
-  ```
 
-#### **3. Lack of Grouping for Related Constants**
-- **Flaw**: Constants like `foodLine` and `drinkLine` are related but are not grouped together. This can make the class harder to navigate and understand.
-- **Change**: Group related constants in a nested class or use an `enum` for better organization:
-  ```java
-  public static final class ItemLimits {
-      public static final int FOOD = 16;
-      public static final int DRINK = 21;
-  }
-  ```
 
-#### **4. Non-Descriptive Field Names**
-- **Flaw**: Some field names (e.g., `noRooms`, `noItems`) are not very descriptive and could be improved for better readability.
-- **Change**: Use more descriptive names:
-  ```java
-  public static final int NUMBER_OF_ROOMS = 80;
-  public static final int NUMBER_OF_ITEMS = 43;
-  ```
 
-#### **5. No Encapsulation**
-- **Flaw**: All fields are `public`, which exposes them to direct modification (if not `final`) and reduces encapsulation.
-- **Change**: While constants are typically `public`, consider using a private constructor to prevent instantiation of the class:
-  ```java
-  private Constants() {
-      throw new UnsupportedOperationException("Utility class");
-  }
-  ```
 
-#### **6. Potential for Overloading**
-- **Flaw**: The class could become bloated if too many unrelated constants are added in the future.
-- **Change**: Split the class into multiple smaller classes or enums based on the context of the constants (e.g., `GameConstants`, `UIConstants`).
-
-### **Improved Version of the Class**
-Here’s how the class could look after applying the suggested changes:
-
-```java
-public final class Constants {
-
-    // Prevent instantiation
-    private Constants() {
-        throw new UnsupportedOperationException("Utility class");
-    }
-
-    // Game-related constants
-    public static final int NUMBER_OF_ROOMS = 80;
-    public static final int NUMBER_OF_ITEMS = 43;
-    public static final int NUMBER_OF_VERBS = 42;
-    public static final int NUMBER_OF_NOUNS = 52;
-    public static final int CARRIABLE_ITEMS = 24;
-
-    // Item type limits
-    public static final class ItemLimits {
-        public static final int FOOD = 16;
-        public static final int DRINK = 21;
-    }
-
-    // UI-related constants
-    public static final int SEPARATOR_LINE_LENGTH = 90;
-    public static final String SEPARATOR_LINE = "-".repeat(SEPARATOR_LINE_LENGTH);
-}
-```
-
-### **Summary of Changes**
-1. Made `line` final and dynamically generated it.
-2. Grouped related constants (`foodLine` and `drinkLine`) into a nested class.
-3. Improved field names for better readability.
-4. Added a private constructor to prevent instantiation.
-5. Ensured all fields are `final` for immutability.
-
-Here’s the analysis of your `Item` class using the provided template:
-
----
 
 ## **Item**
 
@@ -2118,110 +2028,18 @@ public class GameEngine {
 
 ---
 
-## **Main**
 
-### **Overview**
-The `Main` class serves as the entry point for the game application. It initializes the game data, creates the player, and launches the game UI in a separate thread using Swing's event dispatch thread. This ensures that the game runs smoothly without blocking the main thread.
 
-### **Key Responsibilities**
-1. **Game Initialization**: Initializes the game data (`Game`), player (`Player`), and game engine (`GameEngine`).
-2. **UI Launch**: Launches the game UI (`GameFrame`) in a separate thread using `SwingUtilities.invokeLater`.
 
-### **Instance Variables**
-- None. The class does not maintain any state and is purely used for initialization and launching.
 
-### **Constructor**
-- The class does not have an explicit constructor. It uses a default constructor.
 
-### **Methods**
-1. **`startGame()`**
-   - Initializes the game data, player, and game engine.
-   - Launches the game UI in a separate thread using `SwingUtilities.invokeLater`.
 
-### **Potential Flaws and Possible Changes**
 
-#### **1. Lack of Flexibility**
-- **Flaw**: The `startGame` method is tightly coupled to specific implementations of `Game`, `Player`, and `GameEngine`.
-- **Change**: Use dependency injection or a factory pattern to allow for different implementations of these classes.
 
-#### **2. No Error Handling**
-- **Flaw**: The method does not handle potential errors during initialization or UI launch.
-- **Change**: Add error handling (e.g., try-catch blocks) to gracefully handle exceptions.
 
-#### **3. Limited Extensibility**
-- **Flaw**: The class is not designed to support additional features like command-line arguments or configuration options.
-- **Change**: Add support for command-line arguments or configuration files to customize game behavior.
 
-#### **4. Hardcoded UI Launch**
-- **Flaw**: The UI launch logic is hardcoded, making it difficult to switch to a different UI framework.
-- **Change**: Use an interface or abstract class to decouple the UI launch logic from the `Main` class.
 
-### **Improved Version of the Class**
-Here’s a refactored version of the `Main` class with some of the suggested changes applied:
 
-```java
-public class Main {
-
-    public void startGame() {
-        try {
-            // Initialize game data
-            Game gameData = new Game();
-            Player player = new Player();
-            GameEngine game = new GameEngine(gameData, player);
-
-            // Launch the game UI in a separate thread
-            SwingUtilities.invokeLater(() -> new GameFrame(game));
-        } catch (Exception e) {
-            System.err.println("Failed to start the game: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        Main main = new Main();
-        main.startGame();
-    }
-}
-```
-
-### **Summary of Changes**
-1. **Error Handling**: Added a try-catch block to handle potential errors during initialization and UI launch.
-2. **Lambda Expression**: Replaced the anonymous inner class with a lambda expression for cleaner code.
-3. **Main Method**: Added a `main` method to allow the class to be executed directly.
-
-### **Additional Suggestions**
-1. **Command-Line Arguments**: Extend the `Main` class to support command-line arguments for customizing game behavior (e.g., loading a specific save file).
-   ```java
-   public static void main(String[] args) {
-       Main main = new Main();
-       if (args.length > 0 && args[0].equals("--load")) {
-           main.loadGame(args[1]); // Load a specific save file
-       } else {
-           main.startGame(); // Start a new game
-       }
-   }
-   ```
-
-2. **Configuration File**: Use a configuration file (e.g., JSON or properties file) to customize game settings.
-   ```java
-   Properties config = new Properties();
-   try (InputStream input = Main.class.getResourceAsStream("/config.properties")) {
-       config.load(input);
-       String gameMode = config.getProperty("game.mode", "default");
-       // Use gameMode to customize game behavior
-   } catch (IOException e) {
-       System.err.println("Failed to load configuration: " + e.getMessage());
-   }
-   ```
-
-3. **Dependency Injection**: Use a dependency injection framework (e.g., Spring or Guice) to manage dependencies between classes.
-   ```java
-   Injector injector = Guice.createInjector(new GameModule());
-   GameEngine game = injector.getInstance(GameEngine.class);
-   SwingUtilities.invokeLater(() -> new GameFrame(game));
-   ```
-
----
 
 ## **Player**
 

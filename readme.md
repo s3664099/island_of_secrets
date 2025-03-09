@@ -103,33 +103,30 @@ To compile and run the game, follow these steps:
 
 This package is only used to start the game, and only holds the class that launches the game.
 
-#### **Start Class**
+## **Start Class**
 
-The `Start` class serves as the **entry point** for the application. It initializes the game, starts its execution, and ensures errors are logged and handled gracefully.
+### **Overview**
+The `Start` class is the **entry point** for the game application. It is responsible for launching the game, handling errors, and logging key events during startup.
 
 ### **Key Responsibilities**
-1. **Initialize the Game**:
-   - Creates an instance of the `Main` class, which encapsulates the game logic.
-2. **Start the Game**:
-   - Calls the `startGame()` method to begin the game's execution.
+1. **Launch the Game**:
+   - Initializes the game by creating an instance of the `Main` class and calling its `startGame()` method.
+2. **Error Handling**:
+   - Catches and logs any errors that occur during game startup, ensuring the application fails gracefully.
 3. **Logging**:
-   - Logs key events, such as the start and successful initialization of the game.
-4. **Error Handling**:
-   - Catches and logs any exceptions that occur during game initialization or execution, ensuring a graceful failure.
+   - Logs important events, such as the start of the application and successful game initialization.
 
-### **Constructor**
-- **None**:
-  - The class does not define an explicit constructor because it only contains the `main` method and does not require instance-specific initialization.
+### **How It Works**
+- The `main` method:
+  - Logs the start of the application.
+  - Creates an instance of the `Main` class and starts the game.
+  - Logs the successful start of the game.
+  - Catches and logs any errors that occur during this process.
 
-### **Methods**
-1. **`main(String[] args)`**:
-   - **Description**: The entry point of the application. It initializes the game, starts its execution, and handles errors.
-   - **Steps**:
-     1. Logs the start of the application.
-     2. Creates an instance of the `Main` class.
-     3. Calls the `startGame()` method to begin the game.
-     4. Logs the successful start of the game.
-     5. Catches and logs any exceptions that occur during initialization or execution.
+### **Usage**
+The `Start` class is the first class executed when the game is launched. It does not require any configuration or modification unless the game's startup process changes.
+
+---
 
 ### Controller
 
@@ -155,7 +152,47 @@ The controller package is a part of the MVP pattern and holds all of the classes
 
 ### Data
 
-## **Constants**  
+## **Constants Class**
+
+### **Overview**
+The `Constants` class is a **centralized place** for storing fixed values used throughout the game. These values include game configuration settings, item limits, and other shared data. The class is designed to be **static** and **immutable**, meaning its values cannot be changed once defined.
+
+### **Purpose**
+- **Simplify Maintenance**: By storing all constants in one place, it’s easier to update values without searching through the entire codebase.
+- **Improve Readability**: Constants with descriptive names make the code easier to understand.
+- **Ensure Consistency**: Using constants prevents hardcoding values in multiple places, reducing the risk of errors.
+
+### **Key Constants**
+1. **Game Configuration**:
+   - `NUMBER_OF_ROOMS`: Total number of rooms in the game.
+   - `NUMBER_OF_ITEMS`: Total number of items in the game.
+   - `NUMBER_OF_VERBS`: Total number of verbs (actions) available.
+   - `NUMBER_OF_NOUNS`: Total number of nouns (objects) available.
+
+2. **Item Limits**:
+   - `MAX_CARRIABLE_ITEMS`: Maximum number of items the player can carry.
+   - `FOOD_THRESHOLD`: Items with IDs above this value are considered food.
+   - `DRINK_THRESHOLD`: Items with IDs above this value are considered drinks.
+
+### **Usage**
+- The `Constants` class is used throughout the game to access shared values. For example:
+  ```java
+  if (itemId <= Constants.MAX_CARRIABLE_ITEMS) {
+      System.out.println("This item can be carried.");
+  }
+  ```
+
+- Since all fields are `public static final`, they can be accessed directly without creating an instance of the class:
+  ```java
+  int totalRooms = Constants.NUMBER_OF_ROOMS;
+  ```
+
+### **Best Practices**
+- **Do Not Modify**: The values in this class are fixed and should not be changed at runtime.
+- **Add New Constants**: If the game requires additional fixed values, add them to this class to maintain consistency.
+- **Use Descriptive Names**: When adding new constants, choose names that clearly describe their purpose.
+
+---
 
 ## **Item**
 
@@ -173,7 +210,29 @@ The controller package is a part of the MVP pattern and holds all of the classes
 
 ## **GameEngine**
 
-## **Main**
+## **Main Class**
+
+### **Overview**
+The `Main` class is responsible for setting up and launching the game. It initializes the game data, creates the player, and starts the game UI in a way that ensures smooth performance.
+
+### **Key Responsibilities**
+1. **Game Setup**:
+   - Initializes the game data, player, and game engine.
+2. **UI Launch**:
+   - Starts the game UI using Swing's event dispatch thread to avoid blocking the main thread.
+3. **Error Handling**:
+   - Catches and handles errors during game setup and UI launch, ensuring the game fails gracefully if something goes wrong.
+
+### **How It Works**
+- The `startGame()` method:
+  - Creates the game data, player, and game engine.
+  - Launches the game UI in a separate thread.
+  - Handles any errors that occur during this process, printing helpful error messages.
+
+### **Usage**
+The `Main` class is used by the `Start` class to initialize and launch the game. It does not need to be directly instantiated or modified unless the game's initialization logic changes.
+
+---
 
 ## **Player**
 

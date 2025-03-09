@@ -39,7 +39,7 @@ public class Player implements Serializable {
 		this.roomToDisplay = this.room;
 		
 		if (this.room == 20) {
-			this.roomToDisplay = rand.nextInt(Constants.noRooms-1)+1;
+			this.roomToDisplay = rand.nextInt(Constants.NUMBER_OF_ROOMS-1)+1;
 		}
 		
 		return this.roomToDisplay;
@@ -51,7 +51,7 @@ public class Player implements Serializable {
 	
 	public void update() {
 		this.timeRemaining --;
-		this.strength = (float) (this.strength-(this.weight/Constants.noItems+.1));
+		this.strength = (float) (this.strength-(this.weight/Constants.NUMBER_OF_ITEMS+.1));
 	}
 		
 	public float getStrengthWisdon() {

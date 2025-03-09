@@ -157,18 +157,18 @@ public class GameEngine {
 			int nounNumber = processCommands.getNounNumber();
 		
 			//Either verb or noun doesn't exist
-			if (verbNumber>Constants.noVerbs || nounNumber == Constants.noNouns) {
+			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
 				this.game.setMessage("You can't "+command);
 			}
 
 			//Neither exists
-			if (verbNumber>Constants.noVerbs && nounNumber == 52) {
+			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
 				this.game.setMessage("What!!");
 			}
 		
 			//No second word move to end
 			if (nounNumber == -1) {
-				nounNumber = Constants.noNouns;
+				nounNumber = Constants.NUMBER_OF_NOUNS;
 			}
 		
 			this.player.update();
@@ -201,7 +201,7 @@ public class GameEngine {
 				this.game.setMessage("I do not understand");
 			}
 			
-			float strengthAdj = (float) ((player.getWeight()/Constants.noNouns+0.1)-3);
+			float strengthAdj = (float) ((player.getWeight()/Constants.NUMBER_OF_NOUNS+0.1)-3);
 			player.adjustStrength(strengthAdj);
 			
 			if (player.checkPosition()) {
