@@ -14,31 +14,64 @@ import java.io.Serializable;
 public class Item implements Serializable {
 	
 	private static final long serialVersionUID = -2697850646469797958L;
-	int itemFlag;
-	int itemLocation;
-	String item;
-	boolean wisdomGained = false;
+	private int itemFlag;
+	private int itemLocation;
+	private String itemName;
+	private boolean wisdomAcquired = false;
 	
+	private static final int FLAG_OFFSET = 48; // ASCII value of '0'
+	private static final int LOCATION_OFFSET = 32; // ASCII value of space
+	private static final int LOCATION_ADJUSTMENT = 96; // Adjustment for values > 127
+	private static final int ASCII_MAX = 127; // Adjustment for values > 127
+	
+	/**
+     * Constructs an Item with the specified flag, location, and description.
+     *
+     * @param flag     The flag character (e.g., from ITEM_FLAG).
+     * @param location The location character (e.g., from ITEM_LOCATION).
+     * @param description The item's description.
+     */
 	public Item(char flag,char location, String item) {
 				
 		//Converts the strings to the appropriate int
-		this.itemFlag = ((int) flag)-48;
-		this.itemLocation = ((int) location)-32;
+		this.itemFlag = ((int) flag)-FLAG_OFFSET;
+		this.itemLocation = ((int) location)-LOCATION_OFFSET;
 		
-		if (this.itemLocation>127) {
-			this.itemLocation -= 96;
+		
+		if (this.itemLocation>ASCII_MAX) {
+			this.itemLocation -= LOCATION_ADJUSTMENT;
 		}
 				
 		//Saves the descriptions
-		this.item = item;
+		this.itemName = item;
 	}
 	
-	public String getItem() {
-		return this.item;
+	public String getItemName() {
+		return this.itemName;
+	}
+	
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	
+	public int getItemFlag() {
+		return this.itemFlag;
+	}
+	
+	public void setItemFlag(int flag) {
+		this.itemFlag = flag;
+	}
+	
+	public int getItemLocation() {
+		return this.itemLocation;
+	}
+	
+	public void setItemLocation(int newLocation) {
+		this.itemLocation = newLocation;
 	}
 	
 	//Checks if the item is present at the location
-	public boolean checkLocation(int location) {
+	public boolean isAtLocation(int location) {
 		
 		boolean itemPresent = false;
 		
@@ -47,36 +80,25 @@ public class Item implements Serializable {
 		}
 		
 		return itemPresent;
+	}	
+			
+	public void setWisdomAcquired(boolean wisdonAcquired) {
+		this.wisdomAcquired = wisdonAcquired;
 	}
 	
-	public int getFlag() {
-		return this.itemFlag;
+	public boolean hasWisdonAcquired() {
+		return this.wisdomAcquired;
 	}
 	
-	public int getLocation() {
-		return this.itemLocation;
-	}
-	
-	public void setLocation(int newLocation) {
-		this.itemLocation = newLocation;
-	}
-	
-	public void setFlag(int flag) {
-		this.itemFlag = flag;
-	}
-	
-	public void setDescription(String description) {
-		this.item = description;
-	}
-	
-	public void setWisdomGain() {
-		this.wisdomGained = !this.wisdomGained;
-	}
-	
-	public boolean checkWisdomGain() {
-		return this.wisdomGained;
-	}
-
+    @Override
+    public String toString() {
+        return "Item{" +
+                "description='" + itemName + '\'' +
+                ", location=" + itemLocation +
+                ", flag=" + itemFlag +
+                ", wisdomGained=" + wisdomAcquired +
+                '}';
+    }
 }
 
 /*

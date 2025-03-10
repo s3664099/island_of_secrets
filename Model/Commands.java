@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 9 March 2025
+Version: 4.2
+Date: 10 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -81,31 +81,31 @@ public class Commands {
 		}
 			
 		//Poisoned waters
-		if (code.equals("490051") && game.getItem(29).getFlag()==0) {
+		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
 			player.setPanelFlag(4);
 		}
 				
 		//Checks if player able to move
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		if (game.getItem(39).checkLocation(player.getRoom()) && 
+		if (game.getItem(39).isAtLocation(player.getRoom()) && 
 			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
 			game.setMessage("Omegan's presence prevents you from leaving!");
 		
 		//Swampman blocks
-		} else if (player.getRoom() == game.getItem(32).getLocation() && 
-					game.getItem(32).getFlag()<1 && direction == 3) {
+		} else if (player.getRoom() == game.getItem(32).getItemLocation() && 
+					game.getItem(32).getItemFlag()<1 && direction == 3) {
 			game.setMessage("He will not let you pass.");
 		
 		//The Rocks
-		} else if (player.getRoom() == 47 && game.getItem(44).getFlag()==0) {
+		} else if (player.getRoom() == 47 && game.getItem(44).getItemFlag()==0) {
 			game.setMessage("The rocks move to prevent you");
 		
 		//Room with Arms
-		} else if (player.getRoom() == 28 && game.getItem(7).getFlag()!=1) {
+		} else if (player.getRoom() == 28 && game.getItem(7).getItemFlag()!=1) {
 			game.setMessage("The arms hold you fast");
 		
 		//Snake at grandpa's Shack
-		} else if (player.getRoom()==45 && game.getItem(40).getFlag()==0 && direction == 4) {
+		} else if (player.getRoom()==45 && game.getItem(40).getItemFlag()==0 && direction == 4) {
 			game.setMessage("Hisss!");
 		
 		//Looks like need canyon beast to climb the path	
@@ -142,7 +142,7 @@ public class Commands {
 			}
 			
 			//Room with the hands
-			if (player.getRoom()==28 && game.getItem(7).getFlag()!=1) {
+			if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
 				game.setMessage("You enter the room and giant hands grab you and hold you fast");
 			} else if (player.getRoom()==28) {
 				game.setMessage("You enter the room and brightly shining torch force the arms to retreat to the walls");
@@ -152,14 +152,14 @@ public class Commands {
 			
 			
 			//Does the player have the beast and is on the jetty
-			if (player.getRoom() == 33 && game.getItem(16).getLocation()==0) {
-				game.getItem(16).setLocation(rand.nextInt(4)+1);
-				game.getItem(16).setFlag(0);
+			if (player.getRoom() == 33 && game.getItem(16).getItemLocation()==0) {
+				game.getItem(16).setItemLocation(rand.nextInt(4)+1);
+				game.getItem(16).setItemFlag(0);
 				game.setMessage("The beast runs away");
 			}
 			
 			//Handling the ferry man
-			if (player.getRoom()==game.getItem(25).getLocation() && this.noun == 25) {
+			if (player.getRoom()==game.getItem(25).getItemLocation() && this.noun == 25) {
 				
 				if (player.getWisdom()<60) {
 					
@@ -167,7 +167,7 @@ public class Commands {
 										  "falling under the spell of the boatman|"
 										  + "and are taken to the Island of Secrets ...|"
 										  + "to serve Omegan forever.",4);
-					game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(1);
+					game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 				} else {
 					
 					game.setPanelMessages("You board the craft ...",
@@ -183,8 +183,8 @@ public class Commands {
 	public void take(Game game,Player player) {
 				
 		//Is the item present, and can it be taken?
-		if (((game.getItem(noun).getFlag()>0 && game.getItem(noun).getFlag()<9) ||
-			game.getItem(noun).getLocation()!=player.getRoom()) && this.noun<=Constants.MAX_CARRIABLE_ITEMS) {
+		if (((game.getItem(noun).getItemFlag()>0 && game.getItem(noun).getItemFlag()<9) ||
+			game.getItem(noun).getItemLocation()!=player.getRoom()) && this.noun<=Constants.MAX_CARRIABLE_ITEMS) {
 			
 			//Pick more apples and add to food.
 			if (player.getRoom()==45 && game.checkApples() && noun==1) {
@@ -196,7 +196,7 @@ public class Commands {
 			} else if (player.getRoom()==27 && noun == 7) {
 				game.setMessage("There are no more within reach");
 			} else {
-				game.setMessage("What "+game.getItem(noun).getItem()+"?");
+				game.setMessage("What "+game.getItem(noun).getItemName()+"?");
 			}
 			
 		} else {
@@ -214,7 +214,7 @@ public class Commands {
 					//Add special lightning Flashes screen
 					game.setMessage("Lightning Flashes");
 					
-					game.getItem(39).setLocation(player.getRoom());
+					game.getItem(39).setItemLocation(player.getRoom());
 					player.setWisdom(player.getWisdom()-2);
 					player.setStrength(player.getStrength()-8);
 					player.setPanelFlag(2);
@@ -236,15 +236,15 @@ public class Commands {
 					int weight = 0;
 										
 					//picks up item
-					if (game.getItem(noun).getLocation()== player.getRoom() && (
-						game.getItem(noun).getFlag()<1 || game.getItem(noun).getFlag()==9)
+					if (game.getItem(noun).getItemLocation()== player.getRoom() && (
+						game.getItem(noun).getItemFlag()<1 || game.getItem(noun).getItemFlag()==9)
 						&& noun<Constants.MAX_CARRIABLE_ITEMS) {
-							game.getItem(noun).setLocation(0);
+							game.getItem(noun).setItemLocation(0);
 							weight = -1;
 					}
 					
-					if (noun == 16 && game.getItem(10).getLocation()!=0) {
-						game.getItem(noun).setLocation(player.getRoom());
+					if (noun == 16 && game.getItem(10).getItemLocation()!=0) {
+						game.getItem(noun).setItemLocation(player.getRoom());
 						game.setMessage("It escaped");
 						weight = 0;
 					}
@@ -252,46 +252,46 @@ public class Commands {
 					if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
 						weight = -1;
 						player.adjustFood(2);
-						game.getItem(noun).setLocation(-18);
+						game.getItem(noun).setItemLocation(-18);
 					}
 					
 					if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
 						weight = -1;
 						player.adjustDrink(2);
-						game.getItem(noun).setLocation(-18);
+						game.getItem(noun).setItemLocation(-18);
 					}
 										
 					if (weight == -1) {
 						game.setMessage("Taken");
 						
 						//Makes sure that wisdom increase only happens once
-						if (!game.getItem(noun).checkWisdomGain()) {
+						if (!game.getItem(noun).hasWisdonAcquired()) {
 							player.setWisdom(player.getWisdom()+4);
-							game.getItem(noun).setWisdomGain();
+							game.getItem(noun).setWisdomAcquired(true);
 						}
 						
 						player.setWeight(player.getWeight()+1);
 						
-						if (game.getItem(noun).getFlag()>1) {
-							game.getItem(noun).setFlag(0);
+						if (game.getItem(noun).getItemFlag()>1) {
+							game.getItem(noun).setItemFlag(0);
 						}
 					}
 																				
 					//Handles the bird when attempting to take the egg without the staff
-					if (code.equals("246046") && game.getItem(11).getLocation() != 0) {
+					if (code.equals("246046") && game.getItem(11).getItemLocation() != 0) {
 
 						game.setMessage("You anger the bird");
-						game.getItem(noun).setLocation(player.getRoom());
+						game.getItem(noun).setItemLocation(player.getRoom());
 						
 						//One in three bird takes you to random spot & replaces wild canyon beast
 						//Needed beast to actually get here
 						if (rand.nextInt(3)>1) {
 							game.addMessage(" which flies you to a remote place.");
 							player.setRoom(63+rand.nextInt(6));
-							game.getItem(16).setLocation(1);
-							game.getItem(16).setFlag(0);
+							game.getItem(16).setItemLocation(1);
+							game.getItem(16).setItemFlag(0);
 						}
-					} else if (code.equals("246046") && game.getItem(11).getLocation() == 0) {
+					} else if (code.equals("246046") && game.getItem(11).getItemLocation() == 0) {
 						game.setMessage("You use the staff to keep the Dactyl away and take the egg");
 					}
 				}	
@@ -303,9 +303,9 @@ public class Commands {
 		
 		String object = "";
 				
-		if ((noun != 24 && game.getItem(noun).getLocation()>0) || noun == 52) {
+		if ((noun != 24 && game.getItem(noun).getItemLocation()>0) || noun == 52) {
 			
-			String itemName = game.getItem(noun).getItem();
+			String itemName = game.getItem(noun).getItemName();
 			
 			if (itemName.length()==0) {
 				itemName = "that";
@@ -334,18 +334,18 @@ public class Commands {
 	public void drop(Game game, Player player) {
 		
 		//Dropping the Earthenware Jug
-		if (noun == 4 && game.getItem(noun).getLocation()==0 && verb==9) {
-			game.getItem(noun).setLocation(81);
+		if (noun == 4 && game.getItem(noun).getItemLocation()==0 && verb==9) {
+			game.getItem(noun).setItemLocation(81);
 			player.setWisdom(player.getWisdom()-1);
 			player.setWeight(player.getWeight()-1);
 			game.setMessage("It breaks!");
 		
 		//Dropping a brightly glowing torch
 		} else if (code.substring(0,3).equals("701")) {
-			game.getItem(noun).setLocation(player.getRoom());
+			game.getItem(noun).setItemLocation(player.getRoom());
 			game.setMessage("The torch dims when you drop it.");	
-			game.getItem(7).setFlag(0);
-			game.getItem(7).setDescription("a flickering torch");
+			game.getItem(7).setItemFlag(0);
+			game.getItem(7).setItemName("a flickering torch");
 			
 			if (player.getRoom()==28) {
 				game.addMessage("|Upon dropping the torch the arms reach out and grab you, preventing you from moving.");
@@ -353,14 +353,14 @@ public class Commands {
 			
 		//Dropping other items
 		} else {
-			if (game.getItem(noun).getLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
-				game.getItem(noun).setLocation(player.getRoom());
+			if (game.getItem(noun).getItemLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
+				game.getItem(noun).setItemLocation(player.getRoom());
 				player.setWeight(player.getWeight()-1);
 				game.setMessage("Done");
 				
 				//Dropping the beast
 				if (noun == 16) {
-					game.getItem(noun).setFlag(0);
+					game.getItem(noun).setItemFlag(0);
 				}
 				
 			} else {
@@ -377,7 +377,7 @@ public class Commands {
 		}
 		
 		//Eating lillies (moved here since in original game code wouldn't reach)
-		if (noun == 3 && game.getItem(3).getLocation()==0) {
+		if (noun == 3 && game.getItem(3).getItemLocation()==0) {
 			player.adjustWisdom(-5);
 			player.adjustStrength(-2);
 			game.setMessage("They make you very ill");
@@ -406,7 +406,7 @@ public class Commands {
 		if (noun==31) {
 			
 			if (game.getItemFlagSum(4)!=-1) {
-				game.setMessage("You don't have "+game.getItem(noun).getItem());
+				game.setMessage("You don't have "+game.getItem(noun).getItemName());
 			} else {
 				game.setMessage("Ouch!");
 				player.adjustStrength(-4);
@@ -439,7 +439,7 @@ public class Commands {
 		
 		//Riding the canyon beast
 		if (this.code.substring(0,4).equals("1600")) {
-			game.getItem(noun).setFlag(-1);
+			game.getItem(noun).setItemFlag(-1);
 			game.setMessage("It allows you to ride.");
 		} else if (this.code.substring(0,4).equals("1601")) {
 			game.setMessage("You are already riding the beast.");
@@ -455,16 +455,16 @@ public class Commands {
 		//Open chest in grandpa's shack
 		if (this.code.equals("2644044")) {
 			game.setMessage("The chest opens. There is something inside");
-			game.getItem(6).setFlag(9);
-			game.getItem(5).setFlag(9);
-			game.getItem(15).setFlag(9);
-			game.getItem(26).setFlag(1);
+			game.getItem(6).setItemFlag(9);
+			game.getItem(5).setItemFlag(9);
+			game.getItem(15).setItemFlag(9);
+			game.getItem(26).setItemFlag(1);
 		}
 		
 		//Open trapdoor in refuse filled room
 		if (this.code.equals("2951151")) {
 			game.setMessage("The trapdoor creaks");
-			game.getItem(29).setFlag(0);
+			game.getItem(29).setItemFlag(0);
 			player.adjustWisdom(3);
 		}
 	}
@@ -475,47 +475,47 @@ public class Commands {
 		game.setMessage("Nothing happens");
 
 		//Carrying Hammer or Axe
-		if (game.getItem(9).getLocation()==0 || game.getItem(15).getLocation()==0) {
+		if (game.getItem(9).getItemLocation()==0 || game.getItem(15).getItemLocation()==0) {
 			game.setMessage("Ok");
 		}
 		
 		//Chopping roots with Axe
-		if (this.code.equals("3577077") && game.getItem(9).getLocation()==0) {
-			game.getItem(23).setFlag(0);
-			game.getItem(23).setLocation(player.getRoom());
+		if (this.code.equals("3577077") && game.getItem(9).getItemLocation()==0) {
+			game.getItem(23).setItemFlag(0);
+			game.getItem(23).setItemLocation(player.getRoom());
 		}
 		
 		//Break the column with hammer
 		if (this.code.equals("1258158") || this.code.equals("2758158") && 
-			game.getItem(15).getLocation()==0) {
-				game.getItem(12).setFlag(0);
-				game.getItem(27).setFlag(0);
+			game.getItem(15).getItemLocation()==0) {
+				game.getItem(12).setItemFlag(0);
+				game.getItem(27).setItemFlag(0);
 				game.setMessage("Crack");
 		}
 		
 		//Break the staff
 		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
 			player.adjustWisdom(10);
-			game.getItem(noun).setLocation(81);
-			game.getItem(noun).setFlag(-1);
+			game.getItem(noun).setItemLocation(81);
+			game.getItem(noun).setItemFlag(-1);
 			player.setPanelFlag(3);
 			
-			if (game.getItem(2).getLocation() != player.getRoom()) {
+			if (game.getItem(2).getItemLocation() != player.getRoom()) {
 				game.setPanelMessages("It shatters releasing a rainbow of colours!", "", 1);
 			} else {
 				game.setPanelMessages("It shatters releasing a rainbow of colours!", 
 									  "The egg hatches into a baby dactyl which takes"+
 									  " Omegan in its claws and flies away", 2);
-				game.getItem(39).setLocation(81);
-				game.getItem(2).setLocation(2);
-				game.getItem(2).setFlag(-1);
+				game.getItem(39).setItemLocation(81);
+				game.getItem(2).setItemLocation(2);
+				game.getItem(2).setItemFlag(-1);
 				player.adjustStrength(40);
 			}
 		
 		//Response if player uses the staff without meeting the conditions above
 		} else if (this.code.substring(0,4).equals("1100") && verb == 19) {
-			game.getItem(noun).setLocation(81);
-			game.getItem(noun).setFlag(-1);
+			game.getItem(noun).setItemLocation(81);
+			game.getItem(noun).setItemFlag(-1);
 			player.setPanelFlag(3);
 			game.setPanelMessages("It shatters releasing a rainbow of colours!", "", 1);
 		}
@@ -525,10 +525,10 @@ public class Commands {
 			(this.noun>38 && this.noun<44) || this.noun==16) {
 			
 			//Carrying the axe?
-			if (game.getItem(9).getLocation()<1) {
+			if (game.getItem(9).getItemLocation()<1) {
 				kill(player,game);
 			} else {
-				game.setMessage("You annoy the "+game.getItem(noun).getItem());
+				game.setMessage("You annoy the "+game.getItem(noun).getItemName());
 			}
 		} 
 	}
@@ -541,8 +541,8 @@ public class Commands {
 		game.setMessage("That would be unwise");
 		
 		//Is object present - ends game
-		if (game.getItem(noun).getLocation() == player.getRoom()) {
-			game.getItem(Constants.NUMBER_OF_ITEMS).setFlag(1);
+		if (game.getItem(noun).getItemLocation() == player.getRoom()) {
+			game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
 			player.setPanelFlag(3);
 			game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
 					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
@@ -561,8 +561,8 @@ public class Commands {
 		player.adjustStrength(-2);
 		player.adjustWisdom(-2);
 		
-		if (game.getItem(noun).getLocation() == player.getRoom() || 
-			game.getItem(noun).getLocation() ==0) {
+		if (game.getItem(noun).getItemLocation() == player.getRoom() || 
+			game.getItem(noun).getItemLocation() ==0) {
 			
 			//Omegan the evil one
 			if (noun==39) {
@@ -575,7 +575,7 @@ public class Commands {
 			//Sage of the Lilies
 			} else if (noun==33) {
 				game.setMessage("You can't touch her");
-				game.getItem(3).setLocation(81);
+				game.getItem(3).setItemLocation(81);
 			
 			//Logmen
 			} else if (noun==41) {
@@ -588,8 +588,8 @@ public class Commands {
 				game.setPanelMessages("You anger the bird!",
 									  "Which flies you to a remote place",2);
 				player.setRoom(rand.nextInt(6)+63);
-				game.getItem(16).setLocation(1);
-				game.getItem(16).setFlag(0);
+				game.getItem(16).setItemLocation(1);
+				game.getItem(16).setItemFlag(0);
 				game.setMessage("");
 			
 			//Strike Flint
@@ -598,19 +598,19 @@ public class Commands {
 				game.setMessage("Sparks fly");
 				
 				//Coal in room
-				if (player.getRoom()==game.getItem(13).getLocation()) {
+				if (player.getRoom()==game.getItem(13).getItemLocation()) {
 					
-					game.getItem(noun).setFlag(-1);
-					game.getItem(13).setLocation(81);
+					game.getItem(noun).setItemFlag(-1);
+					game.getItem(13).setItemLocation(81);
 					player.setPanelFlag(3);
 					
 					//Omegan's present in his sanctum
-					if (player.getRoom()==game.getItem(38).getLocation() && player.getRoom()==10) {
+					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
 						game.setPanelMessages("The coal burns with a red flame",
 								"Which dissolves Omegan's Cloak",2);
 						player.adjustWisdom(20);
-						game.getItem(13).setFlag(-1);
-						game.getItem(38).setLocation(81);
+						game.getItem(13).setItemFlag(-1);
+						game.getItem(38).setItemLocation(81);
 					} else {
 						game.setPanelMessages("The coal burns with a red flame","",1);					
 					}
@@ -624,7 +624,7 @@ public class Commands {
 	//Works
 	public void swim(Player player,Game game) {
 
-		if (player.getRoom()!=51 || game.getItem(29).getFlag()>0) {
+		if (player.getRoom()!=51 || game.getItem(29).getItemFlag()>0) {
 			game.setMessage("You can't swim here!");
 			player.adjustWisdom(1);
 		} else {
@@ -639,7 +639,7 @@ public class Commands {
 		
 		int location = -1;
 		
-		if (game.getItem(36).getFlag()<0) {
+		if (game.getItem(36).getItemFlag()<0) {
 			
 			if (commands.length>1) {
 				
@@ -681,7 +681,7 @@ public class Commands {
 			
 			//Scratch the Sage
 			if (code.equals("3371071") && verb == 28) {
-				game.getItem(3).setFlag(0);
+				game.getItem(3).setItemFlag(0);
 				game.setMessage("She nods slowly.");
 				player.adjustWisdom(5);
 			}
@@ -693,13 +693,13 @@ public class Commands {
 		game.setMessage("A-dub-dub");
 				
 		//Rub the stone
-		if (noun.equals("stone") && player.getRoom()==15 && game.getItem(28).getFlag()==1
-			&& game.getItem(5).getLocation()==0) {
-			game.getItem(28).setFlag(0);
+		if (noun.equals("stone") && player.getRoom()==15 && game.getItem(28).getItemFlag()==1
+			&& game.getItem(5).getItemLocation()==0) {
+			game.getItem(28).setItemFlag(0);
 			game.setMessage("Reflections stir within.");			
 		} else if (code.substring(0,4).equals("2815") && player.getRoom()==15
-				&& game.getItem(28).getFlag()==0) {
-			game.getItem(8).setFlag(0);
+				&& game.getItem(28).getItemFlag()==0) {
+			game.getItem(8).setItemFlag(0);
 			take(game,player);
 			game.setMessage("The stone utters 'Stony Words'");
 		}
@@ -726,13 +726,13 @@ public class Commands {
 			
 			boolean ragSeen = false;
 			
-			if (game.getItem(5).getLocation()==44 && game.getItem(5).getFlag()==9) {
+			if (game.getItem(5).getItemLocation()==44 && game.getItem(5).getItemFlag()==9) {
 				game.addMessage("|The chest contains a dirty old rag");
-				game.getItem(5).setFlag(0);
+				game.getItem(5).setItemFlag(0);
 				ragSeen = true;
 			}
 			
-			if (game.getItem(15).getLocation()==44 && game.getItem(15).getFlag()==9) {
+			if (game.getItem(15).getItemLocation()==44 && game.getItem(15).getItemFlag()==9) {
 				
 				String hammer = "";
 
@@ -743,20 +743,20 @@ public class Commands {
 				}	
 				
 				game.addMessage(hammer+" a geologist's hammer");
-				game.getItem(15).setFlag(0);
+				game.getItem(15).setItemFlag(0);
 			}
 		} else if (command[1].equals("table") && player.getRoom()==44 && command[0].equals("examine")) {
 			
 			game.setMessage("The coffee table looks like it has been better days.");
 			boolean breadSeen = false;
 			
-			if (game.getItem(17).getLocation()==44 && game.getItem(17).getFlag()==9) {
+			if (game.getItem(17).getItemLocation()==44 && game.getItem(17).getItemFlag()==9) {
 				game.addMessage("|On the table is a loaf of bread");
-				game.getItem(17).setFlag(0);
+				game.getItem(17).setItemFlag(0);
 				breadSeen = true;
 			}
 			
-			if (game.getItem(21).getLocation()==44 && game.getItem(21).getFlag()==9) {
+			if (game.getItem(21).getItemLocation()==44 && game.getItem(21).getItemFlag()==9) {
 				
 				String water = "";
 				
@@ -767,7 +767,7 @@ public class Commands {
 				}
 				
 				game.addMessage(water+" a bottle of water");
-				game.getItem(21).setFlag(0);
+				game.getItem(21).setItemFlag(0);
 			}
 		} else if (command[1].equals("column") && player.getRoom()==58 && command[0].equals("examine")) {
 			game.setMessage("At the bottom of the column are the words 'remember old times'");
@@ -859,14 +859,14 @@ public class Commands {
 		
 		//Fill Earthenware Jug
 		if (code.equals("40041")) {
-			game.getItem(4).setFlag(-1);
+			game.getItem(4).setItemFlag(-1);
 			game.setMessage("Filled");
-			game.getItem(4).setDescription("A jug full of bubbling green liquid");
+			game.getItem(4).setItemName("A jug full of bubbling green liquid");
 		} else if (code.equals("40013")) {
 			game.setMessage("The water streams out of the jug");
 		} else if (code.substring(0,2).equals("40")) {
 			
-			if (game.getItem(4).getFlag()==-1)  {
+			if (game.getItem(4).getItemFlag()==-1)  {
 				if (player.getRoom()==41 || player.getRoom()==13) {
 					game.setMessage("The jug is already full");
 				}
@@ -879,38 +879,38 @@ public class Commands {
 		
 		//Speaking to the clashing rocks
 		if (noun.toLowerCase().equals("stony words") && player.getRoom()==47 &&
-			game.getItem(8).getFlag()==0) {
+			game.getItem(8).getItemFlag()==0) {
 			game.setMessage("The stones are fixed.");
-			game.getItem(44).setFlag(1);
+			game.getItem(44).setItemFlag(1);
 		}
 		
 		//Speaking to the scavenger -has flowers and pebble
 		if (noun.toLowerCase().equals("remember old times") && 
-			player.getRoom()==game.getItem(42).getLocation() && 
-			game.getItem(3).getLocation()==81 &&
-			game.getItem(12).getLocation()==81) {
+			player.getRoom()==game.getItem(42).getItemLocation() && 
+			game.getItem(3).getItemLocation()==81 &&
+			game.getItem(12).getItemLocation()==81) {
 			game.setMessage("He eats the flowers - and changes");
-			game.getItem(42).setFlag(1);
-			game.getItem(43).setFlag(0);
+			game.getItem(42).setItemFlag(1);
+			game.getItem(43).setItemFlag(0);
 		}
 	}
 	
 	public int rest(Game game, Player player, boolean msgSet) {
 		
 		//Bases time to wait based on Living Storm flag
-		int count = Math.abs(game.getItem(36).getFlag()+3);
+		int count = Math.abs(game.getItem(36).getItemFlag()+3);
 						
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
 			player.reduceTime();
-			if (player.getStrength()<100 || game.getItem(22).getFlag()==(player.getRoom()*-1)) {
+			if (player.getStrength()<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
 				player.adjustStrength(1);
 			}
 		}
 		
-		if (player.getTime()>100 || game.getItem(36).getFlag()<1) {
+		if (player.getTime()>100 || game.getItem(36).getItemFlag()<1) {
 			player.adjustWisdom(2);
-			game.getItem(36).setFlag(1);
+			game.getItem(36).setItemFlag(1);
 		}
 				
 		if (!msgSet) {
@@ -925,20 +925,20 @@ public class Commands {
 	public void wave(Game game,Player player) {
 		
 		//Wave to boatman
-		if (game.getItem(25).checkLocation(player.getRoom())) {
+		if (game.getItem(25).isAtLocation(player.getRoom())) {
 			game.setMessage("The boatman waves back.");
 		}
 		
 		//Wave torch
 		if (code.substring(0,3).equals("700")) {
-			game.getItem(7).setFlag(1);
+			game.getItem(7).setItemFlag(1);
 			game.setMessage("The torch brightens.");
 			
 			if (player.getRoom()==28) {
 				game.addMessage("The hands release you and retreat into the wall.");
 			}
 			
-			game.getItem(7).setDescription("a brightly glowing torch");
+			game.getItem(7).setItemName("a brightly glowing torch");
 			player.adjustWisdom(8);
 		}
 	}
@@ -956,17 +956,17 @@ public class Commands {
 				
 		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
 			
-			if (game.getItem(i).checkLocation(0)) {
+			if (game.getItem(i).isAtLocation(0)) {
 				
 				//Checks the length of the string and adds a break if too long
-				if (itemLength+game.getItem(i).getItem().length()+1>lineLength) {
+				if (itemLength+game.getItem(i).getItemName().length()+1>lineLength) {
 					items = items +"|";
 					itemLength = 0;
 				}
 				
 				//First item recorded
 				if (!hasItem) {
-					items = "|Items: "+game.getItem(i).getItem();
+					items = "|Items: "+game.getItem(i).getItemName();
 					hasItem = true;
 					itemLength = items.length()-1;
 				
@@ -979,8 +979,8 @@ public class Commands {
 						items = items +", ";
 						extraLength = 2;
 					}
-					items = items+game.getItem(i).getItem();
-					itemLength += game.getItem(i).getItem().length()+extraLength;
+					items = items+game.getItem(i).getItemName();
+					itemLength += game.getItem(i).getItemName().length()+extraLength;
 				}
 			}
 		}
@@ -1148,7 +1148,7 @@ public class Commands {
 	public void quit(Player player, Game game) {
 		
 		game.setMessage("You relinquish your quest");
-		game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(-1);
+		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
 		player.setTime(1);
 		game.endGame();
 	}
@@ -1219,5 +1219,6 @@ public class Commands {
  * 28 February 2025 - Removed Stack Trace from Load & Save
  * 3 March 2025 - Added section to remove cloak when destroyed
  * 5 March 2025 - Increased to v4.0
- * 9 March 2025 - Refactored constants
+ * 9 March 2025 - Refactored constant
+ * 10 March 2025 - Updated the setWisdom method by passing boolean
  */

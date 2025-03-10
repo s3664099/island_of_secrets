@@ -86,17 +86,17 @@ public class Game implements Serializable {
 		if (roomNumber == 45) {
 			items = "A tree bristling with apples";
 			count ++;
-		} else if (roomNumber == 27 && itemList[7].getLocation()==27 && itemList[7].getFlag()==9 ) {
+		} else if (roomNumber == 27 && itemList[7].getItemLocation()==27 && itemList[7].getItemFlag()==9 ) {
 			items = "A torch hanging in a bracket on the wall";
 			count ++;
 		} else if (roomNumber == 44) {
 			items = "A coffee table against the wall";
 			count ++;
 			
-			if (itemList[26].getFlag() == 1) {
+			if (itemList[26].getItemFlag() == 1) {
 				items += ", an open oak chest";
 			}
-		} else if (roomNumber == 67 && itemList[14].getLocation() == 67 && itemList[14].getFlag()==9) {
+		} else if (roomNumber == 67 && itemList[14].getItemLocation() == 67 && itemList[14].getItemFlag()==9) {
 			items += "A piece of flint stuck in the crack";
 			count++;
 		} else if (roomNumber == 60 && locationList[roomNumber].getViewed()) {
@@ -108,13 +108,13 @@ public class Game implements Serializable {
 			if(item != null) {
 				
 				//If the items are visible display them.
-				if(item.checkLocation(roomNumber) && item.getFlag()<1) {
+				if(item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
 					
 					count ++;
 					if (count>1) {
-						items = String.format("%s, %s",items,item.getItem());
+						items = String.format("%s, %s",items,item.getItemName());
 					} else {
-						items = String.format("%s %s",items,item.getItem());
+						items = String.format("%s %s",items,item.getItemName());
 					}
 				}
 			}
@@ -177,7 +177,7 @@ public class Game implements Serializable {
 		//Checks the room number, and displays the special location.
 		if (roomNumber == 51) {
 			exit = "There is a door to the east";
-			if (itemList[29].getFlag()!=0) {
+			if (itemList[29].getItemFlag()!=0) {
 				exit += " and a closed trapdoor in the floor";
 			}
 		} else if (roomNumber == 12) {
@@ -272,7 +272,7 @@ public class Game implements Serializable {
 	
 	//Gets the sum of the item's flag and location
 	public int getItemFlagSum(int itemNumber) {
-		return itemList[itemNumber].getFlag() + itemList[itemNumber].getLocation();
+		return itemList[itemNumber].getItemFlag() + itemList[itemNumber].getItemLocation();
 	}
 	
 	//Sets up and gets the panel messages

@@ -196,6 +196,101 @@ The `Constants` class is a **centralized place** for storing fixed values used t
 
 ## **Item**
 
+### **Overview**
+The `Item` class represents an in-game item, including its properties such as name, location, flag, and whether wisdom has been acquired. It is designed to be serializable, allowing the game state to be saved and loaded.
+
+### **Purpose**
+- **Encapsulate Item Data**: Stores and manages data related to in-game items, such as their name, location, and flags.
+- **Support Serialization**: Implements `Serializable` to enable saving and loading of game state.
+- **Provide Utility Methods**: Offers methods to check if an item is at a specific location, update its properties, and retrieve its state.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`itemFlag`**: An integer representing the item’s flag (e.g., properties or state).
+- **`itemLocation`**: An integer representing the item’s current location in the game world.
+- **`itemName`**: A string describing the item’s name or description.
+- **`wisdomAcquired`**: A boolean indicating whether wisdom has been acquired from the item.
+- **Constants**: 
+  - `FLAG_OFFSET`: ASCII value of `'0'`, used for converting flag characters to integers.
+  - `LOCATION_OFFSET`: ASCII value of space, used for converting location characters to integers.
+  - `LOCATION_ADJUSTMENT`: Adjustment value for location values greater than 127.
+  - `ASCII_MAX`: Maximum ASCII value before adjustment is needed.
+
+#### **2. Methods**
+- **Constructor**:
+  - `Item(char flag, char location, String itemName)`: Initializes an item with a flag, location, and name.
+- **Getters and Setters**:
+  - `getItemName()`, `setItemName(String)`: Retrieve or update the item’s name.
+  - `getItemFlag()`, `setItemFlag(int)`: Retrieve or update the item’s flag.
+  - `getItemLocation()`, `setItemLocation(int)`: Retrieve or update the item’s location.
+  - `setWisdomAcquired(boolean)`, `hasWisdomAcquired()`: Set or check whether wisdom has been acquired.
+- **Utility Methods**:
+  - `isAtLocation(int)`: Checks if the item is at a specific location.
+- **`toString()`**:
+  - Provides a string representation of the item for debugging or logging.
+
+### **Usage**
+To use the `Item` class, create an instance with the required parameters and interact with it using the provided methods. For example:
+
+```java
+// Create an item
+Item apple = new Item('1', 'A', "Shiny Apple");
+
+// Check if the item is at a specific location
+if (apple.isAtLocation(10)) {
+    System.out.println("The apple is at location 10.");
+}
+
+// Update the item's location
+apple.setItemLocation(20);
+
+// Check if wisdom has been acquired
+if (apple.hasWisdomAcquired()) {
+    System.out.println("Wisdom has been acquired from the apple.");
+}
+```
+
+### **Best Practices**
+1. **Encapsulation**:
+   - Use the provided getter and setter methods to access or modify the item’s properties.
+2. **Validation**:
+   - Ensure that location and flag values are within valid ranges when setting them.
+3. **Serialization**:
+   - Update the `serialVersionUID` if the class structure changes significantly to avoid compatibility issues during deserialization.
+4. **Debugging**:
+   - Use the `toString()` method for debugging or logging to inspect the item’s state.
+
+### **Example**
+Here’s an example of how the `Item` class might be used in the game:
+
+```java
+// Create an item
+Item torch = new Item('2', 'B', "Flickering Torch");
+
+// Print the item's details
+System.out.println(torch.toString()); // Output: Item{description='Flickering Torch', location=34, flag=2, wisdomGained=false}
+
+// Update the item's location
+torch.setItemLocation(50);
+
+// Check if the item is at a specific location
+if (torch.isAtLocation(50)) {
+    System.out.println("The torch is at location 50.");
+}
+
+// Mark wisdom as acquired
+torch.setWisdomAcquired(true);
+```
+
+### **Why Use This Class?**
+- **Centralized Item Management**: Encapsulates all data and behavior related to in-game items in one place.
+- **Flexibility**: Allows items to be dynamically updated during gameplay (e.g., changing location or flags).
+- **Serialization Support**: Enables saving and loading of game state, ensuring persistence across sessions.
+- **Debugging and Logging**: The `toString()` method provides a convenient way to inspect item states.
+
+---
+
 ## **Location**
 
 ---

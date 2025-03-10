@@ -136,8 +136,8 @@ public class CommandProcess {
 	
 	public String codeCommand(int room, int nounNumber, Item item) {
 		
-		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getLocation()),
-										 Math.abs(item.getFlag()),room);
+		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
+										 Math.abs(item.getItemFlag()),room);
 		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
 		this.codedCommand = codedNoun;
 				
@@ -299,9 +299,9 @@ public class CommandProcess {
 		}
 			
 		//Adjusting flag of living storm
-		if (game.getItem(36).getFlag()<1 && game.getItem(22).getFlag() != -player.getRoom()) {
-			game.getItem(36).setFlag(game.getItem(36).getFlag()+1);
-			game.getItem(36).setLocation(player.getRoom());
+		if (game.getItem(36).getItemFlag()<1 && game.getItem(22).getItemFlag() != -player.getRoom()) {
+			game.getItem(36).setItemFlag(game.getItem(36).getItemFlag()+1);
+			game.getItem(36).setItemLocation(player.getRoom());
 			player.adjustStrength(-1);
 		}
 
@@ -309,47 +309,47 @@ public class CommandProcess {
 
 		//Does the living storm appear
 		if (player.getTime()<900 && player.getRoom()==23 && 
-			game.getItem(36).getFlag()>0 && stormRand ==2) {
-			game.getItem(36).setFlag(-(rand.nextInt(4)+6));
+			game.getItem(36).getItemFlag()>0 && stormRand ==2) {
+			game.getItem(36).setItemFlag(-(rand.nextInt(4)+6));
 			game.addMessage(" A storm breaks overhead!");
 		}
 		
 		//Location of the wild canyon beast
-		if (!game.getItem(16).checkLocation(player.getRoom()) && 
-			game.getItem(16).getLocation()>0) {
-			game.getItem(16).setLocation(rand.nextInt(4)+1);
+		if (!game.getItem(16).isAtLocation(player.getRoom()) && 
+			game.getItem(16).getItemLocation()>0) {
+			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
 		}
 		
 		//Location of Omegan
-		if (!game.getItem(39).checkLocation(player.getRoom())) {
+		if (!game.getItem(39).isAtLocation(player.getRoom())) {
 			int part1 = 10 * (rand.nextInt(5)+1);
 			int part2 = 7 * (rand.nextInt(3)+1);
 			int newLocation = Math.min(part1+part2, 80);
-			game.getItem(39).setLocation(newLocation);
+			game.getItem(39).setItemLocation(newLocation);
 		
 		//Is Omegan with player?
-		} else if (game.getItem(39).checkLocation(player.getRoom()) &&
-				   !game.getItem(43).checkLocation(player.getRoom()) &&
-				   game.getItem(13).getFlag()>-1) {
+		} else if (game.getItem(39).isAtLocation(player.getRoom()) &&
+				   !game.getItem(43).isAtLocation(player.getRoom()) &&
+				   game.getItem(13).getItemFlag()>-1) {
 			player.adjustStrength(-2);
 			player.adjustWisdom(-2);
 		}
 			
 		//Swampman's Position if not with player
-		if (!game.getItem(32).checkLocation(player.getRoom()) && game.getResponse()==0) {
-			game.getItem(32).setLocation(76+rand.nextInt(2));
+		if (!game.getItem(32).isAtLocation(player.getRoom()) && game.getResponse()==0) {
+			game.getItem(32).setItemLocation(76+rand.nextInt(2));
 		}
 		
 		//Swampman with the player?
-		if (game.getItem(32).checkLocation(player.getRoom()) && rand.nextInt(2)==1 &&
-			game.getItem(32).getFlag()==0) {
+		if (game.getItem(32).isAtLocation(player.getRoom()) && rand.nextInt(2)==1 &&
+			game.getItem(32).getItemFlag()==0) {
 			
-			game.getItem(32).setFlag(-1);
+			game.getItem(32).setItemFlag(-1);
 			String swampMan = "The swampman tells his tale";
 			String message = "Median can disable the equipment";
 			int loop = 2;
 			
-			if (game.getItem(8).checkLocation(0)) {
+			if (game.getItem(8).isAtLocation(0)) {
 				message+="|and asks you for the pebble you carry.";
 				loop++;
 			}
@@ -360,28 +360,28 @@ public class CommandProcess {
 		//Does the boatman appear?
 		if ((player.getRoom()==33 || player.getRoom()==57 || player.getRoom()==73) &&
 			rand.nextInt(2)==1) {
-			game.getItem(25).setLocation(player.getRoom());
+			game.getItem(25).setItemLocation(player.getRoom());
 		}
 				
 		//Check if pushed into well
 		if (player.getRoom()==19 && player.getStrength()<70 && 
-			game.getItem(43).getFlag()==0 && rand.nextInt(4)==1) {
+			game.getItem(43).getItemFlag()==0 && rand.nextInt(4)==1) {
 			game.setMessage("Pushed into the pit");
-			game.getItem(Constants.NUMBER_OF_NOUNS).setFlag(1);
+			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		}
 		
 		//Movement of the logmen if player not present
-		if (!game.getItem(41).checkLocation(player.getRoom())) {
-			game.getItem(41).setLocation(21+((rand.nextInt(3)+1)*10)+(rand.nextInt(2)+1));
+		if (!game.getItem(41).isAtLocation(player.getRoom())) {
+			game.getItem(41).setItemLocation(21+((rand.nextInt(3)+1)*10)+(rand.nextInt(2)+1));
 		} else {
-			game.getItem(41).setFlag(game.getItem(41).getFlag()-1);
+			game.getItem(41).setItemFlag(game.getItem(41).getItemFlag()-1);
 			
 			//Upset the logmen
-			if (game.getItem(41).getFlag()<-4) {
+			if (game.getItem(41).getItemFlag()<-4) {
 				
 				String message = "The Logmen decide to have a little fun and";
 				String messageTwo = "tie you up in a storeroom";
-				game.getItem(41).setFlag(0);
+				game.getItem(41).setItemFlag(0);
 				player.adjustStrength(-4);
 				player.adjustWisdom(-4);
 				
@@ -398,21 +398,21 @@ public class CommandProcess {
 				
 				//Do you lose items
 				for (int i=3;i<5;i++) {
-					if (game.getItem(i).getLocation()==0) {
-						game.getItem(i).setLocation(42);
+					if (game.getItem(i).getItemLocation()==0) {
+						game.getItem(i).setItemLocation(42);
 					}
 				}
 			}
 		}
 		
 		//Move Median to player location is condition correct
-		if (game.getItem(43).getFlag()==0) {
-			game.getItem(43).setLocation(player.getRoom());
+		if (game.getItem(43).getItemFlag()==0) {
+			game.getItem(43).setItemLocation(player.getRoom());
 		}
 		
 		//Replays notice re: Median
-		if (game.getItem(43).getLocation()<18 && player.getRoom() != 9 && 
-			player.getRoom() != 10 && game.getItem(49).getFlag()<1) {
+		if (game.getItem(43).getItemLocation()<18 && player.getRoom() != 9 && 
+			player.getRoom() != 10 && game.getItem(49).getItemFlag()<1) {
 			
 			String messageOne = "Median can disable the equipment";
 			player.setPanelFlag(3);
@@ -429,19 +429,19 @@ public class CommandProcess {
 		if (player.getStrength()-player.getWeight()<50) {
 			int object = rand.nextInt(9)+1;
 			
-			if (game.getItem(object).checkLocation(0)) {
-				game.getItem(object).setLocation(player.getRoom());
+			if (game.getItem(object).isAtLocation(0)) {
+				game.getItem(object).setItemLocation(player.getRoom());
 				game.addMessage(" You drop something.");
 			}
 		}
 				
 		//Near the clashing stones
-		if (player.getRoom()==47 && game.getItem(8).getFlag()>0) {
+		if (player.getRoom()==47 && game.getItem(8).getItemFlag()>0) {
 			game.addMessage(" You can go no further");
 		}
 		
 		//Involving staff, pebble & coal - seems like a win condition
-		if (game.getItem(8).getFlag()+game.getItem(11).getFlag()+game.getItem(13).getFlag()==-3) {
+		if (game.getItem(8).getItemFlag()+game.getItem(11).getItemFlag()+game.getItem(13).getItemFlag()==-3) {
 			
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";
@@ -452,7 +452,7 @@ public class CommandProcess {
 		}
 		
 		//Fail Quest conditions
-		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getFlag()==1) {
+		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.");
 			game.endGame();
 		}
@@ -465,9 +465,9 @@ public class CommandProcess {
 		boolean alreadyMessage = false;
 		
 		if (subject.length()==0) {
-			String itemName = game.getItem(objNumber).getItem();
+			String itemName = game.getItem(objNumber).getItemName();
 			game.setMessage("Please enter who you will be giving the "+itemName+" to.");
-		} else if (player.getRoom() != game.getItem(objNumber).getLocation()) {
+		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
 			game.setMessage("The "+subject+" is not here.");
 		} else {
 			
@@ -475,21 +475,21 @@ public class CommandProcess {
 			
 			//Removes the snake from the hut by giving it an apple
 			if (codedNoun.equals("10045") && objNumber==40) {
-				game.getItem(nounNumber).setLocation(81);
-				game.getItem(objNumber).setFlag(1);
+				game.getItem(nounNumber).setItemLocation(81);
+				game.getItem(objNumber).setItemFlag(1);
 				game.setMessage("The snake uncoils");
 			
 			//Giving water to a villager (but must have some drink)
 			} else if (codedNoun.equals("2413075") && objNumber==30 && player.getDrink()>1) {
 
-				if (game.getItem(11).getFlag() != 0) {
+				if (game.getItem(11).getItemFlag() != 0) {
 					game.setMessage("He drinks the water and offers his staff");
-					game.getItem(30).setDescription("A villager");
+					game.getItem(30).setItemName("A villager");
 				} else {
 					game.setMessage("He drinks the water");
 				}
 				
-				game.getItem(11).setFlag(0);
+				game.getItem(11).setItemFlag(0);
 				player.adjustDrink(1);
 			} else {
 				
@@ -498,26 +498,26 @@ public class CommandProcess {
 					 codedNoun.substring(0,3).equals("120")) &&
 					 objNumber == 42) {
 					player.setWisdom(player.getWisdom()+10);
-					game.getItem(nounNumber).setLocation(81);
+					game.getItem(nounNumber).setItemLocation(81);
 				
 				//Give jug to swampman
 				} else if (codedNoun.substring(0,2).equals("40") && 
-						   game.getItem(4).getFlag()<0 && objNumber == 32) {
-					game.getItem(objNumber).setFlag(1);
-					game.getItem(nounNumber).setLocation(81);
+						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
+					game.getItem(objNumber).setItemFlag(1);
+					game.getItem(nounNumber).setItemLocation(81);
 					game.setMessage("The Swampman takes the jug and leaves");
 					alreadyMessage = true;
 				
 				//Give pebble to Median
 				} else if (codedNoun.substring(0,2).equals("80") &&
 						   objNumber == 43) {
-					game.getItem(nounNumber).setLocation(81);
+					game.getItem(nounNumber).setItemLocation(81);
 					player.setPanelFlag(3);
-					game.getItem(8).setFlag(-1);
+					game.getItem(8).setItemFlag(-1);
 
 					//Removes Median from Game
-					game.getItem(43).setLocation(81);
-					game.getItem(43).setFlag(1);
+					game.getItem(43).setItemLocation(81);
+					game.getItem(43).setItemFlag(1);
 					
 					if (player.getRoom()==8) {
 						game.setPanelMessages("He takes it ...", 
@@ -533,14 +533,14 @@ public class CommandProcess {
 				}
 				
 				//Successfully given
-				if (game.getItem(nounNumber).getLocation() == 81 && !alreadyMessage) {
+				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
 					game.setMessage("It is accepted");
 				}
 				
 				//Giving to logmen
 				if (objNumber == 41) {
 					game.setMessage("It is taken");
-					game.getItem(nounNumber).setLocation(51);
+					game.getItem(nounNumber).setItemLocation(51);
 				}
 			}
 		}
@@ -549,7 +549,7 @@ public class CommandProcess {
 	public void executeShelter(Game game, Player player, int location) {
 		
 		player.setRoom(location);
-		game.getItem(22).setFlag(-location);
+		game.getItem(22).setItemFlag(-location);
 		game.addMessage("You reach shelter.");
 		game.setPanelMessages("You blindly run through the storm","",1);
 
