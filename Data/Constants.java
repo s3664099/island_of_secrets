@@ -39,4 +39,5 @@ public class Constants {
  * 15 January 2025  - Added a constant for the line length
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
+ * 9 March 2025 - Updated code based on recommendations
 */
