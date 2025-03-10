@@ -198,7 +198,93 @@ The `Constants` class is a **centralized place** for storing fixed values used t
 
 ## **Location**
 
-## **RawData**      
+---
+
+## **RawData Class**
+
+### **Overview**
+The `RawData` class is a **data repository** that stores and provides access to static game data, such as locations, objects, verbs, nouns, and other configuration values. It serves as a centralized place for all hardcoded game data, making it easier to manage and update.
+
+### **Purpose**
+- **Centralized Data Storage**: Stores all static game data in one place for easy access and maintenance.
+- **Data Retrieval**: Provides methods to retrieve specific data (e.g., locations, objects, verbs) based on input parameters.
+- **Error Handling**: Includes input validation to prevent runtime errors when accessing data.
+
+### **Key Components**
+
+#### **1. Data Arrays**
+- **`LOCATION_TYPES`**: Maps each location to a type (e.g., forest, cave, factory).
+- **`LOCATION_IMAGE`**: Stores the image names associated with each location type.
+- **`LOCATIONS`**: Contains descriptions and metadata for each game location.
+- **`OBJECTS`**: Lists all objects in the game, including carriable items, food, and drink.
+- **`VERBS`**: Defines the actions players can perform.
+- **`NOUNS`**: Lists the objects or directions players can interact with.
+- **`ITEM_LOCATION`**: Encodes the location of each item in the game.
+- **`ITEM_FLAG`**: Encodes flags or properties for each item.
+- **`PREPOSITIONS`**: Lists prepositions used in the game (e.g., "by", "in", "on").
+
+#### **2. Methods**
+- **`getLocation(int number)`**: Retrieves the description of a specific location.
+- **`getImage(int number)`**: Retrieves the image name for a specific location type.
+- **`getObjects(int number)`**: Retrieves the description of a specific object.
+- **`getPrepositions()`**: Returns the list of prepositions.
+- **`getItemLocation(int number)`**: Retrieves the location code for a specific item.
+- **`getItemFlag(int number)`**: Retrieves the flag for a specific item.
+- **`getVerbs()`**: Returns the list of verbs.
+- **`getNouns()`**: Returns the list of nouns.
+
+### **Usage**
+
+#### **Accessing Data**
+To retrieve data from the `RawData` class, use the provided static methods. For example:
+
+```java
+// Get the description of location 5
+String location = RawData.getLocation(5);
+
+// Get the image name for location type 2
+String image = RawData.getImage(2);
+
+// Get the description of object 10
+String object = RawData.getObjects(10);
+
+// Get the list of verbs
+String[] verbs = RawData.getVerbs();
+```
+
+#### **Error Handling**
+All methods include input validation to ensure the input `number` is within the valid range. If the input is invalid, an `IllegalArgumentException` is thrown with a descriptive error message.
+
+### **Best Practices**
+1. **Avoid Modifying Data**:
+   - All fields are `private` and `final`, meaning they cannot be modified after initialization. This ensures data integrity.
+2. **Use Constants**:
+   - When accessing data, use constants or enums (if available) to avoid hardcoding indices.
+3. **Extend with External Data**:
+   - If the game grows in complexity, consider moving hardcoded data to external files (e.g., JSON or XML) for easier maintenance.
+
+### **Example**
+Here’s an example of how the `RawData` class might be used in the game:
+
+```java
+// Retrieve and display location information
+int locationId = 5;
+String locationDescription = RawData.getLocation(locationId);
+String locationImage = RawData.getImage(locationId);
+System.out.println("Location: " + locationDescription);
+System.out.println("Image: " + locationImage);
+
+// Retrieve and display object information
+int objectId = 10;
+String objectDescription = RawData.getObjects(objectId);
+System.out.println("Object: " + objectDescription);
+```
+
+### **Why Use This Class?**
+- **Centralized Data Management**: All game data is stored in one place, making it easy to update and maintain.
+- **Improved Code Quality**: Reduces the risk of errors caused by hardcoding data in multiple places.
+- **Scalability**: Makes it easier to add new data or extend the game in the future.
+
 
 ### Model
 
