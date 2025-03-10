@@ -14,7 +14,7 @@ import View.GameFrame;
 
 public class Main {
 	
-	public void startGame() {
+	public void startGame()  {
 
 		try {
 			
@@ -28,7 +28,7 @@ public class Main {
 				try {
 					new GameFrame(game);
 				} catch (Exception e) {
-					throw new RuntimeException("Failed to launch game UI: "+e.getMessage());
+					throw new RuntimeException("Main - Failed to launch game UI: "+e.getMessage());
 				}
 			});
 

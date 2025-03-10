@@ -59,13 +59,11 @@ public class Game implements Serializable {
 		for (int itemNumber=1;itemNumber<noItems+1;itemNumber++) {
 			
 			String item = "";
-			
+						
 			if(itemNumber<=Constants.NUMBER_OF_ITEMS) {
 				item = RawData.getObjects(itemNumber);
 			}
-			
-			//System.out.printf("%s %s %s %s%n",item, RawData.getItemLocation(itemNumber),RawData.getItemFlag(itemNumber),itemNumber);
-			
+						
 			Item newItem = new Item(RawData.getItemFlag(itemNumber),
 									RawData.getItemLocation(itemNumber),
 									item);			

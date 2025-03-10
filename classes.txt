@@ -107,13 +107,13 @@ If you need to start a new chat and want to provide the necessary context about 
 
 ## **ShelterButton**     
 
-### Data
+
 
  
 
 
 
-## **Location**
+
 
     
 
@@ -499,156 +499,7 @@ The `Item` class represents an item in the game. It stores information about the
 
 
 
-## **Location**
 
-### **Overview**
-
-### **Key Responsibilities**
-1. Stores information about a location, including its name, exits, visitation status, and type.
-2. Parses the location name to determine available exits.
-3. Tracks whether the location has been visited or viewed.
-4. Supports serialization for saving and loading game states.
-
-### **Constructor**
-- **`Location(String name, String[] prepositions, String roomType)`**
-  - Initializes a `Location` object with the provided `name`, `prepositions`, and `roomType`.
-  - Parses the `name` string to extract the preposition and determine the available exits.
-  - The `name` string is expected to have a specific format:
-    - The first character represents an index into the `prepositions` array.
-    - The last four characters represent the exits (e.g., `"0"` for an open exit, other values for closed exits).
-  - Sets the `roomType` and initializes the `exits` array based on the parsed data.
-
-### **Methods**
-1. **`getName()`**
-   - Returns the formatted name of the location.
-
-2. **`getExits()`**
-   - Returns an array of booleans representing the available exits.
-
-3. **`setVisited()`**
-   - Marks the location as visited.
-
-4. **`getVisited()`**
-   - Returns whether the location has been visited.
-
-5. **`setViewed()`**
-   - Marks the location as viewed.
-
-6. **`getViewed()`**
-   - Returns whether the location has been viewed.
-
-7. **`getRoomType()`**
-   - Returns the type of the room.
-
-### **Potential Flaws and Possible Changes**
-
-#### **1. Magic Numbers and String Manipulation**
-- The constructor uses hardcoded indices (`0`, `1`, `name.length()-4`) for string manipulation, which makes the code less readable and maintainable.
-- **Change**: Replace magic numbers with named constants:
-  ```java
-  private static final int PREPOSITION_INDEX = 0;
-  private static final int EXIT_START_INDEX = name.length() - 4;
-  ```
-
-#### **2. Lack of Input Validation**
-- The constructor does not validate the input parameters (e.g., `name`, `prepositions`, `roomType`). Invalid input could lead to runtime errors.
-- **Change**: Add validation:
-  ```java
-  if (name == null || name.length() < 5) {
-      throw new IllegalArgumentException("Invalid name format");
-  }
-  if (prepositions == null || prepositions.length == 0) {
-      throw new IllegalArgumentException("Prepositions array cannot be null or empty");
-  }
-  ```
-
-#### **3. Inefficient String Parsing**
-- The constructor uses `substring` multiple times to parse the `name` string, which can be inefficient.
-- **Change**: Use a single `substring` call:
-  ```java
-  String exitString = name.substring(name.length() - 4);
-  ```
-
-#### **4. Immutable Fields**
-- The `name` and `roomType` fields are not `final`, meaning they can be modified after object creation.
-- **Change**: Make them `final` if they should not change after initialization.
-
-#### **5. Boolean Array for Exits**
-- The `exits` array uses a boolean to represent each exit, which limits flexibility (e.g., cannot represent different types of exits).
-- **Change**: Use an `enum` to represent exit types:
-  ```java
-  public enum ExitType {
-      OPEN,
-      CLOSED,
-      LOCKED
-  }
-  private ExitType[] exits = new ExitType[4];
-  ```
-
-### **Improved Version of the Class**
-```java
-import java.io.Serializable;
-
-public class Location implements Serializable {
-
-    private static final long serialVersionUID = 7421397108414613755L;
-
-    private static final int PREPOSITION_INDEX = 0;
-    private static final int EXIT_START_INDEX = 4;
-
-    private final String name;
-    private final boolean[] exits = new boolean[4];
-    private boolean visited = false;
-    private boolean viewed = false;
-    private final String roomType;
-
-    public Location(String name, String[] prepositions, String roomType) {
-        if (name == null || name.length() < 5) {
-            throw new IllegalArgumentException("Invalid name format");
-        }
-        if (prepositions == null || prepositions.length == 0) {
-            throw new IllegalArgumentException("Prepositions array cannot be null or empty");
-        }
-
-        int prepIndex = Integer.parseInt(name.substring(PREPOSITION_INDEX, PREPOSITION_INDEX + 1)) - 1;
-        this.name = String.format("%s %s", prepositions[prepIndex], name.substring(1, name.length() - EXIT_START_INDEX));
-        this.roomType = roomType;
-
-        String exitString = name.substring(name.length() - EXIT_START_INDEX);
-        for (int i = 0; i < exits.length; i++) {
-            exits[i] = exitString.charAt(i) == '0';
-        }
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public boolean[] getExits() {
-        return this.exits.clone();
-    }
-
-    public void setVisited() {
-        this.visited = true;
-    }
-
-    public boolean getVisited() {
-        return this.visited;
-    }
-
-    public void setViewed() {
-        this.viewed = true;
-    }
-
-    public boolean getViewed() {
-        return this.viewed;
-    }
-
-    public String getRoomType() {
-        return this.roomType;
-    }
-}
-```
 
 
 ### Model Package

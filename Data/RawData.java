@@ -192,7 +192,7 @@ public class RawData {
 	public static String getLocation(int number) {
 		
 		if (number<0 || number >= LOCATIONS.length) {
-			throw new IllegalArgumentException("Invalid location number: "+number);
+			throw new IllegalArgumentException("Raw Data - Invalid location number: "+number);
 		}
 		
 		return LOCATIONS[number];
@@ -201,16 +201,16 @@ public class RawData {
 	public static String getImage(int number) {
 		
 		if (number<0 || number >= LOCATION_TYPES.length) {
-			throw new IllegalArgumentException("Invalid location type number: "+number);
+			throw new IllegalArgumentException("Raw Data - Invalid location type number: "+number);
 		}
 		
 		return LOCATION_IMAGE[LOCATION_TYPES[number]-1];
 	}
 	
 	public static String getObjects(int number) {
-		
-		if (number<0 || number >= OBJECTS.length) {
-			throw new IllegalArgumentException("Invalid object number: "+number);
+				
+		if (number<0 || number >= OBJECTS.length+1) {
+			throw new IllegalArgumentException("Raw Data - Invalid object number: "+number);
 		}
 		
 		return OBJECTS[number-1];
@@ -223,7 +223,7 @@ public class RawData {
 	public static char getItemLocation(int number) {
 		
 		if (number<0 || number >= ITEM_LOCATION.length()) {
-			throw new IllegalArgumentException("Invalid object location number: "+number);
+			throw new IllegalArgumentException("Raw Data - Invalid object location number: "+number);
 		}
 		
 		return ITEM_LOCATION.charAt(number-1);
@@ -232,7 +232,7 @@ public class RawData {
 	public static char getItemFlag(int number) {
 		
 		if (number<0 || number >= ITEM_FLAG.length()) {
-			throw new IllegalArgumentException("Invalid object flag number: "+number);
+			throw new IllegalArgumentException("Raw Data - Invalid object flag number: "+number);
 		}		
 		
 		return ITEM_FLAG.charAt(number-1);
@@ -267,4 +267,6 @@ public class RawData {
  * 11 February 2025 - Fixed incorrect images on map
  * 5 March 2025 - Increased to v4.0
  * 10 March 2025 - Updated code as recommended by DeepSeek
+ * 				 - Added reference to location of exception
+ * 				 - Fix problem with error preventing objects
 */

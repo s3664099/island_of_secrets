@@ -16,7 +16,7 @@ public class Constants {
 
     // Prevent instantiation (private constructor)
     private Constants() {
-        throw new UnsupportedOperationException("Utility class");
+        throw new UnsupportedOperationException("Constants - Utility class");
     }
 	
 	//Game related constants
