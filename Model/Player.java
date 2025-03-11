@@ -2,14 +2,16 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 11 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import Data.Constants;
@@ -19,16 +21,24 @@ public class Player implements Serializable {
 	private static final long serialVersionUID = 495300605316911022L;
 	private int room = 23;
 	private int roomToDisplay = this.room;
-	private float strength = 100;
-	private int wisdom = 35;
-	private int timeRemaining = 1000;
-	private int weight = 0;
-	private int food = 2;
-	private int drink = 2;
-	private Random rand = new Random();
+	private final Map<String,Object> stats = new HashMap<>();
+	private final Random rand = new Random();
 	private int panelFlag = 0;
 	private int swimming = 0;
 	private int swimPosition = 0;
+		
+	private static final int RANDOM_ROOM_TRIGGER = 20;
+	
+	public Player() {
+		
+		//Initialize Stats
+		stats.put("strength", 100.0f);
+		stats.put("wisdom", 35);
+		stats.put("timeRemaining",1000);
+		stats.put("weight", 0);
+		stats.put("food",2);
+		stats.put("drink", 2);
+	}
 	
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
@@ -38,24 +48,29 @@ public class Player implements Serializable {
 		
 		this.roomToDisplay = this.room;
 		
-		if (this.room == 20) {
+		if (this.room == RANDOM_ROOM_TRIGGER) {
 			this.roomToDisplay = rand.nextInt(Constants.NUMBER_OF_ROOMS-1)+1;
 		}
 		
 		return this.roomToDisplay;
 	}
 	
-	public String getStatus() {
-		return String.format("Strength: %.2f         wisdom: %d", this.strength,this.wisdom);
+	public String toStringStatus() {
+		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
 	}
 	
-	public void update() {
-		this.timeRemaining --;
-		this.strength = (float) (this.strength-(this.weight/Constants.NUMBER_OF_ITEMS+.1));
+	public void turnUpdateStats() {
+		
+		int timeRemaining = (int) stats.get("timeRemaining");
+		stats.put("timeRemaining", timeRemaining-1);
+		
+		float strength = getStrength();
+		int weight = (int) stats.get("weight");
+		stats.put("strength", strength - (weight/Constants.NUMBER_OF_ITEMS+0.1f));
 	}
 		
 	public float getStrengthWisdon() {
-		return this.strength+this.wisdom;
+		return getStrength()+getWisdom();
 	}
 
 	//Getters & Setters
@@ -63,24 +78,33 @@ public class Player implements Serializable {
 		return this.room;
 	}
 	
-	public void setRoom(int newRoom) {
-		this.room = newRoom;
+	public void setRoom(int room) {
+		this.room = room;
 	}
 	
 	//Time getter/setter
-	public String getTimeDetails() {
-		return String.format("Time Remaining: %d",this.timeRemaining);
+	public String toStringTimeRemaining() {
+		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
 	}
 	
-	public int getTime() {
-		return this.timeRemaining;
+	public Object getStat(String statName) {
+		return stats.get(statName);
 	}
 	
+	public void setStat(String statName,Object value) {
+		stats.put(statName,value);
+	}
+		
 	public void reduceTime() {
 		this.timeRemaining--;
 	}
 	
 	public void setTime(int newTime) {
+		
+		if (newTime<0) {
+			throw new IllegalArgumentException("Player - Time cannot be negative");
+		}
+		
 		this.timeRemaining = newTime;
 	}
 
@@ -90,6 +114,7 @@ public class Player implements Serializable {
 	}
 
 	public void setWisdom(int newWisdom) {
+		
 		this.wisdom = newWisdom;
 	}
 	
@@ -147,6 +172,11 @@ public class Player implements Serializable {
 	 * 		2 - Lightning Flashes 
 	 */
 	public void setPanelFlag(int panelFlag) {
+		
+		if (panelFlag<0) {
+			throw new IllegalArgumentException("Player - Panel Flag Cannot be less than 0");
+		}
+		
 		this.panelFlag = panelFlag;
 	}
 	
@@ -195,4 +225,5 @@ public class Player implements Serializable {
  * 31 January 2025 - Completed Testing and increased version
  * 1 February 2025 - Added serializable ID and removed unused variables.
  * 5 March 2025 - Increased to v4.0
+ * 11 March 2025 - Fixed issues and moved stats to a map
  */

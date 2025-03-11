@@ -2,7 +2,7 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
+Version: 4.1
 Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -35,11 +35,11 @@ public class GameEngine {
 	}
 		
 	public String getTime() {
-		return player.getTimeDetails();
+		return player.toStringTimeRemaining();
 	}
 	
 	public String getStatus() {
-		return player.getStatus();
+		return player.toStringStatus();
 	}
 	
 	public String getRoom() {
@@ -171,7 +171,7 @@ public class GameEngine {
 				nounNumber = Constants.NUMBER_OF_NOUNS;
 			}
 		
-			this.player.update();
+			this.player.turnUpdateStats();
 			Item item = this.game.getItem(nounNumber);
 			String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 			processCommands.executeCommand(this.game, player, nounNumber);
@@ -289,9 +289,8 @@ public class GameEngine {
 	}
 	
 	public int getFinalScore() {
-		
-		boolean timeBonus = player.getTime()<640;
-		double timeScore = player.getTime()/7.0;
+		boolean timeBonus = (int) player.getStat("timeRemaining")<640;
+		double timeScore = (int) player.getStat("timeRemaining")/7.0;
 		double applyTimeBonus = timeBonus ? -timeScore:0;
 		return (int) ((int) player.getStrength()+player.getWisdom()+applyTimeBonus);
 	}
@@ -392,4 +391,5 @@ public class GameEngine {
 23 February 2025 - Fixed surfacing for the swimming in poisoned waters
 3 March 2025 - Added call to focus on command line
 5 March 2025 - Increased to v4.0
+11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
 */

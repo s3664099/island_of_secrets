@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 10 March 2025
+Version: 4.3
+Date: 11 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -908,7 +908,7 @@ public class Commands {
 			}
 		}
 		
-		if (player.getTime()>100 || game.getItem(36).getItemFlag()<1) {
+		if ((int) player.getStat("timeRemaining")>100 || game.getItem(36).getItemFlag()<1) {
 			player.adjustWisdom(2);
 			game.getItem(36).setItemFlag(1);
 		}
@@ -1221,4 +1221,5 @@ public class Commands {
  * 5 March 2025 - Increased to v4.0
  * 9 March 2025 - Refactored constant
  * 10 March 2025 - Updated the setWisdom method by passing boolean
+ * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats
  */

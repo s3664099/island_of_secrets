@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 11 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -308,7 +308,7 @@ public class CommandProcess {
 		int stormRand = rand.nextInt(3);
 
 		//Does the living storm appear
-		if (player.getTime()<900 && player.getRoom()==23 && 
+		if ((int) player.getStat("timeRemaining")<900 && player.getRoom()==23 && 
 			game.getItem(36).getItemFlag()>0 && stormRand ==2) {
 			game.getItem(36).setItemFlag(-(rand.nextInt(4)+6));
 			game.addMessage(" A storm breaks overhead!");
@@ -452,7 +452,7 @@ public class CommandProcess {
 		}
 		
 		//Fail Quest conditions
-		if (player.getTime()<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
+		if ((int) player.getStat("timeRemaining")<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.");
 			game.endGame();
 		}
@@ -611,4 +611,5 @@ public class CommandProcess {
  * 28 February 2025 - Removed Median after giving him the stone
  * 3 March 2025 - Added code to include weight in calculation for dropping items.
  * 5 March 2025 - Increased to v4.0
+ * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
  */
