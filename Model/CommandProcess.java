@@ -426,7 +426,7 @@ public class CommandProcess {
 		}
 		
 		//Too weak to carry something
-		if (((float) player.getStat("strength"))-player.getWeight()<50) {
+		if (((float) player.getStat("strength"))-((int) player.getStat("weight"))<50) {
 			int object = rand.nextInt(9)+1;
 			
 			if (game.getItem(object).isAtLocation(0)) {
@@ -612,5 +612,5 @@ public class CommandProcess {
  * 3 March 2025 - Added code to include weight in calculation for dropping items.
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
- * 12 March 2025 - Updated wisdom & strength for use with hash map
+ * 12 March 2025 - Updated wisdom, strength & weight for use with hash map
  */

@@ -91,38 +91,7 @@ public class Player implements Serializable {
 		stat --;
 		stats.put(statName, stat);
 	}
-	
-	//Strength getter/setter
-	/*
-	public float getStrength() {
-		return (float) stats.get("strength");
-	}
-
-	public void setStrength(Object newStrength) {
-		stats.set("strength",newStrength);
-	}
-	
-	public void adjustStrength(float change) {
 		
-		float strength = (float) stats.get("strength");
-		
-		this.strength += change;
-	}
-	*/
-	
-	//Weight getter/setter
-	public int getWeight() {
-		return this.weight;
-	}
-	
-	public void setWeight(int newWeight) {
-		this.weight = newWeight;
-	}
-	
-	public void adjustWeight(int change) {
-		this.weight += change;
-	}
-	
 	//Food getter/setter
 	public void adjustFood(int change) {
 		this.food += change;
@@ -211,5 +180,5 @@ public class Player implements Serializable {
  * 1 February 2025 - Added serializable ID and removed unused variables.
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Fixed issues and moved stats to a map
- * 12 March 2025 - Removed timeRemaining stats. Removed wisdom getters & setters
+ * 12 March 2025 - Removed timeRemaining stats. Removed wisdom, strength, weight getters & setters
  */

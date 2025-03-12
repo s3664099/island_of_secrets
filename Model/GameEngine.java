@@ -201,7 +201,7 @@ public class GameEngine {
 				this.game.setMessage("I do not understand");
 			}
 			
-			float strengthAdj = (float) ((player.getWeight()/Constants.NUMBER_OF_NOUNS+0.1)-3);
+			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
 			player.setStat("strength",strengthAdj);
 			
 			if (player.checkPosition()) {
@@ -393,5 +393,5 @@ public class GameEngine {
 3 March 2025 - Added call to focus on command line
 5 March 2025 - Increased to v4.0
 11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
-12 March 2025 - Updated code to use the hashmap for wisdom & strength
+12 March 2025 - Updated code to use the hashmap for wisdom, strength & weight
 */

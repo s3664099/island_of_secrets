@@ -190,7 +190,7 @@ public class Commands {
 			if (player.getRoom()==45 && game.checkApples() && noun==1) {
 				player.adjustFood(1);
 				game.setMessage("You pick an apple from the tree");
-				player.setWeight(player.getWeight()+1);
+				player.setStat("weight",((int) player.getStat("weight"))+1);
 			} else if (player.getRoom()==45 && noun ==1) {
 				game.setMessage("There are no more apples within reach");
 			} else if (player.getRoom()==27 && noun == 7) {
@@ -270,7 +270,7 @@ public class Commands {
 							game.getItem(noun).setWisdomAcquired(true);
 						}
 						
-						player.setWeight(player.getWeight()+1);
+						player.setStat("weight",((int) player.getStat("weight"))+1);
 						
 						if (game.getItem(noun).getItemFlag()>1) {
 							game.getItem(noun).setItemFlag(0);
@@ -337,7 +337,7 @@ public class Commands {
 		if (noun == 4 && game.getItem(noun).getItemLocation()==0 && verb==9) {
 			game.getItem(noun).setItemLocation(81);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-			player.setWeight(player.getWeight()-1);
+			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.setMessage("It breaks!");
 		
 		//Dropping a brightly glowing torch
@@ -355,7 +355,7 @@ public class Commands {
 		} else {
 			if (game.getItem(noun).getItemLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
 				game.getItem(noun).setItemLocation(player.getRoom());
-				player.setWeight(player.getWeight()-1);
+				player.setStat("weight",((int) player.getStat("weight"))-1);
 				game.setMessage("Done");
 				
 				//Dropping the beast
@@ -1222,5 +1222,5 @@ public class Commands {
  * 9 March 2025 - Refactored constant
  * 10 March 2025 - Updated the setWisdom method by passing boolean
  * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats\
- * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom & strength for hashmap.
+ * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom, strength & weight for hashmap.
  */
