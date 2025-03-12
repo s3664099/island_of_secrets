@@ -60,13 +60,13 @@ public class Player implements Serializable {
 		int timeRemaining = (int) stats.get("timeRemaining");
 		stats.put("timeRemaining", timeRemaining-1);
 		
-		float strength = getStrength();
+		float strength = (float) stats.get("strength");
 		int weight = (int) stats.get("weight");
 		stats.put("strength", strength - (weight/Constants.NUMBER_OF_ITEMS+0.1f));
 	}
 		
 	public float getStrengthWisdon() {
-		return getStrength()+((int) getStat("wisdom"));
+		return ((float) stats.get("strength"))+((int) getStat("wisdom"));
 	}
 
 	//Getters & Setters
@@ -93,17 +93,22 @@ public class Player implements Serializable {
 	}
 	
 	//Strength getter/setter
+	/*
 	public float getStrength() {
-		return this.strength;
+		return (float) stats.get("strength");
 	}
 
-	public void setStrength(float newStrength) {
-		this.strength = newStrength;
+	public void setStrength(Object newStrength) {
+		stats.set("strength",newStrength);
 	}
 	
 	public void adjustStrength(float change) {
+		
+		float strength = (float) stats.get("strength");
+		
 		this.strength += change;
 	}
+	*/
 	
 	//Weight getter/setter
 	public int getWeight() {

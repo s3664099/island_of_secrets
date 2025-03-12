@@ -204,7 +204,7 @@ public class Commands {
 			//Evil books in library
 			if (this.code.equals("3450050")) {
 				player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-				player.setStrength(player.getStrength()-8);
+				player.setStat("strength",(float) player.getStat("strength")-8);
 				game.setMessage("They are cursed");
 			} else {
 				
@@ -216,7 +216,7 @@ public class Commands {
 					
 					game.getItem(39).setItemLocation(player.getRoom());
 					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
-					player.setStrength(player.getStrength()-8);
+					player.setStat("strength",(float) player.getStat("strength")-8);
 					player.setPanelFlag(2);
 				}
 				
@@ -379,7 +379,7 @@ public class Commands {
 		//Eating lillies (moved here since in original game code wouldn't reach)
 		if (noun == 3 && game.getItem(3).getItemLocation()==0) {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-			player.adjustStrength(-2);
+			player.setStat("strength",(float) player.getStat("strength")-2);
 			game.setMessage("They make you very ill");
 		
 		//Item unedible
@@ -394,7 +394,7 @@ public class Commands {
 			
 			if (player.getFood()>0) {
 				player.adjustFood(-1);
-				player.adjustStrength(10);
+				player.setStat("strength",(float) player.getStat("strength")+10);
 				game.setMessage("Ok");
 			}
 		}
@@ -409,7 +409,7 @@ public class Commands {
 				game.setMessage("You don't have "+game.getItem(noun).getItemName());
 			} else {
 				game.setMessage("Ouch!");
-				player.adjustStrength(-4);
+				player.setStat("strength",(float) player.getStat("strength")-4);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-7);
 				player.setPanelFlag(3);
 				
@@ -429,7 +429,7 @@ public class Commands {
 			game.setMessage("You have no drink.");
 			if (player.getDrink()>0) {
 				player.adjustDrink(-1);
-				player.adjustStrength(7);
+				player.setStat("strength",(float) player.getStat("strength")+7);
 				game.setMessage("Ok");
 			}
 		}
@@ -471,7 +471,7 @@ public class Commands {
 	
 	public void chip(Game game,Player player) {
 		
-		player.adjustStrength(-2);
+		player.setStat("strength",(float) player.getStat("strength")-2);
 		game.setMessage("Nothing happens");
 
 		//Carrying Hammer or Axe
@@ -509,7 +509,7 @@ public class Commands {
 				game.getItem(39).setItemLocation(81);
 				game.getItem(2).setItemLocation(2);
 				game.getItem(2).setItemFlag(-1);
-				player.adjustStrength(40);
+				player.setStat("strength",(float) player.getStat("strength")+40);
 			}
 		
 		//Response if player uses the staff without meeting the conditions above
@@ -536,7 +536,7 @@ public class Commands {
 	public void kill(Player player, Game game) {
 		
 		//Take a hit even if the object isn't present
-		player.adjustStrength(-12);
+		player.setStat("strength",(float) player.getStat("strength")-12);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 		game.setMessage("That would be unwise");
 		
@@ -547,7 +547,7 @@ public class Commands {
 			game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
 					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
 							+ " end.|I claim you as my own!|Ha Ha Hah!",6);
-			player.setStrength(0);
+			player.setStat("strength",0);
 			player.setStat("wisdom",0);
 			player.setStat("timeRemaining",0);
 			game.endGame();	
@@ -558,7 +558,7 @@ public class Commands {
 		
 		game.setMessage("That would be unwise");
 		
-		player.adjustStrength(-2);
+		player.setStat("strength",(float) player.getStat("strength")-2);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		
 		if (game.getItem(noun).getItemLocation() == player.getRoom() || 
@@ -616,7 +616,7 @@ public class Commands {
 					}
 				}
 			}
-			player.adjustStrength(-8);
+			player.setStat("strength",(float) player.getStat("strength")-8);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		}		
 	}
@@ -903,8 +903,8 @@ public class Commands {
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
 			player.reduceStat("timeRemaining");
-			if (player.getStrength()<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
-				player.adjustStrength(1);
+			if (((float) player.getStat("strength"))<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
+				player.setStat("strength",(float) player.getStat("strength")-8);
 			}
 		}
 		
@@ -1222,5 +1222,5 @@ public class Commands {
  * 9 March 2025 - Refactored constant
  * 10 March 2025 - Updated the setWisdom method by passing boolean
  * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats\
- * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom for hashmap.
+ * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom & strength for hashmap.
  */

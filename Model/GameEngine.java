@@ -104,7 +104,7 @@ public class GameEngine {
 		//Swimming in poisoned Waters?
 		if (player.getPanelFlag()==4) {
 			
-			if (player.getStrength()<15) {
+			if (((float) player.getStat("strength"))<15) {
 				game.addMessage("|You are very weak!");
 			}
 			
@@ -202,7 +202,7 @@ public class GameEngine {
 			}
 			
 			float strengthAdj = (float) ((player.getWeight()/Constants.NUMBER_OF_NOUNS+0.1)-3);
-			player.adjustStrength(strengthAdj);
+			player.setStat("strength",strengthAdj);
 			
 			if (player.checkPosition()) {
 				player.setPanelFlag(0);
@@ -210,7 +210,7 @@ public class GameEngine {
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
 				player.resetPosition();
-			} else if (player.getStrength()<1) {
+			} else if (((float) player.getStat("strength"))<1) {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);
 				this.game.endGame();
@@ -293,7 +293,7 @@ public class GameEngine {
 		double timeScore = (int) player.getStat("timeRemaining")/7.0;
 		double applyTimeBonus = timeBonus ? -timeScore:0;
 		int wisdom = (int) player.getStat("wisdom");
-		return (int) ((int) player.getStrength()+wisdom+applyTimeBonus);
+		return (int) ((int) ((float) player.getStat("strength"))+wisdom+applyTimeBonus);
 	}
 	
 	//What panel is to be displayed after the command is executed.
@@ -393,5 +393,5 @@ public class GameEngine {
 3 March 2025 - Added call to focus on command line
 5 March 2025 - Increased to v4.0
 11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
-12 March 2025 - Updated code to use the hashmap for wisdom
+12 March 2025 - Updated code to use the hashmap for wisdom & strength
 */

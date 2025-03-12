@@ -294,7 +294,7 @@ public class CommandProcess {
 		
 		//Thicket of biting bushes
 		if (player.getRoom()==14 && rand.nextInt(3)==1) {
-			player.adjustStrength(-1);
+			player.setStat("strength",(float) player.getStat("strength")-1);
 			game.addMessage("You are bitten.");
 		}
 			
@@ -302,7 +302,7 @@ public class CommandProcess {
 		if (game.getItem(36).getItemFlag()<1 && game.getItem(22).getItemFlag() != -player.getRoom()) {
 			game.getItem(36).setItemFlag(game.getItem(36).getItemFlag()+1);
 			game.getItem(36).setItemLocation(player.getRoom());
-			player.adjustStrength(-1);
+			player.setStat("strength",(float) player.getStat("strength")-1);
 		}
 
 		int stormRand = rand.nextInt(3);
@@ -331,7 +331,7 @@ public class CommandProcess {
 		} else if (game.getItem(39).isAtLocation(player.getRoom()) &&
 				   !game.getItem(43).isAtLocation(player.getRoom()) &&
 				   game.getItem(13).getItemFlag()>-1) {
-			player.adjustStrength(-2);
+			player.setStat("strength",(float) player.getStat("strength")-2);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		}
 			
@@ -362,9 +362,9 @@ public class CommandProcess {
 			rand.nextInt(2)==1) {
 			game.getItem(25).setItemLocation(player.getRoom());
 		}
-				
+		
 		//Check if pushed into well
-		if (player.getRoom()==19 && player.getStrength()<70 && 
+		if (player.getRoom()==19 && ((float) player.getStat("strength"))<70 && 
 			game.getItem(43).getItemFlag()==0 && rand.nextInt(4)==1) {
 			game.setMessage("Pushed into the pit");
 			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
@@ -382,7 +382,7 @@ public class CommandProcess {
 				String message = "The Logmen decide to have a little fun and";
 				String messageTwo = "tie you up in a storeroom";
 				game.getItem(41).setItemFlag(0);
-				player.adjustStrength(-4);
+				player.setStat("strength",(float) player.getStat("strength")-4);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-4);
 				
 				//Player located determines where end up
@@ -421,12 +421,12 @@ public class CommandProcess {
 		
 		//Player in the clone vat room
 		if (player.getRoom()==18) {
-			player.adjustStrength(-1);
+			player.setStat("strength",(float) player.getStat("strength")-1);
 			game.addMessage("The gas leaking from the vats burns your lungs!");
 		}
 		
 		//Too weak to carry something
-		if (player.getStrength()-player.getWeight()<50) {
+		if (((float) player.getStat("strength"))-player.getWeight()<50) {
 			int object = rand.nextInt(9)+1;
 			
 			if (game.getItem(object).isAtLocation(0)) {
@@ -452,7 +452,7 @@ public class CommandProcess {
 		}
 		
 		//Fail Quest conditions
-		if ((int) player.getStat("timeRemaining")<0 || player.getStrength()<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
+		if ((int) player.getStat("timeRemaining")<0 || ((float) player.getStat("strength"))<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.");
 			game.endGame();
 		}
@@ -612,5 +612,5 @@ public class CommandProcess {
  * 3 March 2025 - Added code to include weight in calculation for dropping items.
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
- * 12 March 2025 - Updated wisdom for use with hash map
+ * 12 March 2025 - Updated wisdom & strength for use with hash map
  */
