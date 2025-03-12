@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 11 March 2025
+Version: 4.4
+Date: 12 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -161,7 +161,7 @@ public class Commands {
 			//Handling the ferry man
 			if (player.getRoom()==game.getItem(25).getItemLocation() && this.noun == 25) {
 				
-				if (player.getWisdom()<60) {
+				if ((int) player.getStat("wisdom")<60) {
 					
 					game.setPanelMessages("You board the craft ...",
 										  "falling under the spell of the boatman|"
@@ -203,7 +203,7 @@ public class Commands {
 			
 			//Evil books in library
 			if (this.code.equals("3450050")) {
-				player.setWisdom(player.getWisdom()-5);
+				player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 				player.setStrength(player.getStrength()-8);
 				game.setMessage("They are cursed");
 			} else {
@@ -215,7 +215,7 @@ public class Commands {
 					game.setMessage("Lightning Flashes");
 					
 					game.getItem(39).setItemLocation(player.getRoom());
-					player.setWisdom(player.getWisdom()-2);
+					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 					player.setStrength(player.getStrength()-8);
 					player.setPanelFlag(2);
 				}
@@ -266,7 +266,7 @@ public class Commands {
 						
 						//Makes sure that wisdom increase only happens once
 						if (!game.getItem(noun).hasWisdonAcquired()) {
-							player.setWisdom(player.getWisdom()+4);
+							player.setStat("wisdom",(int) player.getStat("wisdom")+4);
 							game.getItem(noun).setWisdomAcquired(true);
 						}
 						
@@ -336,7 +336,7 @@ public class Commands {
 		//Dropping the Earthenware Jug
 		if (noun == 4 && game.getItem(noun).getItemLocation()==0 && verb==9) {
 			game.getItem(noun).setItemLocation(81);
-			player.setWisdom(player.getWisdom()-1);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 			player.setWeight(player.getWeight()-1);
 			game.setMessage("It breaks!");
 		
@@ -378,7 +378,7 @@ public class Commands {
 		
 		//Eating lillies (moved here since in original game code wouldn't reach)
 		if (noun == 3 && game.getItem(3).getItemLocation()==0) {
-			player.adjustWisdom(-5);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 			player.adjustStrength(-2);
 			game.setMessage("They make you very ill");
 		
@@ -386,7 +386,7 @@ public class Commands {
 		} else if ((noun<=Constants.FOOD_THRESHOLD || noun>=Constants.DRINK_THRESHOLD) 
 			&& nounStr.length()>0) {
 			game.setMessage("You can't "+command);
-			player.setWisdom(player.getWisdom()-1);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		
 		//Eat
 		} else {
@@ -410,7 +410,7 @@ public class Commands {
 			} else {
 				game.setMessage("Ouch!");
 				player.adjustStrength(-4);
-				player.adjustWisdom(-7);
+				player.setStat("wisdom",(int) player.getStat("wisdom")-7);
 				player.setPanelFlag(3);
 				
 				int count = rest(game,player,true);
@@ -423,7 +423,7 @@ public class Commands {
 		} else if ((noun<Constants.DRINK_THRESHOLD || noun>Constants.MAX_CARRIABLE_ITEMS) 
 				&& nounStr.length()>0) {
 				game.setMessage("You can't "+command);
-				player.setWisdom(player.getWisdom()-1);
+				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else {
 			
 			game.setMessage("You have no drink.");
@@ -465,7 +465,7 @@ public class Commands {
 		if (this.code.equals("2951151")) {
 			game.setMessage("The trapdoor creaks");
 			game.getItem(29).setItemFlag(0);
-			player.adjustWisdom(3);
+			player.setStat("wisdom",(int) player.getStat("wisdom")+3);
 		}
 	}
 	
@@ -495,7 +495,7 @@ public class Commands {
 		
 		//Break the staff
 		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
-			player.adjustWisdom(10);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 			game.getItem(noun).setItemLocation(81);
 			game.getItem(noun).setItemFlag(-1);
 			player.setPanelFlag(3);
@@ -537,7 +537,7 @@ public class Commands {
 		
 		//Take a hit even if the object isn't present
 		player.adjustStrength(-12);
-		player.adjustWisdom(-10);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 		game.setMessage("That would be unwise");
 		
 		//Is object present - ends game
@@ -548,8 +548,8 @@ public class Commands {
 					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
 							+ " end.|I claim you as my own!|Ha Ha Hah!",6);
 			player.setStrength(0);
-			player.setWisdom(0);
-			player.setTime(0);
+			player.setStat("wisdom",0);
+			player.setStat("timeRemaining",0);
 			game.endGame();	
 		}
 	}
@@ -559,7 +559,7 @@ public class Commands {
 		game.setMessage("That would be unwise");
 		
 		player.adjustStrength(-2);
-		player.adjustWisdom(-2);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		
 		if (game.getItem(noun).getItemLocation() == player.getRoom() || 
 			game.getItem(noun).getItemLocation() ==0) {
@@ -608,7 +608,7 @@ public class Commands {
 					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
 						game.setPanelMessages("The coal burns with a red flame",
 								"Which dissolves Omegan's Cloak",2);
-						player.adjustWisdom(20);
+						player.setStat("wisdom",(int) player.getStat("wisdom")+20);
 						game.getItem(13).setItemFlag(-1);
 						game.getItem(38).setItemLocation(81);
 					} else {
@@ -617,7 +617,7 @@ public class Commands {
 				}
 			}
 			player.adjustStrength(-8);
-			player.adjustWisdom(-5);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		}		
 	}
 	
@@ -626,7 +626,7 @@ public class Commands {
 
 		if (player.getRoom()!=51 || game.getItem(29).getItemFlag()>0) {
 			game.setMessage("You can't swim here!");
-			player.adjustWisdom(1);
+			player.setStat("wisdom",(int) player.getStat("wisdom")+1);
 		} else {
 			game.setMessage("You dive into the water");
 			player.setPanelFlag(4);
@@ -683,7 +683,7 @@ public class Commands {
 			if (code.equals("3371071") && verb == 28) {
 				game.getItem(3).setItemFlag(0);
 				game.setMessage("She nods slowly.");
-				player.adjustWisdom(5);
+				player.setStat("wisdom",(int) player.getStat("wisdom")+5);
 			}
 		} 
 	}
@@ -902,14 +902,14 @@ public class Commands {
 						
 		//Waits and increases strength
 		for (int i=1;i<count;i++) {
-			player.reduceTime();
+			player.reduceStat("timeRemaining");
 			if (player.getStrength()<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
 				player.adjustStrength(1);
 			}
 		}
 		
 		if ((int) player.getStat("timeRemaining")>100 || game.getItem(36).getItemFlag()<1) {
-			player.adjustWisdom(2);
+			player.setStat("wisdom",(int) player.getStat("wisdom")+2);
 			game.getItem(36).setItemFlag(1);
 		}
 				
@@ -939,7 +939,7 @@ public class Commands {
 			}
 			
 			game.getItem(7).setItemName("a brightly glowing torch");
-			player.adjustWisdom(8);
+			player.setStat("wisdom",(int) player.getStat("wisdom")+8);
 		}
 	}
 	
@@ -1149,7 +1149,7 @@ public class Commands {
 		
 		game.setMessage("You relinquish your quest");
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
-		player.setTime(1);
+		player.setStat("timeRemaining",1);
 		game.endGame();
 	}
 }
@@ -1221,5 +1221,6 @@ public class Commands {
  * 5 March 2025 - Increased to v4.0
  * 9 March 2025 - Refactored constant
  * 10 March 2025 - Updated the setWisdom method by passing boolean
- * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats
+ * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats\
+ * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom for hashmap.
  */

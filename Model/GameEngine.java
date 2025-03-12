@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 5 March 2025
+Version: 4.2
+Date: 12 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -292,7 +292,8 @@ public class GameEngine {
 		boolean timeBonus = (int) player.getStat("timeRemaining")<640;
 		double timeScore = (int) player.getStat("timeRemaining")/7.0;
 		double applyTimeBonus = timeBonus ? -timeScore:0;
-		return (int) ((int) player.getStrength()+player.getWisdom()+applyTimeBonus);
+		int wisdom = (int) player.getStat("wisdom");
+		return (int) ((int) player.getStrength()+wisdom+applyTimeBonus);
 	}
 	
 	//What panel is to be displayed after the command is executed.
@@ -392,4 +393,5 @@ public class GameEngine {
 3 March 2025 - Added call to focus on command line
 5 March 2025 - Increased to v4.0
 11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
+12 March 2025 - Updated code to use the hashmap for wisdom
 */

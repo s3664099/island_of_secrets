@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 11 March 2025
+Version: 4.2
+Date: 12 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -55,10 +55,6 @@ public class Player implements Serializable {
 		return this.roomToDisplay;
 	}
 	
-	public String toStringStatus() {
-		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
-	}
-	
 	public void turnUpdateStats() {
 		
 		int timeRemaining = (int) stats.get("timeRemaining");
@@ -70,7 +66,7 @@ public class Player implements Serializable {
 	}
 		
 	public float getStrengthWisdon() {
-		return getStrength()+getWisdom();
+		return getStrength()+((int) getStat("wisdom"));
 	}
 
 	//Getters & Setters
@@ -81,12 +77,7 @@ public class Player implements Serializable {
 	public void setRoom(int room) {
 		this.room = room;
 	}
-	
-	//Time getter/setter
-	public String toStringTimeRemaining() {
-		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
-	}
-	
+		
 	public Object getStat(String statName) {
 		return stats.get(statName);
 	}
@@ -94,32 +85,11 @@ public class Player implements Serializable {
 	public void setStat(String statName,Object value) {
 		stats.put(statName,value);
 	}
-		
-	public void reduceTime() {
-		this.timeRemaining--;
-	}
 	
-	public void setTime(int newTime) {
-		
-		if (newTime<0) {
-			throw new IllegalArgumentException("Player - Time cannot be negative");
-		}
-		
-		this.timeRemaining = newTime;
-	}
-
-	//Wisdom getter/Setter
-	public int getWisdom() {
-		return this.wisdom;
-	}
-
-	public void setWisdom(int newWisdom) {
-		
-		this.wisdom = newWisdom;
-	}
-	
-	public void adjustWisdom(int change) {
-		this.wisdom += change;
+	public void reduceStat(String statName) {
+		int stat = (int) stats.get(statName);
+		stat --;
+		stats.put(statName, stat);
 	}
 	
 	//Strength getter/setter
@@ -207,6 +177,16 @@ public class Player implements Serializable {
 		
 		return checked;
 	}
+	
+	//ToString Methods
+	public String toStringStatus() {
+		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
+	}
+
+	public String toStringTimeRemaining() {
+		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
+	}
+	
 }
 
 /* 2 November 2024 - Create File
@@ -226,4 +206,5 @@ public class Player implements Serializable {
  * 1 February 2025 - Added serializable ID and removed unused variables.
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Fixed issues and moved stats to a map
+ * 12 March 2025 - Removed timeRemaining stats. Removed wisdom getters & setters
  */

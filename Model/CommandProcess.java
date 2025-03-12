@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 11 March 2025
+Version: 4.2
+Date: 12 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -289,7 +289,7 @@ public class CommandProcess {
 		
 		//Orchards
 		if (player.getRoom()==61) {
-			player.adjustWisdom(rand.nextInt(2)+1);
+			player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
 		}
 		
 		//Thicket of biting bushes
@@ -332,7 +332,7 @@ public class CommandProcess {
 				   !game.getItem(43).isAtLocation(player.getRoom()) &&
 				   game.getItem(13).getItemFlag()>-1) {
 			player.adjustStrength(-2);
-			player.adjustWisdom(-2);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		}
 			
 		//Swampman's Position if not with player
@@ -383,7 +383,7 @@ public class CommandProcess {
 				String messageTwo = "tie you up in a storeroom";
 				game.getItem(41).setItemFlag(0);
 				player.adjustStrength(-4);
-				player.adjustWisdom(-4);
+				player.setStat("wisdom",(int) player.getStat("wisdom")-4);
 				
 				//Player located determines where end up
 				if (player.getRoom()<34) {
@@ -497,7 +497,7 @@ public class CommandProcess {
 				if ((codedNoun.substring(0,3).equals("300") || 
 					 codedNoun.substring(0,3).equals("120")) &&
 					 objNumber == 42) {
-					player.setWisdom(player.getWisdom()+10);
+					player.setStat("wisdom",(int) player.getStat("wisdom")+10);
 					game.getItem(nounNumber).setItemLocation(81);
 				
 				//Give jug to swampman
@@ -612,4 +612,5 @@ public class CommandProcess {
  * 3 March 2025 - Added code to include weight in calculation for dropping items.
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
+ * 12 March 2025 - Updated wisdom for use with hash map
  */
