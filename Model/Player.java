@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 12 March 2025
+Version: 4.3
+Date: 14 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -92,24 +92,6 @@ public class Player implements Serializable {
 		stats.put(statName, stat);
 	}
 		
-	//Food getter/setter
-	public void adjustFood(int change) {
-		this.food += change;
-	}
-
-	public int getFood() {
-		return this.food;
-	}
-	
-	//drink getter/setter
-	public void adjustDrink(int change) {
-		this.drink += change;
-	}
-	
-	public int getDrink() {
-		return this.drink;
-	}
-	
 	/*     Flag Settings:
 	 * 		0 - Normal Screen
 	 * 		1 - Give Screen
@@ -181,4 +163,5 @@ public class Player implements Serializable {
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Fixed issues and moved stats to a map
  * 12 March 2025 - Removed timeRemaining stats. Removed wisdom, strength, weight getters & setters
+ * 14 March 2025 - Removed food & Drink
  */

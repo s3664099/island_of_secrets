@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 12 March 2025
+Version: 4.3
+Date: 14 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -478,9 +478,9 @@ public class CommandProcess {
 				game.getItem(nounNumber).setItemLocation(81);
 				game.getItem(objNumber).setItemFlag(1);
 				game.setMessage("The snake uncoils");
-			
+				
 			//Giving water to a villager (but must have some drink)
-			} else if (codedNoun.equals("2413075") && objNumber==30 && player.getDrink()>1) {
+			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
 
 				if (game.getItem(11).getItemFlag() != 0) {
 					game.setMessage("He drinks the water and offers his staff");
@@ -490,7 +490,7 @@ public class CommandProcess {
 				}
 				
 				game.getItem(11).setItemFlag(0);
-				player.adjustDrink(1);
+				player.setStat("drink",((int) player.getStat("drink"))-1);
 			} else {
 				
 				//Giving items to the ancient scavenger
@@ -613,4 +613,5 @@ public class CommandProcess {
  * 5 March 2025 - Increased to v4.0
  * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
  * 12 March 2025 - Updated wisdom, strength & weight for use with hash map
+ * 14 March 2025 - Updated eat & Drink
  */

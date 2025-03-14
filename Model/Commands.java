@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 12 March 2025
+Version: 4.5
+Date: 14 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -188,7 +188,7 @@ public class Commands {
 			
 			//Pick more apples and add to food.
 			if (player.getRoom()==45 && game.checkApples() && noun==1) {
-				player.adjustFood(1);
+				player.setStat("food",((int) player.getStat("food"))+1);
 				game.setMessage("You pick an apple from the tree");
 				player.setStat("weight",((int) player.getStat("weight"))+1);
 			} else if (player.getRoom()==45 && noun ==1) {
@@ -251,13 +251,13 @@ public class Commands {
 					
 					if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
 						weight = -1;
-						player.adjustFood(2);
+						player.setStat("food",((int) player.getStat("food"))+2);
 						game.getItem(noun).setItemLocation(-18);
 					}
 					
 					if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
 						weight = -1;
-						player.adjustDrink(2);
+						player.setStat("drink",((int) player.getStat("drink"))+2);
 						game.getItem(noun).setItemLocation(-18);
 					}
 										
@@ -392,8 +392,8 @@ public class Commands {
 		} else {
 			game.setMessage("You have no food");
 			
-			if (player.getFood()>0) {
-				player.adjustFood(-1);
+			if (((int) player.getStat("food")+1)>0) {
+				player.setStat("food",((int) player.getStat("food"))-1);
 				player.setStat("strength",(float) player.getStat("strength")+10);
 				game.setMessage("Ok");
 			}
@@ -427,8 +427,8 @@ public class Commands {
 		} else {
 			
 			game.setMessage("You have no drink.");
-			if (player.getDrink()>0) {
-				player.adjustDrink(-1);
+			if (((int) player.getStat("drink"))>0) {
+				player.setStat("drink",((int) player.getStat("drink"))-1);
 				player.setStat("strength",(float) player.getStat("strength")+7);
 				game.setMessage("Ok");
 			}
@@ -951,8 +951,8 @@ public class Commands {
 		String items = "";
 		
 		game.setMessage("Info - Items carried|");
-		game.addMessage("Food: "+player.getFood());
-		game.addMessage("      Drink: "+player.getDrink()+"|");
+		game.addMessage("Food: "+((int) player.getStat("food")));
+		game.addMessage("      Drink: "+((int) player.getStat("water"))+"|");
 				
 		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
 			
@@ -1223,4 +1223,5 @@ public class Commands {
  * 10 March 2025 - Updated the setWisdom method by passing boolean
  * 11 March 2025 - Updated code for timeRemaining getter after moving into HashMap for stats\
  * 12 March 2025 - Updated Time Remaining Stats to hashmap. Updated wisdom, strength & weight for hashmap.
+ * 14 March 2025 - Updated food and drink stats
  */
