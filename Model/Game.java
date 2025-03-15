@@ -39,6 +39,14 @@ public class Game implements Serializable {
 	
 	private int APPLE_COUNT = 3;
 	private int START_LOCATION = 23;
+	private int RANDOM_ROOM = 39;
+	private int RANDOM_EXIT_COMBO = 5;
+	private int NUMBER_EXITS = 4;
+	
+	private String NORTH = "North";
+	private String SOUTH = "South";
+	private String EAST = "East";
+	private String WEST = "West";
 
 	public Game(Location[] locations, Item[] items) {
 		
@@ -84,7 +92,7 @@ public class Game implements Serializable {
 		for (Item item:itemList) {
 			if(item != null) {
 				
-				//If the items are visible display them.
+				//If the items are visible display themString.
 				if(item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
 					
 					count ++;
@@ -109,34 +117,34 @@ public class Game implements Serializable {
 		
 		boolean[] exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
+		SpecialExitHandler exitHandler = new SpecialExitHandler();
 		
-		if (roomNumber == 39) {
-			int randExit = rand.nextInt(5);
+		if (roomNumber == RANDOM_ROOM) {
+			int randExit = rand.nextInt(RANDOM_EXIT_COMBO);
 			boolean[] exitArray = {false,true,false,false,false,true,false,true,true};
 			int count = 0;
 			
-			for (int x=randExit;x<randExit+4;x++) {
+			for (int x=randExit;x<randExit+NUMBER_EXITS;x++) {
 				exitNumbers[count]=exitArray[x];
 				count ++;
 			}
 		}
 		
 		//Checks if the exit is a special exit. If not, displays it normally.
-		if (exitNumbers[0] && (roomNumber != 70 && roomNumber != 37 && roomNumber != 11 &&
-							   roomNumber != 41 && roomNumber != 43 && roomNumber != 66)) {
-			exits = addExit("North",exits);
+		if (exitNumbers[0] && (exitHandler.displayExit(roomNumber,NORTH))) {
+			exits = addExit(NORTH,exits);
 		}
 		
-		if (exitNumbers[1] && (roomNumber != 60 && roomNumber !=56)) {
-			exits = addExit("South",exits);
+		if (exitNumbers[1] && (exitHandler.displayExit(roomNumber,SOUTH))) {
+			exits = addExit(SOUTH,exits);
 		}
 		
-		if (exitNumbers[2] && (roomNumber != 44 && roomNumber != 52)) {
-			exits = addExit("East",exits);
+		if (exitNumbers[2] && (exitHandler.displayExit(roomNumber,EAST))) {
+			exits = addExit(EAST,exits);
 		}
 		
-		if (exitNumbers[3] && (roomNumber !=12 && roomNumber !=53 && roomNumber !=45)) {
-			exits = addExit("West",exits);
+		if (exitNumbers[3] && (exitHandler.displayExit(roomNumber,WEST))) {
+			exits = addExit(WEST,exits);
 		}
 		
 		if (exits.length()>0) {

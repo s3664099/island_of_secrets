@@ -2,8 +2,8 @@
 Title: Island of Secrets Quit Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 15 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 
 import Model.Game;
 import Model.GameEngine;
+import Model.GameInitialiser;
 import Model.Player;
 import View.GameFrame;
 import View.GamePanel;
@@ -38,7 +39,7 @@ public class QuitButton implements ActionListener {
 		if (!restart) {
 			this.frame.dispose();
 		} else {
-			this.game.restart(new Game(), new Player());
+			this.game.restart(GameInitialiser.initialiseGame(), new Player());
 			this.game.setGamePanel(panel);
 		}
 	}
@@ -49,4 +50,5 @@ public class QuitButton implements ActionListener {
  * 31 January 2025 - Completed Testing and increased version
  * 17 February 2025 - Added option to restart the game
  * 5 March 2025 - Increased to v4.0
+ * 15 March 2025 - Added the Game Initialiser
  */
