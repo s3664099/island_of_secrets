@@ -27,6 +27,7 @@ public class GameEngine {
 	private String codedCommand;
 	private int nounNum;
 	private Test test = new Test();
+	private Swimming swim;
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -185,6 +186,12 @@ public class GameEngine {
 				this.player = processCommands.getPlayer();
 			}
 			
+			//Is the player now swimming - creates new swimming object
+			if (player.getSwimming()) {
+				this.swim = new Swimming(player.getRoom());
+				player.setSwimming(false);
+			}
+			
 			test.displayValue(this.game, this.player);
 			
 			determinePanel(game);
@@ -194,7 +201,7 @@ public class GameEngine {
 			this.game.setMessage("Ok");
 			
 			if (command.substring(0,1).equals("n")) {
-				player.adjustPosition();
+				this.swim.swim();
 			} else if (!command.substring(0,1).equals("s") &&
 					   !command.substring(0,1).equals("e") &&
 					   !command.substring(0,1).equals("w")) {
@@ -204,12 +211,12 @@ public class GameEngine {
 			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
 			player.setStat("strength",strengthAdj);
 			
-			if (player.checkPosition()) {
+			if (this.swim.checkPosition((float) player.getStat("strength"))) {
 				player.setPanelFlag(0);
 				this.game.setMessage("You surface");
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
-				player.resetPosition();
+				
 			} else if (((float) player.getStat("strength"))<1) {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);

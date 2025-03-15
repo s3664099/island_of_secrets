@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 14 March 2025
+Version: 4.4
+Date: 15 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -19,13 +19,13 @@ import Data.Constants;
 public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 495300605316911022L;
+	
 	private int room = 23;
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
 	private int panelFlag = 0;
-	private int swimming = 0;
-	private int swimPosition = 0;
+	private boolean isSwimming = false;
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
 	
@@ -110,30 +110,14 @@ public class Player implements Serializable {
 		return this.panelFlag;
 	}
 	
-	//Methods for handling the swimming in poisoned waters
-	public void setSwimming() {
-		this.swimming = this.room;
-	}
-		
-	public void adjustPosition() {
-		this.swimPosition++;
+	public void setSwimming(boolean isSwimming) {
+		this.isSwimming = isSwimming;
 	}
 	
-	public void resetPosition() {
-		this.swimPosition = 0;
+	public boolean getSwimming() {
+		return this.isSwimming;
 	}
-	
-	public boolean checkPosition() {
 		
-		boolean checked = false;
-		
-		if ((this.swimming/2)<this.swimPosition && this.strength>0) {
-			checked = true;
-		}
-		
-		return checked;
-	}
-	
 	//ToString Methods
 	public String toStringStatus() {
 		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
@@ -164,4 +148,5 @@ public class Player implements Serializable {
  * 11 March 2025 - Fixed issues and moved stats to a map
  * 12 March 2025 - Removed timeRemaining stats. Removed wisdom, strength, weight getters & setters
  * 14 March 2025 - Removed food & Drink
+ * 15 March 2025 - Removed Swimming and added check if swimming
  */

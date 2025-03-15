@@ -626,12 +626,12 @@ public class Commands {
 
 		if (player.getRoom()!=51 || game.getItem(29).getItemFlag()>0) {
 			game.setMessage("You can't swim here!");
-			player.setStat("wisdom",(int) player.getStat("wisdom")+1);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else {
 			game.setMessage("You dive into the water");
 			player.setPanelFlag(4);
 			player.setRoom(rand.nextInt(5)+1);
-			player.setSwimming();
+			player.setSwimming(true);
 		}
 	}
 	
