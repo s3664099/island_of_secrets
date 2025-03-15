@@ -483,9 +483,9 @@ System.out.println("Object: " + objectDescription);
 
 ## **GameEngine**
 
-## **GameInitialiser**
-
 ---
+
+## **GameInitialiser**
 
 ### **Overview**
 The `GameInitialiser` class is a utility class designed to initialize and set up the core components of a text-based adventure game. It prepares the game environment by creating and configuring locations (rooms) and items, which are essential for the game world. This class ensures that the game starts with all necessary objects and locations properly set up.
@@ -673,6 +673,109 @@ System.out.println(player.toString()); // Output: Player{room=20, strength=100.0
 - **Flexibility**: Uses a `Map` to store stats, making it easy to add or modify attributes dynamically.
 - **Serialization Support**: Enables saving and loading of game state, ensuring persistence across sessions.
 - **Utility Methods**: Provides methods to manage and retrieve the player’s state, making it easier to implement game logic.
+
+---
+
+## **SpecialExitHandler**
+
+### **Overview**
+The `SpecialExitHandler` class is responsible for managing special exits in a text-based adventure game. It encapsulates the logic for determining and displaying special exits based on the player's current room and game state. This class ensures that special exits are handled consistently and efficiently.
+
+### **Purpose**
+The primary purpose of the `SpecialExitHandler` class is to:
+- Store and manage special exit descriptions for specific rooms.
+- Determine whether a special exit should be displayed based on the player's location and game conditions.
+- Provide a clean and modular way to handle special exit logic, separating it from the main game logic.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`specialExits`**: A `Map<Integer, String[]>` that stores special exit descriptions for specific rooms. Each entry contains:
+  - **Key**: The room number (`Integer`).
+  - **Value**: An array of two strings (`String[]`):
+    - The first string represents the **direction** of the special exit.
+    - The second string is the **description** of the special exit.
+- **`TRAPDOOR`**: A constant representing the item ID for the trapdoor.
+- **`TRAPDOOR_ROOM`**: A constant representing the room number where the trapdoor is located.
+- **`TRAPDOOR_DESCRIPTION`**: A constant string describing the trapdoor.
+
+#### **2. Methods**
+- **`SpecialExitHandler()`**:  
+  The constructor initializes the `specialExits` map with predefined special exit descriptions for specific rooms.
+  
+- **`displayExit(int roomNumber, String exit)`**:  
+  Determines whether a special exit should be displayed for a given room and direction.  
+  - **Parameters**:
+    - `roomNumber`: The current room number.
+    - `exit`: The direction to check.
+  - **Returns**: `true` if the exit should be displayed, `false` otherwise.
+
+- **`getSpecialExit(int roomNumber, Item[] itemList)`**:  
+  Retrieves the special exit description for a given room, including additional descriptions based on game conditions (e.g., the trapdoor in room 51).  
+  - **Parameters**:
+    - `roomNumber`: The current room number.
+    - `itemList`: An array of `Item` objects representing the game's items.
+  - **Returns**: A string describing the special exit.
+
+### **Usage**
+To use the `SpecialExitHandler` class, follow these steps:
+
+1. **Initialize the Handler**:
+   ```java
+   SpecialExitHandler specialExitHandler = new SpecialExitHandler();
+   ```
+
+2. **Check if a Special Exit Should Be Displayed**:
+   ```java
+   boolean shouldDisplayExit = specialExitHandler.displayExit(51, "East");
+   ```
+
+3. **Get the Special Exit Description**:
+   ```java
+   String specialExitDescription = specialExitHandler.getSpecialExit(51, itemList);
+   System.out.println(specialExitDescription); // Output: "There is a door to the east and a closed trapdoor in the floor"
+   ```
+
+### **Best Practices**
+1. **Encapsulation**:  
+   - The `specialExits` map and related logic are encapsulated within the `SpecialExitHandler` class, making it easy to modify or extend without affecting other parts of the code.
+
+2. **Separation of Concerns**:  
+   - Special exit logic is separated from the main game logic, improving modularity and maintainability.
+
+3. **Constants for Magic Numbers**:  
+   - Magic numbers (e.g., `TRAPDOOR`, `TRAPDOOR_ROOM`) are replaced with named constants, improving readability and reducing the risk of errors.
+
+4. **Scalability**:  
+   - Adding new special exits is as simple as updating the `specialExits` map in the constructor.
+
+### **Example**
+Here’s an example of how the `SpecialExitHandler` class might be used in a game:
+
+```java
+public class Game {
+    private SpecialExitHandler specialExitHandler;
+    private Item[] itemList;
+
+    public Game(Item[] itemList) {
+        this.specialExitHandler = new SpecialExitHandler();
+        this.itemList = itemList;
+    }
+
+    public void displaySpecialExits(int roomNumber) {
+        String specialExitDescription = specialExitHandler.getSpecialExit(roomNumber, itemList);
+        if (!specialExitDescription.isEmpty()) {
+            System.out.println(specialExitDescription);
+        }
+    }
+}
+```
+
+### **Why Use This Class?**
+- **Modularity**: The `SpecialExitHandler` class encapsulates all special exit logic, making the codebase cleaner and easier to maintain.
+- **Flexibility**: Special exits can be easily added, modified, or removed by updating the `specialExits` map.
+- **Readability**: The use of constants and clear method names improves code readability and understanding.
+- **Scalability**: The class is designed to handle additional special exits and conditions as the game evolves.
 
 ---
 

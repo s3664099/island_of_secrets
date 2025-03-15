@@ -21,6 +21,7 @@ public class Game implements Serializable {
 	
 	private Location[] locationList;
 	private Item[] itemList;
+	private SpecialExitHandler specialExitHandler;
 	
 	private String message = "Let your quest begin!";
 	private String[] commands = {"","",""};
@@ -48,10 +49,11 @@ public class Game implements Serializable {
 	private String EAST = "East";
 	private String WEST = "West";
 
-	public Game(Location[] locations, Item[] items) {
+	public Game(Location[] locations, Item[] items,SpecialExitHandler specialExitHandler) {
 		
 		this.locationList = locations;
 		this.itemList = items;
+		this.specialExitHandler = specialExitHandler;
 		
 		//sets start location
 		locationList[START_LOCATION].setVisited();
@@ -156,41 +158,7 @@ public class Game implements Serializable {
 	
 	//Displays the special location.
 	public String getSpecialExits(int roomNumber) {
-		
-		String exit = "";
-		
-		//Checks the room number, and displays the special location.
-		if (roomNumber == 51) {
-			exit = "There is a door to the east";
-			if (itemList[29].getItemFlag()!=0) {
-				exit += " and a closed trapdoor in the floor";
-			}
-		} else if (roomNumber == 12) {
-			exit = "You can also go west into the cave";
-		} else if (roomNumber == 53 || roomNumber == 45) {
-			exit = "You can also go west into the hut";
-		} else if (roomNumber == 70) {
-			exit = "You can also go north into the hut";
-		} else if (roomNumber == 37) {
-			exit = "You can also go north into the portal";
-		} else if (roomNumber == 11) {
-			exit = "You can also go north out of the lair";
-		} else if (roomNumber == 41) {
-			exit = "You can also go north out of the hut";
-		} else if (roomNumber == 43) {
-			exit = "You can also go north out of the cabin";
-		} else if (roomNumber == 66) {
-			exit = "You can also go north down of the pyramid";
-		} else if (roomNumber == 60) {
-			exit = "You can go south out of the hut";
-		} else if (roomNumber == 56) {
-			exit = "You can also go south up the pyramid";
-		} else if (roomNumber == 44) {
-			exit = "You can go east out of the shack";
-		} else if (roomNumber == 52) {
-			exit = "You can go east out of the hall";
-		}		
-		return exit;
+		return specialExitHandler.getSpecialExit(roomNumber, itemList);	
 	}
 	
 	//Checks if it is possible to move through the exit
@@ -413,5 +381,5 @@ public class Game implements Serializable {
  * 25 February 2025 - Started working on displaying saved games as buttons
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
- * 15 March 2025 - Moved initialisation to separate section
+ * 15 March 2025 - Moved initialisation to separate section. Refactored way to handle exits
  */

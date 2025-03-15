@@ -1,5 +1,5 @@
 /*
-Title: Island of Secrets Quit Button
+Title: Island of Secrets Special Exit Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.0
@@ -12,13 +12,16 @@ package Model;
 import java.util.HashMap;
 import java.util.Map;
 
+import Data.Item;
+
 public class SpecialExitHandler {
 
 	//Map holds an array of 2 strings - direction & special direction name
-	private Map<Integer, String[]> specialExits = new HashMap();
+	private Map<Integer, String[]> specialExits = new HashMap<Integer, String[]>();
 
 	private int TRAPDOOR = 29;
 	private int TRAPDOOR_ROOM = 51;
+	private String TRAPDOOR_DESCRIPTION = " and a closed trapdoor in the floor";
 	
 	public SpecialExitHandler() {
 		
@@ -49,6 +52,19 @@ public class SpecialExitHandler {
 		}
 		
 		return displayExit;
+	}
+	
+	public String getSpecialExit(int roomNumber, Item[] itemList) {
+		
+		String[] exitDescriptions = specialExits.getOrDefault(roomNumber, new String[]{"", ""});
+		String baseDescription = exitDescriptions[1];
+		
+		//Is player in the trapdoor room
+		if (roomNumber == TRAPDOOR_ROOM && itemList[TRAPDOOR].getItemFlag() !=0) {
+			baseDescription += TRAPDOOR_DESCRIPTION;
+		}
+		
+		return baseDescription;
 	}
 }
 

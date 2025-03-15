@@ -25,7 +25,7 @@ public class GameInitialiser {
 		locations[0] = null; //Room 0 is unused
 		
 		//Initialise locations
-		for (int roomNumber=1;roomNumber<=noRooms;roomNumber++) {
+		for (int roomNumber=1;roomNumber<noRooms;roomNumber++) {
 						
 			locations[roomNumber+1] = new Location(RawData.getLocation(roomNumber),
 												RawData.getPrepositions(),
@@ -46,11 +46,11 @@ public class GameInitialiser {
 			items[itemNumber] = new Item(RawData.getItemFlag(itemNumber),
 										 RawData.getItemLocation(itemNumber),
 										 itemName);			
-		}	
-		return new Game(locations,items);
+		}
+				
+		return new Game(locations,items,new SpecialExitHandler());
 	}
 }
 
 /* 15 March 2025 - Created File
- * 
  */
