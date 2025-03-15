@@ -19,7 +19,7 @@ public class Main {
 		try {
 			
 			//Initialises the game data
-			Game gameData = new Game();
+			Game gameData =  GameInitialiser.initialiseGame();
 			Player player = new Player();
 			GameEngine game = new GameEngine(gameData,player);
 			

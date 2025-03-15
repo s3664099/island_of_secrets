@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 15 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,18 +12,16 @@ package Model;
 import java.io.Serializable;
 import java.util.Random;
 
-import Data.Constants;
 import Data.Item;
 import Data.Location;
-import Data.RawData;
 
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 3473676803014192040L;
-	private int noRooms = Constants.NUMBER_OF_ROOMS;
-	private int noItems = Constants.NUMBER_OF_NOUNS;
-	private Location[] locationList = new Location[noRooms+1];
-	private Item[] itemList = new Item[noItems+1];
+	
+	private Location[] locationList;
+	private Item[] itemList;
+	
 	private String message = "Let your quest begin!";
 	private String[] commands = {"","",""};
 	private Random rand = new Random();
@@ -33,42 +31,23 @@ public class Game implements Serializable {
 	private boolean endGame = false;
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
-	private int appleCount = 3;
 	private boolean displayGames = false;
 	private boolean moreGames = false;
 	private boolean lessGames = false;
 	private boolean start = true;
 	private String[] gameDisplayed = {"","","","",""};
+	
+	private int APPLE_COUNT = 3;
+	private int START_LOCATION = 23;
 
-	public Game() {
-				
-		locationList[0] = null;
-		itemList[0] = null;
+	public Game(Location[] locations, Item[] items) {
 		
-		//Builds the location objects
-		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
-						
-			Location newLocation = new Location(RawData.getLocation(roomNumber),
-												RawData.getPrepositions(),RawData.getImage(roomNumber));
-			locationList[roomNumber+1] = newLocation;
-		}
+		this.locationList = locations;
+		this.itemList = items;
 		
-		locationList[23].setVisited();
+		//sets start location
+		locationList[START_LOCATION].setVisited();
 		
-		//Builds the item objects
-		for (int itemNumber=1;itemNumber<noItems+1;itemNumber++) {
-			
-			String item = "";
-						
-			if(itemNumber<=Constants.NUMBER_OF_ITEMS) {
-				item = RawData.getObjects(itemNumber);
-			}
-						
-			Item newItem = new Item(RawData.getItemFlag(itemNumber),
-									RawData.getItemLocation(itemNumber),
-									item);			
-			itemList[itemNumber] = newItem;
-		}
 	}
 	
 	public String getRoomName(int roomNumber) {
@@ -335,8 +314,8 @@ public class Game implements Serializable {
 		
 		boolean applesLeft = false;
 		
-		if (appleCount>0) {
-			appleCount --;
+		if (APPLE_COUNT>0) {
+			APPLE_COUNT --;
 			applesLeft = true;
 		}
 		
@@ -426,4 +405,5 @@ public class Game implements Serializable {
  * 25 February 2025 - Started working on displaying saved games as buttons
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
+ * 15 March 2025 - Moved initialisation to separate section
  */

@@ -483,6 +483,72 @@ System.out.println("Object: " + objectDescription);
 
 ## **GameEngine**
 
+## **GameInitialiser**
+
+---
+
+### **Overview**
+The `GameInitialiser` class is a utility class designed to initialize and set up the core components of a text-based adventure game. It prepares the game environment by creating and configuring locations (rooms) and items, which are essential for the game world. This class ensures that the game starts with all necessary objects and locations properly set up.
+
+### **Purpose**
+The primary purpose of the `GameInitialiser` class is to:
+- Initialize the game's locations (rooms) using data from the `RawData` class.
+- Initialize the game's items, assigning them properties such as names, locations, and flags.
+- Return a fully configured `Game` object that contains all the initialized locations and items, ready for gameplay.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+The `GameInitialiser` class does not have any instance variables. It operates as a static utility class, meaning all its functionality is provided through static methods.
+
+#### **2. Methods**
+- **`public static Game initialiseGame()`**:  
+  This is the main method of the class. It performs the following tasks:
+  1. Initializes an array of `Location` objects based on the number of rooms defined in `Constants.NUMBER_OF_ROOMS`.
+  2. Populates each location with data from the `RawData` class, including descriptions, prepositions, and images.
+  3. Initializes an array of `Item` objects based on the number of items defined in `Constants.NUMBER_OF_NOUNS`.
+  4. Assigns properties to each item, such as its name, location, and flags, using data from the `RawData` class.
+  5. Returns a `Game` object containing the initialized locations and items.
+
+### **Usage**
+To use the `GameInitialiser` class, simply call the `initialiseGame()` method. This method will return a fully initialized `Game` object, which can then be used to start the game.
+
+```java
+// Initialize the game
+Game game = GameInitialiser.initialiseGame();
+
+// Use the game object to start the game or perform other operations
+```
+
+### **Best Practices**
+1. **Encapsulation:** The `GameInitialiser` class encapsulates the initialization logic, making it easy to modify or extend the game setup process without affecting other parts of the code.
+2. **Separation of Concerns:** By separating the initialization logic into its own class, the codebase remains modular and easier to maintain.
+3. **Use of Constants:** The class relies on constants (e.g., `Constants.NUMBER_OF_ROOMS`) to define the size of the game world, ensuring consistency and flexibility.
+4. **Null Index Handling:** The first index of the `locations` and `items` arrays is intentionally set to `null` to align with the game's numbering scheme. Ensure this is respected when accessing these arrays.
+
+### **Example**
+Here’s an example of how the `GameInitialiser` class might be used in a game:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Initialize the game
+        Game game = GameInitialiser.initialiseGame();
+
+        // Start the game loop or perform other game logic
+        // ...
+    }
+}
+```
+
+### **Why Use This Class?**
+- **Simplifies Game Setup:** The `GameInitialiser` class handles the complex process of setting up the game world, allowing developers to focus on other aspects of the game.
+- **Reusability:** The class can be reused across different parts of the game or in future projects with similar requirements.
+- **Maintainability:** By centralizing the initialization logic, the codebase becomes easier to maintain and debug.
+- **Scalability:** The class is designed to work with dynamic data (e.g., `RawData`), making it easy to scale the game world by simply updating the data sources.
+
+---
+
 ## **Main Class**
 
 ### **Overview**
