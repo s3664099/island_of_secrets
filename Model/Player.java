@@ -127,6 +127,19 @@ public class Player implements Serializable {
 		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
 	}
 	
+	@Override
+	public String toString() {
+	    return "Player{" +
+	            "room=" + room +
+	            ", strength=" + stats.get("strength") +
+	            ", wisdom=" + stats.get("wisdom")  +
+	            ", timeRemaining=" + stats.get("timeRemaining")  +
+	            ", weight=" + stats.get("weight") +
+	            ", food=" + stats.get("food") +
+	            ", drink=" + stats.get("drink") +
+	            '}';
+	}
+	
 }
 
 /* 2 November 2024 - Create File
@@ -148,5 +161,5 @@ public class Player implements Serializable {
  * 11 March 2025 - Fixed issues and moved stats to a map
  * 12 March 2025 - Removed timeRemaining stats. Removed wisdom, strength, weight getters & setters
  * 14 March 2025 - Removed food & Drink
- * 15 March 2025 - Removed Swimming and added check if swimming
+ * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 12 March 2025
+Version: 4.3
+Date: 15 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -209,7 +209,8 @@ public class GameEngine {
 			}
 			
 			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
-			player.setStat("strength",strengthAdj);
+			float strength = ((float) player.getStat("strength")) + strengthAdj;
+			player.setStat("strength",strength);
 			
 			if (this.swim.checkPosition((float) player.getStat("strength"))) {
 				player.setPanelFlag(0);
@@ -217,7 +218,7 @@ public class GameEngine {
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
 				
-			} else if (((float) player.getStat("strength"))<1) {
+			} else if (strength<1) {
 				this.game.setMessage("You get lost and drown");
 				player.setPanelFlag(0);
 				this.game.endGame();
@@ -401,4 +402,5 @@ public class GameEngine {
 5 March 2025 - Increased to v4.0
 11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
 12 March 2025 - Updated code to use the hashmap for wisdom, strength & weight
+15 March 2025 - Updated class to handle a separate swimming class.
 */

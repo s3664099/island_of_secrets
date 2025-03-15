@@ -57,7 +57,7 @@ public class Location implements Serializable {
 		//Parse the exits
 		String exitString = name.substring(name.length()-EXIT_START_INDEX);
 		for (int i=0;i<4;i++) {
-			exits[1] = exitString.charAt(i) == '0';
+			exits[i] = exitString.charAt(i) == '0';
 		}
 		
 		this.roomType = roomType;

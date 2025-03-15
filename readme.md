@@ -509,6 +509,179 @@ The `Main` class is used by the `Start` class to initialize and launch the game.
 
 ## **Player**
 
+### **Overview**
+The `Player` class represents the player in the game, managing their attributes (e.g., strength, wisdom, time remaining) and state (e.g., current room, food, drink). It uses a `Map` to store and manage player stats dynamically, making it flexible and extensible. The class is serializable, allowing the game state to be saved and loaded.
+
+### **Purpose**
+- **Encapsulate Player Data**: Stores and manages the player’s attributes and state using a `Map` for flexibility.
+- **Support Serialization**: Implements `Serializable` to enable saving and loading of game state.
+- **Provide Utility Methods**: Offers methods to update and retrieve the player’s state (e.g., strength, wisdom, room).
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`room`**: The player’s current room.
+- **`roomToDisplay`**: The room to display (used for special cases like random room display).
+- **`stats`**: A `Map<String, Object>` storing the player’s attributes (e.g., strength, wisdom, time remaining, weight, food, drink).
+- **`rand`**: A `Random` object for generating random values.
+- **`panelFlag`**: A flag for UI state (e.g., normal screen, give screen, lightning flashes).
+- **`isSwimming`**: A boolean indicating whether the player is swimming.
+- **`RANDOM_ROOM_TRIGGER`**: A constant representing the room that triggers random room display.
+
+#### **2. Methods**
+- **`getDisplayRoom()`**: Returns the room to display.
+- **`updateDisplayRoom()`**: Updates the room to display (e.g., for random room logic).
+- **`turnUpdateStats()`**: Updates the player’s stats at the end of each turn (e.g., reduces time and strength).
+- **`getStrengthWisdom()`**: Returns the combined value of strength and wisdom.
+- **Getters and Setters**:
+  - `getRoom()`, `setRoom(int)`: Retrieve or update the player’s current room.
+  - `getStat(String)`, `setStat(String, Object)`, `reduceStat(String)`: Manage the player’s stats dynamically.
+  - `getPanelFlag()`, `setPanelFlag(int)`: Manage the UI state flag.
+  - `getSwimming()`, `setSwimming(boolean)`: Manage the player’s swimming state.
+- **`toString` Methods**:
+  - `toStringStatus()`: Returns a formatted string with the player’s strength and wisdom.
+  - `toStringTimeRemaining()`: Returns a formatted string with the player’s remaining time.
+  - `toString()`: Returns a detailed string representation of the player’s state for debugging.
+
+### **Usage**
+To use the `Player` class, create an instance and interact with it using the provided methods. For example:
+
+```java
+// Create a player
+Player player = new Player();
+
+// Update the player's room
+player.setRoom(20);
+
+// Print the player's status
+System.out.println(player.toStringStatus()); // Output: Strength: 100.00         Wisdom: 35
+
+// Update the player's state
+player.turnUpdateStats();
+
+// Check if the player is swimming
+player.setSwimming(true);
+if (player.getSwimming()) {
+    System.out.println("The player is swimming.");
+}
+```
+
+### **Best Practices**
+1. **Encapsulation**:
+   - Use the provided getter and setter methods to access or modify the player’s attributes.
+2. **Validation**:
+   - Ensure that attribute values (e.g., room, strength, wisdom) are within valid ranges when setting them.
+3. **Serialization**:
+   - Update the `serialVersionUID` if the class structure changes significantly to avoid compatibility issues during deserialization.
+4. **Debugging**:
+   - Use the `toString()` method for debugging or logging to inspect the player’s state.
+
+### **Example**
+Here’s an example of how the `Player` class might be used in the game:
+
+```java
+// Create a player
+Player player = new Player();
+
+// Update the player's room
+player.setRoom(20);
+
+// Print the player's status
+System.out.println(player.toStringStatus()); // Output: Strength: 100.00         Wisdom: 35
+
+// Update the player's state
+player.turnUpdateStats();
+
+// Check if the player is swimming
+player.setSwimming(true);
+if (player.getSwimming()) {
+    System.out.println("The player is swimming.");
+}
+
+// Print the player's details
+System.out.println(player.toString()); // Output: Player{room=20, strength=100.0, wisdom=35, timeRemaining=999, weight=0, food=2, drink=2}
+```
+
+### **Why Use This Class?**
+- **Centralized Player Management**: Encapsulates all data and behavior related to the player in one place.
+- **Flexibility**: Uses a `Map` to store stats, making it easy to add or modify attributes dynamically.
+- **Serialization Support**: Enables saving and loading of game state, ensuring persistence across sessions.
+- **Utility Methods**: Provides methods to manage and retrieve the player’s state, making it easier to implement game logic.
+
+---
+
+## **Swimming**
+
+### **Overview**
+The `Swimming` class manages the player’s swimming state, including their position and progress while swimming. It is designed to handle the logic for swimming mechanics in the game.
+
+### **Purpose**
+- **Encapsulate Swimming Logic**: Tracks the player’s swimming progress and checks if they have reached a specific position.
+- **Support Game Mechanics**: Provides methods to update and check the player’s swimming state.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`swimming`**: Represents the room or context in which the player is swimming.
+- **`swimPosition`**: Tracks the player’s progress while swimming.
+
+#### **2. Methods**
+- **Constructor**:
+  - `Swimming(int swimming)`: Initializes the swimming state with the specified room or context.
+- **`swim()`**: Increments the player’s swimming position.
+- **`checkPosition(float strength)`**: Checks if the player has reached a specific swimming position and has sufficient strength to continue.
+
+### **Usage**
+To use the `Swimming` class, create an instance and interact with it using the provided methods. For example:
+
+```java
+// Create a swimming instance
+Swimming swimming = new Swimming(10);
+
+// Update the player's swimming position
+swimming.swim();
+
+// Check if the player has reached the swimming position
+if (swimming.checkPosition(50.0f)) {
+    System.out.println("The player has reached the swimming position.");
+}
+```
+
+### **Best Practices**
+1. **Encapsulation**:
+   - Use the provided methods to interact with the swimming state, avoiding direct manipulation of instance variables.
+2. **Validation**:
+   - Ensure that the `strength` parameter passed to `checkPosition` is valid (e.g., non-negative).
+3. **Integration**:
+   - Integrate the `Swimming` class with the `Player` class to manage the player’s swimming state during gameplay.
+
+### **Example**
+Here’s an example of how the `Swimming` class might be used in the game:
+
+```java
+// Create a swimming instance
+Swimming swimming = new Swimming(10);
+
+// Simulate swimming progress
+for (int i = 0; i < 6; i++) {
+    swimming.swim();
+}
+
+// Check if the player has reached the swimming position
+if (swimming.checkPosition(50.0f)) {
+    System.out.println("The player has reached the swimming position.");
+} else {
+    System.out.println("The player is still swimming.");
+}
+```
+
+### **Why Use This Class?**
+- **Encapsulation of Swimming Logic**: Keeps swimming-related logic separate from other player mechanics, improving code organization.
+- **Reusability**: Can be reused in different parts of the game where swimming mechanics are needed.
+- **Simplicity**: Provides a straightforward way to track and check swimming progress.
+
+---
+
 ## **Test**  
 
 ### View

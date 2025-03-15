@@ -32,14 +32,6 @@ public class Swimming {
 		
 		return checked;
 	}
-	
-	/*
-	//Methods for handling the swimming in poisoned waters
-	public void setSwimming() {
-		this.swimming = this.room;
-	}
-
-	*/
 }
 
 /*15 March 2025 - Created File
