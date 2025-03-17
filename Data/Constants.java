@@ -31,6 +31,16 @@ public class Constants {
 	public static final int FOOD_THRESHOLD = 16; // Items with IDs >16 are food
 	public static final int DRINK_THRESHOLD = 21; // Items with IDs > 21 are drinks
 	public static final int LINE_LENGTH = 90;
+	
+	//Constants for the Game Class
+	public static final int START_LOCATION = 23;
+	public static final int RANDOM_ROOM = 39;
+	public static final int RANDOM_EXIT_COMBO = 5;
+	
+	public static final String NORTH = "North";
+	public static final String SOUTH = "South";
+	public static final String EAST = "East";
+	public static final String WEST = "West";
 }
 
 /* 1 November 2024 - Created File

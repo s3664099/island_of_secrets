@@ -676,6 +676,85 @@ System.out.println(player.toString()); // Output: Player{room=20, strength=100.0
 
 ---
 
+## **RandomExitHandler**
+
+### **Overview**
+The `RandomExitHandler` class is responsible for generating random exits for specific rooms in a text-based adventure game. It encapsulates the logic for creating a randomized set of exits based on predefined patterns, ensuring that the game world remains dynamic and unpredictable.
+
+### **Purpose**
+The primary purpose of the `RandomExitHandler` class is to:
+- Generate a random set of exits for a room based on a predefined array of exit combinations.
+- Provide a modular and reusable way to handle random exit generation, separating this logic from the main game logic.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`rand`**: A `Random` object used to generate random numbers for selecting exit combinations.
+
+#### **2. Methods**
+- **`generateRandomExits()`**:  
+  Generates a random set of exits for a room based on a predefined array of exit combinations.  
+  - **Returns**: A `boolean[]` array representing the available exits (e.g., `true` for an open exit, `false` for a closed exit).
+
+### **Usage**
+To use the `RandomExitHandler` class, follow these steps:
+
+1. **Initialize the Handler**:
+   ```java
+   RandomExitHandler randomExitHandler = new RandomExitHandler();
+   ```
+
+2. **Generate Random Exits**:
+   ```java
+   boolean[] randomExits = randomExitHandler.generateRandomExits();
+   ```
+
+3. **Use the Generated Exits**:
+   - The returned `boolean[]` array can be used to set the exits for a specific room in the game.
+   - Example:
+     ```java
+     locationList[roomNumber].setExits(randomExits);
+     ```
+
+### **Best Practices**
+1. **Encapsulation**:  
+   - The `RandomExitHandler` class encapsulates all random exit generation logic, making it easy to modify or extend without affecting other parts of the code.
+
+2. **Separation of Concerns**:  
+   - Random exit logic is separated from the main game logic, improving modularity and maintainability.
+
+3. **Reusability**:  
+   - The class can be reused across different parts of the game or in future projects with similar requirements.
+
+4. **Scalability**:  
+   - Adding new exit combinations or modifying the randomization logic is straightforward.
+
+### **Example**
+Here’s an example of how the `RandomExitHandler` class might be used in a game:
+
+```java
+public class Game {
+    private RandomExitHandler randomExitHandler;
+
+    public Game() {
+        this.randomExitHandler = new RandomExitHandler();
+    }
+
+    public void setRandomExits(int roomNumber) {
+        boolean[] randomExits = randomExitHandler.generateRandomExits();
+        locationList[roomNumber].setExits(randomExits);
+    }
+}
+```
+
+### **Why Use This Class?**
+- **Dynamic Gameplay**: Random exits add an element of unpredictability to the game, making it more engaging for players.
+- **Modularity**: The class is self-contained and can be easily integrated into the existing game logic.
+- **Maintainability**: By separating random exit generation into its own class, the codebase becomes easier to maintain and debug.
+- **Scalability**: The class can be extended to support more complex randomization logic or additional exit combinations.
+
+---
+
 ## **SpecialExitHandler**
 
 ### **Overview**

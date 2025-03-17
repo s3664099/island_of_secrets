@@ -3,14 +3,13 @@ Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.2
-Date: 16 March 2025
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import Data.Constants;
 import Data.Item;
@@ -24,11 +23,11 @@ public class Game implements Serializable {
 	private Item[] itemList;
 	private SpecialExitHandler specialExitHandler;
 	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
+	private RandomExitHandler randomExitHandler = new RandomExitHandler();
 	
 	private String message = "Let your quest begin!";
 	private boolean newMessage = false;
 	private String[] commands = {"","",""};
-	private Random rand = new Random();
 	private String panelMessageOne;
 	private String panelMessageTwo;
 	private int panelLoop;
@@ -40,17 +39,8 @@ public class Game implements Serializable {
 	private boolean lessGames = false;
 	private boolean start = true;
 	private String[] gameDisplayed = {"","","","",""};
+	private int apple_count = 3;
 	
-	private int APPLE_COUNT = 3;
-	private int START_LOCATION = 23;
-	private int RANDOM_ROOM = 39;
-	private int RANDOM_EXIT_COMBO = 5;
-	
-	private String NORTH = "North";
-	private String SOUTH = "South";
-	private String EAST = "East";
-	private String WEST = "West";
-
 	public Game(Location[] locations, Item[] items,SpecialExitHandler specialExitHandler) {
 		
 		this.locationList = locations;
@@ -58,7 +48,7 @@ public class Game implements Serializable {
 		this.specialExitHandler = specialExitHandler;
 		
 		//sets start location
-		locationList[START_LOCATION].setVisited();
+		locationList[Constants.START_LOCATION].setVisited();
 		
 	}
 	
@@ -107,32 +97,25 @@ public class Game implements Serializable {
 		String exits = "";
 		SpecialExitHandler exitHandler = new SpecialExitHandler();
 		
-		if (roomNumber == RANDOM_ROOM) {
-			int randExit = rand.nextInt(RANDOM_EXIT_COMBO);
-			boolean[] exitArray = {false,true,false,false,false,true,false,true,true};
-			int count = 0;
-			
-			for (int x=randExit;x<randExit+Constants.NUMBER_EXITS;x++) {
-				exitNumbers[count]=exitArray[x];
-				count ++;
-			}
+		if (roomNumber == Constants.RANDOM_ROOM) {
+			exitNumbers = randomExitHandler.generateRandomExits();			
 		}
 		
 		//Checks if the exit is a special exit. If not, displays it normally.
-		if (exitNumbers[0] && (exitHandler.displayExit(roomNumber,NORTH))) {
-			exits = addExit(NORTH,exits);
+		if (exitNumbers[0] && (exitHandler.displayExit(roomNumber,Constants.NORTH))) {
+			exits = addExit(Constants.NORTH,exits);
 		}
 		
-		if (exitNumbers[1] && (exitHandler.displayExit(roomNumber,SOUTH))) {
-			exits = addExit(SOUTH,exits);
+		if (exitNumbers[1] && (exitHandler.displayExit(roomNumber,Constants.SOUTH))) {
+			exits = addExit(Constants.SOUTH,exits);
 		}
 		
-		if (exitNumbers[2] && (exitHandler.displayExit(roomNumber,EAST))) {
-			exits = addExit(EAST,exits);
+		if (exitNumbers[2] && (exitHandler.displayExit(roomNumber,Constants.EAST))) {
+			exits = addExit(Constants.EAST,exits);
 		}
 		
-		if (exitNumbers[3] && (exitHandler.displayExit(roomNumber,WEST))) {
-			exits = addExit(WEST,exits);
+		if (exitNumbers[3] && (exitHandler.displayExit(roomNumber,Constants.WEST))) {
+			exits = addExit(Constants.WEST,exits);
 		}
 		
 		if (exits.length()>0) {
@@ -270,8 +253,8 @@ public class Game implements Serializable {
 		
 		boolean applesLeft = false;
 		
-		if (APPLE_COUNT>0) {
-			APPLE_COUNT --;
+		if (apple_count>0) {
+			apple_count --;
 			applesLeft = true;
 		}
 		
@@ -362,5 +345,7 @@ public class Game implements Serializable {
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
  * 15 March 2025 - Moved initialisation to separate section. Refactored way to handle exits
- * 16 March 2025 - Added specialItemHandler
+ * 16 March 2025 - Added specialItemHandler. Moved constants to constants class
+ * 				   Moved random exits to a separate class to generate the random exits
+ * 
  */

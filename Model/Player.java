@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 15 March 2025
+Version: 4.5
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,12 +13,15 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Data.Constants;
 
 public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 495300605316911022L;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	private int room = 23;
 	private int roomToDisplay = this.room;
@@ -75,6 +78,7 @@ public class Player implements Serializable {
 	}
 	
 	public void setRoom(int room) {
+		logger.log(Level.INFO, "Player moved to room: " + room);
 		this.room = room;
 	}
 		
@@ -162,4 +166,5 @@ public class Player implements Serializable {
  * 12 March 2025 - Removed timeRemaining stats. Removed wisdom, strength, weight getters & setters
  * 14 March 2025 - Removed food & Drink
  * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
+ * 17 March 2025 - Added logging to list room player has entered.
  */
