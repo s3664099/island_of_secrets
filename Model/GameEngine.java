@@ -3,7 +3,7 @@ Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.3
-Date: 15 March 2025
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -159,12 +159,12 @@ public class GameEngine {
 		
 			//Either verb or noun doesn't exist
 			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-				this.game.setMessage("You can't "+command);
+				this.game.addMessage("You can't "+command);
 			}
 
 			//Neither exists
 			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-				this.game.setMessage("What!!");
+				this.game.addMessage("What!!");
 			}
 		
 			//No second word move to end
@@ -198,14 +198,14 @@ public class GameEngine {
 			
 		} else {
 			
-			this.game.setMessage("Ok");
+			this.game.addMessage("Ok");
 			
 			if (command.substring(0,1).equals("n")) {
 				this.swim.swim();
 			} else if (!command.substring(0,1).equals("s") &&
 					   !command.substring(0,1).equals("e") &&
 					   !command.substring(0,1).equals("w")) {
-				this.game.setMessage("I do not understand");
+				this.game.addMessage("I do not understand");
 			}
 			
 			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
@@ -214,12 +214,12 @@ public class GameEngine {
 			
 			if (this.swim.checkPosition((float) player.getStat("strength"))) {
 				player.setPanelFlag(0);
-				this.game.setMessage("You surface");
+				this.game.addMessage("You surface");
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
 				
 			} else if (strength<1) {
-				this.game.setMessage("You get lost and drown");
+				this.game.addMessage("You get lost and drown");
 				player.setPanelFlag(0);
 				this.game.endGame();
 			}
@@ -403,4 +403,5 @@ public class GameEngine {
 11 March 2025 - Updated code due to moving timeRemaining into a map for player stats
 12 March 2025 - Updated code to use the hashmap for wisdom, strength & weight
 15 March 2025 - Updated class to handle a separate swimming class.
+17 March 2025 - Changed setMessage to addMessage
 */

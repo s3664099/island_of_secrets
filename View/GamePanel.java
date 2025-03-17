@@ -92,7 +92,7 @@ public class GamePanel extends JPanel {
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
 		}
-				
+						
 		if (game.getGame().checkStart()) {
 			JPanel inputPanel = new JPanel(new GridLayout(1,1));
 			addButton(inputPanel,"Click for Clues & Hints",new BookButton(game,this),260);

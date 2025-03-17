@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 14 March 2025
+Version: 4.4
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -44,7 +44,7 @@ public class CommandProcess {
 				splitCommand[1] = command.substring(commands[0].length()).trim();
 			}
 		} else {
-			game.setMessage("Most commands need two words");
+			game.addMessage("Most commands need two words");
 		}
 	}
 	
@@ -366,7 +366,7 @@ public class CommandProcess {
 		//Check if pushed into well
 		if (player.getRoom()==19 && ((float) player.getStat("strength"))<70 && 
 			game.getItem(43).getItemFlag()==0 && rand.nextInt(4)==1) {
-			game.setMessage("Pushed into the pit");
+			game.addMessage("Pushed into the pit");
 			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		}
 		
@@ -466,27 +466,27 @@ public class CommandProcess {
 		
 		if (subject.length()==0) {
 			String itemName = game.getItem(objNumber).getItemName();
-			game.setMessage("Please enter who you will be giving the "+itemName+" to.");
+			game.addMessage("Please enter who you will be giving the "+itemName+" to.");
 		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
-			game.setMessage("The "+subject+" is not here.");
+			game.addMessage("The "+subject+" is not here.");
 		} else {
 			
-			game.setMessage("It is refused.");
+			game.addMessage("It is refused.");
 			
 			//Removes the snake from the hut by giving it an apple
 			if (codedNoun.equals("10045") && objNumber==40) {
 				game.getItem(nounNumber).setItemLocation(81);
 				game.getItem(objNumber).setItemFlag(1);
-				game.setMessage("The snake uncoils");
+				game.addMessage("The snake uncoils");
 				
 			//Giving water to a villager (but must have some drink)
 			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
 
 				if (game.getItem(11).getItemFlag() != 0) {
-					game.setMessage("He drinks the water and offers his staff");
+					game.addMessage("He drinks the water and offers his staff");
 					game.getItem(30).setItemName("A villager");
 				} else {
-					game.setMessage("He drinks the water");
+					game.addMessage("He drinks the water");
 				}
 				
 				game.getItem(11).setItemFlag(0);
@@ -505,7 +505,7 @@ public class CommandProcess {
 						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
 					game.getItem(objNumber).setItemFlag(1);
 					game.getItem(nounNumber).setItemLocation(81);
-					game.setMessage("The Swampman takes the jug and leaves");
+					game.addMessage("The Swampman takes the jug and leaves");
 					alreadyMessage = true;
 				
 				//Give pebble to Median
@@ -534,12 +534,12 @@ public class CommandProcess {
 				
 				//Successfully given
 				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
-					game.setMessage("It is accepted");
+					game.addMessage("It is accepted");
 				}
 				
 				//Giving to logmen
 				if (objNumber == 41) {
-					game.setMessage("It is taken");
+					game.addMessage("It is taken");
 					game.getItem(nounNumber).setItemLocation(51);
 				}
 			}
@@ -614,4 +614,5 @@ public class CommandProcess {
  * 11 March 2025 - Updated getter for timeRemaining after moving into HashMap for stats
  * 12 March 2025 - Updated wisdom, strength & weight for use with hash map
  * 14 March 2025 - Updated eat & Drink
+ * 17 March 2025 - Changed setMessage to addMessage
  */

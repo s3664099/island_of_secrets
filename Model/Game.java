@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 15 March 2025
+Version: 4.2
+Date: 16 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,6 +12,7 @@ package Model;
 import java.io.Serializable;
 import java.util.Random;
 
+import Data.Constants;
 import Data.Item;
 import Data.Location;
 
@@ -22,8 +23,10 @@ public class Game implements Serializable {
 	private Location[] locationList;
 	private Item[] itemList;
 	private SpecialExitHandler specialExitHandler;
+	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
 	
 	private String message = "Let your quest begin!";
+	private boolean newMessage = false;
 	private String[] commands = {"","",""};
 	private Random rand = new Random();
 	private String panelMessageOne;
@@ -42,7 +45,6 @@ public class Game implements Serializable {
 	private int START_LOCATION = 23;
 	private int RANDOM_ROOM = 39;
 	private int RANDOM_EXIT_COMBO = 5;
-	private int NUMBER_EXITS = 4;
 	
 	private String NORTH = "North";
 	private String SOUTH = "South";
@@ -68,26 +70,10 @@ public class Game implements Serializable {
 	public String getItems(int roomNumber) {
 				
 		int count = 0;
-		String items = "";
-		
-		if (roomNumber == 45) {
-			items = "A tree bristling with apples";
+		String items = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
+
+		if (items.length()>0) {
 			count ++;
-		} else if (roomNumber == 27 && itemList[7].getItemLocation()==27 && itemList[7].getItemFlag()==9 ) {
-			items = "A torch hanging in a bracket on the wall";
-			count ++;
-		} else if (roomNumber == 44) {
-			items = "A coffee table against the wall";
-			count ++;
-			
-			if (itemList[26].getItemFlag() == 1) {
-				items += ", an open oak chest";
-			}
-		} else if (roomNumber == 67 && itemList[14].getItemLocation() == 67 && itemList[14].getItemFlag()==9) {
-			items += "A piece of flint stuck in the crack";
-			count++;
-		} else if (roomNumber == 60 && locationList[roomNumber].getViewed()) {
-			items += "A map, along with a collection of papers which seem to make up a diary";
 		}
 		
 		//Goes through each of the items
@@ -126,7 +112,7 @@ public class Game implements Serializable {
 			boolean[] exitArray = {false,true,false,false,false,true,false,true,true};
 			int count = 0;
 			
-			for (int x=randExit;x<randExit+NUMBER_EXITS;x++) {
+			for (int x=randExit;x<randExit+Constants.NUMBER_EXITS;x++) {
 				exitNumbers[count]=exitArray[x];
 				count ++;
 			}
@@ -163,7 +149,6 @@ public class Game implements Serializable {
 	
 	//Checks if it is possible to move through the exit
 	public boolean checkExit(int room, int direction) {
-	
 		return locationList[room].getExits()[direction];
 	}
 	
@@ -192,20 +177,15 @@ public class Game implements Serializable {
 	//Resets the message
 	public void clearMessage() {
 		this.message = "";
+		this.newMessage = false;
 	}
-	
-	//sets the message
-	public void setMessage(String message) {
 		
-		this.message = message;
-	}
-	
 	//Extends the message
 	public void addMessage(String message) {
 		
-		if (this.message.length()>0) {
+		if (this.newMessage) {
 			
-			if (this.message.endsWith("|") || this.message.endsWith(".")) {
+			if (this.message.endsWith(".")) {
 				this.message = String.format("%s %s", this.message, message);
 			} else {
 				this.message = String.format("%s, %s", this.message, message);
@@ -382,4 +362,5 @@ public class Game implements Serializable {
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
  * 15 March 2025 - Moved initialisation to separate section. Refactored way to handle exits
+ * 16 March 2025 - Added specialItemHandler
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 9 March 2025
+Version: 4.2
+Date: 16 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -24,6 +24,7 @@ public class Constants {
 	public static final int NUMBER_OF_ITEMS = 43;
 	public static final int NUMBER_OF_VERBS = 42;
 	public static final int NUMBER_OF_NOUNS = 52;
+	public static final int NUMBER_EXITS = 4;
 	
 	//Threshold for item categories in the item list
 	public static final int MAX_CARRIABLE_ITEMS = 24; // Items with IDs <= 24 are carriable
@@ -40,4 +41,5 @@ public class Constants {
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
  * 9 March 2025 - Updated code based on recommendations
+ * 16 March 2025 - Moved NUMBER_OF_EXITS here
 */
