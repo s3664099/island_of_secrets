@@ -9,11 +9,14 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import Data.Constants;
 
-public class RandomExitHandler {
+public class RandomExitHandler implements Serializable {
+
+	private static final long serialVersionUID = 3367548012798466733L;
 	private Random rand = new Random();
 	
 	//Generates location's exits from a array randomly

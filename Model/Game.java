@@ -10,6 +10,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 import Data.Constants;
 import Data.Item;
@@ -18,18 +19,19 @@ import Data.Location;
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 3473676803014192040L;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	private Location[] locationList;
 	private Item[] itemList;
-	private SpecialExitHandler specialExitHandler;
+	private SpecialExitHandler specialExitHandler = new SpecialExitHandler();
 	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
 	private RandomExitHandler randomExitHandler = new RandomExitHandler();
 	
 	private String message = "Let your quest begin!";
 	private boolean newMessage = false;
 	private String[] commands = {"","",""};
-	private String panelMessageOne;
-	private String panelMessageTwo;
+	//private String panelMessageOne; - we are simply going to have an array for this
+	//private String panelMessageTwo;
 	private int panelLoop;
 	private boolean endGame = false;
 	private int saveGameCount = 0;
@@ -53,36 +55,36 @@ public class Game implements Serializable {
 	}
 	
 	public String getRoomName(int roomNumber) {
+		
+	    if (roomNumber < 0 || roomNumber >= locationList.length) {
+	        throw new IllegalArgumentException("Invalid room number: " + roomNumber);
+	    }
+		
 		return this.locationList[roomNumber].getName();
 	}
 	
 	//Goes through the items and checks what is present
 	public String getItems(int roomNumber) {
-				
-		int count = 0;
-		String items = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
-
-		if (items.length()>0) {
-			count ++;
-		}
 		
+	    if (roomNumber < 0 || roomNumber >= locationList.length) {
+	        throw new IllegalArgumentException("Invalid room number: " + roomNumber);
+	    }
+		
+		String items = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
+		int count = items.isEmpty() ? 0:1;
+				
 		//Goes through each of the items
 		for (Item item:itemList) {
-			if(item != null) {
-				
-				//If the items are visible display themString.
-				if(item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
-					
-					count ++;
-					if (count>1) {
-						items = String.format("%s, %s",items,item.getItemName());
-					} else {
-						items = String.format("%s %s",items,item.getItemName());
-					}
+			if(item != null && item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
+				count ++;
+				if (count>1) {
+					items = String.format("%s, %s",items,item.getItemName());
+				} else {
+					items = String.format("%s %s",items,item.getItemName());
 				}
 			}
 		}
-
+				
 		if (count>0) {
 			items = String.format("%s %s","You see:",items);
 		}
@@ -95,26 +97,26 @@ public class Game implements Serializable {
 		
 		boolean[] exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
-		SpecialExitHandler exitHandler = new SpecialExitHandler();
+		specialExitHandler = new SpecialExitHandler();
 		
 		if (roomNumber == Constants.RANDOM_ROOM) {
 			exitNumbers = randomExitHandler.generateRandomExits();			
 		}
 		
 		//Checks if the exit is a special exit. If not, displays it normally.
-		if (exitNumbers[0] && (exitHandler.displayExit(roomNumber,Constants.NORTH))) {
+		if (exitNumbers[0] && (specialExitHandler.displayExit(roomNumber,Constants.NORTH))) {
 			exits = addExit(Constants.NORTH,exits);
 		}
 		
-		if (exitNumbers[1] && (exitHandler.displayExit(roomNumber,Constants.SOUTH))) {
+		if (exitNumbers[1] && (specialExitHandler.displayExit(roomNumber,Constants.SOUTH))) {
 			exits = addExit(Constants.SOUTH,exits);
 		}
 		
-		if (exitNumbers[2] && (exitHandler.displayExit(roomNumber,Constants.EAST))) {
+		if (exitNumbers[2] && (specialExitHandler.displayExit(roomNumber,Constants.EAST))) {
 			exits = addExit(Constants.EAST,exits);
 		}
 		
-		if (exitNumbers[3] && (exitHandler.displayExit(roomNumber,Constants.WEST))) {
+		if (exitNumbers[3] && (specialExitHandler.displayExit(roomNumber,Constants.WEST))) {
 			exits = addExit(Constants.WEST,exits);
 		}
 		
@@ -166,6 +168,8 @@ public class Game implements Serializable {
 	//Extends the message
 	public void addMessage(String message) {
 		
+		logger.info("Adding message: " + message);
+		
 		if (this.newMessage) {
 			
 			if (this.message.endsWith(".")) {
@@ -192,7 +196,7 @@ public class Game implements Serializable {
 	}
 	
 	//Sets up and gets the panel messages
-	public void setPanelMessages(String messageOne,String messageTwo,int loop) {
+	public void setPanelMessages(String messages,int loop) {
 		this.panelMessageOne = messageOne;
 		this.panelMessageTwo = messageTwo;
 		this.panelLoop = loop;
@@ -202,16 +206,14 @@ public class Game implements Serializable {
 		return this.panelMessageOne;
 	}
 	
-	public String getMsgTwo() {
-		return this.panelMessageTwo;
-	}
-	
 	public int getLoop() {
 		return this.panelLoop;
 	}
 	
 	//Flag to determine whether the game has ended.
 	public void endGame() {
+		
+		logger.info("Game ended.");
 		this.endGame = true;
 	}
 	
@@ -241,6 +243,11 @@ public class Game implements Serializable {
 	//1 - Give Response
 	//2 - Shelter Response
 	public void setResponse(int responseType) {
+		
+	    if (responseType < 0 || responseType >= Constants.NUMBER_RESPONSES) {
+	        throw new IllegalArgumentException("Invalid response type: " + responseType);
+	    }
+		
 		this.responseRequired = responseType;
 	}
 	
@@ -345,7 +352,7 @@ public class Game implements Serializable {
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
  * 15 March 2025 - Moved initialisation to separate section. Refactored way to handle exits
- * 16 March 2025 - Added specialItemHandler. Moved constants to constants class
+ * 76 March 2025 - Added specialItemHandler. Moved constants to constants class
  * 				   Moved random exits to a separate class to generate the random exits
- * 
+ * 				   Generated SpecialExitHandler once
  */

@@ -36,6 +36,7 @@ public class Constants {
 	public static final int START_LOCATION = 23;
 	public static final int RANDOM_ROOM = 39;
 	public static final int RANDOM_EXIT_COMBO = 5;
+	public static final int NUMBER_RESPONSES = 2;
 	
 	public static final String NORTH = "North";
 	public static final String SOUTH = "South";

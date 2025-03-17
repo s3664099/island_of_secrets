@@ -2,19 +2,22 @@
 Title: Island of Secrets Special Exit Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 15 March 2025
+Version: 4.1
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import Data.Item;
 
-public class SpecialExitHandler {
+public class SpecialExitHandler implements Serializable {
+
+	private static final long serialVersionUID = 7662068425968354288L;
 
 	//Map holds an array of 2 strings - direction & special direction name
 	private Map<Integer, String[]> specialExits = new HashMap<Integer, String[]>();
@@ -69,5 +72,5 @@ public class SpecialExitHandler {
 }
 
 /* 15 March 2025 - Created File
- * 
+ * 17 March 2025 - Made class serialisable
  */

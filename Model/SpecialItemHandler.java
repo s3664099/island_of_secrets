@@ -2,20 +2,23 @@
 Title: Island of Secrets Special Item Handler Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 16 March 2025
+Version: 4.1
+Date: 17 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import Data.Item;
 import Data.Location;
 
-public class SpecialItemHandler {
+public class SpecialItemHandler implements Serializable {
+
+	private static final long serialVersionUID = -3392796825592359959L;
 
 	private Map<Integer, String> itemDescriptions = new HashMap<>();
 	
@@ -55,4 +58,5 @@ public class SpecialItemHandler {
 }
 
 /* 16 March 2025 - Created file
+ * 17 March 2025 - Made class serialisable
  */
