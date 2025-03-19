@@ -9,71 +9,65 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Data.Constants;
 
 public class MessageBuilder {
 	
-	private List<String> message;
+	private List<String> messages;
 	private int maxMessageLength;
 	
+	//Standard Construction
 	public MessageBuilder() {
-		
+		this.messages = new ArrayList<>();
+		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length
 	}
 	
+	//Initialises with a message
 	public MessageBuilder(String message) {
-		this.message.add(message);
+		this.messages = new ArrayList<>();
+		this.messages.add(message);
+		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length
 	}
 	
-	public void addLongMessage(String message) {
+	//Initialises with a custom max length
+	public MessageBuilder(int maxMessageLength) {
+		this.messages = new ArrayList<>();
+		this.maxMessageLength = maxMessageLength;
+	}
+	
+	/**
+     * Adds a message to the builder. If the message exceeds the maximum length,
+     * it is split into multiple lines at the last space before the limit.
+     */
+	public void addMessage(String message) {
 		
-		//Is this the first message?
-		if (!displayMessage) {
+		//Ignores empty or null messages
+		if (message != null && !message.isEmpty()) {
 			
-			//Clears and adds
-			displayMessage = true;
-			this.message.clear();
-			this.message.add(message);
+			//Split the message is if exceeds the max length
+			while(message.length() > maxMessageLength) {
+				int lastSpace = message.lastIndexOf(" ",maxMessageLength);
 
-		} else {
-			
-			//Gets the last one and adds new message to the end
-			int listSize = this.message.size();
-			String lastLine = this.message.get(listSize);
-			
-			//Checks how the last line ends
-			if (lastLine.endsWith(".")) {
-				lastLine = String.format("%s %s", lastLine, message);
-			} else {
-				lastLine = String.format("%s, %s", lastLine, message);
+				if (lastSpace == -1) {
+					
+					//No space found, for split at max length
+					lastSpace = maxMessageLength;
+				}
+				messages.add(message.substring(0,lastSpace).trim());
+				message = message.substring(lastSpace).trim();
 			}
 			
-			lastLine += message;
-			lastLine = lastLine.trim();
-			
-			//Checks if message to long
-			if (lastLine.length()>Constants.MESSAGE_LENGTH) {
-				
-				//Splits the message at the last space, and adds last two message to the end
-				int lastSpace = lastLine.lastIndexOf(" ");
-				lastLine = lastLine.substring(lastSpace, lastLine.length());
-				String oldLastLine = this.message.get(listSize).substring(0,lastSpace);
-				this.message.remove(lastLine);
-				this.message.add(oldLastLine);
-				this.message.add(lastLine);
-
-			} else {
-
-				//Concat's the message and replaces it with the last one.
-				message  = this.message.get(listSize)+message;
-				this.message.remove(listSize);
-				this.message.add(message);
+			//Adds the remaining part of the message
+			if (!message.isEmpty()) {
+				messages.add(message);
 			}
 		}
 	}
 	
-	public void addMessage(String message) {
+	public void concatMessage(String message) {
 		this.message.add(message);
 	}
 	
