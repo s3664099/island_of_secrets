@@ -26,6 +26,9 @@ public class Constants {
 	public static final int NUMBER_OF_NOUNS = 52;
 	public static final int NUMBER_EXITS = 4;
 	
+	//Panel Related constants
+	public static final int MESSAGE_LENGTH = 60;
+	
 	//Threshold for item categories in the item list
 	public static final int MAX_CARRIABLE_ITEMS = 24; // Items with IDs <= 24 are carriable
 	public static final int FOOD_THRESHOLD = 16; // Items with IDs >16 are food

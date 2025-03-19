@@ -1,5 +1,5 @@
 /*
-Title: Island of Secrets Initialise Game Class
+Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.2
@@ -27,11 +27,10 @@ public class Game implements Serializable {
 	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
 	private RandomExitHandler randomExitHandler = new RandomExitHandler();
 	
-	private String message = "Let your quest begin!";
-	private boolean newMessage = false;
+	private MessageBuilder normalMessage = new MessageBuilder("Let your quest begin!");
+	private MessageBuilder panelMessage = new MessageBuilder();
 	private String[] commands = {"","",""};
-	//private String panelMessageOne; - we are simply going to have an array for this
-	//private String panelMessageTwo;
+	
 	private int panelLoop;
 	private boolean endGame = false;
 	private int saveGameCount = 0;
@@ -158,13 +157,7 @@ public class Game implements Serializable {
 	public String getMessage() {
 		return this.message;
 	}
-	
-	//Resets the message
-	public void clearMessage() {
-		this.message = "";
-		this.newMessage = false;
-	}
-		
+			
 	//Extends the message
 	public void addMessage(String message) {
 		
@@ -172,11 +165,7 @@ public class Game implements Serializable {
 		
 		if (this.newMessage) {
 			
-			if (this.message.endsWith(".")) {
-				this.message = String.format("%s %s", this.message, message);
-			} else {
-				this.message = String.format("%s, %s", this.message, message);
-			}
+
 		}  else {
 			this.message = message;
 		}		
