@@ -573,6 +573,134 @@ The `Main` class is used by the `Start` class to initialize and launch the game.
 
 ---
 
+## **MessageBuilder**
+
+### **Overview**
+The `MessageBuilder` class is a utility class designed to manage and format messages in a text-based adventure game. It handles the construction, concatenation, and splitting of messages to ensure they fit within a specified maximum length. This class is particularly useful for displaying dynamic and multi-line messages to the player.
+
+### **Purpose**
+The primary purpose of the `MessageBuilder` class is to:
+- Manage the construction of messages, including concatenation and splitting.
+- Ensure messages do not exceed a specified maximum length.
+- Provide a clean and modular way to handle message formatting, separating this logic from the main game logic.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`messages`**: A `List<String>` that stores the formatted messages.
+- **`maxMessageLength`**: An `int` that specifies the maximum length of a single message line.
+
+#### **2. Constructors**
+- **`MessageBuilder()`**:  
+  Initializes the `MessageBuilder` with a default maximum message length (`Constants.MESSAGE_LENGTH`).
+
+- **`MessageBuilder(String message)`**:  
+  Initializes the `MessageBuilder` with a default maximum message length and adds an initial message.
+
+- **`MessageBuilder(int maxMessageLength)`**:  
+  Initializes the `MessageBuilder` with a custom maximum message length.
+
+#### **3. Methods**
+- **`addMessage(String message, boolean clear)`**:  
+  Adds a message to the builder. If the message exceeds the maximum length, it is split into multiple lines at the last space before the limit.  
+  - **Parameters**:
+    - `message`: The message to add.
+    - `clear`: If `true`, clears all existing messages before adding the new one.
+
+- **`addLongMessage(String message, boolean clear)`**:  
+  Adds a message that should be concatenated with the last message if possible. If the last message ends with a period, the new message starts on a new line. Otherwise, it is appended with a comma.  
+  - **Parameters**:
+    - `message`: The message to add.
+    - `clear`: If `true`, clears all existing messages before adding the new one.
+
+- **`getMessages()`**:  
+  Returns the list of formatted messages.  
+  - **Returns**: A `List<String>` containing the formatted messages.
+
+- **`clearMessages()`**:  
+  Clears all messages from the builder.
+
+### **Usage**
+To use the `MessageBuilder` class, follow these steps:
+
+1. **Initialize the Builder**:
+   ```java
+   MessageBuilder messageBuilder = new MessageBuilder();
+   ```
+
+2. **Add Messages**:
+   - Add a single message:
+     ```java
+     messageBuilder.addMessage("You see a tree bristling with apples.", false);
+     ```
+   - Add a long message that concatenates with the previous one:
+     ```java
+     messageBuilder.addLongMessage("There is a door to the east.", false);
+     ```
+
+3. **Retrieve Messages**:
+   ```java
+   List<String> messages = messageBuilder.getMessages();
+   for (String message : messages) {
+       System.out.println(message);
+   }
+   ```
+
+4. **Clear Messages**:
+   ```java
+   messageBuilder.clearMessages();
+   ```
+
+### **Best Practices**
+1. **Encapsulation**:  
+   - The `MessageBuilder` class encapsulates all message formatting logic, making it easy to modify or extend without affecting other parts of the code.
+
+2. **Separation of Concerns**:  
+   - Message formatting logic is separated from the main game logic, improving modularity and maintainability.
+
+3. **Flexibility**:  
+   - The class supports custom maximum message lengths and intelligent concatenation of messages.
+
+4. **Edge Case Handling**:  
+   - The class handles edge cases like null inputs, empty messages, and messages longer than the maximum length without spaces.
+
+### **Example**
+Here’s an example of how the `MessageBuilder` class might be used in a game:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Initialize the MessageBuilder with a custom max length
+        MessageBuilder messageBuilder = new MessageBuilder(50);
+
+        // Add messages
+        messageBuilder.addMessage("You see a tree bristling with apples.", false);
+        messageBuilder.addLongMessage("There is a door to the east.", false);
+        messageBuilder.addLongMessage("You can also go west into the cave.", false);
+
+        // Get and display messages
+        List<String> messages = messageBuilder.getMessages();
+        for (String message : messages) {
+            System.out.println(message);
+        }
+    }
+}
+```
+
+### **Output**
+```
+You see a tree bristling with apples.
+There is a door to the east, You can also go west into the cave.
+```
+
+### **Why Use This Class?**
+- **Cleaner Code**: The logic for message formatting is centralized, making the code easier to understand and maintain.
+- **Better Performance**: Messages are split and concatenated efficiently, reducing unnecessary operations.
+- **Robustness**: The class handles edge cases and ensures messages fit within the specified length limit.
+- **Flexibility**: Supports custom message length limits and intelligent concatenation.
+
+---
+
 ## **Player**
 
 ### **Overview**
