@@ -17,6 +17,8 @@ import View.GamePanel;
 import View.LightningPanel;
 import View.MapPanel;
 import View.MessagePanel;
+
+import java.util.List;
 import java.util.Random;
 
 public class GameEngine {
@@ -100,20 +102,21 @@ public class GameEngine {
 		
 	}
 	
-	public String getMessage() {
+	public List<String> getMessage() {
 		
 		//Swimming in poisoned Waters?
 		if (player.getPanelFlag()==4) {
 			
 			if (((float) player.getStat("strength"))<15) {
-				game.addMessage("|You are very weak!");
+				game.addMessage("You are very weak!",false);
 			}
 			
-			game.addMessage("|||Which Way?");
+			game.addMessage("", false);
+			game.addMessage("", false);
+			game.addMessage("Which Way?",false);
 		}
 		
-		String message = game.getMessage();
-		game.clearMessage();
+		List<String> message = game.getNormalMessage();
 		
 		return message;
 	}
@@ -159,12 +162,12 @@ public class GameEngine {
 		
 			//Either verb or noun doesn't exist
 			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-				this.game.addMessage("You can't "+command);
+				this.game.addNormalMessage("You can't "+command,true);
 			}
 
 			//Neither exists
 			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-				this.game.addMessage("What!!");
+				this.game.addNormalMessage("What!!",true);
 			}
 		
 			//No second word move to end
@@ -198,14 +201,14 @@ public class GameEngine {
 			
 		} else {
 			
-			this.game.addMessage("Ok");
+			this.game.addNormalMessage("Ok",true);
 			
 			if (command.substring(0,1).equals("n")) {
 				this.swim.swim();
 			} else if (!command.substring(0,1).equals("s") &&
 					   !command.substring(0,1).equals("e") &&
 					   !command.substring(0,1).equals("w")) {
-				this.game.addMessage("I do not understand");
+				this.game.addNormalMessage("I do not understand",true);
 			}
 			
 			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
@@ -214,12 +217,12 @@ public class GameEngine {
 			
 			if (this.swim.checkPosition((float) player.getStat("strength"))) {
 				player.setPanelFlag(0);
-				this.game.addMessage("You surface");
+				this.game.addNormalMessage("You surface",true);
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
 				
 			} else if (strength<1) {
-				this.game.addMessage("You get lost and drown");
+				this.game.addNormalMessage("You get lost and drown",true);
 				player.setPanelFlag(0);
 				this.game.endGame();
 			}
@@ -245,7 +248,7 @@ public class GameEngine {
 			CommandProcess processCommands = new CommandProcess();
 			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
 		} else {
-			this.game.addMessage("I'm sorry, I don't understand.");
+			this.game.addNormalMessage("I'm sorry, I don't understand.",true);
 		}
 		
 		this.game.setResponse(0);
@@ -268,7 +271,7 @@ public class GameEngine {
 			
 			processCommands.executeShelter(this.game, this.player,room);
 		} else {
-			this.game.addMessage("Please enter either 1,2 or 3");
+			this.game.addNormalMessage("Please enter either 1,2 or 3",true);
 		}
 		
 		this.game.setResponse(0);
@@ -311,8 +314,7 @@ public class GameEngine {
 			setPanel(game, new LightningPanel(0,game,this));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==3) {
-			setPanel(game,new MessagePanel(game,this,this.game.getMsgOne(),
-					 this.game.getMsgTwo(),this.game.getLoop()));
+			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage()));
 			player.setPanelFlag(0);
 		} else {
 			resetPanel(game);

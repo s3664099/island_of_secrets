@@ -9,6 +9,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.io.IOException;
 import java.util.Random;
 
 import Data.Constants;
@@ -44,7 +45,7 @@ public class CommandProcess {
 				splitCommand[1] = command.substring(commands[0].length()).trim();
 			}
 		} else {
-			game.addMessage("Most commands need two words");
+			game.addNormalMessage("Most commands need two words",true);
 		}
 	}
 	
@@ -145,7 +146,7 @@ public class CommandProcess {
 	}
 	
 	//Executes the command
-	public void executeCommand(Game game,Player player,int nounNumber) {
+	public void executeCommand(Game game,Player player,int nounNumber) throws IOException {
 		
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		int commandLength = this.commands.length;
@@ -295,7 +296,7 @@ public class CommandProcess {
 		//Thicket of biting bushes
 		if (player.getRoom()==14 && rand.nextInt(3)==1) {
 			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addMessage("You are bitten.");
+			game.addNormalMessage("You are bitten.",false);
 		}
 			
 		//Adjusting flag of living storm
@@ -311,7 +312,7 @@ public class CommandProcess {
 		if ((int) player.getStat("timeRemaining")<900 && player.getRoom()==23 && 
 			game.getItem(36).getItemFlag()>0 && stormRand ==2) {
 			game.getItem(36).setItemFlag(-(rand.nextInt(4)+6));
-			game.addMessage(" A storm breaks overhead!");
+			game.addNormalMessage(" A storm breaks overhead!",false);
 		}
 		
 		//Location of the wild canyon beast
@@ -345,16 +346,14 @@ public class CommandProcess {
 			game.getItem(32).getItemFlag()==0) {
 			
 			game.getItem(32).setItemFlag(-1);
-			String swampMan = "The swampman tells his tale";
-			String message = "Median can disable the equipment";
-			int loop = 2;
+			
+			game.addPanelMessage("The swampman tells his tale",true);
+			game.addPanelMessage("Median can disable the equipment",false);
 			
 			if (game.getItem(8).isAtLocation(0)) {
-				message+="|and asks you for the pebble you carry.";
-				loop++;
+				game.addPanelMessage("and asks you for the pebble you carry.",false);
 			}
 			player.setPanelFlag(3);
-			game.setPanelMessages(swampMan, message, loop);
 		}
 		
 		//Does the boatman appear?
@@ -366,7 +365,7 @@ public class CommandProcess {
 		//Check if pushed into well
 		if (player.getRoom()==19 && ((float) player.getStat("strength"))<70 && 
 			game.getItem(43).getItemFlag()==0 && rand.nextInt(4)==1) {
-			game.addMessage("Pushed into the pit");
+			game.addNormalMessage("Pushed into the pit",false);
 			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		}
 		
@@ -394,7 +393,8 @@ public class CommandProcess {
 				}
 				
 				player.setPanelFlag(3);
-				game.setPanelMessages(message, messageTwo,2);
+				game.addPanelMessage(message, true);
+				game.addPanelMessage(messageTwo, false);
 				
 				//Do you lose items
 				for (int i=3;i<5;i++) {
@@ -615,4 +615,5 @@ public class CommandProcess {
  * 12 March 2025 - Updated wisdom, strength & weight for use with hash map
  * 14 March 2025 - Updated eat & Drink
  * 17 March 2025 - Changed setMessage to addMessage
+ * 20 March 2025 - Started updating code with Message builder class
  */

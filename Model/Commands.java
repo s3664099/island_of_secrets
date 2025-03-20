@@ -540,15 +540,20 @@ public class Commands {
 		//Take a hit even if the object isn't present
 		player.setStat("strength",(float) player.getStat("strength")-12);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
-		game.addMessage("That would be unwise");
+		game.addNormalMessage("That would be unwise",true);
 		
 		//Is object present - ends game
 		if (game.getItem(noun).getItemLocation() == player.getRoom()) {
 			game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
+			
 			player.setPanelFlag(3);
-			game.setPanelMessages("Thunder splits the sky!","It is the triumphant"
-					+ " voice of Omegan.|Well done Alphan!|The means becomes the"
-							+ " end.|I claim you as my own!|Ha Ha Hah!",6);
+			game.addPanelMessage("Thunder splits the sky!",true);
+			game.addPanelMessage("It is the triumphant voice of Omegan.",false);
+			game.addPanelMessage("Well done Alphan!",false);
+			game.addPanelMessage("The means becomes the end.",false);
+			game.addPanelMessage("I claim you as my own!",false);
+			game.addPanelMessage("Ha Ha Hah!",false);
+
 			player.setStat("strength",0);
 			player.setStat("wisdom",0);
 			player.setStat("timeRemaining",0);
@@ -558,7 +563,7 @@ public class Commands {
 	
 	public void attack(Game game, Player player) {
 		
-		game.addMessage("That would be unwise");
+		game.addNormalMessage("That would be unwise",true);
 		
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
@@ -568,36 +573,37 @@ public class Commands {
 			
 			//Omegan the evil one
 			if (noun==39) {
-				game.addMessage("He laughs dangerously.");
+				game.addNormalMessage("He laughs dangerously.",true);
 			
 			//Swampman
 			} else if (noun==32) {
-				game.addMessage("The swampman is unmoved.");
+				game.addNormalMessage("The swampman is unmoved.",true);
 			
 			//Sage of the Lilies
 			} else if (noun==33) {
-				game.addMessage("You can't touch her");
+				game.addNormalMessage("You can't touch her",true);
 				game.getItem(3).setItemLocation(81);
 			
 			//Logmen
 			} else if (noun==41) {
-				game.addMessage("They think that's funny!");
+				game.addNormalMessage("They think that's funny!",true);
 
 			//In the Dactyl's Nest
 			} else if (player.getRoom()==46) {
 				
 				player.setPanelFlag(3);
-				game.setPanelMessages("You anger the bird!",
-									  "Which flies you to a remote place",2);
+				game.addPanelMessage("You anger the bird!",true);
+				game.addPanelMessage("Which flies you to a remote place", false);
+
 				player.setRoom(rand.nextInt(6)+63);
 				game.getItem(16).setItemLocation(1);
 				game.getItem(16).setItemFlag(0);
-				game.addMessage("");
+				game.addNormalMessage("",true);
 			
 			//Strike Flint
 			} else if (code.substring(0,4).equals("1400")) {
 
-				game.addMessage("Sparks fly");
+				game.addNormalMessage("Sparks fly",true);
 				
 				//Coal in room
 				if (player.getRoom()==game.getItem(13).getItemLocation()) {
@@ -608,13 +614,15 @@ public class Commands {
 					
 					//Omegan's present in his sanctum
 					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
-						game.setPanelMessages("The coal burns with a red flame",
-								"Which dissolves Omegan's Cloak",2);
+						
+						game.addPanelMessage("The coal burns with a red flame",true);
+						game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
+
 						player.setStat("wisdom",(int) player.getStat("wisdom")+20);
 						game.getItem(13).setItemFlag(-1);
 						game.getItem(38).setItemLocation(81);
 					} else {
-						game.setPanelMessages("The coal burns with a red flame","",1);					
+						game.addPanelMessage("The coal burns with a red flame",true);				
 					}
 				}
 			}
@@ -627,10 +635,10 @@ public class Commands {
 	public void swim(Player player,Game game) {
 
 		if (player.getRoom()!=51 || game.getItem(29).getItemFlag()>0) {
-			game.addMessage("You can't swim here!");
+			game.addNormalMessage("You can't swim here!",true);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else {
-			game.addMessage("You dive into the water");
+			game.addNormalMessage("You dive into the water",true);
 			player.setPanelFlag(4);
 			player.setRoom(rand.nextInt(5)+1);
 			player.setSwimming(true);
@@ -646,7 +654,7 @@ public class Commands {
 			if (commands.length>1) {
 				
 				String shelterLocation = commands[1];
-				game.addMessage("");
+				game.addNormalMessage("",true);
 				
 				if (commands.length>2 && commands[1].equals("in")) {
 					shelterLocation = commands[2];
@@ -659,15 +667,15 @@ public class Commands {
 				} else if (shelterLocation.equals("cabin")) {
 					location = 41;
 				} else {
-					game.addMessage("I'm sorry, I do not know that place");
+					game.addNormalMessage("I'm sorry, I do not know that place",true);
 				}
 				
 			} else {
-				game.addMessage("You can shelter in:");
+				game.addNormalMessage("You can shelter in:",true);
 				game.setResponse(2);
 			}
 		} else {
-			game.addMessage("Not possible at the moment.");
+			game.addNormalMessage("Not possible at the moment.",true);
 		}
 		
 		return location;
@@ -675,16 +683,16 @@ public class Commands {
 	
 	public void help(Player player, Game game) {
 		
-		game.addMessage("?!?");
+		game.addNormalMessage("?!?",true);
 		
 		//Help Villager or Sage
 		if (code.equals("3075075") || code.equals("3371071")) {
-			game.addMessage("How will you do that?");
+			game.addNormalMessage("How will you do that?",true);
 			
 			//Scratch the Sage
 			if (code.equals("3371071") && verb == 28) {
 				game.getItem(3).setItemFlag(0);
-				game.addMessage("She nods slowly.");
+				game.addNormalMessage("She nods slowly.",true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")+5);
 			}
 		} 
@@ -692,24 +700,24 @@ public class Commands {
 	
 	public void polish(Player player, Game game,String noun) {
 		
-		game.addMessage("A-dub-dub");
+		game.addNormalMessage("A-dub-dub",true);
 				
 		//Rub the stone
 		if (noun.equals("stone") && player.getRoom()==15 && game.getItem(28).getItemFlag()==1
 			&& game.getItem(5).getItemLocation()==0) {
 			game.getItem(28).setItemFlag(0);
-			game.addMessage("Reflections stir within.");			
+			game.addNormalMessage("Reflections stir within.",true);			
 		} else if (code.substring(0,4).equals("2815") && player.getRoom()==15
 				&& game.getItem(28).getItemFlag()==0) {
 			game.getItem(8).setItemFlag(0);
 			take(game,player);
-			game.addMessage("The stone utters 'Stony Words'");
+			game.addNormalMessage("The stone utters 'Stony Words'",true);
 		}
 	}
 	
 	public void examine(Player player, Game game, String[] command) {
 		
-		game.addMessage("Examine the book for clues");
+		game.addNormalMessage("Examine the book for clues",true);
 		
 		if (command[1].equals("well") && player.getRoom()==19) {
 			command[1]="room";
@@ -717,19 +725,19 @@ public class Commands {
 				
 		//Read the parchment
 		if (code.substring(0,3).equals("600")) {
-			game.addMessage("Remember Aladin. It Worked for him.");
+			game.addNormalMessage("Remember Aladin. It Worked for him.",true);
 			
 		//Examining the chest
 		} else if (code.equals("2644044") && command[0].equals("examine")) {
-			game.addMessage("The chest is closed");
+			game.addNormalMessage("The chest is closed",true);
 		} else if (code.equals("2644144") && command[0].equals("examine")) {
-			game.addMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says |"
-					+ "'Use the rag if it looks a bit dim'");
+			game.addNormalMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says |"
+					+ "'Use the rag if it looks a bit dim'",true);
 			
 			boolean ragSeen = false;
 			
 			if (game.getItem(5).getItemLocation()==44 && game.getItem(5).getItemFlag()==9) {
-				game.addMessage("|The chest contains a dirty old rag");
+				game.addNormalMessage(" The chest contains a dirty old rag",false);
 				game.getItem(5).setItemFlag(0);
 				ragSeen = true;
 			}
@@ -739,21 +747,21 @@ public class Commands {
 				String hammer = "";
 
 				if (!ragSeen) {
-					hammer = "|On the table is";
+					hammer = "On the table is";
 				} else {
 					hammer = " and";
 				}	
 				
-				game.addMessage(hammer+" a geologist's hammer");
+				game.addNormalMessage(hammer+" a geologist's hammer",false);
 				game.getItem(15).setItemFlag(0);
 			}
 		} else if (command[1].equals("table") && player.getRoom()==44 && command[0].equals("examine")) {
 			
-			game.addMessage("The coffee table looks like it has been better days.");
+			game.addNormalMessage("The coffee table looks like it has been better days.",true);
 			boolean breadSeen = false;
 			
 			if (game.getItem(17).getItemLocation()==44 && game.getItem(17).getItemFlag()==9) {
-				game.addMessage("|On the table is a loaf of bread");
+				game.addNormalMessage("On the table is a loaf of bread",false);
 				game.getItem(17).setItemFlag(0);
 				breadSeen = true;
 			}
@@ -763,54 +771,54 @@ public class Commands {
 				String water = "";
 				
 				if (!breadSeen) {
-					water = "|On the table is";
+					water = "On the table is";
 				} else {
 					water = " and";
 				}
 				
-				game.addMessage(water+" a bottle of water");
+				game.addNormalMessage(water+" a bottle of water",false);
 				game.getItem(21).setItemFlag(0);
 			}
 		} else if (command[1].equals("column") && player.getRoom()==58 && command[0].equals("examine")) {
-			game.addMessage("At the bottom of the column are the words 'remember old times'");
+			game.addNormalMessage("At the bottom of the column are the words 'remember old times'",true);
 		} else if (command[0].equals("examine") && command[1].equals("room")) {
-			game.addMessage("There doesn't seem anything out of the ordinary here");
+			game.addNormalMessage("There doesn't seem anything out of the ordinary here",true);
 			
 			if (player.getRoom()==65 || player.getRoom()==66 || player.getRoom()==67) {
-				game.addMessage("You can see quite a distance from here. To the north a forest rises into ragged peaks|");
-				game.addMessage("while to the west you can see a log village on a lake. The the south is a swamp, while|");
-				game.addMessage("blasted lands disappear to the east. In the middle of a lake, shrouded in mist, appears|");
-				game.addMessage("to be an ancient castle.");
+				game.addNormalMessage("You can see quite a distance from here. To the north a forest rises into ragged peaks",true);
+				game.addNormalMessage("while to the west you can see a log village on a lake. The the south is a swamp, while",false);
+				game.addNormalMessage("blasted lands disappear to the east. In the middle of a lake, shrouded in mist, appears",false);
+				game.addNormalMessage("to be an ancient castle.",false);
 			} else if (player.getRoom()==19) {
-				game.addMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting|");
-				game.addMessage("to add you to their number");
+				game.addNormalMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting",true);
+				game.addNormalMessage("to add you to their number",false);
 			} else if (player.getRoom()==74 || player.getRoom()==75||player.getRoom()==76) {
-				game.addMessage("You see a village that appears to have been frozen in time, with buildings and|");
-				game.addMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp|");
-				game.addMessage("seems to be ever so slowly enveloping it.");
+				game.addNormalMessage("You see a village that appears to have been frozen in time, with buildings and",true);
+				game.addNormalMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp",false);
+				game.addNormalMessage("seems to be ever so slowly enveloping it.",false);
 			} else if (player.getRoom()==17) {
-				game.addMessage("This room has rows and rows of pods with glass lids containing what appears|");
-				game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number|");
-				game.addMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or|");
-				game.addMessage("have rotted away. A foul, almost toxic, smell seems to be present.");
+				game.addNormalMessage("This room has rows and rows of pods with glass lids containing what appears",true);
+				game.addNormalMessage("appears to be identical people fast asleep, or even in a coma. However a number",false);
+				game.addNormalMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or",false);
+				game.addNormalMessage("have rotted away. A foul, almost toxic, smell seems to be present.",false);
 			} else if (player.getRoom()==10) {
-				game.addMessage("This room has an evil presence in it, with strange symbols on the floor and wall|");
-				game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from|");
-				game.addMessage("long forgotten family. A crystaline glass window looks out over the island.");
+				game.addNormalMessage("This room has an evil presence in it, with strange symbols on the floor and wall",true);
+				game.addNormalMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from",false);
+				game.addNormalMessage("long forgotten family. A crystaline glass window looks out over the island.",false);
 			} else if (player.getRoom()==58) {
-				game.addMessage("The column looks like it has seen better days. It is crumbling and appears that a|");
-				game.addMessage("peice could easily be removed if you had the right equipment. There is a message|");
-				game.addMessage("inscribed at the base of the column.");
+				game.addNormalMessage("The column looks like it has seen better days. It is crumbling and appears that a",true);
+				game.addNormalMessage("peice could easily be removed if you had the right equipment. There is a message",false);
+				game.addNormalMessage("inscribed at the base of the column.",false);
 			} else if (player.getRoom()==60) {
-				game.addMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.|");
-				game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,|");
-				game.addMessage("considering the contents. There is a desk that is covered in papers, which includes|"); 
-				game.addMessage("what looks like a map.");
+				game.addNormalMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.",true);
+				game.addNormalMessage("Whoever lived here, or worked from here, must have been some sort of scholar,",false);
+				game.addNormalMessage("considering the contents. There is a desk that is covered in papers, which includes",false); 
+				game.addNormalMessage("what looks like a map.",false);
 				game.getRoom(player.getRoom()).setViewed();
 			}
 		} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
 				
-			game.addMessage("The map looks like it is of a castle located on an island");
+			game.addNormalMessage("The map looks like it is of a castle located on an island",true);
 			game.getRoom(57).setVisited();
 			
 			for (int x=0;x<5;x++) {
@@ -821,68 +829,68 @@ public class Commands {
 				
 		} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
 		
-			game.addMessage("The papers look like the belong to somebody by the name Median. It chronicles his search|");
-			game.addMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure|");
-			game.addMessage("for this poison. In addition, you notice the following|");
+			game.addNormalMessage("The papers look like the belong to somebody by the name Median. It chronicles his search",true);
+			game.addNormalMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure",false);
+			game.addNormalMessage("for this poison. In addition, you notice the following",false);
 			
 			int x=rand.nextInt(10);			
 
 			switch (x) {
 				case 0:
-					game.addMessage("'Only those of strong will can resist the boatman'");
+					game.addNormalMessage("'Only those of strong will can resist the boatman'",false);
 					break;
 				case 1:
-					game.addMessage("'The Sagemaster rewards those who help her'");
+					game.addNormalMessage("'The Sagemaster rewards those who help her'",false);
 					break;
 				case 2:
-					game.addMessage("'The stone's mouth needs some polishing'");
+					game.addNormalMessage("'The stone's mouth needs some polishing'",false);
 					break;
 				case 3:
-					game.addMessage("'The hands fear bright light'");
+					game.addNormalMessage("'The hands fear bright light'",false);
 					break;
 				case 4:
-					game.addMessage("'Words will stop the stone'");
+					game.addNormalMessage("'Words will stop the stone'",false);
 					break;
 				case 5:
-					game.addMessage("'Omegan's Cloak is his strength'");
+					game.addNormalMessage("'Omegan's Cloak is his strength'",false);
 					break;
 				case 6:
-					game.addMessage("'The Dactyl could be useful'");
+					game.addNormalMessage("'The Dactyl could be useful'",false);
 					break;
 				default:
-					game.addMessage("'I think it is time to head to the island. I hope I remember.'");
+					game.addNormalMessage("'I think it is time to head to the island. I hope I remember.'",false);
 			}	
 		}
 	}
 	
 	public void fill(Game game,Player player) {
 		
-		game.addMessage("Not sure that can be done.");
+		game.addNormalMessage("Not sure that can be done.",true);
 		
 		//Fill Earthenware Jug
 		if (code.equals("40041")) {
 			game.getItem(4).setItemFlag(-1);
-			game.addMessage("Filled");
+			game.addNormalMessage("Filled",true);
 			game.getItem(4).setItemName("A jug full of bubbling green liquid");
 		} else if (code.equals("40013")) {
-			game.addMessage("The water streams out of the jug");
+			game.addNormalMessage("The water streams out of the jug",true);
 		} else if (code.substring(0,2).equals("40")) {
 			
 			if (game.getItem(4).getItemFlag()==-1)  {
 				if (player.getRoom()==41 || player.getRoom()==13) {
-					game.addMessage("The jug is already full");
+					game.addNormalMessage("The jug is already full",true);
 				}
 			}
 		}
 	}
 	
 	public void say(Game game, String noun,Player player) {
-		game.addMessage(noun);
+		game.addNormalMessage(noun,true);
 		
 		//Speaking to the clashing rocks
 		if (noun.toLowerCase().equals("stony words") && player.getRoom()==47 &&
 			game.getItem(8).getItemFlag()==0) {
-			game.addMessage("The stones are fixed.");
+			game.addNormalMessage("The stones are fixed.",true);
 			game.getItem(44).setItemFlag(1);
 		}
 		
@@ -891,7 +899,7 @@ public class Commands {
 			player.getRoom()==game.getItem(42).getItemLocation() && 
 			game.getItem(3).getItemLocation()==81 &&
 			game.getItem(12).getItemLocation()==81) {
-			game.addMessage("He eats the flowers - and changes");
+			game.addNormalMessage("He eats the flowers - and changes",true);
 			game.getItem(42).setItemFlag(1);
 			game.getItem(43).setItemFlag(0);
 		}
@@ -916,8 +924,12 @@ public class Commands {
 		}
 				
 		if (!msgSet) {
-			game.setPanelMessages("Time passes ...", "Time passes ...", count);
-			game.addMessage("Ok");
+			
+			game.addPanelMessage("Time passes ...", true);
+			for (int i=1;i<count;i++) {
+				game.addPanelMessage("Time passes ...", false);
+			}
+			game.addNormalMessage("Ok",true);
 			player.setPanelFlag(3);
 		}
 		
@@ -928,16 +940,16 @@ public class Commands {
 		
 		//Wave to boatman
 		if (game.getItem(25).isAtLocation(player.getRoom())) {
-			game.addMessage("The boatman waves back.");
+			game.addNormalMessage("The boatman waves back.",true);
 		}
 		
 		//Wave torch
 		if (code.substring(0,3).equals("700")) {
 			game.getItem(7).setItemFlag(1);
-			game.addMessage("The torch brightens.");
+			game.addNormalMessage("The torch brightens.",true);
 			
 			if (player.getRoom()==28) {
-				game.addMessage("The hands release you and retreat into the wall.");
+				game.addNormalMessage("The hands release you and retreat into the wall.",false);
 			}
 			
 			game.getItem(7).setItemName("a brightly glowing torch");
@@ -948,27 +960,20 @@ public class Commands {
 	public void info (Game game, Player player) {
 		
 		boolean hasItem = false;
-		int lineLength = Constants.LINE_LENGTH;
 		int itemLength = 0;
 		String items = "";
 		
-		game.addMessage("Info - Items carried|");
-		game.addMessage("Food: "+((int) player.getStat("food")));
-		game.addMessage("      Drink: "+((int) player.getStat("water"))+"|");
+		game.addMessage("Info - Items carried",true);
+		game.addMessage("Food: "+((int) player.getStat("food")),false);
+		game.addMessage("Drink: "+((int) player.getStat("water")),false);
 				
 		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
 			
 			if (game.getItem(i).isAtLocation(0)) {
 				
-				//Checks the length of the string and adds a break if too long
-				if (itemLength+game.getItem(i).getItemName().length()+1>lineLength) {
-					items = items +"|";
-					itemLength = 0;
-				}
-				
 				//First item recorded
 				if (!hasItem) {
-					items = "|Items: "+game.getItem(i).getItemName();
+					items = "Items: "+game.getItem(i).getItemName();
 					hasItem = true;
 					itemLength = items.length()-1;
 				
@@ -986,16 +991,16 @@ public class Commands {
 				}
 			}
 		}
-		game.addMessage(items);
+		game.addMessage(items,false);
 	}
 	
-	public void save(Game game, Player player) {
+	public void save(Game game, Player player) throws IOException {
 		
 		boolean writeFile = false;
 		String[] commands = command.split(" ");
 		
 		if (commands.length==1) {
-			game.addMessage("Please include the name of your game.");
+			game.addNormalMessage("Please include the name of your game.",true);
 		} else {
 				
 			File saveGameDirectory = new File("savegames");
@@ -1011,7 +1016,7 @@ public class Commands {
 			if (saveFile.exists() && (commands.length<3 || !commands[2].equals("o"))) {
 					
 				//If file exists tells user how to overwrite it
-				game.addMessage("File already exists. Please add 'o' to the end to overwrite.|");
+				game.addNormalMessage("File already exists. Please add 'o' to the end to overwrite.",true);
 				writeFile = false;
 			
 			} else {
@@ -1028,19 +1033,18 @@ public class Commands {
 					out.writeObject(player);
 					out.close();
 					file.close();
-					game.addMessage("Save successful");
+					game.addNormalMessage("Save successful",true);
 
 				} catch (IOException e) {
-					game.addMessage("Game failed to save");
-					//e.printStackTrace();
+			        throw new IOException("Game Failed to save " + e.toString());
 				}
 			} else {
-				game.addMessage("Game not saved");
+				game.addNormalMessage("Game not saved",true);
 			}
 		}
 	}
 	
-	public boolean load(Game game, Player player) {
+	public boolean load(Game game, Player player) throws IOException {
 		
 		//Prevent saves from having more than one word (Same with save)
 		
@@ -1057,7 +1061,7 @@ public class Commands {
 		
 			//If not available
 			if (!saveFile.exists()) {			
-				game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.|");
+				game.addNormalMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true);
 			} else {
 				loadFile = true;
 			}
@@ -1078,13 +1082,12 @@ public class Commands {
 				
 					fileIn.close();
 					file.close();
-					this.game.addMessage("Game successfully loaded");
+					this.game.addNormalMessage("Game successfully loaded",true);
 					game.resetCount();
 							
 					//Location failed to load
 				} catch (IOException|ClassNotFoundException e) {
-					this.game.addMessage("Game failed to load");
-					//e.printStackTrace();
+			        throw new IOException("Game Failed to save " + e.toString());
 				}
 			}
 		}
@@ -1116,7 +1119,7 @@ public class Commands {
 		game.setLessGames(false);
 		
 		if (noGames==0) {
-			game.addMessage("There are no saved games to display");
+			game.addNormalMessage("There are no saved games to display",true);
 		} else {
 
 			//Check with number of games and determine which games are displayed
@@ -1143,13 +1146,13 @@ public class Commands {
 		
 			game.setGameDisplay(true);
 			game.setDisplayedGames(gameDisplayed);
-			game.addMessage(gameMessage);
+			game.addNormalMessage(gameMessage,true);
 		}
 	}
 	
 	public void quit(Player player, Game game) {
 		
-		game.addMessage("You relinquish your quest");
+		game.addNormalMessage("You relinquish your quest",true);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
 		player.setStat("timeRemaining",1);
 		game.endGame();

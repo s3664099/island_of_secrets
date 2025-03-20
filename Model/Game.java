@@ -164,6 +164,11 @@ public class Game implements Serializable {
 	}
 			
 	//Adds Message
+	public void addMessage(String message,Boolean clear) {
+		logger.info("Adding message: " + message);
+		normalMessage.addMessage(message, clear);
+	}
+	
 	public void addNormalMessage(String message,boolean clear) {
 		
 		logger.info("Adding message: " + message);
