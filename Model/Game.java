@@ -2,14 +2,15 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 17 March 2025
+Version: 4.3
+Date: 20 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 
 import Data.Constants;
@@ -29,9 +30,9 @@ public class Game implements Serializable {
 	
 	private MessageBuilder normalMessage = new MessageBuilder("Let your quest begin!");
 	private MessageBuilder panelMessage = new MessageBuilder();
+	
 	private String[] commands = {"","",""};
 	
-	private int panelLoop;
 	private boolean endGame = false;
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
@@ -154,21 +155,25 @@ public class Game implements Serializable {
 	}
 	
 	//Retrieves the message
-	public String getMessage() {
-		return this.message;
+	public List<String> getNormalMessage() {
+		return normalMessage.getMessages();
+	}
+	
+	public List<String> getPanelMessage() {
+		return panelMessage.getMessages();
 	}
 			
-	//Extends the message
-	public void addMessage(String message) {
+	//Adds Message
+	public void addNormalMessage(String message,boolean clear) {
 		
 		logger.info("Adding message: " + message);
+		normalMessage.addLongMessage(message, clear);
 		
-		if (this.newMessage) {
-			
-
-		}  else {
-			this.message = message;
-		}		
+	}
+	
+	public void addPanelMessage(String message,boolean clear) {
+		logger.info("Adding Panel message: " + message);
+		panelMessage.addMessage(message, clear);
 	}
 	
 	public String getCommand(int number) {
@@ -183,22 +188,7 @@ public class Game implements Serializable {
 	public int getItemFlagSum(int itemNumber) {
 		return itemList[itemNumber].getItemFlag() + itemList[itemNumber].getItemLocation();
 	}
-	
-	//Sets up and gets the panel messages
-	public void setPanelMessages(String messages,int loop) {
-		this.panelMessageOne = messageOne;
-		this.panelMessageTwo = messageTwo;
-		this.panelLoop = loop;
-	}
-	
-	public String getMsgOne() {
-		return this.panelMessageOne;
-	}
-	
-	public int getLoop() {
-		return this.panelLoop;
-	}
-	
+			
 	//Flag to determine whether the game has ended.
 	public void endGame() {
 		
@@ -341,7 +331,8 @@ public class Game implements Serializable {
  * 2 March 2025 - Added variable to confirm start of game
  * 5 March 2025 - Increased to v4.0
  * 15 March 2025 - Moved initialisation to separate section. Refactored way to handle exits
- * 76 March 2025 - Added specialItemHandler. Moved constants to constants class
+ * 16 March 2025 - Added specialItemHandler. Moved constants to constants class
  * 				   Moved random exits to a separate class to generate the random exits
  * 				   Generated SpecialExitHandler once
+ * 20 March 2025 - Updated class to handle message builder
  */

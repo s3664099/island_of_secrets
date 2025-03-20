@@ -42,10 +42,15 @@ public class MessageBuilder {
      * Adds a message to the builder. If the message exceeds the maximum length,
      * it is split into multiple lines at the last space before the limit.
      */
-	public void addMessage(String message) {
+	public void addMessage(String message, boolean clear) {
 		
 		//Ignores empty or null messages
 		if (message != null && !message.isEmpty()) {
+			
+			//Clears the message if instructed
+			if (clear) {
+				clearMessages();
+			}
 			
 			//Split the message is if exceeds the max length
 			while(message.length() > maxMessageLength) {
@@ -72,10 +77,17 @@ public class MessageBuilder {
      * If the last message ends with a period, the new message starts on a new line.
      * Otherwise, it is appended with a comma.
      */
-    public void addLongMessage(String message) {
+    public void addLongMessage(String message, boolean clear) {
     	
     	if (message != null && !message.isEmpty()) {
+    		
+			//Clears the message if instructed
+			if (clear) {
+				clearMessages();
+			}
+    		
     		if (messages.isEmpty()) {
+    		
     			//First message, add it directly
     			messages.add(message);
     		} else {
@@ -103,7 +115,7 @@ public class MessageBuilder {
     				
     				//Split the concatenated message
     				messages.remove(messages.size()-1);
-    				addMessage(lastMessage);
+    				addMessage(lastMessage,false);
     			}
     		}
     	}
@@ -114,7 +126,7 @@ public class MessageBuilder {
      * Returns the list of formatted messages.
      */
     public List<String> getMessages() {
-        return new ArrayList<>(messages); // Return a copy to prevent external modification
+        return messages; // Return a copy to prevent external modification
     }
 
     /**
@@ -126,5 +138,6 @@ public class MessageBuilder {
 }
 
 /* 19 March 2025 - Created Class
- * 20 March 2025 - Completed class based on recommendations
+ * 20 March 2025 - Completed class based on recommendations.
+ * 				   Add clear functionality inside message
  */
