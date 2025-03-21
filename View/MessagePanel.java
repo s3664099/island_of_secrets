@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 21 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,6 +11,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
@@ -27,39 +28,42 @@ public class MessagePanel extends JPanel {
 	private GamePanel game;
 	private GameEngine engine;
 	
-    public MessagePanel(GamePanel game,GameEngine engine,String messageOne,String messageTwo,int noMessages) {
+	private final int HEAD = 0;
+	private final int NEXT = 1;
+	private final String FONT = "Arial";
+	private final int FONT_SIZE = 24;
+	
+    public MessagePanel(GamePanel game,GameEngine engine,ArrayList<String> messages) {
     	
         this.game = game;
         this.engine = engine;
-        noMessages --;
         
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
         
-        label = createLabel("<html>"+messageOne+"</html>");
+        //Displays the first message
+        label = createLabel("<html>"+messages.get(HEAD)+"</html>");
         add(label, BorderLayout.CENTER);
-
-        //Splits the second message to create multiple messages
-        String[] messages = messageTwo.split("\\|");
         
-        if (messages.length == 1) {
-        	messageOne = messageOne+"<br>"+messageTwo;
-        } else {
-        	messageOne = messageOne+"<br>"+messages[0];
-        	messageTwo = messageTwo.substring(messages[0].length()+1);
-        }
+        //Updates the first message with the second and removes them
+        if (messages.size() > 0) {
+        	String message = messages.get(HEAD)+"<br>"+messages.get(NEXT);
+        	messages.remove(HEAD);
+        	messages.remove(HEAD);
+        	messages.add(HEAD, message);
+        } 
         
-        startSequence(noMessages,messageOne,messageTwo);
+        startSequence(messages);
 
     }
 	
     private JLabel createLabel(String text) {
         label = new JLabel(text, SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 24)); // Optional: Customize the font
+        label.setFont(new Font(FONT, Font.BOLD, FONT_SIZE)); 
         return label;
     }
     
-    private void startSequence(int noMessages,String messageOne,String messageTwo) {
+    private void startSequence(ArrayList<String> messages) {
             	
     	// First delay: 2 seconds for initial message
         new Thread(() -> {
@@ -67,16 +71,17 @@ public class MessagePanel extends JPanel {
             	
             	int delay = 2;
             	
-            	if (noMessages==0) {
+            	//Last Message
+            	if (messages.size()==1) {
             		delay=5;
             	}
             	
             	TimeUnit.SECONDS.sleep(delay);
                 
-            	if (noMessages == 0) {
+            	if (messages.size()==1) {
             		SwingUtilities.invokeLater(() ->  resetPanel(game));
             	} else {
-            		setPanel(game,new MessagePanel(this.game,this.engine,messageOne,messageTwo,noMessages));
+            		setPanel(game,new MessagePanel(this.game,this.engine,messages));
             	}
 
             } catch (InterruptedException e) {
@@ -107,4 +112,5 @@ public class MessagePanel extends JPanel {
  * 18 January 2025 - Removed the unused includes and added a serializable section to get rid of warnings.
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
+ * 21 March 2025 - Updated for MessageBuilder class
  */
