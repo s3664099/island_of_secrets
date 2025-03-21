@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 21 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -86,8 +87,7 @@ public class GamePanel extends JPanel {
 				
 		//Display message
 		middlePanel.add(CreateLabelPanel("", 1));
-		String message = game.getMessage();
-		String[] messages = message.split("\\|");
+		List<String> messages = game.getMessage();
 				
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
@@ -314,4 +314,5 @@ public class GamePanel extends JPanel {
  * 2 March 2025 - Added button to open browser to book
  * 3 March 2025 - Added code to focus on the command line.
  * 5 March 2025 - Increased to v4.0
+ * 21 March 2021 - Updated for messageBuilder
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 21 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -38,8 +38,8 @@ public class LightningPanel extends JPanel {
 
         // Create and add the label to the center
         label = new JLabel("⚡⚡ Lightning Flashes ⚡⚡", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 36)); // Optional: Customize the font
-        label.setForeground(Color.WHITE); // Optional: Text color
+        label.setFont(new Font("Arial", Font.BOLD, 36));
+        label.setForeground(Color.WHITE);
         add(label, BorderLayout.CENTER);
 
         startLightningEffect();
@@ -89,4 +89,5 @@ public class LightningPanel extends JPanel {
  * 18 January 2025 - Removed the unused includes and added a serializable section to get rid of warnings.
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
+ * 21 March 2025 - Removed the notes
 */

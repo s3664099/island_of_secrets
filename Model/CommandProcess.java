@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 17 March 2025
+Version: 4.6
+Date: 21 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -416,13 +416,13 @@ public class CommandProcess {
 			
 			String messageOne = "Median can disable the equipment";
 			player.setPanelFlag(3);
-			game.setPanelMessages(messageOne,"",1);
+			game.addPanelMessage(messageOne,true);
 		}
 		
 		//Player in the clone vat room
 		if (player.getRoom()==18) {
 			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addMessage("The gas leaking from the vats burns your lungs!");
+			game.addNormalMessage("The gas leaking from the vats burns your lungs!",false);
 		}
 		
 		//Too weak to carry something
@@ -431,13 +431,13 @@ public class CommandProcess {
 			
 			if (game.getItem(object).isAtLocation(0)) {
 				game.getItem(object).setItemLocation(player.getRoom());
-				game.addMessage(" You drop something.");
+				game.addMessage(" You drop something.",false);
 			}
 		}
 				
 		//Near the clashing stones
 		if (player.getRoom()==47 && game.getItem(8).getItemFlag()>0) {
-			game.addMessage(" You can go no further");
+			game.addMessage(" You can go no further",false);
 		}
 		
 		//Involving staff, pebble & coal - seems like a win condition
@@ -447,13 +447,13 @@ public class CommandProcess {
 			String messageOne = "The world lives with new hope!";
 			player.setPanelFlag(3);
 			game.setPanelMessages(game.getMsgOne(),game.getMsgTwo()+"|"+messageOne,game.getLoop()+1);
-			game.addMessage("Your quest is over!");
+			game.addNormalMessage("Your quest is over!",true);
 			game.endGame();
 		}
 		
 		//Fail Quest conditions
 		if ((int) player.getStat("timeRemaining")<0 || ((float) player.getStat("strength"))<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
-			game.addMessage( "You have failed, the evil one succeeds.");
+			game.addNormalMessage( "You have failed, the evil one succeeds.",true);
 			game.endGame();
 		}
 	}
@@ -466,27 +466,27 @@ public class CommandProcess {
 		
 		if (subject.length()==0) {
 			String itemName = game.getItem(objNumber).getItemName();
-			game.addMessage("Please enter who you will be giving the "+itemName+" to.");
+			game.addNormalMessage("Please enter who you will be giving the "+itemName+" to.",true);
 		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
-			game.addMessage("The "+subject+" is not here.");
+			game.addNormalMessage("The "+subject+" is not here.",true);
 		} else {
 			
-			game.addMessage("It is refused.");
+			game.addNormalMessage("It is refused.",true);
 			
 			//Removes the snake from the hut by giving it an apple
 			if (codedNoun.equals("10045") && objNumber==40) {
 				game.getItem(nounNumber).setItemLocation(81);
 				game.getItem(objNumber).setItemFlag(1);
-				game.addMessage("The snake uncoils");
+				game.addNormalMessage("The snake uncoils",true);
 				
 			//Giving water to a villager (but must have some drink)
 			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
 
 				if (game.getItem(11).getItemFlag() != 0) {
-					game.addMessage("He drinks the water and offers his staff");
+					game.addNormalMessage("He drinks the water and offers his staff",true);
 					game.getItem(30).setItemName("A villager");
 				} else {
-					game.addMessage("He drinks the water");
+					game.addNormalMessage("He drinks the water",true);
 				}
 				
 				game.getItem(11).setItemFlag(0);
@@ -505,7 +505,7 @@ public class CommandProcess {
 						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
 					game.getItem(objNumber).setItemFlag(1);
 					game.getItem(nounNumber).setItemLocation(81);
-					game.addMessage("The Swampman takes the jug and leaves");
+					game.addNormalMessage("The Swampman takes the jug and leaves",true);
 					alreadyMessage = true;
 				
 				//Give pebble to Median
@@ -519,27 +519,23 @@ public class CommandProcess {
 					game.getItem(43).setItemLocation(81);
 					game.getItem(43).setItemFlag(1);
 					
-					if (player.getRoom()==8) {
-						game.setPanelMessages("He takes it ...", 
-											  "and casts it into the chemical vats, |purifying them with"
-											  + " a clear blue light reaching far into the lakes and rivers "
-											  + "beyond.", 3);
-					} else {
-						game.setPanelMessages("He takes it,", 
-											  "runs down the corridor, ...|and casts it into the chemical vats,"+
-											  " |purifying them with a clear blue light reaching far into the "+
-											  "lakes and rivers beyond.", 4);
-					}
+					game.addPanelMessage("He takes it ...", true);
+					if (player.getRoom()!=8) {
+						game.addPanelMessage("runs down the corridor, ...", false);
+					} 
+					game.addPanelMessage("and casts it into the chemical vats, ", false);
+					game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
+					game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
 				}
 				
 				//Successfully given
 				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
-					game.addMessage("It is accepted");
+					game.addNormalMessage("It is accepted",true);
 				}
 				
 				//Giving to logmen
 				if (objNumber == 41) {
-					game.addMessage("It is taken");
+					game.addNormalMessage("It is taken",true);
 					game.getItem(nounNumber).setItemLocation(51);
 				}
 			}
@@ -550,8 +546,8 @@ public class CommandProcess {
 		
 		player.setRoom(location);
 		game.getItem(22).setItemFlag(-location);
-		game.addMessage("You reach shelter.");
-		game.setPanelMessages("You blindly run through the storm","",1);
+		game.addNormalMessage("You reach shelter.",true);
+		game.addPanelMessage("You blindly run through the storm",true);
 
 	}
 }
@@ -616,4 +612,5 @@ public class CommandProcess {
  * 14 March 2025 - Updated eat & Drink
  * 17 March 2025 - Changed setMessage to addMessage
  * 20 March 2025 - Started updating code with Message builder class
+ * 21 March 2025 - Finished updating messages with Message Builder class
  */

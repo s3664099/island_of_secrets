@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 17 March 2025
+Version: 4.4
+Date: 21 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import View.LightningPanel;
 import View.MapPanel;
 import View.MessagePanel;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -127,18 +128,18 @@ public class GameEngine {
 	}
 	
 	//Used if more than 5 saved games
-	public void increaseLoad(GamePanel game) {
+	public void increaseLoad(GamePanel game) throws IOException {
 		this.game.increaseCount();
 		System.out.println(this.game.getCount());
 		processCommand("load",game);
 	}
 	
-	public void decreaseLoad(GamePanel game) {
+	public void decreaseLoad(GamePanel game) throws IOException {
 		this.game.descreaseCount();
 		processCommand("load",game);
 	}
 	
-	public void processCommand(String command,GamePanel game) {
+	public void processCommand(String command,GamePanel game) throws IOException {
 		
 		//Saves the commands into the previous command list
 		if (this.commands[0].equals("")) {
@@ -406,4 +407,5 @@ public class GameEngine {
 12 March 2025 - Updated code to use the hashmap for wisdom, strength & weight
 15 March 2025 - Updated class to handle a separate swimming class.
 17 March 2025 - Changed setMessage to addMessage
+21 March 2025 - Added throws declaration
 */
