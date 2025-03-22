@@ -424,9 +424,11 @@ public class CommandProcess {
 			player.setStat("strength",(float) player.getStat("strength")-1);
 			game.addNormalMessage("The gas leaking from the vats burns your lungs!",false);
 		}
-		
+				
 		//Too weak to carry something
-		if (((float) player.getStat("strength"))-((int) player.getStat("weight"))<50) {
+		float str = (float) player.getStat("strength");
+		int weight = (int) player.getStat("weight");
+		if ((str-weight)<50) {
 			int object = rand.nextInt(9)+1;
 			
 			if (game.getItem(object).isAtLocation(0)) {

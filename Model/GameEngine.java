@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 21 March 2025
+Version: 4.5
+Date: 22 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -315,7 +315,7 @@ public class GameEngine {
 			setPanel(game, new LightningPanel(0,game,this));
 			player.setPanelFlag(0);
 		} else if (player.getPanelFlag()==3) {
-			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage()));
+			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
 			player.setPanelFlag(0);
 		} else {
 			resetPanel(game);
@@ -408,4 +408,5 @@ public class GameEngine {
 15 March 2025 - Updated class to handle a separate swimming class.
 17 March 2025 - Changed setMessage to addMessage
 21 March 2025 - Added throws declaration
+22 March 2025 - Updated MessagePanel constructor
 */

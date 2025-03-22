@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 20 March 2025
+Version: 4.8
+Date: 22 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -174,7 +174,7 @@ public class Commands {
 					player.setRoom(57);
 				}
 				game.addNormalMessage("The boat skims the dark and silent waters.",true);
-				//player.setPanelFlag(3);
+				player.setPanelFlag(3);
 			}
 		}
 	}
@@ -541,7 +541,7 @@ public class Commands {
 		player.setStat("strength",(float) player.getStat("strength")-12);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 		game.addNormalMessage("That would be unwise",true);
-		
+				
 		//Is object present - ends game
 		if (game.getItem(noun).getItemLocation() == player.getRoom()) {
 			game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
@@ -554,9 +554,10 @@ public class Commands {
 			game.addPanelMessage("I claim you as my own!",false);
 			game.addPanelMessage("Ha Ha Hah!",false);
 
-			player.setStat("strength",0);
+			player.setStat("strength",(float) 0);
 			player.setStat("wisdom",0);
 			player.setStat("timeRemaining",0);
+
 			game.endGame();	
 		}
 	}
@@ -1231,4 +1232,5 @@ public class Commands {
  * 14 March 2025 - Updated food and drink stats
  * 17 March 2025 - Changed setMessage to addMessage
  * 20 March 2025 - Started updating code to handle message builder in game class
+ * 22 March 2025 - Added cast to strength to fix error with killing people
  */

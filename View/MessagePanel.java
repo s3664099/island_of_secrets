@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 21 March 2025
+Version: 4.2
+Date: 22 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,31 +27,35 @@ public class MessagePanel extends JPanel {
 	private JLabel label;
 	private GamePanel game;
 	private GameEngine engine;
+	private String game_messages;
 	
 	private final int HEAD = 0;
 	private final int NEXT = 1;
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	
-    public MessagePanel(GamePanel game,GameEngine engine,List<String> messages) {
+    public MessagePanel(GamePanel game,GameEngine engine,List<String> messages,String start_message) {
     	
         this.game = game;
         this.engine = engine;
-        
+                
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
+        this.game_messages = start_message+messages.get(HEAD);
         
         //Displays the first message
-        label = createLabel("<html>"+messages.get(HEAD)+"</html>");
+        label = createLabel("<html>"+this.game_messages+"</html>");
         add(label, BorderLayout.CENTER);
         
         //Updates the first message with the second and removes them
         if (messages.size() > 0) {
-        	String message = messages.get(HEAD)+"<br>"+messages.get(NEXT);
-        	messages.remove(HEAD);
-        	messages.remove(HEAD);
-        	messages.add(HEAD, message);
-        } 
+        	
+        	this.game_messages = this.game_messages+"<br>";
+        		
+        	if (messages.size()>0) {
+        		messages.remove(HEAD);
+        	}
+        }
         
         startSequence(messages);
 
@@ -68,20 +72,20 @@ public class MessagePanel extends JPanel {
     	// First delay: 2 seconds for initial message
         new Thread(() -> {
             try {
-            	
+            	            	
             	int delay = 2;
             	
             	//Last Message
-            	if (messages.size()==1) {
+            	if (messages.size()==0) {
             		delay=5;
             	}
-            	
+          	
             	TimeUnit.SECONDS.sleep(delay);
                 
-            	if (messages.size()==1) {
+            	if (messages.size()==0) {
             		SwingUtilities.invokeLater(() ->  resetPanel(game));
             	} else {
-            		setPanel(game,new MessagePanel(this.game,this.engine,messages));
+            		setPanel(game,new MessagePanel(this.game,this.engine,messages,this.game_messages));
             	}
 
             } catch (InterruptedException e) {
@@ -113,4 +117,5 @@ public class MessagePanel extends JPanel {
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
  * 21 March 2025 - Updated for MessageBuilder class
+ * 22 March 2025 - Fixed issue with MessagePanel - works now.
  */
