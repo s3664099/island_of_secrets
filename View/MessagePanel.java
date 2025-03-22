@@ -11,7 +11,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
@@ -33,7 +33,7 @@ public class MessagePanel extends JPanel {
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	
-    public MessagePanel(GamePanel game,GameEngine engine,ArrayList<String> messages) {
+    public MessagePanel(GamePanel game,GameEngine engine,List<String> messages) {
     	
         this.game = game;
         this.engine = engine;
@@ -63,7 +63,7 @@ public class MessagePanel extends JPanel {
         return label;
     }
     
-    private void startSequence(ArrayList<String> messages) {
+    private void startSequence(List<String> messages) {
             	
     	// First delay: 2 seconds for initial message
         new Thread(() -> {

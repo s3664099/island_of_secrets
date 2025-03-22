@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 21 March 2025
+Version: 4.7
+Date: 22 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -446,7 +446,7 @@ public class CommandProcess {
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";
 			player.setPanelFlag(3);
-			game.setPanelMessages(game.getMsgOne(),game.getMsgTwo()+"|"+messageOne,game.getLoop()+1);
+			game.addPanelMessage(messageOne, false);
 			game.addNormalMessage("Your quest is over!",true);
 			game.endGame();
 		}
@@ -613,4 +613,5 @@ public class CommandProcess {
  * 17 March 2025 - Changed setMessage to addMessage
  * 20 March 2025 - Started updating code with Message builder class
  * 21 March 2025 - Finished updating messages with Message Builder class
+ * 22 March 2025 - Fixed up final issue with messages
  */

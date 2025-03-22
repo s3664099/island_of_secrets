@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2024
+Version: 4.1
+Date: 22 March 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,6 +11,7 @@ package Controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JTextField;
 
@@ -43,7 +44,12 @@ public class CommandListener implements KeyListener {
 			} else if (game.getResponseType()==2) {
 				game.processShelter(command,gamePanel);
 			} else {
-				game.processCommand(command, gamePanel);
+				try {
+					game.processCommand(command, gamePanel);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -68,4 +74,5 @@ public class CommandListener implements KeyListener {
  * 19 January 2025 - Added notes for unused methods.
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
+ * 22 March 2025 - Added error handling
  */
