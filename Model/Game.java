@@ -30,8 +30,11 @@ public class Game implements Serializable {
 	
 	private MessageBuilder normalMessage = new MessageBuilder("Let your quest begin!");
 	private MessageBuilder panelMessage = new MessageBuilder();
-	
+		
 	private String[] commands = {"","",""};
+	
+	private enum GameState { STARTED, RUNNING }
+	private GameState gameState = GameState.STARTED;
 	
 	private boolean endGame = false;
 	private int saveGameCount = 0;
@@ -39,7 +42,6 @@ public class Game implements Serializable {
 	private boolean displayGames = false;
 	private boolean moreGames = false;
 	private boolean lessGames = false;
-	private boolean start = true;
 	private String[] gameDisplayed = {"","","","",""};
 	private int apple_count = 3;
 	
@@ -97,7 +99,6 @@ public class Game implements Serializable {
 		
 		boolean[] exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
-		specialExitHandler = new SpecialExitHandler();
 		
 		if (roomNumber == Constants.RANDOM_ROOM) {
 			exitNumbers = randomExitHandler.generateRandomExits();			
@@ -180,15 +181,30 @@ public class Game implements Serializable {
 	}
 	
 	public String getCommand(int number) {
+		
+		if (number<0||number>=commands.length) {
+			throw new IllegalArgumentException("Invalid command number: " + number);
+		}
+		
 		return commands[number];
 	}
 	
-	public Item getItem(int itemNumber) {		
+	public Item getItem(int itemNumber) {
+		
+		if (itemNumber<0||itemNumber >=itemList.length) {
+			throw new IllegalArgumentException("Invalid item number: " + itemNumber);
+		}
+		
 		return itemList[itemNumber];
 	}
 	
 	//Gets the sum of the item's flag and location
 	public int getItemFlagSum(int itemNumber) {
+		
+		if (itemNumber<0||itemNumber >=itemList.length) {
+			throw new IllegalArgumentException("Invalid item number: " + itemNumber);
+		}
+		
 		return itemList[itemNumber].getItemFlag() + itemList[itemNumber].getItemLocation();
 	}
 			
@@ -231,6 +247,7 @@ public class Game implements Serializable {
 	    }
 		
 		this.responseRequired = responseType;
+		logger.info("Response type set to: " + responseType);
 	}
 	
 	public int getResponse() {
@@ -245,6 +262,7 @@ public class Game implements Serializable {
 		if (apple_count>0) {
 			apple_count --;
 			applesLeft = true;
+			logger.info("Apple count decreased. Remaining apples: " + apple_count);
 		}
 		
 		return applesLeft;
@@ -261,6 +279,7 @@ public class Game implements Serializable {
 	
 	public void setMoreGames(boolean moreGames) {
 		this.moreGames = moreGames;
+		logger.info("More game position set to: " + this.moreGames);
 	}
 	
 	public boolean getMoreGames() {
@@ -269,6 +288,7 @@ public class Game implements Serializable {
 	
 	public void setLessGames(boolean lessGames) {
 		this.lessGames = lessGames;
+		logger.info("Less game position set to: " + this.lessGames);
 	}
 	
 	public boolean getLessGames() {
@@ -285,16 +305,15 @@ public class Game implements Serializable {
 	
 	//Checks if the start of game
 	public boolean checkStart() {
+
+		boolean started = false;
 		
-		boolean start = true;
-		
-		if (this.start) {
-			this.start = false;
-		} else {
-			start = false;
+		if (gameState == GameState.STARTED) {
+			gameState = GameState.RUNNING;
+			started = true;
 		}
 		
-		return start;
+		return started;
 	}
 }
 
@@ -339,4 +358,5 @@ public class Game implements Serializable {
  * 				   Generated SpecialExitHandler once
  * 20 March 2025 - Updated class to handle message builder
  * 23 March 2025 - Combined addMessage and addNormalMessage
+ * 				   Updated check start to Enum
  */
