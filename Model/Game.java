@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 20 March 2025
+Version: 4.4
+Date: 23 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -164,18 +164,16 @@ public class Game implements Serializable {
 	}
 			
 	//Adds Message
-	public void addMessage(String message,Boolean clear) {
+	public void addMessage(String message,boolean clear, boolean isLongMessage ) {
 		logger.info("Adding message: " + message);
-		normalMessage.addMessage(message, clear);
-	}
-	
-	public void addNormalMessage(String message,boolean clear) {
 		
-		logger.info("Adding message: " + message);
-		normalMessage.addLongMessage(message, clear);
-		
+		if (isLongMessage) {
+			normalMessage.addLongMessage(message, clear);
+		} else {
+			normalMessage.addMessage(message, clear);
+		}
 	}
-	
+		
 	public void addPanelMessage(String message,boolean clear) {
 		logger.info("Adding Panel message: " + message);
 		panelMessage.addMessage(message, clear);
@@ -340,4 +338,5 @@ public class Game implements Serializable {
  * 				   Moved random exits to a separate class to generate the random exits
  * 				   Generated SpecialExitHandler once
  * 20 March 2025 - Updated class to handle message builder
+ * 23 March 2025 - Combined addMessage and addNormalMessage
  */

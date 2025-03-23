@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 22 March 2025
+Version: 4.6
+Date: 23 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -109,12 +109,12 @@ public class GameEngine {
 		if (player.getPanelFlag()==4) {
 			
 			if (((float) player.getStat("strength"))<15) {
-				game.addMessage("You are very weak!",false);
+				game.addMessage("You are very weak!",false,false);
 			}
 			
-			game.addMessage("", false);
-			game.addMessage("", false);
-			game.addMessage("Which Way?",false);
+			game.addMessage("", false,false);
+			game.addMessage("", false,false);
+			game.addMessage("Which Way?",false,false);
 		}
 		
 		List<String> message = game.getNormalMessage();
@@ -163,12 +163,12 @@ public class GameEngine {
 		
 			//Either verb or noun doesn't exist
 			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-				this.game.addNormalMessage("You can't "+command,true);
+				this.game.addMessage("You can't "+command,true,true);
 			}
 
 			//Neither exists
 			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-				this.game.addNormalMessage("What!!",true);
+				this.game.addMessage("What!!",true,true);
 			}
 		
 			//No second word move to end
@@ -202,14 +202,14 @@ public class GameEngine {
 			
 		} else {
 			
-			this.game.addNormalMessage("Ok",true);
+			this.game.addMessage("Ok",true,true);
 			
 			if (command.substring(0,1).equals("n")) {
 				this.swim.swim();
 			} else if (!command.substring(0,1).equals("s") &&
 					   !command.substring(0,1).equals("e") &&
 					   !command.substring(0,1).equals("w")) {
-				this.game.addNormalMessage("I do not understand",true);
+				this.game.addMessage("I do not understand",true,true);
 			}
 			
 			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
@@ -218,12 +218,12 @@ public class GameEngine {
 			
 			if (this.swim.checkPosition((float) player.getStat("strength"))) {
 				player.setPanelFlag(0);
-				this.game.addNormalMessage("You surface",true);
+				this.game.addMessage("You surface",true,true);
 				Random rand = new Random();
 				player.setRoom(rand.nextInt(3)+31);
 				
 			} else if (strength<1) {
-				this.game.addNormalMessage("You get lost and drown",true);
+				this.game.addMessage("You get lost and drown",true,true);
 				player.setPanelFlag(0);
 				this.game.endGame();
 			}
@@ -249,7 +249,7 @@ public class GameEngine {
 			CommandProcess processCommands = new CommandProcess();
 			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
 		} else {
-			this.game.addNormalMessage("I'm sorry, I don't understand.",true);
+			this.game.addMessage("I'm sorry, I don't understand.",true,true);
 		}
 		
 		this.game.setResponse(0);
@@ -272,7 +272,7 @@ public class GameEngine {
 			
 			processCommands.executeShelter(this.game, this.player,room);
 		} else {
-			this.game.addNormalMessage("Please enter either 1,2 or 3",true);
+			this.game.addMessage("Please enter either 1,2 or 3",true,true);
 		}
 		
 		this.game.setResponse(0);
@@ -409,4 +409,5 @@ public class GameEngine {
 17 March 2025 - Changed setMessage to addMessage
 21 March 2025 - Added throws declaration
 22 March 2025 - Updated MessagePanel constructor
+23 March 2025 - Merged addMessage and addNormalMessage
 */

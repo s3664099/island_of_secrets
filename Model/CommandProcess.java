@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 22 March 2025
+Version: 4.8
+Date: 23 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -45,7 +45,7 @@ public class CommandProcess {
 				splitCommand[1] = command.substring(commands[0].length()).trim();
 			}
 		} else {
-			game.addNormalMessage("Most commands need two words",true);
+			game.addMessage("Most commands need two words",true,true);
 		}
 	}
 	
@@ -296,7 +296,7 @@ public class CommandProcess {
 		//Thicket of biting bushes
 		if (player.getRoom()==14 && rand.nextInt(3)==1) {
 			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addNormalMessage("You are bitten.",false);
+			game.addMessage("You are bitten.",false,true);
 		}
 			
 		//Adjusting flag of living storm
@@ -312,7 +312,7 @@ public class CommandProcess {
 		if ((int) player.getStat("timeRemaining")<900 && player.getRoom()==23 && 
 			game.getItem(36).getItemFlag()>0 && stormRand ==2) {
 			game.getItem(36).setItemFlag(-(rand.nextInt(4)+6));
-			game.addNormalMessage(" A storm breaks overhead!",false);
+			game.addMessage(" A storm breaks overhead!",false,true);
 		}
 		
 		//Location of the wild canyon beast
@@ -365,7 +365,7 @@ public class CommandProcess {
 		//Check if pushed into well
 		if (player.getRoom()==19 && ((float) player.getStat("strength"))<70 && 
 			game.getItem(43).getItemFlag()==0 && rand.nextInt(4)==1) {
-			game.addNormalMessage("Pushed into the pit",false);
+			game.addMessage("Pushed into the pit",false,true);
 			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		}
 		
@@ -422,7 +422,7 @@ public class CommandProcess {
 		//Player in the clone vat room
 		if (player.getRoom()==18) {
 			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addNormalMessage("The gas leaking from the vats burns your lungs!",false);
+			game.addMessage("The gas leaking from the vats burns your lungs!",false,true);
 		}
 				
 		//Too weak to carry something
@@ -433,13 +433,13 @@ public class CommandProcess {
 			
 			if (game.getItem(object).isAtLocation(0)) {
 				game.getItem(object).setItemLocation(player.getRoom());
-				game.addMessage(" You drop something.",false);
+				game.addMessage(" You drop something.",false,false);
 			}
 		}
 				
 		//Near the clashing stones
 		if (player.getRoom()==47 && game.getItem(8).getItemFlag()>0) {
-			game.addMessage(" You can go no further",false);
+			game.addMessage(" You can go no further",false,false);
 		}
 		
 		//Involving staff, pebble & coal - seems like a win condition
@@ -449,13 +449,13 @@ public class CommandProcess {
 			String messageOne = "The world lives with new hope!";
 			player.setPanelFlag(3);
 			game.addPanelMessage(messageOne, false);
-			game.addNormalMessage("Your quest is over!",true);
+			game.addMessage("Your quest is over!",true,true);
 			game.endGame();
 		}
 		
 		//Fail Quest conditions
 		if ((int) player.getStat("timeRemaining")<0 || ((float) player.getStat("strength"))<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
-			game.addNormalMessage( "You have failed, the evil one succeeds.",true);
+			game.addMessage( "You have failed, the evil one succeeds.",true,true);
 			game.endGame();
 		}
 	}
@@ -468,27 +468,27 @@ public class CommandProcess {
 		
 		if (subject.length()==0) {
 			String itemName = game.getItem(objNumber).getItemName();
-			game.addNormalMessage("Please enter who you will be giving the "+itemName+" to.",true);
+			game.addMessage("Please enter who you will be giving the "+itemName+" to.",true,true);
 		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
-			game.addNormalMessage("The "+subject+" is not here.",true);
+			game.addMessage("The "+subject+" is not here.",true,true);
 		} else {
 			
-			game.addNormalMessage("It is refused.",true);
+			game.addMessage("It is refused.",true,true);
 			
 			//Removes the snake from the hut by giving it an apple
 			if (codedNoun.equals("10045") && objNumber==40) {
 				game.getItem(nounNumber).setItemLocation(81);
 				game.getItem(objNumber).setItemFlag(1);
-				game.addNormalMessage("The snake uncoils",true);
+				game.addMessage("The snake uncoils",true,true);
 				
 			//Giving water to a villager (but must have some drink)
 			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
 
 				if (game.getItem(11).getItemFlag() != 0) {
-					game.addNormalMessage("He drinks the water and offers his staff",true);
+					game.addMessage("He drinks the water and offers his staff",true,true);
 					game.getItem(30).setItemName("A villager");
 				} else {
-					game.addNormalMessage("He drinks the water",true);
+					game.addMessage("He drinks the water",true,true);
 				}
 				
 				game.getItem(11).setItemFlag(0);
@@ -507,7 +507,7 @@ public class CommandProcess {
 						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
 					game.getItem(objNumber).setItemFlag(1);
 					game.getItem(nounNumber).setItemLocation(81);
-					game.addNormalMessage("The Swampman takes the jug and leaves",true);
+					game.addMessage("The Swampman takes the jug and leaves",true,true);
 					alreadyMessage = true;
 				
 				//Give pebble to Median
@@ -532,12 +532,12 @@ public class CommandProcess {
 				
 				//Successfully given
 				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
-					game.addNormalMessage("It is accepted",true);
+					game.addMessage("It is accepted",true,true);
 				}
 				
 				//Giving to logmen
 				if (objNumber == 41) {
-					game.addNormalMessage("It is taken",true);
+					game.addMessage("It is taken",true,true);
 					game.getItem(nounNumber).setItemLocation(51);
 				}
 			}
@@ -548,7 +548,7 @@ public class CommandProcess {
 		
 		player.setRoom(location);
 		game.getItem(22).setItemFlag(-location);
-		game.addNormalMessage("You reach shelter.",true);
+		game.addMessage("You reach shelter.",true,true);
 		game.addPanelMessage("You blindly run through the storm",true);
 
 	}
@@ -616,4 +616,5 @@ public class CommandProcess {
  * 20 March 2025 - Started updating code with Message builder class
  * 21 March 2025 - Finished updating messages with Message Builder class
  * 22 March 2025 - Fixed up final issue with messages
+ * 23 March 2025 - Combined addMessage and addNormalMessage
  */
