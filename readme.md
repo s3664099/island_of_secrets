@@ -481,6 +481,149 @@ System.out.println("Object: " + objectDescription);
 
 ## **Game**
 
+### **Overview**
+The `Game` class is the core class of a text-based adventure game. It manages the game state, including locations, items, exits, player interactions, and messages. The class is designed to be modular, with responsibilities divided among helper classes like `SpecialExitHandler`, `SpecialItemHandler`, `RandomExitHandler`, and `MessageBuilder`.
+
+### **Purpose**
+The primary purpose of the `Game` class is to:
+- Manage the game world, including locations and items.
+- Handle player interactions, such as moving between rooms, picking up items, and triggering special events.
+- Maintain the game state, including messages, panel displays, and end-game conditions.
+- Provide a clean and modular structure for extending and maintaining the game.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- **`locationList`**: An array of `Location` objects representing the rooms in the game.
+- **`itemList`**: An array of `Item` objects representing the items in the game.
+- **`specialExitHandler`**: Handles special exits for specific rooms.
+- **`specialItemHandler`**: Handles special item descriptions and interactions.
+- **`randomExitHandler`**: Generates random exits for specific rooms.
+- **`normalMessage`**: A `MessageBuilder` for managing normal game messages.
+- **`panelMessage`**: A `MessageBuilder` for managing panel-specific messages.
+- **`commands`**: An array of commands available to the player.
+- **`gameState`**: An enum (`STARTED`, `RUNNING`) to track the game's state.
+- **`endGame`**: A flag indicating whether the game has ended.
+- **`saveGameCount`**: Tracks the number of saved games.
+- **`responseRequired`**: Indicates the type of response required from the player.
+- **`displayGames`**, **`moreGames`**, **`lessGames`**: Flags for managing game display options.
+- **`gameDisplayed`**: An array of displayed games.
+- **`apple_count`**: Tracks the number of apples remaining in the game.
+
+#### **2. Methods**
+- **`getRoomName(int roomNumber)`**: Returns the name of a room.
+- **`getItems(int roomNumber)`**: Returns a description of items in a room.
+- **`getExits(int roomNumber)`**: Returns a description of available exits from a room.
+- **`getSpecialExits(int roomNumber)`**: Returns a description of special exits for a room.
+- **`checkExit(int room, int direction)`**: Checks if a specific exit is available.
+- **`getRoom(int roomNumber)`**: Returns the `Location` object for a room.
+- **`addExit(String exit, String exits)`**: Helper method to format exit descriptions.
+- **`getNormalMessage()`**: Returns the list of normal messages.
+- **`getPanelMessage()`**: Returns the list of panel messages.
+- **`addMessage(String message, boolean clear, boolean isLongMessage)`**: Adds a message to the normal message builder.
+- **`addPanelMessage(String message, boolean clear)`**: Adds a message to the panel message builder.
+- **`getCommand(int number)`**: Returns a command from the commands array.
+- **`getItem(int itemNumber)`**: Returns an `Item` object.
+- **`getItemFlagSum(int itemNumber)`**: Returns the sum of an item's flag and location.
+- **`endGame()`**: Ends the game.
+- **`checkEndGame()`**: Checks if the game has ended.
+- **`checkApples()`**: Checks if there are apples remaining.
+- **`setResponse(int responseType)`**: Sets the required response type.
+- **`getResponse()`**: Returns the required response type.
+- **`checkStart()`**: Checks if the game has just started.
+
+### **Usage**
+To use the `Game` class, follow these steps:
+
+1. **Initialize the Game**:
+   ```java
+   Location[] locations = // Initialize locations
+   Item[] items = // Initialize items
+   SpecialExitHandler specialExitHandler = new SpecialExitHandler();
+   Game game = new Game(locations, items, specialExitHandler);
+   ```
+
+2. **Interact with the Game**:
+   - Get room information:
+     ```java
+     String roomName = game.getRoomName(23);
+     String itemsInRoom = game.getItems(23);
+     String exits = game.getExits(23);
+     ```
+   - Add messages:
+     ```java
+     game.addMessage("You see a tree bristling with apples.", false, false);
+     game.addPanelMessage("Panel message example.", true);
+     ```
+   - End the game:
+     ```java
+     game.endGame();
+     ```
+
+3. **Check Game State**:
+   - Check if the game has ended:
+     ```java
+     if (game.checkEndGame()) {
+         System.out.println("Game over!");
+     }
+     ```
+
+### **Best Practices**
+1. **Encapsulation**:  
+   - The `Game` class encapsulates all game logic, making it easy to modify or extend without affecting other parts of the code.
+
+2. **Separation of Concerns**:  
+   - Helper classes like `SpecialExitHandler`, `SpecialItemHandler`, `RandomExitHandler`, and `MessageBuilder` handle specific responsibilities, improving modularity and maintainability.
+
+3. **Input Validation**:  
+   - Methods like `getRoomName`, `getItems`, `getCommand`, and `setResponse` include input validation to prevent runtime errors.
+
+4. **Logging**:  
+   - Key events (e.g., adding messages, ending the game) are logged for debugging and monitoring.
+
+5. **Reusability**:  
+   - The class is designed to be reusable across different parts of the game or in future projects.
+
+### **Example**
+Here’s an example of how the `Game` class might be used in a game:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Initialize locations, items, and handlers
+        Location[] locations = // Initialize locations
+        Item[] items = // Initialize items
+        SpecialExitHandler specialExitHandler = new SpecialExitHandler();
+
+        // Initialize the game
+        Game game = new Game(locations, items, specialExitHandler);
+
+        // Interact with the game
+        System.out.println(game.getRoomName(23));
+        System.out.println(game.getItems(23));
+        System.out.println(game.getExits(23));
+
+        // Add a message
+        game.addMessage("You see a tree bristling with apples.", false, false);
+        System.out.println(game.getNormalMessage());
+
+        // End the game
+        game.endGame();
+        if (game.checkEndGame()) {
+            System.out.println("Game over!");
+        }
+    }
+}
+```
+
+### **Why Use This Class?**
+- **Centralized Game Logic**: The `Game` class manages all aspects of the game, providing a single point of control.
+- **Modularity**: Helper classes handle specific responsibilities, making the codebase easier to maintain and extend.
+- **Flexibility**: The class supports future enhancements, such as new locations, items, or game mechanics.
+- **Robustness**: Input validation and logging ensure that the game runs smoothly and is easy to debug.
+
+---
+
 ## **GameEngine**
 
 ---

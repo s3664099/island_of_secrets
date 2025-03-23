@@ -123,7 +123,7 @@ If you need to start a new chat and want to provide the necessary context about 
 
 ## **Commands**
 
-## **Game**
+
 
 ## **GameEngine**
 
