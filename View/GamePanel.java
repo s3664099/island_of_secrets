@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 21 March 2025
+Version: 4.2
+Date: 24 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,13 +39,10 @@ public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	Color background;
 	GameEngine game;
-	GameFrame frame;
 	JTextField commandField;
 
-	public GamePanel(GameEngine game,GameFrame frame) {
-		
+	public GamePanel(GameEngine game) {
 		add(game);
-		this.frame = frame;
 	}
 	
 	public void add(GameEngine game) {
@@ -157,7 +154,7 @@ public class GamePanel extends JPanel {
 
 		//Checks if displaying load games or shelter locations
 		if (!game.getGame().getGameDisplay() && game.getResponseType()!=2) {
-
+			
 			//Button to display the map
 			if (game.getPlayer().getPanelFlag()!=4) {
 				addButton(inputPanel,"Map",new MapButton(game,this),320);
@@ -192,8 +189,8 @@ public class GamePanel extends JPanel {
 				this.commandField = commandField;
 				
 			} else {
-				addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
-				addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
+				//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+				//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
 			}
 		
 			bottomPanel.add(inputPanel);
@@ -314,5 +311,6 @@ public class GamePanel extends JPanel {
  * 2 March 2025 - Added button to open browser to book
  * 3 March 2025 - Added code to focus on the command line.
  * 5 March 2025 - Increased to v4.0
- * 21 March 2021 - Updated for messageBuilder
+ * 21 March 2025 - Updated for messageBuilder
+ * 24 March 2025 - Removed GameFrame
  */

@@ -38,6 +38,9 @@ public class MapPanel extends JPanel {
 		this.game = game;
 		this.engine = engine;
 		
+		System.out.println("In Panel");
+		System.out.println(engine);
+		
 		setLayout(new GridLayout(11,10));
 		
 		for (int x=1;x<110;x++) {

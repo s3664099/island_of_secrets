@@ -135,7 +135,7 @@ If you need to start a new chat and want to provide the necessary context about 
 
 ### View
 
-## **GameFrame**
+
 
 ## **GamePanel**
 
@@ -148,6 +148,25 @@ If you need to start a new chat and want to provide the necessary context about 
 ---
 
 
+2. Code Quality Issues
+Issue	Fix	Example
+Inconsistent naming	Follow Java conventions:
+CreateLabelPanel() → createLabelPanel()
+Magic numbers	Replace with constants:
+new GridLayout(18,1) → new GridLayout(MAX_MESSAGE_LINES, 1)
+Duplicate layout code	Extract common panel creation to builder methods
+Raw types	Use generics for collections:
+List<String> messages
+3. UI-Specific Issues
+Issue	Fix	Impact
+Hardcoded colors/sizes	Move to UIConfig class:
+BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black)
+Fragile string parsing (getLineLength())	Use Swing's JTextArea with line wrapping	High
+Mixed layout responsibilities	Separate into specialized panel classes:
+StatusPanel, CommandPanel, etc.
+4. Thread Safety Issues
+Risk	Solution	Location
+Swing operations not on EDT	Wrap in SwingUtilities.invokeLater()	setCommandField()
 
 
 
