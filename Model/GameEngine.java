@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 23 March 2025
+Version: 4.7
+Date: 24 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 
 import Data.Constants;
 import Data.Item;
+import Interfaces.GameCommandHandler;
+import Interfaces.GameStateProvider;
 import View.GamePanel;
 import View.LightningPanel;
 import View.MapPanel;
@@ -22,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-public class GameEngine {
+public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	private Game game;
 	private Player player;
@@ -410,4 +412,5 @@ public class GameEngine {
 21 March 2025 - Added throws declaration
 22 March 2025 - Updated MessagePanel constructor
 23 March 2025 - Merged addMessage and addNormalMessage
+24 March 2025 - Added Interfaces
 */
