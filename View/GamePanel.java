@@ -32,20 +32,27 @@ import Controller.QuitButton;
 import Controller.SearchGameButton;
 import Controller.ShelterButton;
 import Data.Constants;
+import Interfaces.GameCommandHandler;
+import Interfaces.GameStateProvider;
 import Model.GameEngine;
 
 public class GamePanel extends JPanel {
 	
+	private final GameStateProvider state;
+	private final GameCommandHandler commander;
+	
 	private static final long serialVersionUID = 1L;
 	Color background;
-	GameEngine game;
 	JTextField commandField;
 
+
 	public GamePanel(GameEngine game) {
-		add(game);
+		this.state = game;
+		this.commander = game;
+		initialiseUI();
 	}
 	
-	public void add(GameEngine game) {
+	public void initialiseUI() {
 				
 		//Gets the background colour for the frame
 		background = this.getBackground();
@@ -58,11 +65,11 @@ public class GamePanel extends JPanel {
 		topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		JPanel middlePanel = new JPanel(new GridLayout(18,1));
-		middlePanel.add(CreateLabelPanel(game.getRoom(), 1));
+		middlePanel.add(CreateLabelPanel(state.getRoom(), 1));
 		middlePanel.add(CreateLabelPanel("", 1));
 				
 		//Add the items to the room panel
-		String itemString = game.getItems();
+		String itemString = state.getItems();
 		
 		while (itemString.length()>0) {
 			
@@ -73,18 +80,18 @@ public class GamePanel extends JPanel {
 		}
 		
 		//Adds space if there are items.
-		if (game.getItems().length()>0) {
+		if (state.getItems().length()>0) {
 			middlePanel.add(CreateLabelPanel("", 1));
 		}
 		
 		//Add exits
-		middlePanel.add(CreateLabelPanel(game.getExits(),1));
-		middlePanel.add(CreateLabelPanel(game.getSpecialExits(),1));
+		middlePanel.add(CreateLabelPanel(state.getExits(),1));
+		middlePanel.add(CreateLabelPanel(state.getSpecialExits(),1));
 		middlePanel.add(CreateLabelPanel("",2));
 				
 		//Display message
 		middlePanel.add(CreateLabelPanel("", 1));
-		List<String> messages = game.getMessage();
+		List<String> messages = state.getMessage();
 				
 		for (String msg:messages) {
 			middlePanel.add(CreateLabelPanel(msg, 1));
