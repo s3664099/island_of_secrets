@@ -19,6 +19,8 @@ public interface GameStateProvider {
 	public String getRoom();
 	public String getItems();
 	public String getExits();
+	public String getTime();
+	public String getStatus();
 	public String getSpecialExits();
 	public String[] getDisplayedSavedGames();
 	public String[] getCommands();

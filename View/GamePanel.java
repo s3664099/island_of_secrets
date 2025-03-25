@@ -56,14 +56,11 @@ public class GamePanel extends JPanel {
 				
 		//Gets the background colour for the frame
 		background = this.getBackground();
-
 		this.setLayout (new BorderLayout()); 
 		
 		// Top section for status and label panels
-		JPanel topPanel = new JPanel(new GridLayout(1, 1)); // Adjust as necessary
-		topPanel.add(CreateStatusPanel(game));
-		topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-		
+		StatusPanel statusPanel = new StatusPanel(state);
+				
 		JPanel middlePanel = new JPanel(new GridLayout(18,1));
 		middlePanel.add(CreateLabelPanel(state.getRoom(), 1));
 		middlePanel.add(CreateLabelPanel("", 1));
@@ -234,21 +231,7 @@ public class GamePanel extends JPanel {
 	public void addPanel(JPanel panel) {
 		this.add(panel);
 	}
-	
-	private JPanel CreateStatusPanel(GameEngine game) {
 		
-        JPanel statusPanel = new JPanel(new GridLayout(2,1));
-        
-        JPanel statPanel = CreatePanel(0);
-        JLabel statLabel = new JLabel(game.getStatus());
-        statPanel.add(statLabel);
-        
-        statusPanel.add(CreateLabelPanel(game.getTime(),0));
-        statusPanel.add(CreateLabelPanel(game.getStatus(),0)); 
-        
-        return statusPanel;
-	}
-	
 	private JPanel CreatePanel(int flowType) {
 
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
