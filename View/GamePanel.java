@@ -97,13 +97,13 @@ public class GamePanel extends JPanel {
 			middlePanel.add(CreateLabelPanel(msg, 1));
 		}
 						
-		if (game.getGame().checkStart()) {
+		if (state.isInitialGameState()) {
 			JPanel inputPanel = new JPanel(new GridLayout(1,1));
 			addButton(inputPanel,"Click for Clues & Hints",new BookButton(game,this),260);
 			middlePanel.add(inputPanel);
 		}
 		
-		if (game.getResponseType()==2) {
+		if (state.getResponseType()==2) {
 			
 			String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
 			Integer[] shelterLocations = {44,11,41};
@@ -114,9 +114,9 @@ public class GamePanel extends JPanel {
 				middlePanel.add(inputPanel);
 			}
 			
-		} else if (game.getGame().getGameDisplay()==true) {
+		} else if (state.isSavedGameState()) {
 			
-			for (String gameName:game.getGame().getDisplayedGames()) {
+			for (String gameName:state.getDisplayedSavedGames()) {
 				
 				//Is there a saved game?
 				if (gameName.length()>0) {
@@ -127,13 +127,13 @@ public class GamePanel extends JPanel {
 			}
 			
 			//Checks if move forward/back and adds buttons for that.
-			if (game.getGame().getLessGames()) {
+			if (state.getLowerLimitSavedGames()) {
 				JPanel inputPanel = new JPanel(new GridLayout(1,1));
 				addButton(inputPanel,"Previous",new SearchGameButton(game,this,false),320);
 				middlePanel.add(inputPanel);
 			}
 			
-			if (game.getGame().getMoreGames()) {
+			if (state.getUpperLimitSavedGames()) {
 				JPanel inputPanel = new JPanel(new GridLayout(1,1));
 				addButton(inputPanel,"Next",new SearchGameButton(game,this,true),320);
 				middlePanel.add(inputPanel);

@@ -450,13 +450,13 @@ public class CommandProcess {
 			player.setPanelFlag(3);
 			game.addPanelMessage(messageOne, false);
 			game.addMessage("Your quest is over!",true,true);
-			game.endGame();
+			game.setEndGameState();
 		}
 		
 		//Fail Quest conditions
 		if ((int) player.getStat("timeRemaining")<0 || ((float) player.getStat("strength"))<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
 			game.addMessage( "You have failed, the evil one succeeds.",true,true);
-			game.endGame();
+			game.setEndGameState();
 		}
 	}
 	

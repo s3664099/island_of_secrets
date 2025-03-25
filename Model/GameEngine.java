@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 24 March 2025
+Version: 4.8
+Date: 25 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -128,19 +128,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	public String[] getCommands() {
 		return this.commands;
 	}
-	
-	//Used if more than 5 saved games
-	public void increaseLoad(GamePanel game) throws IOException {
-		this.game.increaseCount();
-		System.out.println(this.game.getCount());
-		processCommand("load",game);
-	}
-	
-	public void decreaseLoad(GamePanel game) throws IOException {
-		this.game.descreaseCount();
-		processCommand("load",game);
-	}
-	
+		
 	public void processCommand(String command,GamePanel game) throws IOException {
 		
 		//Saves the commands into the previous command list
@@ -227,7 +215,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			} else if (strength<1) {
 				this.game.addMessage("You get lost and drown",true,true);
 				player.setPanelFlag(0);
-				this.game.endGame();
+				this.game.setEndGameState();
 			}
 			test.displayValue(this.game, this.player);
 			resetPanel(game);
@@ -298,8 +286,51 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		game.setCommandField();
 	}
 	
+	//Handled what saved games to display
+	//Used if more than 5 saved games
+	public void increaseLoad(GamePanel game) throws IOException {
+		this.game.increaseCount();
+		System.out.println(this.game.getCount());
+		processCommand("load",game);
+	}
+	
+	public void decreaseLoad(GamePanel game) throws IOException {
+		this.game.descreaseCount();
+		processCommand("load",game);
+	}
+
+	public boolean getLowerLimitSavedGames() {
+		return game.getUpperLimitSavedGames();
+	}
+	
+	public boolean getUpperLimitSavedGames() {
+		return game.getUpperLimitSavedGames();
+	}
+	
+	public String[] getDisplayedSavedGames() {
+		return game.getDisplayedSavedGames();
+	}
+	
+	//Sets Game States
+	public void setSavedGameState(boolean saveGame) {
+		game.setSavedGameState(saveGame);
+	}
+	
+	//Checks Game States
 	public boolean checkEndGame() {
 		return game.checkEndGame();
+	}
+	
+	public boolean isInitialGameState() {
+		return game.isInitialGameState();
+	}
+	
+	public boolean isSavedGameState() {
+		return game.isSavedGameState();
+	}
+	
+	public boolean isEndGameState() {
+		return game.isEndGameState();
 	}
 	
 	public int getFinalScore() {
@@ -413,4 +444,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 22 March 2025 - Updated MessagePanel constructor
 23 March 2025 - Merged addMessage and addNormalMessage
 24 March 2025 - Added Interfaces
+25 March 2025 - Added method checking initial game state & displayed games
 */

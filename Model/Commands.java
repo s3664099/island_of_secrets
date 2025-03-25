@@ -558,7 +558,7 @@ public class Commands {
 			player.setStat("wisdom",0);
 			player.setStat("timeRemaining",0);
 
-			game.endGame();	
+			game.setEndGameState();	
 		}
 	}
 	
@@ -1110,14 +1110,14 @@ public class Commands {
 		
 		//Sets variables to list set number of game names		
 		String gameMessage = "Games Saves";
-		String[] gameDisplayed = game.getDisplayedGames();
+		String[] gameDisplayed = game.getDisplayedSavedGames();
 		int noGames=savFiles.length;
 		int gameStart = 0;
 		int totalDisplayed = 5;
 		int maxDisplay = 5;
 		
-		game.setMoreGames(false);
-		game.setLessGames(false);
+		game.setUpperLimitSavedGames(false);
+		game.setLowerLimitSavedGames(false);
 		
 		if (noGames==0) {
 			game.addMessage("There are no saved games to display",true,true);
@@ -1128,7 +1128,7 @@ public class Commands {
 				gameStart = game.getCount()*maxDisplay;
 				if (noGames-gameStart>maxDisplay) {
 					totalDisplayed = gameStart+maxDisplay;
-					game.setMoreGames(true);
+					game.setUpperLimitSavedGames(true);
 				} else {
 					totalDisplayed += noGames-gameStart;
 				}
@@ -1142,7 +1142,7 @@ public class Commands {
 			}
 		
 			if (gameStart>0) {
-				game.setLessGames(true);
+				game.setLowerLimitSavedGames(true);
 			}
 		
 			game.setGameDisplay(true);
@@ -1156,7 +1156,7 @@ public class Commands {
 		game.addMessage("You relinquish your quest",true,true);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
 		player.setStat("timeRemaining",1);
-		game.endGame();
+		game.setEndGameState();
 	}
 }
 

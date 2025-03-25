@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 23 March 2025
+Version: 4.5
+Date: 25 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -33,16 +33,15 @@ public class Game implements Serializable {
 		
 	private String[] commands = {"","",""};
 	
-	private enum GameState { STARTED, RUNNING }
+	private enum GameState { STARTED, RUNNING, SAVED_GAMES,ENDED }
 	private GameState gameState = GameState.STARTED;
 	
-	private boolean endGame = false;
+	//private boolean endGame = false;
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
-	private boolean displayGames = false;
-	private boolean moreGames = false;
-	private boolean lessGames = false;
-	private String[] gameDisplayed = {"","","","",""};
+	private boolean upperLimitSavedGames = false;
+	private boolean lowerLimitSavedGames = false;
+	private String[] savedGamesDisplayed = {"","","","",""};
 	private int apple_count = 3;
 	
 	public Game(Location[] locations, Item[] items,SpecialExitHandler specialExitHandler) {
@@ -207,18 +206,7 @@ public class Game implements Serializable {
 		
 		return itemList[itemNumber].getItemFlag() + itemList[itemNumber].getItemLocation();
 	}
-			
-	//Flag to determine whether the game has ended.
-	public void endGame() {
-		
-		logger.info("Game ended.");
-		this.endGame = true;
-	}
-	
-	public boolean checkEndGame() {
-		return this.endGame;
-	}
-	
+				
 	//Cycle through number of save games
 	public int getCount() {
 		return this.saveGameCount;
@@ -268,52 +256,74 @@ public class Game implements Serializable {
 		return applesLeft;
 	}
 	
-	//Getters & Setters for displaying games
-	public void setGameDisplay(boolean display) {
-		this.displayGames = display;
+	//Handling saved game display
+	public void setUpperLimitSavedGames(boolean moreGames) {
+		this.upperLimitSavedGames = moreGames;
+		logger.info("More game position set to: " + this.upperLimitSavedGames);
 	}
 	
-	public boolean getGameDisplay() {
-		return this.displayGames;
+	public boolean getUpperLimitSavedGames() {
+		return this.upperLimitSavedGames;
 	}
 	
-	public void setMoreGames(boolean moreGames) {
-		this.moreGames = moreGames;
-		logger.info("More game position set to: " + this.moreGames);
+	public void setLowerLimitSavedGames(boolean lessGames) {
+		this.lowerLimitSavedGames = lessGames;
+		logger.info("Less game position set to: " + this.lowerLimitSavedGames);
 	}
 	
-	public boolean getMoreGames() {
-		return this.moreGames;
+	public boolean getLowerLimitSavedGames() {
+		return this.lowerLimitSavedGames;
 	}
 	
-	public void setLessGames(boolean lessGames) {
-		this.lessGames = lessGames;
-		logger.info("Less game position set to: " + this.lessGames);
-	}
-	
-	public boolean getLessGames() {
-		return this.lessGames;
-	}
-	
-	public String[] getDisplayedGames() {
-		return this.gameDisplayed;
+	public String[] getDisplayedSavedGames() {
+		return this.savedGamesDisplayed;
 	}
 	
 	public void setDisplayedGames(String[] gameDisplayed) {
-		this.gameDisplayed = gameDisplayed;
+		this.savedGamesDisplayed = gameDisplayed;
 	}	
 	
-	//Checks if the start of game
-	public boolean checkStart() {
+	//Checks and sets Game State
+	public void setSavedGameState(boolean display) {
+		if (display) {
+			gameState = GameState.SAVED_GAMES;
+		} else {
+			gameState = GameState.RUNNING;
+		}
+	}
+	//Flag to determine whether the game has ended.
+	public void setEndGameState() {
+		
+		logger.info("Game ended.");
+		gameState = GameState.ENDED;
+	}
+	
+	public boolean isInitialGameState() {
 
 		boolean started = false;
-		
 		if (gameState == GameState.STARTED) {
 			gameState = GameState.RUNNING;
 			started = true;
 		}
-		
 		return started;
+	}
+		
+	public boolean isSavedGameState() {
+		
+		boolean saveGame = false;
+		if (gameState == GameState.SAVED_GAMES) {
+			saveGame = true;
+		}
+		return saveGame;
+	}
+	
+	public boolean isEndGameState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.ENDED) {
+			endGame = true;
+		}
+		return endGame;
 	}
 }
 
@@ -359,4 +369,6 @@ public class Game implements Serializable {
  * 20 March 2025 - Updated class to handle message builder
  * 23 March 2025 - Combined addMessage and addNormalMessage
  * 				   Updated check start to Enum
+ * 25 March 2025 - Updated method name for checking initial game state
+ * 				 - Added gameState for checking saved games & end game
  */
