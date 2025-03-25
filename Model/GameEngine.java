@@ -226,6 +226,10 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return game.getResponse();
 	}
 	
+	public int getPanelFlag() {
+		return player.getPanelFlag();
+	}
+	
 	public void processGive(String object,GamePanel game) {
 
 		//Checks if the response is 'to xxxx'
@@ -316,11 +320,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		game.setSavedGameState(saveGame);
 	}
 	
-	//Checks Game States
-	public boolean checkEndGame() {
-		return game.checkEndGame();
-	}
-	
+	//Checks Game States	
 	public boolean isInitialGameState() {
 		return game.isInitialGameState();
 	}

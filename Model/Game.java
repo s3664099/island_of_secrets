@@ -36,7 +36,6 @@ public class Game implements Serializable {
 	private enum GameState { STARTED, RUNNING, SAVED_GAMES,ENDED }
 	private GameState gameState = GameState.STARTED;
 	
-	//private boolean endGame = false;
 	private int saveGameCount = 0;
 	private int responseRequired = 0;
 	private boolean upperLimitSavedGames = false;

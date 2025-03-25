@@ -144,9 +144,9 @@ public class GamePanel extends JPanel {
 			middlePanel.add(inputPanel);
 		}
 
-		if (game.checkEndGame()) {
+		if (state.isEndGameState()) {
 			
-			String gameScore = String.format("Your Final Score = %s", game.getFinalScore());
+			String gameScore = String.format("Your Final Score = %s", state.getFinalScore());
 			middlePanel.add(CreateLabelPanel(gameScore, 1));
 			middlePanel.add(CreateLabelPanel("Game Over!", 1));
 		}
@@ -154,16 +154,16 @@ public class GamePanel extends JPanel {
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		//Creates the command field
-		String[] commands = game.getCommands();
+		String[] commands = state.getCommands();
 		JPanel bottomPanel = new JPanel(new GridLayout(6,1));
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); //Top, Left, Bottom, Right
 		JPanel inputPanel = new JPanel(new GridLayout(1,1));
 
 		//Checks if displaying load games or shelter locations
-		if (!game.getGame().getGameDisplay() && game.getResponseType()!=2) {
+		if (!state.isSavedGameState() && state.getResponseType()!=2) {
 			
 			//Button to display the map
-			if (game.getPlayer().getPanelFlag()!=4) {
+			if (state.getPanelFlag()!=4) {
 				addButton(inputPanel,"Map",new MapButton(game,this),320);
 				bottomPanel.add(inputPanel);
 			}
@@ -173,7 +173,7 @@ public class GamePanel extends JPanel {
 			for (int i=0;i<commands.length;i++) {
 			
 				//If blank, adds blank label
-				if (commands[i].length()==0 || game.getResponseType() !=0) {
+				if (commands[i].length()==0 || state.getResponseType() !=0) {
 					bottomPanel.add(CreateLabelPanel(commands[i],1));
 			
 					//Otherwise add button with command
@@ -187,7 +187,7 @@ public class GamePanel extends JPanel {
 				
 			inputPanel = new JPanel(new GridLayout(1,1));
 		
-			if (!game.checkEndGame()) {
+			if (!state.isEndGameState()) {
 			
 				JTextField commandField = new JTextField(2);
 				commandField.addKeyListener(new CommandListener(commandField,game,this));
@@ -196,16 +196,16 @@ public class GamePanel extends JPanel {
 				this.commandField = commandField;
 				
 			} else {
-				//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
-				//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
+				addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+				addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
 			}
 		
 			bottomPanel.add(inputPanel);
 			
-		} else if (game.getGame().getGameDisplay()) {
+		} else if (state.isSavedGameState()) {
 			
 			//Add Escape save game button here and hide map
-			game.getGame().setGameDisplay(false);
+			commander.setSavedGameState(false);
 
 			//Button to escape shelter
 		} else {}
