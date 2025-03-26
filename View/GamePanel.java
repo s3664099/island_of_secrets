@@ -173,7 +173,7 @@ public class GamePanel extends JPanel {
 		} else {}
 		*/		
 		this.add(statusPanel, BorderLayout.NORTH); // Add to the top of the main layout
-		//this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
+		this.add(roomPanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
 		//this.add(bottomPanel,BorderLayout.SOUTH);
 	}
 	
@@ -222,23 +222,6 @@ public class GamePanel extends JPanel {
         panel.add(label);
         return panel;
 	}
-	
-	private int getLineLength(String line) {
-		
-		int lineLength = Constants.LINE_LENGTH;
-		
-		if (lineLength>line.length()) {
-			lineLength = line.length();
-		}
-		
-		if (line.length()>99) {
-			while(!Character.isWhitespace(line.charAt(lineLength))) {
-				lineLength --;
-			}
-		}
-		
-		return lineLength;
-	}	
 }
 
 /* 2 November 2024 - Created File

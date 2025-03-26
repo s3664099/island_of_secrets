@@ -9,16 +9,25 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package View;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Data.Constants;
 import Interfaces.GameStateProvider;
 
 public class RoomPanel extends JPanel {
 
 	private static final long serialVersionUID = -7153746273218337269L;
 	private final GameStateProvider state;
-
+	
+	private final JLabel roomLabel = new JLabel();
+	private List<JLabel> itemLabelList;
+	private List<String> itemTextList;
+	
 	public RoomPanel(GameStateProvider state) {
 		this.state = state;
 		configureLayout();
@@ -26,14 +35,24 @@ public class RoomPanel extends JPanel {
 	}
 	
 	private void configureLayout() {
-		JPanel middlePanel = new JPanel(new GridLayout(9,1));
+		setLayout(new GridLayout(9,1));
+		determineLength(state.getItems(),itemLabelList);
+		
+		//Room Display
+		JPanel roomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		roomPanel.add(roomLabel);
+		add(roomPanel);
+		
+		//ItemDisplay
+		for (int i=0;i<itemLabelList.size();i++) {
+			JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			itemPanel.add(itemLabelList.get(i));
+			add(itemPanel);
+		}
 	}
 	
 	/*
-	JPanel middlePanel = new JPanel(new GridLayout(18,1));
-	middlePanel.add(CreateLabelPanel(state.getRoom(), 1));
-	middlePanel.add(CreateLabelPanel("", 1));
-			
+				
 	//Add the items to the room panel
 	String itemString = state.getItems();
 	
@@ -73,10 +92,41 @@ public class RoomPanel extends JPanel {
 	*/
 	
 	public void refresh() {
-		//timeLabel.setText(state.getTime());
-		//timeLabel.setText(state.getStatus());
+		roomLabel.setText(state.getRoom());
+		
+		for (int i=0;i<itemLabelList.size();i++) {
+			itemLabelList.get(i).setText(itemTextList.get(i));
+		}
+
 	}
 	
+	private void determineLength(String displayString, List<JLabel> labelList) {
+
+		while (displayString.length()>0) {		
+			int lineLength = getLineLength(displayString);
+			itemTextList.add(displayString.substring(0,lineLength));
+			displayString = displayString.substring(lineLength);
+			labelList.add(new JLabel());
+		}
+
+	}
+	
+	private int getLineLength(String line) {
+		
+		int lineLength = Constants.LINE_LENGTH;
+		
+		if (lineLength>line.length()) {
+			lineLength = line.length();
+		}
+		
+		if (line.length()>99) {
+			while(!Character.isWhitespace(line.charAt(lineLength))) {
+				lineLength --;
+			}
+		}
+		
+		return lineLength;
+	}
 }
 
 /* 25 March 2025 - Created Fle
