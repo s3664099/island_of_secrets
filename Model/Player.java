@@ -79,7 +79,9 @@ public class Player implements Serializable {
 	
 	public void setRoom(int room) {
 		logger.log(Level.INFO, "Player moved to room: " + room);
+
 		this.room = room;
+		this.roomToDisplay = room;
 	}
 		
 	public Object getStat(String statName) {

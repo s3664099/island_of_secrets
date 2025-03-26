@@ -12,9 +12,7 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -35,12 +33,13 @@ import Data.Constants;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Model.GameEngine;
+import Test.RoomPanelTest;
 
 public class GamePanel extends JPanel {
 	
 	private final GameStateProvider state;
 	private final GameCommandHandler commander;
-	
+		
 	private static final long serialVersionUID = 1L;
 	Color background;
 	JTextField commandField;

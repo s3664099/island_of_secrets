@@ -11,6 +11,7 @@ package View;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -25,8 +26,10 @@ public class RoomPanel extends JPanel {
 	private final GameStateProvider state;
 	
 	private final JLabel roomLabel = new JLabel();
-	private List<JLabel> itemLabelList;
-	private List<String> itemTextList;
+	private final JLabel exitLabel = new JLabel();
+	private final JLabel specialExitLabel = new JLabel();
+	private List<JLabel> itemLabelList  = new ArrayList<JLabel>();
+	private List<String> itemTextList = new ArrayList<String>();
 	
 	public RoomPanel(GameStateProvider state) {
 		this.state = state;
@@ -37,7 +40,7 @@ public class RoomPanel extends JPanel {
 	private void configureLayout() {
 		setLayout(new GridLayout(9,1));
 		determineLength(state.getItems(),itemLabelList);
-		
+				
 		//Room Display
 		JPanel roomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		roomPanel.add(roomLabel);
@@ -49,31 +52,19 @@ public class RoomPanel extends JPanel {
 			itemPanel.add(itemLabelList.get(i));
 			add(itemPanel);
 		}
+		
+		//Exit Panels
+		JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		exitPanel.add(exitLabel);
+		add(exitPanel);
+		
+		JPanel specialExitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		specialExitPanel.add(specialExitLabel);
+		add(specialExitPanel);
 	}
 	
 	/*
-				
-	//Add the items to the room panel
-	String itemString = state.getItems();
-	
-	while (itemString.length()>0) {
-		
-		int lineLength = getLineLength(itemString);
-		String itemLine = itemString.substring(0,lineLength).trim();
-		itemString = itemString.substring(lineLength);
-		middlePanel.add(CreateLabelPanel(itemLine, 1));
-	}
-	
-	//Adds space if there are items.
-	if (state.getItems().length()>0) {
-		middlePanel.add(CreateLabelPanel("", 1));
-	}
-	
-	//Add exits
-	middlePanel.add(CreateLabelPanel(state.getExits(),1));
-	middlePanel.add(CreateLabelPanel(state.getSpecialExits(),1));
-	middlePanel.add(CreateLabelPanel("",2));
-			
+					
 	//Display message
 	middlePanel.add(CreateLabelPanel("", 1));
 	List<String> messages = state.getMessage();
@@ -93,11 +84,12 @@ public class RoomPanel extends JPanel {
 	
 	public void refresh() {
 		roomLabel.setText(state.getRoom());
+		exitLabel.setText(state.getExits());
+		specialExitLabel.setText(state.getSpecialExits());
 		
 		for (int i=0;i<itemLabelList.size();i++) {
 			itemLabelList.get(i).setText(itemTextList.get(i));
 		}
-
 	}
 	
 	private void determineLength(String displayString, List<JLabel> labelList) {
@@ -129,6 +121,6 @@ public class RoomPanel extends JPanel {
 	}
 }
 
-/* 25 March 2025 - Created Fle
+/* 25 March 2025 - Created File
  * 26 March 2026 - Added code to produce the contents
  */
