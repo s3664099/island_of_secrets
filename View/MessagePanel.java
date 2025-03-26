@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 22 March 2025
+Version: 4.3
+Date: 26 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -103,7 +103,7 @@ public class MessagePanel extends JPanel {
     
 	private void resetPanel(GamePanel game) {
 		game.removeAll();
-		game.add(this.engine);
+		//game.add(this.engine);
 		game.revalidate();
 		game.repaint();
 	}
@@ -118,4 +118,5 @@ public class MessagePanel extends JPanel {
  * 5 March 2025 - Increased to v4.0
  * 21 March 2025 - Updated for MessageBuilder class
  * 22 March 2025 - Fixed issue with MessagePanel - works now.
+ * 26 March 2025 - Commented out code to allow code to run
  */

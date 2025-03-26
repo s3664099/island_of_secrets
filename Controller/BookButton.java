@@ -2,8 +2,8 @@
 Title: Island of Secrets Book Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.1
+Date: 26 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -44,7 +44,7 @@ public class BookButton implements ActionListener {
 			}
 		}
 		
-		game.getGame().setGameDisplay(false);
+		//game.getGame().setGameDisplay(false);
 		game.setGamePanel(this.panel);
 	}
 
@@ -52,4 +52,5 @@ public class BookButton implements ActionListener {
 
 /* 2 March 2025 - Created Class
  * 5 March 2025 - Increased to v4.0
+ * 26 March 2025 - Commented out code to enable to run
  */

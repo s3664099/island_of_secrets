@@ -2,7 +2,7 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
+Version: 4.9
 Date: 25 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -284,7 +284,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	private void resetPanel(GamePanel game) {
 
 		game.removeAll();
-		game.add(this);
+		//game.add(this);
 		game.revalidate();
 		game.repaint();
 		game.setCommandField();
@@ -445,4 +445,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 23 March 2025 - Merged addMessage and addNormalMessage
 24 March 2025 - Added Interfaces
 25 March 2025 - Added method checking initial game state & displayed games
+26 March 2025 - Commented out code to enable to run
 */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Status Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 25 March 2025
+Version: 4.1
+Date: 26 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -49,10 +49,11 @@ public class StatusPanel extends JPanel {
 	
 	public void refresh() {
 		timeLabel.setText(state.getTime());
-		timeLabel.setText(state.getStatus());
+		statusLabel.setText(state.getStatus());
 	}
 
 }
 
 /* 25 March 2025 - Created File
+ * 26 March 2025 - Fixed error with time not showing
  */

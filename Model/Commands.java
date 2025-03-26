@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 23 March 2025
+Version: 4.10
+Date: 26 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1145,7 +1145,7 @@ public class Commands {
 				game.setLowerLimitSavedGames(true);
 			}
 		
-			game.setGameDisplay(true);
+			//game.setGameDisplay(true);
 			game.setDisplayedGames(gameDisplayed);
 			game.addMessage(gameMessage,true,true);
 		}
@@ -1234,4 +1234,5 @@ public class Commands {
  * 20 March 2025 - Started updating code to handle message builder in game class
  * 22 March 2025 - Added cast to strength to fix error with killing people
  * 23 March 2025 - Merged addMessage and addNormalMessage
+ * 26 March 2025 - Commented out code to enable to run
  */

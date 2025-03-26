@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 21 March 2025
+Version: 4.2
+Date: 26 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -79,7 +79,7 @@ public class LightningPanel extends JPanel {
     
 	private void resetPanel(GamePanel game) {
 		game.removeAll();
-		game.add(this.engine);
+		//game.add(this.engine);
 		game.revalidate();
 		game.repaint();
 	}
@@ -90,4 +90,5 @@ public class LightningPanel extends JPanel {
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
  * 21 March 2025 - Removed the notes
+ * 26 March 2025 - Commented out code to allow to run
 */

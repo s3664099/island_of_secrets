@@ -60,40 +60,10 @@ public class GamePanel extends JPanel {
 		
 		// Top section for status and label panels
 		StatusPanel statusPanel = new StatusPanel(state);
+		RoomPanel roomPanel = new RoomPanel(state);
 				
-		JPanel middlePanel = new JPanel(new GridLayout(18,1));
-		middlePanel.add(CreateLabelPanel(state.getRoom(), 1));
-		middlePanel.add(CreateLabelPanel("", 1));
-				
-		//Add the items to the room panel
-		String itemString = state.getItems();
-		
-		while (itemString.length()>0) {
-			
-			int lineLength = getLineLength(itemString);
-			String itemLine = itemString.substring(0,lineLength).trim();
-			itemString = itemString.substring(lineLength);
-			middlePanel.add(CreateLabelPanel(itemLine, 1));
-		}
-		
-		//Adds space if there are items.
-		if (state.getItems().length()>0) {
-			middlePanel.add(CreateLabelPanel("", 1));
-		}
-		
-		//Add exits
-		middlePanel.add(CreateLabelPanel(state.getExits(),1));
-		middlePanel.add(CreateLabelPanel(state.getSpecialExits(),1));
-		middlePanel.add(CreateLabelPanel("",2));
-				
-		//Display message
-		middlePanel.add(CreateLabelPanel("", 1));
-		List<String> messages = state.getMessage();
-				
-		for (String msg:messages) {
-			middlePanel.add(CreateLabelPanel(msg, 1));
-		}
-						
+
+		/*		
 		if (state.isInitialGameState()) {
 			JPanel inputPanel = new JPanel(new GridLayout(1,1));
 			addButton(inputPanel,"Click for Clues & Hints",new BookButton(game,this),260);
@@ -141,12 +111,7 @@ public class GamePanel extends JPanel {
 			middlePanel.add(inputPanel);
 		}
 
-		if (state.isEndGameState()) {
-			
-			String gameScore = String.format("Your Final Score = %s", state.getFinalScore());
-			middlePanel.add(CreateLabelPanel(gameScore, 1));
-			middlePanel.add(CreateLabelPanel("Game Over!", 1));
-		}
+
 		
 		middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
@@ -206,14 +171,14 @@ public class GamePanel extends JPanel {
 
 			//Button to escape shelter
 		} else {}
-				
-		this.add(topPanel, BorderLayout.NORTH); // Add to the top of the main layout
-		this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
-		this.add(bottomPanel,BorderLayout.SOUTH);
+		*/		
+		this.add(statusPanel, BorderLayout.NORTH); // Add to the top of the main layout
+		//this.add(middlePanel,BorderLayout.CENTER);//String position = BorderLayout.CENTER;
+		//this.add(bottomPanel,BorderLayout.SOUTH);
 	}
 	
 	public void setCommandField() {
-		this.commandField.requestFocusInWindow();
+		//this.commandField.requestFocusInWindow();
 	}
 	
 	//Creates a button and adds it to the panel.

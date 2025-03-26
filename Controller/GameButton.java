@@ -29,7 +29,7 @@ public class GameButton implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		game.getGame().setGameDisplay(false);
+		//game.getGame().setGameDisplay(false);
 		game.setGamePanel(this.panel);
 	}
 
@@ -38,4 +38,5 @@ public class GameButton implements ActionListener {
 /* 10 February 2025 - Created Class
  * 26 February 2025 - Added code to
  * 5 March 2025 - Increased to v4.0
+ * 26 March 2025 - Commented out code to enable to run
  */
