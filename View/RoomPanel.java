@@ -1,5 +1,5 @@
 /*
-Title: Island of Secrets Status Panel
+Title: Island of Secrets Room Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.1
@@ -9,11 +9,13 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package View;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -40,6 +42,7 @@ public class RoomPanel extends JPanel {
 	private void configureLayout() {
 		setLayout(new GridLayout(9,1));
 		determineLength(state.getItems(),itemLabelList);
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 				
 		//Room Display
 		JPanel roomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
