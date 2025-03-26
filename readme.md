@@ -1207,6 +1207,51 @@ if (swimming.checkPosition(50.0f)) {
 
 ## **GameFrame**
 
+### **Overview**
+The main application window (`JFrame`) that hosts the game's UI components, serving as the root container for all visual elements.
+
+### **Purpose**
+To create and manage the primary game window with fixed dimensions, centered positioning, and proper shutdown behavior.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- `serialVersionUID`: Version control for serialization  
+- Implicitly inherits all `JFrame` properties  
+
+#### **2. Methods**
+- `initiliseUI()`: Sets up window properties and content  
+- `configureWindow()`: Defines size, position, and resize policies  
+
+### **Usage**
+```java
+// Launch the game window:
+GameFrame frame = new GameFrame(gameEngine);
+```
+
+### **Best Practices**
+1. **Single Responsibility**: Only handles window management, not game logic  
+2. **UI Thread Safety**: Uses `SwingUtilities.invokeLater` for visibility operations  
+3. **Fixed Dimensions**: Prevents resizing for consistent layout  
+
+### **Example**
+```java
+// Typical usage in Main class:
+SwingUtilities.invokeLater(() -> {
+    new GameFrame(gameEngine); // Window created on EDT
+});
+```
+
+### **Why Use This Class?**
+- **Encapsulation**: Centralizes window configuration  
+- **User Experience**:  
+  - Centered on screen  
+  - Clean shutdown behavior (EXIT_ON_CLOSE)  
+  - Consistent 800x600 gameplay area  
+- **Framework Integration**: Properly integrates Swing's event dispatch thread  
+
+---
+
 ## **GamePanel**
 
 ## **Lightning Panel**
@@ -1216,6 +1261,56 @@ if (swimming.checkPosition(50.0f)) {
 ## **MessagePanel**          
 
 ---
+
+## **StatusPanel**
+
+### **Overview**
+A Swing-based panel that displays real-time game status information (time and player stats) in a clean, two-line layout.
+
+### **Purpose**
+To visually present dynamic game state information (time remaining and player status) consistently across all game screens.
+
+### **Key Components**
+
+#### **1. Instance Variables**
+- `timeLabel`: Displays the current in-game time  
+- `statusLabel`: Shows player stats (strength/wisdom)  
+- `state`: GameStateProvider interface for data access  
+
+#### **2. Methods**
+- `configureLayout()`: Sets up the panel structure with centered labels  
+- `refresh()`: Updates labels with latest game state  
+
+### **Usage**
+```java
+// Initialize
+StatusPanel statusPanel = new StatusPanel(gameEngine);
+
+// Update during game loop
+statusPanel.refresh();
+```
+
+### **Best Practices**
+1. **Call `refresh()`** after any game state change  
+2. **Keep text concise** (fits default panel width)  
+3. **Access state thread-safely** via SwingUtilities.invokeLater()  
+
+### **Example**
+```java
+// In GamePanel constructor:
+add(new StatusPanel(gameState), BorderLayout.NORTH);
+
+// During game updates:
+SwingUtilities.invokeLater(() -> statusPanel.refresh());
+```
+
+### **Why Use This Class?**
+- **Encapsulation**: Self-contained display logic  
+- **Consistency**: Uniform status display format  
+- **Performance**: Lightweight updates via JLabel text swaps  
+
+---
+
 
 ## **Class Name**
 
