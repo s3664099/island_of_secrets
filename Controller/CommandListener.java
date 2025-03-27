@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 22 March 2024
+Version: 4.2
+Date: 27 March 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,37 +15,42 @@ import java.io.IOException;
 
 import javax.swing.JTextField;
 
+import Interfaces.GameCommandHandler;
+import Interfaces.GameStateProvider;
 import Model.GameEngine;
+import View.CommandPanel;
 import View.GamePanel;
 
 public class CommandListener implements KeyListener {
 
-	JTextField text;
-	GameEngine game;
-	GamePanel gamePanel;
+	private JTextField commandField;
+	private final GameCommandHandler commander;
+	private final GameStateProvider state;
+	private final GamePanel gamePanel;
 	
-	public CommandListener(JTextField text, GameEngine game, GamePanel gameFrame) {
-		this.text = text;
-		this.game = game;
-		this.gamePanel = gameFrame;
+	public CommandListener(JTextField commandField, GameCommandHandler commander, GameStateProvider state,GamePanel GamePanel) {
+		this.commandField = commandField;
+		this.commander = commander;
+		this.state = state;
+		this.gamePanel = GamePanel;
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent evt) {
 		
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			
-			String command = this.text.getText();
-			this.text.setText("");
+			String command = this.commandField.getText();
+			this.commandField.setText("");
 			
-			if (game.getResponseType()==1) {
-				game.processGive(command, gamePanel);
-			} else if (game.getResponseType()==2) {
-				game.processShelter(command,gamePanel);
+			if (state.getResponseType()==1) {
+				commander.processGive(command, gamePanel);
+			} else if (state.getResponseType()==2) {
+				commander.processShelter(command,gamePanel);
 			} else {
 				try {
-					game.processCommand(command, gamePanel);
+					commander.processCommand(command, gamePanel);
 				} catch (IOException e) {
 					
 					e.printStackTrace();
@@ -75,4 +80,5 @@ public class CommandListener implements KeyListener {
  * 31 January 2025 - Completed Testing and increased version
  * 5 March 2025 - Increased to v4.0
  * 22 March 2025 - Added error handling
+ * 27 March 2025 - Update file for new stule
  */

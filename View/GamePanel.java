@@ -3,7 +3,7 @@ Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.3
-Date: 26 March 2025
+Date: 27 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -47,7 +47,7 @@ public class GamePanel extends JPanel {
 		// Top section for status and label panels
 		StatusPanel statusPanel = new StatusPanel(state);
 		RoomPanel roomPanel = new RoomPanel(state);
-		CommandPanel commandPanel = new CommandPanel(state);
+		CommandPanel commandPanel = new CommandPanel(state,commander,this);
 				
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
@@ -99,4 +99,5 @@ public class GamePanel extends JPanel {
  * 21 March 2025 - Updated for messageBuilder
  * 24 March 2025 - Removed GameFrame
  * 26 March 2025 - Moved code to separate classes
+ * 27 March 2025 - Updated CommandPanel Constructor
  */

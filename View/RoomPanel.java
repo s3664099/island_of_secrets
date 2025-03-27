@@ -40,7 +40,7 @@ public class RoomPanel extends JPanel {
 	}
 	
 	private void configureLayout() {
-		setLayout(new GridLayout(9,1));
+		setLayout(new GridLayout(12,1));
 		determineLength(state.getItems(),itemLabelList);
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 				

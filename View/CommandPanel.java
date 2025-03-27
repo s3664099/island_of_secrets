@@ -2,30 +2,48 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 26 March 2025
+Version: 4.1
+Date: 27 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
 import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import Controller.CommandListener;
+import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 
 public class CommandPanel  extends JPanel  {
 	
 	private static final long serialVersionUID = 5738616866958583642L;
 	public final GameStateProvider state;
+	public final GameCommandHandler commander;
+	public final GamePanel panel;
 
-	public CommandPanel(GameStateProvider state) {
+	public CommandPanel(GameStateProvider state,GameCommandHandler commander,GamePanel panel) {
 		this.state = state;
+		this.commander = commander;
+		this.panel = panel;
 		configureLayout();
 		refresh();
 	}
 	
 	private void configureLayout() {
-		setLayout(new GridLayout(15,1));
+		setLayout(new GridLayout(6,1));
+		
+		JPanel commanderPanel = new JPanel(new GridLayout(1,1));
+		JTextField commandField = new JTextField(2);
+		commandField.addKeyListener(new CommandListener(commandField,commander,state,panel));
+		commanderPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
+		commanderPanel.add(commandField);
+		add(commanderPanel);
+//		/this.commandField = commandField;
 	}
 	/*		
 	if (state.isInitialGameState()) {
@@ -107,15 +125,11 @@ public class CommandPanel  extends JPanel  {
 			}
 		}
 			
-		inputPanel = new JPanel(new GridLayout(1,1));
+		--->inputPanel = new JPanel(new GridLayout(1,1));
 	
 		if (!state.isEndGameState()) {
 		
-			JTextField commandField = new JTextField(2);
-			commandField.addKeyListener(new CommandListener(commandField,game,this));
-			inputPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
-			inputPanel.add(commandField);
-			this.commandField = commandField;
+
 			
 		} else {
 			addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
@@ -138,4 +152,5 @@ public class CommandPanel  extends JPanel  {
 }
 
 /* 26 March 2025 - Created File
+ * 27 March 2025 - Added command line
  */
