@@ -44,6 +44,7 @@ public class CommandListener implements KeyListener {
 			String command = this.commandField.getText();
 			this.commandField.setText("");
 			
+			/*
 			if (state.getResponseType()==1) {
 				commander.processGive(command, gamePanel);
 			} else if (state.getResponseType()==2) {
@@ -56,6 +57,7 @@ public class CommandListener implements KeyListener {
 					e.printStackTrace();
 				}
 			}
+			*/
 		}
 		
 	}

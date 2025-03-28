@@ -35,11 +35,11 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private void configureLayout() {
-		setLayout(new GridLayout(6,1));
+		setLayout(new GridLayout(9,1));
 		
 		JPanel commanderPanel = new JPanel(new GridLayout(1,1));
 		JTextField commandField = new JTextField(2);
-		commandField.addKeyListener(new CommandListener(commandField,commander,state,panel));
+		//commandField.addKeyListener(new CommandListener(commandField,commander,state,panel));
 		commanderPanel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
 		commanderPanel.add(commandField);
 		add(commanderPanel);

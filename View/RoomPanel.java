@@ -30,6 +30,7 @@ public class RoomPanel extends JPanel {
 	private final JLabel roomLabel = new JLabel();
 	private final JLabel exitLabel = new JLabel();
 	private final JLabel specialExitLabel = new JLabel();
+	private List<JLabel> messageLabelList  = new ArrayList<JLabel>();
 	private List<JLabel> itemLabelList  = new ArrayList<JLabel>();
 	private List<String> itemTextList = new ArrayList<String>();
 	
@@ -40,7 +41,7 @@ public class RoomPanel extends JPanel {
 	}
 	
 	private void configureLayout() {
-		setLayout(new GridLayout(12,1));
+		setLayout(new GridLayout(9,1));
 		determineLength(state.getItems(),itemLabelList);
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 				
@@ -64,34 +65,29 @@ public class RoomPanel extends JPanel {
 		JPanel specialExitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		specialExitPanel.add(specialExitLabel);
 		add(specialExitPanel);
-	}
-	
-	/*
-					
-	//Display message
-	middlePanel.add(CreateLabelPanel("", 1));
-	List<String> messages = state.getMessage();
-			
-	for (String msg:messages) {
-		middlePanel.add(CreateLabelPanel(msg, 1));
-	}
-	
-			if (state.isEndGameState()) {
-			
-			String gameScore = String.format("Your Final Score = %s", state.getFinalScore());
-			middlePanel.add(CreateLabelPanel(gameScore, 1));
-			middlePanel.add(CreateLabelPanel("Game Over!", 1));
+		
+		//MessageDisplay
+		for (int i=0;i<state.getMessage().size();i++) {
+			JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			messageLabelList.add(new JLabel());
+			messagePanel.add(messageLabelList.get(i));
+			add(messagePanel);
 		}
-				middlePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-	*/
-	
+	}
+		
 	public void refresh() {
 		roomLabel.setText(state.getRoom());
 		exitLabel.setText(state.getExits());
 		specialExitLabel.setText(state.getSpecialExits());
 		
+		//Adds Items
 		for (int i=0;i<itemLabelList.size();i++) {
 			itemLabelList.get(i).setText(itemTextList.get(i));
+		}
+
+		//Adds message
+		for (int i=0;i<messageLabelList.size();i++) {
+			messageLabelList.get(i).setText(state.getMessage().get(i));
 		}
 	}
 	
