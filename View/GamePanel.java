@@ -28,9 +28,9 @@ public class GamePanel extends JPanel {
 	private final GameCommandHandler commander;
 		
 	private static final long serialVersionUID = 1L;
-	Color background;
-	JTextField commandField;
-
+	private StatusPanel statusPanel;
+	private RoomPanel roomPanel;
+	private CommandPanel commandPanel;
 
 	public GamePanel(GameEngine game) {
 		this.state = game;
@@ -41,33 +41,16 @@ public class GamePanel extends JPanel {
 	public void initialiseUI() {
 				
 		//Gets the background colour for the frame
-		background = this.getBackground();
 		this.setLayout (new BorderLayout()); 
 		
 		// Top section for status and label panels
-		StatusPanel statusPanel = new StatusPanel(state);
-		RoomPanel roomPanel = new RoomPanel(state);
-		CommandPanel commandPanel = new CommandPanel(state,commander,this);
+		statusPanel = new StatusPanel(state);
+		roomPanel = new RoomPanel(state);
+		commandPanel = new CommandPanel(state,commander);
 				
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
 		this.add(commandPanel,BorderLayout.SOUTH);
-	}
-	
-	public void setCommandField() {
-		//this.commandField.requestFocusInWindow();
-	}
-	
-	//Creates a button and adds it to the panel.
-	private void addButton(JPanel panel,String buttonName,ActionListener action,int size) {
-		
-		//Create Exit Button
-		JButton button = new JButton(buttonName);
-		panel.add(button);
-		
-		//Closes frame when clicked
-		panel.setBorder(BorderFactory.createEmptyBorder(0,size,0,size));
-	    button.addActionListener(action);
 	}
 }
 
