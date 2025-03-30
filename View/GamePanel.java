@@ -2,21 +2,15 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 27 March 2025
+Version: 4.4
+Date: 30 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
@@ -83,4 +77,5 @@ public class GamePanel extends JPanel {
  * 24 March 2025 - Removed GameFrame
  * 26 March 2025 - Moved code to separate classes
  * 27 March 2025 - Updated CommandPanel Constructor
+ * 30 March 2025 - Removed usued Code
  */

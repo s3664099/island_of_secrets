@@ -30,7 +30,6 @@ public class MessagePanel extends JPanel {
 	private String game_messages;
 	
 	private final int HEAD = 0;
-	private final int NEXT = 1;
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	

@@ -51,7 +51,6 @@ public class StatusPanel extends JPanel {
 		timeLabel.setText(state.getTime());
 		statusLabel.setText(state.getStatus());
 	}
-
 }
 
 /* 25 March 2025 - Created File

@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 26 March 2025
+Version: 4.3
+Date: 30 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,12 +26,10 @@ public class LightningPanel extends JPanel {
 	private int number = 0;
 	private JLabel label;
 	private GamePanel game;
-	private GameEngine engine;
 	
     public LightningPanel(int initialNumber,GamePanel game,GameEngine engine) {
         this.number = initialNumber;
         this.game = game;
-        this.engine = engine;
 
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
@@ -91,4 +89,5 @@ public class LightningPanel extends JPanel {
  * 5 March 2025 - Increased to v4.0
  * 21 March 2025 - Removed the notes
  * 26 March 2025 - Commented out code to allow to run
+ * 30 March 2025 - Removed unusued code
 */
