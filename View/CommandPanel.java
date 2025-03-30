@@ -37,7 +37,7 @@ public class CommandPanel  extends JPanel  {
 		this.state = state;
 		this.commander = commander;
 		setLayout(new GridLayout(9,1));
-		configureLayout();
+		refresh();
 	}
 	
 	private void configureLayout() {
@@ -45,7 +45,7 @@ public class CommandPanel  extends JPanel  {
 		add(createSpacePanel());
 		
 		if (state.isInitialGameState()) {
-			add(createBookPanel());
+			add(addButtonPanel("Click for Clues & Hints",null,260));
 		}
 		
 		if (state.getResponseType()==2) {
@@ -54,9 +54,40 @@ public class CommandPanel  extends JPanel  {
 			addSaveGameButtonPanels();
 		}
 		
-		add(createSpacePanel());
-		add(createCommandInputPanel());
-		
+		if (!state.isInitialGameState() && state.getResponseType()!=2 && !state.isSavedGameState()) {
+			
+			//Button to display the map
+			if (state.getPanelFlag()!=4) {
+				//addButton(inputPanel,"Map",new MapButton(game,this),320);
+				add(addButtonPanel("Map",null,320));
+			}
+			
+			//Command Field includes four labels above which contain the last three commands.
+			String[] commands = state.getCommands();
+			for (int i=0;i<commands.length;i++) {
+				
+				//If blank, adds blank label
+				if (commands[i].length()==0 || state.getResponseType() !=0) {
+					add(createSpacePanel());
+			
+				//Otherwise add button with command
+				} else {
+					//addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
+					add(addButtonPanel(commands[i],null,320));
+				}
+			}
+			
+			add(createSpacePanel());		
+			if (!state.isEndGameState()) {
+				add(createCommandInputPanel());
+			} else {
+				//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+				//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
+				add(addButtonPanel("Exit",null,320));
+				add(addButtonPanel("Restart",null,320));
+			}
+		}
+				
 		revalidate();
 		repaint();
 	}
@@ -65,62 +96,7 @@ public class CommandPanel  extends JPanel  {
 		configureLayout();
 		this.commandField.requestFocusInWindow();
 	}
-		
-	/*				
-	//Creates the command field
-	String[] commands = state.getCommands();
-	JPanel bottomPanel = new JPanel(new GridLayout(6,1));
-	bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); //Top, Left, Bottom, Right
-	JPanel inputPanel = new JPanel(new GridLayout(1,1));
-
-	//Checks if displaying load games or shelter locations
-	if (!state.isSavedGameState() && state.getResponseType()!=2) {
-		
-		//Button to display the map
-		if (state.getPanelFlag()!=4) {
-			addButton(inputPanel,"Map",new MapButton(game,this),320);
-			bottomPanel.add(inputPanel);
-		}
-		
-		//Command Field includes four labels above which contain the last three commands.
-		//Also one for a blank spot
-		for (int i=0;i<commands.length;i++) {
-		
-			//If blank, adds blank label
-			if (commands[i].length()==0 || state.getResponseType() !=0) {
-				bottomPanel.add(CreateLabelPanel(commands[i],1));
-		
-				//Otherwise add button with command
-			} else {
-				inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
-				inputPanel.setBorder(BorderFactory.createEmptyBorder(0,50,0,520));
-				bottomPanel.add(inputPanel);
-			}
-		}
 			
-		--->inputPanel = new JPanel(new GridLayout(1,1));
-	
-		if (!state.isEndGameState()) {
-		
-
-			
-		} else {
-			addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
-			addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
-		}
-	
-		bottomPanel.add(inputPanel);
-		
-	} else if (state.isSavedGameState()) {
-		
-		//Add Escape save game button here and hide map
-		commander.setSavedGameState(false);
-
-		//Button to escape shelter
-	} else {}
-	*/
-	
 	//Component Builders
 	//Adds a space between panels
 	private JPanel createSpacePanel() {
@@ -131,6 +107,12 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	//Creates a button and adds it to the panel.
+	private JPanel addButtonPanel(String title,ActionListener action,int size) {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		addButton(panel,title,action,size);
+		return panel;
+	}
+	
 	private void addButton(JPanel panel,String buttonName,ActionListener action,int size) {
 		
 		//Create Exit Button
@@ -141,23 +123,14 @@ public class CommandPanel  extends JPanel  {
 		panel.setBorder(BorderFactory.createEmptyBorder(0,size,0,size));
 	    button.addActionListener(action);
 	}
-	
-	private JPanel createBookPanel() {
-		JPanel inputPanel = new JPanel(new GridLayout(1,1));
-		//addButton(inputPanel,"Click for Clues & Hints",new BookButton(game,this),260);
-		addButton(inputPanel,"Click for Clues & Hints",null,260);
-		return inputPanel;
-	}
-	
+				
 	private void addShelterButtonPanels() {
 		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
 		Integer[] shelterLocations = {44,11,41};
 		
 		for (int i=0;i<3;i++) {
-			JPanel panel = new JPanel(new GridLayout(1,1));
 			//JButton button = addButton(shelters[i],new ShelterButton(game,this,shelterLocations[i]),320);
-			//panel.add(button);
-			add(panel);
+			add(addButtonPanel(shelters[i],null,320));
 		}
 	}
 	
@@ -167,10 +140,8 @@ public class CommandPanel  extends JPanel  {
 			
 			//Is there a saved game?
 			if (gameName.length()>0) {
-				JPanel panel = new JPanel(new GridLayout(1,1));
 				//JButton button = addButton(gameName,new LoadGameButton(game,this,gameName),320);
-				//panel.add(button);
-				add(panel);
+				add(addButtonPanel(gameName,null,320));
 			}
 		}
 		
