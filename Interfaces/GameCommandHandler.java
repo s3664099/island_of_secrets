@@ -9,10 +9,15 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Interfaces;
 
+import java.io.IOException;
+
 //Write Operations
 public interface GameCommandHandler {
 
 	public void setSavedGameState(boolean isSavedGame);
+	public void processCommand(String input) throws IOException;
+	public void processGive(String item);
+	public void processShelter(int locationID);
 	
 }
 

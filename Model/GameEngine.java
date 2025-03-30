@@ -374,6 +374,24 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			this.commands[x] = "";
 		}
 	}
+
+	@Override
+	public void processCommand(String input) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processGive(String item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processShelter(int locationID) {
+		// TODO Auto-generated method stub
+		
+	}
 } 
 
 /*
