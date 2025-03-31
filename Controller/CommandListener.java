@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 27 March 2024
+Version: 4.3
+Date: 31 March 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
+import Model.GameController;
 import Model.GameEngine;
 import View.CommandPanel;
 import View.GamePanel;
@@ -24,15 +25,13 @@ import View.GamePanel;
 public class CommandListener implements KeyListener {
 
 	private JTextField commandField;
-	private final GameCommandHandler commander;
 	private final GameStateProvider state;
-	private final GamePanel gamePanel;
+	private final GameController game;
 	
-	public CommandListener(JTextField commandField, GameCommandHandler commander, GameStateProvider state,GamePanel GamePanel) {
+	public CommandListener(JTextField commandField, GameController game) {
 		this.commandField = commandField;
-		this.commander = commander;
-		this.state = state;
-		this.gamePanel = GamePanel;
+		this.state = game.getEngine();
+		this.game = game;
 	}
 
 	@Override
@@ -44,22 +43,19 @@ public class CommandListener implements KeyListener {
 			String command = this.commandField.getText();
 			this.commandField.setText("");
 			
-			/*
+			
 			if (state.getResponseType()==1) {
-				commander.processGive(command, gamePanel);
+				//commander.processGive(command);
 			} else if (state.getResponseType()==2) {
-				commander.processShelter(command,gamePanel);
+				//commander.processShelter(command);
 			} else {
 				try {
-					commander.processCommand(command, gamePanel);
+					game.processCommand(command);
 				} catch (IOException e) {
-					
 					e.printStackTrace();
 				}
 			}
-			*/
-		}
-		
+		}		
 	}
 
 	@Override
@@ -83,4 +79,5 @@ public class CommandListener implements KeyListener {
  * 5 March 2025 - Increased to v4.0
  * 22 March 2025 - Added error handling
  * 27 March 2025 - Update file for new stule
+ * 31 March 2025 - Updated file to handle Decoupling
  */

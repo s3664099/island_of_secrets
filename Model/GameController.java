@@ -51,7 +51,7 @@ public class GameController implements GameCommandHandler {
 	}
 	
 	public void refreshUI() {
-		ui.refreshUI();
+		ui.refreshUI(this);
 	}
 }
 

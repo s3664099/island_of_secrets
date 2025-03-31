@@ -19,8 +19,8 @@ import Model.GameController;
 
 public class GamePanel extends JPanel implements GameUI {
 	
-	private final GameStateProvider state;
-	private final GameCommandHandler commander;
+	private GameStateProvider state;
+	private final GameController game;
 		
 	private static final long serialVersionUID = 1L;
 	private StatusPanel statusPanel;
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements GameUI {
 
 	public GamePanel(GameController game) {
 		this.state = game.getEngine();
-		this.commander = game.getEngine();
+		this.game = game;
 		initialiseUI();
 	}
 	
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements GameUI {
 		// Top section for status and label panels
 		statusPanel = new StatusPanel(state);
 		roomPanel = new RoomPanel(state);
-		commandPanel = new CommandPanel(state,commander);
+		commandPanel = new CommandPanel(game);
 				
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
@@ -49,8 +49,13 @@ public class GamePanel extends JPanel implements GameUI {
 	}
 
 	@Override
-	public void refreshUI() {
-		// TODO Auto-generated method stub
+	public void refreshUI(GameController game) {
+		this.state = game.getEngine();
+		removeAll();
+		initialiseUI();
+		revalidate();
+		repaint();
+		//game.setCommandField();
 	}
 }
 
@@ -84,4 +89,5 @@ public class GamePanel extends JPanel implements GameUI {
  * 26 March 2025 - Moved code to separate classes
  * 27 March 2025 - Updated CommandPanel Constructor
  * 30 March 2025 - Removed usued Code
+ * 31 March 2025 - Added panel refresh
  */

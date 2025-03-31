@@ -2,8 +2,8 @@
 Title: Island of Secrets Load Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 22 March 2025
+Version: 4.2
+Date: 31 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -31,7 +31,7 @@ public class LoadGameButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		try {
-			game.processCommand("load "+gameName, panel);
+			game.processCommand("load "+gameName);
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -43,4 +43,5 @@ public class LoadGameButton implements ActionListener {
 /* 26 February 2025 - Created Class
  * 5 March 2025 - Increased to v4.0
  * 22 March 2025 - Added error handling
+ * 31 March 2025 - Removed panel from process command
  */

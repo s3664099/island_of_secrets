@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 29 March 2025
+Version: 4.10
+Date: 31 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -130,7 +130,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return this.commands;
 	}
 		
-	public void processCommand(String command,GamePanel game) throws IOException {
+	public void processCommand(String command) throws IOException {
 		
 		//Saves the commands into the previous command list
 		if (this.commands[0].equals("")) {
@@ -189,7 +189,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			
 			test.displayValue(this.game, this.player);
 			
-			determinePanel(game);
+			//determinePanel(game);
 			
 		} else {
 			
@@ -219,7 +219,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 				this.game.setEndGameState();
 			}
 			test.displayValue(this.game, this.player);
-			resetPanel(game);
 		}
 	}
 	
@@ -270,9 +269,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			this.game.addMessage("Please enter either 1,2 or 3",true,true);
 		}
 		
-		this.game.setResponse(0);
-		resetPanel(game);
-		
+		this.game.setResponse(0);		
 	}
 
 	private void setPanel(JPanel game,JPanel panel) {
@@ -281,27 +278,18 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		game.revalidate();
 		game.repaint();
 	}
-	
-	private void resetPanel(GamePanel game) {
-
-		game.removeAll();
-		//game.add(this);
-		game.revalidate();
-		game.repaint();
-		//game.setCommandField();
-	}
-	
+		
 	//Handled what saved games to display
 	//Used if more than 5 saved games
 	public void increaseLoad(GamePanel game) throws IOException {
 		this.game.increaseCount();
 		System.out.println(this.game.getCount());
-		processCommand("load",game);
+		processCommand("load");
 	}
 	
 	public void decreaseLoad(GamePanel game) throws IOException {
 		this.game.descreaseCount();
-		processCommand("load",game);
+		processCommand("load");
 	}
 
 	public boolean getLowerLimitSavedGames() {
@@ -351,9 +339,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		} else if (player.getPanelFlag()==3) {
 			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
 			player.setPanelFlag(0);
-		} else {
-			resetPanel(game);
-		}	
+		} 
 	}
 	
 	//Displays the map panel
@@ -363,7 +349,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	//Displays the game panel
 	public void setGamePanel(GamePanel game) {
-		resetPanel(game);
+		//resetPanel(game);
 	}
 	
 	public void restart(Game game, Player player) {
@@ -373,12 +359,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		for (int x=0;x<this.commands.length;x++) {
 			this.commands[x] = "";
 		}
-	}
-
-	@Override
-	public void processCommand(String input) throws IOException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -466,4 +446,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 25 March 2025 - Added method checking initial game state & displayed games
 26 March 2025 - Commented out code to enable to run
 29 March 2025 - Hid setCommandField
+31 March 2025 - Removed panel refresh. Removed panel from process command
 */

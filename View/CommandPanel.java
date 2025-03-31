@@ -23,19 +23,20 @@ import Controller.BookButton;
 import Controller.CommandListener;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
+import Model.GameController;
 
 public class CommandPanel  extends JPanel  {
 	
 	private static final long serialVersionUID = 5738616866958583642L;
 	private final GameStateProvider state;
-	private final GameCommandHandler commander;
+	private final GameController game;
 	private JTextField commandField = new JTextField(2);
 	
 	private final JLabel spaceLabel = new JLabel();
 
-	public CommandPanel(GameStateProvider state,GameCommandHandler commander) {
-		this.state = state;
-		this.commander = commander;
+	public CommandPanel(GameController game) {
+		this.state = game.getEngine();
+		this.game = game;
 		setLayout(new GridLayout(9,1));
 		refresh();
 	}
@@ -169,7 +170,7 @@ public class CommandPanel  extends JPanel  {
 	private JPanel createCommandInputPanel() {
 		JPanel panel = new JPanel(new GridLayout(1,1));
 		panel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
-		//commandField.addKeyListener(new CommandListener(commandField,commander,state,panel));
+		commandField.addKeyListener(new CommandListener(commandField,game));
 		panel.add(commandField);
 		return panel;
 	}

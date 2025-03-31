@@ -55,8 +55,8 @@ public class GameFrame extends JFrame implements GameUI {
 	}
 
 	@Override
-	public void refreshUI() {
-		gamePanel.refreshUI();		
+	public void refreshUI(GameController game) {
+		gamePanel.refreshUI(game);		
 	}
 }
 /* 8 November 2024 - Created File
