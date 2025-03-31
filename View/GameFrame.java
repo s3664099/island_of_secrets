@@ -12,25 +12,30 @@ package View;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import Interfaces.GameUI;
+import Model.GameController;
 import Model.GameEngine;
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements GameUI {
 
 	private static final long serialVersionUID = -5095376582483866399L;
+	public GamePanel gamePanel = null;
 
 	public GameFrame(GameEngine engine) {
 		
 		super("Island of Secrets");
-		initiliseUI(engine);
+		GameController controller = new GameController(engine,this);
+		this.gamePanel = new GamePanel(controller);
+		
+		initiliseUI(gamePanel);
 	}
 	
-	private void initiliseUI(GameEngine engine) {
+	private void initiliseUI(GamePanel gamePanel) {
 
 		//kills the window when the 'x' is clicked at the top
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		configureWindow();
 		
-		GamePanel gamePanel = new GamePanel(engine);
 		this.add(gamePanel);
 				
 		SwingUtilities.invokeLater(() -> {
@@ -47,6 +52,11 @@ public class GameFrame extends JFrame {
 		
 		//Center
 		setLocationRelativeTo(null);
+	}
+
+	@Override
+	public void refreshUI() {
+		gamePanel.refreshUI();		
 	}
 }
 /* 8 November 2024 - Created File

@@ -11,7 +11,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Interfaces;
 
 public interface GameUI {
-	void refresh();
+	void refreshUI();
 }
 
 /* 30 March 2025 - Created file

@@ -2,17 +2,14 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 30 March 2025
+Version: 4.1
+Date: 31 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
 import java.io.IOException;
-
-import javax.swing.SwingUtilities;
-
 import Interfaces.GameCommandHandler;
 import Interfaces.GameUI;
 
@@ -24,6 +21,10 @@ public class GameController implements GameCommandHandler {
 	public GameController(GameEngine engine, GameUI ui) {
 		this.engine = engine;
 		this.ui = ui;
+	}
+	
+	public GameEngine getEngine() {
+		return engine;
 	}
 
 	@Override
@@ -48,12 +49,12 @@ public class GameController implements GameCommandHandler {
 		engine.processShelter(locationID);
 		refreshUI();
 	}
-
-    private void refreshUI() {
-        SwingUtilities.invokeLater(ui::refresh);
-    }
 	
+	public void refreshUI() {
+		ui.refreshUI();
+	}
 }
 
 /* 30 March 2025 - Created file
+ * 31 March 2025 - Made gameUI the GameFrame
  */

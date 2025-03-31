@@ -14,9 +14,10 @@ import javax.swing.JPanel;
 
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
-import Model.GameEngine;
+import Interfaces.GameUI;
+import Model.GameController;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements GameUI {
 	
 	private final GameStateProvider state;
 	private final GameCommandHandler commander;
@@ -26,9 +27,9 @@ public class GamePanel extends JPanel {
 	private RoomPanel roomPanel;
 	private CommandPanel commandPanel;
 
-	public GamePanel(GameEngine game) {
-		this.state = game;
-		this.commander = game;
+	public GamePanel(GameController game) {
+		this.state = game.getEngine();
+		this.commander = game.getEngine();
 		initialiseUI();
 	}
 	
@@ -45,6 +46,11 @@ public class GamePanel extends JPanel {
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
 		this.add(commandPanel,BorderLayout.SOUTH);
+	}
+
+	@Override
+	public void refreshUI() {
+		// TODO Auto-generated method stub
 	}
 }
 
