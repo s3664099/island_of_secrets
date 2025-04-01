@@ -12,7 +12,6 @@ package View;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Interfaces.GameUI;
 import Model.GameController;
@@ -51,11 +50,15 @@ public class GamePanel extends JPanel implements GameUI {
 	@Override
 	public void refreshUI(GameController game) {
 		this.state = game.getEngine();
-		removeAll();
-		initialiseUI();
+		
+		statusPanel.refresh();
+		roomPanel.refresh();
+		commandPanel.refresh();
+
 		revalidate();
 		repaint();
-		//game.setCommandField();
+		commandPanel.requestCommandFocus();
+
 	}
 }
 

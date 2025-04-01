@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 31 March 2024
+Version: 4.4
+Date: 1 April 2024
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,13 +25,12 @@ import View.GamePanel;
 public class CommandListener implements KeyListener {
 
 	private JTextField commandField;
-	private final GameStateProvider state;
-	private final GameController game;
+	private final GameController controller;
 	
-	public CommandListener(JTextField commandField, GameController game) {
+	public CommandListener(JTextField commandField, GameController controller) {
+
 		this.commandField = commandField;
-		this.state = game.getEngine();
-		this.game = game;
+		this.controller = controller;
 	}
 
 	@Override
@@ -40,17 +39,17 @@ public class CommandListener implements KeyListener {
 		//Checks if user presses enter
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			
-			String command = this.commandField.getText();
+			String command = this.commandField.getText().trim();
 			this.commandField.setText("");
 			
 			
-			if (state.getResponseType()==1) {
+			if (controller.getResponseType()==1) {
 				//commander.processGive(command);
-			} else if (state.getResponseType()==2) {
+			} else if (controller.getResponseType()==2) {
 				//commander.processShelter(command);
 			} else {
 				try {
-					game.processCommand(command);
+					controller.processCommand(command);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -80,4 +79,5 @@ public class CommandListener implements KeyListener {
  * 22 March 2025 - Added error handling
  * 27 March 2025 - Update file for new stule
  * 31 March 2025 - Updated file to handle Decoupling
+ * 1 April 2025 - Updated listener to make it tighter
  */

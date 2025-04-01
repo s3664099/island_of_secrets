@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 31 March 2025
+Version: 4.5
+Date: 1 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import Controller.BookButton;
 import Controller.CommandListener;
@@ -95,7 +96,7 @@ public class CommandPanel  extends JPanel  {
 	
 	public void refresh() {
 		configureLayout();
-		this.commandField.requestFocusInWindow();
+		requestCommandFocus();
 	}
 			
 	//Component Builders
@@ -174,6 +175,13 @@ public class CommandPanel  extends JPanel  {
 		panel.add(commandField);
 		return panel;
 	}
+
+	public void requestCommandFocus() {
+		SwingUtilities.invokeLater(() -> {
+			commandField.requestFocusInWindow();
+			commandField.selectAll();
+		});
+	}
 }
 
 /* 26 March 2025 - Created File
@@ -181,4 +189,5 @@ public class CommandPanel  extends JPanel  {
  * 28 March 2025 - Added space creation panel
  * 30 March 2025 - Completed Class
  * 31 March 2025 - Changed GameEngine to game controller
+ * 1 April 2025 - Updated code to resquest focus in the commandfield
  */
