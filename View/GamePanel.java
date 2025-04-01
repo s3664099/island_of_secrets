@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements GameUI {
 		this.state = game.getEngine();
 		
 		statusPanel.refresh();
-		roomPanel.refresh();
+		roomPanel.refreshUI();
 		commandPanel.refresh();
 
 		revalidate();

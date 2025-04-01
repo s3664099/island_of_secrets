@@ -74,17 +74,24 @@ public class RoomPanel extends JPanel {
 			add(messagePanel);
 		}
 	}
+	
+	public void refreshUI() {
+		removeAll();
+		configureLayout();
+		refresh();
+	}
 		
 	public void refresh() {
-		roomLabel.setText(state.getRoom());
-		exitLabel.setText(state.getExits());
-		specialExitLabel.setText(state.getSpecialExits());
 		
-		//Adds Items
+		roomLabel.setText(state.getRoom());
+		
 		for (int i=0;i<itemLabelList.size();i++) {
 			itemLabelList.get(i).setText(itemTextList.get(i));
 		}
-
+		
+		exitLabel.setText(state.getExits());
+		specialExitLabel.setText(state.getSpecialExits());
+		
 		//Adds message
 		for (int i=0;i<messageLabelList.size();i++) {
 			messageLabelList.get(i).setText(state.getMessage().get(i));
@@ -92,8 +99,10 @@ public class RoomPanel extends JPanel {
 	}
 	
 	private void determineLength(String displayString, List<JLabel> labelList) {
-
-		while (displayString.length()>0) {		
+		System.out.println(displayString);
+		System.out.println("Hello");
+		while (displayString.length()>0) {
+			System.out.println(displayString);
 			int lineLength = getLineLength(displayString);
 			itemTextList.add(displayString.substring(0,lineLength));
 			displayString = displayString.substring(lineLength);
