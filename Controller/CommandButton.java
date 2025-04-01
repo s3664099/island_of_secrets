@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 31 March 2025
+Version: 4.3
+Date: 1 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,27 +13,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import Model.GameEngine;
-import View.GamePanel;
+import Model.GameController;
 
 public class CommandButton implements ActionListener {
 
-	private GameEngine game;
-	private GamePanel panel;
 	private String command;
+	private GameController controller;
 	
-	public CommandButton(GameEngine game, GamePanel panel, String command) {
+	public CommandButton(GameController controller, String command) {
 		
-		this.panel = panel;
-		this.game = game;
 		this.command = command;
+		this.controller = controller;
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		try {
-			game.processCommand(command);
+			controller.processCommand(command);
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -46,4 +43,5 @@ public class CommandButton implements ActionListener {
  * 5 March 2025 - Increased version to v4.0
  * 22 March 2025 - Added Error Handling
  * 31 March 2025 - Removed panel from process command
+ * 1 April 2024 - Updated listener
  */

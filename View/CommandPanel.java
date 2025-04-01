@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import Controller.BookButton;
+import Controller.CommandButton;
 import Controller.CommandListener;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
@@ -74,8 +75,7 @@ public class CommandPanel  extends JPanel  {
 			
 				//Otherwise add button with command
 				} else {
-					//addButton(inputPanel,commands[i],new CommandButton(game,this,commands[i]),320);
-					add(addButtonPanel(commands[i],null,320));
+					add(addButtonPanel(commands[i],new CommandButton(game,commands[i]),320));
 				}
 			}
 			
@@ -189,5 +189,5 @@ public class CommandPanel  extends JPanel  {
  * 28 March 2025 - Added space creation panel
  * 30 March 2025 - Completed Class
  * 31 March 2025 - Changed GameEngine to game controller
- * 1 April 2025 - Updated code to resquest focus in the commandfield
+ * 1 April 2025 - Updated code to request focus in the commandField. Command button works
  */
