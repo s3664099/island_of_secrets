@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 1 April 2025
+Version: 4.1
+Date: 2 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -22,7 +22,12 @@ public class GameState implements GameStateProvider {
 	private final String status;
 	private final String specialExits;
 	private final String[] displayedSavedGames;
-	private final String[] getCommands;
+	private final String[] previousCommands;
+	private final List<String> message;
+	private final int finalScore;
+	private final boolean initialGameState;
+	private final boolean saveGameState;
+	private final boolean endGameState;
 	
 	public GameState(GameStateProvider state) {
 		this.room = state.getRoom();
@@ -32,7 +37,12 @@ public class GameState implements GameStateProvider {
 		this.status = state.getStatus();
 		this.specialExits = state.getSpecialExits(); 
 		this.displayedSavedGames = state.getDisplayedSavedGames();
-		this.getCommands = state.getCommands();
+		this.previousCommands = state.getCommands();
+		this.message = state.getMessage();
+		this.finalScore = state.getFinalScore();
+		this.initialGameState = state.isInitialGameState();
+		this.saveGameState = state.isSavedGameState();
+		this.endGameState = state.isEndGameState();
 		
 	}
 	
@@ -73,37 +83,32 @@ public class GameState implements GameStateProvider {
 
 	@Override
 	public String[] getCommands() {
-		return this.getCommands;
+		return this.previousCommands;
 	}
 
 	@Override
 	public List<String> getMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.message;
 	}
 	
 	@Override
 	public int getFinalScore() {
-		
-		return 0;
+		return this.finalScore;
 	}
 
 	@Override
 	public boolean isInitialGameState() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.initialGameState;
 	}
 
 	@Override
 	public boolean isSavedGameState() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.saveGameState;
 	}
 
 	@Override
 	public boolean isEndGameState() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.endGameState;
 	}
 
 	@Override
@@ -133,4 +138,5 @@ public class GameState implements GameStateProvider {
 }
 
 /* 1 April 2025 - Created File
+ * 2 April 2025 - Added up to endGameState
  */
