@@ -87,29 +87,7 @@
 
 
 ### **Phase 2: Architectural Foundation**
-3. **Introduce Controller**
-   ```java
-   public class GameController {
-       private final GameEngine engine;
-       private final GameUI ui;
-       
-       public void onCommand(String input) {
-           engine.processCommand(input);
-           ui.refresh();
-       }
-   }
-   ```
 
-4. **State Management**
-   - Implement `GameState` DTO:
-   ```java
-   public record GameState(
-       String time,
-       String status,
-       List<String> messages,
-       boolean showMap
-   ) {}
-   ```
 
 ### **Phase 3: UI Modernization**
 5. **Component-Based UI**
@@ -165,3 +143,4 @@ Would you like to drill down into any specific phase first? I recommend starting
 Add //Button to escape shelter
     //Show items in room of secret visions
     //Exit & Restart should be on same line - Command Panel
+    //Why is the message not displaying correctly?

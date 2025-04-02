@@ -2,8 +2,8 @@
 Title: Island of Secrets Room Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 1 April 2025
+Version: 4.4
+Date: 2 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -44,7 +44,7 @@ public class RoomPanel extends JPanel {
 		setLayout(new GridLayout(9,1));
 		determineLength(state.getItems(),itemLabelList);
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-				
+		
 		//Room Display
 		JPanel roomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		roomPanel.add(roomLabel);
@@ -76,6 +76,12 @@ public class RoomPanel extends JPanel {
 	}
 	
 	public void refreshUI() {
+				
+		//Clears the lists
+		messageLabelList.clear();
+		itemLabelList.clear();
+		itemTextList.clear();
+		
 		removeAll();
 		configureLayout();
 		refresh();
@@ -84,7 +90,7 @@ public class RoomPanel extends JPanel {
 	public void refresh() {
 		
 		roomLabel.setText(state.getRoom());
-		
+
 		for (int i=0;i<itemLabelList.size();i++) {
 			itemLabelList.get(i).setText(itemTextList.get(i));
 		}
@@ -99,10 +105,9 @@ public class RoomPanel extends JPanel {
 	}
 	
 	private void determineLength(String displayString, List<JLabel> labelList) {
-		System.out.println(displayString);
-		System.out.println("Hello");
+
 		while (displayString.length()>0) {
-			System.out.println(displayString);
+			
 			int lineLength = getLineLength(displayString);
 			itemTextList.add(displayString.substring(0,lineLength));
 			displayString = displayString.substring(lineLength);
@@ -133,4 +138,5 @@ public class RoomPanel extends JPanel {
  * 26 March 2026 - Added code to produce the contents
  * 28 March 2025 - Complete panel by adding message label
  * 1 April 2025 - Updated refresh to display items
+ * 2 April 2025 - Fixed issue with items not displaying
  */
