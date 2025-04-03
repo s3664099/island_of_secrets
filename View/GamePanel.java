@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements GameUI {
 		// Top section for status and label panels
 		statusPanel = new StatusPanel(state);
 		roomPanel = new RoomPanel(state);
-		commandPanel = new CommandPanel(game);
+		commandPanel = new CommandPanel(game,state);
 				
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements GameUI {
 		
 		statusPanel.refreshUI(this.state);
 		roomPanel.refreshUI(this.state);
-		commandPanel.refresh();
+		commandPanel.refreshUI(this.state);
 
 		revalidate();
 		repaint();

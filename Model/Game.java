@@ -298,7 +298,7 @@ public class Game implements Serializable {
 	}
 	
 	public boolean isInitialGameState() {
-
+		
 		boolean started = false;
 		if (gameState == GameState.STARTED) {
 			gameState = GameState.RUNNING;

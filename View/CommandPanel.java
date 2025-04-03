@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 1 April 2025
+Version: 4.6
+Date: 3 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,19 +26,20 @@ import Controller.CommandListener;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Model.GameController;
+import Model.GameState;
 
 public class CommandPanel  extends JPanel  {
 	
 	private static final long serialVersionUID = 5738616866958583642L;
-	private final GameStateProvider state;
+	private GameStateProvider state;
 	private final GameController game;
 	private JTextField commandField = new JTextField(2);
 	private CommandListener activeListener;
 	
 	private final JLabel spaceLabel = new JLabel();
 
-	public CommandPanel(GameController game) {
-		this.state = game.getEngine();
+	public CommandPanel(GameController game,GameStateProvider state) {
+		this.state = state;
 		this.game = game;
 		setLayout(new GridLayout(9,1));
 		refresh();
@@ -47,7 +48,7 @@ public class CommandPanel  extends JPanel  {
 	private void configureLayout() {
 		removeAll();
 		add(createSpacePanel());
-		
+				
 		if (state.isInitialGameState()) {
 			add(addButtonPanel("Click for Clues & Hints",null,260));
 		}
@@ -58,7 +59,7 @@ public class CommandPanel  extends JPanel  {
 			addSaveGameButtonPanels();
 		}
 		
-		if (!state.isInitialGameState() && state.getResponseType()!=2 && !state.isSavedGameState()) {
+		if (state.getResponseType()!=2 && !state.isSavedGameState()) {
 			
 			//Button to display the map
 			if (state.getPanelFlag()!=4) {
@@ -95,7 +96,14 @@ public class CommandPanel  extends JPanel  {
 		repaint();
 	}
 	
-	public void refresh() {
+	public void refreshUI(GameStateProvider state) {
+		this.state = state;
+		refresh();
+		
+	}
+	
+	private void refresh() {
+		
 		configureLayout();
 		requestCommandFocus();
 	}
@@ -198,4 +206,6 @@ public class CommandPanel  extends JPanel  {
  * 30 March 2025 - Completed Class
  * 31 March 2025 - Changed GameEngine to game controller
  * 1 April 2025 - Updated code to request focus in the commandField. Command button works
+ * 3 April 2025 - Fixed problem with multiple command and initial state not changing. Updated
+ *                to handle command state.
  */
