@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 1 April 2025
+Version: 4.3
+Date: 3 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,6 +21,10 @@ public class GameController implements GameCommandHandler {
 	public GameController(GameEngine engine, GameUI ui) {
 		this.engine = engine;
 		this.ui = ui;
+	}
+	
+	public GameState getState() {
+		return new GameState(engine);
 	}
 	
 	public GameEngine getEngine() {
@@ -62,4 +66,5 @@ public class GameController implements GameCommandHandler {
 /* 30 March 2025 - Created file
  * 31 March 2025 - Made gameUI the GameFrame
  * 1 April 2025 - Added getResponseType
+ * 3 April 2025 - Updated Code to take GameState
  */

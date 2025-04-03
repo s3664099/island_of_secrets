@@ -12,15 +12,8 @@ package Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-
 import javax.swing.JTextField;
-
-import Interfaces.GameCommandHandler;
-import Interfaces.GameStateProvider;
 import Model.GameController;
-import Model.GameEngine;
-import View.CommandPanel;
-import View.GamePanel;
 
 public class CommandListener implements KeyListener {
 
@@ -44,7 +37,7 @@ public class CommandListener implements KeyListener {
 			
 			
 			if (controller.getResponseType()==1) {
-				//commander.processGive(command);
+				controller.processGive(command);
 			} else if (controller.getResponseType()==2) {
 				//commander.processShelter(command);
 			} else {

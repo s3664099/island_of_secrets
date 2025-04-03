@@ -2,8 +2,8 @@
 Title: Island of Secrets Room Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 2 April 2025
+Version: 4.5
+Date: 3 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,7 +25,7 @@ import Interfaces.GameStateProvider;
 public class RoomPanel extends JPanel {
 
 	private static final long serialVersionUID = -7153746273218337269L;
-	private final GameStateProvider state;
+	private GameStateProvider state;
 	
 	private final JLabel roomLabel = new JLabel();
 	private final JLabel exitLabel = new JLabel();
@@ -75,8 +75,10 @@ public class RoomPanel extends JPanel {
 		}
 	}
 	
-	public void refreshUI() {
-				
+	public void refreshUI(GameStateProvider state) {
+		
+		this.state = state;
+		
 		//Clears the lists
 		messageLabelList.clear();
 		itemLabelList.clear();
@@ -139,4 +141,5 @@ public class RoomPanel extends JPanel {
  * 28 March 2025 - Complete panel by adding message label
  * 1 April 2025 - Updated refresh to display items
  * 2 April 2025 - Fixed issue with items not displaying
+ * 3 April 2025 - Updated code to take the Game State
  */

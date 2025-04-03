@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 2 April 2025
+Version: 4.2
+Date: 3 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,10 @@ public class GameState implements GameStateProvider {
 	private final String[] previousCommands;
 	private final List<String> message;
 	private final int finalScore;
+	private final int responseType;
+	private final int panelFlag;
+	private final boolean lowerLimit;
+	private final boolean upperLimit;
 	private final boolean initialGameState;
 	private final boolean saveGameState;
 	private final boolean endGameState;
@@ -43,7 +47,10 @@ public class GameState implements GameStateProvider {
 		this.initialGameState = state.isInitialGameState();
 		this.saveGameState = state.isSavedGameState();
 		this.endGameState = state.isEndGameState();
-		
+		this.lowerLimit = state.getLowerLimitSavedGames();
+		this.upperLimit = state.getUpperLimitSavedGames();
+		this.responseType = state.getResponseType();
+		this.panelFlag = state.getPanelFlag();
 	}
 	
 	@Override
@@ -113,30 +120,27 @@ public class GameState implements GameStateProvider {
 
 	@Override
 	public boolean getLowerLimitSavedGames() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.lowerLimit;
 	}
 
 	@Override
 	public boolean getUpperLimitSavedGames() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.upperLimit;
 	}
 
 	@Override
 	public int getResponseType() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.responseType;
 	}
 
 	@Override
 	public int getPanelFlag() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.panelFlag;
 	}
 
 }
 
 /* 1 April 2025 - Created File
  * 2 April 2025 - Added up to endGameState
+ * 3 April 2025 - Completed Game State
  */
