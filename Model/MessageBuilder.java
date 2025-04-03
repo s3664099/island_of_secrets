@@ -10,6 +10,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import java.util.List;
 
 import Data.Constants;
@@ -18,6 +19,7 @@ public class MessageBuilder {
 	
 	private List<String> messages;
 	private int maxMessageLength;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	//Standard Construction
 	public MessageBuilder() {
@@ -49,6 +51,7 @@ public class MessageBuilder {
 			
 			//Clears the message if instructed
 			if (clear) {
+				logger.info("Clear Message");
 				clearMessages();
 			}
 			

@@ -131,7 +131,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 		
 	public void processCommand(String command) throws IOException {
-		
+				
 		//Saves the commands into the previous command list
 		if (this.commands[0].equals("")) {
 			this.commands[0] = command;

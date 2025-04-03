@@ -33,6 +33,7 @@ public class CommandPanel  extends JPanel  {
 	private final GameStateProvider state;
 	private final GameController game;
 	private JTextField commandField = new JTextField(2);
+	private CommandListener activeListener;
 	
 	private final JLabel spaceLabel = new JLabel();
 
@@ -171,7 +172,14 @@ public class CommandPanel  extends JPanel  {
 	private JPanel createCommandInputPanel() {
 		JPanel panel = new JPanel(new GridLayout(1,1));
 		panel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
-		commandField.addKeyListener(new CommandListener(commandField,game));
+		
+		if (activeListener != null) {
+			commandField.removeKeyListener(activeListener);
+		}
+		
+		activeListener = new CommandListener(commandField,game);
+		commandField.addKeyListener(activeListener);
+		
 		panel.add(commandField);
 		return panel;
 	}
