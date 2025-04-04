@@ -26,20 +26,16 @@ import Controller.GameButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import Model.GameController;
 import Model.GameEngine;
 
 public class MapPanel extends JPanel {
 	
 	private static final long serialVersionUID = -1097043236506747632L;
-	private GameEngine engine;
-	private GamePanel game;
+	private GameController game;
 	
-	public MapPanel(GamePanel game,GameEngine engine) {
+	public MapPanel(GameController game) {
 		this.game = game;
-		this.engine = engine;
-		
-		System.out.println("In Panel");
-		System.out.println(engine);
 		
 		setLayout(new GridLayout(11,10));
 		
@@ -65,12 +61,12 @@ public class MapPanel extends JPanel {
 				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
 			}
 			
-			if (x<81 && engine.getGame().getRoom(x).getVisited()) {
+			if (x<81 && game.getGame().getRoom(x).getVisited()) {
 				
-				String imageName = engine.getGame().getRoom(x).getRoomType();
-				boolean[] exits = engine.getGame().getRoom(x).getExits();
+				String imageName = game.getGame().getRoom(x).getRoomType();
+				boolean[] exits = game.getGame().getRoom(x).getExits();
 				
-				if (engine.getPlayer().getRoom()==x) {
+				if (game.getPlayer().getRoom()==x) {
 					imageName = "adventurer";
 				}
 				

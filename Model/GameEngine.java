@@ -18,7 +18,6 @@ import Interfaces.GameStateProvider;
 import Test.Test;
 import View.GamePanel;
 import View.LightningPanel;
-import View.MapPanel;
 import View.MessagePanel;
 
 import java.io.IOException;
@@ -341,17 +340,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			player.setPanelFlag(0);
 		} 
 	}
-	
-	//Displays the map panel
-	public void setMapPanel(GamePanel game) {
-		setPanel(game,new MapPanel(game,this));
-	}
-	
-	//Displays the game panel
-	public void setGamePanel(GamePanel game) {
-		//resetPanel(game);
-	}
-	
+			
 	public void restart(Game game, Player player) {
 		this.game = game;
 		this.player = player;
@@ -447,4 +436,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 26 March 2025 - Commented out code to enable to run
 29 March 2025 - Hid setCommandField
 31 March 2025 - Removed panel refresh. Removed panel from process command
+4 April 2025 - Removed UI Components
 */

@@ -23,10 +23,9 @@ import javax.swing.SwingUtilities;
 import Controller.BookButton;
 import Controller.CommandButton;
 import Controller.CommandListener;
-import Interfaces.GameCommandHandler;
+import Controller.MapButton;
 import Interfaces.GameStateProvider;
 import Model.GameController;
-import Model.GameState;
 
 public class CommandPanel  extends JPanel  {
 	
@@ -63,8 +62,7 @@ public class CommandPanel  extends JPanel  {
 			
 			//Button to display the map
 			if (state.getPanelFlag()!=4) {
-				//addButton(inputPanel,"Map",new MapButton(game,this),320);
-				add(addButtonPanel("Map",null,320));
+				add(addButtonPanel("Map",new MapButton(game),320));
 			}
 			
 			//Command Field includes four labels above which contain the last three commands.
