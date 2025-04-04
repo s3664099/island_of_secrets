@@ -30,7 +30,7 @@ public class GameButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		//game.getGame().setGameDisplay(false);
-		game.setGamePanel(this.panel);
+		//game.setGamePanel(this.panel);
 	}
 
 }

@@ -361,6 +361,28 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean getRoomVisited(int roomNumber) {
+		return game.getRoomVisited(roomNumber);
+	}
+
+	@Override
+	public boolean[] getRoomExits(int roomNumber) {
+
+		return game.getRoomExits(roomNumber);
+	}
+
+	@Override
+	public String getRoomImageType(int roomNumber) {
+
+		return game.getRoomImageType(roomNumber);
+	}
+
+	@Override
+	public int getCurrentRoom() {
+		return player.getRoom();
+	}
 } 
 
 /*
@@ -436,5 +458,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 26 March 2025 - Commented out code to enable to run
 29 March 2025 - Hid setCommandField
 31 March 2025 - Removed panel refresh. Removed panel from process command
-4 April 2025 - Removed UI Components
+4 April 2025 - Removed UI Components. Added functions to retrieve room details for map
 */

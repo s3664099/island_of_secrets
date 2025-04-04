@@ -2,8 +2,8 @@
 Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 25 March 2025
+Version: 4.2
+Date: 4 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,6 +26,12 @@ public interface GameStateProvider {
 	public String[] getCommands();
 	public List<String> getMessage();
 	
+	//Map Functions
+	public boolean getRoomVisited(int roomNumber);
+	public boolean[] getRoomExits(int roomNumber);
+	public String getRoomImageType(int roomNumber);
+	public int getCurrentRoom();
+	
 	//GameUI Methods
 	public boolean isInitialGameState();
 	public boolean isSavedGameState();
@@ -38,4 +44,5 @@ public interface GameStateProvider {
 
 /* 24 March 2025 - Created File
  * 25 March 2025 - Added further required methods
+ * 4 April 2025 - Added functions for handling the mapPanel
  */

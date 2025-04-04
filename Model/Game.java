@@ -141,6 +141,24 @@ public class Game implements Serializable {
 		return locationList[roomNumber];
 	}
 	
+	//Map Functions
+	public boolean getRoomVisited(int roomNumber) {
+		
+		for (int i=0;i<locationList.length;i++) {
+			System.out.println(i+") "+locationList[i]);
+		}
+		
+		return locationList[roomNumber].getVisited();
+	}
+	
+	public String getRoomImageType(int roomNumber) {
+		return locationList[roomNumber].getRoomType();
+	}
+	
+	public boolean[] getRoomExits(int roomNumber) {
+		return locationList[roomNumber].getExits();
+	}
+	
 	//Checks to see if an exit has already been added
 	private String addExit(String exit, String exits) {
 		

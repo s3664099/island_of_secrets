@@ -45,7 +45,7 @@ public class BookButton implements ActionListener {
 		}
 		
 		//game.getGame().setGameDisplay(false);
-		game.setGamePanel(this.panel);
+		//game.setGamePanel(this.panel);
 	}
 
 }

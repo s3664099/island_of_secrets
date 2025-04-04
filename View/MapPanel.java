@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Controller.GameButton;
+import Interfaces.GameStateProvider;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,10 +33,12 @@ import Model.GameEngine;
 public class MapPanel extends JPanel {
 	
 	private static final long serialVersionUID = -1097043236506747632L;
-	private GameController game;
+	private final GameStateProvider state;
+	private final GameController game;
 	
 	public MapPanel(GameController game) {
 		this.game = game;
+		this.state = game.getEngine();
 		
 		setLayout(new GridLayout(11,10));
 		
@@ -61,12 +64,12 @@ public class MapPanel extends JPanel {
 				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
 			}
 			
-			if (x<81 && game.getGame().getRoom(x).getVisited()) {
+			if (x<81 && state.getRoomVisited(x)) {
 				
-				String imageName = game.getGame().getRoom(x).getRoomType();
-				boolean[] exits = game.getGame().getRoom(x).getExits();
+				String imageName = state.getRoomImageType(x);
+				boolean[] exits = state.getRoomExits(x);
 				
-				if (game.getPlayer().getRoom()==x) {
+				if (state.getCurrentRoom()==x) {
 					imageName = "adventurer";
 				}
 				
@@ -110,7 +113,7 @@ public class MapPanel extends JPanel {
 
 			if (x==85) {
 				JPanel inputPanel = new JPanel(new GridLayout(1,1));
-				addButton(inputPanel,"Game",new GameButton(this.engine,this.game));
+				//addButton(inputPanel,"Game",new GameButton(this.engine,this.game));
 				roomPanel.add(inputPanel);
 			}
 			

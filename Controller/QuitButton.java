@@ -39,7 +39,7 @@ public class QuitButton implements ActionListener {
 			this.frame.dispose();
 		} else {
 			this.game.restart(GameInitialiser.initialiseGame(), new Player());
-			this.game.setGamePanel(panel);
+			//this.game.setGamePanel(panel);
 		}
 	}
 

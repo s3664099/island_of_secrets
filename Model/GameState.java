@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 3 April 2025
+Version: 4.3
+Date: 4 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -138,9 +138,30 @@ public class GameState implements GameStateProvider {
 		return this.panelFlag;
 	}
 
+	@Override
+	public boolean getRoomVisited(int roomNumber) {
+		return false;
+	}
+
+	@Override
+	public boolean[] getRoomExits(int roomNumber) {
+		return null;
+	}
+
+	@Override
+	public String getRoomImageType(int roomNumber) {
+		return null;
+	}
+
+	@Override
+	public int getCurrentRoom() {
+		return 0;
+	}
+
 }
 
 /* 1 April 2025 - Created File
  * 2 April 2025 - Added up to endGameState
  * 3 April 2025 - Completed Game State
+ * 4 April 2025 - Updated for new functions added to interface
  */

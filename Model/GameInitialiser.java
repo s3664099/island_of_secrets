@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Initialiser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 15 March 2025
+Version: 4.1
+Date: 4 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,7 +25,7 @@ public class GameInitialiser {
 		locations[0] = null; //Room 0 is unused
 		
 		//Initialise locations
-		for (int roomNumber=1;roomNumber<noRooms;roomNumber++) {
+		for (int roomNumber=0;roomNumber<noRooms;roomNumber++) {
 						
 			locations[roomNumber+1] = new Location(RawData.getLocation(roomNumber),
 												RawData.getPrepositions(),
@@ -53,4 +53,6 @@ public class GameInitialiser {
 }
 
 /* 15 March 2025 - Created File
+ * 4 April 2025 - Fixed problem with initial location not displaying
+ */
  */

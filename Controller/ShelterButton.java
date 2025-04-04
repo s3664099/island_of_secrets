@@ -33,7 +33,7 @@ public class ShelterButton implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		game.getGame().setResponse(0);
 		game.getPlayer().setRoom(location);
-		game.setGamePanel(this.panel);
+		//game.setGamePanel(this.panel);
 	}
 }
 
