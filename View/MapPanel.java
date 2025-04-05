@@ -14,9 +14,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import Controller.GameButton;
-import Interfaces.GameStateProvider;
 import Interfaces.GameView;
 
 import javax.swing.ImageIcon;
@@ -35,7 +33,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import Model.GameController;
-import Model.GameEngine;
 import Model.GameState;
 
 public class MapPanel extends JPanel implements GameView {
@@ -86,28 +83,28 @@ public class MapPanel extends JPanel implements GameView {
 		return panel;
 	}
 	
-    private BorderFactory createRoomBorder(int roomId) {
+    private Border createRoomBorder(int roomId) {
       
-    	BorderFactory border = null;
+    	Border border;
     	
 		if (roomId<10 && roomId>1) {
-			border.createMatteBorder(2, 0, 0, 0, Color.BLACK);
+			border = BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK);
 		} else if (roomId==1) {
-			border.createMatteBorder(2, 2, 0, 0, Color.BLACK);
+			border = BorderFactory.createMatteBorder(2, 2, 0, 0, Color.BLACK);
 		} else if (roomId==10) {
-			border.createMatteBorder(2, 0, 0, 2, Color.BLACK);
+			border = BorderFactory.createMatteBorder(2, 0, 0, 2, Color.BLACK);
 		} else if (roomId==71) {
-			border.createMatteBorder(0, 2, 2, 0, Color.BLACK);
+			border = BorderFactory.createMatteBorder(0, 2, 2, 0, Color.BLACK);
 		} else if (roomId==80) {
-			border.createMatteBorder(0, 0, 2, 2, Color.BLACK);
+			border = BorderFactory.createMatteBorder(0, 0, 2, 2, Color.BLACK);
 		} else if (roomId>71 && roomId<80) {
-			border.createMatteBorder(0, 0, 2, 0, Color.BLACK);
+			border = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK);
 		} else if (roomId==11 || roomId==21 || roomId==31 || roomId==41 || roomId==51 || roomId==61) {
-			border.createMatteBorder(0, 2, 0, 0, Color.BLACK);
+			border = BorderFactory.createMatteBorder(0, 2, 0, 0, Color.BLACK);
 		} else if (roomId==20 || roomId==30 || roomId==40 || roomId==50 || roomId==60 || roomId==70) {
-			border.createMatteBorder(0, 0, 0, 2, Color.BLACK);
+			border = BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK);
 		} else {
-			border.createEmptyBorder();
+			border = BorderFactory.createEmptyBorder();
 		}
 	        
         return border;
@@ -168,16 +165,33 @@ public class MapPanel extends JPanel implements GameView {
     	private final Map<String,ImageIcon> cache = new HashMap<>();
     	
     	public ImageIcon getImage(String path) {
-    		return cache.computeIfAbsent(path, p -> {
-    			try {
-    				BufferedImage img = ImageIO.read(getClass().getResourceAsStream(p));
-    				return new ImageIcon(img.getScaledInstance(50,50,Image.SCALE_SMOOTH));
-    			} catch (IOException e) {
-    				System.err.println("Couldn't load image: "+p);
-    				return null;
-    			}
-    		});
+    		ImageIcon result = cache.get(path);
+    		
+    		if (result == null) {
+    			result = createImageIcon(path);
+    			cache.put(path, result);
+    		}
+    		
+    		return result;
     	}
+    	
+        private ImageIcon createImageIcon(String path) {
+        	
+            ImageIcon result = null;
+            try {
+                InputStream stream = getClass().getResourceAsStream(path);
+                if (stream != null) {
+                    BufferedImage img = ImageIO.read(stream);
+                    if (img != null) {
+                        result = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                    }
+                    stream.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Couldn't load image: " + path);
+            }
+            return result;
+        }
     }
 
 }
