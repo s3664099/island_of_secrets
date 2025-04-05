@@ -16,7 +16,7 @@ import Data.Item;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Test.Test;
-import View.GamePanel;
+import View.MainGamePanel;
 import View.LightningPanel;
 import View.MessagePanel;
 
@@ -229,7 +229,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return player.getPanelFlag();
 	}
 	
-	public void processGive(String object,GamePanel game) {
+	public void processGive(String object,MainGamePanel game) {
 
 		//Checks if the response is 'to xxxx'
 		String[] instructions = object.split(" ");
@@ -249,7 +249,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		determinePanel(game);
 	}
 	
-	public void processShelter(String object,GamePanel game) {
+	public void processShelter(String object,MainGamePanel game) {
 		
 		//Checks if response is 1,2,or 3
 		if (object.equals("1") || object.equals("2") || object.equals("3")) {
@@ -280,13 +280,12 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 	//Handled what saved games to display
 	//Used if more than 5 saved games
-	public void increaseLoad(GamePanel game) throws IOException {
+	public void increaseLoad(MainGamePanel game) throws IOException {
 		this.game.increaseCount();
-		System.out.println(this.game.getCount());
 		processCommand("load");
 	}
 	
-	public void decreaseLoad(GamePanel game) throws IOException {
+	public void decreaseLoad(MainGamePanel game) throws IOException {
 		this.game.descreaseCount();
 		processCommand("load");
 	}
@@ -330,7 +329,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 	
 	//What panel is to be displayed after the command is executed.
-	private void determinePanel(GamePanel game) {
+	private void determinePanel(MainGamePanel game) {
 		
 		if (player.getPanelFlag()==2) {
 			setPanel(game, new LightningPanel(0,game,this));

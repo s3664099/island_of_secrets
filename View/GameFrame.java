@@ -19,28 +19,23 @@ import Model.GameEngine;
 public class GameFrame extends JFrame implements GameUI {
 
 	private static final long serialVersionUID = -5095376582483866399L;
-	public GamePanel gamePanel = null;
+	private final GamePanel gamePanel;
 
 	public GameFrame(GameEngine engine) {
 		
 		super("Island of Secrets");
 		GameController controller = new GameController(engine,this);
 		this.gamePanel = new GamePanel(controller);
-		
-		initiliseUI(gamePanel);
+		initiliseUI();
 	}
 	
-	private void initiliseUI(GamePanel gamePanel) {
+	private void initiliseUI() {
 
 		//kills the window when the 'x' is clicked at the top
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setContentPane(gamePanel);
 		configureWindow();
-		
-		this.add(gamePanel);
-				
-		SwingUtilities.invokeLater(() -> {
-			setVisible(true);
-		});
+		setVisible(true);
 	}
 	
 	public void configureWindow()  {
@@ -55,13 +50,13 @@ public class GameFrame extends JFrame implements GameUI {
 
 	@Override
 	public void refreshUI(GameController game) {
-		gamePanel.refreshUI(game);		
+		gamePanel.refreshMainView(game);		
 	}
 
 	@Override
 	public void setMapPanel(GameController game) {
-		remove(gamePanel);
-		add(new MapPanel(game));
+		// TODO Auto-generated method stub
+		
 	}
 }
 /* 8 November 2024 - Created File

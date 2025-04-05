@@ -53,6 +53,5 @@ public class GameInitialiser {
 }
 
 /* 15 March 2025 - Created File
- * 4 April 2025 - Fixed problem with initial location not displaying
- */
+ * 4 April 2025 - Fixed issue with first location not displaying
  */

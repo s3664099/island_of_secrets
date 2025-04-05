@@ -25,7 +25,7 @@ public class MessagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel label;
-	private GamePanel game;
+	private MainGamePanel game;
 	private GameEngine engine;
 	private String game_messages;
 	
@@ -33,7 +33,7 @@ public class MessagePanel extends JPanel {
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	
-    public MessagePanel(GamePanel game,GameEngine engine,List<String> messages,String start_message) {
+    public MessagePanel(MainGamePanel game,GameEngine engine,List<String> messages,String start_message) {
     	
         this.game = game;
         this.engine = engine;
@@ -100,7 +100,7 @@ public class MessagePanel extends JPanel {
 		game.repaint();
 	}
     
-	private void resetPanel(GamePanel game) {
+	private void resetPanel(MainGamePanel game) {
 		game.removeAll();
 		//game.add(this.engine);
 		game.revalidate();

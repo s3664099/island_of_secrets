@@ -144,10 +144,6 @@ public class Game implements Serializable {
 	//Map Functions
 	public boolean getRoomVisited(int roomNumber) {
 		
-		for (int i=0;i<locationList.length;i++) {
-			System.out.println(i+") "+locationList[i]);
-		}
-		
 		return locationList[roomNumber].getVisited();
 	}
 	

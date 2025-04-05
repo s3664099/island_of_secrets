@@ -25,9 +25,9 @@ public class LightningPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int number = 0;
 	private JLabel label;
-	private GamePanel game;
+	private MainGamePanel game;
 	
-    public LightningPanel(int initialNumber,GamePanel game,GameEngine engine) {
+    public LightningPanel(int initialNumber,MainGamePanel game,GameEngine engine) {
         this.number = initialNumber;
         this.game = game;
 
@@ -75,7 +75,7 @@ public class LightningPanel extends JPanel {
         timer.start();
     }
     
-	private void resetPanel(GamePanel game) {
+	private void resetPanel(MainGamePanel game) {
 		game.removeAll();
 		//game.add(this.engine);
 		game.revalidate();

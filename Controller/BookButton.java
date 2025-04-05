@@ -16,14 +16,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class BookButton implements ActionListener {
 
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	
-	public BookButton(GameEngine game, GamePanel panel) {
+	public BookButton(GameEngine game, MainGamePanel panel) {
 		
 		this.panel = panel;
 		this.game = game;		

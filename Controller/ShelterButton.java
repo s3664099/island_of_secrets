@@ -13,15 +13,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class ShelterButton implements ActionListener {
 
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	private int location;
 	
-	public ShelterButton(GameEngine game, GamePanel panel, int location) {
+	public ShelterButton(GameEngine game, MainGamePanel panel, int location) {
 		
 		this.panel = panel;
 		this.game = game;

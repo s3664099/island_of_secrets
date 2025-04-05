@@ -13,14 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class GameButton implements ActionListener {
 
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	
-	public GameButton(GameEngine game, GamePanel panel) {
+	public GameButton(GameEngine game, MainGamePanel panel) {
 		
 		this.panel = panel;
 		this.game = game;

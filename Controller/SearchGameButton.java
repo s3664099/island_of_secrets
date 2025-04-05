@@ -14,15 +14,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class SearchGameButton implements ActionListener {
 
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	private boolean next;
 	
-	public SearchGameButton(GameEngine game, GamePanel panel, boolean next) {
+	public SearchGameButton(GameEngine game, MainGamePanel panel, boolean next) {
 		this.panel = panel;
 		this.game = game;
 		this.next = next;

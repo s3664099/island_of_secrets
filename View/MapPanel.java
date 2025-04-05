@@ -9,129 +9,177 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package View;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import Controller.GameButton;
 import Interfaces.GameStateProvider;
+import Interfaces.GameView;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import Model.GameController;
 import Model.GameEngine;
+import Model.GameState;
 
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements GameView {
 	
 	private static final long serialVersionUID = -1097043236506747632L;
-	private final GameStateProvider state;
-	private final GameController game;
+	private final GameController controller;
+	private GameState state;
+	private final Map<Integer, JPanel> roomPanels = new HashMap<>();
+	private final ImageCache imageCache = new ImageCache();
+	private boolean isInitialised = false;
 	
 	public MapPanel(GameController game) {
-		this.game = game;
-		this.state = game.getEngine();
-		
-		setLayout(new GridLayout(11,10));
-		
-		for (int x=1;x<110;x++) {
-			
-			JPanel roomPanel = new JPanel();
-			
-			if (x<10 && x>1) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
-			} else if (x==1) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 0, 0, Color.BLACK));
-			} else if (x==10) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 2, Color.BLACK));
-			} else if (x==71) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 2, 0, Color.BLACK));
-			} else if (x==80) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 2, Color.BLACK));
-			} else if (x>71 && x<80) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
-			} else if (x==11 || x==21 || x==31 || x==41 || x==51 || x==61) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.BLACK));
-			} else if (x==20 || x==30 || x==40 || x==50 || x==60 || x==70) {
-				roomPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK));
-			}
-			
-			if (x<81 && state.getRoomVisited(x)) {
-				
-				String imageName = state.getRoomImageType(x);
-				boolean[] exits = state.getRoomExits(x);
-				
-				if (state.getCurrentRoom()==x) {
-					imageName = "adventurer";
-				}
-				
-				int north = 0;
-				if (!exits[0]) {
-					north = 2;
-				}
-				
-				int south = 0;
-				if (!exits[1]) {
-					south = 2;
-				}
-				
-				int east = 0;
-				if (!exits[2]) {
-					east = 2 ;
-				}
-				
-				int west = 0;
-				if (!exits[3]) {
-					west = 2;
-				}
-				
-				roomPanel.setBorder(BorderFactory.createMatteBorder(north, west, south, east, Color.BLACK));
-				
-				try {
-					BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream("/Images/" + imageName + ".png"));
-					
-					int width = 50;
-				    int height = 50;
-				    
-				    // Scale the image
-				    Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-					
-					JLabel picLabel = new JLabel(new ImageIcon(image));
-				    roomPanel.add(picLabel);
-				} catch (IOException e) {
-				    e.printStackTrace();
-				}
-			}
 
-			if (x==85) {
-				JPanel inputPanel = new JPanel(new GridLayout(1,1));
-				//addButton(inputPanel,"Game",new GameButton(this.engine,this.game));
-				roomPanel.add(inputPanel);
-			}
-			
+		this.controller = game;
+		this.state = game.getState();
+		setLayout(new GridLayout(11,10));
+	}
+
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseMap();
+			isInitialised=true;
+		}
+	}
+	
+	@Override
+	public void onViewDeactivated() {
+	}
+	
+	@Override
+	public JComponent getViewComponent() {
+		return this;
+	}
+		
+	private void initialiseMap() {
+		for (int roomId = 1;roomId<110;roomId++) {
+			JPanel roomPanel = createRoomPanel(roomId);
+			roomPanels.put(roomId, roomPanel);
 			add(roomPanel);
 		}
 	}
 	
-	//Creates a button and adds it to the panel.
-	private void addButton(JPanel panel,String buttonName,ActionListener action) {
-		
-		//Create Exit Button
-		JButton button = new JButton(buttonName);
-		panel.add(button);
-		
-		//Closes frame when clicked
-		panel.setBorder(BorderFactory.createEmptyBorder(0,320,0,320));
-	    button.addActionListener(action);
+	private JPanel createRoomPanel(int roomId) {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBorder((Border) createRoomBorder(roomId));
+		panel.setPreferredSize(new Dimension(50,50));
+		return panel;
 	}
+	
+    private BorderFactory createRoomBorder(int roomId) {
+      
+    	BorderFactory border = null;
+    	
+		if (roomId<10 && roomId>1) {
+			border.createMatteBorder(2, 0, 0, 0, Color.BLACK);
+		} else if (roomId==1) {
+			border.createMatteBorder(2, 2, 0, 0, Color.BLACK);
+		} else if (roomId==10) {
+			border.createMatteBorder(2, 0, 0, 2, Color.BLACK);
+		} else if (roomId==71) {
+			border.createMatteBorder(0, 2, 2, 0, Color.BLACK);
+		} else if (roomId==80) {
+			border.createMatteBorder(0, 0, 2, 2, Color.BLACK);
+		} else if (roomId>71 && roomId<80) {
+			border.createMatteBorder(0, 0, 2, 0, Color.BLACK);
+		} else if (roomId==11 || roomId==21 || roomId==31 || roomId==41 || roomId==51 || roomId==61) {
+			border.createMatteBorder(0, 2, 0, 0, Color.BLACK);
+		} else if (roomId==20 || roomId==30 || roomId==40 || roomId==50 || roomId==60 || roomId==70) {
+			border.createMatteBorder(0, 0, 0, 2, Color.BLACK);
+		} else {
+			border.createEmptyBorder();
+		}
+	        
+        return border;
+    }
+    
+    public void refreshMap() {
+    	this.state = controller.getState();
+    	
+    	for (Map.Entry<Integer, JPanel> entry: roomPanels.entrySet()) {
+    		int roomId = entry.getKey();
+    		JPanel panel = entry.getValue();
+    		
+    		panel.removeAll();
+    		
+    		if (state.getRoomVisited(roomId)) {
+    			updateRoomVisuals(panel,roomId,state);
+    		}
+    		
+    		if (roomId==85) {
+    			addNavigationButton(panel);
+    		}
+    		panel.revalidate();
+    		panel.repaint();
+    	}
+    }
+    
+    private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
+    	
+    	String imageName = state.getCurrentRoom() == roomId 
+    			? "adventurer"
+    			: state.getRoomImageType(roomId);
+    	
+    	//Add Room Image
+    	ImageIcon icon = imageCache.getImage("/Images/"+ imageName + ".png");
+    	if (icon != null) {
+    		panel.add(new JLabel(icon), BorderLayout.CENTER);
+    	}
+    	
+    	//Update borders based on exits
+    	boolean[] exits = state.getRoomExits(roomId);
+    	panel.setBorder(BorderFactory.createMatteBorder(
+    			exits[0] ? 0:2, //North
+    			exits[3] ? 0:2, //West
+    			exits[1] ? 0:2, //South
+    			exits[2] ? 0:2, //East
+    			Color.BLACK
+    	));
+    }
+    
+    private void addNavigationButton(JPanel panel) {
+    	JButton backButton = new JButton("Back to Game");
+    	//backButton.addActionListener(e -> controller.showMainView());
+    	panel.add(backButton);
+    }
+	
+    //Image cache helper
+    private static class ImageCache {
+    	private final Map<String,ImageIcon> cache = new HashMap<>();
+    	
+    	public ImageIcon getImage(String path) {
+    		return cache.computeIfAbsent(path, p -> {
+    			try {
+    				BufferedImage img = ImageIO.read(getClass().getResourceAsStream(p));
+    				return new ImageIcon(img.getScaledInstance(50,50,Image.SCALE_SMOOTH));
+    			} catch (IOException e) {
+    				System.err.println("Couldn't load image: "+p);
+    				return null;
+    			}
+    		});
+    	}
+    }
+
 }
 
 /*

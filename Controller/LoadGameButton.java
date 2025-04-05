@@ -14,15 +14,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class LoadGameButton implements ActionListener {
 
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	private String gameName;
 	
-	public LoadGameButton(GameEngine game, GamePanel panel,String gameName) {
+	public LoadGameButton(GameEngine game, MainGamePanel panel,String gameName) {
 		this.panel = panel;
 		this.game = game;
 		this.gameName = gameName.substring(0,gameName.length()-4);

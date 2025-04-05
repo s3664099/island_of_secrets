@@ -16,16 +16,16 @@ import Model.GameEngine;
 import Model.GameInitialiser;
 import Model.Player;
 import View.GameFrame;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class QuitButton implements ActionListener {
 	
 	private GameFrame frame;
 	private Boolean restart;
 	private GameEngine game;
-	private GamePanel panel;
+	private MainGamePanel panel;
 	
-	public QuitButton(GameFrame frame,boolean restart,GameEngine game,GamePanel panel) {
+	public QuitButton(GameFrame frame,boolean restart,GameEngine game,MainGamePanel panel) {
 		this.frame = frame;
 		this.restart = restart;
 		this.game = game;

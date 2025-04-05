@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 
 import Model.GameController;
 import Model.GameEngine;
-import View.GamePanel;
+import View.MainGamePanel;
 
 public class MapButton implements ActionListener {
 
