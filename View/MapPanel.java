@@ -5,6 +5,10 @@ Translator: David Sarkies
 Version: 4.2
 Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
+
+- Rooms not displaying after certain spot
+- Just pass game engine through to Map - don't really need to deal with the state there
+
 */
 
 package View;
@@ -26,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import Data.Constants;
 import Interfaces.GameView;
 
 import javax.swing.ImageIcon;
@@ -129,13 +134,16 @@ public class MapPanel extends JPanel implements GameView {
     		    		
     		panel.removeAll();
     		
-    		if (state.getRoomVisited(roomId)) {
-    			updateRoomVisuals(panel,roomId,state);
+    		if (roomId<=Constants.NUMBER_OF_NOUNS) {  		
+    			if (state.getRoomVisited(roomId)) {
+    				updateRoomVisuals(panel,roomId,state);
+    			}
+    		
+    			if (roomId==85) {
+    				addNavigationButton(panel);
+    			}
     		}
     		
-    		if (roomId==85) {
-    			addNavigationButton(panel);
-    		}
     		panel.revalidate();
     		panel.repaint();
     	}
@@ -145,7 +153,7 @@ public class MapPanel extends JPanel implements GameView {
     }
     
     private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
-    	
+    	    	
     	String imageName = state.getCurrentRoom() == roomId 
     			? "adventurer"
     			: state.getRoomImageType(roomId);

@@ -27,11 +27,13 @@ public class GameState implements GameStateProvider {
 	private final int finalScore;
 	private final int responseType;
 	private final int panelFlag;
+	private final int currentRoom;
 	private final boolean lowerLimit;
 	private final boolean upperLimit;
 	private final boolean initialGameState;
 	private final boolean saveGameState;
 	private final boolean endGameState;
+	private final GameStateProvider state;
 	
 	public GameState(GameStateProvider state) {
 		this.room = state.getRoom();
@@ -51,6 +53,8 @@ public class GameState implements GameStateProvider {
 		this.upperLimit = state.getUpperLimitSavedGames();
 		this.responseType = state.getResponseType();
 		this.panelFlag = state.getPanelFlag();
+		this.currentRoom = state.getCurrentRoom();
+		this.state = state;
 	}
 	
 	@Override
@@ -140,22 +144,22 @@ public class GameState implements GameStateProvider {
 
 	@Override
 	public boolean getRoomVisited(int roomNumber) {
-		return false;
+		return state.getRoomVisited(roomNumber);
 	}
 
 	@Override
 	public boolean[] getRoomExits(int roomNumber) {
-		return null;
+		return state.getRoomExits(roomNumber);
 	}
 
 	@Override
 	public String getRoomImageType(int roomNumber) {
-		return null;
+		return state.getRoomImageType(roomNumber);
 	}
 
 	@Override
 	public int getCurrentRoom() {
-		return 0;
+		return this.currentRoom;
 	}
 
 }

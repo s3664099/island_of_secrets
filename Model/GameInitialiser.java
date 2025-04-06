@@ -31,7 +31,7 @@ public class GameInitialiser {
 												RawData.getPrepositions(),
 												RawData.getImage(roomNumber));
 		}
-		
+				
 		//Initialise Items
 		Item[] items = new Item[noItems+1];
 		items[0] = null; //Item 0 is unused

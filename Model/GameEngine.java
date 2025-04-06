@@ -368,7 +368,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 
 	@Override
 	public boolean[] getRoomExits(int roomNumber) {
-
 		return game.getRoomExits(roomNumber);
 	}
 
