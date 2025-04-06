@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Pabel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 April 2025
+Version: 4.1
+Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -23,17 +23,15 @@ public class GamePanel extends JPanel {
     private final JPanel viewContainer = new JPanel(cardLayout);
     private final MainGamePanel mainView;
     private final MapPanel mapView;
-    private final GameController controller;
 	
 	private static final String MAIN_VIEW = "MAIN";
 	private static final String MAP_VIEW = "MAP";
 	
 	public GamePanel(GameController controller) {
 		setLayout(new BorderLayout());
-		this.controller = controller;
 				
-		this.mainView = new MainGamePanel(controller);
-		this.mapView = new MapPanel(controller);
+		this.mainView = new MainGamePanel(controller,this);
+		this.mapView = new MapPanel(controller,this);
 		
 		//Initialise all views
 		viewContainer.add(mainView,MAIN_VIEW);
@@ -47,17 +45,21 @@ public class GamePanel extends JPanel {
 		mainView.refreshUI(controller);
 	}
 	
+	public void refreshMapView(GameController controller) {
+		mapView.refreshUI(controller);
+	}
+	
 	public void showMainView() {
 		cardLayout.show(viewContainer,MAIN_VIEW);
-		refreshMainView(controller);
+		mainView.onViewActivated();
 	}
 	
 	public void showMapView() {
 		cardLayout.show(viewContainer, MAP_VIEW);
+		mapView.onViewActivated();
 	}
-	
 }
 
 /* 5 April 2025 - Created File
- * 
+ * 6 April 2025 - Fixed double display for main view. Fixed issue with map not displaying
 */

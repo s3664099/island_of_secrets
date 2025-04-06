@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 4 April 2025
+Version: 4.2
+Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,20 +13,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.GameController;
-import Model.GameEngine;
-import View.MainGamePanel;
+import View.GamePanel;
 
 public class MapButton implements ActionListener {
 
-	private static GameController controller;
+	private GameController controller;
+	private GamePanel panel;
 	
-	public MapButton(GameController controller) {
+	public MapButton(GameController controller, GamePanel panel) {
 			this.controller = controller;
+			this.panel = panel;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		controller.setMap();
+		panel.showMapView();
+		panel.refreshMapView(controller);
 	}
 
 }
@@ -34,4 +36,5 @@ public class MapButton implements ActionListener {
 /* 2 February 2025 - Created Class
  * 5 March 2025 - Increased to v4.0
  * 4 April 2025 - Update controller for new style
+ * 6 April 2025 - Updated code to handle new style for view
  */

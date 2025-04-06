@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 3 April 2025
+Version: 4.7
+Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,12 +34,16 @@ public class CommandPanel  extends JPanel  {
 	private final GameController game;
 	private JTextField commandField = new JTextField(2);
 	private CommandListener activeListener;
+	private GamePanel panel;
 	
 	private final JLabel spaceLabel = new JLabel();
 
-	public CommandPanel(GameController game,GameStateProvider state) {
+	public CommandPanel(GameController game,GameStateProvider state,GamePanel panel) {
+		
 		this.state = state;
 		this.game = game;
+		this.panel = panel;
+		
 		setLayout(new GridLayout(9,1));
 		refresh();
 	}
@@ -62,7 +66,7 @@ public class CommandPanel  extends JPanel  {
 			
 			//Button to display the map
 			if (state.getPanelFlag()!=4) {
-				add(addButtonPanel("Map",new MapButton(game),320));
+				add(addButtonPanel("Map",new MapButton(game,panel),320));
 			}
 			
 			//Command Field includes four labels above which contain the last three commands.
@@ -206,4 +210,5 @@ public class CommandPanel  extends JPanel  {
  * 1 April 2025 - Updated code to request focus in the commandField. Command button works
  * 3 April 2025 - Fixed problem with multiple command and initial state not changing. Updated
  *                to handle command state.
+ * 6 April 2025 - Updated Map Button,
  */

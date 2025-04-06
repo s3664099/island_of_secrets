@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.2
+Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -38,16 +38,19 @@ import Model.GameState;
 public class MapPanel extends JPanel implements GameView {
 	
 	private static final long serialVersionUID = -1097043236506747632L;
-	private final GameController controller;
+	private GameController controller;
 	private GameState state;
+	private GamePanel panel;
 	private final Map<Integer, JPanel> roomPanels = new HashMap<>();
 	private final ImageCache imageCache = new ImageCache();
 	private boolean isInitialised = false;
 	
-	public MapPanel(GameController game) {
+	public MapPanel(GameController game, GamePanel panel) {
 
 		this.controller = game;
 		this.state = game.getState();
+		this.panel = panel;
+		
 		setLayout(new GridLayout(11,10));
 	}
 
@@ -110,13 +113,20 @@ public class MapPanel extends JPanel implements GameView {
         return border;
     }
     
+    public void refreshUI(GameController controller) {
+    	this.controller = controller;
+    	this.state = controller.getState();
+    	refreshMap();
+    }
+    
     public void refreshMap() {
     	this.state = controller.getState();
     	
     	for (Map.Entry<Integer, JPanel> entry: roomPanels.entrySet()) {
+    		
     		int roomId = entry.getKey();
     		JPanel panel = entry.getValue();
-    		
+    		    		
     		panel.removeAll();
     		
     		if (state.getRoomVisited(roomId)) {
@@ -129,6 +139,9 @@ public class MapPanel extends JPanel implements GameView {
     		panel.revalidate();
     		panel.repaint();
     	}
+    	
+    	revalidate();
+    	repaint();
     }
     
     private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
@@ -204,4 +217,6 @@ public class MapPanel extends JPanel implements GameView {
  * 10 February 2025 - Added the images to the map. Added the walls
  * 22 February 2025 - Added image for player
  * 5 March 2025 - Increased to v4.0
+ * 5 April 2025 - Updated code based on Deepseek recommendations
+ * 6 April 2025 - Fixed issue where map not displaying
  */

@@ -2,21 +2,24 @@
 Title: Island of Secrets Main Game Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 5 April 2025
+Version: 4.10
+Date: 6 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
 import java.awt.BorderLayout;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import Interfaces.GameStateProvider;
 import Interfaces.GameUI;
+import Interfaces.GameView;
 import Model.GameController;
 
-public class MainGamePanel extends JPanel implements GameUI {
+public class MainGamePanel extends JPanel implements GameUI, GameView {
 	
 	private GameStateProvider state;
 	private final GameController game;
@@ -25,23 +28,29 @@ public class MainGamePanel extends JPanel implements GameUI {
 	private StatusPanel statusPanel;
 	private RoomPanel roomPanel;
 	private CommandPanel commandPanel;
+	private GamePanel panel;
+	private boolean isInitialised = false;
 
-	public MainGamePanel(GameController game) {
+	public MainGamePanel(GameController game, GamePanel panel) {
 		this.state = game.getState();
 		this.game = game;
+		this.panel = panel;
+		
 		initialiseUI();
 	}
 	
 	public void initialiseUI() {
-				
+		
+		isInitialised = true;
+		
 		//Gets the background colour for the frame
 		this.setLayout (new BorderLayout()); 
 		
 		// Top section for status and label panels
 		statusPanel = new StatusPanel(state);
 		roomPanel = new RoomPanel(state);
-		commandPanel = new CommandPanel(game,state);
-				
+		commandPanel = new CommandPanel(game,state,panel);
+		
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
 		this.add(commandPanel,BorderLayout.SOUTH);
@@ -63,6 +72,22 @@ public class MainGamePanel extends JPanel implements GameUI {
 
 	@Override
 	public void setMapPanel(GameController game) {}
+
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseUI();
+			isInitialised=true;
+		}
+	}
+
+	@Override
+	public void onViewDeactivated() {}
+
+	@Override
+	public JComponent getViewComponent() {
+		return this;
+	}
 }
 
 /* 2 November 2024 - Created File
@@ -100,4 +125,5 @@ public class MainGamePanel extends JPanel implements GameUI {
  * 3 April 2025 - Updated code to take Game State
  * 4 April 2025 - Added function for mapPanel
  * 5 April 2025 - Changed name to MainGamePanel
+ * 6 April 2025 - Added GameView interface
  */
