@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 6 April 2025
+Version: 4.8
+Date: 7 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -53,7 +53,7 @@ public class CommandPanel  extends JPanel  {
 		add(createSpacePanel());
 				
 		if (state.isInitialGameState()) {
-			add(addButtonPanel("Click for Clues & Hints",null,260));
+			add(addButtonPanel("Click for Clues & Hints",new BookButton(panel,game),260));
 		}
 		
 		if (state.getResponseType()==2) {
@@ -210,5 +210,6 @@ public class CommandPanel  extends JPanel  {
  * 1 April 2025 - Updated code to request focus in the commandField. Command button works
  * 3 April 2025 - Fixed problem with multiple command and initial state not changing. Updated
  *                to handle command state.
- * 6 April 2025 - Updated Map Button,
+ * 6 April 2025 - Updated Map Button
+ * 7 April 2025 - Activated button to open webpage
  */

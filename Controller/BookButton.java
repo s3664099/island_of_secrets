@@ -2,8 +2,8 @@
 Title: Island of Secrets Book Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 26 March 2025
+Version: 4.2
+Date: 7 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,18 +15,18 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import Model.GameEngine;
-import View.MainGamePanel;
+
+import Model.GameController;
+import View.GamePanel;
 
 public class BookButton implements ActionListener {
 
-	private GameEngine game;
-	private MainGamePanel panel;
+	private GamePanel panel;
+	private GameController controller;
 	
-	public BookButton(GameEngine game, MainGamePanel panel) {
-		
+	public BookButton(GamePanel panel,GameController controller) {		
 		this.panel = panel;
-		this.game = game;		
+		this.controller = controller;
 	}
 	
 	@Override
@@ -44,8 +44,7 @@ public class BookButton implements ActionListener {
 			}
 		}
 		
-		//game.getGame().setGameDisplay(false);
-		//game.setGamePanel(this.panel);
+		panel.refreshMainView(controller);
 	}
 
 }
@@ -53,4 +52,5 @@ public class BookButton implements ActionListener {
 /* 2 March 2025 - Created Class
  * 5 March 2025 - Increased to v4.0
  * 26 March 2025 - Commented out code to enable to run
+ * 7 April 2025 - Button to open webpage now works.
  */
