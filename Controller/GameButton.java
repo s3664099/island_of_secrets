@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 5 March 2025
+Version: 4.2
+Date: 7 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,25 +12,27 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Model.GameController;
 import Model.GameEngine;
+import View.GamePanel;
 import View.MainGamePanel;
 
 public class GameButton implements ActionListener {
 
-	private GameEngine game;
-	private MainGamePanel panel;
+	private GameController controller;
+	private GamePanel panel;
 	
-	public GameButton(GameEngine game, MainGamePanel panel) {
+	public GameButton(GameController controller, GamePanel panel) {
 		
 		this.panel = panel;
-		this.game = game;
+		this.controller = controller;
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		//game.getGame().setGameDisplay(false);
-		//game.setGamePanel(this.panel);
+		panel.showMainView();
+		panel.refreshMainView(controller);
 	}
 
 }
@@ -39,4 +41,5 @@ public class GameButton implements ActionListener {
  * 26 February 2025 - Added code to
  * 5 March 2025 - Increased to v4.0
  * 26 March 2025 - Commented out code to enable to run
+ * 7 April 2025 - Action now returns player to the main screen.
  */

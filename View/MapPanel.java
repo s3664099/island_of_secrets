@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import Controller.GameButton;
 import Data.Constants;
 import Interfaces.GameView;
 
@@ -139,11 +140,11 @@ public class MapPanel extends JPanel implements GameView {
     			if (state.getRoomVisited(roomId)) {
     				updateRoomVisuals(panel,roomId,state);
     			}
-    		
-    			if (roomId==85) {
-    				addNavigationButton(panel);
-    			}
     		}
+    		
+			if (roomId==85) {
+				addNavigationButton(panel);
+			}
     		
     		panel.revalidate();
     		panel.repaint();
@@ -177,8 +178,9 @@ public class MapPanel extends JPanel implements GameView {
     }
     
     private void addNavigationButton(JPanel panel) {
-    	JButton backButton = new JButton("Back to Game");
-    	//backButton.addActionListener(e -> controller.showMainView());
+    	    	
+    	JButton backButton = new JButton("Back");
+    	backButton.addActionListener(new GameButton(controller,this.panel));
     	panel.add(backButton);
     }
 	
@@ -229,4 +231,5 @@ public class MapPanel extends JPanel implements GameView {
  * 5 April 2025 - Updated code based on Deepseek recommendations
  * 6 April 2025 - Fixed issue where map not displaying
  * 7 April 2025 - Fixed problem where not all rooms being displayed.
+ * 				- Button to return player to game now works.
  */
