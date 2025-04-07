@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 6 April 2025
+Version: 4.3
+Date: 7 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 - Rooms not displaying after certain spot
@@ -134,7 +134,8 @@ public class MapPanel extends JPanel implements GameView {
     		    		
     		panel.removeAll();
     		
-    		if (roomId<=Constants.NUMBER_OF_NOUNS) {  		
+    		if (roomId<=Constants.NUMBER_OF_ROOMS) {
+
     			if (state.getRoomVisited(roomId)) {
     				updateRoomVisuals(panel,roomId,state);
     			}
@@ -227,4 +228,5 @@ public class MapPanel extends JPanel implements GameView {
  * 5 March 2025 - Increased to v4.0
  * 5 April 2025 - Updated code based on Deepseek recommendations
  * 6 April 2025 - Fixed issue where map not displaying
+ * 7 April 2025 - Fixed problem where not all rooms being displayed.
  */
