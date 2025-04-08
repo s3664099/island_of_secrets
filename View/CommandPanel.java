@@ -24,6 +24,7 @@ import Controller.BookButton;
 import Controller.CommandButton;
 import Controller.CommandListener;
 import Controller.MapButton;
+import Controller.QuitButton;
 import Interfaces.GameStateProvider;
 import Model.GameController;
 
@@ -87,16 +88,15 @@ public class CommandPanel  extends JPanel  {
 			add(createSpacePanel());		
 			add(createCommandInputPanel());
 		} else if (state.isEndGameState()) {
-			//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
 			//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
-			add(addButtonPanel("Exit",null,320));
+			add(addButtonPanel("Exit",new QuitButton(game,false),320));
 			add(addButtonPanel("Restart",null,320));
 		}
 				
 		revalidate();
 		repaint();
 	}
-	
+
 	public void refreshUI(GameStateProvider state) {
 		this.state = state;
 		refresh();

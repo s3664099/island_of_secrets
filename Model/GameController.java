@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 4 April 2025
+Version: 4.5
+Date: 8 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -62,6 +62,10 @@ public class GameController implements GameCommandHandler {
 		ui.refreshUI(this);
 	}
 	
+	public void closeUI() {
+		ui.closePanel();
+	}
+	
 	public void setMap() {
 		ui.setMapPanel(this);
 	}
@@ -72,4 +76,5 @@ public class GameController implements GameCommandHandler {
  * 1 April 2025 - Added getResponseType
  * 3 April 2025 - Updated Code to take GameState
  * 4 April 2025 - Added function to set the mapPanel
+ * 8 April 2025 - Added closeUI function
  */

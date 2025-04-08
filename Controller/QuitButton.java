@@ -12,33 +12,25 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Model.GameEngine;
-import Model.GameInitialiser;
-import Model.Player;
-import View.GameFrame;
-import View.MainGamePanel;
+import Model.GameController;
 
 public class QuitButton implements ActionListener {
 	
-	private GameFrame frame;
+	private GameController controller;
 	private Boolean restart;
-	private GameEngine game;
-	private MainGamePanel panel;
 	
-	public QuitButton(GameFrame frame,boolean restart,GameEngine game,MainGamePanel panel) {
-		this.frame = frame;
+	public QuitButton(GameController controller,boolean restart) {
+		this.controller = controller;
 		this.restart = restart;
-		this.game = game;
-		this.panel = panel;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if (!restart) {
-			this.frame.dispose();
+			controller.closeUI();
 		} else {
-			this.game.restart(GameInitialiser.initialiseGame(), new Player());
+			//this.game.restart(GameInitialiser.initialiseGame(), new Player());
 			//this.game.setGamePanel(panel);
 		}
 	}
