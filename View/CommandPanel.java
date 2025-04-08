@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 7 April 2025
+Version: 4.9
+Date: 8 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -62,7 +62,8 @@ public class CommandPanel  extends JPanel  {
 			addSaveGameButtonPanels();
 		}
 		
-		if (state.getResponseType()!=2 && !state.isSavedGameState()) {
+		if (state.getResponseType()!=2 && !state.isSavedGameState() && 
+			!state.isEndGameState()) {
 			
 			//Button to display the map
 			if (state.getPanelFlag()!=4) {
@@ -84,14 +85,12 @@ public class CommandPanel  extends JPanel  {
 			}
 			
 			add(createSpacePanel());		
-			if (!state.isEndGameState()) {
-				add(createCommandInputPanel());
-			} else {
-				//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
-				//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
-				add(addButtonPanel("Exit",null,320));
-				add(addButtonPanel("Restart",null,320));
-			}
+			add(createCommandInputPanel());
+		} else if (state.isEndGameState()) {
+			//addButton(inputPanel,"Exit",new QuitButton(this.frame,false,game,this),280);
+			//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
+			add(addButtonPanel("Exit",null,320));
+			add(addButtonPanel("Restart",null,320));
 		}
 				
 		revalidate();
@@ -212,4 +211,5 @@ public class CommandPanel  extends JPanel  {
  *                to handle command state.
  * 6 April 2025 - Updated Map Button
  * 7 April 2025 - Activated button to open webpage
+ * 8 April 2025 - Updated the quit and restart buttons to display
  */
