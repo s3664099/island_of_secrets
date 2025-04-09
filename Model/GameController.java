@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 8 April 2025
+Version: 4.6
+Date: 9 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,7 +15,7 @@ import Interfaces.GameUI;
 
 public class GameController implements GameCommandHandler {
 
-	private final GameEngine engine;
+	private GameEngine engine;
 	private final GameUI ui;
 	
 	public GameController(GameEngine engine, GameUI ui) {
@@ -66,6 +66,11 @@ public class GameController implements GameCommandHandler {
 		ui.closePanel();
 	}
 	
+	public void restart() {
+		this.engine = new GameEngine(GameInitialiser.initialiseGame(),new Player());
+		ui.refreshUI(this);
+	}
+	
 	public void setMap() {
 		ui.setMapPanel(this);
 	}
@@ -77,4 +82,5 @@ public class GameController implements GameCommandHandler {
  * 3 April 2025 - Updated Code to take GameState
  * 4 April 2025 - Added function to set the mapPanel
  * 8 April 2025 - Added closeUI function
+ * 9 April 2025 - Added functon to restart game
  */

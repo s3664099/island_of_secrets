@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 8 April 2025
+Version: 4.10
+Date: 9 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -88,9 +88,8 @@ public class CommandPanel  extends JPanel  {
 			add(createSpacePanel());		
 			add(createCommandInputPanel());
 		} else if (state.isEndGameState()) {
-			//addButton(inputPanel,"Restart",new QuitButton(this.frame,true,game,this),280);
 			add(addButtonPanel("Exit",new QuitButton(game,false),320));
-			add(addButtonPanel("Restart",null,320));
+			add(addButtonPanel("Restart",new QuitButton(game,true),320));
 		}
 				
 		revalidate();
@@ -212,4 +211,5 @@ public class CommandPanel  extends JPanel  {
  * 6 April 2025 - Updated Map Button
  * 7 April 2025 - Activated button to open webpage
  * 8 April 2025 - Updated the quit and restart buttons to display
+ * 9 April 2025 - Activated the restart button
  */
