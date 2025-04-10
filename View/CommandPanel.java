@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 9 April 2025
+Version: 4.11
+Date: 10 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,7 @@ import Controller.CommandButton;
 import Controller.CommandListener;
 import Controller.MapButton;
 import Controller.QuitButton;
+import Controller.ShelterButton;
 import Interfaces.GameStateProvider;
 import Model.GameController;
 
@@ -140,8 +141,7 @@ public class CommandPanel  extends JPanel  {
 		Integer[] shelterLocations = {44,11,41};
 		
 		for (int i=0;i<3;i++) {
-			//JButton button = addButton(shelters[i],new ShelterButton(game,this,shelterLocations[i]),320);
-			add(addButtonPanel(shelters[i],null,320));
+			add(addButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),320));
 		}
 	}
 	
@@ -212,4 +212,5 @@ public class CommandPanel  extends JPanel  {
  * 7 April 2025 - Activated button to open webpage
  * 8 April 2025 - Updated the quit and restart buttons to display
  * 9 April 2025 - Activated the restart button
+ * 10 April 2025 - Updated shelterButton
  */

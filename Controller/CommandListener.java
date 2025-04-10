@@ -35,7 +35,6 @@ public class CommandListener implements KeyListener {
 			String command = this.commandField.getText().trim();
 			this.commandField.setText("");
 			
-			
 			if (controller.getResponseType()==1) {
 				controller.processGive(command);
 			} else if (controller.getResponseType()==2) {
