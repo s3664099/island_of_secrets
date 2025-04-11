@@ -29,6 +29,7 @@ public class CommandButton implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+				
 		try {
 			controller.processCommand(command);
 		} catch (IOException e) {

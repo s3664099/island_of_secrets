@@ -1058,7 +1058,7 @@ public class Commands {
 			//Checks to see if the file exists
 			File saveGameDirectory = new File("savegames");				
 			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");		
-		
+			
 			//If not available
 			if (!saveFile.exists()) {			
 				game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
@@ -1112,8 +1112,8 @@ public class Commands {
 		String[] gameDisplayed = game.getDisplayedSavedGames();
 		int noGames=savFiles.length;
 		int gameStart = 0;
-		int totalDisplayed = 5;
-		int maxDisplay = 5;
+		int totalDisplayed = 4;
+		int maxDisplay = 4;
 		
 		game.setUpperLimitSavedGames(false);
 		game.setLowerLimitSavedGames(false);
@@ -1139,7 +1139,7 @@ public class Commands {
 			for (int i = gameStart; i<totalDisplayed;i++ ) {
 				gameDisplayed[i-gameStart] = savFiles[i].getName();
 			}
-		
+						
 			if (gameStart>0) {
 				game.setLowerLimitSavedGames(true);
 			}

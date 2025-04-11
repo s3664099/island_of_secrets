@@ -151,8 +151,8 @@ public class CommandPanel  extends JPanel  {
 				
 			//Is there a saved game?
 			if (gameName.length()>0) {
-				//JButton button = addButton(gameName,new LoadGameButton(game,this,gameName),320);
-				add(addButtonPanel(gameName,null,320));
+				String loadName=gameName.split("\\.")[0];
+				add(addButtonPanel(gameName,new CommandButton(game, "load "+loadName),320));
 			}
 		}
 		
@@ -207,5 +207,6 @@ public class CommandPanel  extends JPanel  {
  * 8 April 2025 - Updated the quit and restart buttons to display
  * 9 April 2025 - Activated the restart button
  * 10 April 2025 - Updated shelterButton
- * 11 April 2025 - Displayed buttons for loading saved games
+ * 11 April 2025 - Displayed buttons for loading saved games. Removed LoadGameButton and just used command button
+ * 				   Fixed issue with loading game
  */
