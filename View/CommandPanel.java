@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 10 April 2025
+Version: 4.12
+Date: 11 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -146,9 +146,9 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private void addSaveGameButtonPanels() {
-		
-		for (String gameName:state.getDisplayedSavedGames()) {
 			
+		for (String gameName:state.getDisplayedSavedGames()) {
+				
 			//Is there a saved game?
 			if (gameName.length()>0) {
 				//JButton button = addButton(gameName,new LoadGameButton(game,this,gameName),320);
@@ -158,23 +158,17 @@ public class CommandPanel  extends JPanel  {
 		
 		//Checks if move forward/back and adds buttons for that.
 		if (state.getLowerLimitSavedGames()) {
-			JPanel panel = new JPanel(new GridLayout(1,1));
+			add(addButtonPanel("Previous",null,320));
 			//JButton button = addButton(inputPanel,"Previous",new SearchGameButton(game,this,false),320);
-			//panel.add(button);
-			add(panel);
 		}
 		
 		if (state.getUpperLimitSavedGames()) {
-			JPanel panel = new JPanel(new GridLayout(1,1));
+			add(addButtonPanel("Next",null,320));
 			//JButton button = addButton("Next",new SearchGameButton(game,this,true),320);
-			//panel.add(button);
-			add(panel);
 		}
 		
-		JPanel panel = new JPanel(new GridLayout(1,1));
+		add(addButtonPanel("Back to Game",null,320));
 		//JButton button = addButton(inputPanel,"Back to Game",new GameButton(game,this),320);
-		//panel.add(button);
-		add(panel);
 	}
 	
 	private JPanel createCommandInputPanel() {
@@ -213,4 +207,5 @@ public class CommandPanel  extends JPanel  {
  * 8 April 2025 - Updated the quit and restart buttons to display
  * 9 April 2025 - Activated the restart button
  * 10 April 2025 - Updated shelterButton
+ * 11 April 2025 - Displayed buttons for loading saved games
  */

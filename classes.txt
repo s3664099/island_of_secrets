@@ -48,6 +48,8 @@
 ### Interfaces
 ## **GameCommandHandler
 ## **GameStateProvider
+## **GameUI
+## **GameView
 
 
     
@@ -55,18 +57,17 @@
 ### Model
 
 ## **CommandProcess**
-
 ## **Commands**
-
-
-
+## **Game Controller
 ## **GameEngine**
+## **GameInitialiser
+## **Gamestate
 
 
 
 
 
-## **Test**  
+
 
 ### View
 
@@ -75,10 +76,12 @@
 ## **GamePanel**
 
 ## **Lightning Panel**
-
+## **MainGamePanel
 ## **MapPanel**
 
 ## **MessagePanel**  
+## **RoomPanel
+## **StatusPanel
 
 ---
 

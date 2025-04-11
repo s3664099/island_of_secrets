@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 26 March 2025
+Version: 4.11
+Date: 11 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -1048,7 +1048,6 @@ public class Commands {
 	public boolean load(Game game, Player player) throws IOException {
 		
 		//Prevent saves from having more than one word (Same with save)
-		
 		boolean loadFile = false;
 		String[] commands = command.split(" ");
 		
@@ -1148,6 +1147,7 @@ public class Commands {
 			//game.setGameDisplay(true);
 			game.setDisplayedGames(gameDisplayed);
 			game.addMessage(gameMessage,true,true);
+			game.setSavedGameState(true);
 		}
 	}
 	
@@ -1235,4 +1235,5 @@ public class Commands {
  * 22 March 2025 - Added cast to strength to fix error with killing people
  * 23 March 2025 - Merged addMessage and addNormalMessage
  * 26 March 2025 - Commented out code to enable to run
+ * 11 April 2025 - Updated code to display saved games
  */
