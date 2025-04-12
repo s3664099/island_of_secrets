@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 10 April 2025
+Version: 4.12
+Date: 12 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -189,7 +189,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			test.displayValue(this.game, this.player);
 			
 			//determinePanel(game);
-			
 		} else {
 			
 			this.game.addMessage("Ok",true,true);
@@ -291,7 +290,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 
 	public boolean getLowerLimitSavedGames() {
-		return game.getUpperLimitSavedGames();
+		return game.getLowerLimitSavedGames();
 	}
 	
 	public boolean getUpperLimitSavedGames() {
@@ -454,4 +453,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 31 March 2025 - Removed panel refresh. Removed panel from process command
 4 April 2025 - Removed UI Components. Added functions to retrieve room details for map
 10 April 2025 - Removed restart and added set room function
+12 April 2025 - Changed to calling correct limit for saved games
 */
