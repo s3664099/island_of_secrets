@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 7 April 2025
+Version: 4.3
+Date: 13 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -41,4 +41,5 @@ public class GameButton implements ActionListener {
  * 5 March 2025 - Increased to v4.0
  * 26 March 2025 - Commented out code to enable to run
  * 7 April 2025 - Action now returns player to the main screen.
+ * 13 April 2025 - Updated button for changing the savedGameState
  */
