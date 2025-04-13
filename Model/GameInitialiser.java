@@ -9,6 +9,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Model;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Data.Constants;
@@ -45,7 +46,7 @@ public final class GameInitialiser {
 												RawData.getImage(roomId-1));
 			
 			final int id = roomId;
-			logger.fine(() -> String.format("Initializing room %d", id));
+			logger.log(Level.FINE, String.format("Initializing room %d", id));
 		}
 		
 		return locations;
@@ -61,7 +62,6 @@ public final class GameInitialiser {
 		
 		//Builds the item objects
 		for (int itemId=1;itemId<=Constants.NUMBER_OF_NOUNS;itemId++) {
-			System.out.println(itemId);
 			
 			//Checks the name to give the item
 			String itemName = (itemId < Constants.NUMBER_OF_ITEMS)
@@ -71,9 +71,8 @@ public final class GameInitialiser {
 										 itemName);
 			
 			final int id = itemId;
-			logger.fine(() -> String.format("Initializing item %d", id));
-		}
-				
+			logger.log(Level.FINE, String.format("Initializing item %d", id));
+		}	
 		return items;
 	}
 }

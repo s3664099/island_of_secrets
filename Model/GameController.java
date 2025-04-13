@@ -10,17 +10,27 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Interfaces.GameCommandHandler;
 import Interfaces.GameUI;
 
-public class GameController implements GameCommandHandler {
+/**
+ * Mediates between GameEngine and GameUI, handling all user interactions
+ * and translating them into game commands.
+ */
+public final class GameController implements GameCommandHandler {
 
+	private static final Logger logger = Logger.getLogger(GameController.class.getName());
+	
 	private GameEngine engine;
 	private final GameUI ui;
 	
 	public GameController(GameEngine engine, GameUI ui) {
-		this.engine = engine;
-		this.ui = ui;
+		this.engine = Objects.requireNonNull(engine, "GameEngine cannot be null");
+        this.ui = Objects.requireNonNull(ui, "GameUI cannot be null");
 	}
 	
 	public GameState getState() {
@@ -32,29 +42,40 @@ public class GameController implements GameCommandHandler {
 	}
 	
 	public int getResponseType() {
-		return this.engine.getResponseType();
-	}
-
-	@Override
-	public void setSavedGameState(boolean isSavedGame) {
-		engine.setSavedGameState(isSavedGame);
+		return engine.getResponseType();
 	}
 
 	@Override
 	public void processCommand(String input) throws IOException {
+		logger.log(Level.FINE, "Processing command: {0}", input);
 		engine.processCommand(input);
 		refreshUI();
 	}
 
 	@Override
 	public void processGive(String item) {
+		logger.log(Level.FINE, "Processing give: {0}", item);
 		engine.processGive(item);
 		refreshUI();
 	}
 
 	@Override
 	public void processShelter(int locationID) {
+		logger.log(Level.FINE, "Processing shelter: {0}", locationID);
 		engine.processShelter(locationID);
+		refreshUI();
+	}
+	
+	@Override
+	public void setSavedGameState(boolean isSavedGame) {
+		engine.setSavedGameState(isSavedGame);
+		refreshUI();
+	}
+	
+	@Override
+	public void setRoom(int locationID) {
+		logger.log(Level.FINE, "Setting room: {0}", locationID);
+		engine.setRoom(locationID);		
 		refreshUI();
 	}
 	
@@ -66,31 +87,29 @@ public class GameController implements GameCommandHandler {
 		ui.closePanel();
 	}
 	
-	public void restart() {
-		this.engine = new GameEngine(GameInitialiser.initialiseGame(),new Player());
-		ui.refreshUI(this);
-	}
-	
-	public void setMap() {
+	public void showMap() {
 		ui.setMapPanel(this);
 	}
-
-	@Override
-	public void setRoom(int locationID) {
-		this.engine.setRoom(locationID);		
-		ui.refreshUI(this);
+	
+	public void restart() {
+		logger.log(Level.FINE, "Restarting game");
+		this.engine = new GameEngine(
+			GameInitialiser.initialiseGame(),
+			new Player()
+		);
+		refreshUI();
 	}
-
+	
 	@Override
 	public void increaseLoadPosition() throws IOException {
 		engine.increaseLoadPosition();
-		ui.refreshUI(this);
+		refreshUI();
 	}
 
 	@Override
 	public void decreaseLoadPosition() throws IOException {
 		engine.decreaseLoadPosition();
-		ui.refreshUI(this);
+		refreshUI();
 	}
 }
 
@@ -102,5 +121,6 @@ public class GameController implements GameCommandHandler {
  * 8 April 2025 - Added closeUI function
  * 9 April 2025 - Added functon to restart game
  * 10 April 2025 - Added set room function
- * 13 April 2025 - Updated code for increasing and descreasing save game positons
+ * 13 April 2025 - Updated code for increasing and descreasing save game positions
+ * 				 - Updated based on DeepSeek recommendations.
  */
