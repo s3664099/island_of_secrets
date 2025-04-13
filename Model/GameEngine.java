@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 12 April 2025
+Version: 4.14
+Date: 13 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -236,7 +236,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			object = instructions[1];
 		}
 		
-		//Is the reponse correct for a give command?
+		//Is the response correct for a give command?
 		if (object.split(" ").length==1) {
 			CommandProcess processCommands = new CommandProcess();
 			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
@@ -279,16 +279,19 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 	//Handled what saved games to display
 	//Used if more than 5 saved games
-	public void increaseLoad(MainGamePanel game) throws IOException {
+	
+	@Override
+	public void increaseLoadPosition() throws IOException {
 		this.game.increaseCount();
 		processCommand("load");
 	}
 	
-	public void decreaseLoad(MainGamePanel game) throws IOException {
+	@Override
+	public void decreaseLoadPosition() throws IOException {
 		this.game.descreaseCount();
 		processCommand("load");
 	}
-
+	
 	public boolean getLowerLimitSavedGames() {
 		return game.getLowerLimitSavedGames();
 	}
@@ -454,4 +457,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 4 April 2025 - Removed UI Components. Added functions to retrieve room details for map
 10 April 2025 - Removed restart and added set room function
 12 April 2025 - Changed to calling correct limit for saved games
+13 April 2025 - Removed panel from increase & descrease load. Updated to reflect interface
 */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Search Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 22 March 2025
+Version: 4.2
+Date: 13 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,19 +12,15 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import Model.GameEngine;
-import View.MainGamePanel;
+import Model.GameController;
 
 public class SearchGameButton implements ActionListener {
 
-	private GameEngine game;
-	private MainGamePanel panel;
+	private GameController controller;
 	private boolean next;
 	
-	public SearchGameButton(GameEngine game, MainGamePanel panel, boolean next) {
-		this.panel = panel;
-		this.game = game;
+	public SearchGameButton(GameController controller, boolean next) {
+		this.controller = controller;
 		this.next = next;
 	}
 	
@@ -33,9 +29,9 @@ public class SearchGameButton implements ActionListener {
 		
 		try {
 			if (next) {
-				game.increaseLoad(panel);;
+				controller.increaseLoadPosition();;
 			} else {
-				game.decreaseLoad(panel);
+				controller.decreaseLoadPosition();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -44,4 +40,5 @@ public class SearchGameButton implements ActionListener {
 }
 
 /* 26 February 2025 - Created Class
+ * 13 April 2025 - Updated class to handle new architecture
  */

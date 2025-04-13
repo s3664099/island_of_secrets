@@ -23,8 +23,10 @@ import javax.swing.SwingUtilities;
 import Controller.BookButton;
 import Controller.CommandButton;
 import Controller.CommandListener;
+import Controller.GameButton;
 import Controller.MapButton;
 import Controller.QuitButton;
+import Controller.SearchGameButton;
 import Controller.ShelterButton;
 import Interfaces.GameStateProvider;
 import Model.GameController;
@@ -158,17 +160,14 @@ public class CommandPanel  extends JPanel  {
 		
 		//Checks if move forward/back and adds buttons for that.
 		if (state.getLowerLimitSavedGames()) {
-			add(addButtonPanel("Previous",null,320));
-			//JButton button = addButton(inputPanel,"Previous",new SearchGameButton(game,this,false),320);
+			add(addButtonPanel("Previous",new SearchGameButton(game,false),320));
 		}
 		
 		if (state.getUpperLimitSavedGames()) {
-			add(addButtonPanel("Next",null,320));
-			//JButton button = addButton("Next",new SearchGameButton(game,this,true),320);
+			add(addButtonPanel("Next",new SearchGameButton(game,true),320));
 		}
 		
-		add(addButtonPanel("Back to Game",null,320));
-		//JButton button = addButton(inputPanel,"Back to Game",new GameButton(game,this),320);
+		add(addButtonPanel("Back to Game",new GameButton(game,panel),320));
 	}
 	
 	private JPanel createCommandInputPanel() {

@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 10 April 2025
+Version: 4.8
+Date: 13 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -80,6 +80,18 @@ public class GameController implements GameCommandHandler {
 		this.engine.setRoom(locationID);		
 		ui.refreshUI(this);
 	}
+
+	@Override
+	public void increaseLoadPosition() throws IOException {
+		engine.increaseLoadPosition();
+		ui.refreshUI(this);
+	}
+
+	@Override
+	public void decreaseLoadPosition() throws IOException {
+		engine.decreaseLoadPosition();
+		ui.refreshUI(this);
+	}
 }
 
 /* 30 March 2025 - Created file
@@ -90,4 +102,5 @@ public class GameController implements GameCommandHandler {
  * 8 April 2025 - Added closeUI function
  * 9 April 2025 - Added functon to restart game
  * 10 April 2025 - Added set room function
+ * 13 April 2025 - Updated code for increasing and descreasing save game positons
  */
