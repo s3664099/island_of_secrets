@@ -192,6 +192,35 @@ public class GameState implements GameStateProvider {
 	public String getRoomImageType(int roomNumber) {
 		return stateProvider.getRoomImageType(roomNumber);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("GameStat[room=%d, score=%d",currentRoom,finalScore);
+	}
+	
+	//For equality checks
+	@Override
+	public boolean equals(Object o) {
+		final boolean isEqual;
+		
+		if (this==o) {
+			isEqual = true;
+		} else if (!(o instanceof GameState)) {
+			isEqual = false;
+		} else {
+			GameState that = (GameState) o;
+			isEqual = (currentRoom == that.currentRoom) &&
+					(finalScore == that.finalScore) &&
+					Objects.equals(room, that.room);
+		}
+		
+		return isEqual;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return Objects.hash(currentRoom, finalScore, room);
+	}
 }
 
 /* 1 April 2025 - Created File
