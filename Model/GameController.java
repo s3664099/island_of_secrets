@@ -84,11 +84,11 @@ public final class GameController implements GameCommandHandler {
 	}
 	
 	public void closeUI() {
-		ui.closePanel();
+		ui.closeUI();
 	}
 	
 	public void showMap() {
-		ui.setMapPanel(this);
+		ui.showMapView(this);
 	}
 	
 	public void restart() {

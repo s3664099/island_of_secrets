@@ -53,12 +53,12 @@ public class GameFrame extends JFrame implements GameUI {
 	}
 
 	@Override
-	public void setMapPanel(GameController game) {
+	public void showMapView(GameController game) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	public void closePanel() {
+	public void closeUI() {
 		setVisible(false);
 		dispose();
 	}

@@ -1371,6 +1371,548 @@ public final class GameInitialiser {
 	}
 }
 
+/**
+ * Mediates between GameEngine and GameUI, handling all user interactions
+ * and translating them into game commands.
+ */
+public final class GameController implements GameCommandHandler {
+
+	private static final Logger logger = Logger.getLogger(GameController.class.getName());
+	
+	private GameEngine engine;
+	private final GameUI ui;
+	
+	public GameController(GameEngine engine, GameUI ui) {
+		this.engine = Objects.requireNonNull(engine, "GameEngine cannot be null");
+        this.ui = Objects.requireNonNull(ui, "GameUI cannot be null");
+	}
+	
+	public GameState getState() {
+		return new GameState(engine);
+	}
+	
+	public GameEngine getEngine() {
+		return engine;
+	}
+	
+	public int getResponseType() {
+		return engine.getResponseType();
+	}
+
+	@Override
+	public void processCommand(String input) throws IOException {
+		logger.log(Level.FINE, "Processing command: {0}", input);
+		engine.processCommand(input);
+		refreshUI();
+	}
+
+	@Override
+	public void processGive(String item) {
+		logger.log(Level.FINE, "Processing give: {0}", item);
+		engine.processGive(item);
+		refreshUI();
+	}
+
+	@Override
+	public void processShelter(int locationID) {
+		logger.log(Level.FINE, "Processing shelter: {0}", locationID);
+		engine.processShelter(locationID);
+		refreshUI();
+	}
+	
+	@Override
+	public void setSavedGameState(boolean isSavedGame) {
+		engine.setSavedGameState(isSavedGame);
+		refreshUI();
+	}
+	
+	@Override
+	public void setRoom(int locationID) {
+		logger.log(Level.FINE, "Setting room: {0}", locationID);
+		engine.setRoom(locationID);		
+		refreshUI();
+	}
+	
+	public void refreshUI() {
+		ui.refreshUI(this);
+	}
+	
+	public void closeUI() {
+		ui.closePanel();
+	}
+	
+	public void showMap() {
+		ui.setMapPanel(this);
+	}
+	
+	public void restart() {
+		logger.log(Level.FINE, "Restarting game");
+		this.engine = new GameEngine(
+			GameInitialiser.initialiseGame(),
+			new Player()
+		);
+		refreshUI();
+	}
+	
+	@Override
+	public void increaseLoadPosition() throws IOException {
+		engine.increaseLoadPosition();
+		refreshUI();
+	}
+
+	@Override
+	public void decreaseLoadPosition() throws IOException {
+		engine.decreaseLoadPosition();
+		refreshUI();
+	}
+}
+
+/**
+ * Immutable snapshot of game state implementing GameStateProvider interface.
+ * Thread-safe by design - all fields are final and collections are unmodifiable.
+ */
+public class GameState implements GameStateProvider {
+
+	//Core game state
+	private final String room;
+	private final String items;
+	private final String exits;
+	private final String specialExits;
+	private final String time;
+	private final String status;
+
+	//UI State
+	private final int responseType;
+	private final int panelFlag;
+	
+	//Game progression
+	private final int currentRoom;
+	private final int finalScore;
+	private final boolean initialGameState;
+	private final boolean saveGameState;
+	private final boolean endGameState;
+	
+	//Saved games navigation
+	private final String[] displayedSavedGames;
+	private final boolean lowerLimit;
+	private final boolean upperLimit;
+	
+	//Command history
+	private final String[] previousCommands;
+	private final List<String> message;
+	
+	//Delegate for dynamic data
+	private final GameStateProvider stateProvider;
+	
+	public GameState(GameStateProvider stateProvider) {
+		Objects.requireNonNull(stateProvider,"State provider cannot be null");
+		
+		this.stateProvider = stateProvider;
+		
+		//Core state
+		this.room = stateProvider.getRoom();
+		this.items = stateProvider.getItems();
+		this.exits = stateProvider.getExits();
+		this.specialExits = stateProvider.getSpecialExits();
+		this.time = stateProvider.getTime();
+		this.status = stateProvider.getStatus();
+
+		//UI state
+		this.responseType = stateProvider.getResponseType();
+		this.panelFlag = stateProvider.getPanelFlag();
+		
+		//Game progression
+		this.currentRoom = stateProvider.getCurrentRoom();
+		this.finalScore = stateProvider.getFinalScore();
+		this.initialGameState = stateProvider.isInitialGameState();
+		this.saveGameState = stateProvider.isSavedGameState();
+		this.endGameState = stateProvider.isEndGameState();
+		
+		//Saved games
+		this.displayedSavedGames = stateProvider.getDisplayedSavedGames().clone();
+		this.lowerLimit = stateProvider.getLowerLimitSavedGames();
+		this.upperLimit = stateProvider.getUpperLimitSavedGames();
+		
+		//Command history
+		this.previousCommands = stateProvider.getCommands().clone();
+		this.message = Collections.unmodifiableList(stateProvider.getMessage());
+	}
+	
+	//Implemented interface methods
+	@Override
+	public String getRoom() {
+		return this.room;
+	}
+
+	@Override
+	public String getItems() {
+		return this.items;
+	}
+
+	@Override
+	public String getExits() {
+		return this.exits;
+	}
+
+	@Override
+	public String getSpecialExits() {
+		return this.specialExits;
+	}
+	
+	@Override
+	public String getTime() {
+		return this.time;
+	}
+
+	@Override
+	public String getStatus() {
+		return this.status;
+	}
+	
+	@Override
+	public int getPanelFlag() {
+		return this.panelFlag;
+	}
+
+	@Override
+	public int getResponseType() {
+		return this.responseType;
+	}
+	
+	@Override
+	public int getCurrentRoom() {
+		return this.currentRoom;
+	}
+	
+	@Override
+	public int getFinalScore() {
+		return this.finalScore;
+	}
+	
+	@Override
+	public boolean isInitialGameState() {
+		return this.initialGameState;
+	}
+
+	@Override
+	public boolean isSavedGameState() {
+		return this.saveGameState;
+	}
+
+	@Override
+	public boolean isEndGameState() {
+		return this.endGameState;
+	}
+	
+	@Override
+	public String[] getDisplayedSavedGames() {
+		return this.displayedSavedGames.clone();
+	}
+
+	@Override
+	public boolean getLowerLimitSavedGames() {
+		return this.lowerLimit;
+	}
+
+	@Override
+	public boolean getUpperLimitSavedGames() {
+		return this.upperLimit;
+	}
+	
+	@Override
+	public String[] getCommands() {
+		return this.previousCommands.clone();
+	}
+
+	@Override
+	public List<String> getMessage() {
+		return this.message;
+	}
+	
+	//Dynamic data delegation
+	@Override
+	public boolean getRoomVisited(int roomNumber) {
+		return stateProvider.getRoomVisited(roomNumber);
+	}
+
+	@Override
+	public boolean[] getRoomExits(int roomNumber) {
+		return stateProvider.getRoomExits(roomNumber);
+	}
+
+	@Override
+	public String getRoomImageType(int roomNumber) {
+		return stateProvider.getRoomImageType(roomNumber);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("GameStat[room=%d, score=%d",currentRoom,finalScore);
+	}
+	
+	//For equality checks
+	@Override
+	public boolean equals(Object o) {
+		final boolean isEqual;
+		
+		if (this==o) {
+			isEqual = true;
+		} else if (!(o instanceof GameState)) {
+			isEqual = false;
+		} else {
+			GameState that = (GameState) o;
+			isEqual = (currentRoom == that.currentRoom) &&
+					(finalScore == that.finalScore) &&
+					Objects.equals(room, that.room);
+		}
+		
+		return isEqual;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return Objects.hash(currentRoom, finalScore, room);
+	}
+}
+
+/**
+ * Defines the contract for handling game commands and state modifications.
+ * Implementations should process these commands and manage game state transitions.
+ */
+public interface GameCommandHandler {
+
+    /**
+     * Toggles saved game display mode
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setSavedGameState(boolean isSavedGame);
+	
+    /**
+     * Processes a text command from the player
+     * @param input The raw command input (e.g., "go north")
+     * @throws IOException if command processing fails due to I/O operations
+     * @throws GameCommandException if command is invalid or cannot be executed
+     */	
+	public void processCommand(String input) throws IOException;
+	
+    /**
+     * Handles item gifting/transfer actions when the player needs to nominate a reciever
+     * @param item The item identifier to process
+     * @throws GameStateException if item cannot be given in current state
+     */	
+	public void processGive(String item);
+	
+    /**
+     * Handles seeking shelter at when a specific event (storm breaks)
+     * @param locationID The shelter location identifier
+     * @throws IllegalStateException if shelter cannot be used at this location
+     */
+	public void processShelter(int locationID);
+	
+    /**
+     * Directly moves player to specified location
+     * @param locationID The destination location identifier
+     * @throws IllegalArgumentException if locationID is invalid
+     */	
+	public void setRoom(int locationID);
+	
+    /**
+     * Navigates forward through saved game list
+     * @throws IOException if navigation fails due to I/O operations
+     * @throws IllegalStateException if at end of saved game list
+     */
+	public void increaseLoadPosition() throws IOException;
+	
+    /**
+     * Navigates backward through saved game list
+     * @throws IOException if navigation fails due to I/O operations
+     * @throws IllegalStateException if at beginning of saved game list
+     */
+	public void decreaseLoadPosition() throws IOException;	
+}
+
+/**
+ * Defines the contract for UI components that can be managed by a view controller.
+ * Provides lifecycle hooks for view activation/deactivation and component access.
+ */
+public interface GameView {
+	
+    /**
+     * Called when the view becomes active/visible.
+     * Implementations should:
+     * - Initialize resources
+     * - Register listeners
+     * - Update displayed content
+     */
+	default void onViewActivated() {};
+	
+    /**
+     * Called when the view becomes inactive/hidden.
+     * Implementations should:
+     * - Clean up resources
+     * - Unregister listeners
+     * - Persist any state
+     */
+	default void onViewDeactivated() {};
+	
+    /**
+     * Gets the root Swing component for this view.
+     * @return The root JComponent that contains this view's UI elements
+     */
+	JComponent getViewComponent();
+}
+
+/**
+ * Defines the core user interface operations for the game.
+ * Implementations handle UI updates, view management, and lifecycle operations.
+ */
+public interface GameUI {
+	
+    /**
+     * Refreshes the entire UI with current game state.
+     * @param controller The game controller providing current state and operations
+     * @throws NullPointerException if controller is null
+     */
+	void refreshUI(GameController controller);
+	
+    /**
+     * Activates and displays the map view.
+     * @param controller The game controller providing map data and operations
+     * @throws IllegalStateException if map cannot be displayed
+     */
+	void showMapView(GameController controller);
+	
+    /**
+     * Closes and cleans up the UI resources.
+     * Implementations should:
+     * - Release any system resources
+     * - Save persistent state
+     * - Terminate any background operations
+     */
+	void closeUI();
+}
+
+/**
+ * Provides read-only access to game state information.
+ * Segregates query operations for game status, map data, and UI state.
+ */
+public interface GameStateProvider {
+
+    /* Core Game Status Methods */
+    
+    /**
+     * @return Formatted description of current room
+     */
+	String getRoom();
+	
+    /**
+     * @return Formatted list of visible items in current location
+     */
+	String getItems();
+	
+    /**
+     * @return Formatted list of available exits
+     */
+	String getExits();
+	
+    /**
+     * @return Current in-game time representation
+     */
+	String getTime();
+
+	/**
+     * @return The player's current score
+     */
+	int getFinalScore();
+	
+    /**
+     * @return Special exit descriptions beyond standard directions
+     */
+	String getSpecialExits();
+	
+	 /**
+     * @return Current player status (health, inventory count, etc.)
+     */
+	String getStatus();
+	
+    /**
+     * @return Array of saved game names for display
+     */
+	String[] getDisplayedSavedGames();
+	
+    /**
+     * @return True if at beginning of saved games list
+     */
+	boolean getLowerLimitSavedGames();
+	
+    /**
+     * @return True if at end of saved games list
+     */
+	boolean getUpperLimitSavedGames();
+	
+    /**
+     * @return Last executed commands (for history/recall)
+     */
+	String[] getCommands();
+	
+    /**
+     * @return Unmodifiable list of game messages/notifications
+     */
+	List<String> getMessage();
+	
+    /* Map Data Access */
+    
+    /**
+     * @param roomNumber The room ID to check
+     * @return True if player has visited this room
+     */
+	boolean getRoomVisited(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
+     * @return Array of available exits [N, S, E, W] 
+     */
+	boolean[] getRoomExits(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
+     * @return Image asset identifier for this room type
+     */
+	String getRoomImageType(int roomNumber);
+	
+    /**
+     * @return Current room ID
+     */
+	int getCurrentRoom();
+	
+    /* UI State Flags */
+    
+    /**
+     * @return True during initial game setup
+     */
+	public boolean isInitialGameState();
+	
+    /**
+     * @return True when in saved game selection mode
+     */
+	public boolean isSavedGameState();
+	
+    /**
+     * @return True when game has ended
+     */
+	public boolean isEndGameState();
+
+    /**
+     * @return Current UI response type (normal/give/shelter)
+     */
+	public int getResponseType();
+	
+    /**
+     * @return Current UI panel configuration flag
+     */
+	public int getPanelFlag();
+}
+
 
 
 

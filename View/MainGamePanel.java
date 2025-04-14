@@ -71,7 +71,7 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 	}
 
 	@Override
-	public void setMapPanel(GameController game) {}
+	public void showMapView(GameController game) {}
 
 	@Override
 	public void onViewActivated() {
@@ -90,7 +90,7 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 	}
 
 	@Override
-	public void closePanel() {}
+	public void closeUI() {}
 }
 
 /* 2 November 2024 - Created File

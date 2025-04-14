@@ -228,4 +228,5 @@ public class GameState implements GameStateProvider {
  * 3 April 2025 - Completed Game State
  * 4 April 2025 - Updated for new functions added to interface
  * 14 April 2025 - Updated based on Deepseek recommendations
+ * 				 - Added equals, hash, and 
  */
