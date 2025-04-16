@@ -2,54 +2,67 @@
 Title: Island of Secrets Main Game Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 8 April 2025
+Version: 4.13
+Date: 16 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package View;
 
 import java.awt.BorderLayout;
+import java.util.Objects;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import Interfaces.GameStateProvider;
 import Interfaces.GameUI;
 import Interfaces.GameView;
 import Model.GameController;
 
+/**
+ * Main game view panel combining status, room, and command components.
+ * Implements both GameUI and GameView interfaces for dual functionality.
+ */
 public class MainGamePanel extends JPanel implements GameUI, GameView {
 	
-	private GameStateProvider state;
+	private static final long serialVersionUID = -9087851496246015145L;
+	
+	//Components
 	private final GameController game;
-		
-	private static final long serialVersionUID = 1L;
+	private final GamePanel parentPanel;
 	private StatusPanel statusPanel;
 	private RoomPanel roomPanel;
 	private CommandPanel commandPanel;
-	private GamePanel panel;
+	
+	//State
+	private GameStateProvider state;
 	private boolean isInitialised = false;
 
 	public MainGamePanel(GameController game, GamePanel panel) {
 		this.state = game.getState();
-		this.game = game;
-		this.panel = panel;
+        this.game = Objects.requireNonNull(game, "GameController cannot be null");
+        this.parentPanel = Objects.requireNonNull(panel, "Parent panel cannot be null");
 		
-		initialiseUI();
+        setLayout(new BorderLayout());
 	}
 	
-	public void initialiseUI() {
-		
-		isInitialised = true;
-		
-		//Gets the background colour for the frame
-		this.setLayout (new BorderLayout()); 
-		
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseComponents();
+			isInitialised=true;
+		}
+		refreshUI(game);
+	}
+	
+	public void initialiseComponents() {
+				
 		// Top section for status and label panels
 		statusPanel = new StatusPanel(state);
 		roomPanel = new RoomPanel(state);
-		commandPanel = new CommandPanel(game,state,panel);
+		commandPanel = new CommandPanel(game,state,parentPanel);
 		
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
@@ -58,31 +71,29 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 
 	@Override
 	public void refreshUI(GameController game) {
-		this.state = game.getState();
 		
-		statusPanel.refreshUI(this.state);
-		roomPanel.refreshUI(this.state);
-		commandPanel.refreshUI(this.state);
-
-		revalidate();
-		repaint();
-		commandPanel.requestCommandFocus();
-
+		SwingUtilities.invokeLater(()-> {
+			this.state = game.getState();
+		
+			statusPanel.refreshUI(state);
+			roomPanel.refreshUI(state);
+			commandPanel.refreshUI(state);
+			
+			revalidate();
+			repaint();
+			commandPanel.requestCommandFocus();
+		});
 	}
 
 	@Override
-	public void showMapView(GameController game) {}
-
-	@Override
-	public void onViewActivated() {
-		if (!isInitialised) {
-			initialiseUI();
-			isInitialised=true;
-		}
+	public void showMapView(GameController game) {
+		// Intentional no-op - handled by parent container
 	}
 
 	@Override
-	public void onViewDeactivated() {}
+	public void onViewDeactivated() {
+		// Optional cleanup can be added here
+	}
 
 	@Override
 	public JComponent getViewComponent() {
@@ -90,7 +101,10 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 	}
 
 	@Override
-	public void closeUI() {}
+	public void closeUI() {
+        // Cleanup resources if needed
+        isInitialised = false;
+	}
 }
 
 /* 2 November 2024 - Created File
@@ -129,5 +143,7 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
  * 4 April 2025 - Added function for mapPanel
  * 5 April 2025 - Changed name to MainGamePanel
  * 6 April 2025 - Added GameView interface
- * 8 April 2025 - Addec close panel function due to interface
+ * 8 April 2025 - Added close panel function due to interface
+ * 15 April 2025 - Started updating code based on Deepseek recommendations
+ * 16 April 2025 - Completed recommended changes
  */
