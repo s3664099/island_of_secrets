@@ -49,18 +49,12 @@ public class RoomPanel extends JPanel {
 		
 		add(createRoomPanel());
 		addItemPanels(state.getItems());
-		
+		add(createExitPanel());
+		add(createSpecialExitPanel());
 
 		
 
-		//Exit Panels
-		JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		exitPanel.add(exitLabel);
-		add(exitPanel);
-		
-		JPanel specialExitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		specialExitPanel.add(specialExitLabel);
-		add(specialExitPanel);
+
 		
 		//MessageDisplay
 		for (int i=0;i<state.getMessage().size();i++) {
@@ -87,6 +81,18 @@ public class RoomPanel extends JPanel {
 	private JPanel createItemPanel(int index) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panel.add(itemLabelList.get(index));
+		return panel;
+	}
+	
+	private JPanel createExitPanel() {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(exitLabel);
+		return panel;
+	}
+	
+	private JPanel createSpecialExitPanel() {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(specialExitLabel);
 		return panel;
 	}
 	
