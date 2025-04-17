@@ -25,8 +25,8 @@ import Interfaces.GameStateProvider;
 public class RoomPanel extends JPanel {
 
 	private static final long serialVersionUID = -7153746273218337269L;
-	private GameStateProvider state;
 	
+	//Components
 	private final JLabel roomLabel = new JLabel();
 	private final JLabel exitLabel = new JLabel();
 	private final JLabel specialExitLabel = new JLabel();
@@ -34,29 +34,25 @@ public class RoomPanel extends JPanel {
 	private List<JLabel> itemLabelList  = new ArrayList<JLabel>();
 	private List<String> itemTextList = new ArrayList<String>();
 	
+	//State
+	private GameStateProvider state;
+	
 	public RoomPanel(GameStateProvider state) {
 		this.state = state;
-		configureLayout();
-		refresh();
+		initialiseComponents();
+		updateDisplay();
 	}
 	
-	private void configureLayout() {
+	private void initialiseComponents() {
 		setLayout(new GridLayout(9,1));
-		determineLength(state.getItems(),itemLabelList);
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
-		//Room Display
-		JPanel roomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		roomPanel.add(roomLabel);
-		add(roomPanel);
+		add(createRoomPanel());
+		addItemPanels(state.getItems());
 		
-		//ItemDisplay
-		for (int i=0;i<itemLabelList.size();i++) {
-			JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			itemPanel.add(itemLabelList.get(i));
-			add(itemPanel);
-		}
+
 		
+
 		//Exit Panels
 		JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		exitPanel.add(exitLabel);
@@ -75,6 +71,25 @@ public class RoomPanel extends JPanel {
 		}
 	}
 	
+	private JPanel createRoomPanel() {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(roomLabel);
+		return panel;
+	}
+	
+	private void addItemPanels(String itemsText) {
+		processItemsText(itemsText);
+		for (int i=0;i<itemLabelList.size();i++) {
+			add(createItemPanel(i));
+		}
+	}
+	
+	private JPanel createItemPanel(int index) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(itemLabelList.get(index));
+		return panel;
+	}
+	
 	public void refreshUI(GameStateProvider state) {
 		
 		this.state = state;
@@ -85,11 +100,11 @@ public class RoomPanel extends JPanel {
 		itemTextList.clear();
 		
 		removeAll();
-		configureLayout();
-		refresh();
+		initialiseComponents();
+		updateDisplay();
 	}
 		
-	public void refresh() {
+	public void updateDisplay() {
 		
 		roomLabel.setText(state.getRoom());
 
@@ -105,34 +120,32 @@ public class RoomPanel extends JPanel {
 			messageLabelList.get(i).setText(state.getMessage().get(i));
 		}
 	}
-	
-	private void determineLength(String displayString, List<JLabel> labelList) {
 
-		while (displayString.length()>0) {
-			
-			int lineLength = getLineLength(displayString);
+	private void processItemsText(String displayString) {
+		int remainingLength = displayString.length();
+		while(remainingLength>0) {
+			int lineLength = calculateLineLength(displayString,remainingLength);
 			itemTextList.add(displayString.substring(0,lineLength));
+			itemLabelList.add(new JLabel());
 			displayString = displayString.substring(lineLength);
-			labelList.add(new JLabel());
+			remainingLength = displayString.length();
 		}
-
 	}
 	
-	private int getLineLength(String line) {
-		
-		int lineLength = Constants.LINE_LENGTH;
-		
-		if (lineLength>line.length()) {
-			lineLength = line.length();
+	private int calculateLineLength(String line, int remainingLength) {
+		int lineLength = Math.min(Constants.LINE_LENGTH, remainingLength);
+		if (remainingLength>99) {
+			lineLength = findLastWhitespace(line,lineLength);
 		}
-		
-		if (line.length()>99) {
-			while(!Character.isWhitespace(line.charAt(lineLength))) {
-				lineLength --;
-			}
-		}
-		
 		return lineLength;
+	}
+	
+	private int findLastWhitespace(String line, int initialLength) {
+		int adjustedLength = initialLength;
+		while (adjustedLength>0 && !Character.isWhitespace(line.charAt(adjustedLength))) {
+			adjustedLength--;
+		}
+		return adjustedLength>0?adjustedLength:initialLength;
 	}
 }
 
