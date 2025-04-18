@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 11 April 2025
+Version: 4.13
+Date: 18 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -83,31 +83,21 @@ public class CommandPanel  extends JPanel  {
 		}
 				
 		if (isNormalUI()) {
-			//Button to display the map
-			if (state.getPanelFlag()!=4) {
-				add(createButtonPanel("Map",new MapButton(game,panel),320));
-			}
-			
-			//Command Field includes four labels above which contain the last three commands.
-			String[] commands = state.getCommands();
-			for (int i=0;i<commands.length;i++) {
-				
-				//If blank, adds blank label
-				if (commands[i].length()==0 || state.getResponseType() !=0) {
-					add(createSpacePanel());
-			
-				//Otherwise add button with command
-				} else {
-					add(createButtonPanel(commands[i],new CommandButton(game,commands[i]),320));
-				}
-			}
-			
-			add(createSpacePanel());		
-			add(createCommandInputPanel());			
+			addNormalUIComponents();	
 		}
 								
-		revalidate();
-		repaint();
+		revalidateAndRepaint();
+	}
+	
+	private void addNormalUIComponents() {
+		
+		if(showMapButton()) {
+			add(createButtonPanel("Map",new MapButton(game,panel),320));
+		}
+		
+		addCommandHistoryButtons();
+		add(createSpacePanel());
+		add(createCommandInputPanel());	
 	}
 	
 	private boolean isInitialGameState() {
@@ -131,12 +121,76 @@ public class CommandPanel  extends JPanel  {
 	private boolean isEndGameState() {
 		return state.isEndGameState();
 	}
-				
+	
+	private boolean showMapButton() {
+		return state.getPanelFlag()!=4;
+	}
+	
 	private JPanel createSpacePanel() {
 		JPanel spacePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		spacePanel.add(spaceLabel);
 		spaceLabel.setText("");
 		return spacePanel;
+	}
+	
+	private void addShelterButtonPanels() {
+		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
+		Integer[] shelterLocations = {44,11,41};
+		
+		for (int i=0;i<SHELTER_COUNT;i++) {
+			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
+		}
+	}
+	
+	private void addCommandHistoryButtons() {
+		
+		for (String command:state.getCommands()) {
+			if (command.isEmpty() || state.getResponseType()!=0) {
+				add(createSpacePanel());
+			} else {
+				add(createButtonPanel(command,new CommandButton(game,command),BUTTON_INDENT));
+			}
+		}
+	}
+	
+	private JPanel createCommandInputPanel() {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		panel.setBorder(BorderFactory.createEmptyBorder(0,COMMAND_FIELD_INDENT,0,COMMAND_FIELD_INDENT));
+		
+		if (activeListener != null) {
+			commandField.removeKeyListener(activeListener);
+		}
+		
+		activeListener = new CommandListener(commandField,game);
+		commandField.addKeyListener(activeListener);
+		panel.add(commandField);
+		
+		requestCommandFocus();
+		return panel;
+	}
+		
+	private void addSaveGameButtonPanels() {
+		
+		for (String gameName:state.getDisplayedSavedGames()) {
+			if (!gameName.isEmpty()) {
+				addSavedGameButton(gameName);
+			}
+		}
+		
+		if (state.getLowerLimitSavedGames()) {
+			add(createButtonPanel("Previous",new SearchGameButton(game,false),BUTTON_INDENT));
+		}
+		
+		if (state.getUpperLimitSavedGames()) {
+			add(createButtonPanel("Next",new SearchGameButton(game,true),BUTTON_INDENT));
+		}
+		
+		add(createButtonPanel("Back to Game",new GameButton(game,panel),BUTTON_INDENT));
+	}
+	
+	private void addSavedGameButton(String gameName) {
+		String loadName = gameName.split("\\,")[0];
+		add(createButtonPanel(gameName,new CommandButton(game,"load "+loadName),BUTTON_INDENT));
 	}
 	
 	private JPanel createButtonPanel(String title,ActionListener action,int indent) {
@@ -147,54 +201,12 @@ public class CommandPanel  extends JPanel  {
 		panel.setBorder(BorderFactory.createEmptyBorder(0,indent,0,indent));
 		return panel;
 	}
-					
-	private void addShelterButtonPanels() {
-		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
-		Integer[] shelterLocations = {44,11,41};
-		
-		for (int i=0;i<3;i++) {
-			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),320));
-		}
+	
+	private void revalidateAndRepaint() {
+		revalidate();
+		repaint();
 	}
 	
-	private void addSaveGameButtonPanels() {
-			
-		for (String gameName:state.getDisplayedSavedGames()) {
-				
-			//Is there a saved game?
-			if (gameName.length()>0) {
-				String loadName=gameName.split("\\.")[0];
-				add(createButtonPanel(gameName,new CommandButton(game, "load "+loadName),320));
-			}
-		}
-		
-		//Checks if move forward/back and adds buttons for that.
-		if (state.getLowerLimitSavedGames()) {
-			add(createButtonPanel("Previous",new SearchGameButton(game,false),320));
-		}
-		
-		if (state.getUpperLimitSavedGames()) {
-			add(createButtonPanel("Next",new SearchGameButton(game,true),320));
-		}
-		
-		add(createButtonPanel("Back to Game",new GameButton(game,panel),320));
-	}
-	
-	private JPanel createCommandInputPanel() {
-		JPanel panel = new JPanel(new GridLayout(1,1));
-		panel.setBorder(BorderFactory.createEmptyBorder(0,170,0,170));
-		
-		if (activeListener != null) {
-			commandField.removeKeyListener(activeListener);
-		}
-		
-		activeListener = new CommandListener(commandField,game);
-		commandField.addKeyListener(activeListener);
-		
-		panel.add(commandField);
-		return panel;
-	}
-
 	public void requestCommandFocus() {
 		SwingUtilities.invokeLater(() -> {
 			commandField.requestFocusInWindow();
@@ -218,4 +230,5 @@ public class CommandPanel  extends JPanel  {
  * 10 April 2025 - Updated shelterButton
  * 11 April 2025 - Displayed buttons for loading saved games. Removed LoadGameButton and just used command button
  * 				   Fixed issue with loading game
+ * 18 April 2025 - Updated code based on recommendations by DeepSeek.
  */
