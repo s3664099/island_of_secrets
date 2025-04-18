@@ -47,10 +47,10 @@ public class RoomPanel extends JPanel {
 		setLayout(new GridLayout(9,1));
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
-		add(createRoomPanel());
+		add(createPanel(roomLabel));
 		addItemPanels(state.getItems());
-		add(createExitPanel());
-		add(createSpecialExitPanel());
+		add(createPanel(exitLabel));
+		add(createPanel(specialExitLabel));
 
 		
 
@@ -65,35 +65,17 @@ public class RoomPanel extends JPanel {
 		}
 	}
 	
-	private JPanel createRoomPanel() {
+	private JPanel createPanel(JLabel label) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(roomLabel);
+		panel.add(label);
 		return panel;
 	}
 	
 	private void addItemPanels(String itemsText) {
 		processItemsText(itemsText);
-		for (int i=0;i<itemLabelList.size();i++) {
-			add(createItemPanel(i));
+		for (int index=0;index<itemLabelList.size();index++) {
+			add(createPanel(itemLabelList.get(index)));
 		}
-	}
-	
-	private JPanel createItemPanel(int index) {
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(itemLabelList.get(index));
-		return panel;
-	}
-	
-	private JPanel createExitPanel() {
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(exitLabel);
-		return panel;
-	}
-	
-	private JPanel createSpecialExitPanel() {
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(specialExitLabel);
-		return panel;
 	}
 	
 	public void refreshUI(GameStateProvider state) {
