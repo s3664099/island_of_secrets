@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 25 March 2025
+Version: 4.6
+Date: 18 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,6 +37,7 @@ public class Game implements Serializable {
 	private GameState gameState = GameState.STARTED;
 	
 	private int saveGameCount = 0;
+	private int startGameCount = 2;
 	private int responseRequired = 0;
 	private boolean upperLimitSavedGames = false;
 	private boolean lowerLimitSavedGames = false;
@@ -314,7 +315,10 @@ public class Game implements Serializable {
 	public boolean isInitialGameState() {
 		
 		boolean started = false;
-		if (gameState == GameState.STARTED) {
+
+		if (startGameCount>0) {
+			startGameCount --;
+		} else if (gameState == GameState.STARTED) {
 			gameState = GameState.RUNNING;
 			started = true;
 		}
@@ -384,4 +388,5 @@ public class Game implements Serializable {
  * 				   Updated check start to Enum
  * 25 March 2025 - Updated method name for checking initial game state
  * 				 - Added gameState for checking saved games & end game
+ * 18 April 2025 - Added startGameCount to display button to open book
  */

@@ -12,6 +12,7 @@ package View;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -34,44 +35,57 @@ import Model.GameController;
 public class CommandPanel  extends JPanel  {
 	
 	private static final long serialVersionUID = 5738616866958583642L;
-	private GameStateProvider state;
-	private final GameController game;
+	
+	//Constants
+	private static final int BUTTON_INDENT= 320;
+	private static final int WIDE_BUTTON_INDENT = 260;
+	private static final int COMMAND_FIELD_INDENT = 170;
+	private static final int SHELTER_COUNT = 3;
+	
+	//Componants
 	private JTextField commandField = new JTextField(2);
-	private CommandListener activeListener;
+	private final JLabel spaceLabel = new JLabel();
+	private final GameController game;
 	private GamePanel panel;
 	
-	private final JLabel spaceLabel = new JLabel();
+	//State
+	private GameStateProvider state;
+	private CommandListener activeListener;
 
 	public CommandPanel(GameController game,GameStateProvider state,GamePanel panel) {
 		
-		this.state = state;
-		this.game = game;
-		this.panel = panel;
+		this.state = Objects.requireNonNull(state);
+		this.game = Objects.requireNonNull(game);
+		this.panel = Objects.requireNonNull(panel);
 		
 		setLayout(new GridLayout(9,1));
-		refresh();
+		configureLayout();
+	}
+
+	public void refreshUI(GameStateProvider state) {
+		this.state = Objects.requireNonNull(state);
+		SwingUtilities.invokeLater(this::configureLayout);
 	}
 	
 	private void configureLayout() {
 		removeAll();
 		add(createSpacePanel());
 				
-		if (state.isInitialGameState()) {
-			add(addButtonPanel("Click for Clues & Hints",new BookButton(panel,game),260));
-		}
-		
-		if (state.getResponseType()==2) {
+		if (isInitialGameState()) {
+			add(createButtonPanel("Click for Clues & Hints",new BookButton(panel,game),WIDE_BUTTON_INDENT));
+		} else if (isSeekingShelter()) {
 			addShelterButtonPanels();
-		} else if (state.isSavedGameState()) {
+		} else if (isShowSavedGameState()) {
 			addSaveGameButtonPanels();
+		} else if (isEndGameState()) {
+			add(createButtonPanel("Exit",new QuitButton(game,false),BUTTON_INDENT));
+			add(createButtonPanel("Restart",new QuitButton(game,true),BUTTON_INDENT));
 		}
-		
-		if (state.getResponseType()!=2 && !state.isSavedGameState() && 
-			!state.isEndGameState()) {
-			
+				
+		if (isNormalUI()) {
 			//Button to display the map
 			if (state.getPanelFlag()!=4) {
-				add(addButtonPanel("Map",new MapButton(game,panel),320));
+				add(createButtonPanel("Map",new MapButton(game,panel),320));
 			}
 			
 			//Command Field includes four labels above which contain the last three commands.
@@ -84,35 +98,40 @@ public class CommandPanel  extends JPanel  {
 			
 				//Otherwise add button with command
 				} else {
-					add(addButtonPanel(commands[i],new CommandButton(game,commands[i]),320));
+					add(createButtonPanel(commands[i],new CommandButton(game,commands[i]),320));
 				}
 			}
 			
 			add(createSpacePanel());		
-			add(createCommandInputPanel());
-		} else if (state.isEndGameState()) {
-			add(addButtonPanel("Exit",new QuitButton(game,false),320));
-			add(addButtonPanel("Restart",new QuitButton(game,true),320));
+			add(createCommandInputPanel());			
 		}
-				
+								
 		revalidate();
 		repaint();
 	}
-
-	public void refreshUI(GameStateProvider state) {
-		this.state = state;
-		refresh();
-		
+	
+	private boolean isInitialGameState() {
+		return state.isInitialGameState();
 	}
 	
-	private void refresh() {
-		
-		configureLayout();
-		requestCommandFocus();
+	private boolean isSeekingShelter() {
+		return state.getResponseType() == 2;
 	}
-			
-	//Component Builders
-	//Adds a space between panels
+	
+	private boolean isShowSavedGameState() {
+		return state.isSavedGameState();
+	}
+	
+	private boolean isNormalUI() {
+		return state.getResponseType() !=2 &&
+				!state.isSavedGameState() &&
+				!state.isEndGameState();
+	}
+	
+	private boolean isEndGameState() {
+		return state.isEndGameState();
+	}
+				
 	private JPanel createSpacePanel() {
 		JPanel spacePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		spacePanel.add(spaceLabel);
@@ -120,30 +139,21 @@ public class CommandPanel  extends JPanel  {
 		return spacePanel;
 	}
 	
-	//Creates a button and adds it to the panel.
-	private JPanel addButtonPanel(String title,ActionListener action,int size) {
+	private JPanel createButtonPanel(String title,ActionListener action,int indent) {
 		JPanel panel = new JPanel(new GridLayout(1,1));
-		addButton(panel,title,action,size);
+		JButton button = new JButton(title);
+		button.addActionListener(action);
+		panel.add(button);
+		panel.setBorder(BorderFactory.createEmptyBorder(0,indent,0,indent));
 		return panel;
 	}
-	
-	private void addButton(JPanel panel,String buttonName,ActionListener action,int size) {
-		
-		//Create Exit Button
-		JButton button = new JButton(buttonName);
-		panel.add(button);
-		
-		//Closes frame when clicked
-		panel.setBorder(BorderFactory.createEmptyBorder(0,size,0,size));
-	    button.addActionListener(action);
-	}
-				
+					
 	private void addShelterButtonPanels() {
 		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
 		Integer[] shelterLocations = {44,11,41};
 		
 		for (int i=0;i<3;i++) {
-			add(addButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),320));
+			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),320));
 		}
 	}
 	
@@ -154,20 +164,20 @@ public class CommandPanel  extends JPanel  {
 			//Is there a saved game?
 			if (gameName.length()>0) {
 				String loadName=gameName.split("\\.")[0];
-				add(addButtonPanel(gameName,new CommandButton(game, "load "+loadName),320));
+				add(createButtonPanel(gameName,new CommandButton(game, "load "+loadName),320));
 			}
 		}
 		
 		//Checks if move forward/back and adds buttons for that.
 		if (state.getLowerLimitSavedGames()) {
-			add(addButtonPanel("Previous",new SearchGameButton(game,false),320));
+			add(createButtonPanel("Previous",new SearchGameButton(game,false),320));
 		}
 		
 		if (state.getUpperLimitSavedGames()) {
-			add(addButtonPanel("Next",new SearchGameButton(game,true),320));
+			add(createButtonPanel("Next",new SearchGameButton(game,true),320));
 		}
 		
-		add(addButtonPanel("Back to Game",new GameButton(game,panel),320));
+		add(createButtonPanel("Back to Game",new GameButton(game,panel),320));
 	}
 	
 	private JPanel createCommandInputPanel() {
