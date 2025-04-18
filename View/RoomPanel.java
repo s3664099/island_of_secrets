@@ -2,8 +2,8 @@
 Title: Island of Secrets Room Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 3 April 2025
+Version: 4.6
+Date: 18 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,10 +14,12 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import Data.Constants;
 import Interfaces.GameStateProvider;
@@ -46,23 +48,12 @@ public class RoomPanel extends JPanel {
 	private void initialiseComponents() {
 		setLayout(new GridLayout(9,1));
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-		
+				
 		add(createPanel(roomLabel));
 		addItemPanels(state.getItems());
 		add(createPanel(exitLabel));
 		add(createPanel(specialExitLabel));
-
-		
-
-
-		
-		//MessageDisplay
-		for (int i=0;i<state.getMessage().size();i++) {
-			JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			messageLabelList.add(new JLabel());
-			messagePanel.add(messageLabelList.get(i));
-			add(messagePanel);
-		}
+		addMessagePanels(state.getMessage());
 	}
 	
 	private JPanel createPanel(JLabel label) {
@@ -78,34 +69,47 @@ public class RoomPanel extends JPanel {
 		}
 	}
 	
+	private void addMessagePanels(List<String> messages) {
+		for (int index = 0;index<messages.size();index++) {
+			messageLabelList.add(new JLabel());
+			add(createPanel(messageLabelList.get(index)));
+		}
+	}
+	
 	public void refreshUI(GameStateProvider state) {
 		
-		this.state = state;
+		this.state = Objects.requireNonNull(state);
 		
-		//Clears the lists
-		messageLabelList.clear();
-		itemLabelList.clear();
-		itemTextList.clear();
-		
-		removeAll();
-		initialiseComponents();
+		resetComponents();
 		updateDisplay();
+	}
+	
+	private void resetComponents() {
+		SwingUtilities.invokeLater(() -> {
+			messageLabelList.clear();
+			itemLabelList.clear();
+			itemTextList.clear();
+			removeAll();
+			initialiseComponents();
+		});
 	}
 		
 	public void updateDisplay() {
 		
-		roomLabel.setText(state.getRoom());
-
-		for (int i=0;i<itemLabelList.size();i++) {
-			itemLabelList.get(i).setText(itemTextList.get(i));
-		}
-		
-		exitLabel.setText(state.getExits());
-		specialExitLabel.setText(state.getSpecialExits());
-		
-		//Adds message
-		for (int i=0;i<messageLabelList.size();i++) {
-			messageLabelList.get(i).setText(state.getMessage().get(i));
+		SwingUtilities.invokeLater(() -> {
+			roomLabel.setText(state.getRoom());
+			updateLabels(itemTextList,itemLabelList);
+			exitLabel.setText(state.getExits());
+			specialExitLabel.setText(state.getSpecialExits());
+			updateLabels(state.getMessage(),messageLabelList);
+			revalidate();
+			repaint();
+		});
+	}
+	
+	private void updateLabels(List<String> labelText,List<JLabel> labels) {
+		for (int i = 0;i<labelText.size() && i<labels.size();i++) {
+			labels.get(i).setText(labelText.get(i));
 		}
 	}
 
@@ -143,4 +147,5 @@ public class RoomPanel extends JPanel {
  * 1 April 2025 - Updated refresh to display items
  * 2 April 2025 - Fixed issue with items not displaying
  * 3 April 2025 - Updated code to take the Game State
+ * 18 April 2025 - Removed redundant functions, and updated rest as per DeepSeek.
  */
