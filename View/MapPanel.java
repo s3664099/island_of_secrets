@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +28,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
@@ -69,9 +72,11 @@ public class MapPanel extends JPanel implements GameView {
 	@Override
 	public void onViewActivated() {
 		if (!isInitialised) {
+			initialiseTooltips();
 			initialiseMap();
 			isInitialised=true;
 		}
+		refreshMap();
 	}
 	
 	@Override
@@ -93,9 +98,35 @@ public class MapPanel extends JPanel implements GameView {
 	}
 		
 	private JPanel createRoomPanel(int roomId) {
-		JPanel panel = new JPanel(new BorderLayout());
+		
+		JPanel panel = new JPanel(new BorderLayout()) {
+			
+			private static final long serialVersionUID = -8288954048757686323L;
+
+			@Override
+			public JToolTip createToolTip() {
+				JToolTip tip = super.createToolTip();
+				tip.setBackground(new Color(255,255,225)); //Light Yellow
+				tip.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+				return tip;
+			}
+		};
+		
+		panel.setToolTipText(roomToolTips.get(roomId));
 		panel.setBorder((Border) createRoomBorder(roomId));
 		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
+		
+		panel.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				panel.setBackground(new Color(240,240,255));
+				panel.repaint();
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				panel.setBackground(null);
+				panel.repaint();
+			}
+		});
 		return panel;
 	}
 	
@@ -155,8 +186,13 @@ public class MapPanel extends JPanel implements GameView {
     private void updateRoomPanel(int roomId,JPanel panel) {
     	panel.removeAll();
     	
-    	if (roomId<= Constants.NUMBER_OF_ROOMS && state.getRoomVisited(roomId)) {
-    		updateRoomVisuals(panel,roomId,state);
+    	if (roomId<= Constants.NUMBER_OF_ROOMS) {
+    		if(state.getRoomVisited(roomId)) {
+    			updateRoomVisuals(panel,roomId,state);
+    			panel.setToolTipText(roomToolTips.get(roomId));
+    		} else {
+    			panel.setToolTipText(null);
+    		}
     	}
     	
     	if (roomId == SPECIAL_ROOM_ID) {
@@ -167,7 +203,7 @@ public class MapPanel extends JPanel implements GameView {
     }
     
     private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
-    	    	
+    	
     	String imageName = state.getCurrentRoom() == roomId 
     			? "adventurer"
     			: state.getRoomImageType(roomId);
@@ -233,16 +269,16 @@ public class MapPanel extends JPanel implements GameView {
         public void clear() {
             cache.clear();
         }
-    }
-    
-    private static ImageIcon createMissingImageIcon() {
-        // Create a placeholder icon
-        BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = img.createGraphics();
-        g.setColor(Color.RED);
-        g.fillRect(0, 0, 50, 50);
-        g.dispose();
-        return new ImageIcon(img);
+        
+        private static ImageIcon createMissingImageIcon() {
+            // Create a placeholder icon
+            BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = img.createGraphics();
+            g.setColor(Color.RED);
+            g.fillRect(0, 0, 50, 50);
+            g.dispose();
+            return new ImageIcon(img);
+        }
     }
 }
 
@@ -259,5 +295,5 @@ public class MapPanel extends JPanel implements GameView {
  * 7 April 2025 - Fixed problem where not all rooms being displayed.
  * 				- Button to return player to game now works.
  * 20 April 2025 - Update class based on recommendations
- * 				 - Added tool tips
+ * 				 - Added tool tips to display location name when hovering
  */

@@ -2088,8 +2088,603 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
         // Cleanup resources if needed
         isInitialised = false;
 	}
+}/**
+ * Displays game status information including time and player status.
+ * Updates automatically when game state changes.
+ */
+public class StatusPanel extends JPanel {
+	
+	private static final long serialVersionUID = 582607980142319020L;
+	
+	//UI Components
+	private final JLabel timeLabel = new JLabel();
+	private final JLabel statusLabel = new JLabel();
+	
+	//State
+	private GameStateProvider state;
+	
+	public StatusPanel(GameStateProvider state) {
+		this.state = Objects.requireNonNull(state, "GameStateProvider cannot be null");
+		initialiseComponents();
+		updateDisplay();
+	}
+	
+	private void initialiseComponents() {
+		setLayout(new GridLayout(2, 1));
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+		
+		JPanel timePanel = createLabelPanel(timeLabel);
+		JPanel statusPanel = createLabelPanel(statusLabel);
+		
+		add(timePanel);
+		add(statusPanel);
+	}
+	
+	private JPanel createLabelPanel(JLabel label) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panel.add(label);
+		return panel;
+	}
+	
+    /**
+     * Updates the panel with new game state
+     * @param state The current game state provider
+     */
+	public void refreshUI(GameStateProvider state) {
+		this.state = state;
+		updateDisplay();
+	}
+	
+	public void updateDisplay() {
+		SwingUtilities.invokeLater(()->{
+			String timeText="";
+			String statusText="";
+			
+			if (state != null) {
+				timeText = state.getTime();
+				statusText = state.getStatus();
+			}
+			
+			timeLabel.setText(timeText);
+			statusLabel.setText(statusText);
+		});
+	}
 }
+public class RoomPanel extends JPanel {
 
+	private static final long serialVersionUID = -7153746273218337269L;
+	
+	//Components
+	private final JLabel roomLabel = new JLabel();
+	private final JLabel exitLabel = new JLabel();
+	private final JLabel specialExitLabel = new JLabel();
+	private List<JLabel> messageLabelList  = new ArrayList<JLabel>();
+	private List<JLabel> itemLabelList  = new ArrayList<JLabel>();
+	private List<String> itemTextList = new ArrayList<String>();
+	
+	//State
+	private GameStateProvider state;
+	
+	public RoomPanel(GameStateProvider state) {
+		this.state = state;
+		initialiseComponents();
+		updateDisplay();
+	}
+	
+	private void initialiseComponents() {
+		setLayout(new GridLayout(9,1));
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+				
+		add(createPanel(roomLabel));
+		addItemPanels(state.getItems());
+		add(createPanel(exitLabel));
+		add(createPanel(specialExitLabel));
+		addMessagePanels(state.getMessage());
+	}
+	
+	private JPanel createPanel(JLabel label) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(label);
+		return panel;
+	}
+	
+	private void addItemPanels(String itemsText) {
+		processItemsText(itemsText);
+		for (int index=0;index<itemLabelList.size();index++) {
+			add(createPanel(itemLabelList.get(index)));
+		}
+	}
+	
+	private void addMessagePanels(List<String> messages) {
+		for (int index = 0;index<messages.size();index++) {
+			messageLabelList.add(new JLabel());
+			add(createPanel(messageLabelList.get(index)));
+		}
+	}
+	
+	public void refreshUI(GameStateProvider state) {
+		
+		this.state = Objects.requireNonNull(state);
+		
+		resetComponents();
+		updateDisplay();
+	}
+	
+	private void resetComponents() {
+		SwingUtilities.invokeLater(() -> {
+			messageLabelList.clear();
+			itemLabelList.clear();
+			itemTextList.clear();
+			removeAll();
+			initialiseComponents();
+		});
+	}
+		
+	public void updateDisplay() {
+		
+		SwingUtilities.invokeLater(() -> {
+			roomLabel.setText(state.getRoom());
+			updateLabels(itemTextList,itemLabelList);
+			exitLabel.setText(state.getExits());
+			specialExitLabel.setText(state.getSpecialExits());
+			updateLabels(state.getMessage(),messageLabelList);
+			revalidate();
+			repaint();
+		});
+	}
+	
+	private void updateLabels(List<String> labelText,List<JLabel> labels) {
+		for (int i = 0;i<labelText.size() && i<labels.size();i++) {
+			labels.get(i).setText(labelText.get(i));
+		}
+	}
+
+	private void processItemsText(String displayString) {
+		int remainingLength = displayString.length();
+		while(remainingLength>0) {
+			int lineLength = calculateLineLength(displayString,remainingLength);
+			itemTextList.add(displayString.substring(0,lineLength));
+			itemLabelList.add(new JLabel());
+			displayString = displayString.substring(lineLength);
+			remainingLength = displayString.length();
+		}
+	}
+	
+	private int calculateLineLength(String line, int remainingLength) {
+		int lineLength = Math.min(Constants.LINE_LENGTH, remainingLength);
+		if (remainingLength>99) {
+			lineLength = findLastWhitespace(line,lineLength);
+		}
+		return lineLength;
+	}
+	
+	private int findLastWhitespace(String line, int initialLength) {
+		int adjustedLength = initialLength;
+		while (adjustedLength>0 && !Character.isWhitespace(line.charAt(adjustedLength))) {
+			adjustedLength--;
+		}
+		return adjustedLength>0?adjustedLength:initialLength;
+	}
+}public class CommandPanel  extends JPanel  {
+	
+	private static final long serialVersionUID = 5738616866958583642L;
+	
+	//Constants
+	private static final int BUTTON_INDENT= 320;
+	private static final int WIDE_BUTTON_INDENT = 260;
+	private static final int COMMAND_FIELD_INDENT = 170;
+	private static final int SHELTER_COUNT = 3;
+	
+	//Componants
+	private JTextField commandField = new JTextField(2);
+	private final JLabel spaceLabel = new JLabel();
+	private final GameController game;
+	private GamePanel panel;
+	
+	//State
+	private GameStateProvider state;
+	private CommandListener activeListener;
+
+	public CommandPanel(GameController game,GameStateProvider state,GamePanel panel) {
+		
+		this.state = Objects.requireNonNull(state);
+		this.game = Objects.requireNonNull(game);
+		this.panel = Objects.requireNonNull(panel);
+		
+		setLayout(new GridLayout(9,1));
+		configureLayout();
+	}
+
+	public void refreshUI(GameStateProvider state) {
+		this.state = Objects.requireNonNull(state);
+		SwingUtilities.invokeLater(this::configureLayout);
+	}
+	
+	private void configureLayout() {
+		removeAll();
+		add(createSpacePanel());
+				
+		if (isInitialGameState()) {
+			add(createButtonPanel("Click for Clues & Hints",new BookButton(panel,game),WIDE_BUTTON_INDENT));
+		} else if (isSeekingShelter()) {
+			addShelterButtonPanels();
+		} else if (isShowSavedGameState()) {
+			addSaveGameButtonPanels();
+		} else if (isEndGameState()) {
+			add(createButtonPanel("Exit",new QuitButton(game,false),BUTTON_INDENT));
+			add(createButtonPanel("Restart",new QuitButton(game,true),BUTTON_INDENT));
+		}
+				
+		if (isNormalUI()) {
+			addNormalUIComponents();	
+		}
+								
+		revalidateAndRepaint();
+	}
+	
+	private void addNormalUIComponents() {
+		
+		if(showMapButton()) {
+			add(createButtonPanel("Map",new MapButton(game,panel),320));
+		}
+		
+		addCommandHistoryButtons();
+		add(createSpacePanel());
+		add(createCommandInputPanel());	
+	}
+	
+	private boolean isInitialGameState() {
+		return state.isInitialGameState();
+	}
+	
+	private boolean isSeekingShelter() {
+		return state.getResponseType() == 2;
+	}
+	
+	private boolean isShowSavedGameState() {
+		return state.isSavedGameState();
+	}
+	
+	private boolean isNormalUI() {
+		return state.getResponseType() !=2 &&
+				!state.isSavedGameState() &&
+				!state.isEndGameState();
+	}
+	
+	private boolean isEndGameState() {
+		return state.isEndGameState();
+	}
+	
+	private boolean showMapButton() {
+		return state.getPanelFlag()!=4;
+	}
+	
+	private JPanel createSpacePanel() {
+		JPanel spacePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		spacePanel.add(spaceLabel);
+		spaceLabel.setText("");
+		return spacePanel;
+	}
+	
+	private void addShelterButtonPanels() {
+		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
+		Integer[] shelterLocations = {44,11,41};
+		
+		for (int i=0;i<SHELTER_COUNT;i++) {
+			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
+		}
+	}
+	
+	private void addCommandHistoryButtons() {
+		
+		for (String command:state.getCommands()) {
+			if (command.isEmpty() || state.getResponseType()!=0) {
+				add(createSpacePanel());
+			} else {
+				add(createButtonPanel(command,new CommandButton(game,command),BUTTON_INDENT));
+			}
+		}
+	}
+	
+	private JPanel createCommandInputPanel() {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		panel.setBorder(BorderFactory.createEmptyBorder(0,COMMAND_FIELD_INDENT,0,COMMAND_FIELD_INDENT));
+		
+		if (activeListener != null) {
+			commandField.removeKeyListener(activeListener);
+		}
+		
+		activeListener = new CommandListener(commandField,game);
+		commandField.addKeyListener(activeListener);
+		panel.add(commandField);
+		
+		requestCommandFocus();
+		return panel;
+	}
+		
+	private void addSaveGameButtonPanels() {
+		
+		for (String gameName:state.getDisplayedSavedGames()) {
+			if (!gameName.isEmpty()) {
+				addSavedGameButton(gameName);
+			}
+		}
+		
+		if (state.getLowerLimitSavedGames()) {
+			add(createButtonPanel("Previous",new SearchGameButton(game,false),BUTTON_INDENT));
+		}
+		
+		if (state.getUpperLimitSavedGames()) {
+			add(createButtonPanel("Next",new SearchGameButton(game,true),BUTTON_INDENT));
+		}
+		
+		add(createButtonPanel("Back to Game",new GameButton(game,panel),BUTTON_INDENT));
+	}
+	
+	private void addSavedGameButton(String gameName) {
+		String loadName = gameName.split("\\,")[0];
+		add(createButtonPanel(gameName,new CommandButton(game,"load "+loadName),BUTTON_INDENT));
+	}
+	
+	private JPanel createButtonPanel(String title,ActionListener action,int indent) {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		JButton button = new JButton(title);
+		button.addActionListener(action);
+		panel.add(button);
+		panel.setBorder(BorderFactory.createEmptyBorder(0,indent,0,indent));
+		return panel;
+	}
+	
+	private void revalidateAndRepaint() {
+		revalidate();
+		repaint();
+	}
+	
+	public void requestCommandFocus() {
+		SwingUtilities.invokeLater(() -> {
+			commandField.requestFocusInWindow();
+			commandField.selectAll();
+		});
+	}
+}
+public class MapPanel extends JPanel implements GameView {
+	
+	private static final long serialVersionUID = -1097043236506747632L;
+	private GameController controller;
+	private GameState state;
+	private GamePanel panel;
+	private final Map<Integer, JPanel> roomPanels = new HashMap<>();
+	private final Map<Integer,String> roomToolTips = new HashMap<>();
+	private final ImageCache imageCache = new ImageCache();
+	private boolean isInitialised = false;
+	
+	public static final int MAP_ROWS = 11;
+	public static final int MAP_COLS = 10;
+	public static final int ROOM_SIZE = 50;
+	public static final int SPECIAL_ROOM_ID = 85;
+	public static final int GRID_SIZE =  MAP_ROWS * MAP_COLS;
+	
+	public MapPanel(GameController game, GamePanel panel) {
+
+		this.controller = game;
+		this.state = game.getState();
+		this.panel = panel;
+		
+		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
+	}
+
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseTooltips();
+			initialiseMap();
+			isInitialised=true;
+		}
+		refreshMap();
+	}
+	
+	@Override
+	public void onViewDeactivated() {
+		imageCache.clear();
+	}
+	
+	@Override
+	public JComponent getViewComponent() {
+		return this;
+	}
+		
+	private void initialiseMap() {
+		for (int roomId = 1;roomId<GRID_SIZE;roomId++) {
+			JPanel roomPanel = createRoomPanel(roomId);
+			roomPanels.put(roomId, roomPanel);
+			add(roomPanel);
+		}
+	}
+		
+	private JPanel createRoomPanel(int roomId) {
+		
+		JPanel panel = new JPanel(new BorderLayout()) {
+			
+			private static final long serialVersionUID = -8288954048757686323L;
+
+			@Override
+			public JToolTip createToolTip() {
+				JToolTip tip = super.createToolTip();
+				tip.setBackground(new Color(255,255,225)); //Light Yellow
+				tip.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+				return tip;
+			}
+		};
+		
+		panel.setToolTipText(roomToolTips.get(roomId));
+		panel.setBorder((Border) createRoomBorder(roomId));
+		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
+		
+		panel.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				panel.setBackground(new Color(240,240,255));
+				panel.repaint();
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				panel.setBackground(null);
+				panel.repaint();
+			}
+		});
+		return panel;
+	}
+	
+    private Border createRoomBorder(int roomId) {
+      
+    	Border border;
+    	
+		if (roomId<10 && roomId>1) {
+			border = BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK);
+		} else if (roomId==1) {
+			border = BorderFactory.createMatteBorder(2, 2, 0, 0, Color.BLACK);
+		} else if (roomId==10) {
+			border = BorderFactory.createMatteBorder(2, 0, 0, 2, Color.BLACK);
+		} else if (roomId==71) {
+			border = BorderFactory.createMatteBorder(0, 2, 2, 0, Color.BLACK);
+		} else if (roomId==80) {
+			border = BorderFactory.createMatteBorder(0, 0, 2, 2, Color.BLACK);
+		} else if (roomId>71 && roomId<80) {
+			border = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK);
+		} else if (roomId==11 || roomId==21 || roomId==31 || roomId==41 || roomId==51 || roomId==61) {
+			border = BorderFactory.createMatteBorder(0, 2, 0, 0, Color.BLACK);
+		} else if (roomId==20 || roomId==30 || roomId==40 || roomId==50 || roomId==60 || roomId==70) {
+			border = BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK);
+		} else {
+			border = BorderFactory.createEmptyBorder();
+		}
+	        
+        return border;
+    }
+    
+	private void initialiseTooltips() {
+		for (int roomId=1;roomId <= Constants.NUMBER_OF_ROOMS;roomId++) {
+			roomToolTips.put(roomId,generateRoomTooltip(roomId));
+		}
+	}
+	
+	private String generateRoomTooltip(int roomId) {
+		return String.format("<html><b>%s</b></html>",state.getRoomName(roomId));
+	}
+    
+    public void refreshUI(GameController controller) {
+    	this.controller = controller;
+    	this.state = controller.getState();
+    	refreshMap();
+    }
+    
+    public void refreshMap() {
+    	
+    	SwingUtilities.invokeLater(() -> {
+    		this.state = controller.getState();
+    		roomPanels.forEach(this::updateRoomPanel);
+    		revalidate();
+    		repaint();
+    	});
+    }
+    
+    private void updateRoomPanel(int roomId,JPanel panel) {
+    	panel.removeAll();
+    	
+    	if (roomId<= Constants.NUMBER_OF_ROOMS) {
+    		if(state.getRoomVisited(roomId)) {
+    			updateRoomVisuals(panel,roomId,state);
+    			panel.setToolTipText(roomToolTips.get(roomId));
+    		} else {
+    			panel.setToolTipText(null);
+    		}
+    	}
+    	
+    	if (roomId == SPECIAL_ROOM_ID) {
+    		addNavigationButton(panel);
+    	}
+    	panel.revalidate();
+		panel.repaint();
+    }
+    
+    private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
+    	
+    	String imageName = state.getCurrentRoom() == roomId 
+    			? "adventurer"
+    			: state.getRoomImageType(roomId);
+    	
+    	//Add Room Image
+    	ImageIcon icon = imageCache.getImage("/Images/"+ imageName + ".png");
+    	if (icon != null) {
+    		panel.add(new JLabel(icon), BorderLayout.CENTER);
+    	}
+    	
+    	//Update borders based on exits
+    	boolean[] exits = state.getRoomExits(roomId);
+    	panel.setBorder(BorderFactory.createMatteBorder(
+    			exits[0] ? 0:2, //North
+    			exits[3] ? 0:2, //West
+    			exits[1] ? 0:2, //South
+    			exits[2] ? 0:2, //East
+    			Color.BLACK
+    	));
+    }
+    
+    private void addNavigationButton(JPanel panel) {
+    	    	
+    	JButton backButton = new JButton("Back");
+    	backButton.addActionListener(new GameButton(controller,this.panel));
+    	panel.add(backButton);
+    }
+	
+    //Image cache helper
+    private static class ImageCache {
+    	private final ConcurrentHashMap<String,ImageIcon> cache = new ConcurrentHashMap<>();
+    	
+    	public ImageIcon getImage(String path) {
+    		ImageIcon result = cache.get(path);
+    		
+    		if (result == null) {
+    			result = createImageIcon(path);
+    			cache.put(path, result);
+    		}
+    		
+    		return result;
+    	}
+    	
+        private ImageIcon createImageIcon(String path) {
+        	
+            ImageIcon result = null;
+            try {
+                InputStream stream = getClass().getResourceAsStream(path);
+                if (stream != null) {
+                    BufferedImage img = ImageIO.read(stream);
+                    if (img != null) {
+                        result = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                    }
+                    stream.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Couldn't load image: " + path);
+                result = createMissingImageIcon();
+            }
+            return result;
+        }
+        
+        public void clear() {
+            cache.clear();
+        }
+        
+        private static ImageIcon createMissingImageIcon() {
+            // Create a placeholder icon
+            BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = img.createGraphics();
+            g.setColor(Color.RED);
+            g.fillRect(0, 0, 50, 50);
+            g.dispose();
+            return new ImageIcon(img);
+        }
+    }
+}
 
 
 
