@@ -16,6 +16,7 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -23,11 +24,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import Controller.GameButton;
@@ -51,13 +54,19 @@ public class MapPanel extends JPanel implements GameView {
 	private final ImageCache imageCache = new ImageCache();
 	private boolean isInitialised = false;
 	
+	public static final int MAP_ROWS = 11;
+	public static final int MAP_COLS = 10;
+	public static final int ROOM_SIZE = 50;
+	public static final int SPECIAL_ROOM_ID = 85;
+	public static final int GRID_SIZE =  MAP_ROWS * MAP_COLS;
+	
 	public MapPanel(GameController game, GamePanel panel) {
 
 		this.controller = game;
 		this.state = game.getState();
 		this.panel = panel;
 		
-		setLayout(new GridLayout(11,10));
+		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
 	}
 
 	@Override
@@ -70,6 +79,7 @@ public class MapPanel extends JPanel implements GameView {
 	
 	@Override
 	public void onViewDeactivated() {
+		imageCache.clear();
 	}
 	
 	@Override
@@ -78,7 +88,7 @@ public class MapPanel extends JPanel implements GameView {
 	}
 		
 	private void initialiseMap() {
-		for (int roomId = 1;roomId<110;roomId++) {
+		for (int roomId = 1;roomId<GRID_SIZE;roomId++) {
 			JPanel roomPanel = createRoomPanel(roomId);
 			roomPanels.put(roomId, roomPanel);
 			add(roomPanel);
@@ -88,7 +98,7 @@ public class MapPanel extends JPanel implements GameView {
 	private JPanel createRoomPanel(int roomId) {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBorder((Border) createRoomBorder(roomId));
-		panel.setPreferredSize(new Dimension(50,50));
+		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
 		return panel;
 	}
 	
@@ -126,32 +136,27 @@ public class MapPanel extends JPanel implements GameView {
     }
     
     public void refreshMap() {
-    	this.state = controller.getState();
     	
-    	for (Map.Entry<Integer, JPanel> entry: roomPanels.entrySet()) {
-    		
-    		int roomId = entry.getKey();
-    		JPanel panel = entry.getValue();
-    		    		
-    		panel.removeAll();
-    		
-    		if (roomId<=Constants.NUMBER_OF_ROOMS) {
-
-    			if (state.getRoomVisited(roomId)) {
-    				updateRoomVisuals(panel,roomId,state);
-    			}
-    		}
-    		
-			if (roomId==85) {
-				addNavigationButton(panel);
-			}
-    		
-    		panel.revalidate();
-    		panel.repaint();
+    	SwingUtilities.invokeLater(() -> {
+    		this.state = controller.getState();
+    		roomPanels.forEach(this::updateRoomPanel);
+    		revalidate();
+    		repaint();
+    	});
+    }
+    
+    private void updateRoomPanel(int roomId,JPanel panel) {
+    	panel.removeAll();
+    	
+    	if (roomId<= Constants.NUMBER_OF_ROOMS && state.getRoomVisited(roomId)) {
+    		updateRoomVisuals(panel,roomId,state);
     	}
     	
-    	revalidate();
-    	repaint();
+    	if (roomId == SPECIAL_ROOM_ID) {
+    		addNavigationButton(panel);
+    	}
+    	panel.revalidate();
+		panel.repaint();
     }
     
     private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
@@ -186,7 +191,7 @@ public class MapPanel extends JPanel implements GameView {
 	
     //Image cache helper
     private static class ImageCache {
-    	private final Map<String,ImageIcon> cache = new HashMap<>();
+    	private final ConcurrentHashMap<String,ImageIcon> cache = new ConcurrentHashMap<>();
     	
     	public ImageIcon getImage(String path) {
     		ImageIcon result = cache.get(path);
@@ -213,11 +218,25 @@ public class MapPanel extends JPanel implements GameView {
                 }
             } catch (IOException e) {
                 System.err.println("Couldn't load image: " + path);
+                result = createMissingImageIcon();
             }
             return result;
         }
+        
+        public void clear() {
+            cache.clear();
+        }
     }
-
+    
+    private static ImageIcon createMissingImageIcon() {
+        // Create a placeholder icon
+        BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = img.createGraphics();
+        g.setColor(Color.RED);
+        g.fillRect(0, 0, 50, 50);
+        g.dispose();
+        return new ImageIcon(img);
+    }
 }
 
 /*
