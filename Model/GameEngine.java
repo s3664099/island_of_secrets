@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 13 April 2025
+Version: 4.15
+Date: 20 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -369,6 +369,12 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 
 		return game.getRoomImageType(roomNumber);
 	}
+	
+	@Override
+	public String getRoomName(int roomNumber) {
+
+		return game.getRoomName(roomNumber);
+	}
 
 	@Override
 	public int getCurrentRoom() {
@@ -458,4 +464,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 10 April 2025 - Removed restart and added set room function
 12 April 2025 - Changed to calling correct limit for saved games
 13 April 2025 - Removed panel from increase & descrease load. Updated to reflect interface
+20 April 2025 - Added get Room Name function
 */

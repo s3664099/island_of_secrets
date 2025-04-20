@@ -2,13 +2,9 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 7 April 2025
+Version: 4.4
+Date: 20 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
-
-- Rooms not displaying after certain spot
-- Just pass game engine through to Map - don't really need to deal with the state there
-
 */
 
 package View;
@@ -51,6 +47,7 @@ public class MapPanel extends JPanel implements GameView {
 	private GameState state;
 	private GamePanel panel;
 	private final Map<Integer, JPanel> roomPanels = new HashMap<>();
+	private final Map<Integer,String> roomToolTips = new HashMap<>();
 	private final ImageCache imageCache = new ImageCache();
 	private boolean isInitialised = false;
 	
@@ -94,7 +91,7 @@ public class MapPanel extends JPanel implements GameView {
 			add(roomPanel);
 		}
 	}
-	
+		
 	private JPanel createRoomPanel(int roomId) {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBorder((Border) createRoomBorder(roomId));
@@ -128,6 +125,16 @@ public class MapPanel extends JPanel implements GameView {
 	        
         return border;
     }
+    
+	private void initialiseTooltips() {
+		for (int roomId=1;roomId <= Constants.NUMBER_OF_ROOMS;roomId++) {
+			roomToolTips.put(roomId,generateRoomTooltip(roomId));
+		}
+	}
+	
+	private String generateRoomTooltip(int roomId) {
+		return String.format("<html><b>%s</b></html>",state.getRoomName(roomId));
+	}
     
     public void refreshUI(GameController controller) {
     	this.controller = controller;
@@ -251,4 +258,6 @@ public class MapPanel extends JPanel implements GameView {
  * 6 April 2025 - Fixed issue where map not displaying
  * 7 April 2025 - Fixed problem where not all rooms being displayed.
  * 				- Button to return player to game now works.
+ * 20 April 2025 - Update class based on recommendations
+ * 				 - Added tool tips
  */

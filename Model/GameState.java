@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 14 April 2025
+Version: 4.5
+Date: 20 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -178,6 +178,10 @@ public class GameState implements GameStateProvider {
 	}
 	
 	//Dynamic data delegation
+	public String getRoomName(int roomNumber) {
+		return stateProvider.getRoomName(roomNumber);
+	}
+	
 	@Override
 	public boolean getRoomVisited(int roomNumber) {
 		return stateProvider.getRoomVisited(roomNumber);
@@ -229,4 +233,5 @@ public class GameState implements GameStateProvider {
  * 4 April 2025 - Updated for new functions added to interface
  * 14 April 2025 - Updated based on Deepseek recommendations
  * 				 - Added equals, hash, and 
+ * 20 April 2025 - Added get Room Name function
  */

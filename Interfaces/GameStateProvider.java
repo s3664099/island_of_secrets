@@ -2,8 +2,8 @@
 Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 14 April 2025
+Version: 4.4
+Date: 20 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -83,6 +83,12 @@ public interface GameStateProvider {
     
     /**
      * @param roomNumber The room ID to check
+     * @return the name of the room
+     */
+	String getRoomName(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
      * @return True if player has visited this room
      */
 	boolean getRoomVisited(int roomNumber);
@@ -136,4 +142,5 @@ public interface GameStateProvider {
  * 25 March 2025 - Added further required methods
  * 4 April 2025 - Added functions for handling the mapPanel
  * 14 April 2025 - Added JavaDocs
+ * 20 April 2025 - Added getRoomName
  */
