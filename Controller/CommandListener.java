@@ -32,10 +32,10 @@ public class CommandListener implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent evt) {
+	public void keyPressed(KeyEvent event) {
 		
 		//Checks if user presses enter
-		if (evt.getKeyCode() == KeyEvent.VK_ENTER && !processingInput) {
+		if (event.getKeyCode() == KeyEvent.VK_ENTER && !processingInput) {
 			processInput();
 		}		
 	}

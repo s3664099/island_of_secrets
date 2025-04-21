@@ -20,8 +20,8 @@ import Model.GameController;
 
 public class CommandButton implements ActionListener {
 
-	private String command;
-	private GameController controller;
+	private final String command;
+	private final GameController controller;
 	
 	public CommandButton(GameController controller, String command) {
 		
@@ -30,7 +30,7 @@ public class CommandButton implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent event) {
 		if(shouldProcessCommand()) {
 			processCommand();
 		}

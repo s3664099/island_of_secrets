@@ -2763,8 +2763,8 @@ public class CommandListener implements KeyListener {
 
 public class CommandButton implements ActionListener {
 
-	private String command;
-	private GameController controller;
+	private final String command;
+	private final GameController controller;
 	
 	public CommandButton(GameController controller, String command) {
 		
@@ -2773,7 +2773,7 @@ public class CommandButton implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent event) {
 		if(shouldProcessCommand()) {
 			processCommand();
 		}
@@ -2798,7 +2798,158 @@ public class CommandButton implements ActionListener {
 
 }
 
+public class MapButton implements ActionListener {
 
+	private final GameController controller;
+	private final GamePanel panel;
+	
+	public MapButton(GameController controller, GamePanel panel) {
+			this.controller = Objects.requireNonNull(controller,"GameController cannot be null");
+			this.panel = Objects.requireNonNull(panel,"GamePanel cannot be null");
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		showGameMap();
+	}
+	
+	private void showGameMap() {
+		panel.showMapView();
+		panel.refreshMapView(controller);
+	}
+}
+
+public class QuitButton implements ActionListener {
+	
+	private final GameController controller;
+	private final Boolean shouldRestart;
+	
+	public QuitButton(GameController controller,boolean shouldRestart) {
+		this.controller = Objects.requireNonNull(controller,"GameController cannot be null");
+		this.shouldRestart = shouldRestart;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		handleQuitAction();
+	}
+	
+	private void handleQuitAction() {
+		if (shouldRestart) {
+			controller.restart();
+		} else {
+			controller.closeUI();
+		}
+	}
+}
+
+public class BookButton implements ActionListener {
+
+	private final GamePanel panel;
+	private final GameController controller;
+	private static final String BOOK_URL = "https://archive.org/details/island-of-secrets_202303";
+	
+	public BookButton(GamePanel panel,GameController controller) {		
+		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");;
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		openBookLink();
+		refreshGameView();
+	}
+	
+	private void openBookLink() {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI(BOOK_URL));
+			} catch (IOException|URISyntaxException e) {
+				handleLinkError(e);
+			}
+		}
+	}
+	
+	private void refreshGameView() {
+		panel.refreshMainView(controller);
+	}
+	
+	private void handleLinkError(Exception e) {
+		System.err.println("Failed to open book linke :"+e.getMessage());
+	}
+}
+public class GameButton implements ActionListener {
+
+	private final GameController controller;
+	private final GamePanel panel;
+	
+	public GameButton(GameController controller, GamePanel panel) {
+		
+		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		returnToMainGameView();
+	}
+	
+	private void returnToMainGameView() {
+		showMainView();
+		updateGameState();
+		refreshView();
+	}
+	
+	private void showMainView() {
+		panel.showMainView();
+	}
+	
+	private void updateGameState() {
+		controller.setSavedGameState(false);
+	}
+	
+	private void refreshView() {
+		panel.refreshMainView(controller);
+	}
+}
+public class SearchGameButton implements ActionListener {
+
+	private final GameController controller;
+	private final boolean shouldMoveNext;
+	
+	public SearchGameButton(GameController controller, boolean shouldMoveNext) {
+		this.controller = controller;
+		this.shouldMoveNext = shouldMoveNext;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		navigateSavedGames();
+	}
+	
+	private void navigateSavedGames() {
+		try {
+			executeNavigation();
+		} catch (IOException e) {
+			handleNavigationError(e);
+		}
+	}
+	
+	private void executeNavigation() throws IOException {
+		if (shouldMoveNext) {
+			controller.increaseLoadPosition();;
+		} else {
+			controller.decreaseLoadPosition();
+		}
+	}
+	
+    private void handleNavigationError(IOException e) {
+    	Logger.getLogger(SearchGameButton.class.getName())
+        .log(Level.SEVERE, "Game navigation failed", e);
+    }	
+	
+}
 
 
 

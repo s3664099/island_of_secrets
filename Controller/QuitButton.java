@@ -2,8 +2,8 @@
 Title: Island of Secrets Quit Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 9 April 2025
+Version: 4.5
+Date: 21 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,29 +11,32 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import Model.GameController;
 
 public class QuitButton implements ActionListener {
 	
-	private GameController controller;
-	private Boolean restart;
+	private final GameController controller;
+	private final Boolean shouldRestart;
 	
-	public QuitButton(GameController controller,boolean restart) {
-		this.controller = controller;
-		this.restart = restart;
+	public QuitButton(GameController controller,boolean shouldRestart) {
+		this.controller = Objects.requireNonNull(controller,"GameController cannot be null");
+		this.shouldRestart = shouldRestart;
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-		if (!restart) {
-			controller.closeUI();
-		} else {
+	public void actionPerformed(ActionEvent event) {
+		handleQuitAction();
+	}
+	
+	private void handleQuitAction() {
+		if (shouldRestart) {
 			controller.restart();
+		} else {
+			controller.closeUI();
 		}
 	}
-
 }
 
 /* 23 December 2024 - Create File
@@ -44,4 +47,5 @@ public class QuitButton implements ActionListener {
  * 21 March 2025 - Removed extraneous include
  * 8 April 2025 - Add the quit functionality
  * 9 April 2025 - Added the restart functionality
+ * 21 April 2025 - Updated based on DeepSeek's recommendations.
  */
