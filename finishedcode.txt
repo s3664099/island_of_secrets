@@ -2447,7 +2447,7 @@ public class RoomPanel extends JPanel {
 		});
 	}
 }
-public class MapPanel extends JPanel implements GameView {
+
 	
 	private static final long serialVersionUID = -1097043236506747632L;
 	private GameController controller;
@@ -2457,6 +2457,7 @@ public class MapPanel extends JPanel implements GameView {
 	private final Map<Integer,String> roomToolTips = new HashMap<>();
 	private final ImageCache imageCache = new ImageCache();
 	private boolean isInitialised = false;
+	private MapController mapController;
 	
 	public static final int MAP_ROWS = 11;
 	public static final int MAP_COLS = 10;
@@ -2469,6 +2470,7 @@ public class MapPanel extends JPanel implements GameView {
 		this.controller = game;
 		this.state = game.getState();
 		this.panel = panel;
+		this.mapController = new MapController(game,panel);
 		
 		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
 	}
@@ -2516,21 +2518,11 @@ public class MapPanel extends JPanel implements GameView {
 			}
 		};
 		
+		panel.addMouseListener(mapController.createMouseAdapter(roomId));
 		panel.setToolTipText(roomToolTips.get(roomId));
 		panel.setBorder((Border) createRoomBorder(roomId));
 		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
 		
-		panel.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				panel.setBackground(new Color(240,240,255));
-				panel.repaint();
-			}
-			
-			public void mouseExited(MouseEvent e) {
-				panel.setBackground(null);
-				panel.repaint();
-			}
-		});
 		return panel;
 	}
 	
@@ -2685,6 +2677,32 @@ public class MapPanel extends JPanel implements GameView {
         }
     }
 }
+
+public class MapController {
+	
+	public MapController(GameController gameController, GamePanel gamePanel) {}
+	
+	public MouseAdapter createMouseAdapter(int roomId) {
+		return new MouseAdapter() {
+			
+			public void mouseEntered(MouseEvent e) {
+				
+				JPanel panel = (JPanel) e.getSource();
+				panel.setBackground(new Color(240,240,255));
+				panel.repaint();
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				
+				JPanel panel = (JPanel) e.getSource();
+				panel.setBackground(null);
+				panel.repaint();
+			}
+		};
+	}
+}
+
+
 
 
 

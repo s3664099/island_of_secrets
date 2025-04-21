@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 20 April 2025
+Version: 4.5
+Date: 21 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,8 +15,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +31,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import Controller.GameButton;
+import Controller.MapController;
 import Data.Constants;
 import Interfaces.GameView;
 
@@ -53,6 +52,7 @@ public class MapPanel extends JPanel implements GameView {
 	private final Map<Integer,String> roomToolTips = new HashMap<>();
 	private final ImageCache imageCache = new ImageCache();
 	private boolean isInitialised = false;
+	private MapController mapController;
 	
 	public static final int MAP_ROWS = 11;
 	public static final int MAP_COLS = 10;
@@ -65,6 +65,7 @@ public class MapPanel extends JPanel implements GameView {
 		this.controller = game;
 		this.state = game.getState();
 		this.panel = panel;
+		this.mapController = new MapController(game,panel);
 		
 		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
 	}
@@ -112,21 +113,11 @@ public class MapPanel extends JPanel implements GameView {
 			}
 		};
 		
+		panel.addMouseListener(mapController.createMouseAdapter(roomId));
 		panel.setToolTipText(roomToolTips.get(roomId));
 		panel.setBorder((Border) createRoomBorder(roomId));
 		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
 		
-		panel.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				panel.setBackground(new Color(240,240,255));
-				panel.repaint();
-			}
-			
-			public void mouseExited(MouseEvent e) {
-				panel.setBackground(null);
-				panel.repaint();
-			}
-		});
 		return panel;
 	}
 	
@@ -296,4 +287,5 @@ public class MapPanel extends JPanel implements GameView {
  * 				- Button to return player to game now works.
  * 20 April 2025 - Update class based on recommendations
  * 				 - Added tool tips to display location name when hovering
+ * 21 April 2025 - Moved MapController to a separate class in  Controller
  */
