@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 1 April 2024
+Version: 4.5
+Date: 21 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,6 +12,10 @@ package Controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JTextField;
 import Model.GameController;
 
@@ -19,45 +23,59 @@ public class CommandListener implements KeyListener {
 
 	private JTextField commandField;
 	private final GameController controller;
+	private boolean processingInput = false;
 	
 	public CommandListener(JTextField commandField, GameController controller) {
 
-		this.commandField = commandField;
-		this.controller = controller;
+		this.commandField = Objects.requireNonNull(commandField,"CommandField cannot be null");
+		this.controller = Objects.requireNonNull(controller,"Controller cannot be null");
 	}
 
 	@Override
 	public void keyPressed(KeyEvent evt) {
 		
 		//Checks if user presses enter
-		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+		if (evt.getKeyCode() == KeyEvent.VK_ENTER && !processingInput) {
+			processInput();
+		}		
+	}
+	
+	private void processInput() {
+		try {
+			processingInput = true;
+			String command = commandField.getText().trim();
 			
-			String command = this.commandField.getText().trim();
-			this.commandField.setText("");
-			
+			if (!command.isEmpty()) {
+				commandField.setText("");
+				handleCommand(command);
+			}
+		} finally {
+			processingInput = false;
+		}
+	}
+	
+	private void handleCommand(String command) {
+
+		try {
 			if (controller.getResponseType()==1) {
 				controller.processGive(command);
 			} else if (controller.getResponseType()==2) {
-				//commander.processShelter(command);
+			//controller.processShelter(command);
 			} else {
-				try {
-					controller.processCommand(command);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				controller.processCommand(command);
 			}
-		}		
+		} catch (IOException e) {
+			Logger.getLogger(CommandListener.class.getName())
+	          .log(Level.SEVERE, "Command processing error", e);
+		}
 	}
 
+    // Empty implementations remain for interface compliance
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-	    // Method required by KeyListener but not used
-	}
+	public void keyReleased(KeyEvent arg0) {}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-	    // Method required by KeyListener but not used		
-	}
+	public void keyTyped(KeyEvent arg0) {}
 
 }
 
@@ -72,4 +90,5 @@ public class CommandListener implements KeyListener {
  * 27 March 2025 - Update file for new stule
  * 31 March 2025 - Updated file to handle Decoupling
  * 1 April 2025 - Updated listener to make it tighter
+ * 21 April 2025 - Updated based on recommendations by deepSeek
  */
