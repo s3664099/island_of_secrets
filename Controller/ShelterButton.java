@@ -2,8 +2,8 @@
 Title: Island of Secrets Shelter Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 10 April 2025
+Version: 4.2
+Date: 21 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,28 +11,41 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import Model.GameController;
 
 public class ShelterButton implements ActionListener {
 
-	private GameController controller;
-	private int location;
+	private final GameController controller;
+	private final int shelterLocationId;
 	
-	public ShelterButton(GameController controller, int location) {
+	public ShelterButton(GameController controller, int shelterLocationId) {
 		
-		this.controller = controller;
-		this.location = location;
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
+		this.shelterLocationId = validateLocation(shelterLocationId);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		controller.setRoom(location);
+		navigateToShelter();
+	}
+	
+	private void navigateToShelter() {
+		controller.setRoom(shelterLocationId);
+	}
+	
+	private int validateLocation(int locationId) {
+		if (locationId<0) {
+			throw new IllegalArgumentException("Shelter Location ID cannot be negative");
+		}
+		return locationId;
 	}
 }
 
 /* 24 February 2025 - Created Class
  * 5 March 2025 - Increased to v4.0
  * 10 April 2025 - Updated Listener
+ * 21 April 2025 - Update class based on DeepSeek recommendations
  */

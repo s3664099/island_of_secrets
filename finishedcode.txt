@@ -2951,7 +2951,34 @@ public class SearchGameButton implements ActionListener {
 	
 }
 
+public class ShelterButton implements ActionListener {
 
+	private final GameController controller;
+	private final int shelterLocationId;
+	
+	public ShelterButton(GameController controller, int shelterLocationId) {
+		
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
+		this.shelterLocationId = validateLocation(shelterLocationId);
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		navigateToShelter();
+	}
+	
+	private void navigateToShelter() {
+		controller.setRoom(shelterLocationId);
+	}
+	
+	private int validateLocation(int locationId) {
+		if (locationId<0) {
+			throw new IllegalArgumentException("Shelter Location ID cannot be negative");
+		}
+		return locationId;
+	}
+}
 
 
 
