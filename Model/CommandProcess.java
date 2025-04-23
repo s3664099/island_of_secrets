@@ -339,7 +339,7 @@ public class CommandProcess {
 		}
 			
 		//Swampman's Position if not with player
-		if (!game.getItem(32).isAtLocation(player.getRoom()) && game.getResponse()==0) {
+		if (!game.getItem(32).isAtLocation(player.getRoom()) && game.isRunningState()) {
 			game.getItem(32).setItemLocation(76+rand.nextInt(2));
 		}
 		

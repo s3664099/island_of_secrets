@@ -229,14 +229,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		}
 	}
 	
-	public int getResponseType() {
-		return game.getResponse();
-	}
-	
-	public void setResponseType(int type) {
-		game.setResponse(type);
-	}
-	
 	public int getPanelFlag() {
 		return player.getPanelFlag();
 	}
@@ -257,7 +249,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			this.game.addMessage("I'm sorry, I don't understand.",true,true);
 		}
 		
-		this.game.setResponse(0);
+		this.game.setGiveState(false);
 	}
 	
 	private void setPanel(JPanel game,JPanel panel) {
@@ -299,6 +291,11 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		game.setSavedGameState(saveGame);
 	}
 	
+	//Sets Game States
+	public void setShelterState(boolean shelter) {
+		game.setShelterState(shelter);
+	}
+	
 	//Checks Game States	
 	public boolean isInitialGameState() {
 		return game.isInitialGameState();
@@ -310,6 +307,18 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	public boolean isEndGameState() {
 		return game.isEndGameState();
+	}
+	
+	public boolean isRunningState() {
+		return game.isRunningState();
+	}
+	
+	public boolean isGiveState() {
+		return game.isGiveState();
+	}
+	
+	public boolean isShelterState() {
+		return game.isShelterState();
 	}
 	
 	public int getFinalScore() {

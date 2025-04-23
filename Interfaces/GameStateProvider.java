@@ -2,8 +2,8 @@
 Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 20 April 2025
+Version: 4.5
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -128,9 +128,19 @@ public interface GameStateProvider {
 	public boolean isEndGameState();
 
     /**
-     * @return Current UI response type (normal/give/shelter)
+     * @return True when a give response is required
      */
-	public int getResponseType();
+	public boolean isGiveState();
+	
+    /**
+     * @return True when seeking shelter
+     */
+	public boolean isShelterState();
+
+    /**
+     * @return True when standard game state
+     */
+	public boolean isRunningState();
 	
     /**
      * @return Current UI panel configuration flag
@@ -143,4 +153,5 @@ public interface GameStateProvider {
  * 4 April 2025 - Added functions for handling the mapPanel
  * 14 April 2025 - Added JavaDocs
  * 20 April 2025 - Added getRoomName
+ * 23 April 2025 - Removed response required
  */

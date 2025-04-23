@@ -105,7 +105,7 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private boolean isSeekingShelter() {
-		return state.getResponseType() == 2;
+		return state.isShelterState();
 	}
 	
 	private boolean isShowSavedGameState() {
@@ -113,7 +113,7 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private boolean isNormalUI() {
-		return state.getResponseType() !=2 &&
+		return !state.isShelterState() &&
 				!state.isSavedGameState() &&
 				!state.isEndGameState();
 	}
@@ -145,7 +145,7 @@ public class CommandPanel  extends JPanel  {
 	private void addCommandHistoryButtons() {
 		
 		for (String command:state.getCommands()) {
-			if (command.isEmpty() || state.getResponseType()!=0) {
+			if (command.isEmpty() || !state.isRunningState()) {
 				add(createSpacePanel());
 			} else {
 				add(createButtonPanel(command,new CommandButton(game,command),BUTTON_INDENT));

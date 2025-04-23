@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 20 April 2025
+Version: 4.6
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,7 +30,6 @@ public class GameState implements GameStateProvider {
 	private final String status;
 
 	//UI State
-	private final int responseType;
 	private final int panelFlag;
 	
 	//Game progression
@@ -39,6 +38,9 @@ public class GameState implements GameStateProvider {
 	private final boolean initialGameState;
 	private final boolean saveGameState;
 	private final boolean endGameState;
+	private final boolean giveState;
+	private final boolean shelterState;
+	private final boolean runningState;
 	
 	//Saved games navigation
 	private final String[] displayedSavedGames;
@@ -66,7 +68,6 @@ public class GameState implements GameStateProvider {
 		this.status = stateProvider.getStatus();
 
 		//UI state
-		this.responseType = stateProvider.getResponseType();
 		this.panelFlag = stateProvider.getPanelFlag();
 		
 		//Game progression
@@ -75,6 +76,9 @@ public class GameState implements GameStateProvider {
 		this.initialGameState = stateProvider.isInitialGameState();
 		this.saveGameState = stateProvider.isSavedGameState();
 		this.endGameState = stateProvider.isEndGameState();
+		this.giveState = stateProvider.isGiveState();
+		this.shelterState = stateProvider.isShelterState();
+		this.runningState = stateProvider.isRunningState();
 		
 		//Saved games
 		this.displayedSavedGames = stateProvider.getDisplayedSavedGames().clone();
@@ -120,11 +124,6 @@ public class GameState implements GameStateProvider {
 	@Override
 	public int getPanelFlag() {
 		return this.panelFlag;
-	}
-
-	@Override
-	public int getResponseType() {
-		return this.responseType;
 	}
 	
 	@Override
@@ -225,6 +224,21 @@ public class GameState implements GameStateProvider {
 	public int hashCode() {
 	    return Objects.hash(currentRoom, finalScore, room);
 	}
+
+	@Override
+	public boolean isGiveState() {
+		return giveState;
+	}
+
+	@Override
+	public boolean isShelterState() {
+		return shelterState;
+	}
+	
+	@Override
+	public boolean isRunningState() {
+		return runningState;
+	}
 }
 
 /* 1 April 2025 - Created File
@@ -234,4 +248,5 @@ public class GameState implements GameStateProvider {
  * 14 April 2025 - Updated based on Deepseek recommendations
  * 				 - Added equals, hash, and 
  * 20 April 2025 - Added get Room Name function
+ * 23 April 2025 - Updated to enums instead if response required
  */

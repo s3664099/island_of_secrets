@@ -43,15 +43,7 @@ public final class GameController implements GameCommandHandler {
 	public GameEngine getEngine() {
 		return engine;
 	}
-	
-	public int getResponseType() {
-		return engine.getResponseType();
-	}
-	
-	public void setResponseType(int type) {
-		engine.setResponseType(type);
-	}
-	
+		
 	public void addMessage(String message, boolean clear, boolean isLong) {
 		engine.addMessage(message,clear,isLong);
 	}
@@ -74,6 +66,14 @@ public final class GameController implements GameCommandHandler {
 	public void setSavedGameState(boolean isSavedGame) {
 		engine.setSavedGameState(isSavedGame);
 		refreshUI();
+	}
+	
+	public boolean isGiveState() {
+		return engine.isGiveState();
+	}
+	
+	public void setShelterState(boolean shelterState) {
+		engine.setShelterState(false);
 	}
 	
 	@Override

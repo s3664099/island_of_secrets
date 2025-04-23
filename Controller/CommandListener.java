@@ -58,7 +58,7 @@ public class CommandListener implements KeyListener {
 	private void handleCommand(String command) {
 
 		try {
-			if (controller.getResponseType()==1) {
+			if (controller.isGiveState()) {
 				controller.processGive(command);
 			} else {
 				controller.processCommand(command);
@@ -90,5 +90,5 @@ public class CommandListener implements KeyListener {
  * 31 March 2025 - Updated file to handle Decoupling
  * 1 April 2025 - Updated listener to make it tighter
  * 21 April 2025 - Updated based on recommendations by deepSeek
- * 23 April 2025 - Removed process shelter
+ * 23 April 2025 - Removed process shelter and give
  */

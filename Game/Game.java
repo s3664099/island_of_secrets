@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 18 April 2025
+Version: 4.7
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -33,12 +33,11 @@ public class Game implements Serializable {
 		
 	private String[] commands = {"","",""};
 	
-	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE }
 	private GameState gameState = GameState.STARTED;
 	
 	private int saveGameCount = 0;
 	private int startGameCount = 2;
-	private int responseRequired = 0;
 	private boolean upperLimitSavedGames = false;
 	private boolean lowerLimitSavedGames = false;
 	private String[] savedGamesDisplayed = {"","","","",""};
@@ -237,25 +236,7 @@ public class Game implements Serializable {
 	public void resetCount() {
 		this.saveGameCount=0;
 	}
-	
-	//Set the response required for the input
-	//0 - Standard Response
-	//1 - Give Response
-	//2 - Shelter Response
-	public void setResponse(int responseType) {
-
-	    if (responseType < 0 || responseType > Constants.NUMBER_RESPONSES) {
-	        throw new IllegalArgumentException("Invalid response type: " + responseType);
-	    }
 		
-		this.responseRequired = responseType;
-		logger.info("Response type set to: " + responseType);
-	}
-	
-	public int getResponse() {
-		return this.responseRequired;
-	}
-	
 	//Checks how many apples left
 	public boolean checkApples() {
 		
@@ -305,6 +286,23 @@ public class Game implements Serializable {
 			gameState = GameState.RUNNING;
 		}
 	}
+	
+	public void setGiveState(boolean display) {
+		if (display) {
+			gameState = GameState.GIVE;
+		} else {
+			gameState = GameState.RUNNING;
+		}
+	}
+	
+	public void setShelterState(boolean display) {
+		if (display) {
+			gameState = GameState.SHELTER;
+		} else {
+			gameState = GameState.RUNNING;
+		}
+	}
+	
 	//Flag to determine whether the game has ended.
 	public void setEndGameState() {
 		
@@ -338,6 +336,33 @@ public class Game implements Serializable {
 		
 		boolean endGame = false;
 		if (gameState == GameState.ENDED) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isGiveState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.GIVE) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isShelterState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.SHELTER) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isRunningState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.RUNNING) {
 			endGame = true;
 		}
 		return endGame;
@@ -389,4 +414,5 @@ public class Game implements Serializable {
  * 25 March 2025 - Updated method name for checking initial game state
  * 				 - Added gameState for checking saved games & end game
  * 18 April 2025 - Added startGameCount to display button to open book
+ * 23 April 2025 - Removed Response Required and replaced with Enum
  */

@@ -318,7 +318,7 @@ public class Commands {
 			
 			if (commands.length<3) {
 				game.addMessage("Give to whom?",true,true);
-				game.setResponse(1);
+				game.setGiveState(true);;
 			} else {
 				
 				if (commands[2].equals("to") && commands.length>3) {
@@ -675,7 +675,7 @@ public class Commands {
 				
 			} else {
 				game.addMessage("You can shelter in:",true,true);
-				game.setResponse(2);
+				game.setShelterState(true);
 			}
 		} else {
 			game.addMessage("Not possible at the moment.",true,true);
@@ -1238,5 +1238,5 @@ public class Commands {
  * 23 March 2025 - Merged addMessage and addNormalMessage
  * 26 March 2025 - Commented out code to enable to run
  * 11 April 2025 - Updated code to display saved games
- * 23 April 2025 - Fixed info command
+ * 23 April 2025 - Fixed info command. Update response to Enums
  */
