@@ -5,17 +5,12 @@ Translator: David Sarkies
 Version: 4.16
 Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
-
-Change Response Type to Enum
-
 */
 
 package Model;
 
 import javax.swing.JPanel;
 
-import Data.Constants;
-import Data.Item;
 import Game.Game;
 import Game.Player;
 import Interfaces.GameCommandHandler;
@@ -27,17 +22,14 @@ import View.MessagePanel;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	private Game game;
 	private Player player;
-	private String[] commands = {"","",""};
-	private String codedCommand;
-	private int nounNum;
+	private String[] commandHistory = {"","",""};
 	private Test test = new Test();
-	private Swimming swim;
+
 	
 	public GameEngine(Game game,Player player) {
 		this.game = game;
@@ -135,98 +127,15 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	//Passes three previous commands to Panel.
 	public String[] getCommands() {
-		return this.commands;
+		return this.commandHistory;
 	}
 		
 	public void processCommand(String command) throws IOException {
-				
-		//Saves the commands into the previous command list
-		if (this.commands[0].equals("")) {
-			this.commands[0] = command;
-		} else if (this.commands[1].equals("")) {
-			this.commands[1] = command;
-		} else if (this.commands[2].equals("")) {
-			this.commands[2] = command;
-		} else {
-			this.commands[0] = this.commands[1];
-			this.commands[1] = this.commands[2];
-			this.commands[2] = command;
-		}
 		
-		//Checks if player 'Swimming in Poisoned Waters'
-		if (player.getPanelFlag()!=4) {
-			
-			CommandProcess processCommands = new CommandProcess(command,this.game);
-			int verbNumber = processCommands.getVerbNumber();
-			int nounNumber = processCommands.getNounNumber();
+		CommandProcessor processor = new CommandProcessor(game,player);
+		processor.execute(command);
 		
-			//Either verb or noun doesn't exist
-			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-				this.game.addMessage("You can't "+command,true,true);
-			}
-
-			//Neither exists
-			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-				this.game.addMessage("What!!",true,true);
-			}
-		
-			//No second word move to end
-			if (nounNumber == -1) {
-				nounNumber = Constants.NUMBER_OF_NOUNS;
-			}
-		
-			this.player.turnUpdateStats();
-			Item item = this.game.getItem(nounNumber);
-			String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-			processCommands.executeCommand(this.game, player, nounNumber);
-			
-			this.codedCommand = codedCommand;
-			this.nounNum = nounNumber;
-			
-			//Has a game been loaded?
-			if (processCommands.checkLoadedGame()) {
-				this.game = processCommands.getGame();
-				this.player = processCommands.getPlayer();
-			}
-			
-			//Is the player now swimming - creates new swimming object
-			if (player.getSwimming()) {
-				this.swim = new Swimming(player.getRoom());
-				player.setSwimming(false);
-			}
-			
-			test.displayValue(this.game, this.player);
-			
-			//determinePanel(game);
-		} else {
-			
-			this.game.addMessage("Ok",true,true);
-			
-			if (command.substring(0,1).equals("n")) {
-				this.swim.swim();
-			} else if (!command.substring(0,1).equals("s") &&
-					   !command.substring(0,1).equals("e") &&
-					   !command.substring(0,1).equals("w")) {
-				this.game.addMessage("I do not understand",true,true);
-			}
-			
-			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
-			float strength = ((float) player.getStat("strength")) + strengthAdj;
-			player.setStat("strength",strength);
-			
-			if (this.swim.checkPosition((float) player.getStat("strength"))) {
-				player.setPanelFlag(0);
-				this.game.addMessage("You surface",true,true);
-				Random rand = new Random();
-				player.setRoom(rand.nextInt(3)+31);
-				
-			} else if (strength<1) {
-				this.game.addMessage("You get lost and drown",true,true);
-				player.setPanelFlag(0);
-				this.game.setEndGameState();
-			}
-			test.displayValue(this.game, this.player);
-		}
+		test.displayValue(this.game, this.player);
 	}
 	
 	public int getPanelFlag() {
@@ -234,22 +143,8 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 	
 	public void processGive(String object) {
-
-		//Checks if the response is 'to xxxx'
-		String[] instructions = object.split(" ");
-		if (instructions[0].equals("to") && instructions.length==2) {
-			object = instructions[1];
-		}
-		
-		//Is the response correct for a give command?
-		if (object.split(" ").length==1) {
-			CommandProcess processCommands = new CommandProcess();
-			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
-		} else {
-			this.game.addMessage("I'm sorry, I don't understand.",true,true);
-		}
-		
-		this.game.setGiveState(false);
+		CommandProcessor processor = new CommandProcessor(game,player);
+		processor.executeGive(object);
 	}
 	
 	private void setPanel(JPanel game,JPanel panel) {
@@ -257,6 +152,18 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		game.add(panel);
 		game.revalidate();
 		game.repaint();
+	}
+	
+	//What panel is to be displayed after the command is executed.
+	private void determinePanel(MainGamePanel game) {
+		
+		if (player.getPanelFlag()==2) {
+			setPanel(game, new LightningPanel(0,game,this));
+			player.setPanelFlag(0);
+		} else if (player.getPanelFlag()==3) {
+			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
+			player.setPanelFlag(0);
+		} 
 	}
 		
 	//Handled what saved games to display
@@ -329,18 +236,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return (int) ((int) ((float) player.getStat("strength"))+wisdom+applyTimeBonus);
 	}
 	
-	//What panel is to be displayed after the command is executed.
-	private void determinePanel(MainGamePanel game) {
-		
-		if (player.getPanelFlag()==2) {
-			setPanel(game, new LightningPanel(0,game,this));
-			player.setPanelFlag(0);
-		} else if (player.getPanelFlag()==3) {
-			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
-			player.setPanelFlag(0);
-		} 
-	}
-
 	@Override
 	public boolean getRoomVisited(int roomNumber) {
 		return game.getRoomVisited(roomNumber);
@@ -454,4 +349,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 20 April 2025 - Added get Room Name function
 23 April 2025 - Added the set response type and addMessage function
 			  - Removed process shelter
+			  - Removed command processing
 */
