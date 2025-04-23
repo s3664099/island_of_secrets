@@ -33,6 +33,8 @@ public class ShelterButton implements ActionListener {
 	}
 	
 	private void navigateToShelter() {
+		controller.setResponseType(0);
+		controller.addMessage("You reach shelter",true,false);
 		controller.setRoom(shelterLocationId);
 	}
 	

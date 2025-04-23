@@ -33,7 +33,7 @@ public class Game implements Serializable {
 		
 	private String[] commands = {"","",""};
 	
-	private enum GameState { STARTED, RUNNING, SAVED_GAMES,ENDED }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED }
 	private GameState gameState = GameState.STARTED;
 	
 	private int saveGameCount = 0;
@@ -243,8 +243,8 @@ public class Game implements Serializable {
 	//1 - Give Response
 	//2 - Shelter Response
 	public void setResponse(int responseType) {
-		
-	    if (responseType < 0 || responseType >= Constants.NUMBER_RESPONSES) {
+
+	    if (responseType < 0 || responseType > Constants.NUMBER_RESPONSES) {
 	        throw new IllegalArgumentException("Invalid response type: " + responseType);
 	    }
 		

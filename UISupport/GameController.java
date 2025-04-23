@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 13 April 2025
+Version: 4.10
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -47,6 +47,14 @@ public final class GameController implements GameCommandHandler {
 	public int getResponseType() {
 		return engine.getResponseType();
 	}
+	
+	public void setResponseType(int type) {
+		engine.setResponseType(type);
+	}
+	
+	public void addMessage(String message, boolean clear, boolean isLong) {
+		engine.addMessage(message,clear,isLong);
+	}
 
 	@Override
 	public void processCommand(String input) throws IOException {
@@ -59,13 +67,6 @@ public final class GameController implements GameCommandHandler {
 	public void processGive(String item) {
 		logger.log(Level.FINE, "Processing give: {0}", item);
 		engine.processGive(item);
-		refreshUI();
-	}
-
-	@Override
-	public void processShelter(int locationID) {
-		logger.log(Level.FINE, "Processing shelter: {0}", locationID);
-		engine.processShelter(locationID);
 		refreshUI();
 	}
 	
@@ -126,4 +127,6 @@ public final class GameController implements GameCommandHandler {
  * 10 April 2025 - Added set room function
  * 13 April 2025 - Updated code for increasing and descreasing save game positions
  * 				 - Updated based on DeepSeek recommendations.
+ * 23 April 2025 - Added setResponseType to change response type and addMessage to add a message
+ * 				   from the controller, Removed processShelter
  */

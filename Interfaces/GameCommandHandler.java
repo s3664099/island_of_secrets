@@ -2,8 +2,8 @@
 Title: Island of Secrets Write Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 14 April 2025
+Version: 4.5
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,14 +37,7 @@ public interface GameCommandHandler {
      * @throws GameStateException if item cannot be given in current state
      */	
 	public void processGive(String item);
-	
-    /**
-     * Handles seeking shelter at when a specific event (storm breaks)
-     * @param locationID The shelter location identifier
-     * @throws IllegalStateException if shelter cannot be used at this location
-     */
-	public void processShelter(int locationID);
-	
+		
     /**
      * Directly moves player to specified location
      * @param locationID The destination location identifier
@@ -73,4 +66,5 @@ public interface GameCommandHandler {
  * 10 April 2025 - Added setRoom function
  * 13 April 2025 - Added functions for increasing and decreasing load positions
  * 14 April 2025 - Added JavaDocs
+ * 23 April 2025 - Removed process shelter
  */

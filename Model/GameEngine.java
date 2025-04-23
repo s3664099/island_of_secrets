@@ -2,13 +2,11 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 20 April 2025
+Version: 4.16
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
-Fix processGive and processShelter
-Fix Info
-
+Change Response Type to Enum
 
 */
 
@@ -131,6 +129,10 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return message;
 	}
 	
+	public void addMessage(String message, boolean clear, boolean isLong) {
+		game.addMessage(message,clear,isLong);
+	}
+	
 	//Passes three previous commands to Panel.
 	public String[] getCommands() {
 		return this.commands;
@@ -231,6 +233,10 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return game.getResponse();
 	}
 	
+	public void setResponseType(int type) {
+		game.setResponse(type);
+	}
+	
 	public int getPanelFlag() {
 		return player.getPanelFlag();
 	}
@@ -255,28 +261,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		determinePanel(game);
 	}
 	
-	public void processShelter(String object,MainGamePanel game) {
-		
-		//Checks if response is 1,2,or 3
-		if (object.equals("1") || object.equals("2") || object.equals("3")) {
-			CommandProcess processCommands = new CommandProcess();
-			
-			//Determines the room the player goes to
-			int room = 44;
-			if (object.equals("2")) {
-				room = 11;
-			} else if (object.equals("3"))  {
-				room = 41;
-			}
-			
-			processCommands.executeShelter(this.game, this.player,room);
-		} else {
-			this.game.addMessage("Please enter either 1,2 or 3",true,true);
-		}
-		
-		this.game.setResponse(0);		
-	}
-
 	private void setPanel(JPanel game,JPanel panel) {
 		game.removeAll();
 		game.add(panel);
@@ -351,12 +335,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 
 	@Override
 	public void processGive(String item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void processShelter(int locationID) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -472,4 +450,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 12 April 2025 - Changed to calling correct limit for saved games
 13 April 2025 - Removed panel from increase & descrease load. Updated to reflect interface
 20 April 2025 - Added get Room Name function
+23 April 2025 - Added the set response type and addMessage function
+			  - Removed process shelter
 */
