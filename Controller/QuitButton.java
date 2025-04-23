@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-import Model.GameController;
+import UISupport.GameController;
 
 public class QuitButton implements ActionListener {
 	

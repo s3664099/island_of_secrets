@@ -16,6 +16,8 @@ import Data.Constants;
 import Data.Item;
 import Data.Location;
 import Data.RawData;
+import Game.Game;
+import Game.SpecialExitHandler;
 
 public final class GameInitialiser {
 

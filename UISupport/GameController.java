@@ -7,15 +7,18 @@ Date: 13 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Model;
+package UISupport;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Game.Player;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameUI;
+import Model.GameEngine;
+import Model.GameInitialiser;
 
 /**
  * Mediates between GameEngine and GameUI, handling all user interactions

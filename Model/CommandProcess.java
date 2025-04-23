@@ -15,6 +15,8 @@ import java.util.Random;
 import Data.Constants;
 import Data.Item;
 import Data.RawData;
+import Game.Game;
+import Game.Player;
 
 public class CommandProcess {
 	

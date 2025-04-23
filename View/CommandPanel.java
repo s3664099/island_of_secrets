@@ -30,7 +30,7 @@ import Controller.QuitButton;
 import Controller.SearchGameButton;
 import Controller.ShelterButton;
 import Interfaces.GameStateProvider;
-import Model.GameController;
+import UISupport.GameController;
 
 public class CommandPanel  extends JPanel  {
 	

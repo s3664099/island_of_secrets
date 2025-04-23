@@ -10,7 +10,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Interfaces;
 
-import Model.GameController;
+import UISupport.GameController;
 
 /**
  * Defines the core user interface operations for the game.

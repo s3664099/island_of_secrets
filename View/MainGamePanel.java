@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 import Interfaces.GameStateProvider;
 import Interfaces.GameUI;
 import Interfaces.GameView;
-import Model.GameController;
+import UISupport.GameController;
 
 /**
  * Main game view panel combining status, room, and command components.

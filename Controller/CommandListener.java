@@ -17,7 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JTextField;
-import Model.GameController;
+
+import UISupport.GameController;
 
 public class CommandListener implements KeyListener {
 

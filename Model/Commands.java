@@ -10,6 +10,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import Data.Constants;
+import Game.Game;
+import Game.Player;
 
 import java.io.File;
 import java.io.FileInputStream;

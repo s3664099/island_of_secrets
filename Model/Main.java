@@ -10,6 +10,9 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import javax.swing.SwingUtilities;
+
+import Game.Game;
+import Game.Player;
 import View.GameFrame;
 
 public class Main {

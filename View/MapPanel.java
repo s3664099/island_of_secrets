@@ -39,8 +39,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
-import Model.GameController;
-import Model.GameState;
+import UISupport.GameController;
+import UISupport.GameState;
 
 public class MapPanel extends JPanel implements GameView {
 	

@@ -12,8 +12,8 @@ package Test;
 import java.util.Set;
 import java.util.TreeSet;
 
-import Model.Game;
-import Model.Player;
+import Game.Game;
+import Game.Player;
 
 public class Test {
 

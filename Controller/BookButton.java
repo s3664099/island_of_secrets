@@ -17,7 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-import Model.GameController;
+import UISupport.GameController;
 import View.GamePanel;
 
 public class BookButton implements ActionListener {

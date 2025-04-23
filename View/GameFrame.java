@@ -12,8 +12,8 @@ package View;
 import javax.swing.JFrame;
 
 import Interfaces.GameUI;
-import Model.GameController;
 import Model.GameEngine;
+import UISupport.GameController;
 
 public class GameFrame extends JFrame implements GameUI {
 

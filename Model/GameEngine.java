@@ -5,6 +5,11 @@ Translator: David Sarkies
 Version: 4.15
 Date: 20 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
+
+Fix processGive and processShelter
+Fix Info
+
+
 */
 
 package Model;
@@ -13,6 +18,8 @@ import javax.swing.JPanel;
 
 import Data.Constants;
 import Data.Item;
+import Game.Game;
+import Game.Player;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Test.Test;

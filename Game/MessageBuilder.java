@@ -7,7 +7,7 @@ Date: 20 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Model;
+package Game;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
