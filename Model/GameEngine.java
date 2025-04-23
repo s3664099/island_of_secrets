@@ -241,7 +241,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return player.getPanelFlag();
 	}
 	
-	public void processGive(String object,MainGamePanel game) {
+	public void processGive(String object) {
 
 		//Checks if the response is 'to xxxx'
 		String[] instructions = object.split(" ");
@@ -258,7 +258,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		}
 		
 		this.game.setResponse(0);
-		determinePanel(game);
 	}
 	
 	private void setPanel(JPanel game,JPanel panel) {
@@ -331,12 +330,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
 			player.setPanelFlag(0);
 		} 
-	}
-
-	@Override
-	public void processGive(String item) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

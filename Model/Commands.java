@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 11 April 2025
+Version: 4.12
+Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -968,7 +968,7 @@ public class Commands {
 		
 		game.addMessage("Info - Items carried",true,false);
 		game.addMessage("Food: "+((int) player.getStat("food")),false,false);
-		game.addMessage("Drink: "+((int) player.getStat("water")),false,false);
+		game.addMessage("Drink: "+((int) player.getStat("drink")),false,false);
 				
 		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
 			
@@ -1238,4 +1238,5 @@ public class Commands {
  * 23 March 2025 - Merged addMessage and addNormalMessage
  * 26 March 2025 - Commented out code to enable to run
  * 11 April 2025 - Updated code to display saved games
+ * 23 April 2025 - Fixed info command
  */

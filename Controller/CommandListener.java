@@ -2,7 +2,7 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
+Version: 4.6
 Date: 21 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -60,8 +60,6 @@ public class CommandListener implements KeyListener {
 		try {
 			if (controller.getResponseType()==1) {
 				controller.processGive(command);
-			} else if (controller.getResponseType()==2) {
-			//controller.processShelter(command);
 			} else {
 				controller.processCommand(command);
 			}
@@ -92,4 +90,5 @@ public class CommandListener implements KeyListener {
  * 31 March 2025 - Updated file to handle Decoupling
  * 1 April 2025 - Updated listener to make it tighter
  * 21 April 2025 - Updated based on recommendations by deepSeek
+ * 23 April 2025 - Removed process shelter
  */
