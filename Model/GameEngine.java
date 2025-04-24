@@ -2,33 +2,31 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 23 April 2025
+Version: 4.17
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
-import javax.swing.JPanel;
-
+import Commands.CommandProcessor;
+import Commands.CommandResult;
 import Game.Game;
 import Game.Player;
 import Interfaces.GameCommandHandler;
 import Interfaces.GameStateProvider;
 import Test.Test;
-import View.MainGamePanel;
-import View.LightningPanel;
-import View.MessagePanel;
 
 import java.io.IOException;
 import java.util.List;
 
 public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
-	private Game game;
-	private Player player;
-	private String[] commandHistory = {"","",""};
-	private Test test = new Test();
+	private final Game game;
+	private final Player player;
+	private CommandProcessor processor;
+	private final String[] commandHistory = {"","",""};
+	private final Test test = new Test();
 
 	
 	public GameEngine(Game game,Player player) {
@@ -36,7 +34,27 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		this.player = player;
 		this.test.setTest(this.game, this.player);
 	}
+	
+	//=== Core Game Loop ===//
+	public void processCommand(String command) throws IOException {
 		
+		processor = new CommandProcessor(game,player);
+		CommandResult result = processor.execute(command);
+		applyResult(result);
+		
+		test.displayValue(this.game, this.player);
+	}
+	
+	private void applyResult(CommandResult result) {
+		
+	}
+	
+	public void processGive(String object) {
+		CommandProcessor processor = new CommandProcessor(game,player);
+		processor.executeGive(object);
+	}
+	
+	//=== State Management ===//
 	public String getTime() {
 		return player.toStringTimeRemaining();
 	}
@@ -120,54 +138,15 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 		return message;
 	}
-	
-	public void addMessage(String message, boolean clear, boolean isLong) {
-		game.addMessage(message,clear,isLong);
-	}
-	
+		
 	//Passes three previous commands to Panel.
 	public String[] getCommands() {
 		return this.commandHistory;
 	}
-		
-	public void processCommand(String command) throws IOException {
-		
-		CommandProcessor processor = new CommandProcessor(game,player);
-		processor.execute(command);
-		
-		test.displayValue(this.game, this.player);
-	}
-	
+			
 	public int getPanelFlag() {
 		return player.getPanelFlag();
 	}
-	
-	public void processGive(String object) {
-		CommandProcessor processor = new CommandProcessor(game,player);
-		processor.executeGive(object);
-	}
-	
-	private void setPanel(JPanel game,JPanel panel) {
-		game.removeAll();
-		game.add(panel);
-		game.revalidate();
-		game.repaint();
-	}
-	
-	//What panel is to be displayed after the command is executed.
-	private void determinePanel(MainGamePanel game) {
-		
-		if (player.getPanelFlag()==2) {
-			setPanel(game, new LightningPanel(0,game,this));
-			player.setPanelFlag(0);
-		} else if (player.getPanelFlag()==3) {
-			setPanel(game,new MessagePanel(game,this,this.game.getPanelMessage(),""));
-			player.setPanelFlag(0);
-		} 
-	}
-		
-	//Handled what saved games to display
-	//Used if more than 5 saved games
 	
 	@Override
 	public void increaseLoadPosition() throws IOException {
@@ -350,4 +329,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 23 April 2025 - Added the set response type and addMessage function
 			  - Removed process shelter
 			  - Removed command processing
+25 April 2025 - Created CommandResult class and moved methods
 */

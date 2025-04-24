@@ -1,7 +1,7 @@
 Recommended Refactoring Steps
 
 
-Extract command processing into separate class
+
 
 Remove UI dependencies from engine
 

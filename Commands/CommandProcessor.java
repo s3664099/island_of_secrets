@@ -7,7 +7,7 @@ Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Model;
+package Commands;
 
 import java.io.IOException;
 import java.util.Random;
@@ -16,6 +16,7 @@ import Data.Constants;
 import Data.Item;
 import Game.Game;
 import Game.Player;
+import Model.Swimming;
 
 public class CommandProcessor {
 
@@ -30,7 +31,7 @@ public class CommandProcessor {
 		this.player = player;
 	}
 	
-	public void execute(String command) throws IOException {
+	public CommandResult execute(String command) throws IOException {
 		
 		//Saves the commands into the previous command list
 		if (this.commandHistory[0].equals("")) {
@@ -118,6 +119,10 @@ public class CommandProcessor {
 				this.game.setEndGameState();
 			}
 		}
+		
+		CommandResult result = new CommandResult();
+		
+		return result;
 	}
 	
 	public void executeGive(String object) {

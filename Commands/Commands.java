@@ -7,7 +7,7 @@ Date: 23 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Model;
+package Commands;
 
 import Data.Constants;
 import Game.Game;

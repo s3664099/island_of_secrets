@@ -7,7 +7,7 @@ Date: 23 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package Model;
+package Commands;
 
 import java.io.IOException;
 import java.util.Random;
