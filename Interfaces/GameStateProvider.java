@@ -143,9 +143,24 @@ public interface GameStateProvider {
 	public boolean isRunningState();
 	
     /**
-     * @return Current UI panel configuration flag
+     * @return True when swimming player state
      */
-	public int getPanelFlag();
+	public boolean isSwimmingState();
+	
+    /**
+     * @return True when normal player state
+     */
+	public boolean isNormalState();
+	
+    /**
+     * @return True when give player state
+     */
+	public boolean isMessageState();
+	
+    /**
+     * @return True when lightning player state
+     */
+	public boolean isLightningState();
 }
 
 /* 24 March 2025 - Created File
@@ -154,4 +169,5 @@ public interface GameStateProvider {
  * 14 April 2025 - Added JavaDocs
  * 20 April 2025 - Added getRoomName
  * 23 April 2025 - Removed response required
+ * 25 April 2025 - Added 
  */

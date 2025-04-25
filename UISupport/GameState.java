@@ -28,9 +28,6 @@ public class GameState implements GameStateProvider {
 	private final String specialExits;
 	private final String time;
 	private final String status;
-
-	//UI State
-	private final int panelFlag;
 	
 	//Game progression
 	private final int currentRoom;
@@ -41,6 +38,10 @@ public class GameState implements GameStateProvider {
 	private final boolean giveState;
 	private final boolean shelterState;
 	private final boolean runningState;
+	private final boolean messageState;
+	private final boolean lightningState;
+	private final boolean normalState;
+	private final boolean swimmingState;
 	
 	//Saved games navigation
 	private final String[] displayedSavedGames;
@@ -66,9 +67,6 @@ public class GameState implements GameStateProvider {
 		this.specialExits = stateProvider.getSpecialExits();
 		this.time = stateProvider.getTime();
 		this.status = stateProvider.getStatus();
-
-		//UI state
-		this.panelFlag = stateProvider.getPanelFlag();
 		
 		//Game progression
 		this.currentRoom = stateProvider.getCurrentRoom();
@@ -79,6 +77,10 @@ public class GameState implements GameStateProvider {
 		this.giveState = stateProvider.isGiveState();
 		this.shelterState = stateProvider.isShelterState();
 		this.runningState = stateProvider.isRunningState();
+		this.lightningState = stateProvider.isLightningState();
+		this.messageState = stateProvider.isMessageState();
+		this.normalState = stateProvider.isNormalState();
+		this.swimmingState = stateProvider.isSwimmingState();
 		
 		//Saved games
 		this.displayedSavedGames = stateProvider.getDisplayedSavedGames().clone();
@@ -119,11 +121,6 @@ public class GameState implements GameStateProvider {
 	@Override
 	public String getStatus() {
 		return this.status;
-	}
-	
-	@Override
-	public int getPanelFlag() {
-		return this.panelFlag;
 	}
 	
 	@Override
@@ -239,6 +236,26 @@ public class GameState implements GameStateProvider {
 	public boolean isRunningState() {
 		return runningState;
 	}
+
+	@Override
+	public boolean isSwimmingState() {
+		return swimmingState;
+	}
+
+	@Override
+	public boolean isNormalState() {
+		return normalState;
+	}
+
+	@Override
+	public boolean isMessageState() {
+		return messageState;
+	}
+
+	@Override
+	public boolean isLightningState() {
+		return lightningState;
+	}
 }
 
 /* 1 April 2025 - Created File
@@ -249,4 +266,5 @@ public class GameState implements GameStateProvider {
  * 				 - Added equals, hash, and 
  * 20 April 2025 - Added get Room Name function
  * 23 April 2025 - Updated to enums instead if response required
+ * 25 April 2025 - Updated based on enums in Player class.
  */

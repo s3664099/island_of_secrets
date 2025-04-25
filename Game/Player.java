@@ -27,7 +27,7 @@ public class Player implements Serializable {
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
-	private enum PlayerState { NORMAL,GIVE,LIGHTNING,SWIMMING };
+	private enum PlayerState { NORMAL,MESSAGE,LIGHTNING,SWIMMING };
 	private PlayerState playerState = PlayerState.NORMAL;
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
@@ -102,8 +102,8 @@ public class Player implements Serializable {
 		playerState = PlayerState.NORMAL;
 	}
 	
-	public void setPlayerStateGive() {
-		playerState = PlayerState.GIVE;
+	public void setPlayerStateMessage() {
+		playerState = PlayerState.MESSAGE;
 	}
 	
 	public void setPlayerStateSwimming() {
@@ -122,9 +122,9 @@ public class Player implements Serializable {
 		return state;
 	}
 	
-	public boolean isPlayerStateGive() {
+	public boolean isPlayerStateMessage() {
 		boolean state = false;
-		if (playerState == PlayerState.GIVE) {
+		if (playerState == PlayerState.MESSAGE) {
 			state = true;
 		}
 		return state;

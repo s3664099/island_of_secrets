@@ -123,7 +123,7 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private boolean showMapButton() {
-		return state.getPanelFlag()!=4;
+		return state.isSwimmingState();
 	}
 	
 	private JPanel createSpacePanel() {

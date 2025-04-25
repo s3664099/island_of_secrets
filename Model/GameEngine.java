@@ -88,7 +88,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 		String description = "";
 		
-		if (player.getPanelFlag()==4) {
+		if (player.isPlayerStateSwimming()) {
 			description = "You are swimming in poisoned waters";
 		} else {
 			player.updateDisplayRoom();
@@ -103,7 +103,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 		String itemDisplay = "";
 		
-		if (player.getPanelFlag()==0) {
+		if (player.isPlayerStateNormal()) {
 			itemDisplay = game.getItems(player.getDisplayRoom());
 		}
 		
@@ -122,7 +122,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 		String exitDisplay = "";
 		
-		if (player.getPanelFlag()==0) {
+		if (player.isPlayerStateNormal()) {
 			exitDisplay = game.getExits(player.getRoom());
 		}		
 		
@@ -133,7 +133,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 
 		String exitDisplay = "";
 		
-		if (player.getPanelFlag()==0) {
+		if (player.isPlayerStateNormal()) {
 			exitDisplay = game.getSpecialExits(player.getRoom());
 		}		
 		
@@ -144,7 +144,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	public List<String> getMessage() {
 		
 		//Swimming in poisoned Waters?
-		if (player.getPanelFlag()==4) {
+		if (player.isPlayerStateSwimming()) {
 			
 			if (((float) player.getStat("strength"))<15) {
 				game.addMessage("You are very weak!",false,false);
@@ -164,11 +164,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	public String[] getCommands() {
 		return this.commandHistory;
 	}
-			
-	public int getPanelFlag() {
-		return player.getPanelFlag();
-	}
-	
+				
 	@Override
 	public void increaseLoadPosition() throws IOException {
 		this.game.increaseCount();
@@ -226,6 +222,22 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	public boolean isShelterState() {
 		return game.isShelterState();
+	}
+	
+	public boolean isSwimmingState() {
+		return player.isPlayerStateSwimming();
+	}
+	
+	public boolean isMessageState() {
+		return player.isPlayerStateMessage();
+	}
+	
+	public boolean isLightningState() {
+		return player.isPlayerStateLightning();
+	}
+	
+	public boolean isNormalState() {
+		return player.isPlayerStateNormal();
 	}
 	
 	public int getFinalScore() {
@@ -350,5 +362,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 23 April 2025 - Added the set response type and addMessage function
 			  - Removed process shelter
 			  - Removed command processing
-25 April 2025 - Created CommandResult class and moved methods
+24 April 2025 - Created CommandResult class and move methods
+25 April 2025 - Added methods for player state
 */
