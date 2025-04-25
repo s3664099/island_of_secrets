@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 17 March 2025
+Version: 4.6
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,8 +27,8 @@ public class Player implements Serializable {
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
-	private int panelFlag = 0;
-	private boolean isSwimming = false;
+	private enum PlayerState { NORMAL,GIVE,LIGHTNING,SWIMMING };
+	private PlayerState playerState = PlayerState.NORMAL;
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
 	
@@ -97,33 +97,55 @@ public class Player implements Serializable {
 		stat --;
 		stats.put(statName, stat);
 	}
-		
-	/*     Flag Settings:
-	 * 		0 - Normal Screen
-	 * 		1 - Give Screen
-	 * 		2 - Lightning Flashes 
-	 */
-	public void setPanelFlag(int panelFlag) {
-		
-		if (panelFlag<0) {
-			throw new IllegalArgumentException("Player - Panel Flag Cannot be less than 0");
+	
+	public void setPlayerStateNormal() {
+		playerState = PlayerState.NORMAL;
+	}
+	
+	public void setPlayerStateGive() {
+		playerState = PlayerState.GIVE;
+	}
+	
+	public void setPlayerStateSwimming() {
+		playerState = PlayerState.SWIMMING;
+	}
+	
+	public void setPlayerStateLightning() {
+		playerState = PlayerState.LIGHTNING;
+	}
+	
+	public boolean isPlayerStateNormal() {
+		boolean state = false;
+		if (playerState == PlayerState.NORMAL) {
+			state = true;
 		}
-		
-		this.panelFlag = panelFlag;
+		return state;
 	}
 	
-	public int getPanelFlag() {
-		return this.panelFlag;
+	public boolean isPlayerStateGive() {
+		boolean state = false;
+		if (playerState == PlayerState.GIVE) {
+			state = true;
+		}
+		return state;
 	}
 	
-	public void setSwimming(boolean isSwimming) {
-		this.isSwimming = isSwimming;
-	}
+	public boolean isPlayerStateSwimming() {
+		boolean state = false;
+		if (playerState == PlayerState.SWIMMING) {
+			state = true;
+		}
+		return state;
+	}		
 	
-	public boolean getSwimming() {
-		return this.isSwimming;
-	}
-		
+	public boolean isPlayerStateLightning() {
+		boolean state = false;
+		if (playerState == PlayerState.LIGHTNING) {
+			state = true;
+		}
+		return state;
+	}		
+	
 	//ToString Methods
 	public String toStringStatus() {
 		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
@@ -169,4 +191,5 @@ public class Player implements Serializable {
  * 14 March 2025 - Removed food & Drink
  * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
  * 17 March 2025 - Added logging to list room player has entered.
+ * 25 March 2025 - Added Enums Player State
  */

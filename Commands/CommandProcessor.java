@@ -20,8 +20,8 @@ import Model.Swimming;
 
 public class CommandProcessor {
 
-	private Game game;
-	private Player player;
+	private final Game game;
+	private final Player player;
 	private String codedCommand;
 	private int nounNum;
 	private Swimming swim;
@@ -32,20 +32,7 @@ public class CommandProcessor {
 	}
 	
 	public CommandResult execute(String command) throws IOException {
-		
-		//Saves the commands into the previous command list
-		if (this.commandHistory[0].equals("")) {
-			this.commandHistory[0] = command;
-		} else if (this.commandHistory[1].equals("")) {
-			this.commandHistory[1] = command;
-		} else if (this.commandHistory[2].equals("")) {
-			this.commandHistory[2] = command;
-		} else {
-			this.commandHistory[0] = this.commandHistory[1];
-			this.commandHistory[1] = this.commandHistory[2];
-			this.commandHistory[2] = command;
-		}
-		
+				
 		//Checks if player 'Swimming in Poisoned Waters'
 		if (player.getPanelFlag()!=4) {
 			
@@ -90,7 +77,7 @@ public class CommandProcessor {
 			
 			test.displayValue(this.game, this.player);
 			
-			//determinePanel(game);
+
 		} else {
 			
 			this.game.addMessage("Ok",true,true);

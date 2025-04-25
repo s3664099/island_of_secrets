@@ -41,6 +41,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		processor = new CommandProcessor(game,player);
 		CommandResult result = processor.execute(command);
 		applyResult(result);
+		updateCommandHistory(command);
 		
 		test.displayValue(this.game, this.player);
 	}
@@ -49,12 +50,32 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 	}
 	
+	private void updateCommandHistory(String command) {
+		
+		//Saves the commands into the previous command list
+		if (this.commandHistory[0].equals("")) {
+			this.commandHistory[0] = command;
+		} else if (this.commandHistory[1].equals("")) {
+			this.commandHistory[1] = command;
+		} else if (this.commandHistory[2].equals("")) {
+			this.commandHistory[2] = command;
+		} else {
+			this.commandHistory[0] = this.commandHistory[1];
+			this.commandHistory[1] = this.commandHistory[2];
+			this.commandHistory[2] = command;
+		}
+	}
+	
 	public void processGive(String object) {
 		CommandProcessor processor = new CommandProcessor(game,player);
 		processor.executeGive(object);
 	}
 	
 	//=== State Management ===//
+	public void addMessage(String message, boolean clear, boolean isLong) {
+		game.addMessage(message,clear,isLong);
+	}
+	
 	public String getTime() {
 		return player.toStringTimeRemaining();
 	}
