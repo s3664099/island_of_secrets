@@ -2,8 +2,8 @@
 Title: Island of Secrets Write Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 23 April 2025
+Version: 4.6
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,10 +18,22 @@ import java.io.IOException;
 public interface GameCommandHandler {
 
     /**
-     * Toggles saved game display mode
+     * Sets game state to running
      * @param isSavedGame true to enter saved game selection, false to return to normal play
      */
-	public void setSavedGameState(boolean isSavedGame);
+	public void setRunningGameState();
+	
+    /**
+     * Sets the game state to display saved games
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setSavedGameState();
+	
+    /**
+     * Sets the game state to display shelter options
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setShelterGameState();
 	
     /**
      * Processes a text command from the player
@@ -67,4 +79,5 @@ public interface GameCommandHandler {
  * 13 April 2025 - Added functions for increasing and decreasing load positions
  * 14 April 2025 - Added JavaDocs
  * 23 April 2025 - Removed process shelter
+ * 25 April 2025 - Updated interface with new functions
  */

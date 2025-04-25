@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 23 April 2025
+Version: 4.11
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -63,8 +63,14 @@ public final class GameController implements GameCommandHandler {
 	}
 	
 	@Override
-	public void setSavedGameState(boolean isSavedGame) {
-		engine.setSavedGameState(isSavedGame);
+	public void setSavedGameState() {
+		engine.setSavedGameState();
+		refreshUI();
+	}
+	
+	@Override
+	public void setRunningGameState() {
+		engine.setRunningGameState();
 		refreshUI();
 	}
 	
@@ -72,8 +78,9 @@ public final class GameController implements GameCommandHandler {
 		return engine.isGiveState();
 	}
 	
-	public void setShelterState(boolean shelterState) {
-		engine.setShelterState(false);
+	@Override
+	public void setShelterGameState() {
+		engine.setShelterGameState();
 	}
 	
 	@Override
@@ -129,4 +136,5 @@ public final class GameController implements GameCommandHandler {
  * 				 - Updated based on DeepSeek recommendations.
  * 23 April 2025 - Added setResponseType to change response type and addMessage to add a message
  * 				   from the controller, Removed processShelter
+ * 25 April 2025 - Updated based on changes to enums in Game class and Player class
  */

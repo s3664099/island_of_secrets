@@ -189,14 +189,17 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		return game.getDisplayedSavedGames();
 	}
 	
-	//Sets Game States
-	public void setSavedGameState(boolean saveGame) {
-		game.setSavedGameState(saveGame);
+	public void setRunningGameState() {
+		game.setRunningGameState();
+	}
+	
+	public void setSavedGameState() {
+		game.setSavedGameState();
 	}
 	
 	//Sets Game States
-	public void setShelterState(boolean shelter) {
-		game.setShelterState(shelter);
+	public void setShelterGameState() {
+		game.setShelterGameState();
 	}
 	
 	//Checks Game States	
@@ -229,11 +232,11 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 	
 	public boolean isMessageState() {
-		return player.isPlayerStateMessage();
+		return game.isMessageState();
 	}
 	
 	public boolean isLightningState() {
-		return player.isPlayerStateLightning();
+		return game.isLightningState();
 	}
 	
 	public boolean isNormalState() {

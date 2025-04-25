@@ -27,7 +27,7 @@ public class Player implements Serializable {
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
-	private enum PlayerState { NORMAL,MESSAGE,LIGHTNING,SWIMMING };
+	private enum PlayerState { NORMAL,SWIMMING };
 	private PlayerState playerState = PlayerState.NORMAL;
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
@@ -102,29 +102,14 @@ public class Player implements Serializable {
 		playerState = PlayerState.NORMAL;
 	}
 	
-	public void setPlayerStateMessage() {
-		playerState = PlayerState.MESSAGE;
-	}
 	
 	public void setPlayerStateSwimming() {
 		playerState = PlayerState.SWIMMING;
 	}
 	
-	public void setPlayerStateLightning() {
-		playerState = PlayerState.LIGHTNING;
-	}
-	
 	public boolean isPlayerStateNormal() {
 		boolean state = false;
 		if (playerState == PlayerState.NORMAL) {
-			state = true;
-		}
-		return state;
-	}
-	
-	public boolean isPlayerStateMessage() {
-		boolean state = false;
-		if (playerState == PlayerState.MESSAGE) {
 			state = true;
 		}
 		return state;
@@ -137,15 +122,7 @@ public class Player implements Serializable {
 		}
 		return state;
 	}		
-	
-	public boolean isPlayerStateLightning() {
-		boolean state = false;
-		if (playerState == PlayerState.LIGHTNING) {
-			state = true;
-		}
-		return state;
-	}		
-	
+		
 	//ToString Methods
 	public String toStringStatus() {
 		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
@@ -191,5 +168,5 @@ public class Player implements Serializable {
  * 14 March 2025 - Removed food & Drink
  * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
  * 17 March 2025 - Added logging to list room player has entered.
- * 25 March 2025 - Added Enums Player State
+ * 25 March 2025 - Added Enums Player State. Removed Message and Lightning states (should be in game)
  */

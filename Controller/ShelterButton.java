@@ -2,8 +2,8 @@
 Title: Island of Secrets Shelter Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 21 April 2025
+Version: 4.3
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -33,7 +33,7 @@ public class ShelterButton implements ActionListener {
 	}
 	
 	private void navigateToShelter() {
-		controller.setShelterState(false);
+		controller.setRunningGameState();
 		controller.addMessage("You reach shelter",true,false);
 		controller.setRoom(shelterLocationId);
 	}
@@ -50,4 +50,5 @@ public class ShelterButton implements ActionListener {
  * 5 March 2025 - Increased to v4.0
  * 10 April 2025 - Updated Listener
  * 21 April 2025 - Update class based on DeepSeek recommendations
+ * 25 April 2025 - Changed based on changes to Enums
  */

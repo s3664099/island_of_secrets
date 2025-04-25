@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 23 April 2025
+Version: 4.8
+Date: 25 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -33,7 +33,7 @@ public class Game implements Serializable {
 		
 	private String[] commands = {"","",""};
 	
-	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,MESSAGE,LIGHTNING }
 	private GameState gameState = GameState.STARTED;
 	
 	private int saveGameCount = 0;
@@ -278,32 +278,22 @@ public class Game implements Serializable {
 		this.savedGamesDisplayed = gameDisplayed;
 	}	
 	
-	//Checks and sets Game State
-	public void setSavedGameState(boolean display) {
-		if (display) {
-			gameState = GameState.SAVED_GAMES;
-		} else {
-			gameState = GameState.RUNNING;
-		}
+	public void setRunningGameState() {
+		gameState = GameState.RUNNING;
+	}
+
+	public void setSavedGameState() {
+		gameState = GameState.SAVED_GAMES;
 	}
 	
-	public void setGiveState(boolean display) {
-		if (display) {
-			gameState = GameState.GIVE;
-		} else {
-			gameState = GameState.RUNNING;
-		}
+	public void setGiveState() {
+		gameState = GameState.GIVE;
 	}
 	
-	public void setShelterState(boolean display) {
-		if (display) {
-			gameState = GameState.SHELTER;
-		} else {
-			gameState = GameState.RUNNING;
-		}
+	public void setShelterGameState() {
+		gameState = GameState.SHELTER;
 	}
 	
-	//Flag to determine whether the game has ended.
 	public void setEndGameState() {
 		
 		logger.info("Game ended.");
@@ -354,6 +344,24 @@ public class Game implements Serializable {
 		
 		boolean endGame = false;
 		if (gameState == GameState.SHELTER) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isMessageState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.MESSAGE) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isLightningState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.LIGHTNING) {
 			endGame = true;
 		}
 		return endGame;
@@ -415,4 +423,5 @@ public class Game implements Serializable {
  * 				 - Added gameState for checking saved games & end game
  * 18 April 2025 - Added startGameCount to display button to open book
  * 23 April 2025 - Removed Response Required and replaced with Enum
+ * 25 April 2025 - 
  */

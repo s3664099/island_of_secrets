@@ -44,7 +44,7 @@ public class GameButton implements ActionListener {
 	}
 	
 	private void updateGameState() {
-		controller.setSavedGameState(false);
+		controller.setRunningGameState();
 	}
 	
 	private void refreshView() {
@@ -59,4 +59,5 @@ public class GameButton implements ActionListener {
  * 7 April 2025 - Action now returns player to the main screen.
  * 13 April 2025 - Updated button for changing the savedGameState
  * 21 April 2025 - Updated based on deepseek recommendations
+ * 25 April 2025 - Changed based on updated to Enums
  */
