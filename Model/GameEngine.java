@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 25 April 2025
+Version: 4.18
+Date: 27 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -42,7 +42,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		CommandResult result = null;
 		
 		if(player.isPlayerStateSwimming()) {
-			result = swimming.execute(command);
+			result = swimming.execute(command,player,game);
 		} else {
 			processor = new CommandProcessor(game,player);
 			result = processor.execute(command);

@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 25 April 2025
+Version: 4.7
+Date: 27 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Data.Constants;
+import Model.Swimming;
 
 public class Player implements Serializable {
 	
@@ -29,6 +30,7 @@ public class Player implements Serializable {
 	private final Random rand = new Random();
 	private enum PlayerState { NORMAL,SWIMMING };
 	private PlayerState playerState = PlayerState.NORMAL;
+	private Swimming swim;
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
 	
@@ -90,6 +92,14 @@ public class Player implements Serializable {
 	
 	public void setStat(String statName,Object value) {
 		stats.put(statName,value);
+	}
+	
+	public Swimming getSwimming() {
+		return swim;
+	}
+	
+	public void setSwimming(Swimming swim) {
+		this.swim = swim;
 	}
 	
 	public void reduceStat(String statName) {
@@ -169,4 +179,5 @@ public class Player implements Serializable {
  * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
  * 17 March 2025 - Added logging to list room player has entered.
  * 25 March 2025 - Added Enums Player State. Removed Message and Lightning states (should be in game)
+ * 27 March 2025 - Added Swimming class to store swimming state
  */

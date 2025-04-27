@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 23 April 2025
+Version: 4.1
+Date: 27 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,7 +24,6 @@ public class CommandProcessor {
 	private final Player player;
 	private String codedCommand;
 	private int nounNum;
-	private Swimming swim;
 
 	public CommandProcessor(Game game, Player player) {
 		this.game = game;
@@ -32,81 +31,47 @@ public class CommandProcessor {
 	}
 	
 	public CommandResult execute(String command) throws IOException {
-				
-		//Checks if player 'Swimming in Poisoned Waters'
-		if (player.getPanelFlag()!=4) {
 			
-			CommandProcess processCommands = new CommandProcess(command,this.game);
-			int verbNumber = processCommands.getVerbNumber();
-			int nounNumber = processCommands.getNounNumber();
+		CommandProcess processCommands = new CommandProcess(command,this.game);
+		int verbNumber = processCommands.getVerbNumber();
+		int nounNumber = processCommands.getNounNumber();
 		
-			//Either verb or noun doesn't exist
-			if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-				this.game.addMessage("You can't "+command,true,true);
-			}
+		//Either verb or noun doesn't exist
+		if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
+			this.game.addMessage("You can't "+command,true,true);
+		}
 
-			//Neither exists
-			if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-				this.game.addMessage("What!!",true,true);
-			}
-		
-			//No second word move to end
-			if (nounNumber == -1) {
-				nounNumber = Constants.NUMBER_OF_NOUNS;
-			}
-		
-			this.player.turnUpdateStats();
-			Item item = this.game.getItem(nounNumber);
-			String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-			processCommands.executeCommand(this.game, player, nounNumber);
-			
-			this.codedCommand = codedCommand;
-			this.nounNum = nounNumber;
-			
-			//Has a game been loaded?
-			if (processCommands.checkLoadedGame()) {
-				this.game = processCommands.getGame();
-				this.player = processCommands.getPlayer();
-			}
-			
-			//Is the player now swimming - creates new swimming object
-			if (player.getSwimming()) {
-				this.swim = new Swimming(player.getRoom());
-				player.setSwimming(false);
-			}
-			
-			test.displayValue(this.game, this.player);
-			
-
-		} else {
-			
-			this.game.addMessage("Ok",true,true);
-			
-			if (command.substring(0,1).equals("n")) {
-				this.swim.swim();
-			} else if (!command.substring(0,1).equals("s") &&
-					   !command.substring(0,1).equals("e") &&
-					   !command.substring(0,1).equals("w")) {
-				this.game.addMessage("I do not understand",true,true);
-			}
-			
-			float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
-			float strength = ((float) player.getStat("strength")) + strengthAdj;
-			player.setStat("strength",strength);
-			
-			if (this.swim.checkPosition((float) player.getStat("strength"))) {
-				player.setPanelFlag(0);
-				this.game.addMessage("You surface",true,true);
-				Random rand = new Random();
-				player.setRoom(rand.nextInt(3)+31);
-				
-			} else if (strength<1) {
-				this.game.addMessage("You get lost and drown",true,true);
-				player.setPanelFlag(0);
-				this.game.setEndGameState();
-			}
+		//Neither exists
+		if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
+			this.game.addMessage("What!!",true,true);
 		}
 		
+		//No second word move to end
+		if (nounNumber == -1) {
+			nounNumber = Constants.NUMBER_OF_NOUNS;
+		}
+		
+		this.player.turnUpdateStats();
+		Item item = this.game.getItem(nounNumber);
+		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
+		processCommands.executeCommand(this.game, player, nounNumber);
+			
+		this.codedCommand = codedCommand;
+		this.nounNum = nounNumber;
+			
+		//Has a game been loaded?
+		if (processCommands.checkLoadedGame()) {
+			this.game = processCommands.getGame();
+			this.player = processCommands.getPlayer();
+		}
+		
+		//Is the player now swimming - creates new swimming object
+		if (player.isPlayerStateSwimming()) {
+			player.setSwimming(new Swimming(player.getRoom()));
+		}
+			
+		//determinePanel(game);
+				
 		CommandResult result = new CommandResult();
 		
 		return result;
@@ -133,4 +98,5 @@ public class CommandProcessor {
 }
 
 /* 23 April 2025 - Create class
+ * 27 April 2025 - Moved Swimming code to Swimming. Added swimming state change
  */
