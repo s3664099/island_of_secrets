@@ -24,6 +24,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
 	private final Game game;
 	private final Player player;
+	private SwimmingHandler swimming = new SwimmingHandler();
 	private CommandProcessor processor;
 	private final String[] commandHistory = {"","",""};
 	private final Test test = new Test();
@@ -38,8 +39,14 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	//=== Core Game Loop ===//
 	public void processCommand(String command) throws IOException {
 		
-		processor = new CommandProcessor(game,player);
-		CommandResult result = processor.execute(command);
+		CommandResult result = null;
+		
+		if(player.isPlayerStateSwimming()) {
+			result = swimming.execute(command);
+		} else {
+			processor = new CommandProcessor(game,player);
+			result = processor.execute(command);
+		}
 		applyResult(result);
 		updateCommandHistory(command);
 		
@@ -89,7 +96,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		String description = "";
 		
 		if (player.isPlayerStateSwimming()) {
-			description = "You are swimming in poisoned waters";
+			description = swimming.getDescription();
 		} else {
 			player.updateDisplayRoom();
 			int room = player.getDisplayRoom();		
@@ -145,14 +152,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		
 		//Swimming in poisoned Waters?
 		if (player.isPlayerStateSwimming()) {
-			
-			if (((float) player.getStat("strength"))<15) {
-				game.addMessage("You are very weak!",false,false);
-			}
-			
-			game.addMessage("", false,false);
-			game.addMessage("", false,false);
-			game.addMessage("Which Way?",false,false);
+			swimming.setMessage(game, player);
 		}
 		
 		List<String> message = game.getNormalMessage();
@@ -367,4 +367,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			  - Removed command processing
 24 April 2025 - Created CommandResult class and move methods
 25 April 2025 - Added methods for player state
+27 April 2025 - Created swimming handler and moved swimming related code there.
 */
