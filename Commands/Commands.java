@@ -84,7 +84,8 @@ public class Commands {
 			
 		//Poisoned waters
 		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
-			player.setPlayerStateSwimming();
+			player.setRoom(rand.nextInt(5)+1);
+			player.setPlayerStateStartSwimming();
 		}
 				
 		//Checks if player able to move
@@ -642,7 +643,7 @@ public class Commands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else {
 			game.addMessage("You dive into the water",true,true);
-			player.setPlayerStateSwimming();
+			player.setPlayerStateStartSwimming();
 			player.setRoom(rand.nextInt(5)+1);
 		}
 	}
@@ -1239,4 +1240,6 @@ public class Commands {
  * 11 April 2025 - Updated code to display saved games
  * 23 April 2025 - Fixed info command. Update response to Enums
  * 28 April 2025 - Updated for setting the state of the game for messages and others
+ * 				 - Updated code for setting the target room when swimming for move into
+ * 				   poisoned waters
  */

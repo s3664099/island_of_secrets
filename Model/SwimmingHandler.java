@@ -66,7 +66,6 @@ public class SwimmingHandler {
 		game.addMessage("", false,false);
 		game.addMessage("Which Way?",false,false);
 	}
-	
 }
 
 /* 27 April 2025 - Created File.

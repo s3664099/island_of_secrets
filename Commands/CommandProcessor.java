@@ -2,15 +2,14 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 27 April 2025
+Version: 4.3
+Date: 28 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
 import java.io.IOException;
-import java.util.Random;
 
 import Data.Constants;
 import Data.Item;
@@ -20,19 +19,17 @@ import Model.Swimming;
 
 public class CommandProcessor {
 
-	private final Game game;
-	private final Player player;
-	private String codedCommand;
-	private int nounNum;
-
-	public CommandProcessor(Game game, Player player) {
-		this.game = game;
-		this.player = player;
+	private final CommandParser parser;
+	private final CommandValidator validator;
+	
+	public CommandProcessor() {
+		this.parser = new CommandParser();
+		this.validator = new CommandValidator();
 	}
 	
-	public CommandResult execute(String command) throws IOException {
-			
-		CommandProcess processCommands = new CommandProcess(command,this.game);
+	public CommandResult execute(String rawInput,Game game, Player player) {
+		
+		ParsedCommand command = parser.parse(rawInput);
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
@@ -66,8 +63,9 @@ public class CommandProcessor {
 		}
 		
 		//Is the player now swimming - creates new swimming object
-		if (player.isPlayerStateSwimming()) {
+		if (player.isPlayerStateStartSwimming()) {
 			player.setSwimming(new Swimming(player.getRoom()));
+			player.setPlayerStateSwimming();
 		}
 			
 		//determinePanel(game);
@@ -99,4 +97,5 @@ public class CommandProcessor {
 
 /* 23 April 2025 - Create class
  * 27 April 2025 - Moved Swimming code to Swimming. Added swimming state change
+ * 28 April 2025 - Started building the command processing components
  */

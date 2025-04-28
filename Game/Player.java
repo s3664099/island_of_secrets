@@ -28,7 +28,7 @@ public class Player implements Serializable {
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
-	private enum PlayerState { NORMAL,SWIMMING };
+	private enum PlayerState { NORMAL,START_SWIM,SWIMMING };
 	private PlayerState playerState = PlayerState.NORMAL;
 	private Swimming swim;
 		
@@ -37,7 +37,7 @@ public class Player implements Serializable {
 	public Player() {
 		
 		//Initialize Stats
-		stats.put("strength", 100.0f);
+		stats.put("strength", 20f);
 		stats.put("wisdom", 35);
 		stats.put("timeRemaining",1000);
 		stats.put("weight", 0);
@@ -112,6 +112,9 @@ public class Player implements Serializable {
 		playerState = PlayerState.NORMAL;
 	}
 	
+	public void setPlayerStateStartSwimming() {
+		playerState = PlayerState.START_SWIM;
+	}
 	
 	public void setPlayerStateSwimming() {
 		playerState = PlayerState.SWIMMING;
@@ -124,6 +127,14 @@ public class Player implements Serializable {
 		}
 		return state;
 	}
+	
+	public boolean isPlayerStateStartSwimming() {
+		boolean state = false;
+		if (playerState == PlayerState.START_SWIM) {
+			state = true;
+		}
+		return state;
+	}	
 	
 	public boolean isPlayerStateSwimming() {
 		boolean state = false;
@@ -179,5 +190,5 @@ public class Player implements Serializable {
  * 15 March 2025 - Removed Swimming and added check if swimming. Added toString method.
  * 17 March 2025 - Added logging to list room player has entered.
  * 25 March 2025 - Added Enums Player State. Removed Message and Lightning states (should be in game)
- * 27 March 2025 - Added Swimming class to store swimming state
+ * 27 March 2025 - Added Swimming class to store swimming state. Created Start Swimming state
  */
