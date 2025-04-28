@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 25 April 2025
+Version: 4.9
+Date: 28 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -294,6 +294,15 @@ public class Game implements Serializable {
 		gameState = GameState.SHELTER;
 	}
 	
+	public void setMessageGameState() {
+		gameState = GameState.MESSAGE;
+	}
+	
+	public void setLightingGameState() {
+		gameState = GameState.LIGHTNING;
+	}
+	
+	
 	public void setEndGameState() {
 		
 		logger.info("Game ended.");
@@ -423,5 +432,6 @@ public class Game implements Serializable {
  * 				 - Added gameState for checking saved games & end game
  * 18 April 2025 - Added startGameCount to display button to open book
  * 23 April 2025 - Removed Response Required and replaced with Enum
- * 25 April 2025 - 
+ * 25 April 2025 - Added more states
+ * 28 April 2025 - Added methods to set the Message and Lightning State
  */

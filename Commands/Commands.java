@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 23 April 2025
+Version: 4.13
+Date: 28 April 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -84,7 +84,7 @@ public class Commands {
 			
 		//Poisoned waters
 		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
-			player.setPanelFlag(4);
+			player.setPlayerStateSwimming();
 		}
 				
 		//Checks if player able to move
@@ -176,7 +176,7 @@ public class Commands {
 					player.setRoom(57);
 				}
 				game.addMessage("The boat skims the dark and silent waters.",true,true);
-				player.setPanelFlag(3);
+				game.setMessageGameState();
 			}
 		}
 	}
@@ -218,7 +218,7 @@ public class Commands {
 					game.getItem(39).setItemLocation(player.getRoom());
 					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 					player.setStat("strength",(float) player.getStat("strength")-8);
-					player.setPanelFlag(2);
+					game.setLightingGameState();
 				}
 				
 				//1st - pick mushrooms or apple
@@ -318,7 +318,7 @@ public class Commands {
 			
 			if (commands.length<3) {
 				game.addMessage("Give to whom?",true,true);
-				game.setGiveState(true);;
+				game.setGiveState();
 			} else {
 				
 				if (commands[2].equals("to") && commands.length>3) {
@@ -412,7 +412,7 @@ public class Commands {
 				game.addMessage("Ouch!",true,true);
 				player.setStat("strength",(float) player.getStat("strength")-4);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-7);
-				player.setPanelFlag(3);
+				game.setMessageGameState();
 				
 				int count = rest(game,player,true);
 				
@@ -503,7 +503,7 @@ public class Commands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 			game.getItem(noun).setItemLocation(81);
 			game.getItem(noun).setItemFlag(-1);
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
 			
 			if (game.getItem(2).getItemLocation() == player.getRoom()) {
@@ -520,7 +520,7 @@ public class Commands {
 		} else if (this.code.substring(0,4).equals("1100") && verb == 19) {
 			game.getItem(noun).setItemLocation(81);
 			game.getItem(noun).setItemFlag(-1);
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
 		}
 		
@@ -548,7 +548,7 @@ public class Commands {
 		if (game.getItem(noun).getItemLocation() == player.getRoom()) {
 			game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
 			
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 			game.addPanelMessage("Thunder splits the sky!",true);
 			game.addPanelMessage("It is the triumphant voice of Omegan.",false);
 			game.addPanelMessage("Well done Alphan!",false);
@@ -594,7 +594,7 @@ public class Commands {
 			//In the Dactyl's Nest
 			} else if (player.getRoom()==46) {
 				
-				player.setPanelFlag(3);
+				game.setMessageGameState();
 				game.addPanelMessage("You anger the bird!",true);
 				game.addPanelMessage("Which flies you to a remote place", false);
 
@@ -613,7 +613,7 @@ public class Commands {
 					
 					game.getItem(noun).setItemFlag(-1);
 					game.getItem(13).setItemLocation(81);
-					player.setPanelFlag(3);
+					game.setMessageGameState();
 					
 					//Omegan's present in his sanctum
 					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
@@ -642,9 +642,8 @@ public class Commands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else {
 			game.addMessage("You dive into the water",true,true);
-			player.setPanelFlag(4);
+			player.setPlayerStateSwimming();
 			player.setRoom(rand.nextInt(5)+1);
-			player.setSwimming(true);
 		}
 	}
 	
@@ -675,7 +674,7 @@ public class Commands {
 				
 			} else {
 				game.addMessage("You can shelter in:",true,true);
-				game.setShelterState(true);
+				game.setShelterGameState();
 			}
 		} else {
 			game.addMessage("Not possible at the moment.",true,true);
@@ -933,7 +932,7 @@ public class Commands {
 				game.addPanelMessage("Time passes ...", false);
 			}
 			game.addMessage("Ok",true,true);
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 		}
 		
 		return count;		
@@ -1149,7 +1148,7 @@ public class Commands {
 			//game.setGameDisplay(true);
 			game.setDisplayedGames(gameDisplayed);
 			game.addMessage(gameMessage,true,true);
-			game.setSavedGameState(true);
+			game.setSavedGameState();
 		}
 	}
 	
@@ -1239,4 +1238,5 @@ public class Commands {
  * 26 March 2025 - Commented out code to enable to run
  * 11 April 2025 - Updated code to display saved games
  * 23 April 2025 - Fixed info command. Update response to Enums
+ * 28 April 2025 - Updated for setting the state of the game for messages and others
  */

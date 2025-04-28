@@ -61,8 +61,8 @@ public class CommandProcessor {
 			
 		//Has a game been loaded?
 		if (processCommands.checkLoadedGame()) {
-			this.game = processCommands.getGame();
-			this.player = processCommands.getPlayer();
+			//this.game = processCommands.getGame();
+			//this.player = processCommands.getPlayer();
 		}
 		
 		//Is the player now swimming - creates new swimming object
@@ -92,7 +92,7 @@ public class CommandProcessor {
 			this.game.addMessage("I'm sorry, I don't understand.",true,true);
 		}
 		
-		this.game.setGiveState(false);
+		this.game.setGiveState();
 	}
 	
 }

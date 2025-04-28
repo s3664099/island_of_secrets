@@ -355,7 +355,7 @@ public class CommandProcess {
 			if (game.getItem(8).isAtLocation(0)) {
 				game.addPanelMessage("and asks you for the pebble you carry.",false);
 			}
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 		}
 		
 		//Does the boatman appear?
@@ -394,7 +394,7 @@ public class CommandProcess {
 					player.setRoom(51);
 				}
 				
-				player.setPanelFlag(3);
+				game.setMessageGameState();
 				game.addPanelMessage(message, true);
 				game.addPanelMessage(messageTwo, false);
 				
@@ -417,7 +417,7 @@ public class CommandProcess {
 			player.getRoom() != 10 && game.getItem(49).getItemFlag()<1) {
 			
 			String messageOne = "Median can disable the equipment";
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 			game.addPanelMessage(messageOne,true);
 		}
 		
@@ -449,7 +449,7 @@ public class CommandProcess {
 			
 			//The flags of the above must total -3
 			String messageOne = "The world lives with new hope!";
-			player.setPanelFlag(3);
+			game.setMessageGameState();
 			game.addPanelMessage(messageOne, false);
 			game.addMessage("Your quest is over!",true,true);
 			game.setEndGameState();
@@ -516,7 +516,7 @@ public class CommandProcess {
 				} else if (codedNoun.substring(0,2).equals("80") &&
 						   objNumber == 43) {
 					game.getItem(nounNumber).setItemLocation(81);
-					player.setPanelFlag(3);
+					game.setMessageGameState();
 					game.getItem(8).setItemFlag(-1);
 
 					//Removes Median from Game
