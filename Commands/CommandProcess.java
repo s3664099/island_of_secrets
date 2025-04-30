@@ -20,11 +20,7 @@ import Game.Player;
 
 public class CommandProcess {
 	
-	private String[] splitCommand = {"",""};
-	private String[] commands;
-	private String originalCommand;
-	private int verbNo;
-	private String codedCommand;
+
 	private Commands command;
 	private Game game;
 	private Player player;
@@ -33,109 +29,9 @@ public class CommandProcess {
 	
 	public CommandProcess(String command,Game game) {
 		
-		command = command.toLowerCase();
-		command = fixCommand(command);
-		commands = command.split(" ");
-		splitCommand[0] = commands[0];
-		this.originalCommand = command;
 		
-		if (commands.length>1) {
-			
-			if (splitCommand[0].equals("give")) {
-				splitCommand[1] = commands[1];
-			} else {
-				splitCommand[1] = command.substring(commands[0].length()).trim();
-			}
-		} else {
-			game.addMessage("Most commands need two words",true,true);
-		}
-	}
-	
-	public CommandProcess() {}
-	
-	public Game getGame() {
-		return this.game;
-	}
-	
-	public Player getPlayer() {
-		return this.player;
-	}
-	
-	public boolean checkLoadedGame() {
-		return loadedGame;
-	}
-	
-	private String fixCommand(String command) {
 		
-		if (command.equals("u") || command.equals("up")) {
-			command = "go up";
-		} else if (command.equals("d") || command.equals("down")) {
-			command = "go down";
-		} else if (command.equals("i") || command.equals("enter") ||
-				command.equals("inside") || command.equals("go inside")) {
-			command = "go in";
-		} else if (command.equals("o") || command.equals("exit") ||				
-				command.equals("outside") || command.equals("go outside")) {
-			command = "go out";
-		} else if (command.equals("north")) {
-			command = "n";
-		} else if (command.equals("south")) {
-			command = "s";
-		} else if (command.equals("east")) {
-			command = "e";
-		} else if (command.equals("west")) {
-			command = "w";
-		}
-				
-		return command;	
-	}
-	
-	public int getVerbNumber() {
-		
-		int verbNumber = Constants.NUMBER_OF_VERBS+1;
-		int verbCount = 0;
-		
-		for (String command:RawData.getVerbs()) {
-			verbCount ++;
-			
-			if (splitCommand[0].toLowerCase().equals(command)) {
-				verbNumber = verbCount;
-				this.verbNo = verbCount;
-			}
-		}
-						
-		return verbNumber;
-	}
-	
-	public int getNounNumber() {
-		
-		int nounNumber = Constants.NUMBER_OF_NOUNS;
-				
-		//Only called if more than two words
-		if (commands.length>1) {
-			nounNumber = getNounNum(splitCommand[1].toLowerCase());
-		} else {
-			nounNumber = -1;
-		}
-		
-		return nounNumber;
-	}
-	
-	private int getNounNum(String noun) {
-		
-		int nounCount = 0;
-		int nounNumber = Constants.NUMBER_OF_NOUNS;
-		
-		for (String command:RawData.getNouns()) {
-			nounCount ++;
-							
-			if (noun.equals(command)) {
-				nounNumber = nounCount;
-			}
-		}
-				
-		return nounNumber;
-	}
+
 	
 	public String codeCommand(int room, int nounNumber, Item item) {
 		

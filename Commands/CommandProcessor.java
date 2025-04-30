@@ -29,7 +29,7 @@ public class CommandProcessor {
 	
 	public CommandResult execute(String rawInput,Game game, Player player) {
 		
-		ParsedCommand command = parser.parse(rawInput);
+		CommandResult command = parser.parse(rawInput);
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
@@ -69,10 +69,8 @@ public class CommandProcessor {
 		}
 			
 		//determinePanel(game);
-				
-		CommandResult result = new CommandResult();
-		
-		return result;
+						
+		return command;
 	}
 	
 	public void executeGive(String object) {
