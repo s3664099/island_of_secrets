@@ -2,14 +2,15 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 30 April 2025
+Version: 4.2
+Date: 1 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
 import Data.Constants;
+import Data.Item;
 import Data.RawData;
 import Game.Game;
 
@@ -21,18 +22,18 @@ public class CommandParser {
 		normaliser = new CommandNormaliser();
 	}
 	
-	public ParsedCommand parse(String rawInput, Game game) {
+	public ParsedCommand parse(String rawInput, Game game, int room) {
 		
 		rawInput = normaliser.normalise(rawInput);
 		String[] splitCommand = splitCommand(rawInput);
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		int nounNumber = getNounNumber(splitCommand[1]);
-		String codedCommand = codeCommand(splitCommand,nounNumber, game);
+		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		
 		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand);
 	}
 	
-	public String[] splitCommand(String rawInput) {
+	private String[] splitCommand(String rawInput) {
 		
 		String[] splitCommand = {"",""};
 		String[] commands = rawInput.split(" ");
@@ -45,7 +46,7 @@ public class CommandParser {
 		return splitCommand;
 	}
 	
-	public int getVerbNumber(String verb) {
+	private int getVerbNumber(String verb) {
 		
 		int verbNumber = Constants.NUMBER_OF_VERBS+1;
 		int verbCount = 0;
@@ -61,7 +62,7 @@ public class CommandParser {
 		return verbNumber;
 	}
 	
-	public int getNounNumber(String noun) {
+	private int getNounNumber(String noun) {
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
 				
@@ -82,11 +83,18 @@ public class CommandParser {
 		return nounNumber;
 	}
 	
-	private String codeCommand(String[] splitCommand, int nounNumber, Game game) {
-		return "";
+	private String codeCommand(String[] splitCommand, int nounNumber, Game game, int room) {
+		
+		Item item = game.getItem(nounNumber);
+		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
+		Math.abs(item.getItemFlag()),room);
+		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
+		
+		return codedNoun;
 	}
 }
 
 /* 28 April 2025 - Created File
  * 30 April 2025 - Started building parser
+ * 1 May 2025 - Completed parser
  */

@@ -20,28 +20,6 @@ import Game.Player;
 
 public class CommandProcess {
 	
-
-	private Commands command;
-	private Game game;
-	private Player player;
-	private boolean loadedGame = false;
-	private Random rand = new Random();
-	
-	public CommandProcess(String command,Game game) {
-		
-		
-		
-
-	
-	public String codeCommand(int room, int nounNumber, Item item) {
-		
-		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
-										 Math.abs(item.getItemFlag()),room);
-		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
-		this.codedCommand = codedNoun;
-				
-		return codedNoun;
-	}
 	
 	//Executes the command
 	public void executeCommand(Game game,Player player,int nounNumber) throws IOException {
