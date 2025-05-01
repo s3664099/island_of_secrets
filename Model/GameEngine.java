@@ -10,7 +10,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Model;
 
 import Commands.CommandProcessor;
-import Commands.CommandResult;
+import Commands.ParsedCommand;
 import Game.Game;
 import Game.Player;
 import Interfaces.GameCommandHandler;
@@ -39,7 +39,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	//=== Core Game Loop ===//
 	public void processCommand(String command) throws IOException {
 		
-		CommandResult result = null;
+		ParsedCommand result = null;
 		
 		if(player.isPlayerStateSwimming()) {
 			result = swimming.execute(command,player,game);
@@ -53,7 +53,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		test.displayValue(this.game, this.player);
 	}
 	
-	private void applyResult(CommandResult result) {
+	private void applyResult(ParsedCommand result) {
 		
 	}
 	

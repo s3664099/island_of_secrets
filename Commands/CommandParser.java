@@ -14,11 +14,6 @@ import Data.RawData;
 import Game.Game;
 
 public class CommandParser {
-
-	private String[] splitCommand = {"",""};
-	private String codedCommand;
-	int verbNumber;
-	int nounNumber;
 	
 	private final CommandNormaliser normaliser;
 	
@@ -26,7 +21,7 @@ public class CommandParser {
 		normaliser = new CommandNormaliser();
 	}
 	
-	public CommandResult parse(String rawInput, Game game) {
+	public ParsedCommand parse(String rawInput, Game game) {
 		
 		rawInput = normaliser.normalise(rawInput);
 		splitCommand = splitCommand(rawInput,splitCommand);
@@ -34,7 +29,7 @@ public class CommandParser {
 		nounNumber = getNounNumber(splitCommand[1]);
 		codedCommand = codeCommand(splitCommand,nounNumber, game);
 		
-		return new CommandResult();
+		return new ParsedCommand();
 	}
 	
 	public String[] splitCommand(String rawInput, String[] splitCommand) {

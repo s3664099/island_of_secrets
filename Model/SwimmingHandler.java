@@ -11,14 +11,14 @@ package Model;
 
 import java.util.Random;
 
-import Commands.CommandResult;
+import Commands.ParsedCommand;
 import Data.Constants;
 import Game.Game;
 import Game.Player;
 
 public class SwimmingHandler {
 	
-	public CommandResult execute(String command, Player player, Game game) {
+	public ParsedCommand execute(String command, Player player, Game game) {
 		
 		game.addMessage("Ok",true,true);
 		Swimming swim = player.getSwimming();
@@ -49,7 +49,7 @@ public class SwimmingHandler {
 			player.setSwimming(swim);
 		}
 		
-		return new CommandResult();
+		return new ParsedCommand();
 	}
 	
 	public String getDescription() {

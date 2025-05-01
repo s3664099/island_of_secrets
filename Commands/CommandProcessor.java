@@ -27,9 +27,9 @@ public class CommandProcessor {
 		this.validator = new CommandValidator();
 	}
 	
-	public CommandResult execute(String rawInput,Game game, Player player) {
+	public ParsedCommand execute(String rawInput,Game game, Player player) {
 		
-		CommandResult command = parser.parse(rawInput);
+		ParsedCommand command = parser.parse(rawInput, game);
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
