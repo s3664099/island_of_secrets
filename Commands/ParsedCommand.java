@@ -17,7 +17,8 @@ public class ParsedCommand {
 	private final int nounNumber;
 	private boolean verified;
 	
-	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, String[] splitCommand) {
+	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
+						String[] splitCommand) {
 	
 		this.splitCommand = splitCommand;
 		this.codedCommand = codedCommand;
@@ -30,4 +31,3 @@ public class ParsedCommand {
 /* 24 April 2025 - Created File
  * 1 May 2025 - Added varables and built constructor
  */
-*/

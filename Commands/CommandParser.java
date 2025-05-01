@@ -24,16 +24,17 @@ public class CommandParser {
 	public ParsedCommand parse(String rawInput, Game game) {
 		
 		rawInput = normaliser.normalise(rawInput);
-		splitCommand = splitCommand(rawInput,splitCommand);
-		verbNumber = getVerbNumber(splitCommand[0]);
-		nounNumber = getNounNumber(splitCommand[1]);
-		codedCommand = codeCommand(splitCommand,nounNumber, game);
+		String[] splitCommand = splitCommand(rawInput);
+		int verbNumber = getVerbNumber(splitCommand[0]);
+		int nounNumber = getNounNumber(splitCommand[1]);
+		String codedCommand = codeCommand(splitCommand,nounNumber, game);
 		
-		return new ParsedCommand();
+		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand);
 	}
 	
-	public String[] splitCommand(String rawInput, String[] splitCommand) {
+	public String[] splitCommand(String rawInput) {
 		
+		String[] splitCommand = {"",""};
 		String[] commands = rawInput.split(" ");
 		splitCommand[0] = commands[0];
 		
@@ -52,7 +53,7 @@ public class CommandParser {
 		for (String command:RawData.getVerbs()) {
 			verbCount ++;
 			
-			if (splitCommand[0].toLowerCase().equals(command)) {
+			if (verb.equals(command)) {
 				verbNumber = verbCount;
 			}
 		}
@@ -87,5 +88,5 @@ public class CommandParser {
 }
 
 /* 28 April 2025 - Created File
- * 30 April 2025 - Started building the parse command functionality
+ * 30 April 2025 - Started building parser
  */

@@ -30,6 +30,7 @@ public class CommandProcessor {
 	public ParsedCommand execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game);
+		command = validator.validateCommand(command,game);
 		int verbNumber = processCommands.getVerbNumber();
 		int nounNumber = processCommands.getNounNumber();
 		
