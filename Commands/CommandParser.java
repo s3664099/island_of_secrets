@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 1 May 2025
+Version: 4.3
+Date: 2 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,7 +30,7 @@ public class CommandParser {
 		int nounNumber = getNounNumber(splitCommand[1]);
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		
-		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand);
+		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
 	}
 	
 	private String[] splitCommand(String rawInput) {
@@ -97,4 +97,5 @@ public class CommandParser {
 /* 28 April 2025 - Created File
  * 30 April 2025 - Started building parser
  * 1 May 2025 - Completed parser
+ * 2 May 2025 - Updated for command validator
  */

@@ -2,16 +2,58 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 28 April 2025
+Version: 4.1
+Date: 2 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
-public class CommandValidator {
+import Data.Constants;
+import Game.Game;
 
+public class CommandValidator {
+	
+	boolean validCommand;
+	
+	public ParsedCommand validateCommand(ParsedCommand command, Game game) {
+		
+		validCommand = eitherExists(command,game);
+		validCommand = neitherExists(command,game);
+		command.setValidCommand(validCommand);
+		
+		return command;
+	}
+	
+	//Either verb or noun doesn't exist
+	private boolean eitherExists(ParsedCommand command, Game game) {
+		
+		boolean validCommand = true;
+		
+		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
+			command.getNounNumber() == Constants.NUMBER_OF_NOUNS) {
+			game.addMessage("You can't "+command.getCommand(), true, true);
+			validCommand = false;
+		}
+		
+		return validCommand;
+	}
+	
+	//Neither exists
+	private boolean neitherExists(ParsedCommand command,Game game) {
+		
+		boolean validCommand = true;
+		
+		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
+				command.getNounNumber() == 52) {
+			game.addMessage("What!!",true,true);
+			validCommand = false;
+		}
+		
+		return validCommand;
+	}
 }
 
 /* 28 April 2025 - Created File
+ * 2 May 2025 - Added validation
  */

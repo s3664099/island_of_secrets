@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 1 May 2025
+Version: 4.2
+Date: 2 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,23 +11,42 @@ package Commands;
 
 public class ParsedCommand {
 	
+	private final String command;
 	private final String[] splitCommand;
 	private final String codedCommand;
 	private final int verbNumber;
 	private final int nounNumber;
-	private boolean verified;
+	private boolean validCommand;
 	
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
-						String[] splitCommand) {
+						String[] splitCommand, String command) {
 	
 		this.splitCommand = splitCommand;
 		this.codedCommand = codedCommand;
 		this.verbNumber = verbNumber;
 		this.nounNumber = nounNumber;
+		this.command = command;
 	
+	}
+	
+	public int getVerbNumber() {
+		return verbNumber;
+	}
+	
+	public int getNounNumber() {
+		return nounNumber;
+	}
+	
+	public String getCommand() {
+		return command;
+	}
+	
+	public void setValidCommand(boolean validCommand) {
+		this.validCommand = validCommand;
 	}
 }
 
 /* 24 April 2025 - Created File
  * 1 May 2025 - Added varables and built constructor
+ * 2 May 2025 - Added getters for command validation
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 28 April 2025
+Version: 4.4
+Date: 2 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -31,25 +31,12 @@ public class CommandProcessor {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
 		command = validator.validateCommand(command,game);
-		int verbNumber = processCommands.getVerbNumber();
-		int nounNumber = processCommands.getNounNumber();
 		
-		//Either verb or noun doesn't exist
-		if (verbNumber>Constants.NUMBER_OF_VERBS || nounNumber == Constants.NUMBER_OF_NOUNS) {
-			this.game.addMessage("You can't "+command,true,true);
-		}
 
-		//Neither exists
-		if (verbNumber>Constants.NUMBER_OF_VERBS && nounNumber == 52) {
-			this.game.addMessage("What!!",true,true);
-		}
 		
-		//No second word move to end
-		if (nounNumber == -1) {
-			nounNumber = Constants.NUMBER_OF_NOUNS;
-		}
+
 		
-		this.player.turnUpdateStats();
+		player.turnUpdateStats();
 		Item item = this.game.getItem(nounNumber);
 		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
 		processCommands.executeCommand(this.game, player, nounNumber);
@@ -97,4 +84,5 @@ public class CommandProcessor {
 /* 23 April 2025 - Create class
  * 27 April 2025 - Moved Swimming code to Swimming. Added swimming state change
  * 28 April 2025 - Started building the command processing components
+ * 2 May 2025 - Added command validator
  */
