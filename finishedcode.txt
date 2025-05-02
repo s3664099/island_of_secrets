@@ -550,8 +550,2989 @@ public class GameInitialiser {
 		return new Game(locations,items,new SpecialExitHandler());
 	}
 }
+public class BookButton implements ActionListener {
+
+	private final GamePanel panel;
+	private final GameController controller;
+	private static final String BOOK_URL = "https://archive.org/details/island-of-secrets_202303";
+	
+	public BookButton(GamePanel panel,GameController controller) {		
+		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");;
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		openBookLink();
+		refreshGameView();
+	}
+	
+	private void openBookLink() {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI(BOOK_URL));
+			} catch (IOException|URISyntaxException e) {
+				handleLinkError(e);
+			}
+		}
+	}
+	
+	private void refreshGameView() {
+		panel.refreshMainView(controller);
+	}
+	
+	private void handleLinkError(Exception e) {
+		System.err.println("Failed to open book linke :"+e.getMessage());
+	}
+}
+public class CommandButton implements ActionListener {
+
+	private final String command;
+	private final GameController controller;
+	
+	public CommandButton(GameController controller, String command) {
+		
+		this.command = Objects.requireNonNull(command,"Command cannot be null");
+		this.controller = Objects.requireNonNull(controller,"Controller cannot be null");	
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		if(shouldProcessCommand()) {
+			processCommand();
+		}
+	}
+	
+	private boolean shouldProcessCommand() {
+		return !command.trim().isEmpty();
+	}
+	
+	private void processCommand() {
+		try {
+			controller.processCommand(command);
+		} catch (IOException e) {
+			handleCommandError(e);
+		}
+	}
+	
+	private void handleCommandError(IOException e) {
+		Logger.getLogger(CommandListener.class.getName())
+        .log(Level.SEVERE, "Command processing error", e);		
+	}
+
+}
+public class CommandListener implements KeyListener {
+
+	private JTextField commandField;
+	private final GameController controller;
+	private boolean processingInput = false;
+	
+	public CommandListener(JTextField commandField, GameController controller) {
+
+		this.commandField = Objects.requireNonNull(commandField,"CommandField cannot be null");
+		this.controller = Objects.requireNonNull(controller,"Controller cannot be null");
+	}
+
+	@Override
+	public void keyPressed(KeyEvent event) {
+		
+		//Checks if user presses enter
+		if (event.getKeyCode() == KeyEvent.VK_ENTER && !processingInput) {
+			processInput();
+		}		
+	}
+	
+	private void processInput() {
+		try {
+			processingInput = true;
+			String command = commandField.getText().trim();
+			
+			if (!command.isEmpty()) {
+				commandField.setText("");
+				handleCommand(command);
+			}
+		} finally {
+			processingInput = false;
+		}
+	}
+	
+	private void handleCommand(String command) {
+
+		try {
+			if (controller.isGiveState()) {
+				controller.processGive(command);
+			} else {
+				controller.processCommand(command);
+			}
+		} catch (IOException e) {
+			Logger.getLogger(CommandListener.class.getName())
+	          .log(Level.SEVERE, "Command processing error", e);
+		}
+	}
+
+    // Empty implementations remain for interface compliance
+	@Override
+	public void keyReleased(KeyEvent arg0) {}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
+
+}
+public class GameButton implements ActionListener {
+
+	private final GameController controller;
+	private final GamePanel panel;
+	
+	public GameButton(GameController controller, GamePanel panel) {
+		
+		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		returnToMainGameView();
+	}
+	
+	private void returnToMainGameView() {
+		showMainView();
+		updateGameState();
+		refreshView();
+	}
+	
+	private void showMainView() {
+		panel.showMainView();
+	}
+	
+	private void updateGameState() {
+		controller.setRunningGameState();
+	}
+	
+	private void refreshView() {
+		panel.refreshMainView(controller);
+	}
+}
+public class MapButton implements ActionListener {
+
+	private final GameController controller;
+	private final GamePanel panel;
+	
+	public MapButton(GameController controller, GamePanel panel) {
+			this.controller = Objects.requireNonNull(controller,"GameController cannot be null");
+			this.panel = Objects.requireNonNull(panel,"GamePanel cannot be null");
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		showGameMap();
+	}
+	
+	private void showGameMap() {
+		panel.showMapView();
+		panel.refreshMapView(controller);
+	}
+}
+public class MapController {
+	
+	public MapController(GameController gameController, GamePanel gamePanel) {}
+	
+	public MouseAdapter createMouseAdapter(int roomId) {
+		return new MouseAdapter() {
+			
+			public void mouseEntered(MouseEvent e) {
+				
+				JPanel panel = (JPanel) e.getSource();
+				panel.setBackground(new Color(240,240,255));
+				panel.repaint();
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				
+				JPanel panel = (JPanel) e.getSource();
+				panel.setBackground(null);
+				panel.repaint();
+			}
+		};
+	}
+}
+public class QuitButton implements ActionListener {
+	
+	private final GameController controller;
+	private final Boolean shouldRestart;
+	
+	public QuitButton(GameController controller,boolean shouldRestart) {
+		this.controller = Objects.requireNonNull(controller,"GameController cannot be null");
+		this.shouldRestart = shouldRestart;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		handleQuitAction();
+	}
+	
+	private void handleQuitAction() {
+		if (shouldRestart) {
+			controller.restart();
+		} else {
+			controller.closeUI();
+		}
+	}
+}
+public class SearchGameButton implements ActionListener {
+
+	private final GameController controller;
+	private final boolean shouldMoveNext;
+	
+	public SearchGameButton(GameController controller, boolean shouldMoveNext) {
+		this.controller = controller;
+		this.shouldMoveNext = shouldMoveNext;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		navigateSavedGames();
+	}
+	
+	private void navigateSavedGames() {
+		try {
+			executeNavigation();
+		} catch (IOException e) {
+			handleNavigationError(e);
+		}
+	}
+	
+	private void executeNavigation() throws IOException {
+		if (shouldMoveNext) {
+			controller.increaseLoadPosition();;
+		} else {
+			controller.decreaseLoadPosition();
+		}
+	}
+	
+    private void handleNavigationError(IOException e) {
+    	Logger.getLogger(SearchGameButton.class.getName())
+        .log(Level.SEVERE, "Game navigation failed", e);
+    }	
+	
+}
+public class ShelterButton implements ActionListener {
+
+	private final GameController controller;
+	private final int shelterLocationId;
+	
+	public ShelterButton(GameController controller, int shelterLocationId) {
+		
+		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
+		this.shelterLocationId = validateLocation(shelterLocationId);
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		navigateToShelter();
+	}
+	
+	private void navigateToShelter() {
+		controller.setRunningGameState();
+		controller.addMessage("You reach shelter",true,false);
+		controller.setRoom(shelterLocationId);
+	}
+	
+	private int validateLocation(int locationId) {
+		if (locationId<0) {
+			throw new IllegalArgumentException("Shelter Location ID cannot be negative");
+		}
+		return locationId;
+	}
+}
+public class Game implements Serializable {
+	
+	private static final long serialVersionUID = 3473676803014192040L;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
+	
+	private Location[] locationList;
+	private Item[] itemList;
+	private SpecialExitHandler specialExitHandler = new SpecialExitHandler();
+	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
+	private RandomExitHandler randomExitHandler = new RandomExitHandler();
+	
+	private MessageBuilder normalMessage = new MessageBuilder("Let your quest begin!");
+	private MessageBuilder panelMessage = new MessageBuilder();
+		
+	private String[] commands = {"","",""};
+	
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,MESSAGE,LIGHTNING }
+	private GameState gameState = GameState.STARTED;
+	
+	private int saveGameCount = 0;
+	private int startGameCount = 2;
+	private boolean upperLimitSavedGames = false;
+	private boolean lowerLimitSavedGames = false;
+	private String[] savedGamesDisplayed = {"","","","",""};
+	private int apple_count = 3;
+	
+	public Game(Location[] locations, Item[] items,SpecialExitHandler specialExitHandler) {
+		
+		this.locationList = locations;
+		this.itemList = items;
+		this.specialExitHandler = specialExitHandler;
+		
+		//sets start location
+		locationList[Constants.START_LOCATION].setVisited();
+		
+	}
+	
+	public String getRoomName(int roomNumber) {
+		
+	    if (roomNumber < 0 || roomNumber >= locationList.length) {
+	        throw new IllegalArgumentException("Invalid room number: " + roomNumber);
+	    }
+		
+		return this.locationList[roomNumber].getName();
+	}
+	
+	//Goes through the items and checks what is present
+	public String getItems(int roomNumber) {
+		
+	    if (roomNumber < 0 || roomNumber >= locationList.length) {
+	        throw new IllegalArgumentException("Invalid room number: " + roomNumber);
+	    }
+		
+		String items = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
+		int count = items.isEmpty() ? 0:1;
+				
+		//Goes through each of the items
+		for (Item item:itemList) {
+			if(item != null && item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
+				count ++;
+				if (count>1) {
+					items = String.format("%s, %s",items,item.getItemName());
+				} else {
+					items = String.format("%s %s",items,item.getItemName());
+				}
+			}
+		}
+				
+		if (count>0) {
+			items = String.format("%s %s","You see:",items);
+		}
+		
+		return items;
+	}
+	
+	//Returns a display of the available exits.
+	public String getExits(int roomNumber) {
+		
+		boolean[] exitNumbers = locationList[roomNumber].getExits();
+		String exits = "";
+		
+		if (roomNumber == Constants.RANDOM_ROOM) {
+			exitNumbers = randomExitHandler.generateRandomExits();			
+		}
+		
+		//Checks if the exit is a special exit. If not, displays it normally.
+		if (exitNumbers[0] && (specialExitHandler.displayExit(roomNumber,Constants.NORTH))) {
+			exits = addExit(Constants.NORTH,exits);
+		}
+		
+		if (exitNumbers[1] && (specialExitHandler.displayExit(roomNumber,Constants.SOUTH))) {
+			exits = addExit(Constants.SOUTH,exits);
+		}
+		
+		if (exitNumbers[2] && (specialExitHandler.displayExit(roomNumber,Constants.EAST))) {
+			exits = addExit(Constants.EAST,exits);
+		}
+		
+		if (exitNumbers[3] && (specialExitHandler.displayExit(roomNumber,Constants.WEST))) {
+			exits = addExit(Constants.WEST,exits);
+		}
+		
+		if (exits.length()>0) {
+			exits = String.format("You can go:%s",exits);
+		}
+		
+		return exits;
+	}
+	
+	//Displays the special location.
+	public String getSpecialExits(int roomNumber) {
+		return specialExitHandler.getSpecialExit(roomNumber, itemList);	
+	}
+	
+	//Checks if it is possible to move through the exit
+	public boolean checkExit(int room, int direction) {
+		return locationList[room].getExits()[direction];
+	}
+	
+	//Returns the room based on the number passed through
+	public Location getRoom(int roomNumber) {
+		return locationList[roomNumber];
+	}
+	
+	//Map Functions
+	public boolean getRoomVisited(int roomNumber) {
+		
+		return locationList[roomNumber].getVisited();
+	}
+	
+	public String getRoomImageType(int roomNumber) {
+		return locationList[roomNumber].getRoomType();
+	}
+	
+	public boolean[] getRoomExits(int roomNumber) {
+		return locationList[roomNumber].getExits();
+	}
+	
+	//Checks to see if an exit has already been added
+	private String addExit(String exit, String exits) {
+		
+		if (exits.length()>0) {
+			exits = String.format("%s, %s",exits,exit);
+		} else {
+			exits = String.format("%s %s",exits,exit);
+		}
+		
+		return exits;
+	}
+	
+	//Retrieves the message
+	public List<String> getNormalMessage() {
+		return normalMessage.getMessages();
+	}
+	
+	public List<String> getPanelMessage() {
+		return panelMessage.getMessages();
+	}
+			
+	//Adds Message
+	public void addMessage(String message,boolean clear, boolean isLongMessage ) {
+		logger.info("Adding message: " + message);
+		
+		if (isLongMessage) {
+			normalMessage.addLongMessage(message, clear);
+		} else {
+			normalMessage.addMessage(message, clear);
+		}
+	}
+		
+	public void addPanelMessage(String message,boolean clear) {
+		logger.info("Adding Panel message: " + message);
+		panelMessage.addMessage(message, clear);
+	}
+	
+	public String getCommand(int number) {
+		
+		if (number<0||number>=commands.length) {
+			throw new IllegalArgumentException("Invalid command number: " + number);
+		}
+		
+		return commands[number];
+	}
+	
+	public Item getItem(int itemNumber) {
+		
+		if (itemNumber<0||itemNumber >=itemList.length) {
+			throw new IllegalArgumentException("Invalid item number: " + itemNumber);
+		}
+		
+		return itemList[itemNumber];
+	}
+	
+	//Gets the sum of the item's flag and location
+	public int getItemFlagSum(int itemNumber) {
+		
+		if (itemNumber<0||itemNumber >=itemList.length) {
+			throw new IllegalArgumentException("Invalid item number: " + itemNumber);
+		}
+		
+		return itemList[itemNumber].getItemFlag() + itemList[itemNumber].getItemLocation();
+	}
+				
+	//Cycle through number of save games
+	public int getCount() {
+		return this.saveGameCount;
+	}
+	
+	public void increaseCount() {
+		this.saveGameCount++;
+	}
+	
+	public void descreaseCount() {
+		this.saveGameCount--;
+	}
+	
+	public void resetCount() {
+		this.saveGameCount=0;
+	}
+		
+	//Checks how many apples left
+	public boolean checkApples() {
+		
+		boolean applesLeft = false;
+		
+		if (apple_count>0) {
+			apple_count --;
+			applesLeft = true;
+			logger.info("Apple count decreased. Remaining apples: " + apple_count);
+		}
+		
+		return applesLeft;
+	}
+	
+	//Handling saved game display
+	public void setUpperLimitSavedGames(boolean moreGames) {
+		this.upperLimitSavedGames = moreGames;
+		logger.info("More game position set to: " + this.upperLimitSavedGames);
+	}
+	
+	public boolean getUpperLimitSavedGames() {
+		return this.upperLimitSavedGames;
+	}
+	
+	public void setLowerLimitSavedGames(boolean lessGames) {
+		this.lowerLimitSavedGames = lessGames;
+		logger.info("Less game position set to: " + this.lowerLimitSavedGames);
+	}
+	
+	public boolean getLowerLimitSavedGames() {
+		return this.lowerLimitSavedGames;
+	}
+	
+	public String[] getDisplayedSavedGames() {
+		return this.savedGamesDisplayed;
+	}
+	
+	public void setDisplayedGames(String[] gameDisplayed) {
+		this.savedGamesDisplayed = gameDisplayed;
+	}	
+	
+	public void setRunningGameState() {
+		gameState = GameState.RUNNING;
+	}
+
+	public void setSavedGameState() {
+		gameState = GameState.SAVED_GAMES;
+	}
+	
+	public void setGiveState() {
+		gameState = GameState.GIVE;
+	}
+	
+	public void setShelterGameState() {
+		gameState = GameState.SHELTER;
+	}
+	
+	public void setMessageGameState() {
+		gameState = GameState.MESSAGE;
+	}
+	
+	public void setLightingGameState() {
+		gameState = GameState.LIGHTNING;
+	}
+	
+	
+	public void setEndGameState() {
+		
+		logger.info("Game ended.");
+		gameState = GameState.ENDED;
+	}
+	
+	public boolean isInitialGameState() {
+		
+		boolean started = false;
+
+		if (startGameCount>0) {
+			startGameCount --;
+		} else if (gameState == GameState.STARTED) {
+			gameState = GameState.RUNNING;
+			started = true;
+		}
+		return started;
+	}
+		
+	public boolean isSavedGameState() {
+		
+		boolean saveGame = false;
+		if (gameState == GameState.SAVED_GAMES) {
+			saveGame = true;
+		}
+		return saveGame;
+	}
+	
+	public boolean isEndGameState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.ENDED) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isGiveState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.GIVE) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isShelterState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.SHELTER) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isMessageState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.MESSAGE) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isLightningState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.LIGHTNING) {
+			endGame = true;
+		}
+		return endGame;
+	}
+	
+	public boolean isRunningState() {
+		
+		boolean endGame = false;
+		if (gameState == GameState.RUNNING) {
+			endGame = true;
+		}
+		return endGame;
+	}
+}
+public class MessageBuilder {
+	
+	private List<String> messages;
+	private int maxMessageLength;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
+	
+	//Standard Construction
+	public MessageBuilder() {
+		this.messages = new ArrayList<>();
+		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length
+	}
+	
+	//Initialises with a message
+	public MessageBuilder(String message) {
+		this.messages = new ArrayList<>();
+		this.messages.add(message);
+		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length
+	}
+	
+	//Initialises with a custom max length
+	public MessageBuilder(int maxMessageLength) {
+		this.messages = new ArrayList<>();
+		this.maxMessageLength = maxMessageLength;
+	}
+	
+	/**
+     * Adds a message to the builder. If the message exceeds the maximum length,
+     * it is split into multiple lines at the last space before the limit.
+     */
+	public void addMessage(String message, boolean clear) {
+		
+		//Ignores empty or null messages
+		if (message != null && !message.isEmpty()) {
+			
+			//Clears the message if instructed
+			if (clear) {
+				logger.info("Clear Message");
+				clearMessages();
+			}
+			
+			//Split the message is if exceeds the max length
+			while(message.length() > maxMessageLength) {
+				int lastSpace = message.lastIndexOf(" ",maxMessageLength);
+
+				if (lastSpace == -1) {
+					
+					//No space found, for split at max length
+					lastSpace = maxMessageLength;
+				}
+				messages.add(message.substring(0,lastSpace).trim());
+				message = message.substring(lastSpace).trim();
+			}
+			
+			//Adds the remaining part of the message
+			if (!message.isEmpty()) {
+				messages.add(message);
+			}
+		}
+	}
+	
+	/**
+     * Adds a message that should be concatenated with the last message if possible.
+     * If the last message ends with a period, the new message starts on a new line.
+     * Otherwise, it is appended with a comma.
+     */
+    public void addLongMessage(String message, boolean clear) {
+    	
+    	if (message != null && !message.isEmpty()) {
+    		
+			//Clears the message if instructed
+			if (clear) {
+				clearMessages();
+			}
+    		
+    		if (messages.isEmpty()) {
+    		
+    			//First message, add it directly
+    			messages.add(message);
+    		} else {
+    			
+    			//Get last message
+    			String lastMessage = messages.get(messages.size()-1);
+    			
+    			//Determine how to concatenate
+    			if (lastMessage.endsWith(".")) {
+    				
+    				//Start new sentance
+    				lastMessage += " " + message; 
+    			} else {
+    				
+    				//Append the current sentance
+    				lastMessage += ", " + message;
+    			}
+    			
+    			//Check if the concatenated message exceeds the maximum length
+    			if (lastMessage.length() <= maxMessageLength) {
+    				
+    				//Update the last message
+    				messages.set(messages.size()-1, lastMessage);
+    			} else {
+    				
+    				//Split the concatenated message
+    				messages.remove(messages.size()-1);
+    				addMessage(lastMessage,false);
+    			}
+    		}
+    	}
+    	
+    }
+	
+    /**
+     * Returns the list of formatted messages.
+     */
+    public List<String> getMessages() {
+        return messages; // Return a copy to prevent external modification
+    }
+
+    /**
+     * Clears all messages from the builder.
+     */
+    public void clearMessages() {
+        messages.clear();
+    }
+}
+public class Player implements Serializable {
+	
+	private static final long serialVersionUID = 495300605316911022L;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
+	
+	private int room = 23;
+	private int roomToDisplay = this.room;
+	private final Map<String,Object> stats = new HashMap<>();
+	private final Random rand = new Random();
+	private enum PlayerState { NORMAL,START_SWIM,SWIMMING };
+	private PlayerState playerState = PlayerState.NORMAL;
+	private Swimming swim;
+		
+	private static final int RANDOM_ROOM_TRIGGER = 20;
+	
+	public Player() {
+		
+		//Initialize Stats
+		stats.put("strength", 20f);
+		stats.put("wisdom", 35);
+		stats.put("timeRemaining",1000);
+		stats.put("weight", 0);
+		stats.put("food",2);
+		stats.put("drink", 2);
+	}
+	
+	public int getDisplayRoom() {
+		return this.roomToDisplay;
+	}
+		
+	public int updateDisplayRoom() {
+		
+		this.roomToDisplay = this.room;
+		
+		if (this.room == RANDOM_ROOM_TRIGGER) {
+			this.roomToDisplay = rand.nextInt(Constants.NUMBER_OF_ROOMS-1)+1;
+		}
+		
+		return this.roomToDisplay;
+	}
+	
+	public void turnUpdateStats() {
+		
+		int timeRemaining = (int) stats.get("timeRemaining");
+		stats.put("timeRemaining", timeRemaining-1);
+		
+		float strength = (float) stats.get("strength");
+		int weight = (int) stats.get("weight");
+		stats.put("strength", strength - (weight/Constants.NUMBER_OF_ITEMS+0.1f));
+	}
+		
+	public float getStrengthWisdon() {
+		return ((float) stats.get("strength"))+((int) getStat("wisdom"));
+	}
+
+	//Getters & Setters
+	public int getRoom() {
+		return this.room;
+	}
+	
+	public void setRoom(int room) {
+		logger.log(Level.INFO, "Player moved to room: " + room);
+
+		this.room = room;
+		this.roomToDisplay = room;
+	}
+		
+	public Object getStat(String statName) {
+		return stats.get(statName);
+	}
+	
+	public void setStat(String statName,Object value) {
+		stats.put(statName,value);
+	}
+	
+	public Swimming getSwimming() {
+		return swim;
+	}
+	
+	public void setSwimming(Swimming swim) {
+		this.swim = swim;
+	}
+	
+	public void reduceStat(String statName) {
+		int stat = (int) stats.get(statName);
+		stat --;
+		stats.put(statName, stat);
+	}
+	
+	public void setPlayerStateNormal() {
+		playerState = PlayerState.NORMAL;
+	}
+	
+	public void setPlayerStateStartSwimming() {
+		playerState = PlayerState.START_SWIM;
+	}
+	
+	public void setPlayerStateSwimming() {
+		playerState = PlayerState.SWIMMING;
+	}
+	
+	public boolean isPlayerStateNormal() {
+		boolean state = false;
+		if (playerState == PlayerState.NORMAL) {
+			state = true;
+		}
+		return state;
+	}
+	
+	public boolean isPlayerStateStartSwimming() {
+		boolean state = false;
+		if (playerState == PlayerState.START_SWIM) {
+			state = true;
+		}
+		return state;
+	}	
+	
+	public boolean isPlayerStateSwimming() {
+		boolean state = false;
+		if (playerState == PlayerState.SWIMMING) {
+			state = true;
+		}
+		return state;
+	}		
+		
+	//ToString Methods
+	public String toStringStatus() {
+		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
+	}
+
+	public String toStringTimeRemaining() {
+		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
+	}
+	
+	@Override
+	public String toString() {
+	    return "Player{" +
+	            "room=" + room +
+	            ", strength=" + stats.get("strength") +
+	            ", wisdom=" + stats.get("wisdom")  +
+	            ", timeRemaining=" + stats.get("timeRemaining")  +
+	            ", weight=" + stats.get("weight") +
+	            ", food=" + stats.get("food") +
+	            ", drink=" + stats.get("drink") +
+	            '}';
+	}
+	
+}
+public class RandomExitHandler implements Serializable {
+
+	private static final long serialVersionUID = 3367548012798466733L;
+	private Random rand = new Random();
+	
+	//Generates location's exits from a array randomly
+	public boolean[] generateRandomExits() {
+		
+		boolean[] exitArray = {false,true,false,false,false,true,false,true,true};
+		boolean[] randomExits = new boolean[Constants.NUMBER_EXITS];
+		int randExit = rand.nextInt(Constants.RANDOM_EXIT_COMBO);
+		
+		for (int i=0;i<Constants.NUMBER_EXITS;i++) {
+			randomExits[i]=exitArray[randExit+i];
+		}
+		return randomExits;
+	}
+}
+public class SpecialExitHandler implements Serializable {
+
+	private static final long serialVersionUID = 7662068425968354288L;
+
+	//Map holds an array of 2 strings - direction & special direction name
+	private Map<Integer, String[]> specialExits = new HashMap<Integer, String[]>();
+
+	private int TRAPDOOR = 29;
+	private int TRAPDOOR_ROOM = 51;
+	private String TRAPDOOR_DESCRIPTION = " and a closed trapdoor in the floor";
+	
+	public SpecialExitHandler() {
+		
+		//Load Special Exits
+	    specialExits.put(51, new String[]{"","There is a door to the east"});
+	    specialExits.put(12, new String[]{"West","You can also go west into the cave"});
+	    specialExits.put(53, new String[]{"West","You can also go west into the hut"});
+	    specialExits.put(45, new String[]{"West","You can also go west into the hut"});
+	    specialExits.put(70, new String[]{"North","You can also go north into the hut"});
+	    specialExits.put(37, new String[]{"North","You can also go north into the portal"});
+	    specialExits.put(11, new String[]{"North","You can also go north out of the lair"});
+	    specialExits.put(41, new String[]{"North","You can also go north out of the hut"});
+	    specialExits.put(43, new String[]{"North","You can also go north out of the cabin"});
+	    specialExits.put(66, new String[]{"North","You can also go north down of the pyramid"});
+	    specialExits.put(60, new String[]{"South","You can go south out of the hut"});
+	    specialExits.put(56, new String[]{"South" ,"You can also go south up the pyramid"});
+	    specialExits.put(44, new String[]{"East","You can go east out of the shack"});
+	    specialExits.put(52, new String[]{"East","You can go east out of the hall"});
+	}
+	
+	public boolean displayExit(int roomNumber,String exit) {
+		
+		boolean displayExit = true;
+		String[] exitDescriptions =  specialExits.getOrDefault(roomNumber, new String[] {"",""});
+		
+		if (exitDescriptions[0].equals(exit)) {
+			displayExit = false;
+		}
+		
+		return displayExit;
+	}
+	
+	public String getSpecialExit(int roomNumber, Item[] itemList) {
+		
+		String[] exitDescriptions = specialExits.getOrDefault(roomNumber, new String[]{"", ""});
+		String baseDescription = exitDescriptions[1];
+		
+		//Is player in the trapdoor room
+		if (roomNumber == TRAPDOOR_ROOM && itemList[TRAPDOOR].getItemFlag() !=0) {
+			baseDescription += TRAPDOOR_DESCRIPTION;
+		}
+		
+		return baseDescription;
+	}
+}
+public class SpecialItemHandler implements Serializable {
+
+	private static final long serialVersionUID = -3392796825592359959L;
+
+	private Map<Integer, String> itemDescriptions = new HashMap<>();
+	
+	private int ENTRANCE_CHAMBER = 27;
+	private int GRANDPAS_HUT = 44;
+	private int PYRAMID = 67;
+	private int ABODE_HUT = 60;
+	
+	private int TORCH = 7;
+	private int CHEST = 26;
+	private int FLINT = 14;
+	
+	private int FLAG_HIDDEN = 9;
+	
+	
+	public SpecialItemHandler() {
+		itemDescriptions.put(45,"A tree bristling with apples");
+		itemDescriptions.put(27,"A torch hanging in a bracket on the wall");
+		itemDescriptions.put(44, "A coffee table against the wall, an open oak chest");
+		itemDescriptions.put(67,"A piece of flint stuck n the crack");
+		itemDescriptions.put(60, "A map, along with a collection of papers which seem to make up a diary");
+	}
+	
+	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList) {
+		
+		String description = itemDescriptions.getOrDefault(roomNumber,"");
+		
+		if (roomNumber == GRANDPAS_HUT && itemList[CHEST].getItemFlag() !=1) {
+			description = description.split(", ")[0];
+		} else if ((roomNumber == ENTRANCE_CHAMBER && (itemList[TORCH].getItemLocation() != ENTRANCE_CHAMBER || itemList[TORCH].getItemFlag() != FLAG_HIDDEN ))
+				|| (roomNumber == PYRAMID && (itemList[FLINT].getItemLocation() != PYRAMID || itemList[FLINT].getItemFlag() != FLAG_HIDDEN))
+				|| (roomNumber == ABODE_HUT && !locationList[ABODE_HUT].getViewed())) {
+			description = "";
+		}
+		return description;
+	}	
+}
+/**
+ * Defines the contract for handling game commands and state modifications.
+ * Implementations should process these commands and manage game state transitions.
+ */
+public interface GameCommandHandler {
+
+    /**
+     * Sets game state to running
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setRunningGameState();
+	
+    /**
+     * Sets the game state to display saved games
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setSavedGameState();
+	
+    /**
+     * Sets the game state to display shelter options
+     * @param isSavedGame true to enter saved game selection, false to return to normal play
+     */
+	public void setShelterGameState();
+	
+    /**
+     * Processes a text command from the player
+     * @param input The raw command input (e.g., "go north")
+     * @throws IOException if command processing fails due to I/O operations
+     * @throws GameCommandException if command is invalid or cannot be executed
+     */	
+	public void processCommand(String input) throws IOException;
+	
+    /**
+     * Handles item gifting/transfer actions when the player needs to nominate a reciever
+     * @param item The item identifier to process
+     * @throws GameStateException if item cannot be given in current state
+     */	
+	public void processGive(String item);
+		
+    /**
+     * Directly moves player to specified location
+     * @param locationID The destination location identifier
+     * @throws IllegalArgumentException if locationID is invalid
+     */	
+	public void setRoom(int locationID);
+	
+    /**
+     * Navigates forward through saved game list
+     * @throws IOException if navigation fails due to I/O operations
+     * @throws IllegalStateException if at end of saved game list
+     */
+	public void increaseLoadPosition() throws IOException;
+	
+    /**
+     * Navigates backward through saved game list
+     * @throws IOException if navigation fails due to I/O operations
+     * @throws IllegalStateException if at beginning of saved game list
+     */
+	public void decreaseLoadPosition() throws IOException;
+	
+}
+/**
+ * Provides read-only access to game state information.
+ * Segregates query operations for game status, map data, and UI state.
+ */
+public interface GameStateProvider {
+
+    /* Core Game Status Methods */
+    
+    /**
+     * @return Formatted description of current room
+     */
+	String getRoom();
+	
+    /**
+     * @return Formatted list of visible items in current location
+     */
+	String getItems();
+	
+    /**
+     * @return Formatted list of available exits
+     */
+	String getExits();
+	
+    /**
+     * @return Current in-game time representation
+     */
+	String getTime();
+
+	/**
+     * @return The player's current score
+     */
+	int getFinalScore();
+	
+    /**
+     * @return Special exit descriptions beyond standard directions
+     */
+	String getSpecialExits();
+	
+	 /**
+     * @return Current player status (health, inventory count, etc.)
+     */
+	String getStatus();
+	
+    /**
+     * @return Array of saved game names for display
+     */
+	String[] getDisplayedSavedGames();
+	
+    /**
+     * @return True if at beginning of saved games list
+     */
+	boolean getLowerLimitSavedGames();
+	
+    /**
+     * @return True if at end of saved games list
+     */
+	boolean getUpperLimitSavedGames();
+	
+    /**
+     * @return Last executed commands (for history/recall)
+     */
+	String[] getCommands();
+	
+    /**
+     * @return Unmodifiable list of game messages/notifications
+     */
+	List<String> getMessage();
+	
+    /* Map Data Access */
+    
+    /**
+     * @param roomNumber The room ID to check
+     * @return the name of the room
+     */
+	String getRoomName(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
+     * @return True if player has visited this room
+     */
+	boolean getRoomVisited(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
+     * @return Array of available exits [N, S, E, W] 
+     */
+	boolean[] getRoomExits(int roomNumber);
+	
+    /**
+     * @param roomNumber The room ID to check
+     * @return Image asset identifier for this room type
+     */
+	String getRoomImageType(int roomNumber);
+	
+    /**
+     * @return Current room ID
+     */
+	int getCurrentRoom();
+	
+    /* UI State Flags */
+    
+    /**
+     * @return True during initial game setup
+     */
+	public boolean isInitialGameState();
+	
+    /**
+     * @return True when in saved game selection mode
+     */
+	public boolean isSavedGameState();
+	
+    /**
+     * @return True when game has ended
+     */
+	public boolean isEndGameState();
+
+    /**
+     * @return True when a give response is required
+     */
+	public boolean isGiveState();
+	
+    /**
+     * @return True when seeking shelter
+     */
+	public boolean isShelterState();
+
+    /**
+     * @return True when standard game state
+     */
+	public boolean isRunningState();
+	
+    /**
+     * @return True when swimming player state
+     */
+	public boolean isSwimmingState();
+	
+    /**
+     * @return True when normal player state
+     */
+	public boolean isNormalState();
+	
+    /**
+     * @return True when give player state
+     */
+	public boolean isMessageState();
+	
+    /**
+     * @return True when lightning player state
+     */
+	public boolean isLightningState();
+}
+
+/**
+ * Defines the core user interface operations for the game.
+ * Implementations handle UI updates, view management, and lifecycle operations.
+ */
+public interface GameUI {
+	
+    /**
+     * Refreshes the entire UI with current game state.
+     * @param controller The game controller providing current state and operations
+     * @throws NullPointerException if controller is null
+     */
+	void refreshUI(GameController controller);
+	
+    /**
+     * Activates and displays the map view.
+     * @param controller The game controller providing map data and operations
+     * @throws IllegalStateException if map cannot be displayed
+     */
+	void showMapView(GameController controller);
+	
+    /**
+     * Closes and cleans up the UI resources.
+     * Implementations should:
+     * - Release any system resources
+     * - Save persistent state
+     * - Terminate any background operations
+     */
+	void closeUI();
+}
+/**
+ * Defines the contract for UI components that can be managed by a view controller.
+ * Provides lifecycle hooks for view activation/deactivation and component access.
+ */
+public interface GameView {
+	
+    /**
+     * Called when the view becomes active/visible.
+     * Implementations should:
+     * - Initialize resources
+     * - Register listeners
+     * - Update displayed content
+     */
+	default void onViewActivated() {};
+	
+    /**
+     * Called when the view becomes inactive/hidden.
+     * Implementations should:
+     * - Clean up resources
+     * - Unregister listeners
+     * - Persist any state
+     */
+	default void onViewDeactivated() {};
+	
+    /**
+     * Gets the root Swing component for this view.
+     * @return The root JComponent that contains this view's UI elements
+     */
+	JComponent getViewComponent();
+}
+public class GameEngine implements GameCommandHandler,GameStateProvider {
+	
+	private final Game game;
+	private final Player player;
+	private SwimmingHandler swimming = new SwimmingHandler();
+	private CommandProcessor processor;
+	private final String[] commandHistory = {"","",""};
+	private final Test test = new Test();
+
+	
+	public GameEngine(Game game,Player player) {
+		this.game = game;
+		this.player = player;
+		this.test.setTest(this.game, this.player);
+	}
+	
+	//=== Core Game Loop ===//
+	public void processCommand(String command) throws IOException {
+		
+		ParsedCommand result = null;
+		
+		if(player.isPlayerStateSwimming()) {
+			result = swimming.execute(command,player,game);
+		} else {
+			processor = new CommandProcessor();
+			result = processor.execute(command,game,player);
+		}
+		applyResult(result);
+		updateCommandHistory(command);
+		
+		test.displayValue(this.game, this.player);
+	}
+	
+	private void applyResult(ParsedCommand result) {
+		
+	}
+	
+	private void updateCommandHistory(String command) {
+		
+		//Saves the commands into the previous command list
+		if (this.commandHistory[0].equals("")) {
+			this.commandHistory[0] = command;
+		} else if (this.commandHistory[1].equals("")) {
+			this.commandHistory[1] = command;
+		} else if (this.commandHistory[2].equals("")) {
+			this.commandHistory[2] = command;
+		} else {
+			this.commandHistory[0] = this.commandHistory[1];
+			this.commandHistory[1] = this.commandHistory[2];
+			this.commandHistory[2] = command;
+		}
+	}
+	
+	public void processGive(String object) {
+		CommandProcessor processor = new CommandProcessor();
+		processor.executeGive(object);
+	}
+	
+	//=== State Management ===//
+	public void addMessage(String message, boolean clear, boolean isLong) {
+		game.addMessage(message,clear,isLong);
+	}
+	
+	public String getTime() {
+		return player.toStringTimeRemaining();
+	}
+	
+	public String getStatus() {
+		return player.toStringStatus();
+	}
+	
+	public String getRoom() {
+		
+		String description = "";
+		
+		if (player.isPlayerStateSwimming()) {
+			description = swimming.getDescription();
+		} else {
+			player.updateDisplayRoom();
+			int room = player.getDisplayRoom();		
+			description = String.format("You are %s",game.getRoomName(room));
+		}
+		
+		return description;
+	}
+	
+	public String getItems() {
+		
+		String itemDisplay = "";
+		
+		if (player.isPlayerStateNormal()) {
+			itemDisplay = game.getItems(player.getDisplayRoom());
+		}
+		
+		return itemDisplay;
+	}
+	
+	public Game getGame() {
+		return this.game;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public String getExits() {
+		
+		String exitDisplay = "";
+		
+		if (player.isPlayerStateNormal()) {
+			exitDisplay = game.getExits(player.getRoom());
+		}		
+		
+		return exitDisplay;
+	}
+	
+	public String getSpecialExits() {
+
+		String exitDisplay = "";
+		
+		if (player.isPlayerStateNormal()) {
+			exitDisplay = game.getSpecialExits(player.getRoom());
+		}		
+		
+		return exitDisplay;		
+		
+	}
+	
+	public List<String> getMessage() {
+		
+		//Swimming in poisoned Waters?
+		if (player.isPlayerStateSwimming()) {
+			swimming.setMessage(game, player);
+		}
+		
+		List<String> message = game.getNormalMessage();
+		
+		return message;
+	}
+		
+	//Passes three previous commands to Panel.
+	public String[] getCommands() {
+		return this.commandHistory;
+	}
+				
+	@Override
+	public void increaseLoadPosition() throws IOException {
+		this.game.increaseCount();
+		processCommand("load");
+	}
+	
+	@Override
+	public void decreaseLoadPosition() throws IOException {
+		this.game.descreaseCount();
+		processCommand("load");
+	}
+	
+	public boolean getLowerLimitSavedGames() {
+		return game.getLowerLimitSavedGames();
+	}
+	
+	public boolean getUpperLimitSavedGames() {
+		return game.getUpperLimitSavedGames();
+	}
+	
+	public String[] getDisplayedSavedGames() {
+		return game.getDisplayedSavedGames();
+	}
+	
+	public void setRunningGameState() {
+		game.setRunningGameState();
+	}
+	
+	public void setSavedGameState() {
+		game.setSavedGameState();
+	}
+	
+	//Sets Game States
+	public void setShelterGameState() {
+		game.setShelterGameState();
+	}
+	
+	//Checks Game States	
+	public boolean isInitialGameState() {
+		return game.isInitialGameState();
+	}
+	
+	public boolean isSavedGameState() {
+		return game.isSavedGameState();
+	}
+	
+	public boolean isEndGameState() {
+		return game.isEndGameState();
+	}
+	
+	public boolean isRunningState() {
+		return game.isRunningState();
+	}
+	
+	public boolean isGiveState() {
+		return game.isGiveState();
+	}
+	
+	public boolean isShelterState() {
+		return game.isShelterState();
+	}
+	
+	public boolean isSwimmingState() {
+		return player.isPlayerStateSwimming();
+	}
+	
+	public boolean isMessageState() {
+		return game.isMessageState();
+	}
+	
+	public boolean isLightningState() {
+		return game.isLightningState();
+	}
+	
+	public boolean isNormalState() {
+		return player.isPlayerStateNormal();
+	}
+	
+	public int getFinalScore() {
+		boolean timeBonus = (int) player.getStat("timeRemaining")<640;
+		double timeScore = (int) player.getStat("timeRemaining")/7.0;
+		double applyTimeBonus = timeBonus ? -timeScore:0;
+		int wisdom = (int) player.getStat("wisdom");
+		return (int) ((int) ((float) player.getStat("strength"))+wisdom+applyTimeBonus);
+	}
+	
+	@Override
+	public boolean getRoomVisited(int roomNumber) {
+		return game.getRoomVisited(roomNumber);
+	}
+
+	@Override
+	public boolean[] getRoomExits(int roomNumber) {
+		return game.getRoomExits(roomNumber);
+	}
+
+	@Override
+	public String getRoomImageType(int roomNumber) {
+
+		return game.getRoomImageType(roomNumber);
+	}
+	
+	@Override
+	public String getRoomName(int roomNumber) {
+
+		return game.getRoomName(roomNumber);
+	}
+
+	@Override
+	public int getCurrentRoom() {
+		return player.getRoom();
+	}
+
+	@Override
+	public void setRoom(int locationID) {
+		player.setRoom(locationID);
+	}
+} 
+
+public final class GameInitialiser {
+
+	private static final Logger logger = Logger.getLogger(GameInitialiser.class.getName());
+	
+	// Prevent instantiation
+    private GameInitialiser() {  
+        throw new AssertionError("Utility class should not be instantiated");
+    }
+	
+    public static Game initialiseGame() {
+    	return new Game(createLocations(),createItems(),new SpecialExitHandler());
+    }
+    
+    private static Location[] createLocations() {
+    	Location[] locations = new Location[Constants.NUMBER_OF_ROOMS+1];
+
+    	//Room 0 is unused
+    	locations[0] = null;
+    	
+		//Initialise locations
+		// Start from 1 since 0 is unused
+		for (int roomId=1;roomId<= Constants.NUMBER_OF_ROOMS;roomId++) {
+			
+			//Adjusted for 0-based raw data
+			locations[roomId] = new Location(RawData.getLocation(roomId-1),
+												RawData.getPrepositions(),
+												RawData.getImage(roomId-1));
+			
+			final int id = roomId;
+			logger.log(Level.FINE, String.format("Initializing room %d", id));
+		}
+		
+		return locations;
+    }
+    
+	public static Item[] createItems() {
+		
+		//Initialise Items
+		Item[] items = new Item[Constants.NUMBER_OF_NOUNS+1];
+		
+		//Item 0 is unused
+		items[0] = null; 
+		
+		//Builds the item objects
+		for (int itemId=1;itemId<=Constants.NUMBER_OF_NOUNS;itemId++) {
+			
+			//Checks the name to give the item
+			String itemName = (itemId < Constants.NUMBER_OF_ITEMS)
+					? RawData.getObjects(itemId):"";
+			items[itemId] = new Item(RawData.getItemFlag(itemId),
+										 RawData.getItemLocation(itemId),
+										 itemName);
+			
+			final int id = itemId;
+			logger.log(Level.FINE, String.format("Initializing item %d", id));
+		}	
+		return items;
+	}
+}
+
+public class Main {
+	
+	public void startGame()  {
+
+		try {
+			
+			//Initialises the game data
+			Game gameData =  GameInitialiser.initialiseGame();
+			Player player = new Player();
+			GameEngine game = new GameEngine(gameData,player);
+			
+			//Launch UI
+			SwingUtilities.invokeLater(() -> {
+				try {
+					new GameFrame(game);
+				} catch (Exception e) {
+					throw new RuntimeException("Main - Failed to launch game UI: "+e.getMessage());
+				}
+			});
+
+		} catch (Exception e) {
+			System.err.println("Failed to start the game: " + e.getMessage());
+		}
+	}
+}
 
 
+public class Swimming {
+	
+	private int swimming = 0;
+	private int swimPosition = 0;
 
+	public Swimming(int swimming) {
+		this.swimming = swimming;
+	}
+	
+	public void swim() {
+		this.swimPosition++;
+	}
+	
+	public boolean checkPosition(float strength) {
+		
+		boolean checked = false;
+		
+		if ((this.swimming/2)<this.swimPosition && strength>0) {
+			checked = true;
+		}
+		
+		return checked;
+	}
+}
+public class SwimmingHandler {
+	
+	public ParsedCommand execute(String command, Player player, Game game) {
+		
+		game.addMessage("Ok",true,true);
+		Swimming swim = player.getSwimming();
+		
+		if (command.substring(0,1).equals("n")) {
+			swim.swim();
+		} else if (!command.substring(0,1).equals("s") &&
+				   !command.substring(0,1).equals("e") &&
+				   !command.substring(0,1).equals("w")) {
+			game.addMessage("I do not understand",true,true);
+		}
+		
+		float strengthAdj = (float) ((((int) player.getStat("weight"))/Constants.NUMBER_OF_NOUNS+0.1)-3);
+		float strength = ((float) player.getStat("strength")) + strengthAdj;
+		player.setStat("strength",strength);
+		
+		if (swim.checkPosition((float) player.getStat("strength"))) {
+			player.setPlayerStateNormal();
+			game.addMessage("You surface",true,true);
+			Random rand = new Random();
+			player.setRoom(rand.nextInt(3)+31);
+			
+		} else if (strength<1) {
+			game.addMessage("You get lost and drown",true,true);
+			player.setPlayerStateNormal();
+			game.setEndGameState();
+		} else {
+			player.setSwimming(swim);
+		}
+		
+		return new ParsedCommand();
+	}
+	
+	public String getDescription() {
+		return "You are swimming in poisoned waters";
+	}
+	
+	public void setMessage(Game game,Player player) {
+		
+		if (((float) player.getStat("strength"))<15) {
+			game.addMessage("You are very weak!",false,false);
+		}
+		
+		game.addMessage("", false,false);
+		game.addMessage("", false,false);
+		game.addMessage("Which Way?",false,false);
+	}
+}
+public final class GameController implements GameCommandHandler {
+
+	private static final Logger logger = Logger.getLogger(GameController.class.getName());
+	
+	private GameEngine engine;
+	private final GameUI ui;
+	
+	public GameController(GameEngine engine, GameUI ui) {
+		this.engine = Objects.requireNonNull(engine, "GameEngine cannot be null");
+        this.ui = Objects.requireNonNull(ui, "GameUI cannot be null");
+	}
+	
+	public GameState getState() {
+		return new GameState(engine);
+	}
+	
+	public GameEngine getEngine() {
+		return engine;
+	}
+		
+	public void addMessage(String message, boolean clear, boolean isLong) {
+		engine.addMessage(message,clear,isLong);
+	}
+
+	@Override
+	public void processCommand(String input) throws IOException {
+		logger.log(Level.FINE, "Processing command: {0}", input);
+		engine.processCommand(input);
+		refreshUI();
+	}
+
+	@Override
+	public void processGive(String item) {
+		logger.log(Level.FINE, "Processing give: {0}", item);
+		engine.processGive(item);
+		refreshUI();
+	}
+	
+	@Override
+	public void setSavedGameState() {
+		engine.setSavedGameState();
+		refreshUI();
+	}
+	
+	@Override
+	public void setRunningGameState() {
+		engine.setRunningGameState();
+		refreshUI();
+	}
+	
+	public boolean isGiveState() {
+		return engine.isGiveState();
+	}
+	
+	@Override
+	public void setShelterGameState() {
+		engine.setShelterGameState();
+	}
+	
+	@Override
+	public void setRoom(int locationID) {
+		logger.log(Level.FINE, "Setting room: {0}", locationID);
+		engine.setRoom(locationID);		
+		refreshUI();
+	}
+	
+	public void refreshUI() {
+		ui.refreshUI(this);
+	}
+	
+	public void closeUI() {
+		ui.closeUI();
+	}
+	
+	public void showMap() {
+		ui.showMapView(this);
+	}
+	
+	public void restart() {
+		logger.log(Level.FINE, "Restarting game");
+		this.engine = new GameEngine(
+			GameInitialiser.initialiseGame(),
+			new Player()
+		);
+		refreshUI();
+	}
+	
+	@Override
+	public void increaseLoadPosition() throws IOException {
+		engine.increaseLoadPosition();
+		refreshUI();
+	}
+
+	@Override
+	public void decreaseLoadPosition() throws IOException {
+		engine.decreaseLoadPosition();
+		refreshUI();
+	}
+}
+/**
+ * Immutable snapshot of game state implementing GameStateProvider interface.
+ * Thread-safe by design - all fields are final and collections are unmodifiable.
+ */
+public class GameState implements GameStateProvider {
+
+	//Core game state
+	private final String room;
+	private final String items;
+	private final String exits;
+	private final String specialExits;
+	private final String time;
+	private final String status;
+	
+	//Game progression
+	private final int currentRoom;
+	private final int finalScore;
+	private final boolean initialGameState;
+	private final boolean saveGameState;
+	private final boolean endGameState;
+	private final boolean giveState;
+	private final boolean shelterState;
+	private final boolean runningState;
+	private final boolean messageState;
+	private final boolean lightningState;
+	private final boolean normalState;
+	private final boolean swimmingState;
+	
+	//Saved games navigation
+	private final String[] displayedSavedGames;
+	private final boolean lowerLimit;
+	private final boolean upperLimit;
+	
+	//Command history
+	private final String[] previousCommands;
+	private final List<String> message;
+	
+	//Delegate for dynamic data
+	private final GameStateProvider stateProvider;
+	
+	public GameState(GameStateProvider stateProvider) {
+		Objects.requireNonNull(stateProvider,"State provider cannot be null");
+		
+		this.stateProvider = stateProvider;
+		
+		//Core state
+		this.room = stateProvider.getRoom();
+		this.items = stateProvider.getItems();
+		this.exits = stateProvider.getExits();
+		this.specialExits = stateProvider.getSpecialExits();
+		this.time = stateProvider.getTime();
+		this.status = stateProvider.getStatus();
+		
+		//Game progression
+		this.currentRoom = stateProvider.getCurrentRoom();
+		this.finalScore = stateProvider.getFinalScore();
+		this.initialGameState = stateProvider.isInitialGameState();
+		this.saveGameState = stateProvider.isSavedGameState();
+		this.endGameState = stateProvider.isEndGameState();
+		this.giveState = stateProvider.isGiveState();
+		this.shelterState = stateProvider.isShelterState();
+		this.runningState = stateProvider.isRunningState();
+		this.lightningState = stateProvider.isLightningState();
+		this.messageState = stateProvider.isMessageState();
+		this.normalState = stateProvider.isNormalState();
+		this.swimmingState = stateProvider.isSwimmingState();
+		
+		//Saved games
+		this.displayedSavedGames = stateProvider.getDisplayedSavedGames().clone();
+		this.lowerLimit = stateProvider.getLowerLimitSavedGames();
+		this.upperLimit = stateProvider.getUpperLimitSavedGames();
+		
+		//Command history
+		this.previousCommands = stateProvider.getCommands().clone();
+		this.message = Collections.unmodifiableList(stateProvider.getMessage());
+	}
+	
+	//Implemented interface methods
+	@Override
+	public String getRoom() {
+		return this.room;
+	}
+
+	@Override
+	public String getItems() {
+		return this.items;
+	}
+
+	@Override
+	public String getExits() {
+		return this.exits;
+	}
+
+	@Override
+	public String getSpecialExits() {
+		return this.specialExits;
+	}
+	
+	@Override
+	public String getTime() {
+		return this.time;
+	}
+
+	@Override
+	public String getStatus() {
+		return this.status;
+	}
+	
+	@Override
+	public int getCurrentRoom() {
+		return this.currentRoom;
+	}
+	
+	@Override
+	public int getFinalScore() {
+		return this.finalScore;
+	}
+	
+	@Override
+	public boolean isInitialGameState() {
+		return this.initialGameState;
+	}
+
+	@Override
+	public boolean isSavedGameState() {
+		return this.saveGameState;
+	}
+
+	@Override
+	public boolean isEndGameState() {
+		return this.endGameState;
+	}
+	
+	@Override
+	public String[] getDisplayedSavedGames() {
+		return this.displayedSavedGames.clone();
+	}
+
+	@Override
+	public boolean getLowerLimitSavedGames() {
+		return this.lowerLimit;
+	}
+
+	@Override
+	public boolean getUpperLimitSavedGames() {
+		return this.upperLimit;
+	}
+	
+	@Override
+	public String[] getCommands() {
+		return this.previousCommands.clone();
+	}
+
+	@Override
+	public List<String> getMessage() {
+		return this.message;
+	}
+	
+	//Dynamic data delegation
+	public String getRoomName(int roomNumber) {
+		return stateProvider.getRoomName(roomNumber);
+	}
+	
+	@Override
+	public boolean getRoomVisited(int roomNumber) {
+		return stateProvider.getRoomVisited(roomNumber);
+	}
+
+	@Override
+	public boolean[] getRoomExits(int roomNumber) {
+		return stateProvider.getRoomExits(roomNumber);
+	}
+
+	@Override
+	public String getRoomImageType(int roomNumber) {
+		return stateProvider.getRoomImageType(roomNumber);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("GameStat[room=%d, score=%d",currentRoom,finalScore);
+	}
+	
+	//For equality checks
+	@Override
+	public boolean equals(Object o) {
+		final boolean isEqual;
+		
+		if (this==o) {
+			isEqual = true;
+		} else if (!(o instanceof GameState)) {
+			isEqual = false;
+		} else {
+			GameState that = (GameState) o;
+			isEqual = (currentRoom == that.currentRoom) &&
+					(finalScore == that.finalScore) &&
+					Objects.equals(room, that.room);
+		}
+		
+		return isEqual;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return Objects.hash(currentRoom, finalScore, room);
+	}
+
+	@Override
+	public boolean isGiveState() {
+		return giveState;
+	}
+
+	@Override
+	public boolean isShelterState() {
+		return shelterState;
+	}
+	
+	@Override
+	public boolean isRunningState() {
+		return runningState;
+	}
+
+	@Override
+	public boolean isSwimmingState() {
+		return swimmingState;
+	}
+
+	@Override
+	public boolean isNormalState() {
+		return normalState;
+	}
+
+	@Override
+	public boolean isMessageState() {
+		return messageState;
+	}
+
+	@Override
+	public boolean isLightningState() {
+		return lightningState;
+	}
+}
+public class CommandPanel  extends JPanel  {
+	
+	private static final long serialVersionUID = 5738616866958583642L;
+	
+	//Constants
+	private static final int BUTTON_INDENT= 320;
+	private static final int WIDE_BUTTON_INDENT = 260;
+	private static final int COMMAND_FIELD_INDENT = 170;
+	private static final int SHELTER_COUNT = 3;
+	
+	//Componants
+	private JTextField commandField = new JTextField(2);
+	private final JLabel spaceLabel = new JLabel();
+	private final GameController game;
+	private GamePanel panel;
+	
+	//State
+	private GameStateProvider state;
+	private CommandListener activeListener;
+
+	public CommandPanel(GameController game,GameStateProvider state,GamePanel panel) {
+		
+		this.state = Objects.requireNonNull(state);
+		this.game = Objects.requireNonNull(game);
+		this.panel = Objects.requireNonNull(panel);
+		
+		setLayout(new GridLayout(9,1));
+		configureLayout();
+	}
+
+	public void refreshUI(GameStateProvider state) {
+		this.state = Objects.requireNonNull(state);
+		SwingUtilities.invokeLater(this::configureLayout);
+	}
+	
+	private void configureLayout() {
+		removeAll();
+		add(createSpacePanel());
+				
+		if (isInitialGameState()) {
+			add(createButtonPanel("Click for Clues & Hints",new BookButton(panel,game),WIDE_BUTTON_INDENT));
+		} else if (isSeekingShelter()) {
+			addShelterButtonPanels();
+		} else if (isShowSavedGameState()) {
+			addSaveGameButtonPanels();
+		} else if (isEndGameState()) {
+			add(createButtonPanel("Exit",new QuitButton(game,false),BUTTON_INDENT));
+			add(createButtonPanel("Restart",new QuitButton(game,true),BUTTON_INDENT));
+		}
+				
+		if (isNormalUI()) {
+			addNormalUIComponents();	
+		}
+								
+		revalidateAndRepaint();
+	}
+	
+	private void addNormalUIComponents() {
+		
+		if(showMapButton()) {
+			add(createButtonPanel("Map",new MapButton(game,panel),320));
+		}
+		
+		addCommandHistoryButtons();
+		add(createSpacePanel());
+		add(createCommandInputPanel());	
+	}
+	
+	private boolean isInitialGameState() {
+		return state.isInitialGameState();
+	}
+	
+	private boolean isSeekingShelter() {
+		return state.isShelterState();
+	}
+	
+	private boolean isShowSavedGameState() {
+		return state.isSavedGameState();
+	}
+	
+	private boolean isNormalUI() {
+		return !state.isShelterState() &&
+				!state.isSavedGameState() &&
+				!state.isEndGameState();
+	}
+	
+	private boolean isEndGameState() {
+		return state.isEndGameState();
+	}
+	
+	private boolean showMapButton() {
+		return state.isSwimmingState();
+	}
+	
+	private JPanel createSpacePanel() {
+		JPanel spacePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		spacePanel.add(spaceLabel);
+		spaceLabel.setText("");
+		return spacePanel;
+	}
+	
+	private void addShelterButtonPanels() {
+		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
+		Integer[] shelterLocations = {44,11,41};
+		
+		for (int i=0;i<SHELTER_COUNT;i++) {
+			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
+		}
+	}
+	
+	private void addCommandHistoryButtons() {
+		
+		for (String command:state.getCommands()) {
+			if (command.isEmpty() || !state.isRunningState()) {
+				add(createSpacePanel());
+			} else {
+				add(createButtonPanel(command,new CommandButton(game,command),BUTTON_INDENT));
+			}
+		}
+	}
+	
+	private JPanel createCommandInputPanel() {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		panel.setBorder(BorderFactory.createEmptyBorder(0,COMMAND_FIELD_INDENT,0,COMMAND_FIELD_INDENT));
+		
+		if (activeListener != null) {
+			commandField.removeKeyListener(activeListener);
+		}
+		
+		activeListener = new CommandListener(commandField,game);
+		commandField.addKeyListener(activeListener);
+		panel.add(commandField);
+		
+		requestCommandFocus();
+		return panel;
+	}
+		
+	private void addSaveGameButtonPanels() {
+		
+		for (String gameName:state.getDisplayedSavedGames()) {
+			if (!gameName.isEmpty()) {
+				addSavedGameButton(gameName);
+			}
+		}
+		
+		if (state.getLowerLimitSavedGames()) {
+			add(createButtonPanel("Previous",new SearchGameButton(game,false),BUTTON_INDENT));
+		}
+		
+		if (state.getUpperLimitSavedGames()) {
+			add(createButtonPanel("Next",new SearchGameButton(game,true),BUTTON_INDENT));
+		}
+		
+		add(createButtonPanel("Back to Game",new GameButton(game,panel),BUTTON_INDENT));
+	}
+	
+	private void addSavedGameButton(String gameName) {
+		String loadName = gameName.split("\\,")[0];
+		add(createButtonPanel(gameName,new CommandButton(game,"load "+loadName),BUTTON_INDENT));
+	}
+	
+	private JPanel createButtonPanel(String title,ActionListener action,int indent) {
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		JButton button = new JButton(title);
+		button.addActionListener(action);
+		panel.add(button);
+		panel.setBorder(BorderFactory.createEmptyBorder(0,indent,0,indent));
+		return panel;
+	}
+	
+	private void revalidateAndRepaint() {
+		revalidate();
+		repaint();
+	}
+	
+	public void requestCommandFocus() {
+		SwingUtilities.invokeLater(() -> {
+			commandField.requestFocusInWindow();
+			commandField.selectAll();
+		});
+	}
+}
+public class GameFrame extends JFrame implements GameUI {
+
+	private static final long serialVersionUID = -5095376582483866399L;
+	private final GamePanel gamePanel;
+
+	public GameFrame(GameEngine engine) {
+		
+		super("Island of Secrets");
+		GameController controller = new GameController(engine,this);
+		this.gamePanel = new GamePanel(controller);
+		initiliseUI();
+	}
+	
+	private void initiliseUI() {
+
+		//kills the window when the 'x' is clicked at the top
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setContentPane(gamePanel);
+		configureWindow();
+		setVisible(true);
+	}
+	
+	public void configureWindow()  {
+		
+		//sets the boundaries of the frame.
+		setBounds(100,100, 800,600);
+		setResizable(false);
+		
+		//Center
+		setLocationRelativeTo(null);
+	}
+
+	@Override
+	public void refreshUI(GameController game) {
+		gamePanel.refreshMainView(game);		
+	}
+
+	@Override
+	public void showMapView(GameController game) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void closeUI() {
+		setVisible(false);
+		dispose();
+	}
+}
+public class GamePanel extends JPanel {
+	
+    private static final long serialVersionUID = -1175236419449166126L;
+    
+    //View Constants
+	private static final String MAIN_VIEW = "MAIN";
+	private static final String MAP_VIEW = "MAP";
+
+	//UI Components
+	private final CardLayout cardLayout = new CardLayout();
+    private final JPanel viewContainer = new JPanel(cardLayout);
+    private MainGamePanel mainView;
+    private MapPanel mapView;
+	
+	public GamePanel(GameController controller) {
+		Objects.requireNonNull(controller, "GameController cannot be null");
+		initialiseUI(controller);
+	}
+	
+	private void initialiseUI(GameController controller) {
+		
+		setLayout(new BorderLayout());
+		
+		//Create views
+		this.mainView = new MainGamePanel(controller,this);
+		this.mapView = new MapPanel(controller,this);
+		
+		//Configure view container
+		viewContainer.add(mainView,MAIN_VIEW);
+		viewContainer.add(mapView,MAP_VIEW);
+		add(viewContainer,BorderLayout.CENTER);
+
+		//Initial view
+		showMainView();
+	}
+	
+    /**
+     * Refreshes the main game view
+     * @param controller The game controller providing current state
+     */
+	public void refreshMainView(GameController controller) {
+		 SwingUtilities.invokeLater(() -> mainView.refreshUI(controller));
+	}
+	
+    /**
+     * Refreshes the map view
+     * @param controller The game controller providing current state
+     */
+	public void refreshMapView(GameController controller) {
+		SwingUtilities.invokeLater(() -> mapView.refreshUI(controller));
+	}
+	
+    /**
+     * Shows the main game view and triggers activation
+     */
+	public void showMainView() {
+		cardLayout.show(viewContainer,MAIN_VIEW);
+		mainView.onViewActivated();
+	}
+	
+    /**
+     * Shows the map view and triggers activation
+     */
+	public void showMapView() {
+		cardLayout.show(viewContainer, MAP_VIEW);
+		mapView.onViewActivated();
+	}
+	
+    /**
+     * Gets the current active view name
+     * @return Either MAIN_VIEW or MAP_VIEW constant
+     */
+	public String getCurrentView() {
+		
+	    String currentView = MAIN_VIEW;
+	    boolean found = false;
+	    
+	    for (Component comp : viewContainer.getComponents()) {
+	        if (!found && comp.isVisible()) {
+	            currentView = (comp == mainView) ? MAIN_VIEW : MAP_VIEW;
+	            found = true;
+	        }
+	    }
+	    return currentView;
+	}
+}
+/**
+ * Main game view panel combining status, room, and command components.
+ * Implements both GameUI and GameView interfaces for dual functionality.
+ */
+public class MainGamePanel extends JPanel implements GameUI, GameView {
+	
+	private static final long serialVersionUID = -9087851496246015145L;
+	
+	//Components
+	private final GameController game;
+	private final GamePanel parentPanel;
+	private StatusPanel statusPanel;
+	private RoomPanel roomPanel;
+	private CommandPanel commandPanel;
+	
+	//State
+	private GameStateProvider state;
+	private boolean isInitialised = false;
+
+	public MainGamePanel(GameController game, GamePanel panel) {
+		this.state = game.getState();
+        this.game = Objects.requireNonNull(game, "GameController cannot be null");
+        this.parentPanel = Objects.requireNonNull(panel, "Parent panel cannot be null");
+		
+        setLayout(new BorderLayout());
+	}
+	
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseComponents();
+			isInitialised=true;
+		}
+		refreshUI(game);
+	}
+	
+	public void initialiseComponents() {
+				
+		// Top section for status and label panels
+		statusPanel = new StatusPanel(state);
+		roomPanel = new RoomPanel(state);
+		commandPanel = new CommandPanel(game,state,parentPanel);
+		
+		this.add(statusPanel, BorderLayout.NORTH); 
+		this.add(roomPanel,BorderLayout.CENTER);
+		this.add(commandPanel,BorderLayout.SOUTH);
+	}
+
+	@Override
+	public void refreshUI(GameController game) {
+		
+		SwingUtilities.invokeLater(()-> {
+			this.state = game.getState();
+			
+			statusPanel.refreshUI(state);
+			roomPanel.refreshUI(state);
+			commandPanel.refreshUI(state);
+			
+			revalidate();
+			repaint();
+			commandPanel.requestCommandFocus();
+		});
+	}
+
+	@Override
+	public void showMapView(GameController game) {
+		// Intentional no-op - handled by parent container
+	}
+
+	@Override
+	public void onViewDeactivated() {
+		// Optional cleanup can be added here
+	}
+
+	@Override
+	public JComponent getViewComponent() {
+		return this;
+	}
+
+	@Override
+	public void closeUI() {
+        // Cleanup resources if needed
+        isInitialised = false;
+	}
+}
+
+public class MapPanel extends JPanel implements GameView {
+	
+	private static final long serialVersionUID = -1097043236506747632L;
+	private GameController controller;
+	private GameState state;
+	private GamePanel panel;
+	private final Map<Integer, JPanel> roomPanels = new HashMap<>();
+	private final Map<Integer,String> roomToolTips = new HashMap<>();
+	private final ImageCache imageCache = new ImageCache();
+	private boolean isInitialised = false;
+	private MapController mapController;
+	
+	public static final int MAP_ROWS = 11;
+	public static final int MAP_COLS = 10;
+	public static final int ROOM_SIZE = 50;
+	public static final int SPECIAL_ROOM_ID = 85;
+	public static final int GRID_SIZE =  MAP_ROWS * MAP_COLS;
+	
+	public MapPanel(GameController game, GamePanel panel) {
+
+		this.controller = game;
+		this.state = game.getState();
+		this.panel = panel;
+		this.mapController = new MapController(game,panel);
+		
+		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
+	}
+
+	@Override
+	public void onViewActivated() {
+		if (!isInitialised) {
+			initialiseTooltips();
+			initialiseMap();
+			isInitialised=true;
+		}
+		refreshMap();
+	}
+	
+	@Override
+	public void onViewDeactivated() {
+		imageCache.clear();
+	}
+	
+	@Override
+	public JComponent getViewComponent() {
+		return this;
+	}
+		
+	private void initialiseMap() {
+		for (int roomId = 1;roomId<GRID_SIZE;roomId++) {
+			JPanel roomPanel = createRoomPanel(roomId);
+			roomPanels.put(roomId, roomPanel);
+			add(roomPanel);
+		}
+	}
+		
+	private JPanel createRoomPanel(int roomId) {
+		
+		JPanel panel = new JPanel(new BorderLayout()) {
+			
+			private static final long serialVersionUID = -8288954048757686323L;
+
+			@Override
+			public JToolTip createToolTip() {
+				JToolTip tip = super.createToolTip();
+				tip.setBackground(new Color(255,255,225)); //Light Yellow
+				tip.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+				return tip;
+			}
+		};
+		
+		panel.addMouseListener(mapController.createMouseAdapter(roomId));
+		panel.setToolTipText(roomToolTips.get(roomId));
+		panel.setBorder((Border) createRoomBorder(roomId));
+		panel.setPreferredSize(new Dimension(ROOM_SIZE,ROOM_SIZE));
+		
+		return panel;
+	}
+	
+    private Border createRoomBorder(int roomId) {
+      
+    	Border border;
+    	
+		if (roomId<10 && roomId>1) {
+			border = BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK);
+		} else if (roomId==1) {
+			border = BorderFactory.createMatteBorder(2, 2, 0, 0, Color.BLACK);
+		} else if (roomId==10) {
+			border = BorderFactory.createMatteBorder(2, 0, 0, 2, Color.BLACK);
+		} else if (roomId==71) {
+			border = BorderFactory.createMatteBorder(0, 2, 2, 0, Color.BLACK);
+		} else if (roomId==80) {
+			border = BorderFactory.createMatteBorder(0, 0, 2, 2, Color.BLACK);
+		} else if (roomId>71 && roomId<80) {
+			border = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK);
+		} else if (roomId==11 || roomId==21 || roomId==31 || roomId==41 || roomId==51 || roomId==61) {
+			border = BorderFactory.createMatteBorder(0, 2, 0, 0, Color.BLACK);
+		} else if (roomId==20 || roomId==30 || roomId==40 || roomId==50 || roomId==60 || roomId==70) {
+			border = BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK);
+		} else {
+			border = BorderFactory.createEmptyBorder();
+		}
+	        
+        return border;
+    }
+    
+	private void initialiseTooltips() {
+		for (int roomId=1;roomId <= Constants.NUMBER_OF_ROOMS;roomId++) {
+			roomToolTips.put(roomId,generateRoomTooltip(roomId));
+		}
+	}
+	
+	private String generateRoomTooltip(int roomId) {
+		return String.format("<html><b>%s</b></html>",state.getRoomName(roomId));
+	}
+    
+    public void refreshUI(GameController controller) {
+    	this.controller = controller;
+    	this.state = controller.getState();
+    	refreshMap();
+    }
+    
+    public void refreshMap() {
+    	
+    	SwingUtilities.invokeLater(() -> {
+    		this.state = controller.getState();
+    		roomPanels.forEach(this::updateRoomPanel);
+    		revalidate();
+    		repaint();
+    	});
+    }
+    
+    private void updateRoomPanel(int roomId,JPanel panel) {
+    	panel.removeAll();
+    	
+    	if (roomId<= Constants.NUMBER_OF_ROOMS) {
+    		if(state.getRoomVisited(roomId)) {
+    			updateRoomVisuals(panel,roomId,state);
+    			panel.setToolTipText(roomToolTips.get(roomId));
+    		} else {
+    			panel.setToolTipText(null);
+    		}
+    	}
+    	
+    	if (roomId == SPECIAL_ROOM_ID) {
+    		addNavigationButton(panel);
+    	}
+    	panel.revalidate();
+		panel.repaint();
+    }
+    
+    private void updateRoomVisuals(JPanel panel,int roomId,GameState state) {
+    	
+    	String imageName = state.getCurrentRoom() == roomId 
+    			? "adventurer"
+    			: state.getRoomImageType(roomId);
+    	
+    	//Add Room Image
+    	ImageIcon icon = imageCache.getImage("/Images/"+ imageName + ".png");
+    	if (icon != null) {
+    		panel.add(new JLabel(icon), BorderLayout.CENTER);
+    	}
+    	
+    	//Update borders based on exits
+    	boolean[] exits = state.getRoomExits(roomId);
+    	panel.setBorder(BorderFactory.createMatteBorder(
+    			exits[0] ? 0:2, //North
+    			exits[3] ? 0:2, //West
+    			exits[1] ? 0:2, //South
+    			exits[2] ? 0:2, //East
+    			Color.BLACK
+    	));
+    }
+    
+    private void addNavigationButton(JPanel panel) {
+    	    	
+    	JButton backButton = new JButton("Back");
+    	backButton.addActionListener(new GameButton(controller,this.panel));
+    	panel.add(backButton);
+    }
+	
+    //Image cache helper
+    private static class ImageCache {
+    	private final ConcurrentHashMap<String,ImageIcon> cache = new ConcurrentHashMap<>();
+    	
+    	public ImageIcon getImage(String path) {
+    		ImageIcon result = cache.get(path);
+    		
+    		if (result == null) {
+    			result = createImageIcon(path);
+    			cache.put(path, result);
+    		}
+    		
+    		return result;
+    	}
+    	
+        private ImageIcon createImageIcon(String path) {
+        	
+            ImageIcon result = null;
+            try {
+                InputStream stream = getClass().getResourceAsStream(path);
+                if (stream != null) {
+                    BufferedImage img = ImageIO.read(stream);
+                    if (img != null) {
+                        result = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                    }
+                    stream.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Couldn't load image: " + path);
+                result = createMissingImageIcon();
+            }
+            return result;
+        }
+        
+        public void clear() {
+            cache.clear();
+        }
+        
+        private static ImageIcon createMissingImageIcon() {
+            // Create a placeholder icon
+            BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = img.createGraphics();
+            g.setColor(Color.RED);
+            g.fillRect(0, 0, 50, 50);
+            g.dispose();
+            return new ImageIcon(img);
+        }
+    }
+}
+public class MessagePanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private JLabel label;
+	private MainGamePanel game;
+	private GameEngine engine;
+	private String game_messages;
+	
+	private final int HEAD = 0;
+	private final String FONT = "Arial";
+	private final int FONT_SIZE = 24;
+	
+    public MessagePanel(MainGamePanel game,GameEngine engine,List<String> messages,String start_message) {
+    	
+        this.game = game;
+        this.engine = engine;
+                
+        // Set a BorderLayout to center the label
+        setLayout(new BorderLayout());
+        this.game_messages = start_message+messages.get(HEAD);
+        
+        //Displays the first message
+        label = createLabel("<html>"+this.game_messages+"</html>");
+        add(label, BorderLayout.CENTER);
+        
+        //Updates the first message with the second and removes them
+        if (messages.size() > 0) {
+        	
+        	this.game_messages = this.game_messages+"<br>";
+        		
+        	if (messages.size()>0) {
+        		messages.remove(HEAD);
+        	}
+        }
+        
+        startSequence(messages);
+
+    }
+	
+    private JLabel createLabel(String text) {
+        label = new JLabel(text, SwingConstants.CENTER);
+        label.setFont(new Font(FONT, Font.BOLD, FONT_SIZE)); 
+        return label;
+    }
+    
+    private void startSequence(List<String> messages) {
+            	
+    	// First delay: 2 seconds for initial message
+        new Thread(() -> {
+            try {
+            	            	
+            	int delay = 2;
+            	
+            	//Last Message
+            	if (messages.size()==0) {
+            		delay=5;
+            	}
+          	
+            	TimeUnit.SECONDS.sleep(delay);
+                
+            	if (messages.size()==0) {
+            		SwingUtilities.invokeLater(() ->  resetPanel(game));
+            	} else {
+            		setPanel(game,new MessagePanel(this.game,this.engine,messages,this.game_messages));
+            	}
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+    
+	private void setPanel(JPanel game,JPanel panel) {
+		game.removeAll();
+		game.add(panel);
+		game.revalidate();
+		game.repaint();
+	}
+    
+	private void resetPanel(MainGamePanel game) {
+		game.removeAll();
+		//game.add(this.engine);
+		game.revalidate();
+		game.repaint();
+	}
+}
+public class RoomPanel extends JPanel {
+
+	private static final long serialVersionUID = -7153746273218337269L;
+	
+	//Components
+	private final JLabel roomLabel = new JLabel();
+	private final JLabel exitLabel = new JLabel();
+	private final JLabel specialExitLabel = new JLabel();
+	private List<JLabel> messageLabelList  = new ArrayList<JLabel>();
+	private List<JLabel> itemLabelList  = new ArrayList<JLabel>();
+	private List<String> itemTextList = new ArrayList<String>();
+	
+	//State
+	private GameStateProvider state;
+	
+	public RoomPanel(GameStateProvider state) {
+		this.state = state;
+		initialiseComponents();
+		updateDisplay();
+	}
+	
+	private void initialiseComponents() {
+		setLayout(new GridLayout(9,1));
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+				
+		add(createPanel(roomLabel));
+		addItemPanels(state.getItems());
+		add(createPanel(exitLabel));
+		add(createPanel(specialExitLabel));
+		addMessagePanels(state.getMessage());
+	}
+	
+	private JPanel createPanel(JLabel label) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(label);
+		return panel;
+	}
+	
+	private void addItemPanels(String itemsText) {
+		processItemsText(itemsText);
+		for (int index=0;index<itemLabelList.size();index++) {
+			add(createPanel(itemLabelList.get(index)));
+		}
+	}
+	
+	private void addMessagePanels(List<String> messages) {
+		for (int index = 0;index<messages.size();index++) {
+			messageLabelList.add(new JLabel());
+			add(createPanel(messageLabelList.get(index)));
+		}
+	}
+	
+	public void refreshUI(GameStateProvider state) {
+		
+		this.state = Objects.requireNonNull(state);
+		
+		resetComponents();
+		updateDisplay();
+	}
+	
+	private void resetComponents() {
+		SwingUtilities.invokeLater(() -> {
+			messageLabelList.clear();
+			itemLabelList.clear();
+			itemTextList.clear();
+			removeAll();
+			initialiseComponents();
+		});
+	}
+		
+	public void updateDisplay() {
+		
+		SwingUtilities.invokeLater(() -> {
+			roomLabel.setText(state.getRoom());
+			updateLabels(itemTextList,itemLabelList);
+			exitLabel.setText(state.getExits());
+			specialExitLabel.setText(state.getSpecialExits());
+			updateLabels(state.getMessage(),messageLabelList);
+			revalidate();
+			repaint();
+		});
+	}
+	
+	private void updateLabels(List<String> labelText,List<JLabel> labels) {
+		for (int i = 0;i<labelText.size() && i<labels.size();i++) {
+			labels.get(i).setText(labelText.get(i));
+		}
+	}
+
+	private void processItemsText(String displayString) {
+		int remainingLength = displayString.length();
+		while(remainingLength>0) {
+			int lineLength = calculateLineLength(displayString,remainingLength);
+			itemTextList.add(displayString.substring(0,lineLength));
+			itemLabelList.add(new JLabel());
+			displayString = displayString.substring(lineLength);
+			remainingLength = displayString.length();
+		}
+	}
+	
+	private int calculateLineLength(String line, int remainingLength) {
+		int lineLength = Math.min(Constants.LINE_LENGTH, remainingLength);
+		if (remainingLength>99) {
+			lineLength = findLastWhitespace(line,lineLength);
+		}
+		return lineLength;
+	}
+	
+	private int findLastWhitespace(String line, int initialLength) {
+		int adjustedLength = initialLength;
+		while (adjustedLength>0 && !Character.isWhitespace(line.charAt(adjustedLength))) {
+			adjustedLength--;
+		}
+		return adjustedLength>0?adjustedLength:initialLength;
+	}
+}
+/**
+ * Displays game status information including time and player status.
+ * Updates automatically when game state changes.
+ */
+public class StatusPanel extends JPanel {
+	
+	private static final long serialVersionUID = 582607980142319020L;
+	
+	//UI Components
+	private final JLabel timeLabel = new JLabel();
+	private final JLabel statusLabel = new JLabel();
+	
+	//State
+	private GameStateProvider state;
+	
+	public StatusPanel(GameStateProvider state) {
+		this.state = Objects.requireNonNull(state, "GameStateProvider cannot be null");
+		initialiseComponents();
+		updateDisplay();
+	}
+	
+	private void initialiseComponents() {
+		setLayout(new GridLayout(2, 1));
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+		
+		JPanel timePanel = createLabelPanel(timeLabel);
+		JPanel statusPanel = createLabelPanel(statusLabel);
+		
+		add(timePanel);
+		add(statusPanel);
+	}
+	
+	private JPanel createLabelPanel(JLabel label) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panel.add(label);
+		return panel;
+	}
+	
+    /**
+     * Updates the panel with new game state
+     * @param state The current game state provider
+     */
+	public void refreshUI(GameStateProvider state) {
+		this.state = state;
+		updateDisplay();
+	}
+	
+	public void updateDisplay() {
+		SwingUtilities.invokeLater(()->{
+			String timeText="";
+			String statusText="";
+			
+			if (state != null) {
+				timeText = state.getTime();
+				statusText = state.getStatus();
+			}
+			
+			timeLabel.setText(timeText);
+			statusLabel.setText(statusText);
+		});
+	}
+}
 
 

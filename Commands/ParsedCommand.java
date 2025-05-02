@@ -16,7 +16,6 @@ public class ParsedCommand {
 	private final String codedCommand;
 	private final int verbNumber;
 	private final int nounNumber;
-	private boolean validCommand;
 	
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
@@ -39,10 +38,6 @@ public class ParsedCommand {
 	
 	public String getCommand() {
 		return command;
-	}
-	
-	public void setValidCommand(boolean validCommand) {
-		this.validCommand = validCommand;
 	}
 }
 

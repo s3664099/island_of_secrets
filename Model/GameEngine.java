@@ -47,14 +47,14 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			processor = new CommandProcessor();
 			result = processor.execute(command,game,player);
 		}
-		applyResult(result);
+		applyResult(result,player);
 		updateCommandHistory(command);
 		
 		test.displayValue(this.game, this.player);
 	}
 	
-	private void applyResult(ParsedCommand result) {
-		
+	private void applyResult(ParsedCommand result,Player player) {
+		player.turnUpdateStats();
 	}
 	
 	private void updateCommandHistory(String command) {

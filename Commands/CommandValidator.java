@@ -16,13 +16,12 @@ public class CommandValidator {
 	
 	boolean validCommand;
 	
-	public ParsedCommand validateCommand(ParsedCommand command, Game game) {
+	public boolean validateCommand(ParsedCommand command, Game game) {
 		
 		validCommand = eitherExists(command,game);
 		validCommand = neitherExists(command,game);
-		command.setValidCommand(validCommand);
 		
-		return command;
+		return validCommand;
 	}
 	
 	//Either verb or noun doesn't exist

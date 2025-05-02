@@ -30,8 +30,11 @@ public class CommandProcessor {
 	public ParsedCommand execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
-		command = validator.validateCommand(command,game);
+		boolean validCommand = validator.validateCommand(command,game);
 		
+		if(validCommand) {
+			
+		}
 
 		
 
