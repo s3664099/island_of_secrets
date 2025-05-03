@@ -102,7 +102,6 @@ public class CommandParser {
 			
 		if (splitCommand[1].length()==0) {
 			splitCommand[1] = "room";
-			
 		}
 		
 		splitCommand[0] = "examine";
@@ -112,8 +111,6 @@ public class CommandParser {
 								splitCommand,command.getCommand());
 	}
 }
-
-//new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput)
 
 /* 28 April 2025 - Created File
  * 30 April 2025 - Started building parser

@@ -302,7 +302,6 @@ public class Game implements Serializable {
 		gameState = GameState.LIGHTNING;
 	}
 	
-	
 	public void setEndGameState() {
 		
 		logger.info("Game ended.");

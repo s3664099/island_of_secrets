@@ -28,9 +28,6 @@ public class CommandExecutor {
 		
 
 		
-		//Movement Command (verb only)
-		if ((verbNo>0 && verbNo<5)) {
-			this.command.move(game,player,splitCommand[1]);//More than one verb
 		
 		//Eat
 		} else if (verbNo==11) {
