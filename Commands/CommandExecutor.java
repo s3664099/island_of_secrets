@@ -18,8 +18,7 @@ import Data.RawData;
 import Game.Game;
 import Game.Player;
 
-public class CommandProcess {
-	
+public class CommandExecutor {
 	
 	//Executes the command
 	public void executeCommand(Game game,Player player,int nounNumber) throws IOException {
@@ -27,16 +26,7 @@ public class CommandProcess {
 		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
 		int commandLength = this.commands.length;
 		
-		//Sets look to examine
-		if (this.commands[0].equals("look") && commandLength==1) {
-			verbNo = 33;
-			this.splitCommand[0] = "examine";
-			this.splitCommand[1] = "room";
-			commandLength = 2;
-		} else if (this.commands[0].equals("look")) {
-			this.splitCommand[0] = "examine";
-			verbNo = 33;
-		}
+
 		
 		//Movement Command (verb only)
 		if ((verbNo>0 && verbNo<5)) {

@@ -39,7 +39,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	//=== Core Game Loop ===//
 	public void processCommand(String command) throws IOException {
 		
-		ParsedCommand result = null;
+		ActionResult result = null;
 		
 		if(player.isPlayerStateSwimming()) {
 			result = swimming.execute(command,player,game);
@@ -47,6 +47,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			processor = new CommandProcessor();
 			result = processor.execute(command,game,player);
 		}
+		
 		applyResult(result,player);
 		updateCommandHistory(command);
 		

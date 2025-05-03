@@ -21,47 +21,30 @@ public class CommandProcessor {
 
 	private final CommandParser parser;
 	private final CommandValidator validator;
+	private final CommandExecutor executor;
+	private ActionResult result;
 	
 	public CommandProcessor() {
 		this.parser = new CommandParser();
 		this.validator = new CommandValidator();
+		this.executor = new CommandExecutor();
+		this.result = new ActionResult();
 	}
 	
-	public ParsedCommand execute(String rawInput,Game game, Player player) {
+	public ActionResult execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
 		boolean validCommand = validator.validateCommand(command,game);
 		
+		
+		
 		if(validCommand) {
-			
+			result = executor.executeCommand(game,player,command);
 		}
 
-		
-
-		
-		player.turnUpdateStats();
-		Item item = this.game.getItem(nounNumber);
-		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-		processCommands.executeCommand(this.game, player, nounNumber);
-			
-		this.codedCommand = codedCommand;
-		this.nounNum = nounNumber;
-			
-		//Has a game been loaded?
-		if (processCommands.checkLoadedGame()) {
-			//this.game = processCommands.getGame();
-			//this.player = processCommands.getPlayer();
-		}
-		
-		//Is the player now swimming - creates new swimming object
-		if (player.isPlayerStateStartSwimming()) {
-			player.setSwimming(new Swimming(player.getRoom()));
-			player.setPlayerStateSwimming();
-		}
-			
 		//determinePanel(game);
 						
-		return command;
+		return result;
 	}
 	
 	public void executeGive(String object) {
@@ -73,7 +56,7 @@ public class CommandProcessor {
 		
 		//Is the response correct for a give command?
 		if (object.split(" ").length==1) {
-			CommandProcess processCommands = new CommandProcess();
+			CommandExecutor processCommands = new CommandExecutor();
 			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
 		} else {
 			this.game.addMessage("I'm sorry, I don't understand.",true,true);

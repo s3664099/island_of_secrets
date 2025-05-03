@@ -21,7 +21,7 @@ public class CommandParser {
 	public CommandParser() {
 		normaliser = new CommandNormaliser();
 	}
-	
+		
 	public ParsedCommand parse(String rawInput, Game game, int room) {
 		
 		rawInput = normaliser.normalise(rawInput);
@@ -29,10 +29,15 @@ public class CommandParser {
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		int nounNumber = getNounNumber(splitCommand[1]);
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
+		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
 		
-		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
+		if (splitCommand[0].equals("look")) {
+			command = parseLook(splitCommand,command);
+		}
+		
+		return command;
 	}
-	
+		
 	private String[] splitCommand(String rawInput) {
 		
 		String[] splitCommand = {"",""};
@@ -92,10 +97,27 @@ public class CommandParser {
 		
 		return codedNoun;
 	}
+		
+	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command) {
+			
+		if (splitCommand[1].length()==0) {
+			splitCommand[1] = "room";
+			
+		}
+		
+		splitCommand[0] = "examine";
+		int verbNumber = 33;
+		
+		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
+								splitCommand,command.getCommand());
+	}
 }
+
+//new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput)
 
 /* 28 April 2025 - Created File
  * 30 April 2025 - Started building parser
  * 1 May 2025 - Completed parser
  * 2 May 2025 - Updated for command validator
+ * 3 May 2025 - Added Parse Look method
  */

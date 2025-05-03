@@ -1,224 +1,18 @@
-public class CommandProcessor {
-
-	private final CommandParser parser;
-	private final CommandValidator validator;
-	
-	public CommandProcessor() {
-		this.parser = new CommandParser();
-		this.validator = new CommandValidator();
-	}
-	
-	public ParsedCommand execute(String rawInput,Game game, Player player) {
+Okay, this is what I came up with: 	public ActionResult execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
-		command = validator.validateCommand(command,game);
+		boolean validCommand = validator.validateCommand(command,game);
 		
-
 		
-
 		
-		player.turnUpdateStats();
-		Item item = this.game.getItem(nounNumber);
-		String codedCommand = processCommands.codeCommand(this.player.getRoom(),nounNumber,item);
-		processCommands.executeCommand(this.game, player, nounNumber);
-			
-		this.codedCommand = codedCommand;
-		this.nounNum = nounNumber;
-			
-		//Has a game been loaded?
-		if (processCommands.checkLoadedGame()) {
-			//this.game = processCommands.getGame();
-			//this.player = processCommands.getPlayer();
+		if(validCommand) {
+			result = executor.executeCommand(game,player,command);
 		}
-		
-		//Is the player now swimming - creates new swimming object
-		if (player.isPlayerStateStartSwimming()) {
-			player.setSwimming(new Swimming(player.getRoom()));
-			player.setPlayerStateSwimming();
-		}
-			
+
 		//determinePanel(game);
 						
-		return command;
-	}
-	
-	public void executeGive(String object) {
-		//Checks if the response is 'to xxxx'
-		String[] instructions = object.split(" ");
-		if (instructions[0].equals("to") && instructions.length==2) {
-			object = instructions[1];
-		}
-		
-		//Is the response correct for a give command?
-		if (object.split(" ").length==1) {
-			CommandProcess processCommands = new CommandProcess();
-			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
-		} else {
-			this.game.addMessage("I'm sorry, I don't understand.",true,true);
-		}
-		
-		this.game.setGiveState();
-	}
-	
-}
-
-public class CommandParser {
-	
-	private final CommandNormaliser normaliser;
-	
-	public CommandParser() {
-		normaliser = new CommandNormaliser();
-	}
-	
-	public ParsedCommand parse(String rawInput, Game game, int room) {
-		
-		rawInput = normaliser.normalise(rawInput);
-		String[] splitCommand = splitCommand(rawInput);
-		int verbNumber = getVerbNumber(splitCommand[0]);
-		int nounNumber = getNounNumber(splitCommand[1]);
-		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
-		
-		return new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
-	}
-	
-	private String[] splitCommand(String rawInput) {
-		
-		String[] splitCommand = {"",""};
-		String[] commands = rawInput.split(" ");
-		splitCommand[0] = commands[0];
-		
-		if(commands.length>1) {
-			splitCommand[1] = rawInput.substring(commands[0].length(),rawInput.length());
-		}
-		
-		return splitCommand;
-	}
-	
-	private int getVerbNumber(String verb) {
-		
-		int verbNumber = Constants.NUMBER_OF_VERBS+1;
-		int verbCount = 0;
-		
-		for (String command:RawData.getVerbs()) {
-			verbCount ++;
-			
-			if (verb.equals(command)) {
-				verbNumber = verbCount;
-			}
-		}
-		
-		return verbNumber;
-	}
-	
-	private int getNounNumber(String noun) {
-		
-		int nounNumber = Constants.NUMBER_OF_NOUNS;
-				
-		//Only called if more than two words
-		if (noun.length()>1) {
-			
-			int nounCount = 0;
-			for (String command:RawData.getNouns()) {
-				nounCount ++;
-								
-				if (noun.equals(command)) {
-					nounNumber = nounCount;
-				}
-			}
-		} else {
-			nounNumber = -1;
-		}
-		return nounNumber;
-	}
-	
-	private String codeCommand(String[] splitCommand, int nounNumber, Game game, int room) {
-		
-		Item item = game.getItem(nounNumber);
-		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
-		Math.abs(item.getItemFlag()),room);
-		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
-		
-		return codedNoun;
-	}
-}
-public class ParsedCommand {
-	
-	private final String command;
-	private final String[] splitCommand;
-	private final String codedCommand;
-	private final int verbNumber;
-	private final int nounNumber;
-	private boolean validCommand;
-	
-	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
-						String[] splitCommand, String command) {
-	
-		this.splitCommand = splitCommand;
-		this.codedCommand = codedCommand;
-		this.verbNumber = verbNumber;
-		this.nounNumber = nounNumber;
-		this.command = command;
-	
-	}
-	
-	public int getVerbNumber() {
-		return verbNumber;
-	}
-	
-	public int getNounNumber() {
-		return nounNumber;
-	}
-	
-	public String getCommand() {
-		return command;
-	}
-	
-	public void setValidCommand(boolean validCommand) {
-		this.validCommand = validCommand;
-	}
-}
-	
-	boolean validCommand;
-	
-	public ParsedCommand validateCommand(ParsedCommand command, Game game) {
-		
-		validCommand = eitherExists(command,game);
-		validCommand = neitherExists(command,game);
-		command.setValidCommand(validCommand);
-		
-		return command;
-	}
-	
-	//Either verb or noun doesn't exist
-	private boolean eitherExists(ParsedCommand command, Game game) {
-		
-		boolean validCommand = true;
-		
-		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
-			command.getNounNumber() == Constants.NUMBER_OF_NOUNS) {
-			game.addMessage("You can't "+command.getCommand(), true, true);
-			validCommand = false;
-		}
-		
-		return validCommand;
-	}
-	
-	//Neither exists
-	private boolean neitherExists(ParsedCommand command,Game game) {
-		
-		boolean validCommand = true;
-		
-		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
-				command.getNounNumber() == 52) {
-			game.addMessage("What!!",true,true);
-			validCommand = false;
-		}
-		
-		return validCommand;
-	}
-}
-ublic class CommandProcess {
-	
+		return result;
+	} This will be the contents of Executor: public class CommandExecutor {
 	
 	//Executes the command
 	public void executeCommand(Game game,Player player,int nounNumber) throws IOException {
@@ -627,8 +421,7 @@ ublic class CommandProcess {
 		game.addPanelMessage("You blindly run through the storm",true);
 
 	}
-}
-public class Commands {
+} And this is Commands: public class Commands {
 	
 	private int verb;
 	private int noun;
@@ -1766,4 +1559,4 @@ public class Commands {
 		player.setStat("timeRemaining",1);
 		game.setEndGameState();
 	}
-}
+} So, we need to fix these two classes and we are then on the home straight.

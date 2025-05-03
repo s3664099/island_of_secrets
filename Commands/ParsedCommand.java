@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 2 May 2025
+Version: 4.3
+Date: 3 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,9 +39,14 @@ public class ParsedCommand {
 	public String getCommand() {
 		return command;
 	}
+	
+	public String getCodedCommand() {
+		return codedCommand;
+	}
 }
 
 /* 24 April 2025 - Created File
  * 1 May 2025 - Added varables and built constructor
  * 2 May 2025 - Added getters for command validation
+ * 3 May 2025 - Added getter for codedCommand
  */
