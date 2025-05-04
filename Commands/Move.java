@@ -10,6 +10,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Commands;
 
 import Data.Constants;
+import Game.Game;
+import Game.Player;
 
 public class Move {
 	
@@ -50,25 +52,28 @@ public class Move {
 				command.getSplitCommand(),command.getCommand());
 	}
 
-	
-
-
-	/*Validate Move
-	 * 		//Poisoned waters
-		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
-			player.setRoom(rand.nextInt(5)+1);
-			player.setPlayerStateStartSwimming();
+	public boolean validateMove(ParsedCommand command, Game game, int room) {
+		
+		boolean validMove = true;
+		
+		if (!game.checkExit(room,command.getNounNumber()-1)) {
+			game.addMessage("You can't go that way",true,true);
+			validMove = false;
 		}
-				
-		//Checks if player able to move
+		
+		return validMove;
+	}
+	
+	//Can move but event blocks movement
+	public ActionResult moveBlocked(Game game, Player player, ParsedCommand command) {
+		
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		if (game.getItem(39).isAtLocation(player.getRoom()) && 
+		if (game.getItem(39).isAtLocation(player.getRoom()) &&
 			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
-		
-		//Swampman blocks
+
 		} else if (player.getRoom() == game.getItem(32).getItemLocation() && 
-					game.getItem(32).getItemFlag()<1 && direction == 3) {
+					game.getItem(32).getItemFlag()<1 && command.getNounNumber() == 3) {
 			game.addMessage("He will not let you pass.",true,true);
 		
 		//The Rocks
@@ -80,19 +85,20 @@ public class Move {
 			game.addMessage("The arms hold you fast",true,true);
 		
 		//Snake at grandpa's Shack
-		} else if (player.getRoom()==45 && game.getItem(40).getItemFlag()==0 && direction == 4) {
+		} else if (player.getRoom()==45 && game.getItem(40).getItemFlag()==0 && command.getNounNumber() == 4) {
 			game.addMessage("Hisss!",true,true);
 		
 		//Looks like need canyon beast to climb the path	
-		} else if (player.getRoom() == 25 && game.getItemFlagSum(16) != -1 && direction ==3) {
+		} else if (player.getRoom() == 25 && game.getItemFlagSum(16) != -1 && command.getNounNumber() ==3) {
 			game.addMessage("Too steep to climb",true,true);
 		
-		
-		} else if (player.getRoom() == 51 && direction == 3) {
+		} else if (player.getRoom() == 51 && command.getNounNumber() == 3) {
 			game.addMessage("The door is barred!",true,true);
+		}
 		
-	 */
-	
+		return new ActionResult(game,player,)
+			
+	}	
 }
 
 /* 4 May 2025 - Created File

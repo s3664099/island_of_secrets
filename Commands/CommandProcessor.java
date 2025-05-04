@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 2 May 2025
+Version: 4.5
+Date: 4 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,7 +34,7 @@ public class CommandProcessor {
 	public ActionResult execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
-		boolean validCommand = validator.validateCommand(command,game);
+		boolean validCommand = validator.validateCommand(command,game,player);
 		
 		if(validCommand) {
 			result = executor.executeCommand(game,player,command);
@@ -69,4 +69,5 @@ public class CommandProcessor {
  * 27 April 2025 - Moved Swimming code to Swimming. Added swimming state change
  * 28 April 2025 - Started building the command processing components
  * 2 May 2025 - Added command validator
+ * 4 May 2025 - Updated to move player into validator
  */

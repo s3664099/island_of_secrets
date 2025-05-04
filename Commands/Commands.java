@@ -49,7 +49,11 @@ public class Commands {
 	
 	public void move(Game game,Player player,String noun) {
 
-			
+		//Poisoned waters
+		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
+			player.setRoom(rand.nextInt(5)+1);
+			player.setPlayerStateStartSwimming();
+		}	
 
 		//Can move
 		} else {
@@ -66,15 +70,12 @@ public class Commands {
 						"-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
 					player.setRoom(newRoom);
 					game.addMessage("Ok",true,true);
-					haveMoved = true;
+					
 					game.getRoom(newRoom).setVisited();
 				}
 			}
 			
-			//Otherwise can't move
-			if (direction<1 || !haveMoved) {
-				game.addMessage("You can't go that way",true,true);
-			}
+
 			
 			//Room with the hands
 			if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
