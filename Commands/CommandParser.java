@@ -33,6 +33,8 @@ public class CommandParser {
 		
 		if (splitCommand[0].equals("look")) {
 			command = parseLook(splitCommand,command);
+		} else if (command.checkMoveState()) {
+			command = parseMove(command,room);
 		}
 		
 		return command;
@@ -110,6 +112,10 @@ public class CommandParser {
 		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
 								splitCommand,command.getCommand());
 	}
+	
+	private ParsedCommand parseMove(ParsedCommand command,int room) {
+		return new Move().parseMove(command, room);
+	}
 }
 
 /* 28 April 2025 - Created File
@@ -117,4 +123,5 @@ public class CommandParser {
  * 1 May 2025 - Completed parser
  * 2 May 2025 - Updated for command validator
  * 3 May 2025 - Added Parse Look method
+ * 4 May 2025 - Added Parse Move method
  */

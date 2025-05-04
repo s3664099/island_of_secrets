@@ -21,6 +21,7 @@ public class CommandValidator {
 		validCommand = eitherExists(command,game);
 		validCommand = neitherExists(command,game);
 		validCommand = missingNoun(command,game);
+		//Add validate move
 		
 		return validCommand;
 	}

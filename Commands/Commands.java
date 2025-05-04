@@ -48,77 +48,9 @@ public class Commands {
 	}
 	
 	public void move(Game game,Player player,String noun) {
-		
-		int direction = 0;
-		boolean haveMoved=false;
-		
-		//Verb only
-		if (this.noun == 52) {
-			direction = this.verb;
-		} else if (this.noun>Constants.NUMBER_OF_ITEMS && this.noun<Constants.NUMBER_OF_NOUNS) {
-			direction = this.noun-Constants.NUMBER_OF_ITEMS;
-		}
-		
-		if (player.getRoom()==12 && noun.equals("cave")) {
-			direction=4;
-		} else if (player.getRoom()==45 && noun.equals("hut")) {
-			direction=4;
-		} else if (player.getRoom()==53 && noun.equals("hut")) {
-			direction=4;
-		} else if (player.getRoom()==70 && noun.equals("hut") ) {
-			direction=1;
-		}
-						
-		//Sets direction for specific movement command
-		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
-			direction = 4;
-		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
-				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
-				   code.equals("490051")) {
-			direction = 1;
-		} else if (code.equals("510060")||code.equals("480056")) {
-			direction = 2;
-		} else if (code.equals("510044")||code.equals("510052")) {
-			direction = 3;
-		}
+
 			
-		//Poisoned waters
-		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
-			player.setRoom(rand.nextInt(5)+1);
-			player.setPlayerStateStartSwimming();
-		}
-				
-		//Checks if player able to move
-		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		if (game.getItem(39).isAtLocation(player.getRoom()) && 
-			(player.getStrengthWisdon()<180 || player.getRoom()==10)) {
-			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
-		
-		//Swampman blocks
-		} else if (player.getRoom() == game.getItem(32).getItemLocation() && 
-					game.getItem(32).getItemFlag()<1 && direction == 3) {
-			game.addMessage("He will not let you pass.",true,true);
-		
-		//The Rocks
-		} else if (player.getRoom() == 47 && game.getItem(44).getItemFlag()==0) {
-			game.addMessage("The rocks move to prevent you",true,true);
-		
-		//Room with Arms
-		} else if (player.getRoom() == 28 && game.getItem(7).getItemFlag()!=1) {
-			game.addMessage("The arms hold you fast",true,true);
-		
-		//Snake at grandpa's Shack
-		} else if (player.getRoom()==45 && game.getItem(40).getItemFlag()==0 && direction == 4) {
-			game.addMessage("Hisss!",true,true);
-		
-		//Looks like need canyon beast to climb the path	
-		} else if (player.getRoom() == 25 && game.getItemFlagSum(16) != -1 && direction ==3) {
-			game.addMessage("Too steep to climb",true,true);
-		
-		
-		} else if (player.getRoom() == 51 && direction == 3) {
-			game.addMessage("The door is barred!",true,true);
-		
+
 		//Can move
 		} else {
 			
