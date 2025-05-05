@@ -34,9 +34,9 @@ public class CommandProcessor {
 	public ActionResult execute(String rawInput,Game game, Player player) {
 		
 		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
-		boolean validCommand = validator.validateCommand(command,game,player);
+		result = validator.validateCommand(command,game,player);
 		
-		if(validCommand) {
+		if(result.getValid()) {
 			result = executor.executeCommand(game,player,command);
 		}
 

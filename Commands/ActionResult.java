@@ -26,6 +26,24 @@ public class ActionResult {
 		this.game = game;
 		this.valid = false;
 	}
+	
+	public ActionResult(Game game, boolean valid) {
+		this.player = null;
+		this.game = game;
+		this.valid = valid;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public boolean getValid() {
+		return valid;
+	}
 }
 
 /* 5 May 2025 - Created File

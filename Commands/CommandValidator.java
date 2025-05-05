@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 4 May 2025
+Version: 4.4
+Date: 5 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,20 +15,24 @@ import Game.Player;
 
 public class CommandValidator {
 	
-	boolean validCommand;
+	private boolean validCommand;
+	private Game game;
 	
-	public boolean validateCommand(ParsedCommand command, Game game, Player player) {
+	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
 		
-		validCommand = eitherExists(command,game);
-		validCommand = neitherExists(command,game);
-		validCommand = missingNoun(command,game);
+		this.game = game;
+		validCommand = eitherExists(command,this.game);
+		validCommand = neitherExists(command,this.game);
+		validCommand = missingNoun(command,this.game);
+		
+		ActionResult result = new ActionResult(this.game,validCommand);
 		
 		if(command.checkMoveState()) {
 			Move moveValidator = new Move();
-			validCommand = moveValidator.validateMove(command,game,player.getRoom());
+			result = moveValidator.validateMove(command,this.game,player.getRoom());
 		}
 		
-		return validCommand;
+		return result;
 	}
 	
 	//Either verb or noun doesn't exist
@@ -77,4 +81,5 @@ public class CommandValidator {
  * 2 May 2025 - Added validation
  * 3 May 2025 - Added command length validation
  * 4 May 2025 - Added player object to validator
+ * 5 May 2025 - Updated validator to return ActionResult
  */

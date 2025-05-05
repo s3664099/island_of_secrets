@@ -52,7 +52,7 @@ public class Move {
 				command.getSplitCommand(),command.getCommand());
 	}
 
-	public boolean validateMove(ParsedCommand command, Game game, int room) {
+	public ActionResult validateMove(ParsedCommand command, Game game, int room) {
 		
 		boolean validMove = true;
 		
@@ -61,7 +61,7 @@ public class Move {
 			validMove = false;
 		}
 		
-		return validMove;
+		return new ActionResult(game,validMove);
 	}
 	
 	//Can move but event blocks movement
@@ -97,7 +97,6 @@ public class Move {
 		}
 		
 		return new ActionResult(game,player);
-			
 	}	
 }
 

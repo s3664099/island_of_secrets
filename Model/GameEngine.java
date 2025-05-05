@@ -49,14 +49,17 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			result = processor.execute(command,game,player);
 		}
 		
-		applyResult(result,player);
+		applyResult(result);
 		updateCommandHistory(command);
 		
 		test.displayValue(this.game, this.player);
 	}
 	
-	private void applyResult(ActionResult result,Player player) {
-		player.turnUpdateStats();
+	private void applyResult(ActionResult result) {
+		
+		this.player = result.getPlayer();
+		this.game = result.getGame();
+		this.player.turnUpdateStats();
 	}
 	
 	private void updateCommandHistory(String command) {
@@ -372,4 +375,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 27 April 2025 - Created swimming handler and moved swimming related code there.
 1 May 2025 - Fixed errors arising from changes to code
 5 May 2025 - Made game & player mutable (due to need for changing)
+		   - Updated for ActionResult
 */
