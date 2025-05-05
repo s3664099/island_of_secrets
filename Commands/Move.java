@@ -96,7 +96,7 @@ public class Move {
 			game.addMessage("The door is barred!",true,true);
 		}
 		
-		return new ActionResult(game,player,)
+		return new ActionResult(game,player);
 			
 	}	
 }

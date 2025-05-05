@@ -2,13 +2,14 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 1 May 2025
+Version: 4.20
+Date: 5 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import Commands.ActionResult;
 import Commands.CommandProcessor;
 import Commands.ParsedCommand;
 import Game.Game;
@@ -22,8 +23,8 @@ import java.util.List;
 
 public class GameEngine implements GameCommandHandler,GameStateProvider {
 	
-	private final Game game;
-	private final Player player;
+	private Game game;
+	private Player player;
 	private SwimmingHandler swimming = new SwimmingHandler();
 	private CommandProcessor processor;
 	private final String[] commandHistory = {"","",""};
@@ -54,7 +55,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 		test.displayValue(this.game, this.player);
 	}
 	
-	private void applyResult(ParsedCommand result,Player player) {
+	private void applyResult(ActionResult result,Player player) {
 		player.turnUpdateStats();
 	}
 	
@@ -370,4 +371,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 25 April 2025 - Added methods for player state
 27 April 2025 - Created swimming handler and moved swimming related code there.
 1 May 2025 - Fixed errors arising from changes to code
+5 May 2025 - Made game & player mutable (due to need for changing)
 */
