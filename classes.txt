@@ -1,0 +1,404 @@
+public class GameEngine implements GameCommandHandler,GameStateProvider {
+	
+	private Game game;
+	private Player player;
+	private SwimmingHandler swimming = new SwimmingHandler();
+	private CommandProcessor processor;
+	private final String[] commandHistory = {"","",""};
+	private final Test test = new Test();
+
+	
+	public GameEngine(Game game,Player player) {
+		this.game = game;
+		this.player = player;
+		this.test.setTest(this.game, this.player);
+	}
+	
+	//=== Core Game Loop ===//
+	public void processCommand(String command) throws IOException {
+		
+		ActionResult result = null;
+		
+		if(player.isPlayerStateSwimming()) {
+			result = swimming.execute(command,player,game);
+		} else {
+			processor = new CommandProcessor();
+			result = processor.execute(command,game,player);
+		}
+		
+		applyResult(result);
+		updateCommandHistory(command);
+		
+		test.displayValue(this.game, this.player);
+	}
+	
+	private void applyResult(ActionResult result) {
+		
+		this.player = result.getPlayer();
+		this.game = result.getGame();
+		this.player.turnUpdateStats();
+	}
+	
+	private void updateCommandHistory(String command) {
+		
+		//Saves the commands into the previous command list
+		if (this.commandHistory[0].equals("")) {
+			this.commandHistory[0] = command;
+		} else if (this.commandHistory[1].equals("")) {
+			this.commandHistory[1] = command;
+		} else if (this.commandHistory[2].equals("")) {
+			this.commandHistory[2] = command;
+		} else {
+			this.commandHistory[0] = this.commandHistory[1];
+			this.commandHistory[1] = this.commandHistory[2];
+			this.commandHistory[2] = command;
+		}
+	}
+} (This is only part, the game state management has been omitted)
+
+public class CommandProcessor {
+
+	private final CommandParser parser;
+	private final CommandValidator validator;
+	private final CommandExecutor executor;
+	private ActionResult result;
+	
+	public CommandProcessor() {
+		this.parser = new CommandParser();
+		this.validator = new CommandValidator();
+		this.executor = new CommandExecutor();
+		this.result = new ActionResult();
+	}
+	
+	public ActionResult execute(String rawInput,Game game, Player player) {
+		
+		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
+		result = validator.validateCommand(command,game,player);
+		
+		if(result.getValid()) {
+			result = executor.executeCommand(game,player,command);
+		}
+
+		//determinePanel(game);
+						
+		return result;
+	}
+	
+	public void executeGive(String object) {
+		//Checks if the response is 'to xxxx'
+		String[] instructions = object.split(" ");
+		if (instructions[0].equals("to") && instructions.length==2) {
+			object = instructions[1];
+		}
+		
+		//Is the response correct for a give command?
+		if (object.split(" ").length==1) {
+			CommandExecutor processCommands = new CommandExecutor();
+			processCommands.executeGive(this.game,this.player,this.nounNum,object,this.codedCommand);
+		} else {
+			this.game.addMessage("I'm sorry, I don't understand.",true,true);
+		}
+		
+		this.game.setGiveState();
+	}
+	
+} (The executeGive isn't complete)
+
+public class CommandValidator {
+	
+	private boolean validCommand;
+	private Game game;
+	
+	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
+		
+		this.game = game;
+		validCommand = eitherExists(command,this.game);
+		validCommand = neitherExists(command,this.game);
+		validCommand = missingNoun(command,this.game);
+		
+		ActionResult result = new ActionResult(this.game,validCommand);
+		
+		if(command.checkMoveState()) {
+			Move moveValidator = new Move();
+			result = moveValidator.validateMove(command,this.game,player.getRoom());
+		}
+		
+		return result;
+	}
+	
+	//Either verb or noun doesn't exist
+	private boolean eitherExists(ParsedCommand command, Game game) {
+		
+		boolean validCommand = true;
+		
+		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
+			command.getNounNumber() == Constants.NUMBER_OF_NOUNS) {
+			game.addMessage("You can't "+command.getCommand(), true, true);
+			validCommand = false;
+		}
+		
+		return validCommand;
+	}
+	
+	//Neither exists
+	private boolean neitherExists(ParsedCommand command,Game game) {
+		
+		boolean validCommand = true;
+		
+		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
+				command.getNounNumber() == 52) {
+			game.addMessage("What!!",true,true);
+			validCommand = false;
+		}
+		
+		return validCommand;
+	}
+	
+	private boolean missingNoun(ParsedCommand command,Game game) {
+		
+		boolean validCommand = true;
+		
+		if (command.checkMultipleCommandState() && !command.checkNounLength()) {
+			game.addMessage("Most commands need two words", true, true);
+			validCommand = false;
+		}
+		
+		return validCommand;
+		
+	}
+}
+
+public class ActionResult {
+	
+	private final Game game;
+	private final Player player;
+	private final boolean valid;
+	
+	public ActionResult(Game game, Player player) {
+		this.player = player;
+		this.game = game;
+		this.valid = false;
+	}
+	
+	public ActionResult(Game game, boolean valid) {
+		this.player = null;
+		this.game = game;
+		this.valid = valid;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public boolean getValid() {
+		return valid;
+	}
+}
+
+public class CommandParser {
+	
+	private final CommandNormaliser normaliser;
+	
+	public CommandParser() {
+		normaliser = new CommandNormaliser();
+	}
+		
+	public ParsedCommand parse(String rawInput, Game game, int room) {
+		
+		rawInput = normaliser.normalise(rawInput);
+		String[] splitCommand = splitCommand(rawInput);
+		int verbNumber = getVerbNumber(splitCommand[0]);
+		int nounNumber = getNounNumber(splitCommand[1]);
+		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
+		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
+		
+		if (splitCommand[0].equals("look")) {
+			command = parseLook(splitCommand,command);
+		} else if (command.checkMoveState()) {
+			command = parseMove(command,room);
+		}
+		
+		return command;
+	}
+		
+	private String[] splitCommand(String rawInput) {
+		
+		String[] splitCommand = {"",""};
+		String[] commands = rawInput.split(" ");
+		splitCommand[0] = commands[0];
+		
+		if(commands.length>1) {
+			splitCommand[1] = rawInput.substring(commands[0].length(),rawInput.length());
+		}
+		
+		return splitCommand;
+	}
+	
+	private int getVerbNumber(String verb) {
+		
+		int verbNumber = Constants.NUMBER_OF_VERBS+1;
+		int verbCount = 0;
+		
+		for (String command:RawData.getVerbs()) {
+			verbCount ++;
+			
+			if (verb.equals(command)) {
+				verbNumber = verbCount;
+			}
+		}
+		
+		return verbNumber;
+	}
+	
+	private int getNounNumber(String noun) {
+		
+		int nounNumber = Constants.NUMBER_OF_NOUNS;
+				
+		//Only called if more than two words
+		if (noun.length()>1) {
+			
+			int nounCount = 0;
+			for (String command:RawData.getNouns()) {
+				nounCount ++;
+								
+				if (noun.equals(command)) {
+					nounNumber = nounCount;
+				}
+			}
+		} else {
+			nounNumber = -1;
+		}
+		return nounNumber;
+	}
+	
+	private String codeCommand(String[] splitCommand, int nounNumber, Game game, int room) {
+		
+		Item item = game.getItem(nounNumber);
+		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
+		Math.abs(item.getItemFlag()),room);
+		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
+		
+		return codedNoun;
+	}
+		
+	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command) {
+			
+		if (splitCommand[1].length()==0) {
+			splitCommand[1] = "room";
+		}
+		
+		splitCommand[0] = "examine";
+		int verbNumber = 33;
+		
+		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
+								splitCommand,command.getCommand());
+	}
+	
+	private ParsedCommand parseMove(ParsedCommand command,int room) {
+		return new Move().parseMove(command, room);
+	}
+}
+
+public class ParsedCommand {
+	
+	private final String command;
+	private final String[] splitCommand;
+	private final String codedCommand;
+	private final int verbNumber;
+	private final int nounNumber;
+	private enum CommandState { NONE, MOVE, SINGLE_COMMAND, MULTIPLE_COMMAND };
+	private enum CommandType { NONE,TAKE,DROP};
+	private CommandState commandState = CommandState.NONE;
+	private CommandType commandType = CommandType.NONE;
+	
+	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
+						String[] splitCommand, String command) {
+	
+		this.splitCommand = splitCommand;
+		this.codedCommand = codedCommand;
+		this.verbNumber = verbNumber;
+		this.nounNumber = nounNumber;
+		this.command = command;
+		
+		setState(verbNumber);
+	}
+	
+	private void setState(int verbNumber) {
+		
+		if (verbNumber>0 && verbNumber<5) {
+			commandState = CommandState.MOVE;
+		} else if (verbNumber == 11 || verbNumber == 12 || 
+					verbNumber == 25 || verbNumber == 26 ||
+					verbNumber == 37 || verbNumber == 37 ||
+					verbNumber == 38 || verbNumber == 39 ||
+					verbNumber == 40 || verbNumber == 41 ||
+					verbNumber == 42) {
+			commandState = CommandState.SINGLE_COMMAND;
+		} else {
+			commandState = CommandState.MULTIPLE_COMMAND;
+		}
+	}
+	
+	public int getVerbNumber() {
+		return verbNumber;
+	}
+	
+	public int getNounNumber() {
+		return nounNumber;
+	}
+	
+	public String getCommand() {
+		return command;
+	}
+	
+	public String getCodedCommand() {
+		return codedCommand;
+	}
+	
+	public String[] getSplitCommand() {
+		return splitCommand;
+	}
+	
+	public boolean checkNounLength() {
+		boolean nounLength = true;
+		
+		if (splitCommand[1].length()==0) {
+			nounLength = false;
+		}
+		
+		return nounLength;
+	}
+	
+	public boolean checkMoveState() {
+		
+		boolean moveState = false;
+		if (commandState == CommandState.MOVE) {
+			moveState = true;
+		}
+		return moveState;
+	}
+	
+	public boolean checkSingleCommandState() {
+		
+		boolean moveState = false;
+		if (commandState == CommandState.SINGLE_COMMAND) {
+			moveState = true;
+		}
+		return moveState;
+	}
+	
+	public boolean checkMultipleCommandState() {
+		
+		boolean moveState = false;
+		if (commandState == CommandState.MULTIPLE_COMMAND) {
+			moveState = true;
+		}
+		return moveState;
+	}
+}
+
+

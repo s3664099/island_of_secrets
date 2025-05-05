@@ -21,10 +21,8 @@ import Game.Player;
 public class CommandExecutor {
 	
 	//Executes the command
-	public void executeCommand(Game game,Player player,int nounNumber) throws IOException {
-		
-		this.command = new Commands(verbNo,nounNumber,codedCommand,originalCommand);
-		int commandLength = this.commands.length;
+	public void executeCommand(Game game,Player player,ParsedCommand command) {
+
 		
 
 		
