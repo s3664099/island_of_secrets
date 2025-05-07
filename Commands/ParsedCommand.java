@@ -23,13 +23,6 @@ public class ParsedCommand {
 	private CommandState commandState = CommandState.NONE;
 	private CommandType commandType = CommandType.NONE;
 	
-	//private static final String[] VERBS = {
-	//		"n","s","e","w","go","get","take","give","drop","leave","eat","drink","ride",
-	//		"open","pick","chop","chip","tap","break","fight","strike","attack","hit",
-	//		"kill","swim","shelter","help","scratch","catch","rub","polish","read",
-	//		"examine","fill","say","wait","rest","wave","info","load","save","quit","games"
-	//	};
-	
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
 	
@@ -53,9 +46,39 @@ public class ParsedCommand {
 					verbNumber == 40 || verbNumber == 41 ||
 					verbNumber == 42) {
 			commandState = CommandState.SINGLE_COMMAND;
+			setSingleCommand(verbNumber);
 		} else {
 			commandState = CommandState.MULTIPLE_COMMAND;
 		}
+	}
+	
+	public void setSingleCommand(int verbNumber) {
+		
+		if (verbNumber == 11) {
+			commandType = CommandType.EAT;
+		} else if (verbNumber == 12) {
+			commandType = CommandType.DRINK;
+		} else if (verbNumber == 39) {
+			commandType = CommandType.INFO;
+		} else if (verbNumber == 38) {
+			commandType = CommandType.WAVE;
+		} else if (verbNumber == 40) {
+			commandType = CommandType.LOAD;
+		} else if (verbNumber == 41) {
+			commandType = CommandType.SAVE;
+		} else if (verbNumber == 36 || verbNumber == 37) {
+			commandType = CommandType.WAIT;
+		} else if (verbNumber == 42) {
+			commandType = CommandType.QUIT;
+		} else if (verbNumber == 25) {
+			commandType = CommandType.SWIM;
+		} else if (verbNumber == 26) {
+			commandType = CommandType.SHELTER;
+		}
+	}
+	
+	public void setMultipleCommand(int verbNumber) {
+		
 	}
 	
 	public int getVerbNumber() {
