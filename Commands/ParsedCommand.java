@@ -112,30 +112,19 @@ public class ParsedCommand {
 	}
 	
 	public boolean checkMoveState() {
-		
-		boolean moveState = false;
-		if (commandState == CommandState.MOVE) {
-			moveState = true;
-		}
-		return moveState;
+		return commandState == CommandState.MOVE;
 	}
 	
 	public boolean checkSingleCommandState() {
-		
-		boolean moveState = false;
-		if (commandState == CommandState.SINGLE_COMMAND) {
-			moveState = true;
-		}
-		return moveState;
+		return commandState == CommandState.SINGLE_COMMAND;
 	}
 	
 	public boolean checkMultipleCommandState() {
-		
-		boolean moveState = false;
-		if (commandState == CommandState.MULTIPLE_COMMAND) {
-			moveState = true;
-		}
-		return moveState;
+		return commandState == CommandState.MULTIPLE_COMMAND;
+	}
+	
+	public boolean checkNoneCommandType() {
+		return commandType == CommandType.NONE;
 	}
 }
 
@@ -143,5 +132,6 @@ public class ParsedCommand {
  * 1 May 2025 - Added varables and built constructor
  * 2 May 2025 - Added getters for command validation
  * 3 May 2025 - Added getter for codedCommand. Added commandState
- * 7 May 2025 - Added command enums
+ * 7 May 2025 - Added command enums. Set commandType for single Commands
+ * 				Tightened check enum methods
  */

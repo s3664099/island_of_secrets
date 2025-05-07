@@ -24,12 +24,15 @@ public class CommandValidator {
 		validCommand = eitherExists(command,this.game);
 		validCommand = neitherExists(command,this.game);
 		validCommand = missingNoun(command,this.game);
+		validCommand = checkNone(command,this.game);
 		
 		ActionResult result = new ActionResult(this.game,validCommand);
 		
-		if(command.checkMoveState()) {
-			Move moveValidator = new Move();
-			result = moveValidator.validateMove(command,this.game,player.getRoom());
+		if (validCommand) {
+			if(command.checkMoveState()) {
+				Move moveValidator = new Move();
+				result = moveValidator.validateMove(command,this.game,player.getRoom());
+			}
 		}
 		
 		return result;
@@ -71,9 +74,17 @@ public class CommandValidator {
 			game.addMessage("Most commands need two words", true, true);
 			validCommand = false;
 		}
-		
 		return validCommand;
+	}
+	
+	private boolean checkNone(ParsedCommand command,Game game) {
 		
+		boolean validCommand = true;
+		
+		if (command.checkNoneCommandType()) {
+			game.addMessage("I don't understand", true, true);
+		}
+		return validCommand;
 	}
 }
 
