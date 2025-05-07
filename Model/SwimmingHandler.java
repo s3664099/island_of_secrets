@@ -2,8 +2,8 @@
 Title: Island of Secrets Swimming Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 27 April 2025
+Version: 4.1
+Date: 7 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,17 +11,19 @@ package Model;
 
 import java.util.Random;
 
-import Commands.ParsedCommand;
+import Commands.ActionResult;
 import Data.Constants;
 import Game.Game;
 import Game.Player;
 
 public class SwimmingHandler {
 	
-	public ParsedCommand execute(String command, Player player, Game game) {
+	public ActionResult execute(String command, Player player, Game game) {
+		
+		//Need to have it's own command Parser to separate concerns
 		
 		game.addMessage("Ok",true,true);
-		Swimming swim = player.getSwimming();
+		//Swimming swim = player.getSwimming();
 		
 		if (command.substring(0,1).equals("n")) {
 			swim.swim();
@@ -49,7 +51,7 @@ public class SwimmingHandler {
 			player.setSwimming(swim);
 		}
 		
-		return new ParsedCommand();
+		return new ActionResult(game,player);
 	}
 	
 	public String getDescription() {
@@ -69,4 +71,6 @@ public class SwimmingHandler {
 }
 
 /* 27 April 2025 - Created File.
+ * 7 May 2025 - Changed return to ActionResult
+ */
  */
