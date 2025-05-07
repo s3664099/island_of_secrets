@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 3 May 2025
+Version: 4.4
+Date: 7 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -17,9 +17,18 @@ public class ParsedCommand {
 	private final int verbNumber;
 	private final int nounNumber;
 	private enum CommandState { NONE, MOVE, SINGLE_COMMAND, MULTIPLE_COMMAND };
-	private enum CommandType { NONE,TAKE,DROP};
+	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,KILL,SWIM,SHELTER,
+								HELP,SCRATCH,CATCH,RUB,READ,EXAMINE,FILL,SAY,WAIT,WAVE,INFO,
+								LOAD,SAVE,QUIT}; //(-5)
 	private CommandState commandState = CommandState.NONE;
 	private CommandType commandType = CommandType.NONE;
+	
+	//private static final String[] VERBS = {
+	//		"n","s","e","w","go","get","take","give","drop","leave","eat","drink","ride",
+	//		"open","pick","chop","chip","tap","break","fight","strike","attack","hit",
+	//		"kill","swim","shelter","help","scratch","catch","rub","polish","read",
+	//		"examine","fill","say","wait","rest","wave","info","load","save","quit","games"
+	//	};
 	
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
@@ -111,4 +120,5 @@ public class ParsedCommand {
  * 1 May 2025 - Added varables and built constructor
  * 2 May 2025 - Added getters for command validation
  * 3 May 2025 - Added getter for codedCommand. Added commandState
+ * 7 May 2025 - Added command enums
  */
