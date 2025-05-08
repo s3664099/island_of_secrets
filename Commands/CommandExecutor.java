@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 23 March 2025
+Version: 4.9
+Date: 8 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -20,10 +20,25 @@ import Game.Player;
 
 public class CommandExecutor {
 	
+	private ActionResult result = new ActionResult();
+	
 	//Executes the command
-	public void executeCommand(Game game,Player player,ParsedCommand command) {
-
+	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
+		if (command.checkMoveState()) {
+			
+			//Poisoned waters
+			if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
+				player.setRoom(rand.nextInt(5)+1);
+				player.setPlayerStateStartSwimming();
+				result = new ActionResult(game,player);
+			
+			//Normal Move
+			}	else {
+				Move move = new Move();
+				result = executeMove(game,player,command);
+			}
+		}
 
 		
 		
@@ -145,6 +160,8 @@ public class CommandExecutor {
 		}
 		
 		postUpdates(game,player);
+		
+		return result;
 	}
 	
 	public void postUpdates(Game game, Player player) {
@@ -478,4 +495,5 @@ public class CommandExecutor {
  * 21 March 2025 - Finished updating messages with Message Builder class
  * 22 March 2025 - Fixed up final issue with messages
  * 23 March 2025 - Combined addMessage and addNormalMessage
+ * 8 May 2025 - Added ActionResult as return for execution. Added move command
  */

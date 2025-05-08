@@ -49,70 +49,15 @@ public class Commands {
 	
 	public void move(Game game,Player player,String noun) {
 
-		//Poisoned waters
-		if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
-			player.setRoom(rand.nextInt(5)+1);
-			player.setPlayerStateStartSwimming();
-		}	
 
-		//Can move
-		} else {
-			
-			//Sets direction to 0 if not cardinal
-			if (direction>4) {
-				direction = 0;
-			}
-					
-			//Is direction a cardinal?
-			if (direction>0) {
-				if (game.checkExit(player.getRoom(),direction-1)) {
-					int newRoom = player.getRoom() + Integer.parseInt(
-						"-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
-					player.setRoom(newRoom);
-					game.addMessage("Ok",true,true);
-					
-					game.getRoom(newRoom).setVisited();
-				}
-			}
+
+
 			
 
 			
-			//Room with the hands
-			if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
-				game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
-			} else if (player.getRoom()==28) {
-				game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
-			} else if (player.getRoom()==27 && direction==1) {
-				game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
-			}
+
 			
-			
-			//Does the player have the beast and is on the jetty
-			if (player.getRoom() == 33 && game.getItem(16).getItemLocation()==0) {
-				game.getItem(16).setItemLocation(rand.nextInt(4)+1);
-				game.getItem(16).setItemFlag(0);
-				game.addMessage("The beast runs away",false,true);
-			}
-			
-			//Handling the ferry man
-			if (player.getRoom()==game.getItem(25).getItemLocation() && this.noun == 25) {
-				
-				if ((int) player.getStat("wisdom")<60) {
-					
-					game.addPanelMessage("You board the craft ...", true);
-					game.addPanelMessage("falling under the spell of the boatman",false);
-					game.addPanelMessage("and are taken to the Island of Secrets ...", false);
-					game.addPanelMessage("to serve Omegan forever.", false);
-					game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
-				} else {
-					game.addPanelMessage("You board the craft ...", true);
-					game.addPanelMessage("and are taken to the Island of Secrets ...", false);
-					player.setRoom(57);
-				}
-				game.addMessage("The boat skims the dark and silent waters.",true,true);
-				game.setMessageGameState();
-			}
-		}
+
 	}
 	
 	public void take(Game game,Player player) {
