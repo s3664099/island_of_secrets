@@ -21,6 +21,7 @@ import Game.Player;
 public class CommandExecutor {
 	
 	private ActionResult result = new ActionResult();
+	private Random rand = new Random();
 	
 	//Executes the command
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
@@ -28,7 +29,7 @@ public class CommandExecutor {
 		if (command.checkMoveState()) {
 			
 			//Poisoned waters
-			if (code.equals("490051") && game.getItem(29).getItemFlag()==0) {
+			if (command.getCodedCommand().equals("490051") && game.getItem(29).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
 				player.setPlayerStateStartSwimming();
 				result = new ActionResult(game,player);
@@ -36,9 +37,12 @@ public class CommandExecutor {
 			//Normal Move
 			}	else {
 				Move move = new Move();
-				result = executeMove(game,player,command);
+				result = move.executeMove(game,player,command);
 			}
-		}
+		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {
+			
+			ItemCommands item = new ItemCommands();
+			result = item.executeCommand(game,player,command);
 
 		
 		
@@ -99,23 +103,17 @@ public class CommandExecutor {
 			
 			//Go
 			if (verbNo==5) {
-				this.command.move(game,player,splitCommand[1]);
+				
 
 			//Take Command (pick & catch included)
 			} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
-				this.command.take(game,player);
 			
 			//Give
 			} else if (verbNo == 8) {
-				String object = this.command.give(game, player,this.commands);
-				
-				if (object.length()>0) {
-					executeGive(game,player,nounNumber,object,codedCommand);
-				}
+
 
 			//Drop
 			} else if (verbNo == 9||verbNo ==10) {
-				this.command.drop(game,player);
 				
 			//Ride
 			} else if (verbNo==13) {
@@ -338,89 +336,7 @@ public class CommandExecutor {
 		}
 	}
 	
-	public void executeGive(Game game,Player player,int nounNumber, String subject,
-							String codedNoun) {
-				
-		int objNumber = getNounNum(subject);
-		boolean alreadyMessage = false;
-		
-		if (subject.length()==0) {
-			String itemName = game.getItem(objNumber).getItemName();
-			game.addMessage("Please enter who you will be giving the "+itemName+" to.",true,true);
-		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
-			game.addMessage("The "+subject+" is not here.",true,true);
-		} else {
-			
-			game.addMessage("It is refused.",true,true);
-			
-			//Removes the snake from the hut by giving it an apple
-			if (codedNoun.equals("10045") && objNumber==40) {
-				game.getItem(nounNumber).setItemLocation(81);
-				game.getItem(objNumber).setItemFlag(1);
-				game.addMessage("The snake uncoils",true,true);
-				
-			//Giving water to a villager (but must have some drink)
-			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
 
-				if (game.getItem(11).getItemFlag() != 0) {
-					game.addMessage("He drinks the water and offers his staff",true,true);
-					game.getItem(30).setItemName("A villager");
-				} else {
-					game.addMessage("He drinks the water",true,true);
-				}
-				
-				game.getItem(11).setItemFlag(0);
-				player.setStat("drink",((int) player.getStat("drink"))-1);
-			} else {
-				
-				//Giving items to the ancient scavenger
-				if ((codedNoun.substring(0,3).equals("300") || 
-					 codedNoun.substring(0,3).equals("120")) &&
-					 objNumber == 42) {
-					player.setStat("wisdom",(int) player.getStat("wisdom")+10);
-					game.getItem(nounNumber).setItemLocation(81);
-				
-				//Give jug to swampman
-				} else if (codedNoun.substring(0,2).equals("40") && 
-						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
-					game.getItem(objNumber).setItemFlag(1);
-					game.getItem(nounNumber).setItemLocation(81);
-					game.addMessage("The Swampman takes the jug and leaves",true,true);
-					alreadyMessage = true;
-				
-				//Give pebble to Median
-				} else if (codedNoun.substring(0,2).equals("80") &&
-						   objNumber == 43) {
-					game.getItem(nounNumber).setItemLocation(81);
-					game.setMessageGameState();
-					game.getItem(8).setItemFlag(-1);
-
-					//Removes Median from Game
-					game.getItem(43).setItemLocation(81);
-					game.getItem(43).setItemFlag(1);
-					
-					game.addPanelMessage("He takes it ...", true);
-					if (player.getRoom()!=8) {
-						game.addPanelMessage("runs down the corridor, ...", false);
-					} 
-					game.addPanelMessage("and casts it into the chemical vats, ", false);
-					game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
-					game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
-				}
-				
-				//Successfully given
-				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
-					game.addMessage("It is accepted",true,true);
-				}
-				
-				//Giving to logmen
-				if (objNumber == 41) {
-					game.addMessage("It is taken",true,true);
-					game.getItem(nounNumber).setItemLocation(51);
-				}
-			}
-		}
-	}
 	
 	public void executeShelter(Game game, Player player, int location) {
 		

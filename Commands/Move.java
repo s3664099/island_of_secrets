@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 5 May 2025
+Version: 4.2
+Date: 8 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -208,4 +208,5 @@ public class Move {
 
 /* 4 May 2025 - Created File
  * 5 May 2025 - Removed Magic Numbers and replaced with constants
+ * 8 May 2025 - Added execution functionality
  */

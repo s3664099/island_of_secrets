@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 7 May 2025
+Version: 4.5
+Date: 8 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -153,6 +153,18 @@ public class ParsedCommand {
 	public boolean checkNoneCommandType() {
 		return commandType == CommandType.NONE;
 	}
+	
+	public boolean checkTake() {
+		return commandType == CommandType.TAKE;
+	}
+	
+	public boolean checkDrop() {
+		return commandType == CommandType.DROP;
+	}
+	
+	public boolean checkGive() {
+		return commandType == CommandType.GIVE;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -161,4 +173,5 @@ public class ParsedCommand {
  * 3 May 2025 - Added getter for codedCommand. Added commandState
  * 7 May 2025 - Added command enums. Set commandType for single Commands
  * 				Tightened check enum methods
+ * 8 May 2025 - Added the multi-word commands. Added check for take/drop/give
  */
