@@ -17,7 +17,7 @@ public class ParsedCommand {
 	private final int verbNumber;
 	private final int nounNumber;
 	private enum CommandState { NONE, MOVE, SINGLE_COMMAND, MULTIPLE_COMMAND };
-	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,KILL,SWIM,SHELTER,
+	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,ATTACK,KILL,SWIM,SHELTER,
 								HELP,SCRATCH,CATCH,RUB,READ,EXAMINE,FILL,SAY,WAIT,WAVE,INFO,
 								LOAD,SAVE,QUIT}; //(-5)
 	private CommandState commandState = CommandState.NONE;
@@ -37,7 +37,7 @@ public class ParsedCommand {
 	
 	private void setState(int verbNumber) {
 		
-		if (verbNumber>0 && verbNumber<5) {
+		if (verbNumber>0 && verbNumber<6) {
 			commandState = CommandState.MOVE;
 		} else if (verbNumber == 11 || verbNumber == 12 || 
 					verbNumber == 25 || verbNumber == 26 ||
@@ -79,6 +79,33 @@ public class ParsedCommand {
 	
 	public void setMultipleCommand(int verbNumber) {
 		
+		if (verbNumber == 6 || verbNumber == 7 || verbNumber == 15 || verbNumber == 29) {
+			commandType = CommandType.TAKE;
+		} else if (verbNumber == 8) {
+			commandType = CommandType.GIVE;
+		} else if (verbNumber == 9||verbNumber == 10) {
+			commandType = CommandType.DROP;
+		} else if (verbNumber == 13) {
+			commandType = CommandType.RIDE;
+		} else if (verbNumber == 14) {
+			commandType = CommandType.OPEN;
+		} else if (verbNumber>15 && verbNumber <20) {
+			commandType = CommandType.CHOP;
+		} else if (verbNumber>19 && verbNumber <24) {
+			commandType = CommandType.ATTACK;
+		} else if (verbNumber == 24) {
+			commandType = CommandType.KILL;
+		} else if (verbNumber == 27 || verbNumber == 28) {
+			commandType = CommandType.HELP;
+		} else if (verbNumber == 30 || verbNumber == 31) {
+			commandType = CommandType.RUB;
+		} else if (verbNumber == 32 || verbNumber == 33) {
+			commandType = CommandType.EXAMINE;
+		} else if (verbNumber == 34) {
+			commandType = CommandType.FILL;
+		} else if (verbNumber == 35) {
+			commandType = CommandType.SAY;
+		}
 	}
 	
 	public int getVerbNumber() {
