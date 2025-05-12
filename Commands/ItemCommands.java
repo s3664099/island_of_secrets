@@ -10,10 +10,47 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Commands;
 
 import Data.Constants;
+import Data.Item;
 import Game.Game;
 import Game.Player;
 
 public class ItemCommands {
+	
+	private static final int CLEARING = 45;
+	private static final int ENTRANCE_CHAMBER = 27;
+	
+	private static final int APPLE = 1;
+	private static final int TORCH = 7;
+	
+	public ActionResult validateTake(Game game,int currentRoom, ParsedCommand command) {
+		
+		int noun = command.getNounNumber();	
+		Item item = game.getItem(noun);
+		ActionResult result = new ActionResult();
+		
+		if (((item.getItemFlag()>0 && item.getItemFlag()<9) ||
+				item.getItemLocation()!=currentRoom) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
+			
+			if (!extraValidTake(currentRoom, noun)) {
+				game.addMessage("What "+item.getItemName()+"?",true,true);
+				result = new ActionResult(game,false);
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	private boolean extraValidTake(int currentRoom,int noun) {
+		
+		boolean valid = false;
+		
+		if ((currentRoom==CLEARING && noun==APPLE) || (currentRoom==ENTRANCE_CHAMBER && noun==TORCH)) {
+			valid=true;
+		}
+		
+		return valid;
+	}
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		return new ActionResult();
@@ -40,7 +77,7 @@ public class ItemCommands {
 			} else if (player.getRoom()==27 && noun == 7) {
 				game.addMessage("There are no more within reach",true,true);
 			} else {
-				game.addMessage("What "+game.getItem(noun).getItemName()+"?",true,true);
+				
 			}
 			
 		} else {
@@ -300,4 +337,5 @@ public class ItemCommands {
 }
 
 /* 8 May 2025 - Created File
-*/
+ * 12 May 2025 - Added item take validator
+ */

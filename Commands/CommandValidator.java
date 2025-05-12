@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 5 May 2025
+Version: 4.5
+Date: 12 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,6 +32,9 @@ public class CommandValidator {
 			if(command.checkMoveState()) {
 				Move moveValidator = new Move();
 				result = moveValidator.validateMove(command,this.game,player.getRoom());
+			} else if(command.checkTake()) {
+				ItemCommands takeValidator = new ItemCommands();
+				result = takeValidator.validateTake(this.game, player.getRoom(), command);
 			}
 		}
 		
@@ -93,4 +96,5 @@ public class CommandValidator {
  * 3 May 2025 - Added command length validation
  * 4 May 2025 - Added player object to validator
  * 5 May 2025 - Updated validator to return ActionResult
+ * 12 May 2025 - Added call to item take validator
  */
