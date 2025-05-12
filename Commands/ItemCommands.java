@@ -54,7 +54,7 @@ public class ItemCommands {
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
-		ActionResult result = specialItems(game,player,command);
+		ActionResult result = specialItemsTakeResponse(game,player,command);
 		
 		if (!result.getValid()) {
 			
@@ -63,18 +63,18 @@ public class ItemCommands {
 		return new ActionResult();
 	}
 	
-	public ActionResult specialItems(Game game,Player player, ParsedCommand command) {
+	public ActionResult specialItemsTakeResponse(Game game,Player player, ParsedCommand command) {
 		
 		boolean commandActioned = false;
 		int currentRoom = player.getRoom();
 		int noun = command.getNounNumber();
 		
-		if (currentRoom == CLEARING && game.checkApples() && noun == APPLE) {
+		if (currentRoom == CLEARING && game.checkApples() && noun == APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
 			player.setStat("food", ((int) player.getStat("food"))+1);
 			game.addMessage("You pick an apple from the tree",true,true);
 			player.setStat("weight",((int) player.getStat("weight"))+1);
 			commandActioned = true;
-		} else if (currentRoom == CLEARING && noun == APPLE) {
+		} else if (currentRoom == CLEARING && noun == APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
 			game.addMessage("There are no more apples within reach",true,true);
 			commandActioned = true;
 		} else if (currentRoom==ENTRANCE_CHAMBER && noun == TORCH && game.getItem(noun).getItemLocation() != currentRoom) {
