@@ -53,7 +53,36 @@ public class ItemCommands {
 	}
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
+		
+		ActionResult result = specialItems(game,player,command);
+		
+		if (!result.getValid()) {
+			
+		}
+		
 		return new ActionResult();
+	}
+	
+	public ActionResult specialItems(Game game,Player player, ParsedCommand command) {
+		
+		boolean commandActioned = false;
+		int currentRoom = player.getRoom();
+		int noun = command.getNounNumber();
+		
+		if (currentRoom == CLEARING && game.checkApples() && noun == APPLE) {
+			player.setStat("food", ((int) player.getStat("food"))+1);
+			game.addMessage("You pick an apple from the tree",true,true);
+			player.setStat("weight",((int) player.getStat("weight"))+1);
+			commandActioned = true;
+		} else if (currentRoom == CLEARING && noun == APPLE) {
+			game.addMessage("There are no more apples within reach",true,true);
+			commandActioned = true;
+		} else if (currentRoom==ENTRANCE_CHAMBER && noun == TORCH && game.getItem(noun).getItemLocation() != currentRoom) {
+			game.addMessage("There are no more within reach",true,true);
+			commandActioned = true;
+		}
+		
+		return new ActionResult(game,player,commandActioned);
 	}
 
 	/*
@@ -63,23 +92,7 @@ public class ItemCommands {
 	 * 
 	 * 	public void take(Game game,Player player) {
 				
-		//Is the item present, and can it be taken?
-		if (((game.getItem(noun).getItemFlag()>0 && game.getItem(noun).getItemFlag()<9) ||
-			game.getItem(noun).getItemLocation()!=player.getRoom()) && this.noun<=Constants.MAX_CARRIABLE_ITEMS) {
-			
-			//Pick more apples and add to food.
-			if (player.getRoom()==45 && game.checkApples() && noun==1) {
-				player.setStat("food",((int) player.getStat("food"))+1);
-				game.addMessage("You pick an apple from the tree",true,true);
-				player.setStat("weight",((int) player.getStat("weight"))+1);
-			} else if (player.getRoom()==45 && noun ==1) {
-				game.addMessage("There are no more apples within reach",true,true);
-			} else if (player.getRoom()==27 && noun == 7) {
-				game.addMessage("There are no more within reach",true,true);
-			} else {
-				
-			}
-			
+
 		} else {
 			
 			//Evil books in library
