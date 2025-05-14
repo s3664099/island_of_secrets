@@ -21,6 +21,11 @@ public class ItemCommands {
 	
 	private static final int APPLE = 1;
 	private static final int TORCH = 7;
+	private static final int BEAST = 16;
+	private static final int MUSHROOM = 20;
+	
+	private static final int PICK = 15;
+	private static final int CATCH = 29;
 	
 	public ActionResult validateTake(Game game,int currentRoom, ParsedCommand command) {
 		
@@ -35,7 +40,11 @@ public class ItemCommands {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				result = new ActionResult(game,false);
 			}
-			
+		
+		//Validates Pick and Catch commands
+		} else if ((command.getVerbNumber() == PICK && noun != APPLE && noun != MUSHROOM) || 
+				   (command.getVerbNumber() == CATCH && noun != BEAST)){
+			game.addMessage("You can't "+command.getCommand(),true,true);
 		}
 		
 		return result;
@@ -51,7 +60,7 @@ public class ItemCommands {
 		
 		return valid;
 	}
-	
+		
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
 		ActionResult result = specialItemsTakeResponse(game,player,command);
@@ -84,6 +93,7 @@ public class ItemCommands {
 		
 		return new ActionResult(game,player,commandActioned);
 	}
+	
 
 	/*
 	 * Give
@@ -114,18 +124,10 @@ public class ItemCommands {
 					game.setLightingGameState();
 				}
 				
-				//1st - pick mushrooms or apple
+
 				//2nd - catch canyon beast
 				//3rd - noun not an item
-				if ((verb == 15 && noun != 20 && noun != 1) || (verb == 29 && noun !=16) ||
-					noun > Constants.MAX_CARRIABLE_ITEMS) {
-					
-					//Makes sure that the cloak section is not overwritten
-					if (!this.code.equals("3810010")) {
-						game.addMessage("You can't "+command,true,true);
-					}
-					
-				} else {
+
 					
 					int weight = 0;
 										
