@@ -35,6 +35,9 @@ public class CommandValidator {
 			} else if(command.checkTake()) {
 				ItemCommands takeValidator = new ItemCommands();
 				result = takeValidator.validateTake(this.game, player.getRoom(), command);
+			} else if (command.checkDrop()) {
+				ItemCommands dropValidator = new ItemCommands();
+				result = dropValidator.validateDrop(this.game,player,command);
 			}
 		}
 		

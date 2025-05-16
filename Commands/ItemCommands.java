@@ -68,8 +68,23 @@ public class ItemCommands {
 		
 		return valid;
 	}
+	
+	public ActionResult executeCommand(Game game,Player player, ParsedCommand command) {
 		
-	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
+		ActionResult result = new ActionResult();
+		
+		if (command.checkTake()) {
+			result = executeTakeCommand(game,player,command);
+		} else if (command.checkDrop()) {
+			
+		} else if (command.checkGive()) {
+			
+		}
+		
+		return result;
+	}
+		
+	public ActionResult executeTakeCommand(Game game,Player player,ParsedCommand command) {
 		
 		ActionResult result = specialItemsTakeResponse(game,player,command);
 		int noun = command.getNounNumber();
@@ -117,10 +132,11 @@ public class ItemCommands {
 					game.getItem(noun).setItemFlag(0);
 				}
 				
+				result = new ActionResult(game,player);
 			}
 		}
 		
-		return new ActionResult();
+		return result;
 	}
 	
 	public ActionResult specialItemsTakeResponse(Game game,Player player, ParsedCommand command) {
