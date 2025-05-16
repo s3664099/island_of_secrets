@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 8 May 2025
+Version: 4.1
+Date: 16 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,23 +39,23 @@ public class ItemCommands {
 		
 		int noun = command.getNounNumber();	
 		Item item = game.getItem(noun);
-		ActionResult result = new ActionResult();
+		boolean commandSuccessful = true;
 		
 		if (((item.getItemFlag()>0 && item.getItemFlag()<9) ||
 				item.getItemLocation()!=currentRoom) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
 			
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
-				result = new ActionResult(game,false);
-			}
-		
-		//Validates Pick and Catch commands
-		} else if ((command.getVerbNumber() == PICK && noun != APPLE && noun != MUSHROOM) || 
+				commandSuccessful = false;
+			
+			//Validates Pick and Catch commands
+			} else if ((command.getVerbNumber() == PICK && noun != APPLE && noun != MUSHROOM) || 
 				   (command.getVerbNumber() == CATCH && noun != BEAST)){
-			game.addMessage("You can't "+command.getCommand(),true,true);
+				game.addMessage("You can't "+command.getCommand(),true,true);
+			}
 		}
 		
-		return result;
+		return new ActionResult(game,commandSuccessful);
 	}
 	
 	private boolean extraValidTake(int currentRoom,int noun) {
@@ -72,11 +72,50 @@ public class ItemCommands {
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
 		ActionResult result = specialItemsTakeResponse(game,player,command);
+		int noun = command.getNounNumber();
+		String codedCommand = command.getCodedCommand();
 		
 		if (!result.getValid()) {
 			result = specialResponseValidTake(game,player,command);
 			
 			if (!result.getValid()) {
+				game.getItem(noun).setItemLocation(0);
+				
+				if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
+					player.setStat("food",((int) player.getStat("food"))+2);
+					game.getItem(noun).setItemLocation(-18);
+				} else 	if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
+					player.setStat("drink",((int) player.getStat("drink"))+2);
+					game.getItem(noun).setItemLocation(-18);
+				}
+				
+				//Omegan's Cloak
+				if (codedCommand.equals("3810010")) {
+					
+					//Add special lightning Flashes screen
+					game.addMessage("Lightning Flashes",true,true);
+					
+					game.getItem(39).setItemLocation(player.getRoom());
+					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+					player.setStat("strength",(float) player.getStat("strength")-8);
+					game.setLightingGameState();
+				} else if (codedCommand.equals("246046") && game.getItem(STAFF).getItemLocation() == CARRYING) {
+					game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);	
+				} else {
+					game.addMessage("Taken",true,true);
+				}
+				
+				//Makes sure that wisdom increase only happens once
+				if (!game.getItem(noun).hasWisdonAcquired()) {
+					player.setStat("wisdom",(int) player.getStat("wisdom")+4);
+					game.getItem(noun).setWisdomAcquired(true);
+				}
+				
+				player.setStat("weight",((int) player.getStat("weight"))+1);
+				
+				if (game.getItem(noun).getItemFlag()>1) {
+					game.getItem(noun).setItemFlag(0);
+				}
 				
 			}
 		}
@@ -108,7 +147,7 @@ public class ItemCommands {
 	
 	public ActionResult specialResponseValidTake(Game game, Player player, ParsedCommand command) {
 		
-		boolean commandExecuted = false;
+		boolean commandActioned = false;
 		String commandCode = command.getCodedCommand();
 		int noun = command.getNounNumber();
 		
@@ -117,13 +156,13 @@ public class ItemCommands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 			player.setStat("strength",(float) player.getStat("strength")-8);
 			game.addMessage("They are cursed",true,true);
-			commandExecuted = true;
+			commandActioned = true;
 		
 		//Attempting to take the beast
 		} else if (noun == BEAST && game.getItem(ROPE).getItemLocation()!=CARRYING) {
 			game.getItem(noun).setItemLocation(player.getRoom());
 			game.addMessage("It escaped",true,true);
-			commandExecuted = true;
+			commandActioned = true;
 			
 			//Handles the bird when attempting to take the egg without the staff
 		} else if (commandCode.equals("246046") && game.getItem(STAFF).getItemLocation() != CARRYING) {
@@ -139,10 +178,10 @@ public class ItemCommands {
 					game.getItem(16).setItemLocation(FOREST);
 					game.getItem(16).setItemFlag(0);
 				}
-				commandExecuted = true;
+				commandActioned = true;
 		}
 		
-		return new ActionResult(game,player,commandExecuted);
+		return new ActionResult(game,player,commandActioned);
 	}
 
 	/*
@@ -158,17 +197,7 @@ public class ItemCommands {
 
 			} else {
 				
-				//Omegan's Cloak
-				if (this.code.equals("3810010")) {
-					
-					//Add special lightning Flashes screen
-					game.addMessage("Lightning Flashes",true,true);
-					
-					game.getItem(39).setItemLocation(player.getRoom());
-					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
-					player.setStat("strength",(float) player.getStat("strength")-8);
-					game.setLightingGameState();
-				}
+
 				
 
 				//2nd - catch canyon beast
@@ -181,44 +210,24 @@ public class ItemCommands {
 					if (game.getItem(noun).getItemLocation()== player.getRoom() && (
 						game.getItem(noun).getItemFlag()<1 || game.getItem(noun).getItemFlag()==9)
 						&& noun<Constants.MAX_CARRIABLE_ITEMS) {
-							game.getItem(noun).setItemLocation(0);
-							weight = -1;
+							
 					}
 					
 
 					}
 					
-					if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
-						weight = -1;
-						player.setStat("food",((int) player.getStat("food"))+2);
-						game.getItem(noun).setItemLocation(-18);
-					}
+
 					
-					if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
-						weight = -1;
-						player.setStat("drink",((int) player.getStat("drink"))+2);
-						game.getItem(noun).setItemLocation(-18);
-					}
+
 										
 					if (weight == -1) {
-						game.addMessage("Taken",true,true);
 						
-						//Makes sure that wisdom increase only happens once
-						if (!game.getItem(noun).hasWisdonAcquired()) {
-							player.setStat("wisdom",(int) player.getStat("wisdom")+4);
-							game.getItem(noun).setWisdomAcquired(true);
-						}
 						
-						player.setStat("weight",((int) player.getStat("weight"))+1);
-						
-						if (game.getItem(noun).getItemFlag()>1) {
-							game.getItem(noun).setItemFlag(0);
-						}
+
 					}
 																				
 	
-					} else if (code.equals("246046") && game.getItem(11).getItemLocation() == 0) {
-						game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);
+					} 
 					}
 				}	
 			}
@@ -383,4 +392,5 @@ public class ItemCommands {
 
 /* 8 May 2025 - Created File
  * 12 May 2025 - Added item take validator
+ * 16 May 2025 - Completed the take command
  */
