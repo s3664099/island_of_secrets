@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Commands;
 
+import java.util.Random;
+
 import Data.Constants;
 import Data.Item;
 import Game.Game;
@@ -16,16 +18,22 @@ import Game.Player;
 
 public class ItemCommands {
 	
+	private static final int CARRYING = 0;
+	private static final int FOREST = 1;
 	private static final int CLEARING = 45;
 	private static final int ENTRANCE_CHAMBER = 27;
 	
 	private static final int APPLE = 1;
 	private static final int TORCH = 7;
+	private static final int ROPE = 10;
+	private static final int STAFF = 20;
 	private static final int BEAST = 16;
 	private static final int MUSHROOM = 20;
 	
 	private static final int PICK = 15;
 	private static final int CATCH = 29;
+	
+	private Random rand = new Random();
 	
 	public ActionResult validateTake(Game game,int currentRoom, ParsedCommand command) {
 		
@@ -66,7 +74,11 @@ public class ItemCommands {
 		ActionResult result = specialItemsTakeResponse(game,player,command);
 		
 		if (!result.getValid()) {
+			result = specialResponseValidTake(game,player,command);
 			
+			if (!result.getValid()) {
+				
+			}
 		}
 		
 		return new ActionResult();
@@ -94,6 +106,44 @@ public class ItemCommands {
 		return new ActionResult(game,player,commandActioned);
 	}
 	
+	public ActionResult specialResponseValidTake(Game game, Player player, ParsedCommand command) {
+		
+		boolean commandExecuted = false;
+		String commandCode = command.getCodedCommand();
+		int noun = command.getNounNumber();
+		
+		//Evil books in library
+		if (commandCode.equals("3450050")) {
+			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+			player.setStat("strength",(float) player.getStat("strength")-8);
+			game.addMessage("They are cursed",true,true);
+			commandExecuted = true;
+		
+		//Attempting to take the beast
+		} else if (noun == BEAST && game.getItem(ROPE).getItemLocation()!=CARRYING) {
+			game.getItem(noun).setItemLocation(player.getRoom());
+			game.addMessage("It escaped",true,true);
+			commandExecuted = true;
+			
+			//Handles the bird when attempting to take the egg without the staff
+		} else if (commandCode.equals("246046") && game.getItem(STAFF).getItemLocation() != CARRYING) {
+
+				game.addMessage("You anger the bird",true,true);
+				game.getItem(noun).setItemLocation(player.getRoom());
+				
+				//One in three bird takes you to random spot & replaces wild canyon beast
+				//Needed beast to actually get here
+				if (rand.nextInt(3)>1) {
+					game.addMessage(" which flies you to a remote place.",false,true);
+					player.setRoom(63+rand.nextInt(6));
+					game.getItem(16).setItemLocation(FOREST);
+					game.getItem(16).setItemFlag(0);
+				}
+				commandExecuted = true;
+		}
+		
+		return new ActionResult(game,player,commandExecuted);
+	}
 
 	/*
 	 * Give
@@ -105,11 +155,7 @@ public class ItemCommands {
 
 		} else {
 			
-			//Evil books in library
-			if (this.code.equals("3450050")) {
-				player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-				player.setStat("strength",(float) player.getStat("strength")-8);
-				game.addMessage("They are cursed",true,true);
+
 			} else {
 				
 				//Omegan's Cloak
@@ -139,10 +185,7 @@ public class ItemCommands {
 							weight = -1;
 					}
 					
-					if (noun == 16 && game.getItem(10).getItemLocation()!=0) {
-						game.getItem(noun).setItemLocation(player.getRoom());
-						game.addMessage("It escaped",true,true);
-						weight = 0;
+
 					}
 					
 					if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
@@ -173,20 +216,7 @@ public class ItemCommands {
 						}
 					}
 																				
-					//Handles the bird when attempting to take the egg without the staff
-					if (code.equals("246046") && game.getItem(11).getItemLocation() != 0) {
-
-						game.addMessage("You anger the bird",true,true);
-						game.getItem(noun).setItemLocation(player.getRoom());
-						
-						//One in three bird takes you to random spot & replaces wild canyon beast
-						//Needed beast to actually get here
-						if (rand.nextInt(3)>1) {
-							game.addMessage(" which flies you to a remote place.",false,true);
-							player.setRoom(63+rand.nextInt(6));
-							game.getItem(16).setItemLocation(1);
-							game.getItem(16).setItemFlag(0);
-						}
+	
 					} else if (code.equals("246046") && game.getItem(11).getItemLocation() == 0) {
 						game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);
 					}
