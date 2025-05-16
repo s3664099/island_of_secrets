@@ -58,6 +58,19 @@ public class ItemCommands {
 		return new ActionResult(game,commandSuccessful);
 	}
 	
+	public ActionResult validateDrop(Game game,ParsedCommand command) {
+		
+		int noun = command.getNounNumber();
+		boolean validCommand = true;
+		
+		if (game.getItem(noun).getItemLocation()!=0 || noun>=Constants.FOOD_THRESHOLD) {
+			game.addMessage("I can't. Sorry.",true,true);
+			validCommand = false;
+		}
+		
+		return new ActionResult(game,validCommand);
+	}
+	
 	private boolean extraValidTake(int currentRoom,int noun) {
 		
 		boolean valid = false;
@@ -76,7 +89,7 @@ public class ItemCommands {
 		if (command.checkTake()) {
 			result = executeTakeCommand(game,player,command);
 		} else if (command.checkDrop()) {
-			
+			result = executeDropCommand(game,player,command);
 		} else if (command.checkGive()) {
 			
 		}
@@ -199,6 +212,11 @@ public class ItemCommands {
 		
 		return new ActionResult(game,player,commandActioned);
 	}
+	
+	private ActionResult executeDropCommand(Game game, Player player, ParsedCommand command) {
+		
+		
+	}
 
 	/*
 	 * Give
@@ -315,7 +333,7 @@ public class ItemCommands {
 				}
 				
 			} else {
-				game.addMessage("I can't. Sorry.",true,true);
+				
 			}
 		}
 	}
