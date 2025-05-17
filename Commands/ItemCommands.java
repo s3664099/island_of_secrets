@@ -22,14 +22,18 @@ public class ItemCommands {
 	private static final int FOREST = 1;
 	private static final int CLEARING = 45;
 	private static final int ENTRANCE_CHAMBER = 27;
+	private static final int ROOM_WITH_HANDS = 28;
+	private static final int DESTROYED = 81;
 	
 	private static final int APPLE = 1;
+	private static final int JUG = 4;
 	private static final int TORCH = 7;
 	private static final int ROPE = 10;
 	private static final int STAFF = 20;
 	private static final int BEAST = 16;
 	private static final int MUSHROOM = 20;
 	
+	private static final int DROP = 9;
 	private static final int PICK = 15;
 	private static final int CATCH = 29;
 	
@@ -215,7 +219,48 @@ public class ItemCommands {
 	
 	private ActionResult executeDropCommand(Game game, Player player, ParsedCommand command) {
 		
+		int noun = command.getNounNumber();
 		
+		game.getItem(noun).setItemLocation(player.getRoom());
+		player.setStat("weight",((int) player.getStat("weight"))-1);
+		game.addMessage("Done",true,true);
+		
+		ActionResult result = specialDropResults(game,player,command);
+		
+		return result;
+	}
+	
+	private ActionResult specialDropResults(Game game,Player player,ParsedCommand command) {
+		
+		int noun = command.getNounNumber();
+		int verb = command.getVerbNumber();
+		String codedCommand = command.getCodedCommand();
+		
+		//Dropping the Earthenware Jug
+		if (noun == JUG && game.getItem(noun).getItemLocation()==CARRYING && verb==DROP) {
+			game.getItem(noun).setItemLocation(DESTROYED);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
+			player.setStat("weight",((int) player.getStat("weight"))-1);
+			game.addMessage("It breaks!",true,true);
+		
+		//Dropping a brightly glowing torch
+		} else if (codedCommand.substring(0,3).equals("701")) {
+						
+			game.getItem(noun).setItemLocation(player.getRoom());
+			game.addMessage("The torch dims when you drop it.",true,true);	
+			game.getItem(TORCH).setItemFlag(0);
+			game.getItem(TORCH).setItemName("a flickering torch");
+						
+			if (player.getRoom()==ROOM_WITH_HANDS) {
+				game.addMessage("Upon dropping the torch the arms reach out and grab you, preventing you from moving.",false,true);
+			}
+		
+		//Dropping the beast
+		} else if (noun == BEAST) {
+			game.getItem(noun).setItemFlag(0);
+		}
+		
+		return new ActionResult(game,player);
 	}
 
 	/*
@@ -302,35 +347,16 @@ public class ItemCommands {
 	
 	public void drop(Game game, Player player) {
 		
-		//Dropping the Earthenware Jug
-		if (noun == 4 && game.getItem(noun).getItemLocation()==0 && verb==9) {
-			game.getItem(noun).setItemLocation(81);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-			player.setStat("weight",((int) player.getStat("weight"))-1);
-			game.addMessage("It breaks!",true,true);
+
 		
-		//Dropping a brightly glowing torch
-		} else if (code.substring(0,3).equals("701")) {
-			game.getItem(noun).setItemLocation(player.getRoom());
-			game.addMessage("The torch dims when you drop it.",true,true);	
-			game.getItem(7).setItemFlag(0);
-			game.getItem(7).setItemName("a flickering torch");
-			
-			if (player.getRoom()==28) {
-				game.addMessage("Upon dropping the torch the arms reach out and grab you, preventing you from moving.",false,true);
-			}
+		
 			
 		//Dropping other items
 		} else {
 			if (game.getItem(noun).getItemLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
-				game.getItem(noun).setItemLocation(player.getRoom());
-				player.setStat("weight",((int) player.getStat("weight"))-1);
-				game.addMessage("Done",true,true);
+
 				
-				//Dropping the beast
-				if (noun == 16) {
-					game.getItem(noun).setItemFlag(0);
-				}
+
 				
 			} else {
 				
