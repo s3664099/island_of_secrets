@@ -45,7 +45,7 @@ public class Move {
 		
 		int verbNumber = command.getVerbNumber();
 		int nounNumber = command.getNounNumber();
-		String noun = command.getSplitCommand()[1];
+		String noun = command.getSplitTwoCommand()[1];
 		String code = command.getCodedCommand();
 		
 		if (nounNumber == -1) {
@@ -75,7 +75,7 @@ public class Move {
 		}
 		
 		return new ParsedCommand(verbNumber,nounNumber,command.getCodedCommand(),
-				command.getSplitCommand(),command.getCommand());
+				command.getSplitTwoCommand(),command.getCommand());
 	}
 
 	public ActionResult validateMove(ParsedCommand command, Game game, int room) {

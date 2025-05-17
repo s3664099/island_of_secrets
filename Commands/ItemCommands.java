@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 16 May 2025
+Version: 4.2
+Date: 17 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,6 +32,7 @@ public class ItemCommands {
 	private static final int STAFF = 20;
 	private static final int BEAST = 16;
 	private static final int MUSHROOM = 20;
+	private static final int WATER = 24;
 	
 	private static final int DROP = 9;
 	private static final int PICK = 15;
@@ -62,16 +63,41 @@ public class ItemCommands {
 		return new ActionResult(game,commandSuccessful);
 	}
 	
-	public ActionResult validateDrop(Game game,ParsedCommand command) {
+	public ActionResult validateCarrying(Game game,ParsedCommand command) {
 		
 		int noun = command.getNounNumber();
 		boolean validCommand = true;
 		
-		if (game.getItem(noun).getItemLocation()!=0 || noun>=Constants.FOOD_THRESHOLD) {
-			game.addMessage("I can't. Sorry.",true,true);
+		if (game.getItem(noun).getItemLocation()!=CARRYING || noun>=Constants.FOOD_THRESHOLD) {
+			game.addMessage("I don't have that. Sorry.",true,true);
 			validCommand = false;
 		}
 		
+		//Give specific validations
+		if (command.checkGive()) {
+			
+			if(noun == WATER) {
+				validCommand = true;
+			}			
+		}
+		
+		return new ActionResult(game,validCommand);
+	}
+	
+	public ActionResult validateGive(Game game,ParsedCommand command) {
+		
+		String[] commands = command.getSplitFullCommand();
+		boolean validCommand = true;
+		
+		if (commands.length<3) {
+			game.addMessage("Give to whom?",true,true);
+			game.setGiveState();
+			validCommand = false;
+		} else if (commands[2].equals("to") && commands.length<4) {
+			game.addMessage("I don't understand",true,true);
+			validCommand  = false;
+		}
+
 		return new ActionResult(game,validCommand);
 	}
 	
@@ -317,29 +343,11 @@ public class ItemCommands {
 		
 		String object = "";
 				
-		if ((noun != 24 && game.getItem(noun).getItemLocation()>0) || noun == 52) {
-			
-			String itemName = game.getItem(noun).getItemName();
-			
-			if (itemName.length()==0) {
-				itemName = "that";
-			} 
-			
-			game.addMessage("You don't have "+itemName,true,true);
+
 			
 		} else {
 			
-			if (commands.length<3) {
-				game.addMessage("Give to whom?",true,true);
-				game.setGiveState();
-			} else {
-				
-				if (commands[2].equals("to") && commands.length>3) {
-					object = commands[3];
-				} else {
-					game.addMessage("I don't understand",true,true);
-				}
-			}
+
 		}
 		
 		return object;
@@ -453,4 +461,6 @@ public class ItemCommands {
 /* 8 May 2025 - Created File
  * 12 May 2025 - Added item take validator
  * 16 May 2025 - Completed the take command
+ * 17 May 2025 - Completed the drop command
+ * 				 Added validate for give command
  */

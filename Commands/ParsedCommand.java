@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 8 May 2025
+Version: 4.6
+Date: 17 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,7 +12,8 @@ package Commands;
 public class ParsedCommand {
 	
 	private final String command;
-	private final String[] splitCommand;
+	private final String[] splitTwoCommand;
+	private final String[] splitFullCommand;
 	private final String codedCommand;
 	private final int verbNumber;
 	private final int nounNumber;
@@ -26,7 +27,8 @@ public class ParsedCommand {
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
 	
-		this.splitCommand = splitCommand;
+		this.splitTwoCommand = splitCommand;
+		this.splitFullCommand = command.split(" ");
 		this.codedCommand = codedCommand;
 		this.verbNumber = verbNumber;
 		this.nounNumber = nounNumber;
@@ -124,14 +126,18 @@ public class ParsedCommand {
 		return codedCommand;
 	}
 	
-	public String[] getSplitCommand() {
-		return splitCommand;
+	public String[] getSplitTwoCommand() {
+		return splitTwoCommand;
+	}
+	
+	public String[] getSplitFullCommand() {
+		return splitFullCommand;
 	}
 	
 	public boolean checkNounLength() {
 		boolean nounLength = true;
 		
-		if (splitCommand[1].length()==0) {
+		if (splitTwoCommand[1].length()==0) {
 			nounLength = false;
 		}
 		
@@ -174,4 +180,5 @@ public class ParsedCommand {
  * 7 May 2025 - Added command enums. Set commandType for single Commands
  * 				Tightened check enum methods
  * 8 May 2025 - Added the multi-word commands. Added check for take/drop/give
+ * 16 May 2025 - Added code to split all the command, and one to split into verb/noun.
  */
