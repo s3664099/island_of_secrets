@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 17 May 2025
+Version: 4.3
+Date: 19 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.util.Random;
 
 import Data.Constants;
 import Data.Item;
+import Data.RawData;
 import Game.Game;
 import Game.Player;
 
@@ -84,7 +85,7 @@ public class ItemCommands {
 		return new ActionResult(game,validCommand);
 	}
 	
-	public ActionResult validateGive(Game game,ParsedCommand command) {
+	public ActionResult validateGive(Game game, int playerRoom, ParsedCommand command) {
 		
 		String[] commands = command.getSplitFullCommand();
 		boolean validCommand = true;
@@ -96,9 +97,33 @@ public class ItemCommands {
 		} else if (commands[2].equals("to") && commands.length<4) {
 			game.addMessage("I don't understand",true,true);
 			validCommand  = false;
-		}
+		
+		//Validates the reciever
+		} else {
+			
+			String object = getObject(commands);
+			int objectNumber = getNounNumber(object);
 
+			if (objectNumber == -1) {
+				game.addMessage("I do not see the "+object+" here!", true, true);
+				validCommand = false;
+			} else if (playerRoom != game.getItem(objectNumber).getItemLocation()) {
+				game.addMessage("The "+object+" is not here.",true,true);
+			}
+		}
+		
 		return new ActionResult(game,validCommand);
+	}
+	
+	//Determines the receiver of the noun
+	private String getObject(String[] commands) {
+		
+		String object = commands[3];
+		
+		if (object.equals("to")) {
+			object = commands[4];
+		}
+		return object;
 	}
 	
 	private boolean extraValidTake(int currentRoom,int noun) {
@@ -284,16 +309,39 @@ public class ItemCommands {
 		//Dropping the beast
 		} else if (noun == BEAST) {
 			game.getItem(noun).setItemFlag(0);
-		}
+			game.addMessage("The Canyon Beast runs away", true, true);		}
 		
 		return new ActionResult(game,player);
+	}
+	
+	public ActionResult executeGive(Game game, Player player, ParsedCommand command) {
+		
+		String[] commands = command.getSplitFullCommand();
+		String object = getObject(commands);
+		int objectNumber = getNounNumber(object);
+		
+		return new ActionResult();
+	}
+	
+	private int getNounNumber(String object) {
+		
+		int nounCount = 0;
+		int nounNumber = -1;
+		for (String command:RawData.getNouns()) {
+			nounCount ++;
+							
+			if (object.equals(command)) {
+				nounNumber = nounCount;
+			}
+		}
+		return nounNumber;
 	}
 
 	/*
 	 * Give
 	 * if three words - executeGive
 	 * 
-	 * 
+	 * object
 	 * 	public void take(Game game,Player player) {
 				
 
@@ -380,8 +428,7 @@ public class ItemCommands {
 		if (subject.length()==0) {
 			String itemName = game.getItem(objNumber).getItemName();
 			game.addMessage("Please enter who you will be giving the "+itemName+" to.",true,true);
-		} else if (player.getRoom() != game.getItem(objNumber).getItemLocation()) {
-			game.addMessage("The "+subject+" is not here.",true,true);
+		} else 
 		} else {
 			
 			game.addMessage("It is refused.",true,true);
@@ -463,4 +510,5 @@ public class ItemCommands {
  * 16 May 2025 - Completed the take command
  * 17 May 2025 - Completed the drop command
  * 				 Added validate for give command
+ * 19 May 2025 - Validated reciever
  */
