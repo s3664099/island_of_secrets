@@ -34,6 +34,8 @@ public class ItemCommands {
 	private static final int BEAST = 16;
 	private static final int MUSHROOM = 20;
 	private static final int WATER = 24;
+	private static final int VILLAGER = 30;
+	private static final int SNAKE = 40;
 	
 	private static final int DROP = 9;
 	private static final int PICK = 15;
@@ -124,6 +126,20 @@ public class ItemCommands {
 			object = commands[4];
 		}
 		return object;
+	}
+	
+	private int getNounNumber(String object) {
+		
+		int nounCount = 0;
+		int nounNumber = -1;
+		for (String command:RawData.getNouns()) {
+			nounCount ++;
+							
+			if (object.equals(command)) {
+				nounNumber = nounCount;
+			}
+		}
+		return nounNumber;
 	}
 	
 	private boolean extraValidTake(int currentRoom,int noun) {
@@ -318,24 +334,45 @@ public class ItemCommands {
 		
 		String[] commands = command.getSplitFullCommand();
 		String object = getObject(commands);
+		String codedCommand = command.getCodedCommand();
 		int objectNumber = getNounNumber(object);
+		int nounNumber = command.getNounNumber();
+		game.addMessage("It is refused.",true,true);
+		ActionResult result = new ActionResult(game,player);
 		
-		return new ActionResult();
+		//Removes the snake from the hut by giving it an apple
+		if (codedCommand.equals("10045") && objectNumber==SNAKE) {
+			game.getItem(nounNumber).setItemLocation(DESTROYED);
+			game.getItem(objectNumber).setItemFlag(1);
+			game.addMessage("The snake uncoils",true,true);
+			result = new ActionResult(game,player);
+
+		//Giving water to a villager (but must have some drink)
+		} else if (codedCommand.equals("2413075") && objectNumber==VILLAGER && ((int) player.getStat("drink"))>1) {
+			result = giveWater(game,player);
+		} else {
+			
+		}
+		
+		return result;
 	}
 	
-	private int getNounNumber(String object) {
+	private ActionResult giveWater(Game game, Player player) {
 		
-		int nounCount = 0;
-		int nounNumber = -1;
-		for (String command:RawData.getNouns()) {
-			nounCount ++;
-							
-			if (object.equals(command)) {
-				nounNumber = nounCount;
-			}
+		if (game.getItem(11).getItemFlag() != 0) {
+			game.addMessage("He drinks the water and offers his staff",true,true);
+			game.getItem(30).setItemName("A villager");
+		} else {
+			game.addMessage("He drinks the water",true,true);
 		}
-		return nounNumber;
+		
+		game.getItem(11).setItemFlag(0);
+		player.setStat("drink",((int) player.getStat("drink"))-1);
+		
+		return new ActionResult(game,player);
 	}
+	
+
 
 	/*
 	 * Give
@@ -431,26 +468,11 @@ public class ItemCommands {
 		} else 
 		} else {
 			
-			game.addMessage("It is refused.",true,true);
 			
-			//Removes the snake from the hut by giving it an apple
-			if (codedNoun.equals("10045") && objNumber==40) {
-				game.getItem(nounNumber).setItemLocation(81);
-				game.getItem(objNumber).setItemFlag(1);
-				game.addMessage("The snake uncoils",true,true);
-				
-			//Giving water to a villager (but must have some drink)
-			} else if (codedNoun.equals("2413075") && objNumber==30 && ((int) player.getStat("drink"))>1) {
+			
 
-				if (game.getItem(11).getItemFlag() != 0) {
-					game.addMessage("He drinks the water and offers his staff",true,true);
-					game.getItem(30).setItemName("A villager");
-				} else {
-					game.addMessage("He drinks the water",true,true);
-				}
 				
-				game.getItem(11).setItemFlag(0);
-				player.setStat("drink",((int) player.getStat("drink"))-1);
+			
 			} else {
 				
 				//Giving items to the ancient scavenger
@@ -511,4 +533,5 @@ public class ItemCommands {
  * 17 May 2025 - Completed the drop command
  * 				 Added validate for give command
  * 19 May 2025 - Validated reciever
+ * 			   - Give apple to snake and water to villager
  */
