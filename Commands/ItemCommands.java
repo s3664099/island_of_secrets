@@ -12,39 +12,14 @@ package Commands;
 import java.util.Random;
 
 import Data.Constants;
+import Data.GameEntities;
 import Data.Item;
 import Data.RawData;
 import Game.Game;
 import Game.Player;
 
 public class ItemCommands {
-	
-	private static final int CARRYING = 0;
-	private static final int FOREST = 1;
-	private static final int CLEARING = 45;
-	private static final int ENTRANCE_CHAMBER = 27;
-	private static final int ROOM_WITH_HANDS = 28;
-	private static final int DESTROYED = 81;
-	
-	private static final int APPLE = 1;
-	private static final int JUG = 4;
-	private static final int TORCH = 7;
-	private static final int ROPE = 10;
-	private static final int STAFF = 20;
-	private static final int BEAST = 16;
-	private static final int MUSHROOM = 20;
-	private static final int WATER = 24;
-	private static final int VILLAGER = 30;
-	private static final int SWAMPMAN = 32;
-	private static final int SNAKE = 40;
-	private static final int LOGMEN = 42;
-	private static final int SCAVENGER = 42;
-	private static final int MEDIAN = 43;
-	
-	private static final int DROP = 9;
-	private static final int PICK = 15;
-	private static final int CATCH = 29;
-	
+		
 	private Random rand = new Random();
 	
 	public ActionResult validateTake(Game game,int currentRoom, ParsedCommand command) {
@@ -61,7 +36,7 @@ public class ItemCommands {
 				commandSuccessful = false;
 			
 			//Validates Pick and Catch commands
-			} else if ((command.getVerbNumber() == PICK && noun != APPLE && noun != MUSHROOM) || 
+			} else if ((command.getVerbNumber() == GameEntities.PICK && noun != APPLE && noun != MUSHROOM) || 
 				   (command.getVerbNumber() == CATCH && noun != BEAST)){
 				game.addMessage("You can't "+command.getCommand(),true,true);
 			}
@@ -439,4 +414,5 @@ public class ItemCommands {
  * 19 May 2025 - Validated reciever
  * 			   - Give apple to snake and water to villager
  * 21 May 2025 - Completed the give functions.
+ * 			   - Moved constants to separate file.
  */
