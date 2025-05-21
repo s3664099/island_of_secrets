@@ -36,8 +36,8 @@ public class ItemCommands {
 				commandSuccessful = false;
 			
 			//Validates Pick and Catch commands
-			} else if ((command.getVerbNumber() == GameEntities.PICK && noun != APPLE && noun != MUSHROOM) || 
-				   (command.getVerbNumber() == CATCH && noun != BEAST)){
+			} else if ((command.getVerbNumber() == GameEntities.PICK && noun != GameEntities.APPLE && noun != GameEntities.MUSHROOM) || 
+				   (command.getVerbNumber() == GameEntities.CATCH && noun != GameEntities.BEAST)){
 				game.addMessage("You can't "+command.getCommand(),true,true);
 			}
 		}
@@ -50,7 +50,7 @@ public class ItemCommands {
 		int noun = command.getNounNumber();
 		boolean validCommand = true;
 		
-		if (game.getItem(noun).getItemLocation()!=CARRYING || noun>=Constants.FOOD_THRESHOLD) {
+		if (game.getItem(noun).getItemLocation()!=GameEntities.CARRYING || noun>=Constants.FOOD_THRESHOLD) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			validCommand = false;
 		}
@@ -58,7 +58,7 @@ public class ItemCommands {
 		//Give specific validations
 		if (command.checkGive()) {
 			
-			if(noun == WATER) {
+			if(noun == GameEntities.WATER) {
 				validCommand = true;
 			}			
 		}
@@ -125,7 +125,8 @@ public class ItemCommands {
 		
 		boolean valid = false;
 		
-		if ((currentRoom==CLEARING && noun==APPLE) || (currentRoom==ENTRANCE_CHAMBER && noun==TORCH)) {
+		if ((currentRoom==GameEntities.CLEARING && noun==GameEntities.APPLE) || 
+			(currentRoom==GameEntities.ENTRANCE_CHAMBER && noun==GameEntities.TORCH)) {
 			valid=true;
 		}
 		
@@ -177,7 +178,8 @@ public class ItemCommands {
 					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 					player.setStat("strength",(float) player.getStat("strength")-8);
 					game.setLightingGameState();
-				} else if (codedCommand.equals("246046") && game.getItem(STAFF).getItemLocation() == CARRYING) {
+				} else if (codedCommand.equals("246046") && 
+						   game.getItem(GameEntities.STAFF).getItemLocation() == GameEntities.CARRYING) {
 					game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);	
 				} else {
 					game.addMessage("Taken",true,true);
@@ -208,15 +210,18 @@ public class ItemCommands {
 		int currentRoom = player.getRoom();
 		int noun = command.getNounNumber();
 		
-		if (currentRoom == CLEARING && game.checkApples() && noun == APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
+		if (currentRoom == GameEntities.CLEARING && game.checkApples() && 
+			noun == GameEntities.APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
 			player.setStat("food", ((int) player.getStat("food"))+1);
 			game.addMessage("You pick an apple from the tree",true,true);
 			player.setStat("weight",((int) player.getStat("weight"))+1);
 			commandActioned = true;
-		} else if (currentRoom == CLEARING && noun == APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
+		} else if (currentRoom == GameEntities.CLEARING && 
+				   noun == GameEntities.APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
 			game.addMessage("There are no more apples within reach",true,true);
 			commandActioned = true;
-		} else if (currentRoom==ENTRANCE_CHAMBER && noun == TORCH && game.getItem(noun).getItemLocation() != currentRoom) {
+		} else if (currentRoom==GameEntities.ENTRANCE_CHAMBER && noun == GameEntities.TORCH && 
+				   game.getItem(noun).getItemLocation() != currentRoom) {
 			game.addMessage("There are no more within reach",true,true);
 			commandActioned = true;
 		}
@@ -238,13 +243,13 @@ public class ItemCommands {
 			commandActioned = true;
 		
 		//Attempting to take the beast
-		} else if (noun == BEAST && game.getItem(ROPE).getItemLocation()!=CARRYING) {
+		} else if (noun == GameEntities.BEAST && game.getItem(GameEntities.ROPE).getItemLocation()!=GameEntities.CARRYING) {
 			game.getItem(noun).setItemLocation(player.getRoom());
 			game.addMessage("It escaped",true,true);
 			commandActioned = true;
 			
 			//Handles the bird when attempting to take the egg without the staff
-		} else if (commandCode.equals("246046") && game.getItem(STAFF).getItemLocation() != CARRYING) {
+		} else if (commandCode.equals("246046") && game.getItem(GameEntities.STAFF).getItemLocation() != GameEntities.CARRYING) {
 
 				game.addMessage("You anger the bird",true,true);
 				game.getItem(noun).setItemLocation(player.getRoom());
@@ -254,7 +259,7 @@ public class ItemCommands {
 				if (rand.nextInt(3)>1) {
 					game.addMessage(" which flies you to a remote place.",false,true);
 					player.setRoom(63+rand.nextInt(6));
-					game.getItem(16).setItemLocation(FOREST);
+					game.getItem(16).setItemLocation(GameEntities.FOREST);
 					game.getItem(16).setItemFlag(0);
 				}
 				commandActioned = true;
@@ -283,8 +288,9 @@ public class ItemCommands {
 		String codedCommand = command.getCodedCommand();
 		
 		//Dropping the Earthenware Jug
-		if (noun == JUG && game.getItem(noun).getItemLocation()==CARRYING && verb==DROP) {
-			game.getItem(noun).setItemLocation(DESTROYED);
+		if (noun == GameEntities.JUG && game.getItem(noun).getItemLocation()==GameEntities.CARRYING && 
+			verb==GameEntities.DROP) {
+			game.getItem(noun).setItemLocation(GameEntities.DESTROYED);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.addMessage("It breaks!",true,true);
@@ -294,15 +300,15 @@ public class ItemCommands {
 						
 			game.getItem(noun).setItemLocation(player.getRoom());
 			game.addMessage("The torch dims when you drop it.",true,true);	
-			game.getItem(TORCH).setItemFlag(0);
-			game.getItem(TORCH).setItemName("a flickering torch");
+			game.getItem(GameEntities.TORCH).setItemFlag(0);
+			game.getItem(GameEntities.TORCH).setItemName("a flickering torch");
 						
-			if (player.getRoom()==ROOM_WITH_HANDS) {
+			if (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
 				game.addMessage("Upon dropping the torch the arms reach out and grab you, preventing you from moving.",false,true);
 			}
 		
 		//Dropping the beast
-		} else if (noun == BEAST) {
+		} else if (noun == GameEntities.BEAST) {
 			game.getItem(noun).setItemFlag(0);
 			game.addMessage("The Canyon Beast runs away", true, true);		}
 		
@@ -320,42 +326,42 @@ public class ItemCommands {
 		ActionResult result = new ActionResult(game,player);
 		
 		//Removes the snake from the hut by giving it an apple
-		if (codedCommand.equals("10045") && objectNumber==SNAKE) {
-			game.getItem(nounNumber).setItemLocation(DESTROYED);
+		if (codedCommand.equals("10045") && objectNumber==GameEntities.SNAKE) {
+			game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
 			game.getItem(objectNumber).setItemFlag(1);
 			game.addMessage("The snake uncoils",true,true);
 			result = new ActionResult(game,player);
 
 		//Giving water to a villager (but must have some drink)
-		} else if (codedCommand.equals("2413075") && objectNumber==VILLAGER && ((int) player.getStat("drink"))>1) {
+		} else if (codedCommand.equals("2413075") && objectNumber==GameEntities.VILLAGER && ((int) player.getStat("drink"))>1) {
 			result = giveWater(game,player);
 		} else {
 
 			//Giving items to the ancient scavenger
 			if ((codedCommand.substring(0,3).equals("300") || 
 					codedCommand.substring(0,3).equals("120")) &&
-					objectNumber == SCAVENGER) {
+					objectNumber == GameEntities.SCAVENGER) {
 				
 				player.setStat("wisdom",(int) player.getStat("wisdom")+10);
-				game.getItem(nounNumber).setItemLocation(DESTROYED);
+				game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
 				result = new ActionResult(game,player);
 				game.addMessage("It is accepted",true,true);
 				
 			//Give jug to swampman
 			} else if (codedCommand.substring(0,2).equals("40") && 
-					   game.getItem(JUG).getItemFlag()<0 && objectNumber == SWAMPMAN) { 
+					   game.getItem(GameEntities.JUG).getItemFlag()<0 && objectNumber == GameEntities.SWAMPMAN) { 
 				game.getItem(objectNumber).setItemFlag(1);
-				game.getItem(nounNumber).setItemLocation(DESTROYED);
+				game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
 				game.addMessage("The Swampman takes the jug and leaves",true,true);
 				result = new ActionResult(game,player);
 			
 			//Give pebble to Median
 			} else if (codedCommand.substring(0,2).equals("80") &&
-					   objectNumber == MEDIAN) {
+					   objectNumber == GameEntities.MEDIAN) {
 				result = givePebble(game, player,nounNumber);
 			
 			//Giving to logmen
-			} else	if (objectNumber == LOGMEN) {
+			} else	if (objectNumber == GameEntities.LOGMEN) {
 					game.addMessage("It is taken",true,true);
 					game.getItem(nounNumber).setItemLocation(51);
 			}
@@ -367,12 +373,12 @@ public class ItemCommands {
 	
 	private ActionResult givePebble(Game game, Player player, int nounNumber) {
 		
-		game.getItem(nounNumber).setItemLocation(DESTROYED);
+		game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
 		game.setMessageGameState();
 		game.getItem(8).setItemFlag(-1);
 
 		//Removes Median from Game
-		game.getItem(43).setItemLocation(DESTROYED);
+		game.getItem(43).setItemLocation(GameEntities.DESTROYED);
 		game.getItem(43).setItemFlag(1);
 		
 		game.addPanelMessage("He takes it ...", true);
@@ -415,4 +421,5 @@ public class ItemCommands {
  * 			   - Give apple to snake and water to villager
  * 21 May 2025 - Completed the give functions.
  * 			   - Moved constants to separate file.
+ * 			   - Referenced constants in Game Entities file.
  */
