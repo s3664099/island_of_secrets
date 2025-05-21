@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 19 May 2025
+Version: 4.4
+Date: 21 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,7 +35,11 @@ public class ItemCommands {
 	private static final int MUSHROOM = 20;
 	private static final int WATER = 24;
 	private static final int VILLAGER = 30;
+	private static final int SWAMPMAN = 32;
 	private static final int SNAKE = 40;
+	private static final int LOGMEN = 42;
+	private static final int SCAVENGER = 42;
+	private static final int MEDIAN = 43;
 	
 	private static final int DROP = 9;
 	private static final int PICK = 15;
@@ -351,12 +355,66 @@ public class ItemCommands {
 		} else if (codedCommand.equals("2413075") && objectNumber==VILLAGER && ((int) player.getStat("drink"))>1) {
 			result = giveWater(game,player);
 		} else {
+
+			//Giving items to the ancient scavenger
+			if ((codedCommand.substring(0,3).equals("300") || 
+					codedCommand.substring(0,3).equals("120")) &&
+					objectNumber == SCAVENGER) {
+				
+				player.setStat("wisdom",(int) player.getStat("wisdom")+10);
+				game.getItem(nounNumber).setItemLocation(DESTROYED);
+				result = new ActionResult(game,player);
+				game.addMessage("It is accepted",true,true);
+				
+			//Give jug to swampman
+			} else if (codedCommand.substring(0,2).equals("40") && 
+					   game.getItem(JUG).getItemFlag()<0 && objectNumber == SWAMPMAN) { 
+				game.getItem(objectNumber).setItemFlag(1);
+				game.getItem(nounNumber).setItemLocation(DESTROYED);
+				game.addMessage("The Swampman takes the jug and leaves",true,true);
+				result = new ActionResult(game,player);
 			
+			//Give pebble to Median
+			} else if (codedCommand.substring(0,2).equals("80") &&
+					   objectNumber == MEDIAN) {
+				result = givePebble(game, player,nounNumber);
+			
+			//Giving to logmen
+			} else	if (objectNumber == LOGMEN) {
+					game.addMessage("It is taken",true,true);
+					game.getItem(nounNumber).setItemLocation(51);
+			}
+						
 		}
 		
 		return result;
 	}
 	
+	private ActionResult givePebble(Game game, Player player, int nounNumber) {
+		
+		game.getItem(nounNumber).setItemLocation(DESTROYED);
+		game.setMessageGameState();
+		game.getItem(8).setItemFlag(-1);
+
+		//Removes Median from Game
+		game.getItem(43).setItemLocation(DESTROYED);
+		game.getItem(43).setItemFlag(1);
+		
+		game.addPanelMessage("He takes it ...", true);
+		if (player.getRoom()!=8) {
+			game.addPanelMessage("runs down the corridor, ...", false);
+		} 
+		
+		game.addPanelMessage("and casts it into the chemical vats, ", false);
+		game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
+		game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
+		game.addMessage("It is accepted",true,true);
+		
+		return new ActionResult(game,player);
+	}
+
+
+		
 	private ActionResult giveWater(Game game, Player player) {
 		
 		if (game.getItem(11).getItemFlag() != 0) {
@@ -371,160 +429,6 @@ public class ItemCommands {
 		
 		return new ActionResult(game,player);
 	}
-	
-
-
-	/*
-	 * Give
-	 * if three words - executeGive
-	 * 
-	 * object
-	 * 	public void take(Game game,Player player) {
-				
-
-		} else {
-			
-
-			} else {
-				
-
-				
-
-				//2nd - catch canyon beast
-				//3rd - noun not an item
-
-					
-					int weight = 0;
-										
-					//picks up item
-					if (game.getItem(noun).getItemLocation()== player.getRoom() && (
-						game.getItem(noun).getItemFlag()<1 || game.getItem(noun).getItemFlag()==9)
-						&& noun<Constants.MAX_CARRIABLE_ITEMS) {
-							
-					}
-					
-
-					}
-					
-
-					
-
-										
-					if (weight == -1) {
-						
-						
-
-					}
-																				
-	
-					} 
-					}
-				}	
-			}
-		}
-	}
-
-	public String give(Game game,Player player,String[] commands) {
-		
-		String object = "";
-				
-
-			
-		} else {
-			
-
-		}
-		
-		return object;
-	}
-	
-	public void drop(Game game, Player player) {
-		
-
-		
-		
-			
-		//Dropping other items
-		} else {
-			if (game.getItem(noun).getItemLocation()==0 && noun<Constants.FOOD_THRESHOLD) {
-
-				
-
-				
-			} else {
-				
-			}
-		}
-	}
-		public void executeGive(Game game,Player player,int nounNumber, String subject,
-							String codedNoun) {
-				
-		int objNumber = getNounNum(subject);
-		boolean alreadyMessage = false;
-		
-		if (subject.length()==0) {
-			String itemName = game.getItem(objNumber).getItemName();
-			game.addMessage("Please enter who you will be giving the "+itemName+" to.",true,true);
-		} else 
-		} else {
-			
-			
-			
-
-				
-			
-			} else {
-				
-				//Giving items to the ancient scavenger
-				if ((codedNoun.substring(0,3).equals("300") || 
-					 codedNoun.substring(0,3).equals("120")) &&
-					 objNumber == 42) {
-					player.setStat("wisdom",(int) player.getStat("wisdom")+10);
-					game.getItem(nounNumber).setItemLocation(81);
-				
-				//Give jug to swampman
-				} else if (codedNoun.substring(0,2).equals("40") && 
-						   game.getItem(4).getItemFlag()<0 && objNumber == 32) {
-					game.getItem(objNumber).setItemFlag(1);
-					game.getItem(nounNumber).setItemLocation(81);
-					game.addMessage("The Swampman takes the jug and leaves",true,true);
-					alreadyMessage = true;
-				
-				//Give pebble to Median
-				} else if (codedNoun.substring(0,2).equals("80") &&
-						   objNumber == 43) {
-					game.getItem(nounNumber).setItemLocation(81);
-					game.setMessageGameState();
-					game.getItem(8).setItemFlag(-1);
-
-					//Removes Median from Game
-					game.getItem(43).setItemLocation(81);
-					game.getItem(43).setItemFlag(1);
-					
-					game.addPanelMessage("He takes it ...", true);
-					if (player.getRoom()!=8) {
-						game.addPanelMessage("runs down the corridor, ...", false);
-					} 
-					game.addPanelMessage("and casts it into the chemical vats, ", false);
-					game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
-					game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
-				}
-				
-				//Successfully given
-				if (game.getItem(nounNumber).getItemLocation() == 81 && !alreadyMessage) {
-					game.addMessage("It is accepted",true,true);
-				}
-				
-				//Giving to logmen
-				if (objNumber == 41) {
-					game.addMessage("It is taken",true,true);
-					game.getItem(nounNumber).setItemLocation(51);
-				}
-			}
-		}
-	}
-	 */
-	
 }
 
 /* 8 May 2025 - Created File
@@ -534,4 +438,5 @@ public class ItemCommands {
  * 				 Added validate for give command
  * 19 May 2025 - Validated reciever
  * 			   - Give apple to snake and water to villager
+ * 21 May 2025 - Completed the give functions.
  */
