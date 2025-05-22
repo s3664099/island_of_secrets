@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 21 May 2025
+Version: 4.5
+Date: 22 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -121,6 +121,17 @@ public class ItemCommands {
 		return nounNumber;
 	}
 	
+	private boolean validateCode(String playerCode, String code) {
+		
+		boolean codeValid = false;
+		
+		if (playerCode.equals(code)) {
+			codeValid = true;
+		}
+		
+		return codeValid;
+	}
+	
 	private boolean extraValidTake(int currentRoom,int noun) {
 		
 		boolean valid = false;
@@ -138,7 +149,7 @@ public class ItemCommands {
 		ActionResult result = new ActionResult();
 		
 		if (command.checkTake()) {
-			result = executeTakeCommand(game,player,command);
+			result = executeTake(game,player,command);
 		} else if (command.checkDrop()) {
 			result = executeDropCommand(game,player,command);
 		} else if (command.checkGive()) {
@@ -148,11 +159,81 @@ public class ItemCommands {
 		return result;
 	}
 		
-	public ActionResult executeTakeCommand(Game game,Player player,ParsedCommand command) {
+	public ActionResult executeTake(Game game,Player player,ParsedCommand command) {
+		return new TakeHandler(game,player,command).execute();
+	}
+	
+	private class TakeHandler {
+		private final Game game;
+		private final Player player;
+		private final ParsedCommand command;
+		private final int nounNumber;
+		private final int playerRoom;
+		private final String codedCommand;
+		
+		public TakeHandler(Game game, Player player, ParsedCommand command) {
+			this.game = game;
+			this.player = player;
+			this.command = command;
+			nounNumber = command.getNounNumber();
+			playerRoom = player.getRoom();
+			codedCommand = command.getCodedCommand();
+		}
+		
+		ActionResult execute() {
+			
+			ActionResult result = new ActionResult();
+			//Validate
+			if (!canTake()) {
+				game.addMessage("Can't Take", true, true);
+				result = new ActionResult(game,false);
+			} else {
+				if (isApple()) {
+					result = handleApple();
+				} 
+			}
+			
+			return result;
+		}
+		
+		private boolean canTake() {
+			
+			boolean canTake = true;
+			
+			if (game.getItem(nounNumber).getItemLocation() != playerRoom) {
+				canTake = false;
+			}
+			return canTake;
+		}
+		
+
+		private boolean isApple() {
+			
+			boolean isApple = false;
+			
+			if (playerRoom == GameEntities.CLEARING && game.checkApples() &&
+				nounNumber == GameEntities.APPLE && game.getItem(nounNumber).getItemLocation()
+				!= playerRoom) {
+				isApple = true;
+			}
+			
+			return isApple;
+		}
+		
+		private ActionResult handleApple() {
+			
+			player.setStat("food", ((int) player.getStat("food"))+1);
+			game.addMessage("You pick an apple from the tree",true,true);
+			player.setStat("weight",((int) player.getStat("weight"))+1);
+					
+			return new ActionResult(game,player);
+		}
+		
+	}
 		
 		ActionResult result = specialItemsTakeResponse(game,player,command);
-		int noun = command.getNounNumber();
-		String codedCommand = command.getCodedCommand();
+		
+		
 		
 		if (!result.getValid()) {
 			result = specialResponseValidTake(game,player,command);
@@ -210,13 +291,7 @@ public class ItemCommands {
 		int currentRoom = player.getRoom();
 		int noun = command.getNounNumber();
 		
-		if (currentRoom == GameEntities.CLEARING && game.checkApples() && 
-			noun == GameEntities.APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
-			player.setStat("food", ((int) player.getStat("food"))+1);
-			game.addMessage("You pick an apple from the tree",true,true);
-			player.setStat("weight",((int) player.getStat("weight"))+1);
-			commandActioned = true;
-		} else if (currentRoom == GameEntities.CLEARING && 
+		else if (currentRoom == GameEntities.CLEARING && 
 				   noun == GameEntities.APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
 			game.addMessage("There are no more apples within reach",true,true);
 			commandActioned = true;
@@ -422,4 +497,5 @@ public class ItemCommands {
  * 21 May 2025 - Completed the give functions.
  * 			   - Moved constants to separate file.
  * 			   - Referenced constants in Game Entities file.
+ * 22 May 2025 - Created private class to handle take actions
  */
