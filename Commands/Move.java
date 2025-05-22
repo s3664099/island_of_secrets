@@ -2,44 +2,20 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 8 May 2025
+Version: 4.4
+Date: 22 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
 import Data.Constants;
+import Data.GameEntities;
 import Game.Game;
 import Game.Player;
 import java.util.Random;
 
 public class Move {
-	
-	// === Rooms ===
-	private static final int ROOM_ROCKY_PATH = 25;
-	private static final int ROOM_LOW_PASSAGE = 28;
-	private static final int ROOM_CASTLE_ENTRANCE = 47;
-	private static final int ROOM_STOREROOM = 51;
-	private static final int ROOM_CAVE = 12;
-	private static final int ROOM_CLEARING = 45;
-	private static final int ROOM_BUILDING = 53;
-	private static final int ROOM_ABODE_HUT = 70;
-	private static final int ROOM_SANCTUM = 10;
-
-	// === Items ===
-	private static final int ITEM_OMEGAN = 39;
-	private static final int ITEM_SNAKE = 40;
-	private static final int ITEM_CANYON_BEAST = 16;
-	private static final int ITEM_TORCH = 7;
-	private static final int ITEM_SWAMPMAN = 32;
-	private static final int ITEM_ROCKS = 44;
-	
-	// === Directions ===
-	private static final int NORTH = 1;
-	private static final int SOUTH = 2;
-	private static final int EAST = 3;
-	private static final int WEST = 4;
 	
 	public ParsedCommand parseMove(ParsedCommand command,int room) {
 		
@@ -54,24 +30,24 @@ public class Move {
 			nounNumber = nounNumber-Constants.NUMBER_OF_ITEMS;
 		}
 		
-		if ((room == ROOM_CAVE && noun.equals("cave")) || 
-			(room == ROOM_CLEARING && noun.equals("hut")) ||
-			(room ==ROOM_BUILDING && noun.equals("hut"))) {
-			nounNumber = WEST;
-		} else if (room == ROOM_ABODE_HUT && noun.equals("hut")) {
-			nounNumber=NORTH;
+		if ((room == GameEntities.CAVE && noun.equals("cave")) || 
+			(room == GameEntities.CLEARING && noun.equals("hut")) ||
+			(room ==GameEntities.BUILDING && noun.equals("hut"))) {
+			nounNumber = GameEntities.WEST;
+		} else if (room == GameEntities.ABODE_HUT && noun.equals("hut")) {
+			nounNumber=GameEntities.NORTH;
 		}
 		
 		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
-			nounNumber = WEST;
+			nounNumber = GameEntities.WEST;
 		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
 				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
 				   code.equals("490051")) {
-			nounNumber = NORTH;
+			nounNumber = GameEntities.NORTH;
 		} else if (code.equals("510060")||code.equals("480056")) {
-			nounNumber = SOUTH;
+			nounNumber = GameEntities.SOUTH;
 		} else if (code.equals("510044")||code.equals("510052")) {
-			nounNumber = EAST;
+			nounNumber = GameEntities.EAST;
 		}
 		
 		return new ParsedCommand(verbNumber,nounNumber,command.getCodedCommand(),
@@ -118,44 +94,44 @@ public class Move {
 		boolean moveBlocked = false;
 		
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		if (game.getItem(ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
-			(player.getStrengthWisdon()<180 || player.getRoom()==ROOM_SANCTUM)) {
+		if (game.getItem(GameEntities.OMEGAN).isAtLocation(player.getRoom()) &&
+			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.SANCTUM)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
 			moveBlocked = true;
 
-		} else if (player.getRoom() == game.getItem(ITEM_SWAMPMAN).getItemLocation() && 
-					game.getItem(ITEM_SWAMPMAN).getItemFlag()<1 && 
-					command.getNounNumber() == EAST) {
+		} else if (player.getRoom() == game.getItem(GameEntities.SWAMPMAN).getItemLocation() && 
+					game.getItem(GameEntities.SWAMPMAN).getItemFlag()<1 && 
+					command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("He will not let you pass.",true,true);
 			moveBlocked = true;
 		
 		//The Rocks
-		} else if (player.getRoom() == ROOM_CASTLE_ENTRANCE && 
-				   game.getItem(ITEM_ROCKS).getItemFlag()==0) {
+		} else if (player.getRoom() == GameEntities.CASTLE_ENTRANCE && 
+				   game.getItem(GameEntities.ROCKS).getItemFlag()==0) {
 			game.addMessage("The rocks move to prevent you",true,true);
 			moveBlocked = true;
 		
 		//Room with Arms
-		} else if (player.getRoom() == ROOM_LOW_PASSAGE && 
-				   game.getItem(ITEM_TORCH).getItemFlag()!=1) {
+		} else if (player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
+				   game.getItem(GameEntities.TORCH).getItemFlag()!=1) {
 			game.addMessage("The arms hold you fast",true,true);
 			moveBlocked = true;
 		
 		//Snake at grandpa's Shack
-		} else if (player.getRoom()==ROOM_CLEARING && 
-				   game.getItem(ITEM_SNAKE).getItemFlag()==0 && 
-				   command.getNounNumber() == WEST) {
+		} else if (player.getRoom()==GameEntities.CLEARING && 
+				   game.getItem(GameEntities.SNAKE).getItemFlag()==0 && 
+				   command.getNounNumber() == GameEntities.WEST) {
 			game.addMessage("Hisss!",true,true);
 			moveBlocked = true;
 		
 		//Looks like need canyon beast to climb the path	
-		} else if (player.getRoom() == ROOM_ROCKY_PATH && 
-				   game.getItemFlagSum(ITEM_CANYON_BEAST) != -1 && 
-				   command.getNounNumber() == EAST) {
+		} else if (player.getRoom() == GameEntities.ROCKY_PATH && 
+				   game.getItemFlagSum(GameEntities.BEAST) != -1 && 
+				   command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("Too steep to climb",true,true);
 			moveBlocked = true;
 		
-		} else if (player.getRoom() == ROOM_STOREROOM && command.getNounNumber() == EAST) {
+		} else if (player.getRoom() == GameEntities.STOREROOM && command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("The door is barred!",true,true);
 			moveBlocked = true;
 		}
@@ -209,4 +185,6 @@ public class Move {
 /* 4 May 2025 - Created File
  * 5 May 2025 - Removed Magic Numbers and replaced with constants
  * 8 May 2025 - Added execution functionality
+ * 21 May 2025 - Started moving constants to GameEntities
+ * 22 May 2025 - Moved Constants to GameEntities
  */
