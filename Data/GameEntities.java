@@ -3,7 +3,7 @@ Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.0
-Date: 21 May 2025
+Date: 23 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -20,19 +20,19 @@ public class GameEntities {
     }
 
 	// === Rooms ===
-	public static final int CARRYING = 0;
-	public static final int FOREST = 1;
-	public static final int SANCTUM = 10;
-	public static final int CAVE = 12;
-	public static final int ROCKY_PATH = 25;
-	public static final int ENTRANCE_CHAMBER = 27;
+	public static final int ROOM_CARRYING = 0;
+	public static final int ROOM_FOREST = 1;
+	public static final int ROOM_SANCTUM = 10;
+	public static final int ROOM_CAVE = 12;
+	public static final int ROOM_ROCKY_PATH = 25;
+	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
-	public static final int CLEARING = 45;
-	public static final int CASTLE_ENTRANCE = 47;
-	public static final int STOREROOM = 51;
-	public static final int BUILDING = 53;
-	public static final int ABODE_HUT = 70;
-	public static final int DESTROYED = 81;
+	public static final int ROOM_CLEARING = 45;
+	public static final int ROOM_CASTLE_ENTRANCE = 47;
+	public static final int ROOM_STOREROOM = 51;
+	public static final int ROOM_BUILDING = 53;
+	public static final int ROOM_ABODE_HUT = 70;
+	public static final int ROOM_DESTROYED = 81;
 	
 	// === Items ===
 	public static final int APPLE = 1;
@@ -67,4 +67,5 @@ public class GameEntities {
 
 /* 21 May 2025 - Created File
  * 22 May 2025 - Moved constants from Move function
+ * 23 May 2025 - Edited locations to start with ROOM
  */

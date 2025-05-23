@@ -50,7 +50,7 @@ public class ItemCommands {
 		int noun = command.getNounNumber();
 		boolean validCommand = true;
 		
-		if (game.getItem(noun).getItemLocation()!=GameEntities.CARRYING || noun>=Constants.FOOD_THRESHOLD) {
+		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || noun>=Constants.FOOD_THRESHOLD) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			validCommand = false;
 		}
@@ -136,8 +136,8 @@ public class ItemCommands {
 		
 		boolean valid = false;
 		
-		if ((currentRoom==GameEntities.CLEARING && noun==GameEntities.APPLE) || 
-			(currentRoom==GameEntities.ENTRANCE_CHAMBER && noun==GameEntities.TORCH)) {
+		if ((currentRoom==GameEntities.ROOM_CLEARING && noun==GameEntities.APPLE) || 
+			(currentRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && noun==GameEntities.TORCH)) {
 			valid=true;
 		}
 		
@@ -201,7 +201,7 @@ public class ItemCommands {
 			
 			boolean isApple = false;
 			
-			if (playerRoom == GameEntities.CLEARING && game.checkApples() &&
+			if (playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
 				nounNumber == GameEntities.APPLE && game.getItem(nounNumber).getItemLocation()
 				!= playerRoom) {
 				isApple = true;
@@ -215,7 +215,7 @@ public class ItemCommands {
 			boolean noApples = false;
 			
 			//checkApples() will be false.
-			if (playerRoom == GameEntities.CLEARING && nounNumber == GameEntities.APPLE &&
+			if (playerRoom == GameEntities.ROOM_CLEARING && nounNumber == GameEntities.APPLE &&
 				game.getItem(nounNumber).getItemFlag() != playerRoom) {
 				noApples = true;
 			}
@@ -227,12 +227,10 @@ public class ItemCommands {
 			
 			boolean isNoTorch = false;
 			
-			if(playerRoom==GameEntities.ENTRANCE_CHAMBER && nounNumber == GameEntities.TORCH && 
+			if(playerRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && nounNumber == GameEntities.TORCH && 
 			   game.getItem(nounNumber).getItemLocation() != playerRoom) {
-				
 				isNoTorch = true;
 			}
-			
 			return isNoTorch;
 		}
 		
@@ -244,10 +242,9 @@ public class ItemCommands {
 					
 			return new ActionResult(game,player);
 		}
-		
 	}
 		
-		
+	/*	
 		
 		
 		
@@ -300,7 +297,7 @@ public class ItemCommands {
 		
 		return result;
 	}
-		
+		*/
 	public ActionResult specialResponseValidTake(Game game, Player player, ParsedCommand command) {
 		
 		boolean commandActioned = false;
@@ -315,13 +312,13 @@ public class ItemCommands {
 			commandActioned = true;
 		
 		//Attempting to take the beast
-		} else if (noun == GameEntities.BEAST && game.getItem(GameEntities.ROPE).getItemLocation()!=GameEntities.CARRYING) {
+		} else if (noun == GameEntities.BEAST && game.getItem(GameEntities.ROPE).getItemLocation()!=GameEntities.ROOM_CARRYING) {
 			game.getItem(noun).setItemLocation(player.getRoom());
 			game.addMessage("It escaped",true,true);
 			commandActioned = true;
 			
 			//Handles the bird when attempting to take the egg without the staff
-		} else if (commandCode.equals("246046") && game.getItem(GameEntities.STAFF).getItemLocation() != GameEntities.CARRYING) {
+		} else if (commandCode.equals("246046") && game.getItem(GameEntities.STAFF).getItemLocation() != GameEntities.ROOM_CARRYING) {
 
 				game.addMessage("You anger the bird",true,true);
 				game.getItem(noun).setItemLocation(player.getRoom());
@@ -331,7 +328,7 @@ public class ItemCommands {
 				if (rand.nextInt(3)>1) {
 					game.addMessage(" which flies you to a remote place.",false,true);
 					player.setRoom(63+rand.nextInt(6));
-					game.getItem(16).setItemLocation(GameEntities.FOREST);
+					game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
 					game.getItem(16).setItemFlag(0);
 				}
 				commandActioned = true;
@@ -360,9 +357,9 @@ public class ItemCommands {
 		String codedCommand = command.getCodedCommand();
 		
 		//Dropping the Earthenware Jug
-		if (noun == GameEntities.JUG && game.getItem(noun).getItemLocation()==GameEntities.CARRYING && 
+		if (noun == GameEntities.JUG && game.getItem(noun).getItemLocation()==GameEntities.ROOM_CARRYING && 
 			verb==GameEntities.DROP) {
-			game.getItem(noun).setItemLocation(GameEntities.DESTROYED);
+			game.getItem(noun).setItemLocation(GameEntities.ROOM_DESTROYED);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.addMessage("It breaks!",true,true);
@@ -399,7 +396,7 @@ public class ItemCommands {
 		
 		//Removes the snake from the hut by giving it an apple
 		if (codedCommand.equals("10045") && objectNumber==GameEntities.SNAKE) {
-			game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(objectNumber).setItemFlag(1);
 			game.addMessage("The snake uncoils",true,true);
 			result = new ActionResult(game,player);
@@ -415,7 +412,7 @@ public class ItemCommands {
 					objectNumber == GameEntities.SCAVENGER) {
 				
 				player.setStat("wisdom",(int) player.getStat("wisdom")+10);
-				game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
+				game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 				result = new ActionResult(game,player);
 				game.addMessage("It is accepted",true,true);
 				
@@ -423,7 +420,7 @@ public class ItemCommands {
 			} else if (codedCommand.substring(0,2).equals("40") && 
 					   game.getItem(GameEntities.JUG).getItemFlag()<0 && objectNumber == GameEntities.SWAMPMAN) { 
 				game.getItem(objectNumber).setItemFlag(1);
-				game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
+				game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 				game.addMessage("The Swampman takes the jug and leaves",true,true);
 				result = new ActionResult(game,player);
 			
@@ -445,12 +442,12 @@ public class ItemCommands {
 	
 	private ActionResult givePebble(Game game, Player player, int nounNumber) {
 		
-		game.getItem(nounNumber).setItemLocation(GameEntities.DESTROYED);
+		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.setMessageGameState();
 		game.getItem(8).setItemFlag(-1);
 
 		//Removes Median from Game
-		game.getItem(43).setItemLocation(GameEntities.DESTROYED);
+		game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(43).setItemFlag(1);
 		
 		game.addPanelMessage("He takes it ...", true);

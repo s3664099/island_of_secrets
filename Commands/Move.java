@@ -30,11 +30,11 @@ public class Move {
 			nounNumber = nounNumber-Constants.NUMBER_OF_ITEMS;
 		}
 		
-		if ((room == GameEntities.CAVE && noun.equals("cave")) || 
-			(room == GameEntities.CLEARING && noun.equals("hut")) ||
-			(room ==GameEntities.BUILDING && noun.equals("hut"))) {
+		if ((room == GameEntities.ROOM_CAVE && noun.equals("cave")) || 
+			(room == GameEntities.ROOM_CLEARING && noun.equals("hut")) ||
+			(room ==GameEntities.ROOM_BUILDING && noun.equals("hut"))) {
 			nounNumber = GameEntities.WEST;
-		} else if (room == GameEntities.ABODE_HUT && noun.equals("hut")) {
+		} else if (room == GameEntities.ROOM_ABODE_HUT && noun.equals("hut")) {
 			nounNumber=GameEntities.NORTH;
 		}
 		
@@ -95,7 +95,7 @@ public class Move {
 		
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
 		if (game.getItem(GameEntities.OMEGAN).isAtLocation(player.getRoom()) &&
-			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.SANCTUM)) {
+			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
 			moveBlocked = true;
 
@@ -106,7 +106,7 @@ public class Move {
 			moveBlocked = true;
 		
 		//The Rocks
-		} else if (player.getRoom() == GameEntities.CASTLE_ENTRANCE && 
+		} else if (player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
 				   game.getItem(GameEntities.ROCKS).getItemFlag()==0) {
 			game.addMessage("The rocks move to prevent you",true,true);
 			moveBlocked = true;
@@ -118,20 +118,20 @@ public class Move {
 			moveBlocked = true;
 		
 		//Snake at grandpa's Shack
-		} else if (player.getRoom()==GameEntities.CLEARING && 
+		} else if (player.getRoom()==GameEntities.ROOM_CLEARING && 
 				   game.getItem(GameEntities.SNAKE).getItemFlag()==0 && 
 				   command.getNounNumber() == GameEntities.WEST) {
 			game.addMessage("Hisss!",true,true);
 			moveBlocked = true;
 		
 		//Looks like need canyon beast to climb the path	
-		} else if (player.getRoom() == GameEntities.ROCKY_PATH && 
+		} else if (player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
 				   game.getItemFlagSum(GameEntities.BEAST) != -1 && 
 				   command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("Too steep to climb",true,true);
 			moveBlocked = true;
 		
-		} else if (player.getRoom() == GameEntities.STOREROOM && command.getNounNumber() == GameEntities.EAST) {
+		} else if (player.getRoom() == GameEntities.ROOM_STOREROOM && command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("The door is barred!",true,true);
 			moveBlocked = true;
 		}
