@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 22 May 2025
+Version: 4.6
+Date: 23 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -183,31 +183,21 @@ public class ItemCommands {
 		ActionResult execute() {
 			
 			ActionResult result = new ActionResult();
-			//Validate
-			if (!canTake()) {
-				game.addMessage("Can't Take", true, true);
-				result = new ActionResult(game,false);
-			} else {
-				if (isApple()) {
-					result = handleApple();
-				} 
+			
+			if (areApples()) {
+				result = handleApple();
+			} else if (areNoApples()) {
+				game.addMessage("There are no more apples within reach",true,true);
+				result = new ActionResult(game,true);
+			} else if (isNoTorch()) {
+				game.addMessage("There are no more within reach",true,true);
+				result = new ActionResult(game,true);
 			}
 			
 			return result;
 		}
-		
-		private boolean canTake() {
-			
-			boolean canTake = true;
-			
-			if (game.getItem(nounNumber).getItemLocation() != playerRoom) {
-				canTake = false;
-			}
-			return canTake;
-		}
-		
 
-		private boolean isApple() {
+		private boolean areApples() {
 			
 			boolean isApple = false;
 			
@@ -218,6 +208,32 @@ public class ItemCommands {
 			}
 			
 			return isApple;
+		}
+		
+		private boolean areNoApples() {
+			
+			boolean noApples = false;
+			
+			//checkApples() will be false.
+			if (playerRoom == GameEntities.CLEARING && nounNumber == GameEntities.APPLE &&
+				game.getItem(nounNumber).getItemFlag() != playerRoom) {
+				noApples = true;
+			}
+			
+			return noApples;
+		}
+		
+		private boolean isNoTorch() {
+			
+			boolean isNoTorch = false;
+			
+			if(playerRoom==GameEntities.ENTRANCE_CHAMBER && nounNumber == GameEntities.TORCH && 
+			   game.getItem(nounNumber).getItemLocation() != playerRoom) {
+				
+				isNoTorch = true;
+			}
+			
+			return isNoTorch;
 		}
 		
 		private ActionResult handleApple() {
@@ -231,7 +247,7 @@ public class ItemCommands {
 		
 	}
 		
-		ActionResult result = specialItemsTakeResponse(game,player,command);
+		
 		
 		
 		
@@ -284,26 +300,7 @@ public class ItemCommands {
 		
 		return result;
 	}
-	
-	public ActionResult specialItemsTakeResponse(Game game,Player player, ParsedCommand command) {
 		
-		boolean commandActioned = false;
-		int currentRoom = player.getRoom();
-		int noun = command.getNounNumber();
-		
-		else if (currentRoom == GameEntities.CLEARING && 
-				   noun == GameEntities.APPLE && game.getItem(noun).getItemLocation() != currentRoom) {
-			game.addMessage("There are no more apples within reach",true,true);
-			commandActioned = true;
-		} else if (currentRoom==GameEntities.ENTRANCE_CHAMBER && noun == GameEntities.TORCH && 
-				   game.getItem(noun).getItemLocation() != currentRoom) {
-			game.addMessage("There are no more within reach",true,true);
-			commandActioned = true;
-		}
-		
-		return new ActionResult(game,player,commandActioned);
-	}
-	
 	public ActionResult specialResponseValidTake(Game game, Player player, ParsedCommand command) {
 		
 		boolean commandActioned = false;
@@ -498,4 +495,6 @@ public class ItemCommands {
  * 			   - Moved constants to separate file.
  * 			   - Referenced constants in Game Entities file.
  * 22 May 2025 - Created private class to handle take actions
+ * 23 May 2025 - Removed validation (not necessary).
+ * 			   - Added no apples and no torch responses
  */
