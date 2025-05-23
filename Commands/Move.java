@@ -94,39 +94,39 @@ public class Move {
 		boolean moveBlocked = false;
 		
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		if (game.getItem(GameEntities.OMEGAN).isAtLocation(player.getRoom()) &&
+		if (game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
 			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
 			moveBlocked = true;
 
-		} else if (player.getRoom() == game.getItem(GameEntities.SWAMPMAN).getItemLocation() && 
-					game.getItem(GameEntities.SWAMPMAN).getItemFlag()<1 && 
+		} else if (player.getRoom() == game.getItem(GameEntities.ITEM_SWAMPMAN).getItemLocation() && 
+					game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()<1 && 
 					command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("He will not let you pass.",true,true);
 			moveBlocked = true;
 		
 		//The Rocks
 		} else if (player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
-				   game.getItem(GameEntities.ROCKS).getItemFlag()==0) {
+				   game.getItem(GameEntities.ITEM_ROCKS).getItemFlag()==0) {
 			game.addMessage("The rocks move to prevent you",true,true);
 			moveBlocked = true;
 		
 		//Room with Arms
 		} else if (player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
-				   game.getItem(GameEntities.TORCH).getItemFlag()!=1) {
+				   game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
 			game.addMessage("The arms hold you fast",true,true);
 			moveBlocked = true;
 		
 		//Snake at grandpa's Shack
 		} else if (player.getRoom()==GameEntities.ROOM_CLEARING && 
-				   game.getItem(GameEntities.SNAKE).getItemFlag()==0 && 
+				   game.getItem(GameEntities.ITEM_SNAKE).getItemFlag()==0 && 
 				   command.getNounNumber() == GameEntities.WEST) {
 			game.addMessage("Hisss!",true,true);
 			moveBlocked = true;
 		
 		//Looks like need canyon beast to climb the path	
 		} else if (player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
-				   game.getItemFlagSum(GameEntities.BEAST) != -1 && 
+				   game.getItemFlagSum(GameEntities.ITEM_BEAST) != -1 && 
 				   command.getNounNumber() == GameEntities.EAST) {
 			game.addMessage("Too steep to climb",true,true);
 			moveBlocked = true;
