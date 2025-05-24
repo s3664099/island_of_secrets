@@ -166,7 +166,6 @@ public class ItemCommands {
 	private class TakeHandler {
 		private final Game game;
 		private final Player player;
-		private final ParsedCommand command;
 		private final int nounNumber;
 		private final int playerRoom;
 		private final String codedCommand;
@@ -174,7 +173,6 @@ public class ItemCommands {
 		public TakeHandler(Game game, Player player, ParsedCommand command) {
 			this.game = game;
 			this.player = player;
-			this.command = command;
 			nounNumber = command.getNounNumber();
 			playerRoom = player.getRoom();
 			codedCommand = command.getCodedCommand();
@@ -183,7 +181,6 @@ public class ItemCommands {
 		public ActionResult execute() {
 			
 			ActionResult result = new ActionResult();
-			
 			if (areApples()) {
 				result = handleApple();
 			} else if (areNoApples()) {
@@ -200,23 +197,24 @@ public class ItemCommands {
 				result = takeCloak();
 			} else if (isTakingEgg()) {
 				result = takeEgg();
+			} else if (isTakingBooks()) {
+				result = takeBooks();
+			} else if (hasTakeBeastFailed()) {
+				result = takeBeastFailed();
 			} else {
 				result = finaliseTake(game,player,nounNumber,false);
 			}
-			
 			return result;
 		}
 		
 		private boolean areApples() {
 			
 			boolean isApple = false;
-			
 			if (playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
 				nounNumber == GameEntities.ITEM_APPLE && game.getItem(nounNumber).getItemLocation()
 				!= playerRoom) {
 				isApple = true;
 			}
-			
 			return isApple;
 		}
 		
@@ -277,6 +275,26 @@ public class ItemCommands {
 				isTakingEgg = true;
 			}
 			return isTakingEgg;
+		}
+		
+		private boolean isTakingBooks() {
+			
+			boolean isTakingBooks = false;
+			if(validateCode(codedCommand,GameEntities.CODE_EVIL_BOOKS)) {
+				isTakingBooks = true;
+			}
+			return isTakingBooks;
+		}
+		
+		private boolean hasTakeBeastFailed() {
+			
+			boolean isTakingBeast = false;
+			if (nounNumber == GameEntities.ITEM_BEAST && 
+				game.getItem(GameEntities.ITEM_ROPE).getItemLocation() !=
+				GameEntities.ROOM_CARRYING) {
+				isTakingBeast = true;
+			}
+			return isTakingBeast;
 		}
 		
 		private boolean hasStaff() {
@@ -347,7 +365,20 @@ public class ItemCommands {
 					game.getItem(16).setItemFlag(0);
 				}
 			}
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult takeBooks() {
 			
+			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+			player.setStat("strength",(float) player.getStat("strength")-8);
+			game.addMessage("They are cursed",true,true);
+
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult takeBeastFailed() {
+			game.addMessage("It escaped",true,true);
 			return new ActionResult(game,player);
 		}
 		
@@ -372,80 +403,7 @@ public class ItemCommands {
 			return new ActionResult(game,player);
 		}
 	}
-		
-	/*	
-		
-		
-		
-		if (!result.getValid()) {
-			result = specialResponseValidTake(game,player,command);
 			
-			if (!result.getValid()) {
-				
-				
-				if () {
-
-				} else 	if () {
-					player.setStat("drink",((int) player.getStat("drink"))+2);
-					game.getItem(noun).setItemLocation(-18);
-				}
-				
-				//Omegan's Cloak
-				if (codedCommand.equals()) {
-					
-
-				} else if (codedCommand.equals() && 
-						  {
-						
-				} else {
-					
-				}
-				
-				//Makes sure that wisdom increase only happens once
-				if () {
-					
-				}
-				
-				
-				
-
-				
-				result = new ActionResult(game,player);
-			}
-		}
-		
-		return result;
-	}
-		*/
-	public ActionResult specialResponseValidTake(Game game, Player player, ParsedCommand command) {
-		
-		boolean commandActioned = false;
-		String commandCode = command.getCodedCommand();
-		int noun = command.getNounNumber();
-		
-		//Evil books in library
-		if (commandCode.equals("3450050")) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-			player.setStat("strength",(float) player.getStat("strength")-8);
-			game.addMessage("They are cursed",true,true);
-			commandActioned = true;
-		
-		//Attempting to take the beast
-		} else if (noun == GameEntities.ITEM_BEAST && game.getItem(GameEntities.ITEM_ROPE).getItemLocation()!=GameEntities.ROOM_CARRYING) {
-			game.getItem(noun).setItemLocation(player.getRoom());
-			game.addMessage("It escaped",true,true);
-			commandActioned = true;
-			
-			//Handles the bird when attempting to take the egg without the staff
-		} else if (commandCode.equals("246046") && game.getItem(GameEntities.ITEM_STAFF).getItemLocation() != GameEntities.ROOM_CARRYING) {
-
-
-				commandActioned = true;
-		}
-		
-		return new ActionResult(game,player,commandActioned);
-	}
-	
 	private ActionResult executeDropCommand(Game game, Player player, ParsedCommand command) {
 		
 		int noun = command.getNounNumber();
@@ -604,4 +562,5 @@ public class ItemCommands {
  * 23 May 2025 - Removed validation (not necessary).
  * 			   - Added no apples and no torch responses
  * 24 May 2025 - Added take food & drink. Added finalise take
+ * 			   - Completed take command
  */
