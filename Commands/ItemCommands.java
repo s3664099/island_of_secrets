@@ -151,9 +151,9 @@ public class ItemCommands {
 		if (command.checkTake()) {
 			result = executeTake(game,player,command);
 		} else if (command.checkDrop()) {
-			result = executeDropCommand(game,player,command);
+			result = executeDrop(game,player,command);
 		} else if (command.checkGive()) {
-			
+			result = executeGive(game,player,command);
 		}
 		
 		return result;
@@ -165,6 +165,10 @@ public class ItemCommands {
 	
 	public ActionResult executeDrop(Game game, Player player, ParsedCommand command) {
 		return new DropHandler(game,player,command).execute();
+	}
+	
+	public ActionResult executeGive(Game game,Player player, ParsedCommand command) {
+		return new GiveHandler(game,player,command).execute();
 	}
 	
 	private class TakeHandler {
@@ -498,8 +502,31 @@ public class ItemCommands {
 			return new ActionResult(game,player);
 		}
 	}
+	
+	private class GiveHandler {
 		
-	public ActionResult executeGive(Game game, Player player, ParsedCommand command) {
+		private final Game game;
+		private final Player player;
+		private final int nounNumber;
+		private final int verbNumber;
+		private final int playerRoom;
+		private final String codedCommand;
+		
+		public GiveHandler(Game game, Player player, ParsedCommand command) {
+			this.game = game;
+			this.player = player;
+			this.nounNumber = command.getNounNumber();
+			this.verbNumber = command.getVerbNumber();
+			this.playerRoom = player.getRoom();
+			this.codedCommand = command.getCodedCommand();
+		}
+		
+		private ActionResult execute() {
+			return new ActionResult();
+		}
+	}
+		
+	public ActionResult executeGiveCommand(Game game, Player player, ParsedCommand command) {
 		
 		String[] commands = command.getSplitFullCommand();
 		String object = getObject(commands);
@@ -611,4 +638,6 @@ public class ItemCommands {
  * 			   - Added no apples and no torch responses
  * 24 May 2025 - Added take food & drink. Added finalise take
  * 			   - Completed take command
+ * 			   - Added drop command
+ * 			   - Started give command
  */

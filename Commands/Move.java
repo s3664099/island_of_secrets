@@ -179,7 +179,6 @@ public class Move {
 		}
 		return new ActionResult(game,player);
 	}
-	
 }
 
 /* 4 May 2025 - Created File
