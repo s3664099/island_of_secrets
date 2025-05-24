@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 23 May 2025
+Version: 4.7
+Date: 24 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -180,7 +180,7 @@ public class ItemCommands {
 			codedCommand = command.getCodedCommand();
 		}
 		
-		ActionResult execute() {
+		public ActionResult execute() {
 			
 			ActionResult result = new ActionResult();
 			
@@ -196,6 +196,10 @@ public class ItemCommands {
 				result = takeSustanence("food") ;
 			} else if (isDrink()) {
 				result = takeSustanence("drink");
+			} else if (isTakingCloak()) {
+				result = takeCloak();
+			} else if (isTakingEgg()) {
+				result = takeEgg();
 			} else {
 				result = finaliseTake(game,player,nounNumber,false);
 			}
@@ -203,8 +207,6 @@ public class ItemCommands {
 			return result;
 		}
 		
-		
-
 		private boolean areApples() {
 			
 			boolean isApple = false;
@@ -260,6 +262,31 @@ public class ItemCommands {
 			return isDrink;
 		}
 		
+		private boolean isTakingCloak() {
+			
+			boolean isTakingCloak = false;
+			if(validateCode(codedCommand,GameEntities.CODE_CLOAK)) {
+				isTakingCloak = true;
+			}
+			return isTakingCloak;
+		}
+		
+		private boolean isTakingEgg() {
+			boolean isTakingEgg = false;
+			if (validateCode(codedCommand,GameEntities.CODE_EGG)) {
+				isTakingEgg = true;
+			}
+			return isTakingEgg;
+		}
+		
+		private boolean hasStaff() {
+			boolean hasStaff = false;
+			if (game.getItem(GameEntities.ITEM_STAFF).getItemLocation() == GameEntities.ROOM_CARRYING){
+				hasStaff = true;
+			}
+			return hasStaff;
+		}
+		
 		private boolean hasWisdomAcquired() {
 			
 			boolean wisdomAcquired = false;
@@ -284,6 +311,44 @@ public class ItemCommands {
 			game.getItem(nounNumber).setItemLocation(-18);
 			
 			return finaliseTake(game, player, nounNumber, true);
+		}
+		
+		private ActionResult takeCloak() {
+			
+			game.addMessage("Lightning Flashes",true,true);
+			game.getItem(39).setItemLocation(player.getRoom());
+			game.getItem(nounNumber).setItemLocation(0);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+			player.setStat("strength",(float) player.getStat("strength")-8);
+			game.setLightingGameState();
+			
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult takeEgg() {
+			
+			Game game = this.game;
+			Player player = this.player;
+			
+			if (hasStaff()) {
+				ActionResult result = finaliseTake(game,player,nounNumber,false);
+				game = result.getGame();
+				player = result.getPlayer();
+				game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);
+			} else {
+				game.addMessage("You anger the bird",true,true);
+				
+				//One in three bird takes you to random spot & replaces wild canyon beast
+				//Needed beast to actually get here
+				if (rand.nextInt(3)>1) {
+					game.addMessage(" which flies you to a remote place.",false,true);
+					player.setRoom(63+rand.nextInt(6));
+					game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
+					game.getItem(16).setItemFlag(0);
+				}
+			}
+			
+			return new ActionResult(game,player);
 		}
 		
 		private ActionResult finaliseTake(Game game, Player player, int nounNumber, boolean taken) {
@@ -326,18 +391,12 @@ public class ItemCommands {
 				}
 				
 				//Omegan's Cloak
-				if (codedCommand.equals("3810010")) {
+				if (codedCommand.equals()) {
 					
-					//Add special lightning Flashes screen
-					game.addMessage("Lightning Flashes",true,true);
-					
-					game.getItem(39).setItemLocation(player.getRoom());
-					player.setStat("wisdom",(int) player.getStat("wisdom")-2);
-					player.setStat("strength",(float) player.getStat("strength")-8);
-					game.setLightingGameState();
-				} else if (codedCommand.equals("246046") && 
-						   game.getItem(GameEntities.STAFF).getItemLocation() == GameEntities.CARRYING) {
-					game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);	
+
+				} else if (codedCommand.equals() && 
+						  {
+						
 				} else {
 					
 				}
@@ -380,17 +439,7 @@ public class ItemCommands {
 			//Handles the bird when attempting to take the egg without the staff
 		} else if (commandCode.equals("246046") && game.getItem(GameEntities.ITEM_STAFF).getItemLocation() != GameEntities.ROOM_CARRYING) {
 
-				game.addMessage("You anger the bird",true,true);
-				game.getItem(noun).setItemLocation(player.getRoom());
-				
-				//One in three bird takes you to random spot & replaces wild canyon beast
-				//Needed beast to actually get here
-				if (rand.nextInt(3)>1) {
-					game.addMessage(" which flies you to a remote place.",false,true);
-					player.setRoom(63+rand.nextInt(6));
-					game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
-					game.getItem(16).setItemFlag(0);
-				}
+
 				commandActioned = true;
 		}
 		
@@ -554,4 +603,5 @@ public class ItemCommands {
  * 22 May 2025 - Created private class to handle take actions
  * 23 May 2025 - Removed validation (not necessary).
  * 			   - Added no apples and no torch responses
+ * 24 May 2025 - Added take food & drink. Added finalise take
  */

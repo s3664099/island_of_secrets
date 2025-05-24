@@ -57,6 +57,10 @@ public class GameEntities {
 	public static final int CMD_PICK = 15;
 	public static final int CMD_CATCH = 29;
 	
+	// === Codes ===
+	public static final String CODE_CLOAK = "3810010";
+	public static final String CODE_EGG = "246046";
+	
 	// === Directions ===
 	public static final int NORTH = 1;
 	public static final int SOUTH = 2;
