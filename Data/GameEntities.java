@@ -61,6 +61,7 @@ public class GameEntities {
 	public static final String CODE_CLOAK = "3810010";
 	public static final String CODE_EGG = "246046";
 	public static final String CODE_EVIL_BOOKS = "3450050";
+	public static final String CODE_TORCH = "701";
 	
 	// === Directions ===
 	public static final int NORTH = 1;

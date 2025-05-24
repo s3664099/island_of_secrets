@@ -163,6 +163,10 @@ public class ItemCommands {
 		return new TakeHandler(game,player,command).execute();
 	}
 	
+	public ActionResult executeDrop(Game game, Player player, ParsedCommand command) {
+		return new DropHandler(game,player,command).execute();
+	}
+	
 	private class TakeHandler {
 		private final Game game;
 		private final Player player;
@@ -403,38 +407,80 @@ public class ItemCommands {
 			return new ActionResult(game,player);
 		}
 	}
-			
-	private ActionResult executeDropCommand(Game game, Player player, ParsedCommand command) {
-		
-		int noun = command.getNounNumber();
-		
-		game.getItem(noun).setItemLocation(player.getRoom());
-		player.setStat("weight",((int) player.getStat("weight"))-1);
-		game.addMessage("Done",true,true);
-		
-		ActionResult result = specialDropResults(game,player,command);
-		
-		return result;
-	}
 	
-	private ActionResult specialDropResults(Game game,Player player,ParsedCommand command) {
+	private class DropHandler {
+		private final Game game;
+		private final Player player;
+		private final int nounNumber;
+		private final int verbNumber;
+		private final int playerRoom;
+		private final String codedCommand;
 		
-		int noun = command.getNounNumber();
-		int verb = command.getVerbNumber();
-		String codedCommand = command.getCodedCommand();
+		public DropHandler(Game game, Player player, ParsedCommand command) {
+			this.game = game;
+			this.player = player;
+			this.nounNumber = command.getNounNumber();
+			this.verbNumber = command.getVerbNumber();
+			this.playerRoom = player.getRoom();
+			this.codedCommand = command.getCodedCommand();
+		}
 		
-		//Dropping the Earthenware Jug
-		if (noun == GameEntities.ITEM_JUG && game.getItem(noun).getItemLocation()==GameEntities.ROOM_CARRYING && 
-			verb==GameEntities.CMD_DROP) {
-			game.getItem(noun).setItemLocation(GameEntities.ROOM_DESTROYED);
+		public ActionResult execute() {
+			
+			game.getItem(nounNumber).setItemLocation(playerRoom);
+			player.setStat("weight",((int) player.getStat("weight"))-1);
+			game.addMessage("Done",true,true);
+			ActionResult result = new ActionResult(game,player);
+			
+			if(isJug()) {
+				result = dropJug();
+			} else if (isTorch()) {
+				result = dropTorch();
+			} else if (isBeast()) {
+				result = releaseBeast();
+			}
+			
+			return result;
+		}
+		
+		private boolean isJug() {
+			
+			boolean isJug = false;
+			if (nounNumber == GameEntities.ITEM_JUG && 
+				game.getItem(nounNumber).getItemLocation()==GameEntities.ROOM_CARRYING && 
+				verbNumber==GameEntities.CMD_DROP) {
+				isJug = true;
+			}
+			return isJug;
+		}
+		
+		private boolean isTorch() {
+			
+			boolean isTorch = false;
+			if (validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH)) {
+				isTorch = true;
+			}
+			return isTorch;
+		}
+		
+		private boolean isBeast() {
+			boolean isBeast = false;
+			if (nounNumber == GameEntities.ITEM_BEAST) {
+				isBeast = true;
+			}
+			return isBeast;
+		}
+		
+		private ActionResult dropJug() {
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.addMessage("It breaks!",true,true);
-		
-		//Dropping a brightly glowing torch
-		} else if (codedCommand.substring(0,3).equals("701")) {
-						
-			game.getItem(noun).setItemLocation(player.getRoom());
+			return new ActionResult(game,player);
+		}
+				
+		private ActionResult dropTorch() {
+			game.getItem(nounNumber).setItemLocation(player.getRoom());
 			game.addMessage("The torch dims when you drop it.",true,true);	
 			game.getItem(GameEntities.ITEM_TORCH).setItemFlag(0);
 			game.getItem(GameEntities.ITEM_TORCH).setItemName("a flickering torch");
@@ -442,15 +488,17 @@ public class ItemCommands {
 			if (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
 				game.addMessage("Upon dropping the torch the arms reach out and grab you, preventing you from moving.",false,true);
 			}
+			return new ActionResult(game,player);
+		}
 		
-		//Dropping the beast
-		} else if (noun == GameEntities.ITEM_BEAST) {
-			game.getItem(noun).setItemFlag(0);
-			game.addMessage("The Canyon Beast runs away", true, true);		}
-		
-		return new ActionResult(game,player);
+		private ActionResult releaseBeast() {
+			game.getItem(nounNumber).setItemFlag(0);
+			game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
+			game.addMessage("The Canyon Beast runs away", true, true);
+			return new ActionResult(game,player);
+		}
 	}
-	
+		
 	public ActionResult executeGive(Game game, Player player, ParsedCommand command) {
 		
 		String[] commands = command.getSplitFullCommand();
