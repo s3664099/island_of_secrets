@@ -192,10 +192,18 @@ public class ItemCommands {
 			} else if (isNoTorch()) {
 				game.addMessage("There are no more within reach",true,true);
 				result = new ActionResult(game,true);
+			} else if (isFood()) {
+				result = takeSustanence("food") ;
+			} else if (isDrink()) {
+				result = takeSustanence("drink");
+			} else {
+				result = finaliseTake(game,player,nounNumber,false);
 			}
 			
 			return result;
 		}
+		
+		
 
 		private boolean areApples() {
 			
@@ -234,12 +242,68 @@ public class ItemCommands {
 			return isNoTorch;
 		}
 		
+		private boolean isFood() {
+			
+			boolean isFood = false;
+			if(nounNumber>Constants.FOOD_THRESHOLD && nounNumber<Constants.DRINK_THRESHOLD) {
+				isFood = true;
+			}
+			return isFood;
+		}
+		
+		private boolean isDrink() {
+			
+			boolean isDrink = false;
+			if(nounNumber>=Constants.DRINK_THRESHOLD && nounNumber<Constants.MAX_CARRIABLE_ITEMS) {
+				isDrink = true;
+			}
+			return isDrink;
+		}
+		
+		private boolean hasWisdomAcquired() {
+			
+			boolean wisdomAcquired = false;
+			if (game.getItem(nounNumber).hasWisdonAcquired()) {
+				wisdomAcquired = true;
+			}
+			return wisdomAcquired;
+		}
+				
 		private ActionResult handleApple() {
 			
 			player.setStat("food", ((int) player.getStat("food"))+1);
 			game.addMessage("You pick an apple from the tree",true,true);
 			player.setStat("weight",((int) player.getStat("weight"))+1);
 					
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult takeSustanence(String sustanence) {
+			
+			player.setStat(sustanence,((int) player.getStat(sustanence))+2);
+			game.getItem(nounNumber).setItemLocation(-18);
+			
+			return finaliseTake(game, player, nounNumber, true);
+		}
+		
+		private ActionResult finaliseTake(Game game, Player player, int nounNumber, boolean taken) {
+
+			if (!taken) {
+				game.getItem(nounNumber).setItemLocation(0);
+				
+				if (game.getItem(nounNumber).getItemFlag()>1) {
+					game.getItem(nounNumber).setItemFlag(0);
+				}
+			}
+			
+			if (!hasWisdomAcquired()) {
+				player.setStat("wisdom",(int) player.getStat("wisdom")+4);
+				game.getItem(nounNumber).setWisdomAcquired(true);
+			}
+			
+			player.setStat("weight",((int) player.getStat("weight"))+1);
+			game.addMessage("Taken",true,true);
+			
 			return new ActionResult(game,player);
 		}
 	}
@@ -252,12 +316,11 @@ public class ItemCommands {
 			result = specialResponseValidTake(game,player,command);
 			
 			if (!result.getValid()) {
-				game.getItem(noun).setItemLocation(0);
 				
-				if (noun>Constants.FOOD_THRESHOLD && noun<Constants.DRINK_THRESHOLD) {
-					player.setStat("food",((int) player.getStat("food"))+2);
-					game.getItem(noun).setItemLocation(-18);
-				} else 	if (noun>=Constants.DRINK_THRESHOLD && noun<Constants.MAX_CARRIABLE_ITEMS) {
+				
+				if () {
+
+				} else 	if () {
 					player.setStat("drink",((int) player.getStat("drink"))+2);
 					game.getItem(noun).setItemLocation(-18);
 				}
@@ -276,20 +339,17 @@ public class ItemCommands {
 						   game.getItem(GameEntities.STAFF).getItemLocation() == GameEntities.CARRYING) {
 					game.addMessage("You use the staff to keep the Dactyl away and take the egg",true,true);	
 				} else {
-					game.addMessage("Taken",true,true);
+					
 				}
 				
 				//Makes sure that wisdom increase only happens once
-				if (!game.getItem(noun).hasWisdonAcquired()) {
-					player.setStat("wisdom",(int) player.getStat("wisdom")+4);
-					game.getItem(noun).setWisdomAcquired(true);
+				if () {
+					
 				}
 				
-				player.setStat("weight",((int) player.getStat("weight"))+1);
 				
-				if (game.getItem(noun).getItemFlag()>1) {
-					game.getItem(noun).setItemFlag(0);
-				}
+				
+
 				
 				result = new ActionResult(game,player);
 			}
