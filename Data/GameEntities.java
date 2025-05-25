@@ -63,6 +63,7 @@ public class GameEntities {
 	public static final String CODE_EVIL_BOOKS = "3450050";
 	public static final String CODE_TORCH = "701";
 	public static final String CODE_SNAKE = "10045";
+	public static final String CODE_VILLAGER = "2413075";
 	
 	// === Directions ===
 	public static final int NORTH = 1;

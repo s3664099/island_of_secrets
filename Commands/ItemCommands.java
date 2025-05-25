@@ -537,13 +537,32 @@ public class ItemCommands {
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
 				result = giveToSnake();
+			
+			//Giving water to a villager (but must have some drink)
+			} else if (isVillager()) {
+				result = giveToVillager();
+			
+			//Give jug to swampman
+			} else if (isSwampman()) {
+				result = giveToSwampman();
+			
+			//Giving to logmen
+			} else if (isLogmen()) {
+				result = giveToLogmen();
+			
+			//Giving items to the ancient scavenger
+			} else if (isScavenger()) {
+				result = giveToScavenger();
+
+			//Give pebble to Median
+			} else if (isMedian()) {
+				result = giveToMedian();
 			}
 			
 			return new ActionResult();
 		}
 		
 		private boolean isSnake() {
-			
 			boolean isSnake = false;
 			if (validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE) {
 				isSnake = true;
@@ -551,10 +570,64 @@ public class ItemCommands {
 			return isSnake;
 		}
 		
+		private boolean isVillager() {
+			boolean isVillager = false;
+			if (validateCode(codedCommand,GameEntities.CODE_VILLAGER) && objectNumber==GameEntities.ITEM_VILLAGER && 
+				((int) player.getStat("drink"))>1) {
+				isVillager = true;
+			}
+			return isVillager;
+		}
+		
+		private boolean isSwampman() {
+			return true;
+		}
+				
+		private boolean isLogmen() {
+			return true;
+		}
+		
+		private boolean isScavenger() {
+			return true;
+		}
+		
+		private boolean isMedian() {
+			return true;
+		}
+		
 		private ActionResult giveToSnake() {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(objectNumber).setItemFlag(1);
 			game.addMessage("The snake uncoils",true,true);
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult giveToVillager() {
+			if (game.getItem(11).getItemFlag() != 0) {
+				game.addMessage("He drinks the water and offers his staff",true,true);
+				game.getItem(30).setItemName("A villager");
+			} else {
+				game.addMessage("He drinks the water",true,true);
+			}
+			game.getItem(11).setItemFlag(0);
+			player.setStat("drink",((int) player.getStat("drink"))-1);
+			return new ActionResult(game,player);
+		}
+		
+		
+		private ActionResult giveToSwampman() {
+			return new ActionResult(game,player);
+		}
+				
+		private ActionResult giveToLogmen() {
+			return new ActionResult(game,player);
+		}
+		
+		private ActionResult giveToScavenger() {
+			return new ActionResult(game,player);
+		}
+				
+		private ActionResult giveToMedian() {
 			return new ActionResult(game,player);
 		}
 	}
@@ -569,12 +642,12 @@ public class ItemCommands {
 		if () {
 			
 
-		//Giving water to a villager (but must have some drink)
-		} else if (codedCommand.equals("2413075") && objectNumber==GameEntities.ITEM_VILLAGER && ((int) player.getStat("drink"))>1) {
-			result = giveWater(game,player);
+		
+		} else if () {
+			
 		} else {
 
-			//Giving items to the ancient scavenger
+			
 			if ((codedCommand.substring(0,3).equals("300") || 
 					codedCommand.substring(0,3).equals("120")) &&
 					objectNumber == GameEntities.ITEM_SCAVENGER) {
@@ -584,7 +657,7 @@ public class ItemCommands {
 				result = new ActionResult(game,player);
 				game.addMessage("It is accepted",true,true);
 				
-			//Give jug to swampman
+			
 			} else if (codedCommand.substring(0,2).equals("40") && 
 					   game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 && objectNumber == GameEntities.ITEM_SWAMPMAN) { 
 				game.getItem(objectNumber).setItemFlag(1);
@@ -592,7 +665,7 @@ public class ItemCommands {
 				game.addMessage("The Swampman takes the jug and leaves",true,true);
 				result = new ActionResult(game,player);
 			
-			//Give pebble to Median
+			
 			} else if (codedCommand.substring(0,2).equals("80") &&
 					   objectNumber == GameEntities.ITEM_MEDIAN) {
 				result = givePebble(game, player,nounNumber);
@@ -628,23 +701,6 @@ public class ItemCommands {
 		
 		return new ActionResult(game,player);
 	}
-
-
-		
-	private ActionResult giveWater(Game game, Player player) {
-		
-		if (game.getItem(11).getItemFlag() != 0) {
-			game.addMessage("He drinks the water and offers his staff",true,true);
-			game.getItem(30).setItemName("A villager");
-		} else {
-			game.addMessage("He drinks the water",true,true);
-		}
-		
-		game.getItem(11).setItemFlag(0);
-		player.setStat("drink",((int) player.getStat("drink"))-1);
-		
-		return new ActionResult(game,player);
-	}
 }
 
 /* 8 May 2025 - Created File
@@ -664,4 +720,5 @@ public class ItemCommands {
  * 			   - Completed take command
  * 			   - Added drop command
  * 			   - Started give command
+ * 25 May 2025 - Added Give to Snake and Give to Villager
  */
