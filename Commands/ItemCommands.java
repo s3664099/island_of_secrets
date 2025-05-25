@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 24 May 2025
+Version: 4.8
+Date: 25 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -508,8 +508,6 @@ public class ItemCommands {
 		private final Game game;
 		private final Player player;
 		private final int nounNumber;
-		private final int verbNumber;
-		private final int playerRoom;
 		private final int objectNumber;
 		private final String codedCommand;
 		private final String[] commands;
@@ -520,8 +518,6 @@ public class ItemCommands {
 			this.game = game;
 			this.player = player;
 			this.nounNumber = command.getNounNumber();
-			this.verbNumber = command.getVerbNumber();
-			this.playerRoom = player.getRoom();
 			this.codedCommand = command.getCodedCommand();
 			this.commands = command.getSplitFullCommand();
 			this.object = getObject(commands);
@@ -580,11 +576,21 @@ public class ItemCommands {
 		}
 		
 		private boolean isSwampman() {
-			return true;
+			boolean isSwampman = false;
+			if (validateCode(codedCommand.substring(0,2),GameEntities.CODE_JUG) &&
+				game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 &&
+				objectNumber == GameEntities.ITEM_SWAMPMAN) {
+				isSwampman = true;
+			}
+			return isSwampman;
 		}
 				
 		private boolean isLogmen() {
-			return true;
+			boolean isLogmen = false;
+			if(objectNumber == GameEntities.ITEM_LOGMEN) {
+				isLogmen = true;
+			}
+			return isLogmen;
 		}
 		
 		private boolean isScavenger() {
@@ -627,10 +633,15 @@ public class ItemCommands {
 		
 		
 		private ActionResult giveToSwampman() {
+			game.getItem(objectNumber).setItemFlag(1);
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.addMessage("The Swampman takes the jug and leaves",true,true);
 			return new ActionResult(game,player);
 		}
 				
 		private ActionResult giveToLogmen() {
+			game.addMessage("It is taken",true,true);
+			game.getItem(nounNumber).setItemLocation(51);
 			return new ActionResult(game,player);
 		}
 		
@@ -664,54 +675,6 @@ public class ItemCommands {
 			return new ActionResult(game,player);
 		}
 	}
-		
-	public ActionResult executeGiveCommand(Game game, Player player, ParsedCommand command) {
-		
-
-		
-
-		
-		
-		if () {
-			
-
-		
-		} else if () {
-			
-		} else {
-
-			
-			if () {
-				
-
-				
-			
-			} else if (codedCommand.substring(0,2).equals("40") && 
-					   game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 && objectNumber == GameEntities.ITEM_SWAMPMAN) { 
-				game.getItem(objectNumber).setItemFlag(1);
-				game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-				game.addMessage("The Swampman takes the jug and leaves",true,true);
-				result = new ActionResult(game,player);
-			
-			
-			} else if () {
-				result = givePebble(game, player,nounNumber);
-			
-			//Giving to logmen
-			} else	if (objectNumber == GameEntities.ITEM_LOGMEN) {
-					game.addMessage("It is taken",true,true);
-					game.getItem(nounNumber).setItemLocation(51);
-			}
-		}
-		return result;
-	}
-	
-	private ActionResult givePebble(Game game, Player player, int nounNumber) {
-		
-
-		
-		return new ActionResult(game,player);
-	}
 }
 
 /* 8 May 2025 - Created File
@@ -731,5 +694,6 @@ public class ItemCommands {
  * 			   - Completed take command
  * 			   - Added drop command
  * 			   - Started give command
- * 25 May 2025 - Added Give to Snake and Give to Villager
+ * 25 May 2025 - Added Give to Snake and Give to Villager.
+ * 			   - Completed the give functionality
  */

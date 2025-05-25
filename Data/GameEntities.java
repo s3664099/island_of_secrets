@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 24 May 2025
+Version: 4.4
+Date: 25 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -67,6 +67,7 @@ public class GameEntities {
 	public static final String CODE_LILY = "300";
 	public static final String CODE_CHIP = "120";
 	public static final String CODE_PEBBLE = "80";
+	public static final String CODE_JUG = "40";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -80,4 +81,5 @@ public class GameEntities {
  * 22 May 2025 - Moved constants from Move function
  * 23 May 2025 - Edited locations to start with ROOM,ITEM and CMD (Command)
  * 24 May 2025 - Added codes for take
+ * 25 May 2025 - Added codes for give
  */
