@@ -559,7 +559,7 @@ public class ItemCommands {
 				result = giveToMedian();
 			}
 			
-			return new ActionResult();
+			return result;
 		}
 		
 		private boolean isSnake() {
@@ -588,11 +588,22 @@ public class ItemCommands {
 		}
 		
 		private boolean isScavenger() {
-			return true;
+			boolean isScavenger = false;
+			if ((validateCode(codedCommand.substring(0,3),GameEntities.CODE_LILY) || 
+				validateCode(codedCommand.substring(0,3),GameEntities.CODE_CHIP)) &&
+					objectNumber == GameEntities.ITEM_SCAVENGER) {
+				isScavenger = true;
+			}
+			return isScavenger;
 		}
 		
 		private boolean isMedian() {
-			return true;
+			boolean isMedian = false;
+			if(validateCode(codedCommand.substring(0,2),GameEntities.CODE_PEBBLE) &&
+			   objectNumber == GameEntities.ITEM_MEDIAN) {
+				isMedian = true;
+			}
+			return isMedian;
 		}
 		
 		private ActionResult giveToSnake() {
@@ -624,10 +635,32 @@ public class ItemCommands {
 		}
 		
 		private ActionResult giveToScavenger() {
+			player.setStat("wisdom",(int) player.getStat("wisdom")+10);
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.addMessage("It is accepted",true,true);
 			return new ActionResult(game,player);
 		}
 				
 		private ActionResult giveToMedian() {
+			
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.setMessageGameState();
+			game.getItem(8).setItemFlag(-1);
+
+			//Removes Median from Game
+			game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.getItem(43).setItemFlag(1);
+			
+			game.addPanelMessage("He takes it ...", true);
+			if (player.getRoom()!=8) {
+				game.addPanelMessage("runs down the corridor, ...", false);
+			} 
+			
+			game.addPanelMessage("and casts it into the chemical vats, ", false);
+			game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
+			game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
+			game.addMessage("It is accepted",true,true);
+			
 			return new ActionResult(game,player);
 		}
 	}
@@ -648,14 +681,9 @@ public class ItemCommands {
 		} else {
 
 			
-			if ((codedCommand.substring(0,3).equals("300") || 
-					codedCommand.substring(0,3).equals("120")) &&
-					objectNumber == GameEntities.ITEM_SCAVENGER) {
+			if () {
 				
-				player.setStat("wisdom",(int) player.getStat("wisdom")+10);
-				game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-				result = new ActionResult(game,player);
-				game.addMessage("It is accepted",true,true);
+
 				
 			
 			} else if (codedCommand.substring(0,2).equals("40") && 
@@ -666,8 +694,7 @@ public class ItemCommands {
 				result = new ActionResult(game,player);
 			
 			
-			} else if (codedCommand.substring(0,2).equals("80") &&
-					   objectNumber == GameEntities.ITEM_MEDIAN) {
+			} else if () {
 				result = givePebble(game, player,nounNumber);
 			
 			//Giving to logmen
@@ -681,23 +708,7 @@ public class ItemCommands {
 	
 	private ActionResult givePebble(Game game, Player player, int nounNumber) {
 		
-		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.setMessageGameState();
-		game.getItem(8).setItemFlag(-1);
 
-		//Removes Median from Game
-		game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.getItem(43).setItemFlag(1);
-		
-		game.addPanelMessage("He takes it ...", true);
-		if (player.getRoom()!=8) {
-			game.addPanelMessage("runs down the corridor, ...", false);
-		} 
-		
-		game.addPanelMessage("and casts it into the chemical vats, ", false);
-		game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
-		game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
-		game.addMessage("It is accepted",true,true);
 		
 		return new ActionResult(game,player);
 	}
