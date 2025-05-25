@@ -510,7 +510,11 @@ public class ItemCommands {
 		private final int nounNumber;
 		private final int verbNumber;
 		private final int playerRoom;
+		private final int objectNumber;
 		private final String codedCommand;
+		private final String[] commands;
+		private final String object;
+		
 		
 		public GiveHandler(Game game, Player player, ParsedCommand command) {
 			this.game = game;
@@ -519,29 +523,51 @@ public class ItemCommands {
 			this.verbNumber = command.getVerbNumber();
 			this.playerRoom = player.getRoom();
 			this.codedCommand = command.getCodedCommand();
+			this.commands = command.getSplitFullCommand();
+			this.object = getObject(commands);
+			this.objectNumber = getNounNumber(object);
+			
 		}
 		
 		private ActionResult execute() {
+			
+			game.addMessage("It is refused.",true,true);
+			ActionResult result = new ActionResult(game,player);
+			
+			//Removes the snake from the hut by giving it an apple
+			if(isSnake()) {
+				result = giveToSnake();
+			}
+			
 			return new ActionResult();
+		}
+		
+		private boolean isSnake() {
+			
+			boolean isSnake = false;
+			if (validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE) {
+				isSnake = true;
+			}
+			return isSnake;
+		}
+		
+		private ActionResult giveToSnake() {
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.getItem(objectNumber).setItemFlag(1);
+			game.addMessage("The snake uncoils",true,true);
+			return new ActionResult(game,player);
 		}
 	}
 		
 	public ActionResult executeGiveCommand(Game game, Player player, ParsedCommand command) {
 		
-		String[] commands = command.getSplitFullCommand();
-		String object = getObject(commands);
-		String codedCommand = command.getCodedCommand();
-		int objectNumber = getNounNumber(object);
-		int nounNumber = command.getNounNumber();
-		game.addMessage("It is refused.",true,true);
-		ActionResult result = new ActionResult(game,player);
+
 		
-		//Removes the snake from the hut by giving it an apple
-		if (codedCommand.equals("10045") && objectNumber==GameEntities.ITEM_SNAKE) {
-			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-			game.getItem(objectNumber).setItemFlag(1);
-			game.addMessage("The snake uncoils",true,true);
-			result = new ActionResult(game,player);
+
+		
+		
+		if () {
+			
 
 		//Giving water to a villager (but must have some drink)
 		} else if (codedCommand.equals("2413075") && objectNumber==GameEntities.ITEM_VILLAGER && ((int) player.getStat("drink"))>1) {
@@ -576,9 +602,7 @@ public class ItemCommands {
 					game.addMessage("It is taken",true,true);
 					game.getItem(nounNumber).setItemLocation(51);
 			}
-						
 		}
-		
 		return result;
 	}
 	
