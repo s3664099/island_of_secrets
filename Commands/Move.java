@@ -97,29 +97,33 @@ public class Move {
 	
 	public ActionResult executeMove(Game game, Player player, ParsedCommand command) {
 		
-		ActionResult result = moveBlocked(game,player,command);
+		ActionResult blockedCheck = checkMoveBlocked(game,player,command);
 		
 		//Move is not blocked
-		if (!result.getValid()) {
+		if (!blockedCheck.getValid()) {
 			int direction = command.getNounNumber();
-			int newRoom = player.getRoom() + Integer.parseInt(
-					"-10+10+01-01".substring((direction-1)*3, ((direction-1)*3)+3));
+			int newRoom = calculateNewRoom(player.getRoom(),direction);
 			player.setRoom(newRoom);
 			game.addMessage("Ok",true,true);
 			game.getRoom(newRoom).setVisited();
 			
-			result = moveResponse(game,player,command);
+			blockedCheck = handleRoomEntryEffects(game,player,command);
 		}
 		
-		return result;
+		return blockedCheck;
+	}
+	
+	private int calculateNewRoom(int currentRoom, int direction) {
+		return currentRoom + DIRECTION_MODIFIERS[direction-1];
 	}
 	
 	//Can move but event blocks movement
-	private ActionResult moveBlocked(Game game, Player player, ParsedCommand command) {
+	private ActionResult checkMoveBlocked(Game game, Player player, ParsedCommand command) {
 		
 		boolean moveBlocked = false;
 		
 		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
+		// ADD CHECKS SEPARATE FUNCTIONS & ACTIONS SEPARATE FUNCTIONS
 		if (game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
 			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
@@ -165,11 +169,11 @@ public class Move {
 		return new ActionResult(game,player,moveBlocked);
 	}
 	
-	private ActionResult moveResponse(Game game,Player player,ParsedCommand command) {
+	private ActionResult handleRoomEntryEffects(Game game,Player player,ParsedCommand command) {
 		
 		Random rand = new Random();
 		
-		//Room with the hands
+		//Room with the hands ---- CHANGE NUMBERS TO NAMES - HAVE SEPARATE FUNCTIONS FOR CHECKS
 		if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
 			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
 		} else if (player.getRoom()==28) {
@@ -178,14 +182,14 @@ public class Move {
 			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
 		}
 		
-		//Does the player have the beast and is on the jetty
+		//Does the player have the beast and is on the jetty - MOVE TO SEPARATE FUNCTION
 		if (player.getRoom() == 33 && game.getItem(16).getItemLocation()==0) {
 			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
 			game.getItem(16).setItemFlag(0);
 			game.addMessage("The beast runs away",false,true);
 		}
 		
-		//Handling the ferry man
+		//Handling the ferry man - MOVE TO SEPARATE FUNCTION
 		if (player.getRoom()==game.getItem(25).getItemLocation() && command.getNounNumber() == 25) {
 			
 			if ((int) player.getStat("wisdom")<60) {
