@@ -68,6 +68,20 @@ public class GameEntities {
 	public static final String CODE_CHIP = "120";
 	public static final String CODE_PEBBLE = "80";
 	public static final String CODE_JUG = "40";
+	public static final String CODE_IN_LAIR = "500012";
+	public static final String CODE_IN_LOG_HUT = "500053";
+	public static final String CODE_IN_SHACK = "500045";
+	public static final String CODE_IN_ABODE_HUT = "500070";
+	public static final String CODE_IN_PORTAL = "500037";
+	public static final String CODE_OUT_LAIR = "510011";
+	public static final String CODE_OUT_LOG_HUT = "510041";
+	public static final String CODE_OUT_LOG_CABIN = "510043";
+	public static final String CODE_DOWN_PYRAMID = "490066";
+	public static final String CODE_DOWN_TRAPDOOR = "490051";
+	public static final String CODE_OUT_ABODE_HUT = "510060";
+	public static final String CODE_UP_PYRAMID = "480056";
+	public static final String CODE_OUT_SHACK = "510044";
+	public static final String CODE_OUT_HALL = "510052";
 	
 	// === Directions ===
 	public static final int NORTH = 1;

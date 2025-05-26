@@ -51,20 +51,20 @@ public class Move {
 	private int handleCodedCommand(String code,int nounNumber) {
 		
 		Map<String,Integer> codeToDirection = new HashMap<>();
-		codeToDirection.put("500012",GameEntities.WEST);
-		codeToDirection.put("500053",GameEntities.WEST);
-		codeToDirection.put("500045",GameEntities.WEST);
-		codeToDirection.put("500070",GameEntities.NORTH);
-		codeToDirection.put("500037",GameEntities.NORTH);
-		codeToDirection.put("510011",GameEntities.NORTH);
-		codeToDirection.put("510041",GameEntities.NORTH);
-		codeToDirection.put("510043",GameEntities.NORTH);
-		codeToDirection.put("490066",GameEntities.NORTH);
-		codeToDirection.put("490051",GameEntities.NORTH);
-		codeToDirection.put("510060",GameEntities.SOUTH);
-		codeToDirection.put("480056",GameEntities.SOUTH);
-		codeToDirection.put("510044",GameEntities.EAST);
-		codeToDirection.put("510052",GameEntities.EAST);
+		codeToDirection.put(GameEntities.CODE_IN_LAIR,GameEntities.WEST);
+		codeToDirection.put(GameEntities.CODE_IN_LOG_HUT,GameEntities.WEST);
+		codeToDirection.put(GameEntities.CODE_IN_SHACK,GameEntities.WEST);
+		codeToDirection.put(GameEntities.CODE_IN_ABODE_HUT,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_IN_PORTAL,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_OUT_LAIR,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_OUT_LOG_HUT,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_OUT_LOG_CABIN,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_DOWN_PYRAMID,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_DOWN_TRAPDOOR,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_OUT_ABODE_HUT,GameEntities.SOUTH);
+		codeToDirection.put(GameEntities.CODE_UP_PYRAMID,GameEntities.SOUTH);
+		codeToDirection.put(GameEntities.CODE_IN_SHACK,GameEntities.EAST);
+		codeToDirection.put(GameEntities.CODE_OUT_HALL,GameEntities.EAST);
 		return codeToDirection.getOrDefault(code, nounNumber);
 	}
 	
