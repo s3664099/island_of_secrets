@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 22 May 2025
+Version: 4.5
+Date: 26 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,9 +13,15 @@ import Data.Constants;
 import Data.GameEntities;
 import Game.Game;
 import Game.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Move {
+	
+	private static final int[] DIRECTION_MODIFIERS = {-10, +10, +01, -01};
+	private final Random rand = new Random();
 	
 	public ParsedCommand parseMove(ParsedCommand command,int room) {
 		
@@ -24,11 +30,45 @@ public class Move {
 		String noun = command.getSplitTwoCommand()[1];
 		String code = command.getCodedCommand();
 		
+		nounNumber = mapBasicDirection(nounNumber,verbNumber);
+		nounNumber = handleSpecialRooms(room, noun, nounNumber);
+		nounNumber = handleCodedCommand(code,nounNumber);
+				
+		return new ParsedCommand(verbNumber,nounNumber,command.getCodedCommand(),
+				command.getSplitTwoCommand(),command.getCommand());
+	}
+	
+	private int mapBasicDirection(int nounNumber, int verbNumber) {
+		
 		if (nounNumber == -1) {
 			nounNumber = verbNumber;
 		} else if (nounNumber>Constants.NUMBER_OF_ITEMS && nounNumber<Constants.NUMBER_OF_NOUNS) {
 			nounNumber = nounNumber-Constants.NUMBER_OF_ITEMS;
 		}
+		return nounNumber;
+	}
+	
+	private int handleCodedCommand(String code,int nounNumber) {
+		
+		Map<String,Integer> codeToDirection = new HashMap<>();
+		codeToDirection.put("500012",GameEntities.WEST);
+		codeToDirection.put("500053",GameEntities.WEST);
+		codeToDirection.put("500045",GameEntities.WEST);
+		codeToDirection.put("500070",GameEntities.NORTH);
+		codeToDirection.put("500037",GameEntities.NORTH);
+		codeToDirection.put("510011",GameEntities.NORTH);
+		codeToDirection.put("510041",GameEntities.NORTH);
+		codeToDirection.put("510043",GameEntities.NORTH);
+		codeToDirection.put("490066",GameEntities.NORTH);
+		codeToDirection.put("490051",GameEntities.NORTH);
+		codeToDirection.put("510060",GameEntities.SOUTH);
+		codeToDirection.put("480056",GameEntities.SOUTH);
+		codeToDirection.put("510044",GameEntities.EAST);
+		codeToDirection.put("510052",GameEntities.EAST);
+		return codeToDirection.getOrDefault(code, nounNumber);
+	}
+	
+	private int handleSpecialRooms(int room, String noun, int nounNumber) {
 		
 		if ((room == GameEntities.ROOM_CAVE && noun.equals("cave")) || 
 			(room == GameEntities.ROOM_CLEARING && noun.equals("hut")) ||
@@ -37,21 +77,7 @@ public class Move {
 		} else if (room == GameEntities.ROOM_ABODE_HUT && noun.equals("hut")) {
 			nounNumber=GameEntities.NORTH;
 		}
-		
-		if (code.equals("500012") || code.equals("500053") || code.equals("500045")) {
-			nounNumber = GameEntities.WEST;
-		} else if (code.equals("500070")||code.equals("500037")||code.equals("510011")||
-				   code.equals("510041") ||code.equals("510043")||code.equals("490066")||
-				   code.equals("490051")) {
-			nounNumber = GameEntities.NORTH;
-		} else if (code.equals("510060")||code.equals("480056")) {
-			nounNumber = GameEntities.SOUTH;
-		} else if (code.equals("510044")||code.equals("510052")) {
-			nounNumber = GameEntities.EAST;
-		}
-		
-		return new ParsedCommand(verbNumber,nounNumber,command.getCodedCommand(),
-				command.getSplitTwoCommand(),command.getCommand());
+		return nounNumber;	
 	}
 
 	public ActionResult validateMove(ParsedCommand command, Game game, int room) {
@@ -186,4 +212,5 @@ public class Move {
  * 8 May 2025 - Added execution functionality
  * 21 May 2025 - Started moving constants to GameEntities
  * 22 May 2025 - Moved Constants to GameEntities
+ * 26 May 2025 - Updated ParseMove
  */

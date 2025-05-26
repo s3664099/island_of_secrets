@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 10 March 2025
+Version: 4.2
+Date: 26 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -175,13 +175,13 @@ public class RawData {
 	};
 	
 	private static final String[] NOUNS = {
-		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",
-		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits",
-		"mushrooms","bottle","flagon","sap","water","boat","chest","column","opening",
-		"trapdoor","villager","liquid","swampman","sage","books","roots","storm","wraiths",
-		"cloak","omegan","snake","logmen","scavenger","median","north","south","east","west",
-		"up","down","in","out"
+		"apple","egg","flower","jug","rag","parchment","torch","pebble","axe","rope",            //10
+		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits","mushrooms",    //20
+		"bottle","flagon","sap","water","boat","chest","column","opening","trapdoor","villager", //30
+		"liquid","swampman","sage","books","roots","storm","wraiths","cloak","omegan","snake",   //40
+		"logmen","scavenger","median","north","south","east","west","up","down","in","out"
 	};
+	//   48,49,50,51
 			
 	private static final String ITEM_LOCATION = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
 	private static final String ITEM_FLAG = "90101191001109109000901000111000000100000010000000000";
@@ -269,4 +269,5 @@ public class RawData {
  * 10 March 2025 - Updated code as recommended by DeepSeek
  * 				 - Added reference to location of exception
  * 				 - Fix problem with error preventing objects
+ * 26 May 2025 - Moved commands around for easy referencing
 */
