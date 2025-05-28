@@ -69,41 +69,7 @@ public class Commands {
 	
 	public void drink(Game game, Player player,String nounStr) {
 				
-		//Drinking green liquid
-		if (noun==31) {
-			
-			if (game.getItemFlagSum(4)!=-1) {
-				game.addMessage("You don't have "+game.getItem(noun).getItemName(),true,true);
-			} else {
-				game.addMessage("Ouch!",true,true);
-				player.setStat("strength",(float) player.getStat("strength")-4);
-				player.setStat("wisdom",(int) player.getStat("wisdom")-7);
-				game.setMessageGameState();
-				
-				int count = rest(game,player,true);
-				
-				//Sets messages
-				game.addPanelMessage("You taste a drop and ...",true);
-				
-				for (int i=0;i<count;i++) {
-					game.addPanelMessage("Time passes ...", false);
-				}
-			}
-			
-		//Item undrinkable
-		} else if ((noun<Constants.DRINK_THRESHOLD || noun>Constants.MAX_CARRIABLE_ITEMS) 
-				&& nounStr.length()>0) {
-				game.addMessage("You can't "+command,true,true);
-				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-		} else {
-			
-			game.addMessage("You have no drink.",true,true);
-			if (((int) player.getStat("drink"))>0) {
-				player.setStat("drink",((int) player.getStat("drink"))-1);
-				player.setStat("strength",(float) player.getStat("strength")+7);
-				game.addMessage("Ok",true,true);
-			}
-		}
+
 	}
 	
 	public void ride(Game game) {
