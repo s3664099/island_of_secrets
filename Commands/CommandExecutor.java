@@ -39,10 +39,11 @@ public class CommandExecutor {
 				Move move = new Move();
 				result = move.executeMove(game,player,command);
 			}
-		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {
-			
+		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {	
 			ItemCommands item = new ItemCommands();
 			result = item.executeCommand(game,player,command);
+		} else if (command.checkEat() || command.checkDrink()) {
+			
 
 		
 		

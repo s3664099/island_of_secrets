@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 22 May 2025
+Version: 4.8
+Date: 28 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,6 +35,8 @@ public class CommandParser {
 			command = parseLook(splitCommand,command);
 		} else if (command.checkMoveState()) {
 			command = parseMove(command,room);
+		} else if (command.checkEat()) {
+			command = parseEat(command);
 		}
 		
 		return command;
@@ -117,6 +119,10 @@ public class CommandParser {
 		return new Move().parseMove(command, room);
 	}
 	
+	private ParsedCommand parseEat(ParsedCommand command) {
+		return new Consume().parseEat(command);
+	}
+	
 	private class CommandNormaliser {
 
 		public String normalise(String input) {
@@ -154,4 +160,5 @@ public class CommandParser {
  * 3 May 2025 - Added Parse Look method
  * 4 May 2025 - Added Parse Move method
  * 22 May 2025 - Moved CommandNormaliser here as private class
+ * 28 May 2025 - Added parsing for eating
  */

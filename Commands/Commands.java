@@ -64,33 +64,7 @@ public class Commands {
 	
 	public void eat(Game game, Player player,String nounStr) {
 		
-		//Allows 'Eat Food' to work
-		if (nounStr.equals("food")) {
-			noun = 17;
-		}
-		
-		//Eating lillies (moved here since in original game code wouldn't reach)
-		if (noun == 3 && game.getItem(3).getItemLocation()==0) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-			player.setStat("strength",(float) player.getStat("strength")-2);
-			game.addMessage("They make you very ill",true,true);
-		
-		//Item unedible
-		} else if ((noun<=Constants.FOOD_THRESHOLD || noun>=Constants.DRINK_THRESHOLD) 
-			&& nounStr.length()>0) {
-			game.addMessage("You can't "+command,true,true);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-		
-		//Eat
-		} else {
-			game.addMessage("You have no food",true,true);
-			
-			if (((int) player.getStat("food")+1)>0) {
-				player.setStat("food",((int) player.getStat("food"))-1);
-				player.setStat("strength",(float) player.getStat("strength")+10);
-				game.addMessage("Ok",true,true);
-			}
-		}
+
 	}
 	
 	public void drink(Game game, Player player,String nounStr) {
