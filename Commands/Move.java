@@ -156,41 +156,27 @@ public class Move {
 	
 	private ActionResult handleRoomEntryEffects(Game game,Player player,ParsedCommand command) {
 		
-		//Room with the hands ---- CHANGE NUMBERS TO NAMES - HAVE SEPARATE FUNCTIONS FOR CHECKS
-		if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
+		if (isInHandsRoom(game,player)) {
 			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
-		} else if (player.getRoom()==28) {
+		} else if (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
 			game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
-		} else if (player.getRoom()==27 && command.getNounNumber()==1) {
+		} else if (isInEntranceHall(player,command)) {
 			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
 		}
 		
-		//Does the player have the beast and is on the jetty - MOVE TO SEPARATE FUNCTION
-		if (player.getRoom() == 33 && game.getItem(16).getItemLocation()==0) {
+		if (isOnJetty(game,player)) {
 			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
 			game.getItem(16).setItemFlag(0);
 			game.addMessage("The beast runs away",false,true);
 		}
 		
+		ActionResult result = new ActionResult(game,player);
+		
 		//Handling the ferry man - MOVE TO SEPARATE FUNCTION
-		if (player.getRoom()==game.getItem(25).getItemLocation() && command.getNounNumber() == 25) {
-			
-			if ((int) player.getStat("wisdom")<60) {
-				
-				game.addPanelMessage("You board the craft ...", true);
-				game.addPanelMessage("falling under the spell of the boatman",false);
-				game.addPanelMessage("and are taken to the Island of Secrets ...", false);
-				game.addPanelMessage("to serve Omegan forever.", false);
-				game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
-			} else {
-				game.addPanelMessage("You board the craft ...", true);
-				game.addPanelMessage("and are taken to the Island of Secrets ...", false);
-				player.setRoom(57);
-			}
-			game.addMessage("The boat skims the dark and silent waters.",true,true);
-			game.setMessageGameState();
+		if (isCatchingFerry(game,player,command)) {
+			result = catchingFerry(game,player);
 		}
-		return new ActionResult(game,player);
+		return result;
 	}
 	
 	private boolean isOmeganPresent(Game game, Player player) {
@@ -257,6 +243,60 @@ public class Move {
 			doorClosed = true;
 		}
 		return doorClosed;
+	}
+	
+	private boolean isInHandsRoom(Game game,Player player) {
+		boolean isInHandsRoom = false;
+		if (player.getRoom()==GameEntities.ROOM_WITH_HANDS && 
+			game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
+			isInHandsRoom = true;
+		}
+		return isInHandsRoom;
+	}
+	
+	private boolean isInEntranceHall(Player player, ParsedCommand command) {
+		boolean isInEntranceHall = false;
+		if(player.getRoom()==GameEntities.ROOM_ENTRANCE_CHAMBER && command.getNounNumber()==1) {
+			isInEntranceHall = true;
+		}
+		return isInEntranceHall;
+	}
+	
+	private boolean isOnJetty(Game game, Player player) {
+		boolean isOnJetty = false;
+		if(player.getRoom() == GameEntities.ROOM_JETTY && 
+		   game.getItem(GameEntities.ITEM_BEAST).getItemLocation()==0) {
+			isOnJetty = true;
+		}
+		return isOnJetty;
+	}
+	
+	private boolean isCatchingFerry(Game game,Player player,ParsedCommand command) {
+		boolean isCatchingFerry = false;
+		if(player.getRoom()==game.getItem(GameEntities.ITEM_BOAT).getItemLocation() && 
+		   command.getNounNumber() == GameEntities.ITEM_BOAT) {
+			isCatchingFerry = true;
+		}
+		return isCatchingFerry;
+	}
+	
+	private ActionResult catchingFerry(Game game,Player player) {
+		
+		if ((int) player.getStat("wisdom")<60) {
+			game.addPanelMessage("You board the craft ...", true);
+			game.addPanelMessage("falling under the spell of the boatman",false);
+			game.addPanelMessage("and are taken to the Island of Secrets ...", false);
+			game.addPanelMessage("to serve Omegan forever.", false);
+			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
+		} else {
+			game.addPanelMessage("You board the craft ...", true);
+			game.addPanelMessage("and are taken to the Island of Secrets ...", false);
+			player.setRoom(57);
+		}
+		game.addMessage("The boat skims the dark and silent waters.",true,true);
+		game.setMessageGameState();
+		
+		return new ActionResult(game,player);
 	}
 }
 

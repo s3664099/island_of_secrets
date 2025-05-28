@@ -27,6 +27,7 @@ public class GameEntities {
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
+	public static final int ROOM_JETTY = 33;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
@@ -43,6 +44,7 @@ public class GameEntities {
 	public static final int ITEM_BEAST = 16;
 	public static final int ITEM_MUSHROOM = 20;
 	public static final int ITEM_WATER = 24;
+	public static final int ITEM_BOAT = 25;
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_SWAMPMAN = 32;
 	public static final int ITEM_OMEGAN = 39;
