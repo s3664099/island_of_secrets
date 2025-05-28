@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 26 May 2025
+Version: 4.6
+Date: 28 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -120,58 +120,41 @@ public class Move {
 	//Can move but event blocks movement
 	private ActionResult checkMoveBlocked(Game game, Player player, ParsedCommand command) {
 		
-		boolean moveBlocked = false;
+		ActionResult result = new ActionResult(game,player,false);
 		
-		//Prevents Player from leaving is Omegan present and strength/wisdom too little, or in lair
-		// ADD CHECKS SEPARATE FUNCTIONS & ACTIONS SEPARATE FUNCTIONS
-		if (game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
-			(player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
+		if (isOmeganPresent(game,player)) {
 			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 
-		} else if (player.getRoom() == game.getItem(GameEntities.ITEM_SWAMPMAN).getItemLocation() && 
-					game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()<1 && 
-					command.getNounNumber() == GameEntities.EAST) {
+		} else if (isSwampmanPresent(game,player,command)) {
 			game.addMessage("He will not let you pass.",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		
-		//The Rocks
-		} else if (player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
-				   game.getItem(GameEntities.ITEM_ROCKS).getItemFlag()==0) {
+		} else if (areRocksMoving(game,player)) {
 			game.addMessage("The rocks move to prevent you",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		
-		//Room with Arms
-		} else if (player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
-				   game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
+		} else if (doArmsHoldYou(game,player)) {
 			game.addMessage("The arms hold you fast",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		
-		//Snake at grandpa's Shack
-		} else if (player.getRoom()==GameEntities.ROOM_CLEARING && 
-				   game.getItem(GameEntities.ITEM_SNAKE).getItemFlag()==0 && 
-				   command.getNounNumber() == GameEntities.WEST) {
+		} else if (isSnakePresent(game,player,command)) {
 			game.addMessage("Hisss!",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		
-		//Looks like need canyon beast to climb the path	
-		} else if (player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
-				   game.getItemFlagSum(GameEntities.ITEM_BEAST) != -1 && 
-				   command.getNounNumber() == GameEntities.EAST) {
+		} else if (isPlayerRidingBeast(game,player,command)) {
 			game.addMessage("Too steep to climb",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		
-		} else if (player.getRoom() == GameEntities.ROOM_STOREROOM && command.getNounNumber() == GameEntities.EAST) {
+		} else if (isDoorClosed(player,command)) {
 			game.addMessage("The door is barred!",true,true);
-			moveBlocked = true;
+			result = new ActionResult(game,player,true);
 		}
 		
-		return new ActionResult(game,player,moveBlocked);
+		return result;
 	}
 	
 	private ActionResult handleRoomEntryEffects(Game game,Player player,ParsedCommand command) {
-		
-		Random rand = new Random();
 		
 		//Room with the hands ---- CHANGE NUMBERS TO NAMES - HAVE SEPARATE FUNCTIONS FOR CHECKS
 		if (player.getRoom()==28 && game.getItem(7).getItemFlag()!=1) {
@@ -209,6 +192,72 @@ public class Move {
 		}
 		return new ActionResult(game,player);
 	}
+	
+	private boolean isOmeganPresent(Game game, Player player) {
+		boolean omeganPresent = false;
+		if (game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
+		   (player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
+			omeganPresent = true;
+		}
+		return omeganPresent;
+	}
+	
+	private boolean isSwampmanPresent(Game game, Player player, ParsedCommand command) {
+		boolean swampmanPresent = false;
+		if(player.getRoom() == game.getItem(GameEntities.ITEM_SWAMPMAN).getItemLocation() && 
+		   game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()<1 && 
+		   command.getNounNumber() == GameEntities.EAST) {
+			swampmanPresent = true;
+		}
+		return swampmanPresent;
+	}
+	
+	private boolean areRocksMoving(Game game, Player player) {
+		boolean rocksMoving = false;
+		if(player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
+		   game.getItem(GameEntities.ITEM_ROCKS).getItemFlag()==0) {
+			rocksMoving = true;
+		}
+		return rocksMoving;
+	}
+	
+	private boolean doArmsHoldYou(Game game,Player player) {
+		boolean armsHoldYou = false;
+		if(player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
+		   game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
+			armsHoldYou = true;
+		}
+		return armsHoldYou;
+	}
+	
+	private boolean isSnakePresent(Game game,Player player,ParsedCommand command) {
+		boolean snakePresent = false;
+		if(player.getRoom()==GameEntities.ROOM_CLEARING && 
+		   game.getItem(GameEntities.ITEM_SNAKE).getItemFlag()==0 && 
+		   command.getNounNumber() == GameEntities.WEST) {
+			snakePresent = true;
+		}
+		return snakePresent;
+	}
+	
+	private boolean isPlayerRidingBeast(Game game,Player player,ParsedCommand command) {
+		boolean playerRidingBeast = false;
+		if(player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
+		   game.getItemFlagSum(GameEntities.ITEM_BEAST) != -1 && 
+		   command.getNounNumber() == GameEntities.EAST) {
+			playerRidingBeast = true;
+		}
+		return playerRidingBeast;
+	}
+	
+	private boolean isDoorClosed(Player player,ParsedCommand command) {
+		boolean doorClosed = false;
+		if(player.getRoom() == GameEntities.ROOM_STOREROOM && 
+		   command.getNounNumber() == GameEntities.EAST) {
+			doorClosed = true;
+		}
+		return doorClosed;
+	}
 }
 
 /* 4 May 2025 - Created File
@@ -217,4 +266,5 @@ public class Move {
  * 21 May 2025 - Started moving constants to GameEntities
  * 22 May 2025 - Moved Constants to GameEntities
  * 26 May 2025 - Updated ParseMove
+ * 28 May 2025 - Moved checks to separate functions for readability
  */
