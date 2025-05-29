@@ -37,6 +37,7 @@ public class GameEntities {
 	
 	// === Items ===
 	public static final int ITEM_APPLE = 1;
+	public static final int ITEM_LILY = 3;
 	public static final int ITEM_JUG = 4;
 	public static final int ITEM_TORCH = 7;
 	public static final int ITEM_ROPE = 10;
