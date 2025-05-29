@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 28 May 2025
+Version: 4.8
+Date: 29 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -179,6 +179,10 @@ public class ParsedCommand {
 	public boolean checkDrink() {
 		return commandType == CommandType.DRINK;
 	}
+	
+	public boolean checkRest() {
+		return commandType == CommandType.WAIT;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -190,4 +194,5 @@ public class ParsedCommand {
  * 8 May 2025 - Added the multi-word commands. Added check for take/drop/give
  * 16 May 2025 - Added code to split all the command, and one to split into verb/noun.
  * 28 May 2025 - Added check for eat and drink
+ * 29 May 2025 - Added check for rest/wait
  */

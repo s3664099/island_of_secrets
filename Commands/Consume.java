@@ -61,7 +61,21 @@ public class Consume {
 		return new ActionResult(game,player);
 	}
 	
-	public ActionResult executeEat(Game game,Player player, ParsedCommand command) {
+	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
+		
+		ActionResult result = new ActionResult(game,player);
+		
+		if (command.checkEat()) {
+			result = executeEat(game,player,command);
+		} else if (command.checkDrink()) {
+			result = executeDrink(game,player,command);
+		} else if (command.checkRest()) {
+			
+		}
+		return result;
+	}
+	
+	private ActionResult executeEat(Game game,Player player, ParsedCommand command) {
 		
 		int nounNumber = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player);
@@ -70,6 +84,18 @@ public class Consume {
 			result = eatLillies(game,player);
 		} else {
 			result = eatFood(game,player);
+		}
+		return result;
+	}
+	
+	private ActionResult executeDrink(Game game,Player player,ParsedCommand command) {
+		int nounNumber = command.getNounNumber();
+		ActionResult result = new ActionResult(game,player);
+
+		if (isDrinkingLiquid(nounNumber)) {
+			result = drinkLiquid(game,player,nounNumber);
+		} else {
+			result = drink(game,player);
 		}
 		return result;
 	}
@@ -84,6 +110,14 @@ public class Consume {
 		return isEatingLillies;
 	}
 	
+	private boolean isDrinkingLiquid(int nounNumber) {
+		boolean isDrinkingLiquid = false;
+		if (nounNumber == GameEntities.ITEM_LIQUID) {
+			isDrinkingLiquid = true;
+		}
+		return isDrinkingLiquid;
+	}
+	
 	private ActionResult eatLillies(Game game, Player player) {
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		player.setStat("strength",(float) player.getStat("strength")-2);
@@ -95,6 +129,36 @@ public class Consume {
 		player.setStat("food",((int) player.getStat("food"))-1);
 		player.setStat("strength",(float) player.getStat("strength")+10);
 		game.addMessage("Ok",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult drinkLiquid(Game game,Player player,int nounNumber) {
+		
+		if(game.getItemFlagSum(GameEntities.ITEM_JUG)!=-1) {
+			game.addMessage("You don't have "+game.getItem(nounNumber).getItemName(),true,true);
+		} else {
+			game.addMessage("Ouch!",true,true);
+			player.setStat("strength",(float) player.getStat("strength")-4);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-7);
+			game.setMessageGameState();
+			
+			int count = rest(game,player,true);
+			
+			game.addPanelMessage("You taste a drop and ...",true);
+			
+			for (int i=0;i<count;i++) {
+				game.addPanelMessage("Time passes ...", false);
+			}
+		}
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult drink(Game game,Player player) {
+		
+		player.setStat("drink",((int) player.getStat("drink"))-1);
+		player.setStat("strength",(float) player.getStat("strength")+7);
+		game.addMessage("Ok",true,true);
+		
 		return new ActionResult(game,player);
 	}
 	
@@ -121,22 +185,10 @@ public class Consume {
 				//Drinking green liquid
 		if (noun==31) {
 			
-			if (game.getItemFlagSum(4)!=-1) {
-				game.addMessage("You don't have "+game.getItem(noun).getItemName(),true,true);
+			if () {
+				
 			} else {
-				game.addMessage("Ouch!",true,true);
-				player.setStat("strength",(float) player.getStat("strength")-4);
-				player.setStat("wisdom",(int) player.getStat("wisdom")-7);
-				game.setMessageGameState();
-				
-				int count = rest(game,player,true);
-				
-				//Sets messages
-				game.addPanelMessage("You taste a drop and ...",true);
-				
-				for (int i=0;i<count;i++) {
-					game.addPanelMessage("Time passes ...", false);
-				}
+
 			}
 			
 		//Item undrinkable
@@ -144,13 +196,43 @@ public class Consume {
 			
 			
 			if (((int) player.getStat("drink"))>0) {
-				player.setStat("drink",((int) player.getStat("drink"))-1);
-				player.setStat("strength",(float) player.getStat("strength")+7);
-				game.addMessage("Ok",true,true);
+
 			}
 		}
+		
+		public int rest(Game game, Player player, boolean msgSet) {
+		
+		//Bases time to wait based on Living Storm flag
+		int count = Math.abs(game.getItem(36).getItemFlag()+3);
+						
+		//Waits and increases strength
+		for (int i=1;i<count;i++) {
+			player.reduceStat("timeRemaining");
+			if (((float) player.getStat("strength"))<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
+				player.setStat("strength",(float) player.getStat("strength")-8);
+			}
+		}
+		
+		if ((int) player.getStat("timeRemaining")>100 || game.getItem(36).getItemFlag()<1) {
+			player.setStat("wisdom",(int) player.getStat("wisdom")+2);
+			game.getItem(36).setItemFlag(1);
+		}
+				
+		if (!msgSet) {
+			
+			game.addPanelMessage("Time passes ...", true);
+			for (int i=1;i<count;i++) {
+				game.addPanelMessage("Time passes ...", false);
+			}
+			game.addMessage("Ok",true,true);
+			game.setMessageGameState();
+		}
+		
+		return count;		
+	}
  */
 
 /* 28 May 2025 - Created File
  * 29 May 2025 - Added the eat function
+ * 			   - Added drink function and set up for rest
  */

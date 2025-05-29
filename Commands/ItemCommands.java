@@ -159,15 +159,15 @@ public class ItemCommands {
 		return result;
 	}
 		
-	public ActionResult executeTake(Game game,Player player,ParsedCommand command) {
+	private ActionResult executeTake(Game game,Player player,ParsedCommand command) {
 		return new TakeHandler(game,player,command).execute();
 	}
 	
-	public ActionResult executeDrop(Game game, Player player, ParsedCommand command) {
+	private ActionResult executeDrop(Game game, Player player, ParsedCommand command) {
 		return new DropHandler(game,player,command).execute();
 	}
 	
-	public ActionResult executeGive(Game game,Player player, ParsedCommand command) {
+	private ActionResult executeGive(Game game,Player player, ParsedCommand command) {
 		return new GiveHandler(game,player,command).execute();
 	}
 	

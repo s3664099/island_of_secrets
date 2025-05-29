@@ -47,6 +47,7 @@ public class GameEntities {
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
 	public static final int ITEM_VILLAGER = 30;
+	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
 	public static final int ITEM_OMEGAN = 39;
 	public static final int ITEM_SNAKE = 40;

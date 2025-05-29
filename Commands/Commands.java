@@ -539,36 +539,7 @@ public class Commands {
 		}
 	}
 	
-	public int rest(Game game, Player player, boolean msgSet) {
-		
-		//Bases time to wait based on Living Storm flag
-		int count = Math.abs(game.getItem(36).getItemFlag()+3);
-						
-		//Waits and increases strength
-		for (int i=1;i<count;i++) {
-			player.reduceStat("timeRemaining");
-			if (((float) player.getStat("strength"))<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
-				player.setStat("strength",(float) player.getStat("strength")-8);
-			}
-		}
-		
-		if ((int) player.getStat("timeRemaining")>100 || game.getItem(36).getItemFlag()<1) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")+2);
-			game.getItem(36).setItemFlag(1);
-		}
-				
-		if (!msgSet) {
-			
-			game.addPanelMessage("Time passes ...", true);
-			for (int i=1;i<count;i++) {
-				game.addPanelMessage("Time passes ...", false);
-			}
-			game.addMessage("Ok",true,true);
-			game.setMessageGameState();
-		}
-		
-		return count;		
-	}
+
 	
 	public void wave(Game game,Player player) {
 		

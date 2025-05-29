@@ -42,8 +42,9 @@ public class CommandExecutor {
 		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {	
 			ItemCommands item = new ItemCommands();
 			result = item.executeCommand(game,player,command);
-		} else if (command.checkEat() || command.checkDrink()) {
-			
+		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
+			Consume consume = new Consume();
+			result = consume.executeCommand(game,player,command);
 
 		
 		
