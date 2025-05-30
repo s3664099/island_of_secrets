@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 29 May 2025
+Version: 4.2
+Date: 30 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -70,7 +70,7 @@ public class Consume {
 		} else if (command.checkDrink()) {
 			result = executeDrink(game,player,command);
 		} else if (command.checkRest()) {
-			
+			result = executeRest(game,player,command);
 		}
 		return result;
 	}
@@ -100,6 +100,39 @@ public class Consume {
 		return result;
 	}
 	
+	private ActionResult executeRest(Game game, Player player, ParsedCommand command) {
+		
+		
+		int count = determineCount(game);
+		player = determineRestPeriod(count,game,player);
+
+		if (isEnoughTime(game,player)) {
+			player.setStat("wisdom",(int) player.getStat("wisdom")+2);
+			game.getItem(36).setItemFlag(1);
+		}
+				
+		game = setMessage(count,game);
+		
+		return new ActionResult(game,player);	
+	}
+	
+	private int determineCount(Game game) {
+		return Math.abs(game.getItem(GameEntities.ITEM_STORM).getItemFlag()+3);
+	}
+	
+	private Player determineRestPeriod(int count,Game game, Player player) {
+		
+		for (int i=1;i<count;i++) {
+			player.reduceStat("timeRemaining");
+			if (((float) player.getStat("strength"))<100 || 
+				game.getItem(GameEntities.ITEM_WINE).getItemFlag()==(player.getRoom()*-1)) {
+				player.setStat("strength",(float) player.getStat("strength")-8);
+			}
+		}
+		
+		return player;
+	}
+	
 	private boolean isEatingLillies(int nounNumber,Game game) {
 		
 		boolean isEatingLillies = false;
@@ -116,6 +149,16 @@ public class Consume {
 			isDrinkingLiquid = true;
 		}
 		return isDrinkingLiquid;
+	}
+	
+	private boolean isEnoughTime(Game game, Player player) {
+		
+		boolean enoughTime = false;
+		if ((int) player.getStat("timeRemaining")>100 || 
+			game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1) {
+			enoughTime = true;
+		}
+		return enoughTime;
 	}
 	
 	private ActionResult eatLillies(Game game, Player player) {
@@ -142,8 +185,7 @@ public class Consume {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-7);
 			game.setMessageGameState();
 			
-			int count = rest(game,player,true);
-			
+			int count = determineCount(game);
 			game.addPanelMessage("You taste a drop and ...",true);
 			
 			for (int i=0;i<count;i++) {
@@ -162,77 +204,22 @@ public class Consume {
 		return new ActionResult(game,player);
 	}
 	
-}
-
-/*		
-		??EAT
-		//Eating lillies (moved here since in original game code wouldn't reach)
-		if (noun == 3 && game) {
-			
+	private Game setMessage(int count,Game game) {
 		
-		//Item unedible
-		} else 
-		//Eat
-		} else {
-			
-			
-			if () {
-				
-			}
-		}
-		
-		DRINK!!!
-				//Drinking green liquid
-		if (noun==31) {
-			
-			if () {
-				
-			} else {
-
-			}
-			
-		//Item undrinkable
-		}  else {
-			
-			
-			if (((int) player.getStat("drink"))>0) {
-
-			}
-		}
-		
-		public int rest(Game game, Player player, boolean msgSet) {
-		
-		//Bases time to wait based on Living Storm flag
-		int count = Math.abs(game.getItem(36).getItemFlag()+3);
-						
-		//Waits and increases strength
+		game.addPanelMessage("Time passes ...", true);
 		for (int i=1;i<count;i++) {
-			player.reduceStat("timeRemaining");
-			if (((float) player.getStat("strength"))<100 || game.getItem(22).getItemFlag()==(player.getRoom()*-1)) {
-				player.setStat("strength",(float) player.getStat("strength")-8);
-			}
+			game.addPanelMessage("Time passes ...", false);
 		}
+		game.addMessage("Ok",true,true);
+		game.setMessageGameState();
 		
-		if ((int) player.getStat("timeRemaining")>100 || game.getItem(36).getItemFlag()<1) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")+2);
-			game.getItem(36).setItemFlag(1);
-		}
-				
-		if (!msgSet) {
-			
-			game.addPanelMessage("Time passes ...", true);
-			for (int i=1;i<count;i++) {
-				game.addPanelMessage("Time passes ...", false);
-			}
-			game.addMessage("Ok",true,true);
-			game.setMessageGameState();
-		}
-		
-		return count;		
+		return game;
 	}
- */
+	
+}
 
 /* 28 May 2025 - Created File
  * 29 May 2025 - Added the eat function
  * 			   - Added drink function and set up for rest
+ * 20 May 2025 - added the rest functionality
  */

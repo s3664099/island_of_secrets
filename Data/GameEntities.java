@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 25 May 2025
+Version: 4.5
+Date: 30 May 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -44,11 +44,13 @@ public class GameEntities {
 	public static final int ITEM_STAFF = 20;
 	public static final int ITEM_BEAST = 16;
 	public static final int ITEM_MUSHROOM = 20;
+	public static final int ITEM_WINE = 22;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
+	public static final int ITEM_STORM = 36;
 	public static final int ITEM_OMEGAN = 39;
 	public static final int ITEM_SNAKE = 40;
 	public static final int ITEM_LOGMEN = 41;
@@ -100,4 +102,5 @@ public class GameEntities {
  * 23 May 2025 - Edited locations to start with ROOM,ITEM and CMD (Command)
  * 24 May 2025 - Added codes for take
  * 25 May 2025 - Added codes for give
+ * 30 May 2025 - Added codes for rest
  */
