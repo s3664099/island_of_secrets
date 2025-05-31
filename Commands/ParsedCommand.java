@@ -187,6 +187,10 @@ public class ParsedCommand {
 	public boolean checkInfo() {
 		return commandType == CommandType.INFO;
 	}
+	
+	public boolean checkWave() {
+		return commandType == CommandType.WAVE;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -199,5 +203,5 @@ public class ParsedCommand {
  * 16 May 2025 - Added code to split all the command, and one to split into verb/noun.
  * 28 May 2025 - Added check for eat and drink
  * 29 May 2025 - Added check for rest/wait
- * 31 May 2025 - Added Info Function
+ * 31 May 2025 - Added Info & Wave Function
  */

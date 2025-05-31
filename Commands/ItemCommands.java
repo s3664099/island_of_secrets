@@ -461,7 +461,7 @@ public class ItemCommands {
 		private boolean isTorch() {
 			
 			boolean isTorch = false;
-			if (validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH)) {
+			if (validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH_BRIGHT)) {
 				isTorch = true;
 			}
 			return isTorch;

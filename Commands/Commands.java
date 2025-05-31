@@ -543,23 +543,7 @@ public class Commands {
 	
 	public void wave(Game game,Player player) {
 		
-		//Wave to boatman
-		if (game.getItem(25).isAtLocation(player.getRoom())) {
-			game.addMessage("The boatman waves back.",true,true);
-		}
-		
-		//Wave torch
-		if (code.substring(0,3).equals("700")) {
-			game.getItem(7).setItemFlag(1);
-			game.addMessage("The torch brightens.",true,true);
-			
-			if (player.getRoom()==28) {
-				game.addMessage("The hands release you and retreat into the wall.",false,true);
-			}
-			
-			game.getItem(7).setItemName("a brightly glowing torch");
-			player.setStat("wisdom",(int) player.getStat("wisdom")+8);
-		}
+
 	}
 		
 	public void save(Game game, Player player) throws IOException {

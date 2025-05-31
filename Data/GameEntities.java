@@ -67,7 +67,8 @@ public class GameEntities {
 	public static final String CODE_CLOAK = "3810010";
 	public static final String CODE_EGG = "246046";
 	public static final String CODE_EVIL_BOOKS = "3450050";
-	public static final String CODE_TORCH = "701";
+	public static final String CODE_TORCH_DIM = "700";
+	public static final String CODE_TORCH_BRIGHT = "701";
 	public static final String CODE_SNAKE = "10045";
 	public static final String CODE_VILLAGER = "2413075";
 	public static final String CODE_LILY = "300";
