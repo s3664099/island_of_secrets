@@ -45,20 +45,15 @@ public class CommandExecutor {
 		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
 			Consume consume = new Consume();
 			result = consume.executeCommand(game,player,command);
+		} else if (command.checkInfo()) {
+			Miscellaneous misc = new Miscellaneous(game,player,command);
+			result = misc.info();
+		}
 
 		
 		
-		//Eat
-		} else if (verbNo==11) {
-			this.command.eat(game,player,splitCommand[1]);
+
 		
-		//Drink
-		} else if (verbNo==12) {
-			this.command.drink(game,player,splitCommand[1]);
-		
-		//Info
-		} else if (verbNo==39) {
-			this.command.info(game, player);
 		
 		//Wave
 		} else if (verbNo==38) {
@@ -79,9 +74,7 @@ public class CommandExecutor {
 		} else if (verbNo==41) {
 			this.command.save(game, player);
 		
-		//Wait/Rest
-		} else if (verbNo==36 || verbNo==37) {
-			this.command.rest(game, player, false);
+
 		
 		//Quit
 		} else if (verbNo==42) {
@@ -103,19 +96,10 @@ public class CommandExecutor {
 		//More than one verb
 		} else if(commandLength>1) {
 			
-			//Go
-			if (verbNo==5) {
+
 				
 
-			//Take Command (pick & catch included)
-			} else if (verbNo == 6 || verbNo == 7 || verbNo == 15 || verbNo == 29) {
-			
-			//Give
-			} else if (verbNo == 8) {
 
-
-			//Drop
-			} else if (verbNo == 9||verbNo ==10) {
 				
 			//Ride
 			} else if (verbNo==13) {

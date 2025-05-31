@@ -561,44 +561,7 @@ public class Commands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")+8);
 		}
 	}
-	
-	public void info (Game game, Player player) {
 		
-		boolean hasItem = false;
-		int itemLength = 0;
-		String items = "";
-		
-		game.addMessage("Info - Items carried",true,false);
-		game.addMessage("Food: "+((int) player.getStat("food")),false,false);
-		game.addMessage("Drink: "+((int) player.getStat("drink")),false,false);
-				
-		for (int i=1;i<Constants.MAX_CARRIABLE_ITEMS+1;i++) {
-			
-			if (game.getItem(i).isAtLocation(0)) {
-				
-				//First item recorded
-				if (!hasItem) {
-					items = "Items: "+game.getItem(i).getItemName();
-					hasItem = true;
-					itemLength = items.length()-1;
-				
-				//Subsequent items
-				} else {
-					
-					//Adds the item and counts the length of the string
-					int extraLength = 1;
-					if (itemLength > 0) {
-						items = items +", ";
-						extraLength = 2;
-					}
-					items = items+game.getItem(i).getItemName();
-					itemLength += game.getItem(i).getItemName().length()+extraLength;
-				}
-			}
-		}
-		game.addMessage(items,false,false);
-	}
-	
 	public void save(Game game, Player player) throws IOException {
 		
 		boolean writeFile = false;
