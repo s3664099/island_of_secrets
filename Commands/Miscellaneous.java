@@ -71,6 +71,20 @@ public class Miscellaneous {
 		return result;
 	}
 	
+	public ActionResult polish() {
+		
+		game.addMessage("A-dub-dub",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		//Rub the stone
+		if (isPolishStone()) {
+			result = polishStone();			
+		} else if (isPolishStoneAgain()) {
+			result = stonePolished();
+		}
+		return result;
+	}
+	
 	private boolean isBoatmanPresent() {
 		
 		boolean boatmanPresent = false;
@@ -92,7 +106,7 @@ public class Miscellaneous {
 	private boolean isScratchSage() {
 		boolean isScratchSage = false;
 		if (codedCommand.equals(GameEntities.CODE_SCRATCH_SAGE) 
-			&& verbNumber == GameEntities.ITEM_SAGE) {
+			&& verbNumber == GameEntities.CMD_SCRATCH) {
 			isScratchSage = true;
 		}
 		return isScratchSage;
@@ -105,6 +119,29 @@ public class Miscellaneous {
 			helpVillageSage = true;
 		}
 		return helpVillageSage;
+	}
+	
+	private boolean isPolishStone() {
+		boolean polishStone = false;
+		if (command.getSplitTwoCommand()[1].length()>0) {
+			String noun = command.getSplitTwoCommand()[1];
+			if(noun.equals("stone") && player.getRoom()==GameEntities.ROOM_STONE 
+			   && game.getItem(GameEntities.ITEM_STONE).getItemFlag()==1
+			   && game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_CARRYING) {
+				polishStone = true;
+			}
+		}
+		return polishStone;
+	}
+	
+	private boolean isPolishStoneAgain() {
+		boolean polishStone = false;
+		if(codedCommand.substring(0,4).equals("2815") && player.getRoom()==GameEntities.ROOM_STONE
+			&& game.getItem(GameEntities.ITEM_STONE).getItemFlag()==0
+			&& game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_CARRYING) {
+			polishStone = true;
+		}
+		return polishStone;
 	}
 	
 	private Game getDetails() {
@@ -161,8 +198,23 @@ public class Miscellaneous {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+5);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult polishStone() {
+		game.getItem(28).setItemFlag(0);
+		game.addMessage("Reflections stir within.",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult stonePolished() {
+		game.getItem(GameEntities.ITEM_PEBBLE).setItemFlag(0);
+		game.getItem(GameEntities.ITEM_PEBBLE).setItemFlag(GameEntities.ROOM_CARRYING);
+		game.getItem(GameEntities.ITEM_STONE).setItemFlag(99);
+		game.addMessage("The stone utters 'Stony Words'",true,true);
+		game.addMessage("You are carrying something new",false,true);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
- * 1 June 2025 - Added help command
+ * 1 June 2025 - Added help & polish commands
  */

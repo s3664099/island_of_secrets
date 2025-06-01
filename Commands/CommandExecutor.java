@@ -54,8 +54,9 @@ public class CommandExecutor {
 		} else if (command.checkHelp()) {
 			Miscellaneous misc = new Miscellaneous(game,player,command);
 			result = misc.help();
-		}
-
+		} else if (command.checkPolish()) {
+			Miscellaneous misc = new Miscellaneous(game,player,command);
+			result = misc.polish();
 		
 		
 
@@ -125,9 +126,7 @@ public class CommandExecutor {
 				this.command.kill(player, game);
 			
 			
-			//Rub & Polish
-			} else if (verbNo==30||verbNo==31) {
-				this.command.polish(player, game,splitCommand[1]);
+
 
 			//Read & Examine
 			} else if (verbNo==32||verbNo==33) {
@@ -399,5 +398,5 @@ public class CommandExecutor {
  * 23 March 2025 - Combined addMessage and addNormalMessage
  * 8 May 2025 - Added ActionResult as return for execution. Added move command
  * 31 May 2025 - Added info and wave commands
- * 1 June 2025 - Added Help command
+ * 1 June 2025 - Added Help & polish commands
  */

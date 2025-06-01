@@ -322,19 +322,7 @@ public class Commands {
 	
 	public void polish(Player player, Game game,String noun) {
 		
-		game.addMessage("A-dub-dub",true,true);
-				
-		//Rub the stone
-		if (noun.equals("stone") && player.getRoom()==15 && game.getItem(28).getItemFlag()==1
-			&& game.getItem(5).getItemLocation()==0) {
-			game.getItem(28).setItemFlag(0);
-			game.addMessage("Reflections stir within.",true,true);			
-		} else if (code.substring(0,4).equals("2815") && player.getRoom()==15
-				&& game.getItem(28).getItemFlag()==0) {
-			game.getItem(8).setItemFlag(0);
-			take(game,player);
-			game.addMessage("The stone utters 'Stony Words'",true,true);
-		}
+
 	}
 	
 	public void examine(Player player, Game game, String[] command) {

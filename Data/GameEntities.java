@@ -24,6 +24,7 @@ public class GameEntities {
 	public static final int ROOM_FOREST = 1;
 	public static final int ROOM_SANCTUM = 10;
 	public static final int ROOM_CAVE = 12;
+	public static final int ROOM_STONE = 15;
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
@@ -39,7 +40,9 @@ public class GameEntities {
 	public static final int ITEM_APPLE = 1;
 	public static final int ITEM_LILY = 3;
 	public static final int ITEM_JUG = 4;
+	public static final int ITEM_RAG = 5;
 	public static final int ITEM_TORCH = 7;
+	public static final int ITEM_PEBBLE = 8;
 	public static final int ITEM_ROPE = 10;
 	public static final int ITEM_STAFF = 20;
 	public static final int ITEM_BEAST = 16;
@@ -47,7 +50,7 @@ public class GameEntities {
 	public static final int ITEM_WINE = 22;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
-	public static final int ITEM_SAGE = 28;
+	public static final int ITEM_STONE = 28;
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
@@ -63,6 +66,7 @@ public class GameEntities {
 	public static final int CMD_DROP = 9;
 	public static final int CMD_PICK = 15;
 	public static final int CMD_CATCH = 29;
+	public static final int CMD_SCRATCH = 28;
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";

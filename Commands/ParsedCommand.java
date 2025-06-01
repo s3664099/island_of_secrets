@@ -195,6 +195,10 @@ public class ParsedCommand {
 	public boolean checkHelp() {
 		return commandType == CommandType.HELP;
 	}
+	
+	public boolean checkPolish() {
+		return commandType == CommandType.RUB;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -208,5 +212,5 @@ public class ParsedCommand {
  * 28 May 2025 - Added check for eat and drink
  * 29 May 2025 - Added check for rest/wait
  * 31 May 2025 - Added Info & Wave Function
- * 1 June 2025 - Added check for help command
+ * 1 June 2025 - Added check for help & polish commands
  */
