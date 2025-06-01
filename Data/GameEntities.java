@@ -47,6 +47,7 @@ public class GameEntities {
 	public static final int ITEM_WINE = 22;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
+	public static final int ITEM_SAGE = 28;
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
@@ -89,6 +90,9 @@ public class GameEntities {
 	public static final String CODE_UP_PYRAMID = "480056";
 	public static final String CODE_OUT_SHACK = "510044";
 	public static final String CODE_OUT_HALL = "510052";
+	public static final String CODE_SCRATCH_SAGE = "3371071";
+	public static final String CODE_HELP_VILLAGER = "3075075";
+	public static final String CODE_HELP_SAGE = "3371071";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -104,4 +108,5 @@ public class GameEntities {
  * 24 May 2025 - Added codes for take
  * 25 May 2025 - Added codes for give
  * 30 May 2025 - Added codes for rest
+ * 1 June 2025 - Added codes for help
  */

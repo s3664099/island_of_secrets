@@ -3,7 +3,7 @@ Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.10
-Date: 31 May 2025
+Date: 1 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,6 +51,9 @@ public class CommandExecutor {
 		} else if (command.checkWave()) {
 			Miscellaneous misc = new Miscellaneous(game,player,command);
 			result = misc.wave();
+		} else if (command.checkHelp()) {
+			Miscellaneous misc = new Miscellaneous(game,player,command);
+			result = misc.help();
 		}
 
 		
@@ -121,10 +124,7 @@ public class CommandExecutor {
 			} else if (verbNo==24) {
 				this.command.kill(player, game);
 			
-			//Help & Scratch
-			} else if (verbNo==27||verbNo==28) {
-				this.command.help(player, game);
-
+			
 			//Rub & Polish
 			} else if (verbNo==30||verbNo==31) {
 				this.command.polish(player, game,splitCommand[1]);
@@ -399,4 +399,5 @@ public class CommandExecutor {
  * 23 March 2025 - Combined addMessage and addNormalMessage
  * 8 May 2025 - Added ActionResult as return for execution. Added move command
  * 31 May 2025 - Added info and wave commands
+ * 1 June 2025 - Added Help command
  */

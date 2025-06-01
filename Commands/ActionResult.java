@@ -52,7 +52,7 @@ public class ActionResult {
 	public Game getGame() {
 		return game;
 	}
-	
+		
 	public boolean getValid() {
 		return valid;
 	}

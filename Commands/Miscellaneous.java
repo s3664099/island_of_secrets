@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 31 May 2025
+Version: 4.1
+Date: 1 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -19,21 +19,24 @@ public class Miscellaneous {
 	private final Game game;
 	private final Player player;
 	private final ParsedCommand command;
-	private final String commandCode;
+	private final String codedCommand;
+	private final int verbNumber;
 	private boolean hasItems = false;
 	
 	public Miscellaneous(Game game,Player player) {
 		this.game = game;
 		this.player = player;
 		this.command = null;
-		this.commandCode = null;
+		this.codedCommand = null;
+		this.verbNumber = -99;
 	}
 	
 	public Miscellaneous(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
 		this.command = command;
-		this.commandCode = command.getCodedCommand();
+		this.codedCommand = command.getCodedCommand();
+		this.verbNumber = command.getVerbNumber();
 	}
 	
 	public ActionResult info() {
@@ -54,6 +57,20 @@ public class Miscellaneous {
 		return result;
 	}
 	
+	public ActionResult help() {
+		
+		game.addMessage("?!?",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if(isScratchSage()) {
+			result = scratchSage();
+		} else if (isHelpVillagerSage()) {
+			game.addMessage("How will you do that?",true,true);
+			result = new ActionResult(game,player);
+		}
+		return result;
+	}
+	
 	private boolean isBoatmanPresent() {
 		
 		boolean boatmanPresent = false;
@@ -66,10 +83,28 @@ public class Miscellaneous {
 	
 	private boolean isWavingTorch() {
 		boolean wavingTorch = false;
-		if(commandCode.substring(0,3).equals(GameEntities.CODE_TORCH_DIM)) {
+		if(codedCommand.substring(0,3).equals(GameEntities.CODE_TORCH_DIM)) {
 			wavingTorch = true;
 		}
 		return wavingTorch;
+	}
+	
+	private boolean isScratchSage() {
+		boolean isScratchSage = false;
+		if (codedCommand.equals(GameEntities.CODE_SCRATCH_SAGE) 
+			&& verbNumber == GameEntities.ITEM_SAGE) {
+			isScratchSage = true;
+		}
+		return isScratchSage;
+	}
+	
+	private boolean isHelpVillagerSage() {
+		boolean helpVillageSage = false;
+		if (codedCommand.equals(GameEntities.CODE_HELP_VILLAGER) || 
+			codedCommand.equals(GameEntities.CODE_HELP_SAGE)) {
+			helpVillageSage = true;
+		}
+		return helpVillageSage;
 	}
 	
 	private Game getDetails() {
@@ -119,8 +154,15 @@ public class Miscellaneous {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+8);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult scratchSage() {
+		game.getItem(3).setItemFlag(0);
+		game.addMessage("She nods slowly.",true,true);
+		player.setStat("wisdom",(int) player.getStat("wisdom")+5);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
- * 
-*/
+ * 1 June 2025 - Added help command
+ */

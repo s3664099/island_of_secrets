@@ -317,19 +317,7 @@ public class Commands {
 	
 	public void help(Player player, Game game) {
 		
-		game.addMessage("?!?",true,true);
-		
-		//Help Villager or Sage
-		if (code.equals("3075075") || code.equals("3371071")) {
-			game.addMessage("How will you do that?",true,true);
-			
-			//Scratch the Sage
-			if (code.equals("3371071") && verb == 28) {
-				game.getItem(3).setItemFlag(0);
-				game.addMessage("She nods slowly.",true,true);
-				player.setStat("wisdom",(int) player.getStat("wisdom")+5);
-			}
-		} 
+
 	}
 	
 	public void polish(Player player, Game game,String noun) {
