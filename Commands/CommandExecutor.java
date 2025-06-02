@@ -60,6 +60,10 @@ public class CommandExecutor {
 		} else if (command.checkSay()) {
 			Miscellaneous misc = new Miscellaneous(game,player,command);
 			result = misc.speak();
+		} else if (command.checkExamine()) {
+			Examine examine = new Examine(game,player,command);
+			result = examine.examine();
+			
 		
 		
 
@@ -131,9 +135,7 @@ public class CommandExecutor {
 			
 
 
-			//Read & Examine
-			} else if (verbNo==32||verbNo==33) {
-				this.command.examine(player,game,splitCommand);
+
 			
 			//Fill
 			} else if (verbNo==34) {

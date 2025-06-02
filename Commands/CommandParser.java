@@ -2,14 +2,15 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 28 May 2025
+Version: 4.9
+Date: 2 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
 import Data.Constants;
+import Data.GameEntities;
 import Data.Item;
 import Data.RawData;
 import Game.Game;
@@ -32,7 +33,7 @@ public class CommandParser {
 		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
 		
 		if (splitCommand[0].equals("look")) {
-			command = parseLook(splitCommand,command);
+			command = parseLook(splitCommand,command,room);
 		} else if (command.checkMoveState()) {
 			command = parseMove(command,room);
 		} else if (command.checkEat()) {
@@ -102,14 +103,18 @@ public class CommandParser {
 		return codedNoun;
 	}
 		
-	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command) {
+	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command,int room) {
 			
 		if (splitCommand[1].length()==0) {
 			splitCommand[1] = "room";
 		}
 		
+		if (splitCommand[1].equals("well") && room==GameEntities.ROOM_WELL) {
+			splitCommand[1]="room";
+		}
+				
 		splitCommand[0] = "examine";
-		int verbNumber = 33;
+		int verbNumber = GameEntities.CMD_SCRATCH;
 		
 		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
 								splitCommand,command.getCommand());
@@ -161,4 +166,5 @@ public class CommandParser {
  * 4 May 2025 - Added Parse Move method
  * 22 May 2025 - Moved CommandNormaliser here as private class
  * 28 May 2025 - Added parsing for eating
+ * 2 June 2025 - Added further parsing for examine
  */

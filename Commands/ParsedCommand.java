@@ -203,6 +203,10 @@ public class ParsedCommand {
 	public boolean checkSay() {
 		return commandType == CommandType.SAY;
 	}
+	
+	public boolean checkExamine() {
+		return commandType == CommandType.EXAMINE;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -217,5 +221,5 @@ public class ParsedCommand {
  * 29 May 2025 - Added check for rest/wait
  * 31 May 2025 - Added Info & Wave Function
  * 1 June 2025 - Added check for help & polish commands
- * 2 June 2025 - Added check for Speak
+ * 2 June 2025 - Added check for Speak & Examine
  */

@@ -25,6 +25,7 @@ public class GameEntities {
 	public static final int ROOM_SANCTUM = 10;
 	public static final int ROOM_CAVE = 12;
 	public static final int ROOM_STONE = 15;
+	public static final int ROOM_WELL = 19;
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
@@ -68,6 +69,7 @@ public class GameEntities {
 	public static final int CMD_PICK = 15;
 	public static final int CMD_CATCH = 29;
 	public static final int CMD_SCRATCH = 28;
+	public static final int CMD_EXAMINE = 33;
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
@@ -98,6 +100,7 @@ public class GameEntities {
 	public static final String CODE_SCRATCH_SAGE = "3371071";
 	public static final String CODE_HELP_VILLAGER = "3075075";
 	public static final String CODE_HELP_SAGE = "3371071";
+	public static final String CODE_READ_PARCHMENT = "600";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
