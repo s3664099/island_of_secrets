@@ -495,24 +495,7 @@ public class Commands {
 	}
 	
 	public void say(Game game, String noun,Player player) {
-		game.addMessage(noun,true,true);
-		
-		//Speaking to the clashing rocks
-		if (noun.toLowerCase().equals("stony words") && player.getRoom()==47 &&
-			game.getItem(8).getItemFlag()==0) {
-			game.addMessage("The stones are fixed.",false,false);
-			game.getItem(44).setItemFlag(1);
-		}
-		
-		//Speaking to the scavenger -has flowers and pebble
-		if (noun.toLowerCase().equals("remember old times") && 
-			player.getRoom()==game.getItem(42).getItemLocation() && 
-			game.getItem(3).getItemLocation()==81 &&
-			game.getItem(12).getItemLocation()==81) {
-			game.addMessage("He eats the flowers - and changes",false,false);
-			game.getItem(42).setItemFlag(1);
-			game.getItem(43).setItemFlag(0);
-		}
+
 	}
 	
 

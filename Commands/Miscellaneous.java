@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 1 June 2025
+Version: 4.2
+Date: 3 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -84,6 +84,21 @@ public class Miscellaneous {
 		}
 		return result;
 	}
+		
+	public ActionResult speak() {
+		
+		String noun = command.getSplitTwoCommand()[1];
+		game.addMessage(noun,true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if(isSayStonyWords(noun)) {
+			result = sayStonyWords();
+		} else if (isSpeakScavenger(noun)) {
+			result = speakScavenger();
+		}
+		
+		return result;
+	}
 	
 	private boolean isBoatmanPresent() {
 		
@@ -142,6 +157,27 @@ public class Miscellaneous {
 			polishStone = true;
 		}
 		return polishStone;
+	}
+	
+	private boolean isSayStonyWords(String noun) {
+		
+		boolean sayStonyWords = false;
+		if(noun.toLowerCase().equals("stony words") && player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE &&
+			game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()==0) {
+			sayStonyWords = true;
+		}
+		return sayStonyWords;
+	}
+	
+	private boolean isSpeakScavenger(String noun) {
+		boolean speakScavenger = false;
+		if (noun.toLowerCase().equals("remember old times") && 
+			player.getRoom()==game.getItem(GameEntities.ITEM_SCAVENGER).getItemLocation() && 
+			game.getItem(GameEntities.ITEM_LILY).getItemLocation()==GameEntities.ROOM_DESTROYED &&
+			game.getItem(GameEntities.ITEM_CHIP).getItemLocation()==GameEntities.ROOM_DESTROYED) {
+			speakScavenger = true;
+		}
+		return speakScavenger;
 	}
 	
 	private Game getDetails() {
@@ -213,8 +249,22 @@ public class Miscellaneous {
 		game.addMessage("You are carrying something new",false,true);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult sayStonyWords() {
+		game.addMessage("The stones are fixed.",false,false);
+		game.getItem(GameEntities.ITEM_ROCKS).setItemFlag(1);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult speakScavenger() {
+		game.addMessage("He eats the flowers - and changes",false,false);
+		game.getItem(GameEntities.ITEM_SCAVENGER).setItemFlag(1);
+		game.getItem(GameEntities.ITEM_MEDIAN).setItemFlag(0);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
  * 1 June 2025 - Added help & polish commands
+ * 2 June 2025 - Added Speak command
  */
