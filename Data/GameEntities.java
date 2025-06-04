@@ -30,6 +30,7 @@ public class GameEntities {
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
 	public static final int ROOM_JETTY = 33;
+	public static final int ROOM_GRANDPAS_SHACK = 33;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
@@ -47,6 +48,7 @@ public class GameEntities {
 	public static final int ITEM_ROPE = 10;
 	public static final int ITEM_STAFF = 11;
 	public static final int ITEM_CHIP = 12;
+	public static final int ITEM_HAMMER = 15;
 	public static final int ITEM_BEAST = 16;
 	public static final int ITEM_MUSHROOM = 20;
 	public static final int ITEM_WINE = 22;
@@ -101,6 +103,8 @@ public class GameEntities {
 	public static final String CODE_HELP_VILLAGER = "3075075";
 	public static final String CODE_HELP_SAGE = "3371071";
 	public static final String CODE_READ_PARCHMENT = "600";
+	public static final String CODE_CHEST_CLOSED = "2644044";
+	public static final String CODE_CHEST_OPEN = "2644144";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -118,4 +122,5 @@ public class GameEntities {
  * 30 May 2025 - Added codes for rest
  * 1 June 2025 - Added codes for help
  * 2 June 2025 - Added codes for speak
+ * 4 June 2025 - Started adding codes for examine
  */

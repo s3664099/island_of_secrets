@@ -2,8 +2,8 @@
 Title: Island of Secrets Examine Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 2 June 2025
+Version: 4.1
+Date: 4 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -19,12 +19,14 @@ public class Examine {
 	private final Player player;
 	private final ParsedCommand command;
 	private final String codedCommand;
+	private final String noun;
 	
 	public Examine(Game game, Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
 		this.command = command;
 		this.codedCommand = command.getCodedCommand();
+		this.noun = command.getSplitTwoCommand()[0];
 	}
 	
 	public ActionResult examine() {
@@ -34,6 +36,10 @@ public class Examine {
 		
 		if(isReadParchment() ) {
 			result = readParchment();
+		} else if (isChestClosed()) {
+			result = lookClosedChest();
+		} else if (isChestOpen()) {
+			result = lookOpenChest();
 		}
 		
 		return result;
@@ -47,8 +53,59 @@ public class Examine {
 		return readParchment;
 	}
 	
+	private boolean isChestClosed() {
+		boolean chestClosed = false;
+		if (codedCommand.equals(GameEntities.CODE_CHEST_CLOSED) && noun.equals("examine")) {
+			chestClosed = true;
+		}
+		return chestClosed;
+	}
+	
+	private boolean isChestOpen() {
+		boolean chestOpen = false;
+		if (codedCommand.equals(GameEntities.CODE_CHEST_OPEN) && noun.equals("examine")) {
+			chestOpen = true;
+		}
+		return chestOpen;
+	}
+	
 	private ActionResult readParchment() {
 		game.addMessage("Remember Aladin. It Worked for him.",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult lookClosedChest() {
+		game.addMessage("The chest is closed",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult lookOpenChest() {
+		
+		boolean ragSeen = false;
+		game.addMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says",true,true);
+		game.addMessage("'Use the rag if it looks a bit dim'", false,true);
+		
+		if (game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
+			game.getItem(GameEntities.ITEM_RAG).getItemFlag()==9) {
+			game.addMessage(" The chest contains a dirty old rag",false,true);
+			game.getItem(GameEntities.ITEM_RAG).setItemFlag(0);
+			ragSeen = true;
+		}
+		
+		if (game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
+			game.getItem(GameEntities.ITEM_HAMMER).getItemFlag()==9) {
+			
+			String hammer = "";
+
+			if (!ragSeen) {
+				hammer = "The chest contains ";
+			} else {
+				hammer = " and";
+			}	
+			
+			game.addMessage(hammer+" a geologist's hammer",false,true);
+			game.getItem(GameEntities.ITEM_HAMMER).setItemFlag(0);
+		}
 		return new ActionResult(game,player);
 	}
 
@@ -64,32 +121,9 @@ public class Examine {
 			
 		//Examining the chest
 		} else if (code.equals("2644044") && command[0].equals("examine")) {
-			game.addMessage("The chest is closed",true,true);
+			
 		} else if (code.equals("2644144") && command[0].equals("examine")) {
-			game.addMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says |"
-					+ "'Use the rag if it looks a bit dim'",true,true);
-			
-			boolean ragSeen = false;
-			
-			if (game.getItem(5).getItemLocation()==44 && game.getItem(5).getItemFlag()==9) {
-				game.addMessage(" The chest contains a dirty old rag",false,true);
-				game.getItem(5).setItemFlag(0);
-				ragSeen = true;
-			}
-			
-			if (game.getItem(15).getItemLocation()==44 && game.getItem(15).getItemFlag()==9) {
-				
-				String hammer = "";
 
-				if (!ragSeen) {
-					hammer = "On the table is";
-				} else {
-					hammer = " and";
-				}	
-				
-				game.addMessage(hammer+" a geologist's hammer",false,true);
-				game.getItem(15).setItemFlag(0);
-			}
 		} else if (command[1].equals("table") && player.getRoom()==44 && command[0].equals("examine")) {
 			
 			game.addMessage("The coffee table looks like it has been better days.",true,true);
@@ -199,5 +233,5 @@ public class Examine {
 	 */
 }
 /* 2 June 2025 - Created File
- * 
+ * 4 June 2025 - Added examine chest
 */
