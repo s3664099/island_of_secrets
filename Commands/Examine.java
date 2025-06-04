@@ -20,6 +20,7 @@ public class Examine {
 	private final ParsedCommand command;
 	private final String codedCommand;
 	private final String noun;
+	private final String verb;
 	
 	public Examine(Game game, Player player, ParsedCommand command) {
 		this.game = game;
@@ -27,6 +28,7 @@ public class Examine {
 		this.command = command;
 		this.codedCommand = command.getCodedCommand();
 		this.noun = command.getSplitTwoCommand()[0];
+		this.verb = command.getSplitTwoCommand()[1];
 	}
 	
 	public ActionResult examine() {
@@ -40,6 +42,8 @@ public class Examine {
 			result = lookClosedChest();
 		} else if (isChestOpen()) {
 			result = lookOpenChest();
+		} else if (isExamineTable()) {
+			result = examineTable();
 		}
 		
 		return result;
@@ -67,6 +71,14 @@ public class Examine {
 			chestOpen = true;
 		}
 		return chestOpen;
+	}
+	
+	private boolean isExamineTable() {
+		boolean examineTable = false;
+		if (verb.equals("table") && player.getRoom()==44 && noun.equals("examine")) {
+			examineTable = true;
+		}
+		return examineTable;
 	}
 	
 	private ActionResult readParchment() {
@@ -108,6 +120,32 @@ public class Examine {
 		}
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult examineTable() {
+		boolean breadSeen = false;
+		String bottle = "";
+		game.addMessage("The coffee table looks like it has been better days.",true,true);
+		
+		if (game.getItem(GameEntities.ITEM_BREAD).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
+			game.getItem(GameEntities.ITEM_BREAD).getItemFlag()==9) {
+			game.addMessage("On the table is a loaf of bread",false,true);
+			game.getItem(GameEntities.ITEM_BREAD).setItemFlag(0);
+			breadSeen = true;
+		}
+		
+		if (game.getItem(GameEntities.ITEM_BOTTLE).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
+			game.getItem(GameEntities.ITEM_BOTTLE).getItemFlag()==9) {
+			if (!breadSeen) {
+				bottle = "On the table is";
+			} else {
+				bottle = " and";
+			}
+			game.addMessage(bottle+" a bottle of water",false,true);
+			game.getItem(GameEntities.ITEM_BOTTLE).setItemFlag(0);
+		}
+		
+		return new ActionResult(game,player);
+	}
 
 	/*
 	 * 		
@@ -124,30 +162,9 @@ public class Examine {
 			
 		} else if (code.equals("2644144") && command[0].equals("examine")) {
 
-		} else if (command[1].equals("table") && player.getRoom()==44 && command[0].equals("examine")) {
+		} else if () {
 			
-			game.addMessage("The coffee table looks like it has been better days.",true,true);
-			boolean breadSeen = false;
-			
-			if (game.getItem(17).getItemLocation()==44 && game.getItem(17).getItemFlag()==9) {
-				game.addMessage("On the table is a loaf of bread",false,true);
-				game.getItem(17).setItemFlag(0);
-				breadSeen = true;
-			}
-			
-			if (game.getItem(21).getItemLocation()==44 && game.getItem(21).getItemFlag()==9) {
-				
-				String water = "";
-				
-				if (!breadSeen) {
-					water = "On the table is";
-				} else {
-					water = " and";
-				}
-				
-				game.addMessage(water+" a bottle of water",false,true);
-				game.getItem(21).setItemFlag(0);
-			}
+
 		} else if (command[1].equals("column") && player.getRoom()==58 && command[0].equals("examine")) {
 			game.addMessage("At the bottom of the column are the words 'remember old times'",true,true);
 		} else if (command[0].equals("examine") && command[1].equals("room")) {
@@ -233,5 +250,5 @@ public class Examine {
 	 */
 }
 /* 2 June 2025 - Created File
- * 4 June 2025 - Added examine chest
+ * 4 June 2025 - Added examine chest and table
 */

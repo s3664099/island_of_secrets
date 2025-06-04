@@ -50,7 +50,9 @@ public class GameEntities {
 	public static final int ITEM_CHIP = 12;
 	public static final int ITEM_HAMMER = 15;
 	public static final int ITEM_BEAST = 16;
+	public static final int ITEM_BREAD = 17;
 	public static final int ITEM_MUSHROOM = 20;
+	public static final int ITEM_BOTTLE = 21;
 	public static final int ITEM_WINE = 22;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
