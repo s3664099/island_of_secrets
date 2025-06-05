@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 2 June 2025
+Version: 4.8
+Date: 5 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -35,7 +35,14 @@ public class GameEntities {
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
 	public static final int ROOM_BUILDING = 53;
+	public static final int ROOM_COLUMN = 58;
+	public static final int ROOM_PYRAMID_EDGE = 65;
+	public static final int ROOM_PYRAMID_ROOF = 66;
+	public static final int ROOM_PYRAMID_SPLIT = 67;
 	public static final int ROOM_ABODE_HUT = 70;
+	public static final int ROOM_VILLAGE_PETRIFIED = 74;
+	public static final int ROOM_VILLAGE_REMAINS = 75;
+	public static final int ROOM_VILLAGE_ENTRANCE = 76;
 	public static final int ROOM_DESTROYED = 81;
 	
 	// === Items ===
@@ -125,4 +132,5 @@ public class GameEntities {
  * 1 June 2025 - Added codes for help
  * 2 June 2025 - Added codes for speak
  * 4 June 2025 - Started adding codes for examine
+ * 5 June 2025 - Started adding codes for examine room
  */
