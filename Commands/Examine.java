@@ -211,25 +211,14 @@ public class Examine {
 			result = examineWell();
 		} else if (isStoneVillage()) {
 			result = examineVillage();
-		} else if (player.getRoom()==17) {
-			game.addMessage("This room has rows and rows of pods with glass lids containing what appears",true,true);
-			game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number",false,true);
-			game.addMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or",false,true);
-			game.addMessage("have rotted away. A foul, almost toxic, smell seems to be present.",false,true);
-		} else if (player.getRoom()==10) {
-			game.addMessage("This room has an evil presence in it, with strange symbols on the floor and wall",true,true);
-			game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from",false,true);
-			game.addMessage("long forgotten family. A crystaline glass window looks out over the island.",false,true);
-		} else if (player.getRoom()==58) {
-			game.addMessage("The column looks like it has seen better days. It is crumbling and appears that a",true,true);
-			game.addMessage("peice could easily be removed if you had the right equipment. There is a message",false,true);
-			game.addMessage("inscribed at the base of the column.",false,true);
-		} else if (player.getRoom()==60) {
-			game.addMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.",true,true);
-			game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,",false,true);
-			game.addMessage("considering the contents. There is a desk that is covered in papers, which includes",false,true); 
-			game.addMessage("what looks like a map.",false,true);
-			game.getRoom(player.getRoom()).setViewed();
+		} else if (player.getRoom()==GameEntities.ROOM_CLONE_FACTORY) {
+			result = examineCloneFactory();
+		} else if (player.getRoom()==GameEntities.ROOM_SANCTUM) {
+			result = examineSanctum();
+		} else if (player.getRoom()==GameEntities.ROOM_COLUMN) {
+			result = examineColumnRoom();
+		} else if (player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT) {
+			result = examineAbodeHut();
 		}
 		return result;
 	}
@@ -252,6 +241,37 @@ public class Examine {
 		game.addMessage("You see a village that appears to have been frozen in time, with buildings and",true,true);
 		game.addMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp",false,true);
 		game.addMessage("seems to be ever so slowly enveloping it.",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult examineCloneFactory() {
+		game.addMessage("This room has rows and rows of pods with glass lids containing what appears",true,true);
+		game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number",false,true);
+		game.addMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or",false,true);
+		game.addMessage("have rotted away. A foul, almost toxic, smell seems to be present.",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult examineSanctum() {
+		game.addMessage("This room has an evil presence in it, with strange symbols on the floor and wall",true,true);
+		game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from",false,true);
+		game.addMessage("long forgotten family. A crystaline glass window looks out over the island.",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult examineColumnRoom() {
+		game.addMessage("The column looks like it has seen better days. It is crumbling and appears that a",true,true);
+		game.addMessage("peice could easily be removed if you had the right equipment. There is a message",false,true);
+		game.addMessage("inscribed at the base of the column.",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult examineAbodeHut() {
+		game.addMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.",true,true);
+		game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,",false,true);
+		game.addMessage("considering the contents. There is a desk that is covered in papers, which includes",false,true); 
+		game.addMessage("what looks like a map.",false,true);
+		game.getRoom(player.getRoom()).setViewed();
 		return new ActionResult(game,player);
 	}
 
