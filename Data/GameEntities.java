@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 5 June 2025
+Version: 4.9
+Date: 6 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -135,4 +135,5 @@ public class GameEntities {
  * 2 June 2025 - Added codes for speak
  * 4 June 2025 - Started adding codes for examine
  * 5 June 2025 - Started adding codes for examine room
+ * 6 June 2025 - Added more codes for Examine Room
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Examine Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 5 June 2025
+Version: 4.3
+Date: 6 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -50,6 +50,8 @@ public class Examine {
 			result = examineColumn();
 		} else if (isExamineRoom()) {
 			result = examineRoom();
+		} else if (isReadMap()) {
+			result = readMap();
 		}
 		
 		return result;
@@ -129,6 +131,15 @@ public class Examine {
 			isStoneVillage = true;
 		}
 		return isStoneVillage;
+	}
+	
+	private boolean isReadMap() {
+		boolean isReadMap = false;
+		if(noun.equals("map") && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
+		   game.getRoom(player.getRoom()).getViewed()) {
+			isReadMap = true;
+		}
+		return isReadMap;
 	}
 	
 	private ActionResult readParchment() {
@@ -274,6 +285,18 @@ public class Examine {
 		game.getRoom(player.getRoom()).setViewed();
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult readMap() {
+		game.addMessage("The map looks like it is of a castle located on an island",true,true);
+		game.getRoom(57).setVisited();
+		
+		for (int x=0;x<5;x++) {
+			for (int y=7;y<11;y++) {
+				game.getRoom((x*10)+y).setVisited();
+			}
+		}
+		return new ActionResult(game,player);
+	}
 
 	/*
 	 * 		
@@ -299,16 +322,9 @@ public class Examine {
 			
 			
 
-		} else if (command[1].equals("map") && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
+		} else if () {
 				
-			game.addMessage("The map looks like it is of a castle located on an island",true,true);
-			game.getRoom(57).setVisited();
-			
-			for (int x=0;x<5;x++) {
-				for (int y=7;y<11;y++) {
-					game.getRoom((x*10)+y).setVisited();
-				}
-			}
+
 				
 		} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
 		
@@ -349,4 +365,5 @@ public class Examine {
 /* 2 June 2025 - Created File
  * 4 June 2025 - Added examine chest and table
  * 5 June 2025 - Added examine rooms and began splitting into separate methods
+ * 6 June 2025 - Finised Examine Room. Added Read Map
 */
