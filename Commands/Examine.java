@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Commands;
 
+import java.util.Random;
+
 import Data.GameEntities;
 import Game.Game;
 import Game.Player;
@@ -17,16 +19,15 @@ public class Examine {
 	
 	private final Game game;
 	private final Player player;
-	private final ParsedCommand command;
 	private final String codedCommand;
 	private final String verb;
 	private final String noun;
 	private final int playerRoom;
+	private final Random rand = new Random();
 	
 	public Examine(Game game, Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
-		this.command = command;
 		this.codedCommand = command.getCodedCommand();
 		this.verb = command.getSplitTwoCommand()[0];
 		this.noun = command.getSplitTwoCommand()[1];
@@ -52,6 +53,8 @@ public class Examine {
 			result = examineRoom();
 		} else if (isReadMap()) {
 			result = readMap();
+		} else if (isExaminePapers()) {
+			result = examinePapers();
 		}
 		
 		return result;
@@ -140,6 +143,16 @@ public class Examine {
 			isReadMap = true;
 		}
 		return isReadMap;
+	}
+	
+	private boolean isExaminePapers() {
+		boolean examinePapers = false;
+		if((noun.equals("papers") || noun.equals("diary")) && 
+			player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
+			game.getRoom(playerRoom).getViewed()) {
+			examinePapers = true;
+		}
+		return examinePapers;
 	}
 	
 	private ActionResult readParchment() {
@@ -297,73 +310,41 @@ public class Examine {
 		}
 		return new ActionResult(game,player);
 	}
-
-	/*
-	 * 		
+	
+	private ActionResult examinePapers() {
+		game.addMessage("The papers look like the belong to somebody by the name Median. It chronicles his search",true,true);
+		game.addMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure",false,true);
+		game.addMessage("for this poison. In addition, you notice the following",false,true);
+		game.addMessage(getClue(rand.nextInt(10)), false, true);
 		
+		return new ActionResult(game,player);
+	}
+	
+	private String getClue(int clueNumber) {
+		String clue = "'I think it is time to head to the island. I hope I remember.'";
 		
-
-				
-		//Read the parchment
-		if () {
-			
-			
-		//Examining the chest
-		} else if (code.equals("2644044") && command[0].equals("examine")) {
-			
-		} else if (code.equals("2644144") && command[0].equals("examine")) {
-
-		} else if () {
-			
-
-		} else if () {
-			
-		} else if () {
-			
-			
-
-		} else if () {
-				
-
-				
-		} else if ((command[1].equals("papers") || command[1].equals("diary")) && player.getRoom()==60 && game.getRoom(player.getRoom()).getViewed()) {
-		
-			game.addMessage("The papers look like the belong to somebody by the name Median. It chronicles his search",true,true);
-			game.addMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure",false,true);
-			game.addMessage("for this poison. In addition, you notice the following",false,true);
-			
-			int x=rand.nextInt(10);			
-
-			switch (x) {
-				case 0:
-					game.addMessage("'Only those of strong will can resist the boatman'",false,true);
-					break;
-				case 1:
-					game.addMessage("'The Sagemaster rewards those who help her'",false,true);
-					break;
-				case 2:
-					game.addMessage("'The stone's mouth needs some polishing'",false,true);
-					break;
-				case 3:
-					game.addMessage("'The hands fear bright light'",false,true);
-					break;
-				case 4:
-					game.addMessage("'Words will stop the stone'",false,true);
-					break;
-				case 5:
-					game.addMessage("'Omegan's Cloak is his strength'",false,true);
-					break;
-				case 6:
-					game.addMessage("'The Dactyl could be useful'",false,true);
-					break;
-				default:
-					game.addMessage("'I think it is time to head to the island. I hope I remember.'",false,true);
-			}	
+		if(clueNumber == 0) {
+			clue = "'Only those of strong will can resist the boatman'";
+		} else if (clueNumber == 1) {
+			clue = "'The Sagemaster rewards those who help her'";
+		} else if (clueNumber == 2) {
+			clue = "'The stone's mouth needs some polishing'";
+		} else if (clueNumber == 3) {
+			clue = "'The hands fear bright light'";
+		} else if (clueNumber == 4) {
+			clue = "'Words will stop the stone'";
+		} else if (clueNumber == 5) {
+			clue = "'Omegan's Cloak is his strength'";
+		} else if (clueNumber == 6) {
+			clue = "'The Dactyl could be useful'";
 		}
-	 */
+		
+		return clue;
+	}
 }
 /* 2 June 2025 - Created File
  * 4 June 2025 - Added examine chest and table
  * 5 June 2025 - Added examine rooms and began splitting into separate methods
- * 6 June 2025 - Finised Examine Room. Added Read Map
+ * 6 June 2025 - Finished Examine Room. Added Read Map
+ * 8 June 2025 - Finished examine function with examine papers
 */
