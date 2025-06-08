@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 6 June 2025
+Version: 4.10
+Date: 8 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -24,6 +24,7 @@ public class GameEntities {
 	public static final int ROOM_FOREST = 1;
 	public static final int ROOM_SANCTUM = 10;
 	public static final int ROOM_CAVE = 12;
+	public static final int ROOM_BRANCHES = 13;
 	public static final int ROOM_STONE = 15;
 	public static final int ROOM_CLONE_FACTORY = 17;
 	public static final int ROOM_WELL = 19;
@@ -32,6 +33,7 @@ public class GameEntities {
 	public static final int ROOM_WITH_HANDS = 28;
 	public static final int ROOM_JETTY = 33;
 	public static final int ROOM_GRANDPAS_SHACK = 33;
+	public static final int ROOM_HUT = 41;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
@@ -116,6 +118,9 @@ public class GameEntities {
 	public static final String CODE_READ_PARCHMENT = "600";
 	public static final String CODE_CHEST_CLOSED = "2644044";
 	public static final String CODE_CHEST_OPEN = "2644144";
+	public static final String CODE_FILL_JUG = "40041";
+	public static final String CODE_FILL_JUG_WATER = "40013";
+	public static final String CODE_JUG_FULL = "40";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -136,4 +141,5 @@ public class GameEntities {
  * 4 June 2025 - Started adding codes for examine
  * 5 June 2025 - Started adding codes for examine room
  * 6 June 2025 - Added more codes for Examine Room
+ * 8 June 2025 - Added codes for fill
  */

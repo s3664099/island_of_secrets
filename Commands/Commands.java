@@ -331,23 +331,7 @@ public class Commands {
 	
 	public void fill(Game game,Player player) {
 		
-		game.addMessage("Not sure that can be done.",true,true);
-		
-		//Fill Earthenware Jug
-		if (code.equals("40041")) {
-			game.getItem(4).setItemFlag(-1);
-			game.addMessage("Filled",true,true);
-			game.getItem(4).setItemName("A jug full of bubbling green liquid");
-		} else if (code.equals("40013")) {
-			game.addMessage("The water streams out of the jug",true,true);
-		} else if (code.substring(0,2).equals("40")) {
-			
-			if (game.getItem(4).getItemFlag()==-1)  {
-				if (player.getRoom()==41 || player.getRoom()==13) {
-					game.addMessage("The jug is already full",true,true);
-				}
-			}
-		}
+
 	}
 	
 	public void say(Game game, String noun,Player player) {

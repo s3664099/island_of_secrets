@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 3 June 2025
+Version: 4.3
+Date: 8 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -100,6 +100,20 @@ public class Miscellaneous {
 		return result;
 	}
 	
+	public ActionResult fill() {
+		game.addMessage("Not sure that can be done.",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if (isFillJug()) {
+			result = fillJug();
+		} else if (isFillJugWater()) {
+			result = fillJugWater();
+		} else if (isJugFull()) {
+			result = jugFull();
+		}
+		return result;
+	}
+	
 	private boolean isBoatmanPresent() {
 		
 		boolean boatmanPresent = false;
@@ -178,6 +192,30 @@ public class Miscellaneous {
 			speakScavenger = true;
 		}
 		return speakScavenger;
+	}
+	
+	private boolean isFillJug() {
+		boolean fillJug = false;
+		if(codedCommand.equals(GameEntities.CODE_FILL_JUG)) {
+			fillJug = true;
+		}
+		return fillJug;
+	}
+	
+	private boolean isFillJugWater() {
+		boolean fillJugWater = false;
+		if(codedCommand.equals(GameEntities.CODE_FILL_JUG_WATER)) {
+			fillJugWater = true;
+		}
+		return fillJugWater;
+	}
+	
+	private boolean isJugFull() {
+		boolean jugFull = false;
+		if(codedCommand.substring(0,2).equals(GameEntities.CODE_JUG_FULL)) {
+			jugFull = true;
+		}
+		return jugFull;
 	}
 	
 	private Game getDetails() {
@@ -262,9 +300,32 @@ public class Miscellaneous {
 		game.getItem(GameEntities.ITEM_MEDIAN).setItemFlag(0);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult fillJug() {
+		game.getItem(GameEntities.ITEM_JUG).setItemFlag(-1);
+		game.addMessage("Filled",true,true);
+		game.getItem(GameEntities.ITEM_JUG).setItemName("A jug full of bubbling green liquid");
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult fillJugWater() {
+		game.addMessage("The water streams out of the jug",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult jugFull() {
+		if (game.getItem(GameEntities.ITEM_JUG).getItemFlag()==-1)  {
+			if (player.getRoom()==GameEntities.ROOM_HUT || 
+				player.getRoom()==GameEntities.ROOM_BRANCHES) {
+				game.addMessage("The jug is already full",true,true);
+			}
+		}
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
  * 1 June 2025 - Added help & polish commands
  * 2 June 2025 - Added Speak command
+ * 8 June 2025 - Added fill command
  */
