@@ -211,6 +211,10 @@ public class ParsedCommand {
 	public boolean checkFill() {
 		return commandType == CommandType.FILL;
 	}
+	
+	public boolean checkRide() {
+		return commandType == CommandType.RIDE;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -227,4 +231,5 @@ public class ParsedCommand {
  * 1 June 2025 - Added check for help & polish commands
  * 2 June 2025 - Added check for Speak & Examine
  * 8 June 2025 - Added check for fill
+ * 9 June 2025 - Added check for ride
  */

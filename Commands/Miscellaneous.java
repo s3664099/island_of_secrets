@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 8 June 2025
+Version: 4.4
+Date: 9 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -114,6 +114,18 @@ public class Miscellaneous {
 		return result;
 	}
 	
+	public ActionResult ride() {
+		
+		game.addMessage("How?",true,true);
+		ActionResult result = new ActionResult(game,player);
+		if (isRideBeast()) {
+			result = rideBeast();
+		} else if (isAlreadyRidingBeast()) {
+			result = alreadyRidingBeast();
+		} 
+		return result;
+	}
+	
 	private boolean isBoatmanPresent() {
 		
 		boolean boatmanPresent = false;
@@ -218,6 +230,22 @@ public class Miscellaneous {
 		return jugFull;
 	}
 	
+	private boolean isRideBeast() {
+		boolean ridingBeast = false;
+		if(codedCommand.substring(0,4).equals(GameEntities.CODE_RIDE_BEAST)) {
+			ridingBeast = true;
+		}
+		return ridingBeast;
+	}
+	
+	private boolean isAlreadyRidingBeast() {
+		boolean alreadyRidingBeast = false;
+		if(codedCommand.substring(0,4).equals(GameEntities.CODE_RIDING_BEAST)) {
+			alreadyRidingBeast = true;
+		}
+		return alreadyRidingBeast;
+	}
+	
 	private Game getDetails() {
 		
 		String items = getItemDetails();
@@ -320,6 +348,18 @@ public class Miscellaneous {
 				game.addMessage("The jug is already full",true,true);
 			}
 		}
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult rideBeast() {
+		int nounNumber = command.getNounNumber();
+		game.getItem(nounNumber).setItemFlag(-1);
+		game.addMessage("It allows you to ride.",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult alreadyRidingBeast() {
+		game.addMessage("You are already riding the beast.",true,true);
 		return new ActionResult(game,player);
 	}
 }

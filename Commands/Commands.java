@@ -74,15 +74,7 @@ public class Commands {
 	
 	public void ride(Game game) {
 		
-		//Riding the canyon beast
-		if (this.code.substring(0,4).equals("1600")) {
-			game.getItem(noun).setItemFlag(-1);
-			game.addMessage("It allows you to ride.",true,true);
-		} else if (this.code.substring(0,4).equals("1601")) {
-			game.addMessage("You are already riding the beast.",true,true);
-		} else {
-			game.addMessage("How?",true,true);
-		}
+
 	}
 	
 	public void open(Game game,Player player) {

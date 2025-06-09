@@ -121,6 +121,8 @@ public class GameEntities {
 	public static final String CODE_FILL_JUG = "40041";
 	public static final String CODE_FILL_JUG_WATER = "40013";
 	public static final String CODE_JUG_FULL = "40";
+	public static final String CODE_RIDE_BEAST = "1600";
+	public static final String CODE_RIDING_BEAST = "1601";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
