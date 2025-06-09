@@ -123,6 +123,8 @@ public class GameEntities {
 	public static final String CODE_JUG_FULL = "40";
 	public static final String CODE_RIDE_BEAST = "1600";
 	public static final String CODE_RIDING_BEAST = "1601";
+	public static final String CODE_OPEN_CHEST = "2644044";
+	public static final String CODE_OPEN_TRAPDOOR = "2951151";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -144,4 +146,5 @@ public class GameEntities {
  * 5 June 2025 - Started adding codes for examine room
  * 6 June 2025 - Added more codes for Examine Room
  * 8 June 2025 - Added codes for fill
+ * 9 June 2025 - Added codes for ride & opem
  */

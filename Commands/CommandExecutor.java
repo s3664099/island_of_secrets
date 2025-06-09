@@ -69,6 +69,9 @@ public class CommandExecutor {
 		} else if (command.checkRide()) {
 			Miscellaneous ride = new Miscellaneous(game,player,command);
 			result = ride.ride();
+		} else if (command.checkOpen()) {
+			Miscellaneous open = new Miscellaneous(game,player,command);
+			result = open.open();
 			
 		
 		
@@ -118,13 +121,10 @@ public class CommandExecutor {
 
 
 				
-			//Ride
-			} else if (verbNo==13) {
+			
 				
 			
-			//Open
-			} else if (verbNo==14) {
-				this.command.open(game, player);
+			
 			
 			//Break
 			} else if (verbNo>15 && verbNo<20) {
@@ -408,5 +408,5 @@ public class CommandExecutor {
  * 1 June 2025 - Added Help & polish commands
  * 2 June 2025 - Added speak commands
  * 8 June 2025 - Added Fill command
- * 9 June 2025 - Added ride command
+ * 9 June 2025 - Added ride & open commands
  */

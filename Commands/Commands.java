@@ -79,23 +79,7 @@ public class Commands {
 	
 	public void open(Game game,Player player) {
 		
-		game.addMessage("I'm unable to do that",true,true);
-		
-		//Open chest in grandpa's shack
-		if (this.code.equals("2644044")) {
-			game.addMessage("The chest opens. There is something inside",true,true);
-			game.getItem(6).setItemFlag(9);
-			game.getItem(5).setItemFlag(9);
-			game.getItem(15).setItemFlag(9);
-			game.getItem(26).setItemFlag(1);
-		}
-		
-		//Open trapdoor in refuse filled room
-		if (this.code.equals("2951151")) {
-			game.addMessage("The trapdoor creaks",true,true);
-			game.getItem(29).setItemFlag(0);
-			player.setStat("wisdom",(int) player.getStat("wisdom")+3);
-		}
+
 	}
 	
 	public void chip(Game game,Player player) {

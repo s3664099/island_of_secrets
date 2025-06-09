@@ -126,6 +126,20 @@ public class Miscellaneous {
 		return result;
 	}
 	
+	public ActionResult open() {
+		game.addMessage("I'm unable to do that",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if (isOpenChest()) {
+			result = openChest();
+		}
+		
+		if (isOpenTrapdoor()) {
+			result = openTrapdoor();
+		}
+		return result;
+	}
+	
 	private boolean isBoatmanPresent() {
 		
 		boolean boatmanPresent = false;
@@ -246,6 +260,22 @@ public class Miscellaneous {
 		return alreadyRidingBeast;
 	}
 	
+	private boolean isOpenChest() {
+		boolean openingChest = false;
+		if(codedCommand.equals(GameEntities.CODE_OPEN_CHEST)) {
+			openingChest = true;
+		}
+		return openingChest;
+	}
+	
+	private boolean isOpenTrapdoor() {
+		boolean openingTrapdoor = false;
+		if(codedCommand.equals(GameEntities.CODE_OPEN_TRAPDOOR)) {
+			openingTrapdoor = true;
+		}
+		return openingTrapdoor;
+	}
+	
 	private Game getDetails() {
 		
 		String items = getItemDetails();
@@ -362,10 +392,27 @@ public class Miscellaneous {
 		game.addMessage("You are already riding the beast.",true,true);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult openChest() {
+		game.addMessage("The chest opens. There is something inside",true,true);
+		game.getItem(6).setItemFlag(9);
+		game.getItem(5).setItemFlag(9);
+		game.getItem(15).setItemFlag(9);
+		game.getItem(26).setItemFlag(1);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult openTrapdoor() {
+		game.addMessage("The trapdoor creaks",true,true);
+		game.getItem(29).setItemFlag(0);
+		player.setStat("wisdom",(int) player.getStat("wisdom")+3);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
  * 1 June 2025 - Added help & polish commands
  * 2 June 2025 - Added Speak command
  * 8 June 2025 - Added fill command
+ * 9 June 2025 - Added ride and open commands
  */
