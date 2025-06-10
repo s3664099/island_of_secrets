@@ -249,39 +249,7 @@ public class Commands {
 	}
 	
 	public int shelter(Player player,Game game, String[] commands) {
-		
-		int location = -1;
-		
-		if (game.getItem(36).getItemFlag()<0) {
-			
-			if (commands.length>1) {
-				
-				String shelterLocation = commands[1];
-				game.addMessage("",true,true);
-				
-				if (commands.length>2 && commands[1].equals("in")) {
-					shelterLocation = commands[2];
-				}
-				
-				if (shelterLocation.equals("shack")) {
-					location = 44;
-				} else if (shelterLocation.equals("cave")) {
-					location = 11;
-				} else if (shelterLocation.equals("cabin")) {
-					location = 41;
-				} else {
-					game.addMessage("I'm sorry, I do not know that place",true,true);
-				}
-				
-			} else {
-				game.addMessage("You can shelter in:",true,true);
-				game.setShelterGameState();
-			}
-		} else {
-			game.addMessage("Not possible at the moment.",true,true);
-		}
-		
-		return location;
+
 	}
 	
 	public void help(Player player, Game game) {

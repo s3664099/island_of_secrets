@@ -75,6 +75,15 @@ public class CommandExecutor {
 		} else if (command.checkSwim()) {
 			Miscellaneous swim = new Miscellaneous(game,player,command);
 			result = swim.swim();
+		} else if (command.checkShelter()) {
+			Miscellaneous shelter = new Miscellaneous(game,player,command);
+			result = shelter.shelter();
+			/*
+			 * 			int location = this.command.shelter(player, game, commands);
+						if (location != -1) {
+							executeShelter(game,player,location);
+						}
+			 */
 			
 		
 		
@@ -106,13 +115,8 @@ public class CommandExecutor {
 
 		
 
-		//Shelter
-		} else if (verbNo==26) {
-			int location = this.command.shelter(player, game, commands);
-			
-			if (location != -1) {
-				executeShelter(game,player,location);
-			}
+
+
 			
 		//More than one verb
 		} else if(commandLength>1) {
@@ -410,5 +414,5 @@ public class CommandExecutor {
  * 2 June 2025 - Added speak commands
  * 8 June 2025 - Added Fill command
  * 9 June 2025 - Added ride & open commands
- * 10 June 2025 - Added swim command
+ * 10 June 2025 - Added swim & shelter commands
  */

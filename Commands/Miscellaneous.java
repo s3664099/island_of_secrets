@@ -153,6 +153,17 @@ public class Miscellaneous {
 		
 		return result;
 	}
+
+	public ActionResult shelter() {
+		game.addMessage("Not possible at the moment.",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if(isStormBlowing()) {
+			result = shelterFromStorm();
+		}
+		
+		return result; 
+	}
 	
 	private boolean isBoatmanPresent() {
 		
@@ -288,6 +299,14 @@ public class Miscellaneous {
 			openingTrapdoor = true;
 		}
 		return openingTrapdoor;
+	}
+	
+	private boolean isStormBlowing() {
+		boolean stormBlowing = false;
+		if(game.getItem(GameEntities.ITEM_STORM).getItemFlag()<0) {
+			stormBlowing = true;
+		}
+		return stormBlowing;
 	}
 	
 	private boolean checkCanSwim() {
@@ -443,6 +462,37 @@ public class Miscellaneous {
 		player.setRoom(rand.nextInt(5)+1);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult shelterFromStorm() {
+		int commandLength = command.getCommand().split(" ").length;
+		String[] commands = command.getSplitFullCommand();
+		
+		if (commandLength>1) {
+			
+			String shelterLocation = commands[1];
+			game.addMessage("",true,true);
+			
+			if (commands.length>2 && commands[1].equals("in")) {
+				shelterLocation = commands[2];
+			}
+			
+			if (shelterLocation.equals("shack")) {
+				player.setRoom(GameEntities.ROOM_GRANDPAS_SHACK);
+			} else if (shelterLocation.equals("cave")) {
+				player.setRoom(GameEntities.ROOM_LAIR);
+			} else if (shelterLocation.equals("cabin")) {
+				player.setRoom(GameEntities.ROOM_HUT);
+			} else {
+				game.addMessage("I'm sorry, I do not know that place",true,true);
+			}
+			
+		} else {
+			game.addMessage("You can shelter in:",true,true);
+			game.setShelterGameState();
+		}
+		
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
@@ -450,5 +500,5 @@ public class Miscellaneous {
  * 2 June 2025 - Added Speak command
  * 8 June 2025 - Added fill command
  * 9 June 2025 - Added ride and open commands
- * 10 June 2025 - Added swim command
+ * 10 June 2025 - Added swim & shelter commands
  */

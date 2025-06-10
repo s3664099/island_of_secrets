@@ -223,6 +223,10 @@ public class ParsedCommand {
 	public boolean checkSwim() {
 		return commandType == CommandType.SWIM;
 	}
+	
+	public boolean checkShelter() {
+		return commandType == CommandType.SHELTER;
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -240,5 +244,5 @@ public class ParsedCommand {
  * 2 June 2025 - Added check for Speak & Examine
  * 8 June 2025 - Added check for fill
  * 9 June 2025 - Added check for ride & open
- * 10 June 2025 - Added check for swim
+ * 10 June 2025 - Added check for swim & shelter
  */

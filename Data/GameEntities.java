@@ -23,6 +23,7 @@ public class GameEntities {
 	public static final int ROOM_CARRYING = 0;
 	public static final int ROOM_FOREST = 1;
 	public static final int ROOM_SANCTUM = 10;
+	public static final int ROOM_LAIR = 11;
 	public static final int ROOM_CAVE = 12;
 	public static final int ROOM_BRANCHES = 13;
 	public static final int ROOM_STONE = 15;
@@ -32,8 +33,8 @@ public class GameEntities {
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
 	public static final int ROOM_JETTY = 33;
-	public static final int ROOM_GRANDPAS_SHACK = 33;
 	public static final int ROOM_HUT = 41;
+	public static final int ROOM_GRANDPAS_SHACK = 44;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
