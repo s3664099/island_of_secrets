@@ -245,14 +245,7 @@ public class Commands {
 	//Works
 	public void swim(Player player,Game game) {
 
-		if (player.getRoom()!=51 || game.getItem(29).getItemFlag()>0) {
-			game.addMessage("You can't swim here!",true,true);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-		} else {
-			game.addMessage("You dive into the water",true,true);
-			player.setPlayerStateStartSwimming();
-			player.setRoom(rand.nextInt(5)+1);
-		}
+
 	}
 	
 	public int shelter(Player player,Game game, String[] commands) {

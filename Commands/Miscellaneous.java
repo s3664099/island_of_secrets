@@ -2,12 +2,14 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 9 June 2025
+Version: 4.5
+Date: 10 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
+
+import java.util.Random;
 
 import Data.Constants;
 import Data.GameEntities;
@@ -22,6 +24,7 @@ public class Miscellaneous {
 	private final String codedCommand;
 	private final int verbNumber;
 	private boolean hasItems = false;
+	private final Random rand = new Random();
 	
 	public Miscellaneous(Game game,Player player) {
 		this.game = game;
@@ -137,6 +140,17 @@ public class Miscellaneous {
 		if (isOpenTrapdoor()) {
 			result = openTrapdoor();
 		}
+		return result;
+	}
+		
+	public ActionResult swim() {
+		
+		ActionResult result = cannotSwim();
+		
+		if (checkCanSwim()) {
+			result = canSwim();
+		}
+		
 		return result;
 	}
 	
@@ -276,6 +290,14 @@ public class Miscellaneous {
 		return openingTrapdoor;
 	}
 	
+	private boolean checkCanSwim() {
+		boolean canSwim = false;
+		if (player.getRoom()==51 && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()>0) {
+			canSwim = true;
+		}
+		return canSwim;
+	}
+	
 	private Game getDetails() {
 		
 		String items = getItemDetails();
@@ -408,6 +430,19 @@ public class Miscellaneous {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+3);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult cannotSwim() {
+		game.addMessage("You can't swim here!",true,true);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-1);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult canSwim() {
+		game.addMessage("You dive into the water",true,true);
+		player.setPlayerStateStartSwimming();
+		player.setRoom(rand.nextInt(5)+1);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 31 May 2025 - Created File
@@ -415,4 +450,5 @@ public class Miscellaneous {
  * 2 June 2025 - Added Speak command
  * 8 June 2025 - Added fill command
  * 9 June 2025 - Added ride and open commands
+ * 10 June 2025 - Added swim command
  */

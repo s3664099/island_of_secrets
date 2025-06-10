@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 8 June 2025
+Version: 4.12
+Date: 10 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -68,6 +68,7 @@ public class GameEntities {
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
 	public static final int ITEM_STONE = 28;
+	public static final int ITEM_TRAPDOOR = 29;
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
@@ -146,5 +147,6 @@ public class GameEntities {
  * 5 June 2025 - Started adding codes for examine room
  * 6 June 2025 - Added more codes for Examine Room
  * 8 June 2025 - Added codes for fill
- * 9 June 2025 - Added codes for ride & opem
+ * 9 June 2025 - Added codes for ride & open
+ * 10 June 2025 - Added codes for swim
  */
