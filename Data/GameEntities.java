@@ -57,6 +57,7 @@ public class GameEntities {
 	public static final int ITEM_RAG = 5;
 	public static final int ITEM_TORCH = 7;
 	public static final int ITEM_PEBBLE = 8;
+	public static final int ITEM_AXE = 9;
 	public static final int ITEM_ROPE = 10;
 	public static final int ITEM_STAFF = 11;
 	public static final int ITEM_CHIP = 12;
@@ -66,6 +67,7 @@ public class GameEntities {
 	public static final int ITEM_MUSHROOM = 20;
 	public static final int ITEM_BOTTLE = 21;
 	public static final int ITEM_WINE = 22;
+	public static final int ITEM_SAP = 23;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
 	public static final int ITEM_STONE = 28;
@@ -127,6 +129,7 @@ public class GameEntities {
 	public static final String CODE_RIDING_BEAST = "1601";
 	public static final String CODE_OPEN_CHEST = "2644044";
 	public static final String CODE_OPEN_TRAPDOOR = "2951151";
+	public static final String CODE_CHOPPING_ROOTS = "3577077";
 	
 	// === Directions ===
 	public static final int NORTH = 1;

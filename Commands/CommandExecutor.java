@@ -86,6 +86,7 @@ public class CommandExecutor {
 			 */
 		} else if (command.checkChop()) {
 			Combat chop = new Combat(game,player,command);
+			result = chop.chop();
 		} else if (command.checkAttack()) {
 			Combat attack = new Combat(game,player,command);
 		} else if (command.checkKill()) {

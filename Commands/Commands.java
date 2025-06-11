@@ -83,66 +83,7 @@ public class Commands {
 	}
 	
 	public void chip(Game game,Player player) {
-		
-		player.setStat("strength",(float) player.getStat("strength")-2);
-		game.addMessage("Nothing happens",true,true);
 
-		//Carrying Hammer or Axe
-		if (game.getItem(9).getItemLocation()==0 || game.getItem(15).getItemLocation()==0) {
-			game.addMessage("Ok",true,true);
-		}
-		
-		//Chopping roots with Axe
-		if (this.code.equals("3577077") && game.getItem(9).getItemLocation()==0) {
-			game.getItem(23).setItemFlag(0);
-			game.getItem(23).setItemLocation(player.getRoom());
-		}
-		
-		//Break the column with hammer
-		if (this.code.equals("1258158") || this.code.equals("2758158") && 
-			game.getItem(15).getItemLocation()==0) {
-				game.getItem(12).setItemFlag(0);
-				game.getItem(27).setItemFlag(0);
-				game.addMessage("Crack",true,true);
-		}
-		
-		//Break the staff
-		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")-10);
-			game.getItem(noun).setItemLocation(81);
-			game.getItem(noun).setItemFlag(-1);
-			game.setMessageGameState();
-			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-			
-			if (game.getItem(2).getItemLocation() == player.getRoom()) {
-								game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
-				game.addPanelMessage("Omegan in its claws and flies away", false);
-
-				game.getItem(39).setItemLocation(81);
-				game.getItem(2).setItemLocation(2);
-				game.getItem(2).setItemFlag(-1);
-				player.setStat("strength",(float) player.getStat("strength")+40);
-			}
-		
-		//Response if player uses the staff without meeting the conditions above
-		} else if (this.code.substring(0,4).equals("1100") && verb == 19) {
-			game.getItem(noun).setItemLocation(81);
-			game.getItem(noun).setItemFlag(-1);
-			game.setMessageGameState();
-			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-		}
-		
-		//Tap a person (and the still for some odd reason)
-		if (this.verb==18 && (this.noun>29 && this.noun<34) || 
-			(this.noun>38 && this.noun<44) || this.noun==16) {
-			
-			//Carrying the axe?
-			if (game.getItem(9).getItemLocation()<1) {
-				kill(player,game);
-			} else {
-				game.addMessage("You annoy the "+game.getItem(noun).getItemName(),true,true);
-			}
-		} 
 	}
 	
 	public void kill(Player player, Game game) {
