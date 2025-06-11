@@ -490,7 +490,6 @@ public class Miscellaneous {
 			game.addMessage("You can shelter in:",true,true);
 			game.setShelterGameState();
 		}
-		
 		return new ActionResult(game,player);
 	}
 }
