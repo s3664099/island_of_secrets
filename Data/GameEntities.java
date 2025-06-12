@@ -52,6 +52,7 @@ public class GameEntities {
 	
 	// === Items ===
 	public static final int ITEM_APPLE = 1;
+	public static final int ITEM_EGG = 2;
 	public static final int ITEM_LILY = 3;
 	public static final int ITEM_JUG = 4;
 	public static final int ITEM_RAG = 5;
@@ -87,6 +88,7 @@ public class GameEntities {
 	// === Commands ===
 	public static final int CMD_DROP = 9;
 	public static final int CMD_PICK = 15;
+	public static final int CMD_BREAK = 19;
 	public static final int CMD_CATCH = 29;
 	public static final int CMD_SCRATCH = 28;
 	public static final int CMD_EXAMINE = 33;
@@ -133,6 +135,7 @@ public class GameEntities {
 	public static final String CODE_CHOPPING_ROOTS = "3577077";
 	public static final String CODE_BREAK_COLUMN_ONE = "1258158";
 	public static final String CODE_BREAK_COLUMN_TWO = "2758158";
+	public static final String CODE_HAS_STAFF = "1100";
 	
 	// === Directions ===
 	public static final int NORTH = 1;
@@ -156,5 +159,5 @@ public class GameEntities {
  * 8 June 2025 - Added codes for fill
  * 9 June 2025 - Added codes for ride & open
  * 10 June 2025 - Added codes for swim
- * 12 June 2025 - Added codes to break column
+ * 12 June 2025 - Added codes to break column & break staff
  */

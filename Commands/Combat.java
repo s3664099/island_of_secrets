@@ -22,23 +22,17 @@ public class Combat {
 	private final ParsedCommand command;
 	private final String codedCommand;
 	private final int verbNumber;
+	private final int nounNumber;
 	private boolean hasItems = false;
 	private final Random rand = new Random();
-	
-	public Combat(Game game,Player player) {
-		this.game = game;
-		this.player = player;
-		this.command = null;
-		this.codedCommand = null;
-		this.verbNumber = -99;
-	}
-	
+		
 	public Combat(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
 		this.command = command;
 		this.codedCommand = command.getCodedCommand();
 		this.verbNumber = command.getVerbNumber();
+		this.nounNumber = command.getNounNumber();
 	}
 	
 	public ActionResult chop() {
@@ -62,31 +56,14 @@ public class Combat {
 			result = breakColumn();
 		}
 		
-		//Break the staff
-		if (this.code.substring(0,4).equals("1100") && player.getRoom()==10) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")-10);
-			game.getItem(noun).setItemLocation(81);
-			game.getItem(noun).setItemFlag(-1);
-			game.setMessageGameState();
-			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-			
-			if (game.getItem(2).getItemLocation() == player.getRoom()) {
-								game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
-				game.addPanelMessage("Omegan in its claws and flies away", false);
-
-				game.getItem(39).setItemLocation(81);
-				game.getItem(2).setItemLocation(2);
-				game.getItem(2).setItemFlag(-1);
-				player.setStat("strength",(float) player.getStat("strength")+40);
-			}
-		
-		//Response if player uses the staff without meeting the conditions above
-		} else if (this.code.substring(0,4).equals("1100") && verb == 19) {
-			game.getItem(noun).setItemLocation(81);
-			game.getItem(noun).setItemFlag(-1);
-			game.setMessageGameState();
-			game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
+		if (isBreakStaff()) {
+			result = breakStaff();
+		} else if (isWasteStaff()) {
+			result = wasteStaff();
 		}
+
+		
+
 		
 		//Tap a person (and the still for some odd reason)
 		if (this.verb==18 && (this.noun>29 && this.noun<34) || 
@@ -130,6 +107,32 @@ public class Combat {
 		return breakingColumn;
 	}
 	
+	private boolean isBreakStaff() {
+		boolean breakStaff = false;
+		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+		   player.getRoom()==GameEntities.ROOM_SANCTUM) {
+			breakStaff = true;
+		}
+		return breakStaff;
+	}
+	
+	private boolean ifHaveEgg() {
+		boolean haveEgg = false;
+		if(game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom()) {
+			haveEgg = true;
+		}
+		return haveEgg;
+	}
+	
+	private boolean isWasteStaff() {
+		boolean wasteStaff = false;
+		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+		  verbNumber == GameEntities.CMD_BREAK) {
+			wasteStaff = true;
+		}
+		return wasteStaff;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -147,8 +150,48 @@ public class Combat {
 		game.addMessage("Crack",true,true);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult breakStaff() {
+		ActionResult result = breakStaffNormal();
+		
+		if (ifHaveEgg()) {
+			result = releaseDactyl(result);
+		}
+		return result;
+	}
+	
+	private ActionResult breakStaffNormal() {
+		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
+		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+		game.getItem(nounNumber).setItemFlag(-1);
+		game.setMessageGameState();
+		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult releaseDactyl(ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		
+		game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
+		game.addPanelMessage("Omegan in its claws and flies away", false);
+		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
+		game.getItem(GameEntities.ITEM_EGG).setItemLocation(GameEntities.ROOM_DESTROYED);
+		game.getItem(2).setItemFlag(-1);
+		player.setStat("strength",(float) player.getStat("strength")+40);
+		
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult wasteStaff() {
+		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
+		game.getItem(nounNumber).setItemFlag(-1);
+		game.setMessageGameState();
+		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 11 June 2025 - Create File
- * 12 June 2025 - Added Break Column
+ * 12 June 2025 - Added Break Column & Break Staff
  */
