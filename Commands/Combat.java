@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 11 June 2025
+Version: 4.1
+Date: 12 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -58,11 +58,8 @@ public class Combat {
 		}
 		
 		//Break the column with hammer
-		if (this.code.equals("1258158") || this.code.equals("2758158") && 
-			game.getItem(15).getItemLocation()==0) {
-				game.getItem(12).setItemFlag(0);
-				game.getItem(27).setItemFlag(0);
-				game.addMessage("Crack",true,true);
+		if (isBreakingColumn()) {
+			result = breakColumn();
 		}
 		
 		//Break the staff
@@ -123,6 +120,16 @@ public class Combat {
 		return choppingRoots;
 	}
 	
+	private boolean isBreakingColumn() {
+		boolean breakingColumn = false;
+		if(codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
+		   codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO) && 
+		   game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING) {
+			breakingColumn=true;
+		}
+		return breakingColumn;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -131,9 +138,17 @@ public class Combat {
 	private ActionResult choppingRoots() {
 		game.getItem(GameEntities.ITEM_SAP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_SAP).setItemLocation(player.getRoom());
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult breakColumn() {
+		game.getItem(GameEntities.ITEM_CHIP).setItemFlag(0);
+		game.getItem(GameEntities.ITEM_FRACTURE).setItemFlag(0);
+		game.addMessage("Crack",true,true);
+		return new ActionResult(game,player);
 	}
 }
 
 /* 11 June 2025 - Create File
- * 
+ * 12 June 2025 - Added Break Column
  */
