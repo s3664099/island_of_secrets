@@ -87,30 +87,7 @@ public class Commands {
 	}
 	
 	public void kill(Player player, Game game) {
-		
-		//Take a hit even if the object isn't present
-		player.setStat("strength",(float) player.getStat("strength")-12);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
-		game.addMessage("That would be unwise",true,true);
-				
-		//Is object present - ends game
-		if (game.getItem(noun).getItemLocation() == player.getRoom()) {
-			game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
-			
-			game.setMessageGameState();
-			game.addPanelMessage("Thunder splits the sky!",true);
-			game.addPanelMessage("It is the triumphant voice of Omegan.",false);
-			game.addPanelMessage("Well done Alphan!",false);
-			game.addPanelMessage("The means becomes the end.",false);
-			game.addPanelMessage("I claim you as my own!",false);
-			game.addPanelMessage("Ha Ha Hah!",false);
 
-			player.setStat("strength",(float) 0);
-			player.setStat("wisdom",0);
-			player.setStat("timeRemaining",0);
-
-			game.setEndGameState();	
-		}
 	}
 	
 	public void attack(Game game, Player player) {

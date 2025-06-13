@@ -163,4 +163,5 @@ public class GameEntities {
  * 9 June 2025 - Added codes for ride & open
  * 10 June 2025 - Added codes for swim
  * 12 June 2025 - Added codes to break column & break staff
+ * 13 June 2025 - Added codes for tap.
  */

@@ -11,6 +11,7 @@ package Commands;
 
 import java.util.Random;
 
+import Data.Constants;
 import Data.GameEntities;
 import Game.Game;
 import Game.Player;
@@ -74,7 +75,14 @@ public class Combat {
 	}
 	
 	private ActionResult kill() {
-		return new ActionResult(game,player);
+		
+		ActionResult result = defaultKillRespond();
+
+		//Is object present - ends game
+		if (isFatalResponse()) {
+			result = fatalResponse();
+		}
+		return result;
 	}
 	
 	private boolean isCarryingWeapon() {
@@ -150,6 +158,14 @@ public class Combat {
 		return hasAxe;
 	}
 	
+	private boolean isFatalResponse() {
+		boolean isFatal = false;
+		if(game.getItem(nounNumber).getItemLocation() == player.getRoom()) {
+			isFatal = true;
+		}
+		return isFatal;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -212,8 +228,36 @@ public class Combat {
 		game.addMessage("You annoy the "+game.getItem(nounNumber).getItemName(),true,true);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult defaultKillRespond() {
+		player.setStat("strength",(float) player.getStat("strength")-12);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
+		game.addMessage("That would be unwise",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult fatalResponse() {
+		game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
+		
+		game.setMessageGameState();
+		game.addPanelMessage("Thunder splits the sky!",true);
+		game.addPanelMessage("It is the triumphant voice of Omegan.",false);
+		game.addPanelMessage("Well done Alphan!",false);
+		game.addPanelMessage("The means becomes the end.",false);
+		game.addPanelMessage("I claim you as my own!",false);
+		game.addPanelMessage("Ha Ha Hah!",false);
+
+		player.setStat("strength",(float) 0);
+		player.setStat("wisdom",0);
+		player.setStat("timeRemaining",0);
+
+		game.setEndGameState();	
+		
+		return new ActionResult(game,player);
+	}
 }
 
 /* 11 June 2025 - Create File
  * 12 June 2025 - Added Break Column & Break Staff
+ * 13 June 2025 - Added tap & kill command
  */
