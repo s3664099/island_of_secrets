@@ -77,7 +77,9 @@ public class GameEntities {
 	public static final int ITEM_VILLAGER = 30;
 	public static final int ITEM_LIQUID = 31;
 	public static final int ITEM_SWAMPMAN = 32;
+	public static final int ITEM_BOOKS = 34;
 	public static final int ITEM_STORM = 36;
+	public static final int ITEM_CLOAK = 38;
 	public static final int ITEM_OMEGAN = 39;
 	public static final int ITEM_SNAKE = 40;
 	public static final int ITEM_LOGMEN = 41;
@@ -88,6 +90,7 @@ public class GameEntities {
 	// === Commands ===
 	public static final int CMD_DROP = 9;
 	public static final int CMD_PICK = 15;
+	public static final int CMD_TAP = 18;
 	public static final int CMD_BREAK = 19;
 	public static final int CMD_CATCH = 29;
 	public static final int CMD_SCRATCH = 28;

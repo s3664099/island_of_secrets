@@ -62,21 +62,19 @@ public class Combat {
 			result = wasteStaff();
 		}
 
-		
-
-		
-		//Tap a person (and the still for some odd reason)
-		if (this.verb==18 && (this.noun>29 && this.noun<34) || 
-			(this.noun>38 && this.noun<44) || this.noun==16) {
-			
-			//Carrying the axe?
-			if (game.getItem(9).getItemLocation()<1) {
-				kill(player,game);
+		if (isTapPerson()) {
+			if(hasAxe()) {
+				result = kill();
 			} else {
-				game.addMessage("You annoy the "+game.getItem(noun).getItemName(),true,true);
+				result = annoyPerson();
 			}
-		} 
+		}
+
 		return result;
+	}
+	
+	private ActionResult kill() {
+		return new ActionResult(game,player);
 	}
 	
 	private boolean isCarryingWeapon() {
@@ -131,6 +129,25 @@ public class Combat {
 			wasteStaff = true;
 		}
 		return wasteStaff;
+	}
+	
+	private boolean isTapPerson() {
+		boolean tapPerson = false;
+		if((verbNumber==GameEntities.CMD_TAP && 
+		   (nounNumber>GameEntities.ITEM_TRAPDOOR && nounNumber<GameEntities.ITEM_BOOKS) || 
+		   (nounNumber>GameEntities.ITEM_CLOAK && nounNumber<GameEntities.ITEM_ROCKS) || 
+		   nounNumber==GameEntities.ITEM_BEAST)) {
+			tapPerson = true;
+		}
+		return tapPerson;
+	}
+	
+	private boolean hasAxe() {
+		boolean hasAxe = false;
+		if(game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING) {
+			hasAxe = true;
+		}
+		return hasAxe;
 	}
 	
 	private ActionResult carryingWeapon() {
@@ -188,6 +205,11 @@ public class Combat {
 		game.getItem(nounNumber).setItemFlag(-1);
 		game.setMessageGameState();
 		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult annoyPerson() {
+		game.addMessage("You annoy the "+game.getItem(nounNumber).getItemName(),true,true);
 		return new ActionResult(game,player);
 	}
 }
