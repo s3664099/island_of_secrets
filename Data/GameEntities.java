@@ -86,6 +86,7 @@ public class GameEntities {
 	public static final int ITEM_SCAVENGER = 42;
 	public static final int ITEM_MEDIAN = 43;
 	public static final int ITEM_ROCKS = 44;
+	public static final int ITEM_DACTYL = 46;
 	
 	// === Commands ===
 	public static final int CMD_DROP = 9;

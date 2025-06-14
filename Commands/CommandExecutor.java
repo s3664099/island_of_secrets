@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 11 June 2025
+Version: 4.16
+Date: 14 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -89,8 +89,10 @@ public class CommandExecutor {
 			result = chop.chop();
 		} else if (command.checkAttack()) {
 			Combat attack = new Combat(game,player,command);
+			result = attack.attack();
 		} else if (command.checkKill()) {
 			Combat kill = new Combat(game,player,command);
+			result = kill.kill();
 			
 		
 		
@@ -413,4 +415,5 @@ public class CommandExecutor {
  * 9 June 2025 - Added ride & open commands
  * 10 June 2025 - Added swim & shelter commands
  * 11 June 2025 - Added combat commands
+ * 13 June 2025 - Added attack and kill commands
  */

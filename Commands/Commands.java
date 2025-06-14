@@ -92,72 +92,7 @@ public class Commands {
 	
 	public void attack(Game game, Player player) {
 		
-		game.addMessage("That would be unwise",true,true);
-		
-		player.setStat("strength",(float) player.getStat("strength")-2);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
-		
-		if (game.getItem(noun).getItemLocation() == player.getRoom() || 
-			game.getItem(noun).getItemLocation() ==0) {
-			
-			//Omegan the evil one
-			if (noun==39) {
-				game.addMessage("He laughs dangerously.",true,true);
-			
-			//Swampman
-			} else if (noun==32) {
-				game.addMessage("The swampman is unmoved.",true,true);
-			
-			//Sage of the Lilies
-			} else if (noun==33) {
-				game.addMessage("You can't touch her",true,true);
-				game.getItem(3).setItemLocation(81);
-			
-			//Logmen
-			} else if (noun==41) {
-				game.addMessage("They think that's funny!",true,true);
-
-			//In the Dactyl's Nest
-			} else if (player.getRoom()==46) {
-				
-				game.setMessageGameState();
-				game.addPanelMessage("You anger the bird!",true);
-				game.addPanelMessage("Which flies you to a remote place", false);
-
-				player.setRoom(rand.nextInt(6)+63);
-				game.getItem(16).setItemLocation(1);
-				game.getItem(16).setItemFlag(0);
-				game.addMessage("",true,true);
-			
-			//Strike Flint
-			} else if (code.substring(0,4).equals("1400")) {
-
-				game.addMessage("Sparks fly",true,true);
-				
-				//Coal in room
-				if (player.getRoom()==game.getItem(13).getItemLocation()) {
-					
-					game.getItem(noun).setItemFlag(-1);
-					game.getItem(13).setItemLocation(81);
-					game.setMessageGameState();
-					
-					//Omegan's present in his sanctum
-					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
-						
-						game.addPanelMessage("The coal burns with a red flame",true);
-						game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
-
-						player.setStat("wisdom",(int) player.getStat("wisdom")+20);
-						game.getItem(13).setItemFlag(-1);
-						game.getItem(38).setItemLocation(81);
-					} else {
-						game.addPanelMessage("The coal burns with a red flame",true);				
-					}
-				}
-			}
-			player.setStat("strength",(float) player.getStat("strength")-8);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		}		
+	
 	}
 	
 	//Works

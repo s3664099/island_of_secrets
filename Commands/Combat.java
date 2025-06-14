@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 12 June 2025
+Version: 4.3
+Date: 14 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -74,11 +74,84 @@ public class Combat {
 		return result;
 	}
 	
-	private ActionResult kill() {
+	public ActionResult attack() {
+		ActionResult result = defaultAttackRespond();
+		
+		if(isPresent()) {
+			if(isHitOmegan()) {
+				result = hitOmegan();
+			} else if (nounNumber == GameEntities.ITEM_SWAMPMAN) {
+				game.addMessage("The swampman is unmoved.",true,true);
+			} else if (isHitSage()) {
+				result = hitSage();
+			} else if (nounNumber == GameEntities.ITEM_LOGMEN) {
+				game.addMessage("They think that's funny!",true,true);
+			} else if (isHitDactyl()) {
+				result = hitDactyl();
+			}
+		}
+		
+		return result;
+	}
+	
+	/*if () {
+			
+			//Omegan the evil one
+			if (noun==39) {
+				game.addMessage("He laughs dangerously.",true,true);
+			
+			//Swampman
+			} else if (noun==32) {
+				
+			
+			//Sage of the Lilies
+			} else if (noun==33) {
+				game.addMessage("You can't touch her",true,true);
+				game.getItem(3).setItemLocation(81);
+			
+			//Logmen
+			} else if (noun==41) {
+				
+
+			//In the Dactyl's Nest
+			} else if (player.getRoom()==46) {
+				
+
+			
+			//Strike Flint
+			} else if (code.substring(0,4).equals("1400")) {
+
+				game.addMessage("Sparks fly",true,true);
+				
+				//Coal in room
+				if (player.getRoom()==game.getItem(13).getItemLocation()) {
+					
+					game.getItem(noun).setItemFlag(-1);
+					game.getItem(13).setItemLocation(81);
+					game.setMessageGameState();
+					
+					//Omegan's present in his sanctum
+					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
+						
+						game.addPanelMessage("The coal burns with a red flame",true);
+						game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
+
+						player.setStat("wisdom",(int) player.getStat("wisdom")+20);
+						game.getItem(13).setItemFlag(-1);
+						game.getItem(38).setItemLocation(81);
+					} else {
+						game.addPanelMessage("The coal burns with a red flame",true);				
+					}
+				}
+			}
+			player.setStat("strength",(float) player.getStat("strength")-8);
+			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		}	
+	 */
+	
+	public ActionResult kill() {
 		
 		ActionResult result = defaultKillRespond();
-
-		//Is object present - ends game
 		if (isFatalResponse()) {
 			result = fatalResponse();
 		}
@@ -166,6 +239,39 @@ public class Combat {
 		return isFatal;
 	}
 	
+	private boolean isPresent() {
+		boolean present = false;
+		if(game.getItem(nounNumber).getItemLocation() == player.getRoom() || 
+		   game.getItem(nounNumber).getItemLocation() ==GameEntities.ROOM_CARRYING) {
+			present = true;
+		}
+		return present;
+	}
+	
+	private boolean isHitOmegan() {
+		boolean hitOmegan = false;
+		if(nounNumber == GameEntities.ITEM_OMEGAN) {
+			hitOmegan = true;
+		}
+		return hitOmegan;
+	}
+	
+	private boolean isHitSage() {
+		boolean hitSage = false;
+		if(nounNumber == GameEntities.ITEM_LILY) {
+			hitSage = true;
+		}
+		return hitSage;
+	}
+	
+	private boolean isHitDactyl() {
+		boolean hitDactyl = false;
+		if(nounNumber == GameEntities.ITEM_DACTYL) {
+			hitDactyl = true;
+		}
+		return hitDactyl;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -229,6 +335,13 @@ public class Combat {
 		return new ActionResult(game,player);
 	}
 	
+	private ActionResult defaultAttackRespond() {
+		player.setStat("strength",(float) player.getStat("strength")-2);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+		game.addMessage("That would be unwise",true,true);
+		return new ActionResult(game,player);
+	}
+	
 	private ActionResult defaultKillRespond() {
 		player.setStat("strength",(float) player.getStat("strength")-12);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
@@ -255,9 +368,33 @@ public class Combat {
 		
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult hitOmegan() {
+		game.addMessage("He laughs dangerously.",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult hitSage() {
+		game.addMessage("You can't touch her",true,true);
+		game.getItem(3).setItemLocation(81);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult hitDactyl() {
+		game.setMessageGameState();
+		game.addPanelMessage("You anger the bird!",true);
+		game.addPanelMessage("Which flies you to a remote place", false);
+
+		player.setRoom(rand.nextInt(6)+63);
+		game.getItem(16).setItemLocation(1);
+		game.getItem(16).setItemFlag(0);
+		game.addMessage("",true,true);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 11 June 2025 - Create File
  * 12 June 2025 - Added Break Column & Break Staff
  * 13 June 2025 - Added tap & kill command
+ * 14 June 2025 - Started writing the attack section
  */
