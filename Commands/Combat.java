@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 14 June 2025
+Version: 4.4
+Date: 15 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -80,14 +80,16 @@ public class Combat {
 		if(isPresent()) {
 			if(isHitOmegan()) {
 				result = hitOmegan();
-			} else if (nounNumber == GameEntities.ITEM_SWAMPMAN) {
-				game.addMessage("The swampman is unmoved.",true,true);
+			} else if (isSwampman()) {
+				result = hitSwampman();
 			} else if (isHitSage()) {
 				result = hitSage();
-			} else if (nounNumber == GameEntities.ITEM_LOGMEN) {
-				game.addMessage("They think that's funny!",true,true);
+			} else if (isLogmen()) {
+				result = hitLogmen();
 			} else if (isHitDactyl()) {
 				result = hitDactyl();
+			} else if (isStrikeFlint()) {
+				
 			}
 		}
 		
@@ -96,30 +98,12 @@ public class Combat {
 	
 	/*if () {
 			
-			//Omegan the evil one
-			if (noun==39) {
-				game.addMessage("He laughs dangerously.",true,true);
-			
-			//Swampman
-			} else if (noun==32) {
-				
-			
-			//Sage of the Lilies
-			} else if (noun==33) {
-				game.addMessage("You can't touch her",true,true);
-				game.getItem(3).setItemLocation(81);
-			
-			//Logmen
-			} else if (noun==41) {
-				
 
-			//In the Dactyl's Nest
-			} else if (player.getRoom()==46) {
 				
 
 			
 			//Strike Flint
-			} else if (code.substring(0,4).equals("1400")) {
+			} else if () {
 
 				game.addMessage("Sparks fly",true,true);
 				
@@ -272,6 +256,30 @@ public class Combat {
 		return hitDactyl;
 	}
 	
+	private boolean isLogmen() {
+		boolean isLogmen = false;
+		if(nounNumber==GameEntities.ITEM_LOGMEN) {
+			isLogmen = true;
+		}
+		return isLogmen;
+	}
+	
+	private boolean isSwampman() {
+		boolean isSwampman = false;
+		if(nounNumber == GameEntities.ITEM_SWAMPMAN) {
+			isSwampman = true;
+		}
+		return isSwampman;
+	}
+	
+	private boolean isStrikeFlint() {
+		boolean strikeFlint = false;
+		if(codedCommand.equals(GameEntities.CODE_HAS_FLINT)) {
+			strikeFlint = true;
+		}
+		return strikeFlint;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -391,10 +399,20 @@ public class Combat {
 		game.addMessage("",true,true);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult hitLogmen() {
+		game.addMessage("They think that's funny!",true,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult hitSwampman() {
+		game.addMessage("The swampman is unmoved.",true,true);
+		return new ActionResult(game,player);
+	}
 }
 
 /* 11 June 2025 - Create File
  * 12 June 2025 - Added Break Column & Break Staff
  * 13 June 2025 - Added tap & kill command
- * 14 June 2025 - Started writing the attack section
+ * 14 June 2025 - Started writing the attack function
  */
