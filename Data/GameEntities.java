@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 15 June 2025
+Version: 4.15
+Date: 16 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -62,6 +62,7 @@ public class GameEntities {
 	public static final int ITEM_ROPE = 10;
 	public static final int ITEM_STAFF = 11;
 	public static final int ITEM_CHIP = 12;
+	public static final int ITEM_COAL = 13;
 	public static final int ITEM_HAMMER = 15;
 	public static final int ITEM_BEAST = 16;
 	public static final int ITEM_BREAD = 17;
@@ -167,4 +168,5 @@ public class GameEntities {
  * 12 June 2025 - Added codes to break column & break staff
  * 13 June 2025 - Added codes for tap.
  * 15 June 2025 - Added flint code
+ * 16 June 2025 - Added codes for strike flint
  */

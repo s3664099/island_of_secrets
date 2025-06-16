@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 15 June 2025
+Version: 4.5
+Date: 16 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -20,17 +20,14 @@ public class Combat {
 
 	private final Game game;
 	private final Player player;
-	private final ParsedCommand command;
 	private final String codedCommand;
 	private final int verbNumber;
 	private final int nounNumber;
-	private boolean hasItems = false;
 	private final Random rand = new Random();
 		
 	public Combat(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
-		this.command = command;
 		this.codedCommand = command.getCodedCommand();
 		this.verbNumber = command.getVerbNumber();
 		this.nounNumber = command.getNounNumber();
@@ -89,50 +86,13 @@ public class Combat {
 			} else if (isHitDactyl()) {
 				result = hitDactyl();
 			} else if (isStrikeFlint()) {
-				
+				result = strikeFlint();
 			}
 		}
 		
 		return result;
 	}
-	
-	/*if () {
-			
-
-				
-
-			
-			//Strike Flint
-			} else if () {
-
-				game.addMessage("Sparks fly",true,true);
-				
-				//Coal in room
-				if (player.getRoom()==game.getItem(13).getItemLocation()) {
-					
-					game.getItem(noun).setItemFlag(-1);
-					game.getItem(13).setItemLocation(81);
-					game.setMessageGameState();
-					
-					//Omegan's present in his sanctum
-					if (player.getRoom()==game.getItem(38).getItemLocation() && player.getRoom()==10) {
-						
-						game.addPanelMessage("The coal burns with a red flame",true);
-						game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
-
-						player.setStat("wisdom",(int) player.getStat("wisdom")+20);
-						game.getItem(13).setItemFlag(-1);
-						game.getItem(38).setItemLocation(81);
-					} else {
-						game.addPanelMessage("The coal burns with a red flame",true);				
-					}
-				}
-			}
-			player.setStat("strength",(float) player.getStat("strength")-8);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		}	
-	 */
-	
+		
 	public ActionResult kill() {
 		
 		ActionResult result = defaultKillRespond();
@@ -280,6 +240,23 @@ public class Combat {
 		return strikeFlint;
 	}
 	
+	private boolean isCoalPresent() {
+		boolean coalPresent = false;
+		if(player.getRoom()==game.getItem(GameEntities.ITEM_COAL).getItemLocation()) {
+			coalPresent = true;
+		}
+		return coalPresent;
+	}
+	
+	private boolean isOmeganCloakPresent() {
+		boolean omeganCloakPresent = false;
+		if(player.getRoom()==game.getItem(GameEntities.ITEM_CLOAK).getItemLocation() && 
+		   player.getRoom()==GameEntities.ROOM_SANCTUM) {
+			omeganCloakPresent = true;
+		}
+		return omeganCloakPresent;
+	}
+	
 	private ActionResult carryingWeapon() {
 		game.addMessage("Ok",true,true);
 		return new ActionResult(game,player);
@@ -379,12 +356,16 @@ public class Combat {
 	
 	private ActionResult hitOmegan() {
 		game.addMessage("He laughs dangerously.",true,true);
+		player.setStat("strength",(float) player.getStat("strength")-8);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		return new ActionResult(game,player);
 	}
 	
 	private ActionResult hitSage() {
 		game.addMessage("You can't touch her",true,true);
 		game.getItem(3).setItemLocation(81);
+		player.setStat("strength",(float) player.getStat("strength")-8);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		return new ActionResult(game,player);
 	}
 	
@@ -397,17 +378,59 @@ public class Combat {
 		game.getItem(16).setItemLocation(1);
 		game.getItem(16).setItemFlag(0);
 		game.addMessage("",true,true);
+		player.setStat("strength",(float) player.getStat("strength")-8);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		return new ActionResult(game,player);
 	}
 	
 	private ActionResult hitLogmen() {
 		game.addMessage("They think that's funny!",true,true);
+		player.setStat("strength",(float) player.getStat("strength")-8);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		return new ActionResult(game,player);
 	}
 	
 	private ActionResult hitSwampman() {
 		game.addMessage("The swampman is unmoved.",true,true);
+		player.setStat("strength",(float) player.getStat("strength")-8);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		return new ActionResult(game,player);
+	}
+	
+	private ActionResult strikeFlint() {
+		game.addMessage("Sparks fly",true,true);
+		ActionResult result = new ActionResult(game,player);
+		
+		//Coal in room
+		if (isCoalPresent()) {
+			result = coalPresent();
+		}
+		return result;
+	}
+	
+	private ActionResult coalPresent() {
+		game.getItem(nounNumber).setItemFlag(-1);
+		game.getItem(GameEntities.ITEM_COAL).setItemLocation(GameEntities.ROOM_DESTROYED);
+		game.setMessageGameState();
+		game.addPanelMessage("The coal burns with a red flame",true);
+		ActionResult result = new ActionResult(game,player);
+		
+		if (isOmeganCloakPresent()) {
+			result = omeganCloakPresent();
+		} 
+		return result;
+	}
+	
+	private ActionResult omeganCloakPresent() {
+		
+		game.addPanelMessage("The coal burns with a red flame",true);
+		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
+		player.setStat("wisdom",(int) player.getStat("wisdom")+20);
+		game.getItem(GameEntities.ITEM_COAL).setItemFlag(-1);
+		game.getItem(GameEntities.ITEM_CLOAK).setItemLocation(GameEntities.ROOM_DESTROYED);
+		ActionResult result = new ActionResult(game,player);
+		
+		return result;
 	}
 }
 
@@ -415,4 +438,6 @@ public class Combat {
  * 12 June 2025 - Added Break Column & Break Staff
  * 13 June 2025 - Added tap & kill command
  * 14 June 2025 - Started writing the attack function
+ * 15 June 2025 - Continued with Attack Function
+ * 16 June 2025 - Completed attack function with strike flint. Updated damage for attack responses
  */
