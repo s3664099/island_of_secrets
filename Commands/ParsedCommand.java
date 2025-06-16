@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 11 June 2025
+Version: 4.16
+Date: 16 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -239,6 +239,19 @@ public class ParsedCommand {
 	public boolean checkAttack() {
 		return commandType == CommandType.ATTACK;
 	}
+	
+	public boolean checkLoad() {
+		return commandType == CommandType.LOAD;
+	}
+	
+	public boolean checkSave() {
+		return commandType == CommandType.SAVE;
+	}
+	
+	public boolean checkQuit() {
+		return commandType == CommandType.QUIT;
+	}
+	
 }
 
 /* 24 April 2025 - Created File
@@ -258,4 +271,5 @@ public class ParsedCommand {
  * 9 June 2025 - Added check for ride & open
  * 10 June 2025 - Added check for swim & shelter
  * 11 June 2025 - Added check for combat actions
+ * 16 June 2025 - Added checks for load,save & quit
  */

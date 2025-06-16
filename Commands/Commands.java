@@ -137,52 +137,7 @@ public class Commands {
 		
 	public void save(Game game, Player player) throws IOException {
 		
-		boolean writeFile = false;
-		String[] commands = command.split(" ");
-		
-		if (commands.length==1) {
-			game.addMessage("Please include the name of your game.",true,true);
-		} else {
-				
-			File saveGameDirectory = new File("savegames");
-				
-			//Checks to see if the directory exists. If it doesn't it creates the directory
-			if(!saveGameDirectory.exists()) {
-				saveGameDirectory.mkdir();
-			}
-				
-			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");
-				
-			//Checks to see if the file exists
-			if (saveFile.exists() && (commands.length<3 || !commands[2].equals("o"))) {
-					
-				//If file exists tells user how to overwrite it
-				game.addMessage("File already exists. Please add 'o' to the end to overwrite.",true,true);
-				writeFile = false;
-			
-			} else {
-				writeFile = true;
-			}
-		
-			//Writes file	
-			if (writeFile) {
-			
-				try {
-					FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+commands[1]+".sav");
-					ObjectOutputStream out = new ObjectOutputStream(file);
-					out.writeObject(game);
-					out.writeObject(player);
-					out.close();
-					file.close();
-					game.addMessage("Save successful",true,true);
 
-				} catch (IOException e) {
-			        throw new IOException("Game Failed to save " + e.toString());
-				}
-			} else {
-				game.addMessage("Game not saved",true,true);
-			}
-		}
 	}
 	
 	public boolean load(Game game, Player player) throws IOException {

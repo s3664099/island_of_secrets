@@ -93,6 +93,9 @@ public class CommandExecutor {
 		} else if (command.checkKill()) {
 			Combat kill = new Combat(game,player,command);
 			result = kill.kill();
+		} else if (command.checkLoad()) {
+			Persistence save = new Persistence(game,player,command);
+			result = save.save();
 			
 		
 		
@@ -111,9 +114,7 @@ public class CommandExecutor {
 				loadedGame = true;
 			}
 			
-		//Save
-		} else if (verbNo==41) {
-			this.command.save(game, player);
+
 		
 
 		
