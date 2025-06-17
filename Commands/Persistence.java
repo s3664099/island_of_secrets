@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 16 June 2025
+Version: 4.1
+Date: 17 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,54 +39,60 @@ public class Persistence {
 	
 	public ActionResult save() {
 		
-		boolean writeFile = false;
-		
 		if (splitCommand.length==1) {
 			game.addMessage("Please include the name of your game.",true,true);
 		} else {
-				
-			File saveGameDirectory = new File("savegames");
-				
-			//Checks to see if the directory exists. If it doesn't it creates the directory
-			if(!saveGameDirectory.exists()) {
-				saveGameDirectory.mkdir();
-			}
-				
-			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");
-				
-			//Checks to see if the file exists
-			if (saveFile.exists() && (commands.length<3 || !commands[2].equals("o"))) {
-					
-				//If file exists tells user how to overwrite it
-				game.addMessage("File already exists. Please add 'o' to the end to overwrite.",true,true);
-				writeFile = false;
-			
-			} else {
-				writeFile = true;
-			}
-		
-			//Writes file	
-			if (writeFile) {
-			
-				try {
-					FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+commands[1]+".sav");
-					ObjectOutputStream out = new ObjectOutputStream(file);
-					out.writeObject(game);
-					out.writeObject(player);
-					out.close();
-					file.close();
-					game.addMessage("Save successful",true,true);
-
-				} catch (IOException e) {
-			        throw new IOException("Game Failed to save " + e.toString());
-				}
-			} else {
-				game.addMessage("Game not saved",true,true);
-			}
+			Game game = saveGame();
 		}
+		return new ActionResult(game,player);
 	}
 	
+	public Game saveGame() {
+		
+		boolean writeFile = false;
+		File saveGameDirectory = new File("savegames");
+		
+		//Checks to see if the directory exists. If it doesn't it creates the directory
+		if(!saveGameDirectory.exists()) {
+			saveGameDirectory.mkdir();
+		}
+			
+		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");
+			
+		//Checks to see if the file exists
+		if (saveFile.exists() && (splitCommand.length<3 || !splitCommand[2].equals("o"))) {
+				
+			//If file exists tells user how to overwrite it
+			game.addMessage("File already exists. Please add 'o' to the end to overwrite.",true,true);
+			writeFile = false;
+		
+		} else {
+			writeFile = true;
+		}
+	
+		//Writes file	
+		if (writeFile) {
+		
+			try {
+				FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+splitCommand[1]+".sav");
+				ObjectOutputStream out = new ObjectOutputStream(file);
+				out.writeObject(game);
+				out.writeObject(player);
+				out.close();
+				file.close();
+				game.addMessage("Save successful",true,true);
+
+			} catch (IOException e) {
+				game.addMessage("Game Failed to save " + e.toString(),true,true);
+			}
+		} else {
+			game.addMessage("Game not saved",true,true);
+		}
+		return game;
+	}
 }
 
 /* 16 June 2025 - Created File
+ * 17 June 2025 - Created Save Game File.
+ */
 */
