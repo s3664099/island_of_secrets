@@ -142,52 +142,7 @@ public class Commands {
 	
 	public boolean load(Game game, Player player) throws IOException {
 		
-		//Prevent saves from having more than one word (Same with save)
-		boolean loadFile = false;
-		String[] commands = command.split(" ");
-		
-		if (commands.length==1) {
-			displayGames(game);
-		} else {
-		
-			//Checks to see if the file exists
-			File saveGameDirectory = new File("savegames");				
-			File saveFile = new File(saveGameDirectory+"/"+commands[1]+".sav");		
-			
-			//If not available
-			if (!saveFile.exists()) {			
-				game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
-			} else {
-				loadFile = true;
-			}
-		
-			this.game = game;
-			this.player = player;
-				
-			if (loadFile) {
-		
-				//Attempts to load the file
-				try {
-					FileInputStream file = new FileInputStream(saveGameDirectory+"/"+commands[1]+".sav");
-					ObjectInputStream fileIn = new ObjectInputStream(file);
-				
-					//Load successful. Update the objects
-					this.game = (Game) fileIn.readObject();
-					this.player = (Player) fileIn.readObject();
-				
-					fileIn.close();
-					file.close();
-					this.game.addMessage("Game successfully loaded",true,true);
-					game.resetCount();
-							
-					//Location failed to load
-				} catch (IOException|ClassNotFoundException e) {
-			        throw new IOException("Game Failed to save " + e.toString());
-				}
-			}
-		}
-		
-		return loadFile;
+
 	}
 	
 	public void displayGames(Game game) {

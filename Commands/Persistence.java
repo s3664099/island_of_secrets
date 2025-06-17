@@ -10,8 +10,10 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Commands;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
@@ -45,6 +47,19 @@ public class Persistence {
 			Game game = saveGame();
 		}
 		return new ActionResult(game,player);
+	}
+	
+	public ActionResult load() {
+		
+		ActionResult result = new ActionResult(game,player);
+		
+		if (splitCommand.length==1) {
+			result = displayGames(game);
+		} else {
+			result = loadGame();
+		}
+		
+		return result;
 	}
 	
 	public Game saveGame() {
@@ -90,9 +105,46 @@ public class Persistence {
 		}
 		return game;
 	}
+	
+	private ActionResult loadGame() {
+		
+		boolean loadFile = false;
+		File saveGameDirectory = new File("savegames");				
+		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");		
+		
+		//If not available
+		if (!saveFile.exists()) {			
+			game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
+		} else {
+			loadFile = true;
+		}
+			
+		if (loadFile) {
+	
+			//Attempts to load the file
+			try {
+				FileInputStream file = new FileInputStream(saveGameDirectory+"/"+splitCommand[1]+".sav");
+				ObjectInputStream fileIn = new ObjectInputStream(file);
+			
+				//Load successful. Update the objects
+				game = (Game) fileIn.readObject();
+				player = (Player) fileIn.readObject();
+			
+				fileIn.close();
+				file.close();
+				this.game.addMessage("Game successfully loaded",true,true);
+				game.resetCount();
+						
+				//Location failed to load
+			} catch (IOException|ClassNotFoundException e) {
+		        throw new IOException("Game Failed to save " + e.toString());
+			}
+		}
+		return new ActionResult(game,player);
+	}
 }
 
 /* 16 June 2025 - Created File
- * 17 June 2025 - Created Save Game File.
+ * 17 June 2025 - Created Save Game & Load Game File.
  */
 */
