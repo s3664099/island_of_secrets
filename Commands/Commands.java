@@ -147,58 +147,7 @@ public class Commands {
 	
 	public void displayGames(Game game) {
 		
-		//Checks to see if the file exists
-		File saveGameDirectory = new File("savegames");
 		
-		//Retrieves the saved games
-		File[] savFiles = saveGameDirectory.listFiles( new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".sav");
-			};
-		});
-		
-		//Sets variables to list set number of game names		
-		String gameMessage = "Games Saves";
-		String[] gameDisplayed = game.getDisplayedSavedGames();
-		int noGames=savFiles.length;
-		int gameStart = 0;
-		int totalDisplayed = 4;
-		int maxDisplay = 4;
-		
-		game.setUpperLimitSavedGames(false);
-		game.setLowerLimitSavedGames(false);
-		
-		if (noGames==0) {
-			game.addMessage("There are no saved games to display",true,true);
-		} else {
-
-			//Check with number of games and determine which games are displayed
-			if (noGames>5) {
-				gameStart = game.getCount()*maxDisplay;
-				if (noGames-gameStart>maxDisplay) {
-					totalDisplayed = gameStart+maxDisplay;
-					game.setUpperLimitSavedGames(true);
-				} else {
-					totalDisplayed += noGames-gameStart;
-				}
-			} else {
-				totalDisplayed  = noGames;
-			}
-				
-			//Display the games selected
-			for (int i = gameStart; i<totalDisplayed;i++ ) {
-				gameDisplayed[i-gameStart] = savFiles[i].getName();
-			}
-						
-			if (gameStart>0) {
-				game.setLowerLimitSavedGames(true);
-			}
-		
-			//game.setGameDisplay(true);
-			game.setDisplayedGames(gameDisplayed);
-			game.addMessage(gameMessage,true,true);
-			game.setSavedGameState();
-		}
 	}
 	
 	public void quit(Player player, Game game) {

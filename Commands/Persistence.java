@@ -12,9 +12,11 @@ package Commands;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Random;
 
 import Game.Game;
@@ -41,10 +43,12 @@ public class Persistence {
 	
 	public ActionResult save() {
 		
+		Game game = this.game;
+		
 		if (splitCommand.length==1) {
 			game.addMessage("Please include the name of your game.",true,true);
 		} else {
-			Game game = saveGame();
+			game = saveGame();
 		}
 		return new ActionResult(game,player);
 	}
@@ -54,12 +58,64 @@ public class Persistence {
 		ActionResult result = new ActionResult(game,player);
 		
 		if (splitCommand.length==1) {
-			result = displayGames(game);
+			result = displayGames();
 		} else {
 			result = loadGame();
 		}
 		
 		return result;
+	}
+	
+	private ActionResult displayGames() {
+		
+		//Checks to see if the file exists
+		final int MAX_DISPLAY = 4;
+		File saveGameDirectory = new File("savegames");
+		String[] gameDisplayed = game.getDisplayedSavedGames();
+		
+		//Clear previous Entries
+		Arrays.fill(gameDisplayed,"");
+		
+		//Get saved games with safety checks
+		File[] savFiles = getSavedGames(saveGameDirectory);
+		if (savFiles == null || savFiles.length == 0) {
+			game.addMessage("There are no saved games to display", true, true);
+		
+		//Calculate pagination indicies
+		} else {
+			int currentOffset = game.getCount();
+			int startIndex = currentOffset * MAX_DISPLAY;
+			int endIndex = Math.min(startIndex+MAX_DISPLAY,savFiles.length);
+			boolean hasMorePrevious = (startIndex>0);
+			boolean hasMoreNext = (savFiles.length>endIndex);
+			
+			//Populate displayed games
+			for (int i = startIndex;i<endIndex;i++) {
+				gameDisplayed[i-startIndex] = savFiles[i].getName();
+			}
+			
+			//Update game state
+			game.setLowerLimitSavedGames(hasMorePrevious);
+			game.setUpperLimitSavedGames(hasMoreNext);
+			game.setDisplayedGames(gameDisplayed);
+			game.addMessage("Game Saves", true, true);
+			game.setSavedGameState();
+		}
+		
+		return new ActionResult(game,player);
+	}
+		
+	private File[] getSavedGames(File directory) {
+		
+		File[] files = new File[0];
+		
+		if(!directory.exists() || !directory.isDirectory()) {
+			files = new File[0];
+		} else {
+			files = directory.listFiles((dir,name) ->
+			name.toLowerCase().endsWith(".sav"));
+		}
+		return files;
 	}
 	
 	public Game saveGame() {
@@ -108,6 +164,9 @@ public class Persistence {
 	
 	private ActionResult loadGame() {
 		
+		Game game = this.game;
+		Player player = this.player;
+		
 		boolean loadFile = false;
 		File saveGameDirectory = new File("savegames");				
 		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");		
@@ -132,12 +191,12 @@ public class Persistence {
 			
 				fileIn.close();
 				file.close();
-				this.game.addMessage("Game successfully loaded",true,true);
+				game.addMessage("Game successfully loaded",true,true);
 				game.resetCount();
 						
-				//Location failed to load
+			//Location failed to load
 			} catch (IOException|ClassNotFoundException e) {
-		        throw new IOException("Game Failed to save " + e.toString());
+				game.addMessage("Game Failed to save " + e.toString(),true,true);
 			}
 		}
 		return new ActionResult(game,player);
@@ -147,4 +206,3 @@ public class Persistence {
 /* 16 June 2025 - Created File
  * 17 June 2025 - Created Save Game & Load Game File.
  */
-*/

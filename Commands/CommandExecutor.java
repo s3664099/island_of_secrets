@@ -109,13 +109,7 @@ public class CommandExecutor {
 		//Load
 		} else if (verbNo==40) {
 			
-			boolean loadGame = this.command.load(game, player);
-			
-			if (loadGame) {
-				this.game = command.getGame();
-				this.player = command.getPlayer();
-				loadedGame = true;
-			}
+
 			
 
 		
@@ -140,17 +134,17 @@ public class CommandExecutor {
 
 				
 			
-			save
 			
 			
-			
-
 			
 			
 
+			
+			
 
 
-			save
+
+			
 
 
 
