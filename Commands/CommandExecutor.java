@@ -98,7 +98,10 @@ public class CommandExecutor {
 			result = save.save();
 		} else if (command.checkLoad()) {
 			Persistence load = new Persistence(game,player,command);
-			result = load.load();			
+			result = load.load();
+		} else if (command.checkQuit()) {
+			Persistence quit = new Persistence(game,player,command);
+			result = quit.quit();
 			
 		
 		
@@ -117,7 +120,7 @@ public class CommandExecutor {
 		
 		//Quit
 		} else if (verbNo==42) {
-			this.command.quit(player,game);
+			
 		
 
 		

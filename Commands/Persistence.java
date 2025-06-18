@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 17 June 2025
+Version: 4.2
+Date: 18 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,13 +12,12 @@ package Commands;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.Random;
 
+import Data.Constants;
 import Game.Game;
 import Game.Player;
 
@@ -27,18 +26,11 @@ public class Persistence {
 	private final Game game;
 	private final Player player;
 	private final String[] splitCommand;
-	private final String codedCommand;
-	private final int verbNumber;
-	private final int nounNumber;
-	private final Random rand = new Random();
 		
 	public Persistence(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
 		this.splitCommand = command.getSplitFullCommand();
-		this.codedCommand = command.getCodedCommand();
-		this.verbNumber = command.getVerbNumber();
-		this.nounNumber = command.getNounNumber();
 	}
 	
 	public ActionResult save() {
@@ -64,6 +56,14 @@ public class Persistence {
 		}
 		
 		return result;
+	}
+	
+	public ActionResult quit() {
+		game.addMessage("You relinquish your quest",true,true);
+		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
+		player.setStat("timeRemaining",1);
+		game.setEndGameState();
+		return new ActionResult(game,player);
 	}
 	
 	private ActionResult displayGames() {
@@ -205,4 +205,5 @@ public class Persistence {
 
 /* 16 June 2025 - Created File
  * 17 June 2025 - Created Save Game & Load Game File.
+ * 18 June 2025 - Added display saved game functions. Added quit function and tidied up.
  */
