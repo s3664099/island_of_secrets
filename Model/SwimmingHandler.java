@@ -23,7 +23,7 @@ public class SwimmingHandler {
 		//Need to have it's own command Parser to separate concerns
 		
 		game.addMessage("Ok",true,true);
-		//Swimming swim = player.getSwimming();
+		Swimming swim = player.getSwimming();
 		
 		if (command.substring(0,1).equals("n")) {
 			swim.swim();
@@ -73,4 +73,4 @@ public class SwimmingHandler {
 /* 27 April 2025 - Created File.
  * 7 May 2025 - Changed return to ActionResult
  */
- */
+ 

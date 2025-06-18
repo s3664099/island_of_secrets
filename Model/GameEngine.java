@@ -79,8 +79,9 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	}
 	
 	public void processGive(String object) {
-		CommandProcessor processor = new CommandProcessor();
-		processor.executeGive(object);
+		System.out.println("Give to dude");
+		//CommandProcessor processor = new CommandProcessor();
+		//ActionResult result = processor.executeGive(object,game,player);
 	}
 	
 	//=== State Management ===//
