@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 18 June 2025
+Version: 4.1
+Date: 20 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,6 +11,7 @@ package Model;
 
 import Commands.ActionResult;
 import Data.Constants;
+import Data.GameEntities;
 import Game.Game;
 import Game.Player;
 import java.util.Random;
@@ -33,9 +34,8 @@ public class PostCommand {
 	
 	public void updates(Game game, Player player) {
 		
-		//Orchards
-		if (player.getRoom()==61) {
-			player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
+		if (isAtOrchids()) {
+			player = atOrchids(player);
 		}
 		
 		//Thicket of biting bushes
@@ -204,8 +204,24 @@ public class PostCommand {
 			game.setEndGameState();
 		}
 	}
+	
+	private boolean isAtOrchids() {
+		boolean atOrchids = false;
+		if(player.getRoom()==GameEntities.ROOM_ORCHIDS) {
+			atOrchids = true;
+		}
+		return atOrchids;
+	}
+	
+	private Player atOrchids(Player player) {
+		player.setStat("wisdom",(int) 
+		player.getStat("wisdom")+rand.nextInt(2)+1);
+		return player;
+	}
 
 }
 
 /* 18 June 2025 - Created File
+ * 20 June 2025 - Added atOrchids function
+ */
 */
