@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 20 June 2025
+Version: 4.0
+Date: 18 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,24 +34,27 @@ public class PostCommand {
 	
 	public void updates(Game game, Player player) {
 		
+		ActionResult result = new ActionResult(game,player);
+		int stormRand = rand.nextInt(3);
+		
 		if (isAtOrchids()) {
-			player = atOrchids(player);
+			result = atOrchids(result);
 		}
 		
-		//Thicket of biting bushes
-		if (player.getRoom()==14 && rand.nextInt(3)==1) {
-			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addMessage("You are bitten.",false,true);
+		if(isAtThicket()) {
+			result = atThicket(result);
+		}
+		
+		if(needAdjustStorm()) {
+			result = adjustStorm(result);
 		}
 			
 		//Adjusting flag of living storm
-		if (game.getItem(36).getItemFlag()<1 && game.getItem(22).getItemFlag() != -player.getRoom()) {
-			game.getItem(36).setItemFlag(game.getItem(36).getItemFlag()+1);
-			game.getItem(36).setItemLocation(player.getRoom());
-			player.setStat("strength",(float) player.getStat("strength")-1);
+		if () {
+			
 		}
 
-		int stormRand = rand.nextInt(3);
+		
 
 		//Does the living storm appear
 		if ((int) player.getStat("timeRemaining")<900 && player.getRoom()==23 && 
@@ -213,15 +216,48 @@ public class PostCommand {
 		return atOrchids;
 	}
 	
-	private Player atOrchids(Player player) {
-		player.setStat("wisdom",(int) 
-		player.getStat("wisdom")+rand.nextInt(2)+1);
-		return player;
+	private boolean isAtThicket() {
+		boolean atThicket = false;
+		if(player.getRoom()==GameEntities.ROOM_THICKET && rand.nextInt(3)==1) {
+			atThicket = true;
+		}
+		return atThicket;
+	}
+	
+	private boolean needAdjustStorm() {
+		boolean adjustStorm = false;
+		if(game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1 && 
+		   game.getItem(GameEntities.ITEM_WINE).getItemFlag() != -player.getRoom()) {
+			adjustStorm = true;
+		}
+		return adjustStorm;
+	}
+	
+	private ActionResult atOrchids(ActionResult result) {
+		Player player = result.getPlayer();
+		player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
+		return new ActionResult(result.getGame(),player);
+	}
+	
+	private ActionResult atThicket(ActionResult result) {
+		Player player = result.getPlayer();
+		Game game = result.getGame();
+		player.setStat("strength",(float) player.getStat("strength")-1);
+		game.addMessage("You are bitten.",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult adjustStorm(ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		game.getItem(GameEntities.ITEM_STORM).setItemFlag(game.getItem(GameEntities.ITEM_STORM).getItemFlag()+1);
+		game.getItem(GameEntities.ITEM_STORM).setItemLocation(player.getRoom());
+		player.setStat("strength",(float) player.getStat("strength")-1);
+		return new ActionResult(game,player);
 	}
 
 }
 
 /* 18 June 2025 - Created File
- * 20 June 2025 - Added atOrchids function
+ * 20 June 2025 - Added atOrchids, atThicket and adjust storm
  */
-*/

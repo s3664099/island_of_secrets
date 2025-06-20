@@ -26,6 +26,7 @@ public class GameEntities {
 	public static final int ROOM_LAIR = 11;
 	public static final int ROOM_CAVE = 12;
 	public static final int ROOM_BRANCHES = 13;
+	public static final int ROOM_THICKET = 14;
 	public static final int ROOM_STONE = 15;
 	public static final int ROOM_CLONE_FACTORY = 17;
 	public static final int ROOM_WELL = 19;
