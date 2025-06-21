@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 20 June 2025
+Version: 4.17
+Date: 21 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -34,13 +34,17 @@ public class GameEntities {
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
+	public static final int ROOM_POOL = 32;
 	public static final int ROOM_JETTY = 33;
+	public static final int ROOM_DUNES = 34;
 	public static final int ROOM_HUT = 41;
+	public static final int ROOM_TABLE = 42;
 	public static final int ROOM_GRANDPAS_SHACK = 44;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
 	public static final int ROOM_BUILDING = 53;
+	public static final int ROOM_ISLAND = 57;
 	public static final int ROOM_COLUMN = 58;
 	public static final int ROOM_OUTSIDE_HUT = 60;
 	public static final int ROOM_ORCHIDS = 61;
@@ -48,6 +52,7 @@ public class GameEntities {
 	public static final int ROOM_PYRAMID_ROOF = 66;
 	public static final int ROOM_PYRAMID_SPLIT = 67;
 	public static final int ROOM_ABODE_HUT = 70;
+	public static final int ROOM_BRIDGE = 73;
 	public static final int ROOM_VILLAGE_PETRIFIED = 74;
 	public static final int ROOM_VILLAGE_REMAINS = 75;
 	public static final int ROOM_VILLAGE_ENTRANCE = 76;
@@ -173,4 +178,5 @@ public class GameEntities {
  * 15 June 2025 - Added flint code
  * 16 June 2025 - Added codes for strike flint
  * 20 June 2025 - Added orchids room
+ * 21 June 2025 - Added codes for post action
  */
