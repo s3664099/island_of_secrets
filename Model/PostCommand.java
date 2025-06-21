@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 18 June 2025
+Version: 4.2
+Date: 21 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,6 +21,7 @@ public class PostCommand {
 	private final Game game;
 	private final Player player;
 	private final Random rand = new Random();
+	private final int stormRand = rand.nextInt(3);
 	
 	public PostCommand(ActionResult result) {
 		game = result.getGame();
@@ -35,7 +36,6 @@ public class PostCommand {
 	public void updates(Game game, Player player) {
 		
 		ActionResult result = new ActionResult(game,player);
-		int stormRand = rand.nextInt(3);
 		
 		if (isAtOrchids()) {
 			result = atOrchids(result);
@@ -49,39 +49,23 @@ public class PostCommand {
 			result = adjustStorm(result);
 		}
 			
-		//Adjusting flag of living storm
-		if () {
-			
+		if (doesStormAppear()) {
+			result = stormAppears(result);
 		}
 
+		if (doesPlayerHaveBeast()) {
+			result = moveBeast(result);
+		}
 		
+		if (doesOmeganMove()) {
+			result = moveOmegan(result);
+		} else if (isOmeganPresent()) {
+			result = omeganAttacks(result);
 
-		//Does the living storm appear
-		if ((int) player.getStat("timeRemaining")<900 && player.getRoom()==23 && 
-			game.getItem(36).getItemFlag()>0 && stormRand ==2) {
-			game.getItem(36).setItemFlag(-(rand.nextInt(4)+6));
-			game.addMessage(" A storm breaks overhead!",false,true);
-		}
-		
-		//Location of the wild canyon beast
-		if (!game.getItem(16).isAtLocation(player.getRoom()) && 
-			game.getItem(16).getItemLocation()>0) {
-			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
-		}
-		
-		//Location of Omegan
-		if (!game.getItem(39).isAtLocation(player.getRoom())) {
-			int part1 = 10 * (rand.nextInt(5)+1);
-			int part2 = 7 * (rand.nextInt(3)+1);
-			int newLocation = Math.min(part1+part2, 80);
-			game.getItem(39).setItemLocation(newLocation);
 		
 		//Is Omegan with player?
-		} else if (game.getItem(39).isAtLocation(player.getRoom()) &&
-				   !game.getItem(43).isAtLocation(player.getRoom()) &&
-				   game.getItem(13).getItemFlag()>-1) {
-			player.setStat("strength",(float) player.getStat("strength")-2);
-			player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+		} else if () {
+			
 		}
 			
 		//Swampman's Position if not with player
@@ -233,6 +217,44 @@ public class PostCommand {
 		return adjustStorm;
 	}
 	
+	private boolean doesStormAppear() {
+		boolean stormAppears = false;
+		if((int) player.getStat("timeRemaining")<900 && 
+			player.getRoom()==GameEntities.ROOM_PATH && 
+			game.getItem(GameEntities.ITEM_STORM).getItemFlag()>0 && 
+			stormRand ==2) {
+			stormAppears = true;
+		}
+		return stormAppears;
+	}
+	
+	private boolean doesPlayerHaveBeast() {
+		boolean playerHasBeast = false;
+		if(!game.getItem(GameEntities.ITEM_BEAST).isAtLocation(player.getRoom()) && 
+			game.getItem(GameEntities.ITEM_BEAST).getItemLocation()>GameEntities.ROOM_CARRYING) {
+			playerHasBeast = true;
+		}
+		return playerHasBeast;
+	}
+	
+	private boolean doesOmeganMove() {
+		boolean omeganMoves = false;
+		if(!game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom())) {
+			omeganMoves = true;
+		}
+		return omeganMoves;
+	}
+	
+	private boolean isOmeganPresent() {
+		boolean omeganPresent = false;
+		if(game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
+		   !game.getItem(GameEntities.ITEM_MEDIAN).isAtLocation(player.getRoom()) &&
+		   game.getItem(GameEntities.ITEM_COAL).getItemFlag()>-1) {
+			omeganPresent = true;
+		}
+		return omeganPresent;
+	}
+	
 	private ActionResult atOrchids(ActionResult result) {
 		Player player = result.getPlayer();
 		player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
@@ -255,9 +277,41 @@ public class PostCommand {
 		player.setStat("strength",(float) player.getStat("strength")-1);
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult stormAppears(ActionResult result) {
+		Game game = result.getGame();
+		game.getItem(GameEntities.ITEM_STORM).setItemFlag(-(rand.nextInt(4)+6));
+		game.addMessage(" A storm breaks overhead!",false,true);
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult moveBeast(ActionResult result) {
+		Game game = result.getGame();
+		game.getItem(GameEntities.ITEM_BEAST).setItemLocation(rand.nextInt(4)+1);
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult moveOmegan(ActionResult result) {		
+		Game game = result.getGame();
+		int part1 = 10 * (rand.nextInt(5)+1);
+		int part2 = 7 * (rand.nextInt(3)+1);
+		int newLocation = Math.min(part1+part2, 80);
+		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(newLocation);
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult omeganAttacks(ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		player.setStat("strength",(float) player.getStat("strength")-2);
+		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+		game.addMessage(" Omegan attack you!",false,true);
+		return new ActionResult(game,player);
+	}
 
 }
 
 /* 18 June 2025 - Created File
  * 20 June 2025 - Added atOrchids, atThicket and adjust storm
+ * 21 June 2025 - Continued with the post move events, up to Omegan
  */

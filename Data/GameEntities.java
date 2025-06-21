@@ -30,6 +30,7 @@ public class GameEntities {
 	public static final int ROOM_STONE = 15;
 	public static final int ROOM_CLONE_FACTORY = 17;
 	public static final int ROOM_WELL = 19;
+	public static final int ROOM_PATH =  23;
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
 	public static final int ROOM_WITH_HANDS = 28;
