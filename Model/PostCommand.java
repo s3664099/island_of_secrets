@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 21 June 2025
+Version: 4.3
+Date: 22 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -85,43 +85,24 @@ public class PostCommand {
 			result = logmenPresent(result);
 		}
 		
-		if()
-		
-		//Move Median to player location is condition correct
-		if (game.getItem(43).getItemFlag()==0) {
-			game.getItem(43).setItemLocation(player.getRoom());
+		if(isMedianFollowing()) {
+			result = medianFollowing(result);
 		}
 		
-		//Replays notice re: Median
-		if (game.getItem(43).getItemLocation()<18 && player.getRoom() != 9 && 
-			player.getRoom() != 10 && game.getItem(49).getItemFlag()<1) {
-			
-			String messageOne = "Median can disable the equipment";
-			game.setMessageGameState();
-			game.addPanelMessage(messageOne,true);
+		if(isMedianHint()) {
+			result = medianHint(result);
 		}
 		
-		//Player in the clone vat room
-		if (player.getRoom()==18) {
-			player.setStat("strength",(float) player.getStat("strength")-1);
-			game.addMessage("The gas leaking from the vats burns your lungs!",false,true);
+		if (isInVatRoom()) {
+			result = inVatRoom(result);
+		}
+		
+		if (isTooWeak()) {
+			result = dropItems(result);
 		}
 				
-		//Too weak to carry something
-		float str = (float) player.getStat("strength");
-		int weight = (int) player.getStat("weight");
-		if ((str-weight)<50) {
-			int object = rand.nextInt(9)+1;
-			
-			if (game.getItem(object).isAtLocation(0)) {
-				game.getItem(object).setItemLocation(player.getRoom());
-				game.addMessage(" You drop something.",false,false);
-			}
-		}
-				
-		//Near the clashing stones
-		if (player.getRoom()==47 && game.getItem(8).getItemFlag()>0) {
-			game.addMessage(" You can go no further",false,false);
+		if(isAtClashingStones()) {
+			result = atClashingStones(result);
 		}
 		
 		//Involving staff, pebble & coal - seems like a win condition
@@ -263,6 +244,53 @@ public class PostCommand {
 		return logmenUpset;
 	}
 	
+	private boolean isMedianFollowing() {
+		boolean medianFollowing = false;
+		if(game.getItem(GameEntities.ITEM_MEDIAN).getItemFlag()==0) {
+			medianFollowing = true;
+		}
+		return medianFollowing;
+	}
+	
+	private boolean isMedianHint() {
+		boolean medianHint = false;
+		if(game.getItem(GameEntities.ITEM_MEDIAN).getItemLocation()<GameEntities.ROOM_CLONE_ROOM && 
+		   player.getRoom() != GameEntities.ROOM_BATTLEMENTS && 
+		   player.getRoom() != GameEntities.ROOM_SANCTUM && 
+		   game.getItem(GameEntities.ITEM_FLAG_49).getItemFlag()<1) {
+			medianHint = true;
+		}
+		return medianHint;
+	}
+	
+	private boolean isInVatRoom() {
+		boolean inVatRoom = false;
+		if(player.getRoom()==GameEntities.ROOM_CLONE_ROOM) {
+			inVatRoom = true;
+		}
+		return inVatRoom;
+	}
+	
+	private boolean isTooWeak() {
+		
+		boolean tooWeak = false;
+		float str = (float) player.getStat("strength");
+		int weight = (int) player.getStat("weight");
+		if ((str-weight)<50) {
+			tooWeak = true;
+		}
+		return tooWeak;
+	}
+	
+	private boolean isAtClashingStones() {
+		boolean atClashingStones = false;
+		if (player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE && 
+			game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()>0) {
+			atClashingStones = true;
+		}
+		return atClashingStones;
+	}
+	
 	private ActionResult atOrchids(ActionResult result) {
 		Player player = result.getPlayer();
 		player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
@@ -398,9 +426,50 @@ public class PostCommand {
 		}
 		return new ActionResult(game,player);
 	}
+	
+	private ActionResult medianFollowing(ActionResult result) {
+		Game game = result.getGame();
+		game.getItem(GameEntities.ITEM_MEDIAN).setItemLocation(player.getRoom());
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult medianHint(ActionResult result) {
+		Game game = result.getGame();
+		String messageOne = "Median can disable the equipment";
+		game.setMessageGameState();
+		game.addPanelMessage(messageOne,true);
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult inVatRoom(ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		player.setStat("strength",(float) player.getStat("strength")-1);
+		game.addMessage("The gas leaking from the vats burns your lungs!",false,true);
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult dropItems(ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		
+		int object = rand.nextInt(9)+1;
+		if (game.getItem(object).isAtLocation(GameEntities.ROOM_CARRYING)) {
+			game.getItem(object).setItemLocation(player.getRoom());
+			game.addMessage(" You drop something.",false,false);
+		}
+		return new ActionResult(game,player);
+	}
+	
+	private ActionResult atClashingStones(ActionResult result) {
+		Game game = result.getGame();
+		game.addMessage(" You can go no further",false,false);
+		return new ActionResult(game,result.getPlayer());
+	}
 }
 
 /* 18 June 2025 - Created File
  * 20 June 2025 - Added atOrchids, atThicket and adjust storm
  * 21 June 2025 - Continued with the post move events, up to Omegan, now up to logmen
+ * 22 June 2025 - Finished the post move events
  */
