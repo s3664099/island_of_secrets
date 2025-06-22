@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 2 June 2025
+Version: 4.10
+Date: 22 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -28,7 +28,7 @@ public class CommandParser {
 		rawInput = normaliser.normalise(rawInput);
 		String[] splitCommand = splitCommand(rawInput);
 		int verbNumber = getVerbNumber(splitCommand[0]);
-		int nounNumber = getNounNumber(splitCommand[1]);
+		int nounNumber = getNounNumber(splitCommand[1],verbNumber);
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
 		
@@ -72,7 +72,7 @@ public class CommandParser {
 		return verbNumber;
 	}
 	
-	private int getNounNumber(String noun) {
+	private int getNounNumber(String noun,int verbNumber) {
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
 				
@@ -89,18 +89,26 @@ public class CommandParser {
 			}
 		} else {
 			nounNumber = -1;
+			
+			if(verbNumber>0 && verbNumber<5) {
+				nounNumber = new Move().parseSingleDirection(nounNumber, verbNumber);
+			}
 		}
 		return nounNumber;
 	}
 	
 	private String codeCommand(String[] splitCommand, int nounNumber, Game game, int room) {
 		
-		Item item = game.getItem(nounNumber);
-		String codedNoun = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
-		Math.abs(item.getItemFlag()),room);
-		codedNoun = String.valueOf(Integer.parseInt(codedNoun.trim()));
+		String codedCommand = "";
 		
-		return codedNoun;
+		if (nounNumber != -1) {
+			Item item = game.getItem(nounNumber);
+			codedCommand = String.format("%d%d%d%d",nounNumber,Math.abs(item.getItemLocation()),
+										 Math.abs(item.getItemFlag()),room);
+			codedCommand = String.valueOf(Integer.parseInt(codedCommand.trim()));
+		}
+		
+		return codedCommand;
 	}
 		
 	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command,int room) {
@@ -167,4 +175,5 @@ public class CommandParser {
  * 22 May 2025 - Moved CommandNormaliser here as private class
  * 28 May 2025 - Added parsing for eating
  * 2 June 2025 - Added further parsing for examine
+ * 22 June 2025 - Fixed problem where negative nounNumber blocked program.
  */

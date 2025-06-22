@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 28 May 2025
+Version: 4.7
+Date: 22 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,7 +30,6 @@ public class Move {
 		String noun = command.getSplitTwoCommand()[1];
 		String code = command.getCodedCommand();
 		
-		nounNumber = mapBasicDirection(nounNumber,verbNumber);
 		nounNumber = handleSpecialRooms(room, noun, nounNumber);
 		nounNumber = handleCodedCommand(code,nounNumber);
 				
@@ -38,7 +37,7 @@ public class Move {
 				command.getSplitTwoCommand(),command.getCommand());
 	}
 	
-	private int mapBasicDirection(int nounNumber, int verbNumber) {
+	public int parseSingleDirection(int nounNumber, int verbNumber) {
 		
 		if (nounNumber == -1) {
 			nounNumber = verbNumber;
@@ -307,4 +306,5 @@ public class Move {
  * 22 May 2025 - Moved Constants to GameEntities
  * 26 May 2025 - Updated ParseMove
  * 28 May 2025 - Moved checks to separate functions for readability
+ * 22 June 2025 - Moved single direction parsing to before coding command
  */

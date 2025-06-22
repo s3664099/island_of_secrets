@@ -18,8 +18,8 @@ import java.util.Random;
 
 public class PostCommand {
 	
-	private final Game game;
-	private final Player player;
+	private Game game;
+	private Player player;
 	private final Random rand = new Random();
 	private final int stormRand = rand.nextInt(3);
 	
@@ -29,89 +29,46 @@ public class PostCommand {
 	}
 	
 	public ActionResult postUpdates() {
+
+		if (isAtOrchids()) {atOrchids();}
+		
+		if(isAtThicket()) {atThicket();}
+		
+		if(needAdjustStorm()) {adjustStorm();}
+		
+		if (doesStormAppear()) {stormAppears();}
+
+		if (doesPlayerHaveBeast()) {moveBeast();}
+		
+		if (doesOmeganMove()) {moveOmegan();} 
+		else if (isOmeganPresent()) {omeganAttacks();} 
+		
+		if (isSwampManPresent()) {swampManNotPresent();}
+		
+		if (doesSwampManTalk()) {swampManTalks();}
+					
+		if (doesBoatmanAppear()) {boatmanAppears();}
+		
+		if (isAtWell()) {atWell();}
+		
+		if (!areLogmenPresent()) {moveLogmen();} 
+		else {logmenPresent();}
+		
+		if(isMedianFollowing()) {medianFollowing();}
+		
+		if(isMedianHint()) {medianHint();}
+		
+		if (isInVatRoom()) {inVatRoom();}
+		
+		if (isTooWeak()) {dropItems();}
+				
+		if(isAtClashingStones()) {atClashingStones();}
+		
+		if(isWinGame()) {winGame();}
+		
+		if(isLoseGame()) {loseGame();}
 		
 		return new ActionResult(game,player);
-	}
-	
-	public void updates(Game game, Player player) {
-		
-		ActionResult result = new ActionResult(game,player);
-		
-		if (isAtOrchids()) {
-			result = atOrchids(result);
-		}
-		
-		if(isAtThicket()) {
-			result = atThicket(result);
-		}
-		
-		if(needAdjustStorm()) {
-			result = adjustStorm(result);
-		}
-			
-		if (doesStormAppear()) {
-			result = stormAppears(result);
-		}
-
-		if (doesPlayerHaveBeast()) {
-			result = moveBeast(result);
-		}
-		
-		if (doesOmeganMove()) {
-			result = moveOmegan(result);
-		} else if (isOmeganPresent()) {
-			result = omeganAttacks(result);		
-		} 
-		
-		if (isSwampManPresent()) {
-			result = swampManNotPresent(result);
-		}
-		
-		if (doesSwampManTalk()) {
-			result = swampManTalks(result);
-		}
-					
-		if (doesBoatmanAppear()) {
-			result = boatmanAppears(result);
-		}
-		
-		if (isAtWell()) {
-			result = atWell(result);
-		}
-		
-		if (!areLogmenPresent()) {
-			result = moveLogmen(result);
-		} else {
-			result = logmenPresent(result);
-		}
-		
-		if(isMedianFollowing()) {
-			result = medianFollowing(result);
-		}
-		
-		if(isMedianHint()) {
-			result = medianHint(result);
-		}
-		
-		if (isInVatRoom()) {
-			result = inVatRoom(result);
-		}
-		
-		if (isTooWeak()) {
-			result = dropItems(result);
-		}
-				
-		if(isAtClashingStones()) {
-			result = atClashingStones(result);
-		}
-		
-		if(isWinGame()) {
-			result = winGame(result);
-		}
-		
-		if(isLoseGame()) {
-			result = loseGame(result);
-		}
 	}
 	
 	private boolean isAtOrchids() {
@@ -302,68 +259,48 @@ public class PostCommand {
 		return loseGame;
 	}
 	
-	private ActionResult atOrchids(ActionResult result) {
-		Player player = result.getPlayer();
+	private void atOrchids() {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
-		return new ActionResult(result.getGame(),player);
 	}
 	
-	private ActionResult atThicket(ActionResult result) {
-		Player player = result.getPlayer();
-		Game game = result.getGame();
+	private void atThicket() {
 		player.setStat("strength",(float) player.getStat("strength")-1);
 		game.addMessage("You are bitten.",false,true);
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult adjustStorm(ActionResult result) {
-		Game game = result.getGame();
-		Player player = result.getPlayer();
+	private void adjustStorm() {
 		game.getItem(GameEntities.ITEM_STORM).setItemFlag(game.getItem(GameEntities.ITEM_STORM).getItemFlag()+1);
 		game.getItem(GameEntities.ITEM_STORM).setItemLocation(player.getRoom());
 		player.setStat("strength",(float) player.getStat("strength")-1);
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult stormAppears(ActionResult result) {
-		Game game = result.getGame();
+	private void stormAppears() {
 		game.getItem(GameEntities.ITEM_STORM).setItemFlag(-(rand.nextInt(4)+6));
 		game.addMessage(" A storm breaks overhead!",false,true);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult moveBeast(ActionResult result) {
-		Game game = result.getGame();
+	private void moveBeast() {
 		game.getItem(GameEntities.ITEM_BEAST).setItemLocation(rand.nextInt(4)+1);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult moveOmegan(ActionResult result) {		
-		Game game = result.getGame();
+	private void moveOmegan() {		
 		int part1 = 10 * (rand.nextInt(5)+1);
 		int part2 = 7 * (rand.nextInt(3)+1);
 		int newLocation = Math.min(part1+part2, 80);
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(newLocation);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult omeganAttacks(ActionResult result) {
-		Game game = result.getGame();
-		Player player = result.getPlayer();
+	private void omeganAttacks() {
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		game.addMessage(" Omegan attack you!",false,true);
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult swampManNotPresent(ActionResult result) {
-		Game game = result.getGame();
+	private void swampManNotPresent() {
 		game.getItem(GameEntities.ITEM_SWAMPMAN).setItemLocation(76+rand.nextInt(2));
-		return new ActionResult(game,result.getPlayer());
 	}
-	
-	private ActionResult swampManTalks(ActionResult result) {
-		Game game = result.getGame();
+		
+	private void swampManTalks() {
 		game.getItem(GameEntities.ITEM_SWAMPMAN).setItemFlag(-1);
 		game.addPanelMessage("The swampman tells his tale",true);
 		game.addPanelMessage("Median can disable the equipment",false);
@@ -372,44 +309,31 @@ public class PostCommand {
 			game.addPanelMessage("and asks you for the pebble you carry.",false);
 		}
 		game.setMessageGameState();
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult boatmanAppears(ActionResult result) {
-		Game game = result.getGame();
+	private void boatmanAppears() {
 		game.getItem(25).setItemLocation(player.getRoom());
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult atWell(ActionResult result) {
-		Game game = result.getGame();
+	private void atWell() {
 		game.addMessage("Pushed into the pit",false,true);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult moveLogmen(ActionResult result) {
-		Game game = result.getGame();
+	private void moveLogmen() {
 		game.getItem(41).setItemLocation(21+((rand.nextInt(3)+1)*10)+(rand.nextInt(2)+1));
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult logmenPresent(ActionResult result) {
-		Game game = result.getGame();
+	private void logmenPresent() {
 		game.getItem(GameEntities.ITEM_LOGMEN).setItemFlag(game.getItem(GameEntities.ITEM_LOGMEN).getItemFlag()-1);
 		
 		//Upset the logmen
 		if (areLogmenUpset()) {
-			result = logmenUpset(new ActionResult(game,result.getPlayer()));
-			game = result.getGame();
+			logmenUpset();
 		}
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult logmenUpset(ActionResult result) {
-		
-		Game game = result.getGame();
-		Player player = result.getPlayer();
+	private void logmenUpset() {
 		
 		String message = "The Logmen decide to have a little fun and";
 		String messageTwo = "tie you up in a storeroom";
@@ -435,69 +359,51 @@ public class PostCommand {
 				game.getItem(i).setItemLocation(GameEntities.ROOM_TABLE);
 			}
 		}
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult medianFollowing(ActionResult result) {
-		Game game = result.getGame();
+	private void medianFollowing() {
 		game.getItem(GameEntities.ITEM_MEDIAN).setItemLocation(player.getRoom());
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult medianHint(ActionResult result) {
-		Game game = result.getGame();
+	private void medianHint() {
 		String messageOne = "Median can disable the equipment";
 		game.setMessageGameState();
 		game.addPanelMessage(messageOne,true);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult inVatRoom(ActionResult result) {
-		Game game = result.getGame();
-		Player player = result.getPlayer();
+	private void inVatRoom() {
 		player.setStat("strength",(float) player.getStat("strength")-1);
 		game.addMessage("The gas leaking from the vats burns your lungs!",false,true);
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult dropItems(ActionResult result) {
-		Game game = result.getGame();
-		Player player = result.getPlayer();
-		
+	private void dropItems() {		
 		int object = rand.nextInt(9)+1;
 		if (game.getItem(object).isAtLocation(GameEntities.ROOM_CARRYING)) {
 			game.getItem(object).setItemLocation(player.getRoom());
 			game.addMessage(" You drop something.",false,false);
 		}
-		return new ActionResult(game,player);
 	}
 	
-	private ActionResult atClashingStones(ActionResult result) {
-		Game game = result.getGame();
+	private void atClashingStones() {
 		game.addMessage(" You can go no further",false,false);
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult winGame(ActionResult result) {
-		Game game = result.getGame();
+	private void winGame() {
 		String messageOne = "The world lives with new hope!";
 		game.setMessageGameState();
 		game.addPanelMessage(messageOne, false);
 		game.addMessage("Your quest is over!",true,true);
 		game.setEndGameState();
-		return new ActionResult(game,result.getPlayer());
 	}
 	
-	private ActionResult loseGame(ActionResult result) {
-		Game game = result.getGame();
+	private void loseGame() {
 		game.addMessage( "You have failed, the evil one succeeds.",true,true);
 		game.setEndGameState();
-		return new ActionResult(game,result.getPlayer());
 	}
 }
 
 /* 18 June 2025 - Created File
  * 20 June 2025 - Added atOrchids, atThicket and adjust storm
  * 21 June 2025 - Continued with the post move events, up to Omegan, now up to logmen
- * 22 June 2025 - Finished the post move events
+ * 22 June 2025 - Finished the post move events. Made game and player changeable. Updated classes to get rid of result.
  */
