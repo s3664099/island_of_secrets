@@ -105,21 +105,12 @@ public class PostCommand {
 			result = atClashingStones(result);
 		}
 		
-		//Involving staff, pebble & coal - seems like a win condition
-		if (game.getItem(8).getItemFlag()+game.getItem(11).getItemFlag()+game.getItem(13).getItemFlag()==-3) {
-			
-			//The flags of the above must total -3
-			String messageOne = "The world lives with new hope!";
-			game.setMessageGameState();
-			game.addPanelMessage(messageOne, false);
-			game.addMessage("Your quest is over!",true,true);
-			game.setEndGameState();
+		if(isWinGame()) {
+			result = winGame(result);
 		}
 		
-		//Fail Quest conditions
-		if ((int) player.getStat("timeRemaining")<0 || ((float) player.getStat("strength"))<0 || game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
-			game.addMessage( "You have failed, the evil one succeeds.",true,true);
-			game.setEndGameState();
+		if(isLoseGame()) {
+			result = loseGame(result);
 		}
 	}
 	
@@ -289,6 +280,26 @@ public class PostCommand {
 			atClashingStones = true;
 		}
 		return atClashingStones;
+	}
+	
+	private boolean isWinGame() {
+		boolean winGame = false;
+		if (game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()+
+			game.getItem(GameEntities.ITEM_STAFF).getItemFlag()+
+			game.getItem(GameEntities.ITEM_COAL).getItemFlag()==-3) {
+			winGame = true;
+		}
+		return winGame;
+	}
+	
+	private boolean isLoseGame() {
+		boolean loseGame = false;
+		if ((int) player.getStat("timeRemaining")<0 || 
+			(float) player.getStat("strength")<0 || 
+			game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
+			loseGame = true;
+		}
+		return loseGame;
 	}
 	
 	private ActionResult atOrchids(ActionResult result) {
@@ -464,6 +475,23 @@ public class PostCommand {
 	private ActionResult atClashingStones(ActionResult result) {
 		Game game = result.getGame();
 		game.addMessage(" You can go no further",false,false);
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult winGame(ActionResult result) {
+		Game game = result.getGame();
+		String messageOne = "The world lives with new hope!";
+		game.setMessageGameState();
+		game.addPanelMessage(messageOne, false);
+		game.addMessage("Your quest is over!",true,true);
+		game.setEndGameState();
+		return new ActionResult(game,result.getPlayer());
+	}
+	
+	private ActionResult loseGame(ActionResult result) {
+		Game game = result.getGame();
+		game.addMessage( "You have failed, the evil one succeeds.",true,true);
+		game.setEndGameState();
 		return new ActionResult(game,result.getPlayer());
 	}
 }
