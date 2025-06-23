@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.18
-Date: 18 June 2025
+Version: 4.19
+Date: 23 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,36 +32,26 @@ public class CommandExecutor {
 			
 			//Normal Move
 			}	else {
-				Move move = new Move();
-				result = move.executeMove(game,player,command);
+				result = new Move().executeMove(game,player,command);
 			}
 		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {	
-			ItemCommands item = new ItemCommands();
-			result = item.executeCommand(game,player,command);
+			result = new ItemCommands().executeCommand(game,player,command);
 		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
-			Consume consume = new Consume();
-			result = consume.executeCommand(game,player,command);
+			result = new Consume().executeCommand(game,player,command);
 		} else if (command.checkInfo()) {
-			Miscellaneous misc = new Miscellaneous(game,player);
-			result = misc.info();
+			result = new Miscellaneous(game,player).info();
 		} else if (command.checkWave()) {
-			Miscellaneous misc = new Miscellaneous(game,player,command);
-			result = misc.wave();
+			result = new Miscellaneous(game,player,command).wave();
 		} else if (command.checkHelp()) {
-			Miscellaneous misc = new Miscellaneous(game,player,command);
-			result = misc.help();
+			result = new Miscellaneous(game,player,command).help();
 		} else if (command.checkPolish()) {
-			Miscellaneous misc = new Miscellaneous(game,player,command);
-			result = misc.polish();
+			result = new Miscellaneous(game,player,command).polish();
 		} else if (command.checkSay()) {
-			Miscellaneous misc = new Miscellaneous(game,player,command);
-			result = misc.speak();
+			result = new Miscellaneous(game,player,command).speak();
 		} else if (command.checkExamine()) {
-			Examine examine = new Examine(game,player,command);
-			result = examine.examine();
+			result = new Examine(game,player,command).examine();
 		} else if (command.checkFill()) {
-			Miscellaneous fill = new Miscellaneous(game,player,command);
-			result = fill.fill();
+			result = new Miscellaneous(game,player,command).fill();
 		} else if (command.checkRide()) {
 			Miscellaneous ride = new Miscellaneous(game,player,command);
 			result = ride.ride();
@@ -72,8 +62,7 @@ public class CommandExecutor {
 			Miscellaneous swim = new Miscellaneous(game,player,command);
 			result = swim.swim();
 		} else if (command.checkShelter()) {
-			Miscellaneous shelter = new Miscellaneous(game,player,command);
-			result = shelter.shelter();
+			result = new Miscellaneous(game,player,command).shelter();
 			/*
 			 * 			int location = this.command.shelter(player, game, commands);
 						if (location != -1) {
@@ -81,23 +70,18 @@ public class CommandExecutor {
 						}
 			 */
 		} else if (command.checkChop()) {
-			Combat chop = new Combat(game,player,command);
-			result = chop.chop();
+			result = new Combat(game,player,command).chop();
 		} else if (command.checkAttack()) {
-			Combat attack = new Combat(game,player,command);
-			result = attack.attack();
+			result = new Combat(game,player,command).attack();
 		} else if (command.checkKill()) {
-			Combat kill = new Combat(game,player,command);
-			result = kill.kill();
+			result = new Combat(game,player,command).kill();
 		} else if (command.checkSave()) {
-			Persistence save = new Persistence(game,player,command);
-			result = save.save();
+			result = new Persistence(game,player,command).save();
 		} else if (command.checkLoad()) {
 			Persistence load = new Persistence(game,player,command);
 			result = load.load();
 		} else if (command.checkQuit()) {
-			Persistence quit = new Persistence(game,player,command);
-			result = quit.quit();
+			result = new Persistence(game,player,command).quit();
 		}
 		
 		PostCommand updates = new PostCommand(result);
@@ -189,4 +173,5 @@ public class CommandExecutor {
  * 13 June 2025 - Added attack and kill commands
  * 17 June 2025 - Added Load Game command
  * 18 June 2025 - Added quit command and Tidied up.
+ * 23 June 2025 - Tightened code
  */

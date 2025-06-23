@@ -1,0 +1,190 @@
+Default
+  - Start
+Commands
+  - ActionResult
+  - Combat
+  - CommandExecutor
+  - CommandParser
+  - CommandProcessor
+  - CommandValidator
+  - Consume
+  - Examine
+  - ItemCommands
+  - Miscellaneous
+  - Move
+  - ParsedCommand
+  - Persistence
+Controller
+  - BookButton
+  - CommandButton
+  - CommandListener
+  - GameButton
+  - MapButton
+  - MapController
+  - QuitButton
+  - SearchGameButton
+  - ShelterButton
+Data
+  - Constants
+  - GameEntities
+  - Item
+  - Location
+  - RawData
+Game
+  - Game
+  - MessageBuilder
+  - Player
+  - RandomExitHandler
+  - SpecialExitHandler
+  - SpecialItemHandler
+Interfaces
+  - GameCommandHandler
+  - GameStateProvider
+  - GameUI
+  - GameView
+Model
+  - GameEngine
+  - GameInitialiser
+  - Main
+  - PostCommand
+  - Swimming
+  - SwimmingHandler
+UISupport
+  - GameController
+  - GameState
+View
+  - CommandPanel
+  - GameFrame
+  - GamePanel
+  - LightningPanel
+  - MainGamePanel
+  - MapPanel
+  - MessagePanel
+  - RoomPanel
+  - StatusPanel
+  
+ Your package structure is quite clean and well-segmented for a medium-to-large Java project—especially given Eclipse's limitation on nested packages. This modular layout makes it easier to document, maintain, and scale the codebase. Below is a suggested order of exploration for writing the `README.md` and applying polish like logging and Javadoc annotations, starting from the high-level entry points down to the fine-grained functionality:
+
+---
+
+## ✅ **Suggested Order of Exploration**
+
+### **1. `Default` (Root)**
+
+* **`Start`**
+
+  * This is presumably your entry point or launcher.
+  * Start here to understand initialization flow and dependencies.
+
+### **2. `Model`**
+
+* **`Main` / `GameEngine` / `GameInitialiser`**
+
+  * These are likely the core logic hubs.
+  * Useful for understanding the lifecycle of the game and state management.
+* **`PostCommand` / `Swimming` / `SwimmingHandler`**
+
+  * Support features—look after core is clear.
+
+### **3. `Game`**
+
+* **`Game` / `Player`**
+
+  * Core domain model. Should be clearly documented.
+* **`MessageBuilder` / `RandomExitHandler` / `SpecialExitHandler` / `SpecialItemHandler`**
+
+  * Utility and logic handlers—describe their specific rule-sets and integrations.
+
+### **4. `Commands`**
+
+* Understand the command structure after the core game logic.
+* Suggested order:
+
+  * `ParsedCommand`
+  * `CommandParser` / `CommandValidator`
+  * `CommandProcessor` / `CommandExecutor`
+  * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
+* **Note**: `Persistence` should be treated separately—it handles saving/loading.
+
+### **5. `Interfaces`**
+
+* Work backward from `GameUI` and `GameView` to understand UI abstraction.
+* Document contracts expected for each interface.
+
+### **6. `Controller`**
+
+* These are the glue between user interaction and backend logic.
+* Start with `CommandButton`, `CommandListener`, then move to higher-level components like `MapButton`, `QuitButton`.
+
+### **7. `View`**
+
+* After you understand how state and interaction are managed, look at UI rendering.
+* `GamePanel`, `MainGamePanel`, `RoomPanel`, etc. define the game's display.
+
+### **8. `UISupport`**
+
+* Likely cross-cutting utility classes like `GameState`, `GameController`.
+* Should be looked at after the main UI flow is understood.
+
+### **9. `Data`**
+
+* **Constants**: Should be reviewed early and used consistently.
+* **RawData**: Source of level/item data—deserves cleanup & docs.
+* **GameEntities**, `Location`, `Item`: Part of core model—document field meanings.
+
+---
+
+## 🛠️ **Minor Polishing Suggestions**
+
+### **1. Add Logging**
+
+Use `java.util.logging.Logger` or `slf4j` with `logback` for consistency.
+
+Examples:
+
+```java
+private static final Logger LOGGER = Logger.getLogger(GameEngine.class.getName());
+LOGGER.info("Game initialized successfully.");
+LOGGER.warning("Invalid command received: " + command);
+```
+
+### **2. Add Javadoc Comments**
+
+Start with:
+
+* All public classes/interfaces
+* All public methods (especially in `Commands`, `Game`, `GameEngine`, and `GamePanel`)
+* All model/entity fields
+
+Example:
+
+```java
+/**
+ * Parses and validates user commands before execution.
+ */
+public class CommandParser {
+    /**
+     * Parses a raw command string into a ParsedCommand object.
+     *
+     * @param input Raw user input
+     * @return ParsedCommand object containing verb and noun
+     */
+    public ParsedCommand parse(String input) { ... }
+}
+```
+
+### **3. Miscellaneous Cleanup**
+
+* Remove commented-out `System.out.println` lines or replace with logs.
+* Move any magic numbers to `Constants`.
+* Add `.gitignore` if not already present (ignore `bin/`, `.class`, `*.log`, etc.).
+* Check for repeated UI layout logic—consider abstracting repeated code.
+
+---
+
+Would you like me to generate a `README.md` template based on this structure? I can tailor it to:
+
+* Explain your module layout
+* Provide build/run instructions
+* Include contribution/dev guidelines if relevant
+
