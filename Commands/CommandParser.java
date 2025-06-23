@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 22 June 2025
+Version: 4.11
+Date: 23 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,11 +27,12 @@ public class CommandParser {
 		
 		rawInput = normaliser.normalise(rawInput);
 		String[] splitCommand = splitCommand(rawInput);
+		splitCommand[1] = splitCommand[1].trim();
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		int nounNumber = getNounNumber(splitCommand[1],verbNumber);
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
-		
+
 		if (splitCommand[0].equals("look")) {
 			command = parseLook(splitCommand,command,room);
 		} else if (command.checkMoveState()) {
@@ -75,14 +76,13 @@ public class CommandParser {
 	private int getNounNumber(String noun,int verbNumber) {
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
-				
+		
 		//Only called if more than two words
 		if (noun.length()>1) {
 			
 			int nounCount = 0;
 			for (String command:RawData.getNouns()) {
 				nounCount ++;
-								
 				if (noun.equals(command)) {
 					nounNumber = nounCount;
 				}
@@ -176,4 +176,5 @@ public class CommandParser {
  * 28 May 2025 - Added parsing for eating
  * 2 June 2025 - Added further parsing for examine
  * 22 June 2025 - Fixed problem where negative nounNumber blocked program.
+ * 23 June 2025 - Stripped whitespace from noun
  */

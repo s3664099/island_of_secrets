@@ -179,7 +179,7 @@ public class RawData {
 		"staff","chip","coal","flint","hammer","beast","loaf","melon","biscuits","mushrooms",    //20
 		"bottle","flagon","sap","water","boat","chest","column","opening","trapdoor","villager", //30
 		"liquid","swampman","sage","books","roots","storm","wraiths","cloak","omegan","snake",   //40
-		"logmen","scavenger","median","north","south","east","west","up","down","in","out"
+		"logmen","scavenger","median","north","south","east","west","up","down","in","out"       //51
 	};
 	//   48,49,50,51
 			

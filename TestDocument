@@ -1,11 +1,15 @@
 Test Document
 
-Movement - Works where exit is available - crashed when it isn't - won't work afterwards
+Unknown Command - Crashes - Player = null
 
 
 
 
 
+
+
+Omegan - attack message mispelled. Should be on separate line
+	- Should check if message exists, puts it separate line if it does.
 
 
 
