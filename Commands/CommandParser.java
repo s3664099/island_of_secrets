@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 23 June 2025
+Version: 4.12
+Date: 24 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,6 +26,7 @@ public class CommandParser {
 	public ParsedCommand parse(String rawInput, Game game, int room) {
 		
 		rawInput = normaliser.normalise(rawInput);
+		rawInput = parseMovement(rawInput);
 		String[] splitCommand = splitCommand(rawInput);
 		splitCommand[1] = splitCommand[1].trim();
 		int verbNumber = getVerbNumber(splitCommand[0]);
@@ -164,6 +165,17 @@ public class CommandParser {
 			return input;
 		}
 	}
+	
+	public String parseMovement(String command) {
+		
+		if (command.equals("in") || command.equals("out") ||
+			command.equals("up") || command.equals("down")) {
+			command = "go "+command;
+		}
+				
+		return command;
+		
+	}
 }
 
 /* 28 April 2025 - Created File
@@ -177,4 +189,5 @@ public class CommandParser {
  * 2 June 2025 - Added further parsing for examine
  * 22 June 2025 - Fixed problem where negative nounNumber blocked program.
  * 23 June 2025 - Stripped whitespace from noun
+ * 24 June 2025 - Added parser for single command movement commands
  */

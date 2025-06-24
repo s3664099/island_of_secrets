@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 23 June 2025
+Version: 4.9
+Date: 24 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -86,7 +86,7 @@ public class Move {
 		
 		boolean validMove = true;
 		
-		if (!game.checkExit(room,command.getNounNumber()-1)) {
+		if (command.getNounNumber()>4||!game.checkExit(room,command.getNounNumber()-1)) {
 			game.addMessage("You can't go that way",true,true);
 			validMove = false;
 		} else if (command.getNounNumber()>4) {
@@ -311,4 +311,5 @@ public class Move {
  * 28 May 2025 - Moved checks to separate functions for readability
  * 22 June 2025 - Moved single direction elsewhere
  * 23 June 2025 - Fixed problem with movement noun number. Reduced to reflect direction.
+ * 24 June 2025 - Fixed error that resulted in movement number greater than 4
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 23 June 2025
+Version: 4.20
+Date: 24 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -16,11 +16,12 @@ import Model.PostCommand;
 
 public class CommandExecutor {
 	
-	private ActionResult result = new ActionResult();
 	private Random rand = new Random();
 	
 	//Executes the command
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
+		
+		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkMoveState()) {
 			
@@ -174,4 +175,5 @@ public class CommandExecutor {
  * 17 June 2025 - Added Load Game command
  * 18 June 2025 - Added quit command and Tidied up.
  * 23 June 2025 - Tightened code
+ * 24 June 2025 - Moved creation of action result to main code
  */

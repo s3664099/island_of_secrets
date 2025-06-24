@@ -26,7 +26,7 @@ public class ParsedCommand {
 	
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
-	
+				
 		this.splitTwoCommand = splitCommand;
 		this.splitFullCommand = command.split(" ");
 		this.codedCommand = codedCommand;
@@ -250,8 +250,7 @@ public class ParsedCommand {
 	
 	public boolean checkQuit() {
 		return commandType == CommandType.QUIT;
-	}
-	
+	}	
 }
 
 /* 24 April 2025 - Created File
@@ -272,4 +271,5 @@ public class ParsedCommand {
  * 10 June 2025 - Added check for swim & shelter
  * 11 June 2025 - Added check for combat actions
  * 16 June 2025 - Added checks for load,save & quit
+ * 24 June 2025 - Added script to make single special movement commands to go special command
  */
