@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 16 March 2025
+Version: 4.3
+Date: 25 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -41,6 +41,11 @@ public class Constants {
 	public static final int RANDOM_EXIT_COMBO = 5;
 	public static final int NUMBER_RESPONSES = 2;
 	
+	//Constants for the player starting values
+	public static final int STARTING_STRENGTH = 100;
+	public static final int STARTING_WISDOM = 35;
+	public static final int STARTING_TIME = 1000;
+	
 	public static final String NORTH = "North";
 	public static final String SOUTH = "South";
 	public static final String EAST = "East";
@@ -56,4 +61,5 @@ public class Constants {
  * 5 March 2025 - Increased to v4.0
  * 9 March 2025 - Updated code based on recommendations
  * 16 March 2025 - Moved NUMBER_OF_EXITS here
+ * 25 June 2025 - Added constants for player starting values
 */

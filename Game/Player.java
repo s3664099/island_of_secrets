@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 27 April 2025
+Version: 4.8
+Date: 25 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,9 +37,9 @@ public class Player implements Serializable {
 	public Player() {
 		
 		//Initialize Stats
-		stats.put("strength", 20f);
-		stats.put("wisdom", 35);
-		stats.put("timeRemaining",1000);
+		stats.put("strength", Constants.STARTING_STRENGTH);			
+		stats.put("wisdom", Constants.STARTING_WISDOM);				
+		stats.put("timeRemaining",Constants.STARTING_TIME);		
 		stats.put("weight", 0);
 		stats.put("food",2);
 		stats.put("drink", 2);
@@ -191,4 +191,5 @@ public class Player implements Serializable {
  * 17 March 2025 - Added logging to list room player has entered.
  * 25 March 2025 - Added Enums Player State. Removed Message and Lightning states (should be in game)
  * 27 March 2025 - Added Swimming class to store swimming state. Created Start Swimming state
+ * 25 June 2025 - Restored strength to correct starting value. Moved starting constants to the constants file
  */

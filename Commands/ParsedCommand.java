@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 16 June 2025
+Version: 4.17
+Date: 25s June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,6 +51,7 @@ public class ParsedCommand {
 			setSingleCommand(verbNumber);
 		} else {
 			commandState = CommandState.MULTIPLE_COMMAND;
+			setMultipleCommand(verbNumber);
 		}
 	}
 	
@@ -272,4 +273,5 @@ public class ParsedCommand {
  * 11 June 2025 - Added check for combat actions
  * 16 June 2025 - Added checks for load,save & quit
  * 24 June 2025 - Added script to make single special movement commands to go special command
+ * 25 June 2025 - Added function call to set multiple command
  */

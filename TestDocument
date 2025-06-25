@@ -1,7 +1,7 @@
 Test Document
 
-Take not working
-Go boat not working (and possibly others)
+
+
 
 
 
@@ -10,6 +10,10 @@ Go boat not working (and possibly others)
 
 Omegan - attack message mispelled. Should be on separate line
 	- Should check if message exists, puts it separate line if it does.
+	
+	- Map button not appearing
+	
+	- update the code for the special panel messages
 
 
 

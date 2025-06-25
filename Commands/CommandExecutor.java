@@ -2,14 +2,16 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 24 June 2025
+Version: 4.21
+Date: 25 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
 import java.util.Random;
+import java.util.logging.Logger;
+
 import Game.Game;
 import Game.Player;
 import Model.PostCommand;
@@ -17,6 +19,7 @@ import Model.PostCommand;
 public class CommandExecutor {
 	
 	private Random rand = new Random();
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	//Executes the command
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
@@ -24,7 +27,7 @@ public class CommandExecutor {
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkMoveState()) {
-			
+			logger.info("Moving");
 			//Poisoned waters
 			if (command.getCodedCommand().equals("490051") && game.getItem(29).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
@@ -35,33 +38,42 @@ public class CommandExecutor {
 			}	else {
 				result = new Move().executeMove(game,player,command);
 			}
-		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {	
+		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {
+			logger.info("Take/Drop");
 			result = new ItemCommands().executeCommand(game,player,command);
 		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
+			logger.info("Eat/Drink/Rest");
 			result = new Consume().executeCommand(game,player,command);
 		} else if (command.checkInfo()) {
+			logger.info("Info");
 			result = new Miscellaneous(game,player).info();
 		} else if (command.checkWave()) {
+			logger.info("Wave");
 			result = new Miscellaneous(game,player,command).wave();
 		} else if (command.checkHelp()) {
+			logger.info("Help");
 			result = new Miscellaneous(game,player,command).help();
 		} else if (command.checkPolish()) {
+			logger.info("Polish");
 			result = new Miscellaneous(game,player,command).polish();
 		} else if (command.checkSay()) {
+			logger.info("Say");
 			result = new Miscellaneous(game,player,command).speak();
 		} else if (command.checkExamine()) {
+			logger.info("Examine");
 			result = new Examine(game,player,command).examine();
 		} else if (command.checkFill()) {
+			logger.info("Fill");
 			result = new Miscellaneous(game,player,command).fill();
 		} else if (command.checkRide()) {
-			Miscellaneous ride = new Miscellaneous(game,player,command);
-			result = ride.ride();
+			logger.info("Ride");
+			result = new Miscellaneous(game,player,command).ride();
 		} else if (command.checkOpen()) {
-			Miscellaneous open = new Miscellaneous(game,player,command);
-			result = open.open();
+			logger.info("Open");
+			result = new Miscellaneous(game,player,command).open();
 		} else if (command.checkSwim()) {
-			Miscellaneous swim = new Miscellaneous(game,player,command);
-			result = swim.swim();
+			logger.info("Swim");
+			result = new Miscellaneous(game,player,command).swim();
 		} else if (command.checkShelter()) {
 			result = new Miscellaneous(game,player,command).shelter();
 			/*
@@ -71,17 +83,23 @@ public class CommandExecutor {
 						}
 			 */
 		} else if (command.checkChop()) {
+			logger.info("Chop");
 			result = new Combat(game,player,command).chop();
 		} else if (command.checkAttack()) {
+			logger.info("Attack");
 			result = new Combat(game,player,command).attack();
 		} else if (command.checkKill()) {
+			logger.info("Kill");
 			result = new Combat(game,player,command).kill();
 		} else if (command.checkSave()) {
+			logger.info("Save");
 			result = new Persistence(game,player,command).save();
 		} else if (command.checkLoad()) {
+			logger.info("Load");
 			Persistence load = new Persistence(game,player,command);
 			result = load.load();
 		} else if (command.checkQuit()) {
+			logger.info("Quit");
 			result = new Persistence(game,player,command).quit();
 		}
 		
@@ -176,4 +194,5 @@ public class CommandExecutor {
  * 18 June 2025 - Added quit command and Tidied up.
  * 23 June 2025 - Tightened code
  * 24 June 2025 - Moved creation of action result to main code
+ * 25 June 2025 - Added logging to the actions to flag what actions are occuring
  */
