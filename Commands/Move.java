@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 24 June 2025
+Version: 4.10
+Date: 25 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,7 +32,7 @@ public class Move {
 		nounNumber = handleSpecialRooms(room, noun, nounNumber);
 		nounNumber = handleCodedCommand(code,nounNumber);
 		
-		if(nounNumber>4) {
+		if(nounNumber>4 && nounNumber != GameEntities.ITEM_BOAT) {
 			nounNumber -= 43;
 		}
 		
@@ -85,16 +85,17 @@ public class Move {
 	public ActionResult validateMove(ParsedCommand command, Game game, int room) {
 		
 		boolean validMove = true;
+		ActionResult result = new ActionResult(game,validMove);
 		
-		if (command.getNounNumber()>4||!game.checkExit(room,command.getNounNumber()-1)) {
-			game.addMessage("You can't go that way",true,true);
-			validMove = false;
-		} else if (command.getNounNumber()>4) {
-			game.addMessage("I don't understand",true,true);
-			validMove = false;
-		}
+		if (isGoBoat(command.getNounNumber())) {
+			result = goBoat(game);
+		} else if (isNotDirection(command.getNounNumber())) {
+			result = notDirection(game);
+		} else if (isExitBlocked(game,room,command.getNounNumber())) {
+			result = exitBlocked(game);
+		} 
 		
-		return new ActionResult(game,validMove);
+		return result;
 	}
 	
 	public ActionResult executeMove(Game game, Player player, ParsedCommand command) {
@@ -104,10 +105,13 @@ public class Move {
 		//Move is not blocked
 		if (!blockedCheck.getValid()) {
 			int direction = command.getNounNumber();
-			int newRoom = calculateNewRoom(player.getRoom(),direction);
-			player.setRoom(newRoom);
-			game.addMessage("Ok",true,true);
-			game.getRoom(newRoom).setVisited();
+			
+			if(command.getNounNumber()!=GameEntities.ITEM_BOAT) {
+				int newRoom = calculateNewRoom(player.getRoom(),direction);
+				player.setRoom(newRoom);
+				game.addMessage("Ok",true,true);
+				game.getRoom(newRoom).setVisited();
+			}
 			
 			blockedCheck = handleRoomEntryEffects(game,player,command);
 		}
@@ -273,6 +277,45 @@ public class Move {
 		return isOnJetty;
 	}
 	
+	private boolean isGoBoat(int nounNumber) {
+		boolean goBoat = false;
+		if (nounNumber == GameEntities.ITEM_BOAT) {
+			goBoat = true;
+		}
+		return goBoat;
+	}
+	
+	private ActionResult goBoat(Game game) {
+		game.addMessage("That is not possible",true,true);
+		return new ActionResult(game,true);
+	}
+	
+	private boolean isNotDirection(int nounNumber) {
+		boolean notDirection = false;
+		if(nounNumber>4) {
+			notDirection = true;
+		}
+		return notDirection;
+	}
+	
+	private ActionResult notDirection(Game game) {
+		game.addMessage("I don't understand",true,true);
+		return new ActionResult(game,false);
+	}
+	
+	private boolean isExitBlocked(Game game, int room, int nounNumber) {
+		boolean exitBlocked = false;
+		if (!game.checkExit(room,nounNumber-1)) {
+			exitBlocked = true;
+		}
+		return exitBlocked;
+	}
+	
+	private ActionResult exitBlocked(Game game) {
+		game.addMessage("You can't go that way",true,true);
+		return new ActionResult(game, false);
+	}
+	
 	private boolean isCatchingFerry(Game game,Player player,ParsedCommand command) {
 		boolean isCatchingFerry = false;
 		if(player.getRoom()==game.getItem(GameEntities.ITEM_BOAT).getItemLocation() && 
@@ -312,4 +355,5 @@ public class Move {
  * 22 June 2025 - Moved single direction elsewhere
  * 23 June 2025 - Fixed problem with movement noun number. Reduced to reflect direction.
  * 24 June 2025 - Fixed error that resulted in movement number greater than 4
+ * 25 June 2025 - Fixed problem with boat, and made move validation readable.
  */
