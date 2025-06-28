@@ -1,8 +1,16 @@
 Test Document
 
+* For Apples - Need to check if the apple is in the room.
+			 - If so, then taking the apple overrides the other apple functions in the clearing
+			 
+			 - Is apple in room - if so, just take the apple
+			 - If not, is in clearing, if so picks apple for food.
+			 
+			 - Giving apple to snake
+
+
 - Check that the logmen attack
 - check swim works
-- check give function
 - check shelter
 
 

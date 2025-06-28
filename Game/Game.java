@@ -247,7 +247,6 @@ public class Game implements Serializable {
 			applesLeft = true;
 			logger.info("Apple count decreased. Remaining apples: " + apple_count);
 		}
-		
 		return applesLeft;
 	}
 	

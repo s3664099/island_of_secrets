@@ -216,13 +216,13 @@ public class ItemCommands {
 		}
 		
 		private boolean areApples() {
-			
 			boolean isApple = false;
 			if (playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
 				nounNumber == GameEntities.ITEM_APPLE && game.getItem(nounNumber).getItemLocation()
 				!= playerRoom) {
 				isApple = true;
 			}
+			
 			return isApple;
 		}
 		
@@ -235,7 +235,7 @@ public class ItemCommands {
 				game.getItem(nounNumber).getItemFlag() != playerRoom) {
 				noApples = true;
 			}
-			
+
 			return noApples;
 		}
 		
