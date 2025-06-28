@@ -21,7 +21,6 @@ public class GameFrame extends JFrame implements GameUI {
 	private final GamePanel gamePanel;
 
 	public GameFrame(GameEngine engine) {
-		
 		super("Island of Secrets");
 		GameController controller = new GameController(engine,this);
 		this.gamePanel = new GamePanel(controller);

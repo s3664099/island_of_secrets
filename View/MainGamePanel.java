@@ -41,10 +41,11 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 	private boolean isInitialised = false;
 
 	public MainGamePanel(GameController game, GamePanel panel) {
+		
 		this.state = game.getState();
         this.game = Objects.requireNonNull(game, "GameController cannot be null");
         this.parentPanel = Objects.requireNonNull(panel, "Parent panel cannot be null");
-		
+        
         setLayout(new BorderLayout());
 	}
 	

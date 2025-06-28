@@ -49,12 +49,12 @@ public class GamePanel extends JPanel {
 		//Create views
 		this.mainView = new MainGamePanel(controller,this);
 		this.mapView = new MapPanel(controller,this);
-		
+
 		//Configure view container
 		viewContainer.add(mainView,MAIN_VIEW);
 		viewContainer.add(mapView,MAP_VIEW);
 		add(viewContainer,BorderLayout.CENTER);
-
+		
 		//Initial view
 		showMainView();
 	}
