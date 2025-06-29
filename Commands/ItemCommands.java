@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 25 May 2025
+Version: 4.9
+Date: 29 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -193,10 +193,10 @@ public class ItemCommands {
 				result = handleApple();
 			} else if (areNoApples()) {
 				game.addMessage("There are no more apples within reach",true,true);
-				result = new ActionResult(game,true);
+				result = new ActionResult(game,player,true);
 			} else if (isNoTorch()) {
 				game.addMessage("There are no more within reach",true,true);
-				result = new ActionResult(game,true);
+				result = new ActionResult(game,player,true);
 			} else if (isFood()) {
 				result = takeSustanence("food") ;
 			} else if (isDrink()) {
@@ -222,7 +222,6 @@ public class ItemCommands {
 				!= playerRoom) {
 				isApple = true;
 			}
-			
 			return isApple;
 		}
 		
@@ -232,7 +231,7 @@ public class ItemCommands {
 			
 			//checkApples() will be false.
 			if (playerRoom == GameEntities.ROOM_CLEARING && nounNumber == GameEntities.ITEM_APPLE &&
-				game.getItem(nounNumber).getItemFlag() != playerRoom) {
+				game.getItem(nounNumber).getItemLocation() != playerRoom) {
 				noApples = true;
 			}
 
@@ -696,4 +695,5 @@ public class ItemCommands {
  * 			   - Started give command
  * 25 May 2025 - Added Give to Snake and Give to Villager.
  * 			   - Completed the give functionality
+ * 29 June 2025 - Fixed problem with taking the apple.
  */
