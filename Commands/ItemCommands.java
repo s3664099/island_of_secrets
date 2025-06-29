@@ -559,6 +559,8 @@ public class ItemCommands {
 		
 		private boolean isSnake() {
 			boolean isSnake = false;
+			System.out.println(codedCommand);
+			System.out.println(GameEntities.CODE_SNAKE);
 			if (validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE) {
 				isSnake = true;
 			}

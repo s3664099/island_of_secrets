@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 24 June 2025
+Version: 4.13
+Date: 29 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -77,9 +77,14 @@ public class CommandParser {
 	private int getNounNumber(String noun,int verbNumber) {
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
-		
+				
 		//Only called if more than two words
 		if (noun.length()>1) {
+			
+			//Does not contain more than one word?
+			if (noun.split(" ").length>1) {
+				noun = noun.split(" ")[0];
+			}
 			
 			int nounCount = 0;
 			for (String command:RawData.getNouns()) {
@@ -190,4 +195,5 @@ public class CommandParser {
  * 22 June 2025 - Fixed problem where negative nounNumber blocked program.
  * 23 June 2025 - Stripped whitespace from noun
  * 24 June 2025 - Added parser for single command movement commands
+ * 29 June 2025 - Fixed problem with multiple words in noun.
  */
