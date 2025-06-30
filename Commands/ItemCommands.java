@@ -73,7 +73,7 @@ public class ItemCommands {
 		
 		if (commands.length<3) {
 			game.addMessage("Give to whom?",true,true);
-			game.setGiveState();
+			game.setGiveState(command.getSplitFullCommand()[1]);
 			validCommand = false;
 		} else if (commands[2].equals("to") && commands.length<4) {
 			game.addMessage("I don't understand",true,true);

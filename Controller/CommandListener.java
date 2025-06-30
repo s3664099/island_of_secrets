@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Listener
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 21 April 2025
+Version: 4.7
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -58,11 +58,7 @@ public class CommandListener implements KeyListener {
 	private void handleCommand(String command) {
 
 		try {
-			if (controller.isGiveState()) {
-				controller.processGive(command);
-			} else {
-				controller.processCommand(command);
-			}
+			controller.processCommand(command);
 		} catch (IOException e) {
 			Logger.getLogger(CommandListener.class.getName())
 	          .log(Level.SEVERE, "Command processing error", e);
@@ -91,4 +87,5 @@ public class CommandListener implements KeyListener {
  * 1 April 2025 - Updated listener to make it tighter
  * 21 April 2025 - Updated based on recommendations by deepSeek
  * 23 April 2025 - Removed process shelter and give
+ * 30 June 2025 - Removed separate process for give
  */

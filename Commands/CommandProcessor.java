@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 18 June 2025
+Version: 4.7
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,27 +39,6 @@ public class CommandProcessor {
 						
 		return result;
 	}
-	
-	/*
-	public void executeGive(String object,Game game,Player player) {
-		
-		//Checks if the response is 'to xxxx'
-		String[] instructions = object.split(" ");
-		if (instructions[0].equals("to") && instructions.length==2) {
-			object = instructions[1];
-		}
-		
-		//Is the response correct for a give command?
-		if (object.split(" ").length==1) {
-			CommandExecutor processCommands = new CommandExecutor();
-			processCommands.executeGive(game,player,nounNum,object,codedCommand);
-		} else {
-			this.game.addMessage("I'm sorry, I don't understand.",true,true);
-		}
-		
-		this.game.setGiveState();
-	}
-	*/
 }
 
 /* 23 April 2025 - Create class
@@ -68,4 +47,5 @@ public class CommandProcessor {
  * 2 May 2025 - Added command validator
  * 4 May 2025 - Updated to move player into validator
  * 18 June 2025 - Tidied up code
+ * 30 June 2025 - Removed the give section
  */

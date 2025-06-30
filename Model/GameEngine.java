@@ -2,8 +2,8 @@
 Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 5 May 2025
+Version: 4.21
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -76,13 +76,7 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 			this.commandHistory[2] = command;
 		}
 	}
-	
-	public void processGive(String object) {
-		System.out.println("Give to dude");
-		//CommandProcessor processor = new CommandProcessor();
-		//ActionResult result = processor.executeGive(object,game,player);
-	}
-	
+		
 	//=== State Management ===//
 	public void addMessage(String message, boolean clear, boolean isLong) {
 		game.addMessage(message,clear,isLong);
@@ -376,4 +370,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 1 May 2025 - Fixed errors arising from changes to code
 5 May 2025 - Made game & player mutable (due to need for changing)
 		   - Updated for ActionResult
+30 June 2025 - Removed separate process for give
 */

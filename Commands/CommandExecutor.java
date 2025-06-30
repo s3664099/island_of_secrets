@@ -39,7 +39,8 @@ public class CommandExecutor {
 				result = new Move().executeMove(game,player,command);
 			}
 		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {
-			logger.info("Take/Drop");
+			System.out.println("Two");
+			logger.info("Take/Drop/Give");
 			result = new ItemCommands().executeCommand(game,player,command);
 		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
 			logger.info("Eat/Drink/Rest");

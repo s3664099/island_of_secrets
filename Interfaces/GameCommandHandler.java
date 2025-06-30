@@ -2,8 +2,8 @@
 Title: Island of Secrets Write Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 25 April 2025
+Version: 4.7
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -42,14 +42,7 @@ public interface GameCommandHandler {
      * @throws GameCommandException if command is invalid or cannot be executed
      */	
 	public void processCommand(String input) throws IOException;
-	
-    /**
-     * Handles item gifting/transfer actions when the player needs to nominate a reciever
-     * @param item The item identifier to process
-     * @throws GameStateException if item cannot be given in current state
-     */	
-	public void processGive(String item);
-		
+			
     /**
      * Directly moves player to specified location
      * @param locationID The destination location identifier
@@ -80,4 +73,5 @@ public interface GameCommandHandler {
  * 14 April 2025 - Added JavaDocs
  * 23 April 2025 - Removed process shelter
  * 25 April 2025 - Updated interface with new functions
+ * 30 June 2024 - Removed separate process for give
  */

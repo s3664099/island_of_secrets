@@ -27,6 +27,13 @@ public class CommandParser {
 		
 		rawInput = normaliser.normalise(rawInput);
 		rawInput = parseMovement(rawInput);
+		
+		//Separate parse give here. If it is set to give:
+			//Goes to separate function
+			//Splits command, if first word 'to' or single word not a verb sets it as 'give x to x'
+			//Otherwise returns it as a normal command
+			//Resets the give status in game
+		
 		String[] splitCommand = splitCommand(rawInput);
 		splitCommand[1] = splitCommand[1].trim();
 		int verbNumber = getVerbNumber(splitCommand[0]);

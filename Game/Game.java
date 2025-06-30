@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 28 April 2025
+Version: 4.10
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,6 +35,7 @@ public class Game implements Serializable {
 	
 	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,MESSAGE,LIGHTNING }
 	private GameState gameState = GameState.STARTED;
+	private String giveNoun = "";
 	
 	private int saveGameCount = 0;
 	private int startGameCount = 2;
@@ -273,6 +274,11 @@ public class Game implements Serializable {
 		return this.savedGamesDisplayed;
 	}
 	
+	public String getGiveNoun() {
+		gameState = GameState.RUNNING;
+		return giveNoun;
+	}
+	
 	public void setDisplayedGames(String[] gameDisplayed) {
 		this.savedGamesDisplayed = gameDisplayed;
 	}	
@@ -285,7 +291,8 @@ public class Game implements Serializable {
 		gameState = GameState.SAVED_GAMES;
 	}
 	
-	public void setGiveState() {
+	public void setGiveState(String noun) {
+		giveNoun = noun;
 		gameState = GameState.GIVE;
 	}
 	
@@ -340,47 +347,47 @@ public class Game implements Serializable {
 	
 	public boolean isGiveState() {
 		
-		boolean endGame = false;
+		boolean giveState = false;
 		if (gameState == GameState.GIVE) {
-			endGame = true;
+			giveState = true;
 		}
-		return endGame;
+		return giveState;
 	}
 	
 	public boolean isShelterState() {
 		
-		boolean endGame = false;
+		boolean shelterState = false;
 		if (gameState == GameState.SHELTER) {
-			endGame = true;
+			shelterState = true;
 		}
-		return endGame;
+		return shelterState;
 	}
 	
 	public boolean isMessageState() {
 		
-		boolean endGame = false;
+		boolean messageState = false;
 		if (gameState == GameState.MESSAGE) {
-			endGame = true;
+			messageState = true;
 		}
-		return endGame;
+		return messageState;
 	}
 	
 	public boolean isLightningState() {
 		
-		boolean endGame = false;
+		boolean lightningState = false;
 		if (gameState == GameState.LIGHTNING) {
-			endGame = true;
+			lightningState = true;
 		}
-		return endGame;
+		return lightningState;
 	}
 	
 	public boolean isRunningState() {
 		
-		boolean endGame = false;
+		boolean runningState = false;
 		if (gameState == GameState.RUNNING) {
-			endGame = true;
+			runningState = true;
 		}
-		return endGame;
+		return runningState;
 	}
 }
 
@@ -432,4 +439,5 @@ public class Game implements Serializable {
  * 23 April 2025 - Removed Response Required and replaced with Enum
  * 25 April 2025 - Added more states
  * 28 April 2025 - Added methods to set the Message and Lightning State
+ * 30 June 2025 - Updated give state for holding object to give. Changed bools to represent the function
  */

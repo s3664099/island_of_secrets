@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 25 April 2025
+Version: 4.12
+Date: 30 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -52,13 +52,6 @@ public final class GameController implements GameCommandHandler {
 	public void processCommand(String input) throws IOException {
 		logger.log(Level.FINE, "Processing command: {0}", input);
 		engine.processCommand(input);
-		refreshUI();
-	}
-
-	@Override
-	public void processGive(String item) {
-		logger.log(Level.FINE, "Processing give: {0}", item);
-		engine.processGive(item);
 		refreshUI();
 	}
 	
@@ -137,4 +130,5 @@ public final class GameController implements GameCommandHandler {
  * 23 April 2025 - Added setResponseType to change response type and addMessage to add a message
  * 				   from the controller, Removed processShelter
  * 25 April 2025 - Updated based on changes to enums in Game class and Player class
+ * 30 June 2025 - Removed separate process for give
  */
