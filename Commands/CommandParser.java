@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 29 June 2025
+Version: 4.14
+Date: 2 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -27,16 +27,26 @@ public class CommandParser {
 		
 		rawInput = normaliser.normalise(rawInput);
 		rawInput = parseMovement(rawInput);
-		
-		//Separate parse give here. If it is set to give:
-			//Goes to separate function
-			//Splits command, if first word 'to' or single word not a verb sets it as 'give x to x'
-			//Otherwise returns it as a normal command
-			//Resets the give status in game
-		
 		String[] splitCommand = splitCommand(rawInput);
-		splitCommand[1] = splitCommand[1].trim();
 		int verbNumber = getVerbNumber(splitCommand[0]);
+		
+		if (game.isGiveState()) {
+			boolean giveResponse = false;
+			if(splitCommand[0].equals("to")) {
+				rawInput = "give "+game.getGiveNoun()+" "+rawInput;
+				giveResponse = true;
+			} else if (verbNumber == 43) {
+				rawInput = "give "+game.getGiveNoun()+" to "+rawInput;
+				giveResponse = true;
+			}
+			
+			if (giveResponse) {
+				splitCommand = splitCommand(rawInput);
+				verbNumber = getVerbNumber(splitCommand[0]);
+			}
+		}
+		
+		splitCommand[1] = splitCommand[1].trim();
 		int nounNumber = getNounNumber(splitCommand[1],verbNumber);
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
@@ -186,7 +196,6 @@ public class CommandParser {
 		}
 				
 		return command;
-		
 	}
 }
 
@@ -203,4 +212,5 @@ public class CommandParser {
  * 23 June 2025 - Stripped whitespace from noun
  * 24 June 2025 - Added parser for single command movement commands
  * 29 June 2025 - Fixed problem with multiple words in noun.
+ * 2 July 2025 - Added code to handle response to give
  */
