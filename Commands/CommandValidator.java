@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 23 June 2025
+Version: 4.11
+Date: 2 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -40,8 +40,8 @@ public class CommandValidator {
 			} else if (command.checkDrop() || command.checkGive()) {
 				ItemCommands carryingValidator = new ItemCommands();
 				result = carryingValidator.validateCarrying(this.game,command);
-				
-				if (command.checkGive() || !result.getValid()) {
+
+				if (command.checkGive() && result.getValid()) {
 					result = carryingValidator.validateGive(game, player.getRoom(), command);
 				}
 			} else if (command.checkEat()) {
@@ -121,4 +121,5 @@ public class CommandValidator {
  * 19 May 2025 - Added specific validator for reciever of a give
  * 28 May 2025 - Added validation for carrying food/drink
  * 23 June 2025 - Added check to place game into result object
+ * 2 July 2025 - Fixed give validator to reject items not carrying
  */

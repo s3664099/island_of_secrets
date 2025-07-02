@@ -32,9 +32,10 @@ public class CommandProcessor {
 		result = validator.validateCommand(command,game,player);
 		
 		if(result.getValid()) {
+			
 			result = executor.executeCommand(game,player,command);
 		}
-
+		
 		//determinePanel(game);
 						
 		return result;
