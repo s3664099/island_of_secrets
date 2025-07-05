@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 2 July 2025
+Version: 4.12
+Date: 5 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,8 +26,9 @@ public class CommandValidator {
 		validCommand = neitherExists(command,this.game);
 		validCommand = missingNoun(command,this.game);
 		validCommand = checkNone(command,this.game);
+		validCommand = checkNoun(command);
 		
-		ActionResult result = new ActionResult(this.game,validCommand);
+		ActionResult result = new ActionResult(this.game,player,validCommand);
 		
 		//Special command specfic validations
 		if (validCommand) {
@@ -104,7 +105,20 @@ public class CommandValidator {
 		boolean validCommand = true;
 		
 		if (command.checkNoneCommandType()) {
+			validCommand = false;
 			game.addMessage("I don't understand", true, true);
+		}
+		return validCommand;
+	}
+	
+	private boolean checkNoun(ParsedCommand command) {
+		boolean validCommand = true;
+		if (command.checkMultipleCommandState()||
+			(command.checkMoveState() && command.getSplitTwoCommand()[0].equals("go"))) {
+			if(command.getSplitFullCommand().length==1) {
+				game.addMessage("Most commands need two words",true,true);
+				validCommand = false;
+			}
 		}
 		return validCommand;
 	}
@@ -122,4 +136,5 @@ public class CommandValidator {
  * 28 May 2025 - Added validation for carrying food/drink
  * 23 June 2025 - Added check to place game into result object
  * 2 July 2025 - Fixed give validator to reject items not carrying
+ * 5 July 2025 - Added validation for multi-word commands
  */
