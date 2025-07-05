@@ -129,8 +129,8 @@ public class Move {
 		ActionResult result = new ActionResult(game,player,false);
 		
 		if (isOmeganPresent(game,player)) {
-			game.addMessage("Omegan's presence prevents you from leaving!",true,true);
-			result = new ActionResult(game,player,true);
+			//game.addMessage("Omegan's presence prevents you from leaving!",true,true);
+			//result = new ActionResult(game,player,true);
 
 		} else if (isSwampmanPresent(game,player,command)) {
 			game.addMessage("He will not let you pass.",true,true);

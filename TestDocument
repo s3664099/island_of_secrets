@@ -1,10 +1,13 @@
 Test Document
 
-- Fixed problem where give is two actions not being reset. (Give xx -- to xx
+- Omegan Disabled
+
+- Go Out Go In not working in hut.
+- Single Command where should be two crashing
 
 
-- Check that the logmen attack
-- check swim works
+- Check that the logmen attack - They do
+- check swim works - It's Not
 - check shelter
 - confirm that you have enough water
 
@@ -15,20 +18,30 @@ Test Document
 
 Omegan - attack message mispelled. Should be on separate line
 	- Should check if message exists, puts it separate line if it does.
-	
 	- Map button not appearing
-	
+	- Spaces between multi-line messages.
+	- The moving extra text to next line cutting mid word
 	- update the code for the special panel messages
+	- flint mispelled
+	- Carrying something new? For rubbing stone?
+
+
+The storm breaks on the following settings - Time is less than 900
+					   - Player at starting location
+					   - Storm Flag greater than 0
+					   - 1 in 3 change
+	- When it happens the flag is set to a -ve between 4 and 10
+When you shelter, the flag on the wine is set to -R (This is where you shelter)
+So, if you are where you are sheltering, your strength will increase when resting.
+Ideally you can't rest while the storm is raging, though by sheltering you don't lose strength.
 
 
 
 
 
 
-
-
-
-- Stoney Words - Go to Hut, get apple & give to snake. Go hut & open chest
+Step by step solution
+		- Go to Hut, get apple & give to snake. Go hut & open chest
 		- get hammer and rag - also get any food on the way
 		- go to top of pyramid and get flint
 		- go to cave, get and fill jug
@@ -54,22 +67,11 @@ Omegan - attack message mispelled. Should be on separate line
 
 
 
-The storm breaks on the following settings - Time is less than 900
-					   - Player at starting location
-					   - Storm Flag greater than 0
-					   - 1 in 3 change
-	- When it happens the flag is set to a -ve between 4 and 10
-When you shelter, the flag on the wine is set to -R (This is where you shelter)
-So, if you are where you are sheltering, your strength will increase when resting.
-Ideally you can't rest while the storm is raging, though by sheltering you don't lose strength.
 
 
 
-game1 - hut
-game2 - jug
-game3 - pebble & Sage
-game4 - Island
-game7 - At the end part
+
+
 
 
 
