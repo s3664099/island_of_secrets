@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 26 May 2025
+Version: 4.3
+Date: 6 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,7 +32,7 @@ public class RawData {
     										 "path"};
 		    
 	private static final String[] LOCATIONS = {
-		"4the furthest depth of the forest1001",			// 1  F    1 (Forest)
+		"4the furthest depth of the forest1101",			// 1  F    1 (Forest)
 		"4the depths of the mutant forest1000",				// 2  F    1 (Forest)
 		"7a path out of the overground depths1000",			// 3  F    1 (Forest)
 		"6a carniverous tree1000",							// 4  CT   2 (Carniverous Tree)
@@ -42,7 +42,7 @@ public class RawData {
 		"4the sludge fermation vats1110",					// 8  Vt   6 (Vat)
 		"7the uppermost battlements1001",					// 9  Bt   7 (Battlements)
 		"4Omegan's sanctum1110",							//10  Sm   8 (Sanctum
-		"4Snelm's lair0001",								//11  C    9 (Cave)
+		"4Snelm's lair1001",								//11  C    9 (Cave)
 		"2a dark cave0000",									//12  C    9 (Cave)
 		"1broken branches0100",								//13  B   10 (Bush)
 		"1a thicket of biting bushes0000",					//14  B   10 (Bush)
@@ -270,4 +270,5 @@ public class RawData {
  * 				 - Added reference to location of exception
  * 				 - Fix problem with error preventing objects
  * 26 May 2025 - Moved commands around for easy referencing
+ * 6 July 2025 - Only one way into and out of Snelm's Lair
 */

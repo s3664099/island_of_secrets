@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 25 June 2025
+Version: 4.11
+Date: 6 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,21 +51,20 @@ public class Move {
 	}
 	
 	private int handleCodedCommand(String code,int nounNumber) {
-		
 		Map<String,Integer> codeToDirection = new HashMap<>();
 		codeToDirection.put(GameEntities.CODE_IN_LAIR,GameEntities.WEST);
 		codeToDirection.put(GameEntities.CODE_IN_LOG_HUT,GameEntities.WEST);
 		codeToDirection.put(GameEntities.CODE_IN_SHACK,GameEntities.WEST);
 		codeToDirection.put(GameEntities.CODE_IN_ABODE_HUT,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_IN_PORTAL,GameEntities.NORTH);
-		codeToDirection.put(GameEntities.CODE_OUT_LAIR,GameEntities.NORTH);
+		codeToDirection.put(GameEntities.CODE_OUT_LAIR,GameEntities.EAST);
 		codeToDirection.put(GameEntities.CODE_OUT_LOG_HUT,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_OUT_LOG_CABIN,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_DOWN_PYRAMID,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_DOWN_TRAPDOOR,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_OUT_ABODE_HUT,GameEntities.SOUTH);
 		codeToDirection.put(GameEntities.CODE_UP_PYRAMID,GameEntities.SOUTH);
-		codeToDirection.put(GameEntities.CODE_IN_SHACK,GameEntities.EAST);
+		codeToDirection.put(GameEntities.CODE_OUT_SHACK,GameEntities.EAST);
 		codeToDirection.put(GameEntities.CODE_OUT_HALL,GameEntities.EAST);
 		return codeToDirection.getOrDefault(code, nounNumber);
 	}
@@ -356,4 +355,5 @@ public class Move {
  * 23 June 2025 - Fixed problem with movement noun number. Reduced to reflect direction.
  * 24 June 2025 - Fixed error that resulted in movement number greater than 4
  * 25 June 2025 - Fixed problem with boat, and made move validation readable.
+ * 6 July 2025 - Fixed problem going into and out of hut
  */

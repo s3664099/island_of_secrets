@@ -2,14 +2,11 @@ Test Document
 
 - Omegan Disabled - Move
 
-- Go Out Go In not working in hut.
 
 
 
-- Check that the logmen attack - They do
-- check swim works - It's Not
-- check shelter
-- confirm that you have enough water
+
+
 
 
 
@@ -24,6 +21,12 @@ Omegan - attack message mispelled. Should be on separate line
 	- update the code for the special panel messages
 	- flint mispelled
 	- Carrying something new? For rubbing stone?
+	- check swim works - It's Not
+	- check shelter - kinda works
+	- confirm that you have enough water
+	- Sometimes miss swampman (probably because he moves).
+	- The info page is very problematic, showing more than it should.
+	
 
 
 The storm breaks on the following settings - Time is less than 900

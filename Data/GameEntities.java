@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.18
-Date: 22 June 2025
+Version: 4.19
+Date: 6 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -183,4 +183,5 @@ public class GameEntities {
  * 20 June 2025 - Added orchids room
  * 21 June 2025 - Added codes for post action
  * 22 June 2025 - Added codes for post move events
+ * 6 July 2025 - Fixed issue with going into and out of the hut
  */
