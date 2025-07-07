@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 18 June 2025
+Version: 4.3
+Date: 7 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -157,7 +157,10 @@ public class Persistence {
 				game.addMessage("Game Failed to save " + e.toString(),true,true);
 			}
 		} else {
-			game.addMessage("Game not saved",true,true);
+			
+			if (splitCommand.length>2 && !splitCommand[2].equals("o")) {
+				game.addMessage("Game not saved",true,true);
+			}
 		}
 		return game;
 	}
@@ -206,4 +209,5 @@ public class Persistence {
 /* 16 June 2025 - Created File
  * 17 June 2025 - Created Save Game & Load Game File.
  * 18 June 2025 - Added display saved game functions. Added quit function and tidied up.
+ * 7 July 2025 - Fixed code so reason for save game fail displays
  */

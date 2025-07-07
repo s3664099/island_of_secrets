@@ -2,6 +2,13 @@ Test Document
 
 - Omegan Disabled - Move
 
+- Test Save & Load
+	- Not displaying message correctly
+	
+- Can we go through to the end of the game
+- Map button not appearing
+- flint mispelled
+- Omegan - attack message mispelled. Should be on separate line
 
 
 
@@ -10,16 +17,13 @@ Test Document
 
 
 
-
-
-
-Omegan - attack message mispelled. Should be on separate line
+Bugs
 	- Should check if message exists, puts it separate line if it does.
-	- Map button not appearing
+	
 	- Spaces between multi-line messages.
 	- The moving extra text to next line cutting mid word
 	- update the code for the special panel messages
-	- flint mispelled
+	
 	- Carrying something new? For rubbing stone?
 	- check swim works - It's Not
 	- check shelter - kinda works
