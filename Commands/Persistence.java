@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Data.Constants;
 import Game.Game;
@@ -26,6 +28,7 @@ public class Persistence {
 	private final Game game;
 	private final Player player;
 	private final String[] splitCommand;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 		
 	public Persistence(Game game,Player player, ParsedCommand command) {
 		this.game = game;
@@ -154,7 +157,8 @@ public class Persistence {
 				game.addMessage("Save successful",true,true);
 
 			} catch (IOException e) {
-				game.addMessage("Game Failed to save " + e.toString(),true,true);
+				logger.log(Level.SEVERE, "Game Failed to save " + e.toString());
+				game.addMessage("Game Failed to save.",true,true);
 			}
 		} else {
 			
@@ -199,7 +203,8 @@ public class Persistence {
 						
 			//Location failed to load
 			} catch (IOException|ClassNotFoundException e) {
-				game.addMessage("Game Failed to save " + e.toString(),true,true);
+				logger.log(Level.SEVERE, "Game Failed to load " + e.toString());
+				game.addMessage("Game Failed to load.",true,true);
 			}
 		}
 		return new ActionResult(game,player);
@@ -210,4 +215,5 @@ public class Persistence {
  * 17 June 2025 - Created Save Game & Load Game File.
  * 18 June 2025 - Added display saved game functions. Added quit function and tidied up.
  * 7 July 2025 - Fixed code so reason for save game fail displays
+ * 			   - Added logger for game failed to save & load
  */
