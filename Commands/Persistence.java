@@ -94,7 +94,8 @@ public class Persistence {
 			
 			//Populate displayed games
 			for (int i = startIndex;i<endIndex;i++) {
-				gameDisplayed[i-startIndex] = savFiles[i].getName();
+				String saveGame = savFiles[i].getName();
+				gameDisplayed[i-startIndex] = saveGame.substring(0,saveGame.length()-4);
 			}
 			
 			//Update game state
@@ -175,9 +176,9 @@ public class Persistence {
 		Player player = this.player;
 		
 		boolean loadFile = false;
+				
 		File saveGameDirectory = new File("savegames");				
 		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");		
-		
 		//If not available
 		if (!saveFile.exists()) {			
 			game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
@@ -216,4 +217,5 @@ public class Persistence {
  * 18 June 2025 - Added display saved game functions. Added quit function and tidied up.
  * 7 July 2025 - Fixed code so reason for save game fail displays
  * 			   - Added logger for game failed to save & load
+ * 			   - Stripped .sav from load game displays
  */

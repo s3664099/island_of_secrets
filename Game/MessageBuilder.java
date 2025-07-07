@@ -2,21 +2,23 @@
 Title: Island of Secrets Message Builder Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 20 March 2025
+Version: 4.2
+Date: 7 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.List;
 
 import Data.Constants;
 
-public class MessageBuilder {
+public class MessageBuilder implements Serializable {
 	
+	private static final long serialVersionUID = -6554901859226547810L;
 	private List<String> messages;
 	private int maxMessageLength;
 	private static final Logger logger = Logger.getLogger(Game.class.getName());
@@ -143,4 +145,5 @@ public class MessageBuilder {
 /* 19 March 2025 - Created Class
  * 20 March 2025 - Completed class based on recommendations.
  * 				   Add clear functionality inside message
+ * 7 July 2025 - Added serializable
  */
