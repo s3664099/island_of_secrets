@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 29 June 2025
+Version: 4.10
+Date: 10 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,7 +30,6 @@ public class ItemCommands {
 		
 		if (((item.getItemFlag()>0 && item.getItemFlag()<9) ||
 				item.getItemLocation()!=currentRoom) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
-			
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				commandSuccessful = false;
@@ -40,6 +39,9 @@ public class ItemCommands {
 				   (command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST)){
 				game.addMessage("You can't "+command.getCommand(),true,true);
 			}
+		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS) {
+			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
+			commandSuccessful = false;
 		}
 		
 		return new ActionResult(game,commandSuccessful);
@@ -696,4 +698,5 @@ public class ItemCommands {
  * 25 May 2025 - Added Give to Snake and Give to Villager.
  * 			   - Completed the give functionality
  * 29 June 2025 - Fixed problem with taking the apple.
+ * 10 July 2025 - Fixed problem with invalid object still being flagged as taken
  */
