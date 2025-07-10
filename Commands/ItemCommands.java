@@ -28,23 +28,58 @@ public class ItemCommands {
 		Item item = game.getItem(noun);
 		boolean commandSuccessful = true;
 		
-		if (((item.getItemFlag()>0 && item.getItemFlag()<9) ||
-				item.getItemLocation()!=currentRoom) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
+		if (((flaggedUntakeable(item)) || itemNotInRoom(item,currentRoom)) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				commandSuccessful = false;
-			
-			//Validates Pick and Catch commands
-			} else if ((command.getVerbNumber() == GameEntities.CMD_PICK && noun != GameEntities.ITEM_APPLE && noun != GameEntities.ITEM_MUSHROOM) || 
-				   (command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST)){
-				game.addMessage("You can't "+command.getCommand(),true,true);
 			}
+		//Validates Pick and Catch commands
+		} else if ((notValidPick(command)) || (notValidCatch(command))){
+				System.out.println("Not Valid");
+				game.addMessage("You can't "+command.getCommand(),true,true);
+				commandSuccessful = false;
 		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS) {
 			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
 			commandSuccessful = false;
 		}
 		
 		return new ActionResult(game,commandSuccessful);
+	}
+	
+	private boolean flaggedUntakeable(Item item) {
+		boolean untakeable = false;
+		if (item.getItemFlag()>0 && item.getItemFlag()<9) {
+			untakeable = true;
+		}
+		return untakeable;
+	}
+	
+	private boolean itemNotInRoom(Item item,int currentRoom) {
+		boolean notInRoom = false;
+		if (item.getItemLocation()!=currentRoom) {
+			notInRoom = true;
+		}
+		return notInRoom;
+	}
+	
+	private boolean notValidPick(ParsedCommand command) {
+		boolean notValidPick = false;
+		int noun = command.getNounNumber();
+		if (command.getVerbNumber() == GameEntities.CMD_PICK && 
+			noun != GameEntities.ITEM_APPLE && 
+			noun != GameEntities.ITEM_MUSHROOM) {
+			notValidPick = true;
+		}
+		return notValidPick;
+	}
+	
+	private boolean notValidCatch(ParsedCommand command) {
+		boolean notValidCatch = false;
+		int noun = command.getNounNumber();
+		if(command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST) {
+			notValidCatch = true;
+		}
+		return notValidCatch;
 	}
 	
 	public ActionResult validateCarrying(Game game,ParsedCommand command) {
@@ -699,4 +734,5 @@ public class ItemCommands {
  * 			   - Completed the give functionality
  * 29 June 2025 - Fixed problem with taking the apple.
  * 10 July 2025 - Fixed problem with invalid object still being flagged as taken
+ * 				- Fixed validation for take and catch
  */
