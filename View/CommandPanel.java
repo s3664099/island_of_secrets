@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 18 April 2025
+Version: 4.14
+Date: 11 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -123,7 +123,11 @@ public class CommandPanel  extends JPanel  {
 	}
 	
 	private boolean showMapButton() {
-		return state.isSwimmingState();
+		boolean showMapButton = true;
+		if(state.isSwimmingState()) {
+			showMapButton = false;
+		}
+		return showMapButton;
 	}
 	
 	private JPanel createSpacePanel() {
@@ -231,4 +235,5 @@ public class CommandPanel  extends JPanel  {
  * 11 April 2025 - Displayed buttons for loading saved games. Removed LoadGameButton and just used command button
  * 				   Fixed issue with loading game
  * 18 April 2025 - Updated code based on recommendations by DeepSeek.
+ * 11 July 2025 - Update show map check.
  */
