@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 30 May 2025
+Version: 4.3
+Date: 11 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -15,8 +15,6 @@ import Game.Game;
 import Game.Player;
 
 public class Consume {
-
-	//CHECK CARRYING
 	
 	public ParsedCommand parseEat(ParsedCommand command) {
 		
@@ -37,7 +35,7 @@ public class Consume {
 		
 		if ((nounNumber<=Constants.FOOD_THRESHOLD || nounNumber>=Constants.DRINK_THRESHOLD) 
 				&& noun.length()>0) {
-				game.addMessage("You can't "+command,true,true);
+				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 		} else if (((int) player.getStat("food")+1)<1) {
 			game.addMessage("You have no food",true,true);
@@ -62,7 +60,7 @@ public class Consume {
 	}
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
-		
+		System.out.println("Hello");
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkEat()) {
@@ -222,4 +220,5 @@ public class Consume {
  * 29 May 2025 - Added the eat function
  * 			   - Added drink function and set up for rest
  * 20 May 2025 - added the rest functionality
+ * 11 July 2025 - Fixed display error can't eat food.
  */
