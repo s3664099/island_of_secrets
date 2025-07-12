@@ -18,6 +18,9 @@ Test Document
 
 
 
+
+
+
 Bugs
 	- Should check if message exists, puts it separate line if it does.
 	
