@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 11 July 2025
+Version: 4.4
+Date: 12 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,16 +32,19 @@ public class Consume {
 	public ActionResult validateEat(ParsedCommand command, Game game, Player player) {
 		int nounNumber = command.getNounNumber();
 		String noun = command.getSplitTwoCommand()[1];
+		boolean validEat = true;
 		
 		if ((nounNumber<=Constants.FOOD_THRESHOLD || nounNumber>=Constants.DRINK_THRESHOLD) 
 				&& noun.length()>0) {
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
+				validEat = false;
 		} else if (((int) player.getStat("food")+1)<1) {
 			game.addMessage("You have no food",true,true);
+			validEat = false;
 		}
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,validEat);
 	}
 	
 	public ActionResult validateDrink(ParsedCommand command, Game game, Player player) {
@@ -60,7 +63,7 @@ public class Consume {
 	}
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
-		System.out.println("Hello");
+		
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkEat()) {
@@ -221,4 +224,5 @@ public class Consume {
  * 			   - Added drink function and set up for rest
  * 20 May 2025 - added the rest functionality
  * 11 July 2025 - Fixed display error can't eat food.
+ * 12 July 2025 - Fxed problem with eat not executing
  */
