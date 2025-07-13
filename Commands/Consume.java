@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 12 July 2025
+Version: 4.5
+Date: 13 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,8 +34,13 @@ public class Consume {
 		String noun = command.getSplitTwoCommand()[1];
 		boolean validEat = true;
 		
+		if (noun.equals("apple")) {
+			nounNumber = Constants.FOOD_THRESHOLD+1;
+		}
+		
 		if ((nounNumber<=Constants.FOOD_THRESHOLD || nounNumber>=Constants.DRINK_THRESHOLD) 
 				&& noun.length()>0) {
+				
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 				validEat = false;
@@ -50,16 +55,18 @@ public class Consume {
 	public ActionResult validateDrink(ParsedCommand command, Game game, Player player) {
 		int nounNumber = command.getNounNumber();
 		String noun = command.getSplitTwoCommand()[1];
+		boolean validDrink = true;
 		
 		if ((nounNumber<Constants.DRINK_THRESHOLD || nounNumber>Constants.MAX_CARRIABLE_ITEMS) 
 				&& noun.length()>0) {
 				game.addMessage("You can't "+command,true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
+				validDrink = false;
 		} else if (((int) player.getStat("drink")+1)<1) {
 			game.addMessage("You have no drink.",true,true);
+			validDrink = false;
 		}
-		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,validDrink);
 	}
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
@@ -224,5 +231,6 @@ public class Consume {
  * 			   - Added drink function and set up for rest
  * 20 May 2025 - added the rest functionality
  * 11 July 2025 - Fixed display error can't eat food.
- * 12 July 2025 - Fxed problem with eat not executing
+ * 12 July 2025 - Fixed problem with eat not executing
+ * 13 July 2025 - Fixed problem with drink not executing. Allowed eat apple.
  */
