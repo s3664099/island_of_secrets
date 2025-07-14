@@ -5,7 +5,7 @@ Test Document
 
 
  
- - The items list is not splitting
+
 
 - Cannot move in here !!!
 - Buttons not appearing (no help at start, and no prev commands)
@@ -15,7 +15,7 @@ Test Document
 - flint mispelled
 - Omegan - attack message mispelled. Should be on separate line
 - Have message that says you are riding the beast
-
+- Look should also function for examine
 
 - Saved Game before catching boat
 

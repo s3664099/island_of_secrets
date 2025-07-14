@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 10 June 2025
+Version: 4.6
+Date: 14 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -320,12 +320,12 @@ public class Miscellaneous {
 	private Game getDetails() {
 		
 		String items = getItemDetails();
-		game.addMessage("Info - Items carried",true,false);
-		game.addMessage("Food: "+((int) player.getStat("food")),false,false);
-		game.addMessage("Drink: "+((int) player.getStat("drink")),false,false);
+		String infoDisplay = "Info: "+"Food: "+((int) player.getStat("food"));
+		infoDisplay += "  Drink: "+((int) player.getStat("drink"));
+		game.addMessage(infoDisplay,true,false);
 		
 		if(hasItems) {
-			game.addMessage("Items: "+items,false,false);
+			game.addMessage("Items: "+items,false,true);
 		}
 		return game;
 	}
@@ -349,6 +349,7 @@ public class Miscellaneous {
 				itemLength += game.getItem(i).getItemName().length()+extraLength;
 			}
 		}
+		
 		return items;
 	}
 	
@@ -501,4 +502,5 @@ public class Miscellaneous {
  * 8 June 2025 - Added fill command
  * 9 June 2025 - Added ride and open commands
  * 10 June 2025 - Added swim & shelter commands
+ * 14 July 2025 - Updated info section to prevent display from breaking
  */

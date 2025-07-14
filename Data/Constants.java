@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 28 June 2025
+Version: 4.5
+Date: 14 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -27,7 +27,7 @@ public class Constants {
 	public static final int NUMBER_EXITS = 4;
 	
 	//Panel Related constants
-	public static final int MESSAGE_LENGTH = 60;
+	public static final int MESSAGE_LENGTH = 100;
 	
 	//Threshold for item categories in the item list
 	public static final int MAX_CARRIABLE_ITEMS = 24; // Items with IDs <= 24 are carriable
@@ -63,4 +63,5 @@ public class Constants {
  * 16 March 2025 - Moved NUMBER_OF_EXITS here
  * 25 June 2025 - Added constants for player starting values
  * 28 June 2025 - Changed type for strength from int to float
+ * 14 July 2025 - Increased size of message
 */

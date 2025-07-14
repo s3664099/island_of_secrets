@@ -2,8 +2,8 @@
 Title: Island of Secrets Message Builder Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 7 July 2025
+Version: 4.3
+Date: 14 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,7 +26,7 @@ public class MessageBuilder implements Serializable {
 	//Standard Construction
 	public MessageBuilder() {
 		this.messages = new ArrayList<>();
-		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length
+		this.maxMessageLength = Constants.MESSAGE_LENGTH; //Default max length\
 	}
 	
 	//Initialises with a message
@@ -83,7 +83,7 @@ public class MessageBuilder implements Serializable {
      * Otherwise, it is appended with a comma.
      */
     public void addLongMessage(String message, boolean clear) {
-    	
+
     	if (message != null && !message.isEmpty()) {
     		
 			//Clears the message if instructed
@@ -91,40 +91,35 @@ public class MessageBuilder implements Serializable {
 				clearMessages();
 			}
     		
-    		if (messages.isEmpty()) {
-    		
-    			//First message, add it directly
-    			messages.add(message);
-    		} else {
-    			
-    			//Get last message
-    			String lastMessage = messages.get(messages.size()-1);
-    			
-    			//Determine how to concatenate
-    			if (lastMessage.endsWith(".")) {
-    				
-    				//Start new sentance
-    				lastMessage += " " + message; 
-    			} else {
-    				
-    				//Append the current sentance
-    				lastMessage += ", " + message;
-    			}
-    			
-    			//Check if the concatenated message exceeds the maximum length
-    			if (lastMessage.length() <= maxMessageLength) {
-    				
-    				//Update the last message
-    				messages.set(messages.size()-1, lastMessage);
-    			} else {
-    				
-    				//Split the concatenated message
-    				messages.remove(messages.size()-1);
-    				addMessage(lastMessage,false);
-    			}
-    		}
-    	}
-    	
+			if (message.length()<=maxMessageLength) {
+				messages.add(message);
+			} else {
+								
+				while(message.length()>0) {
+
+					int messageEnd = maxMessageLength;
+					if (messageEnd>message.length()) {
+						messages.add(message);
+						message = "";
+					} else {
+					
+						boolean foundBlank = false;
+						while (!foundBlank) {
+							if (message.charAt(messageEnd)==' ') {
+								messages.add(message.substring(0, messageEnd));
+								message = (message.substring(messageEnd));
+								foundBlank = true;
+							} else {
+								messageEnd --;
+							}
+						}
+					}
+				}
+				for(String msg:messages) {
+					System.out.println(msg);
+				}
+			}
+    	}    	
     }
 	
     /**
@@ -146,4 +141,5 @@ public class MessageBuilder implements Serializable {
  * 20 March 2025 - Completed class based on recommendations.
  * 				   Add clear functionality inside message
  * 7 July 2025 - Added serializable
+ * 14 July 2025 - Change way long message works for long strings
  */
