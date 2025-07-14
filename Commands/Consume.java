@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 13 July 2025
+Version: 4.6
+Date: 14 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,14 +37,14 @@ public class Consume {
 		if (noun.equals("apple")) {
 			nounNumber = Constants.FOOD_THRESHOLD+1;
 		}
-		
+
 		if ((nounNumber<=Constants.FOOD_THRESHOLD || nounNumber>=Constants.DRINK_THRESHOLD) 
 				&& noun.length()>0) {
 				
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 				validEat = false;
-		} else if (((int) player.getStat("food")+1)<1) {
+		} else if (((int) player.getStat("food"))<1) {
 			game.addMessage("You have no food",true,true);
 			validEat = false;
 		}
@@ -62,7 +62,7 @@ public class Consume {
 				game.addMessage("You can't "+command,true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 				validDrink = false;
-		} else if (((int) player.getStat("drink")+1)<1) {
+		} else if (((int) player.getStat("drink"))<1) {
 			game.addMessage("You have no drink.",true,true);
 			validDrink = false;
 		}
@@ -233,4 +233,5 @@ public class Consume {
  * 11 July 2025 - Fixed display error can't eat food.
  * 12 July 2025 - Fixed problem with eat not executing
  * 13 July 2025 - Fixed problem with drink not executing. Allowed eat apple.
+ * 14 July 2025 - Fixed problem where eating and drinking more than you have
  */

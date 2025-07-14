@@ -37,7 +37,6 @@ public class Item implements Serializable {
 		this.itemFlag = ((int) flag)-FLAG_OFFSET;
 		this.itemLocation = ((int) location)-LOCATION_OFFSET;
 		
-		
 		if (this.itemLocation>ASCII_MAX) {
 			this.itemLocation -= LOCATION_ADJUSTMENT;
 		}

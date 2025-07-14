@@ -397,6 +397,7 @@ public class Miscellaneous {
 		game.addMessage("He eats the flowers - and changes",false,false);
 		game.getItem(GameEntities.ITEM_SCAVENGER).setItemFlag(1);
 		game.getItem(GameEntities.ITEM_MEDIAN).setItemFlag(0);
+		
 		return new ActionResult(game,player);
 	}
 	

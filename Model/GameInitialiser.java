@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Initialiser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 13 April 2025
+Version: 4.3
+Date: 13 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -66,14 +66,14 @@ public final class GameInitialiser {
 		for (int itemId=1;itemId<=Constants.NUMBER_OF_NOUNS;itemId++) {
 			
 			//Checks the name to give the item
-			String itemName = (itemId < Constants.NUMBER_OF_ITEMS)
+			String itemName = (itemId < Constants.NUMBER_OF_ITEMS+1)
 					? RawData.getObjects(itemId):"";
 			items[itemId] = new Item(RawData.getItemFlag(itemId),
 										 RawData.getItemLocation(itemId),
 										 itemName);
 			
 			final int id = itemId;
-			logger.log(Level.FINE, String.format("Initializing item %d", id));
+			logger.log(Level.FINE, String.format("Initializing item %d, %s", id,itemName));
 		}	
 		return items;
 	}
@@ -82,4 +82,5 @@ public final class GameInitialiser {
 /* 15 March 2025 - Created File
  * 4 April 2025 - Fixed issue with first location not displaying
  * 13 April 2025 - Updated code based on DeepSeek
+ * 13 July 2025 - Increase size of Items when read
  */

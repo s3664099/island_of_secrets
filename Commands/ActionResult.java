@@ -12,6 +12,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Commands;
 
+import Data.GameEntities;
 import Game.Game;
 import Game.Player;
 
