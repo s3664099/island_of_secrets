@@ -7,8 +7,8 @@ Test Document
  
 
 
-- Cannot move in here !!!
-- Buttons not appearing (no help at start, and no prev commands)
+
+- Buttons randomly disappearing (but reappears when view map and back).
 	
 - Can we go through to the end of the game
 
@@ -23,10 +23,10 @@ Test Document
 
 
 Bugs
-	- Should check if message exists, puts it separate line if it does.
 	
-	- Spaces between multi-line messages.
-	- The moving extra text to next line cutting mid word
+	
+	- Spaces between multi-line messages
+	
 	- update the code for the special panel messages
 	
 	- Carrying something new? For rubbing stone?
@@ -34,7 +34,7 @@ Bugs
 	- check shelter - kinda works
 	- confirm that you have enough water
 	- Sometimes miss swampman (probably because he moves).
-	- The info page is very problematic, showing more than it should.
+	
 	
 
 

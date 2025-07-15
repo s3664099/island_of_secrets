@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 14 July 2025
+Version: 4.12
+Date: 15 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,6 +24,7 @@ public class Game implements Serializable {
 	
 	private Location[] locationList;
 	private Item[] itemList;
+	private boolean[] exitNumbers;
 	private SpecialExitHandler specialExitHandler = new SpecialExitHandler();
 	private SpecialItemHandler specialItemHandler = new SpecialItemHandler();
 	private RandomExitHandler randomExitHandler = new RandomExitHandler();
@@ -96,7 +97,7 @@ public class Game implements Serializable {
 	//Returns a display of the available exits.
 	public String getExits(int roomNumber) {
 		
-		boolean[] exitNumbers = locationList[roomNumber].getExits();
+		exitNumbers = locationList[roomNumber].getExits();
 		String exits = "";
 		
 		if (roomNumber == Constants.RANDOM_ROOM) {
@@ -134,7 +135,7 @@ public class Game implements Serializable {
 	
 	//Checks if it is possible to move through the exit
 	public boolean checkExit(int room, int direction) {
-		return locationList[room].getExits()[direction];
+		return exitNumbers[direction];
 	}
 	
 	//Returns the room based on the number passed through
@@ -441,4 +442,5 @@ public class Game implements Serializable {
  * 28 April 2025 - Added methods to set the Message and Lightning State
  * 30 June 2025 - Updated give state for holding object to give. Changed bools to represent the function
  * 14 July 2025 - Made the items passed through to a long message
+ * 15 July 2025 - Moved array holding directions to top as a global variable
  */
