@@ -1,7 +1,7 @@
 Test Document
 
 - Omegan Disabled - Move
-
+- Saved Game before catching boat & at endgame
 
 
  
@@ -10,14 +10,14 @@ Test Document
 
 - Buttons randomly disappearing (but reappears when view map and back).
 	
-- Can we go through to the end of the game
+
 
 - flint mispelled
 - Omegan - attack message mispelled. Should be on separate line
 - Have message that says you are riding the beast
 - Look should also function for examine
+- update the code for the special panel messages
 
-- Saved Game before catching boat
 
 
 
@@ -27,7 +27,7 @@ Bugs
 	
 	- Spaces between multi-line messages
 	
-	- update the code for the special panel messages
+
 	
 	- Carrying something new? For rubbing stone?
 	- check swim works - It's Not
@@ -73,7 +73,7 @@ Step by step solution
 		- go to here and wait til either north or east appears
 		- give pebble to Median
 		- go to Omegan's sanctum and take cloak
-		- drop coal and strike flint
+		- drop coal and cloak and strike flint
 		- drop egg and break staff
 		- Game Over successfully.
 

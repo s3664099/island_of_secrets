@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 16 June 2025
+Version: 4.6
+Date: 15 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -139,9 +139,11 @@ public class Combat {
 		return breakStaff;
 	}
 	
-	private boolean ifHaveEgg() {
+	private boolean ifHaveEggAndOmegan() {
 		boolean haveEgg = false;
-		if(game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom()) {
+		
+		if(game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom() &&
+			game.getItem(GameEntities.ITEM_OMEGAN).getItemLocation() == player.getRoom()) {
 			haveEgg = true;
 		}
 		return haveEgg;
@@ -234,7 +236,8 @@ public class Combat {
 	
 	private boolean isStrikeFlint() {
 		boolean strikeFlint = false;
-		if(codedCommand.equals(GameEntities.CODE_HAS_FLINT)) {
+		
+		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT)) {
 			strikeFlint = true;
 		}
 		return strikeFlint;
@@ -278,7 +281,7 @@ public class Combat {
 	private ActionResult breakStaff() {
 		ActionResult result = breakStaffNormal();
 		
-		if (ifHaveEgg()) {
+		if (ifHaveEggAndOmegan()) {
 			result = releaseDactyl(result);
 		}
 		return result;
@@ -287,7 +290,7 @@ public class Combat {
 	private ActionResult breakStaffNormal() {
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.getItem(nounNumber).setItemFlag(-1);
+		game.getItem(nounNumber).setItemFlag(-9);
 		game.setMessageGameState();
 		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
 		return new ActionResult(game,player);
@@ -301,7 +304,7 @@ public class Combat {
 		game.addPanelMessage("Omegan in its claws and flies away", false);
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(GameEntities.ITEM_EGG).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.getItem(2).setItemFlag(-1);
+		game.getItem(nounNumber).setItemFlag(-1);
 		player.setStat("strength",(float) player.getStat("strength")+40);
 		
 		return new ActionResult(game,player);
@@ -440,4 +443,5 @@ public class Combat {
  * 14 June 2025 - Started writing the attack function
  * 15 June 2025 - Continued with Attack Function
  * 16 June 2025 - Completed attack function with strike flint. Updated damage for attack responses
+ * 15 July 2025 - Updated code so win conditions work, and fails if omegan not present when staff is broken
  */

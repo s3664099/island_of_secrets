@@ -240,6 +240,7 @@ public class PostCommand {
 	}
 	
 	private boolean isWinGame() {
+
 		boolean winGame = false;
 		if (game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()+
 			game.getItem(GameEntities.ITEM_STAFF).getItemFlag()+

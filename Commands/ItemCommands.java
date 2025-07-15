@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 10 July 2025
+Version: 4.11
+Date: 15 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -28,7 +28,8 @@ public class ItemCommands {
 		Item item = game.getItem(noun);
 		boolean commandSuccessful = true;
 		
-		if (((flaggedUntakeable(item)) || itemNotInRoom(item,currentRoom)) && noun<=Constants.MAX_CARRIABLE_ITEMS) {
+		if (((flaggedUntakeable(item)) || itemNotInRoom(item,currentRoom)) && 
+			(noun<=Constants.MAX_CARRIABLE_ITEMS || noun ==38)) {
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				commandSuccessful = false;
@@ -38,7 +39,7 @@ public class ItemCommands {
 				System.out.println("Not Valid");
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				commandSuccessful = false;
-		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS) {
+		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != 38) {
 			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
 			commandSuccessful = false;
 		}
@@ -87,7 +88,8 @@ public class ItemCommands {
 		int noun = command.getNounNumber();
 		boolean validCommand = true;
 		
-		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || noun>=Constants.FOOD_THRESHOLD) {
+		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
+			(noun>=Constants.FOOD_THRESHOLD && noun != 38)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			validCommand = false;
 		}
@@ -735,4 +737,5 @@ public class ItemCommands {
  * 29 June 2025 - Fixed problem with taking the apple.
  * 10 July 2025 - Fixed problem with invalid object still being flagged as taken
  * 				- Fixed validation for take and catch
+ * 15 July 2025 - Enabled cloak to be taken and dropped
  */
