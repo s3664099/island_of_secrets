@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 22 June 2025
+Version: 4.4
+Date: 16 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -294,7 +294,7 @@ public class PostCommand {
 	private void omeganAttacks() {
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
-		game.addMessage(" Omegan attack you!",false,true);
+		game.addMessage("Omegan attacks you!",false,true);
 	}
 	
 	private void swampManNotPresent() {
@@ -407,4 +407,5 @@ public class PostCommand {
  * 20 June 2025 - Added atOrchids, atThicket and adjust storm
  * 21 June 2025 - Continued with the post move events, up to Omegan, now up to logmen
  * 22 June 2025 - Finished the post move events. Made game and player changeable. Updated classes to get rid of result.
+ * 16 July 2025 - Fixed error with omegan attacking
  */
