@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Item Handler Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 17 March 2025
+Version: 4.2
+Date: 16 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import Data.GameEntities;
 import Data.Item;
 import Data.Location;
 
@@ -38,8 +39,9 @@ public class SpecialItemHandler implements Serializable {
 		itemDescriptions.put(45,"A tree bristling with apples");
 		itemDescriptions.put(27,"A torch hanging in a bracket on the wall");
 		itemDescriptions.put(44, "A coffee table against the wall, an open oak chest");
-		itemDescriptions.put(67,"A piece of flint stuck n the crack");
+		itemDescriptions.put(67,"A piece of flint stuck in the crack");
 		itemDescriptions.put(60, "A map, along with a collection of papers which seem to make up a diary");
+		itemDescriptions.put(11, "A parchment stuck amongst the mushrooms");
 	}
 	
 	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList) {
@@ -50,7 +52,9 @@ public class SpecialItemHandler implements Serializable {
 			description = description.split(", ")[0];
 		} else if ((roomNumber == ENTRANCE_CHAMBER && (itemList[TORCH].getItemLocation() != ENTRANCE_CHAMBER || itemList[TORCH].getItemFlag() != FLAG_HIDDEN ))
 				|| (roomNumber == PYRAMID && (itemList[FLINT].getItemLocation() != PYRAMID || itemList[FLINT].getItemFlag() != FLAG_HIDDEN))
-				|| (roomNumber == ABODE_HUT && !locationList[ABODE_HUT].getViewed())) {
+				|| (roomNumber == ABODE_HUT && !locationList[ABODE_HUT].getViewed()
+				|| (roomNumber == GameEntities.ROOM_LAIR && 
+					(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR)))) {
 			description = "";
 		}
 		return description;
@@ -59,4 +63,5 @@ public class SpecialItemHandler implements Serializable {
 
 /* 16 March 2025 - Created file
  * 17 March 2025 - Made class serialisable
+ * 16 July 2025 - Fixed error with flint and added parchment
  */

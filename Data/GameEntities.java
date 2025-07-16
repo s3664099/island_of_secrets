@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 6 July 2025
+Version: 4.20
+Date: 16 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -66,6 +66,7 @@ public class GameEntities {
 	public static final int ITEM_LILY = 3;
 	public static final int ITEM_JUG = 4;
 	public static final int ITEM_RAG = 5;
+	public static final int ITEM_PARCHMENT = 6;
 	public static final int ITEM_TORCH = 7;
 	public static final int ITEM_PEBBLE = 8;
 	public static final int ITEM_AXE = 9;
@@ -184,4 +185,5 @@ public class GameEntities {
  * 21 June 2025 - Added codes for post action
  * 22 June 2025 - Added codes for post move events
  * 6 July 2025 - Fixed issue with going into and out of the hut
+ * 16 July 2025 - Added parchment
  */

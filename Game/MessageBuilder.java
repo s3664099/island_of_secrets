@@ -115,9 +115,6 @@ public class MessageBuilder implements Serializable {
 						}
 					}
 				}
-				for(String msg:messages) {
-					System.out.println(msg);
-				}
 			}
     	}    	
     }
