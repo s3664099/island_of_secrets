@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Item Handler Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 16 July 2025
+Version: 4.3
+Date: 17 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,19 +21,8 @@ public class SpecialItemHandler implements Serializable {
 
 	private static final long serialVersionUID = -3392796825592359959L;
 
-	private Map<Integer, String> itemDescriptions = new HashMap<>();
-	
-	private int ENTRANCE_CHAMBER = 27;
-	private int GRANDPAS_HUT = 44;
-	private int PYRAMID = 67;
-	private int ABODE_HUT = 60;
-	
-	private int TORCH = 7;
-	private int CHEST = 26;
-	private int FLINT = 14;
-	
+	private Map<Integer, String> itemDescriptions = new HashMap<>();	
 	private int FLAG_HIDDEN = 9;
-	
 	
 	public SpecialItemHandler() {
 		itemDescriptions.put(45,"A tree bristling with apples");
@@ -48,11 +37,15 @@ public class SpecialItemHandler implements Serializable {
 		
 		String description = itemDescriptions.getOrDefault(roomNumber,"");
 		
-		if (roomNumber == GRANDPAS_HUT && itemList[CHEST].getItemFlag() !=1) {
+		if (roomNumber == GameEntities.ROOM_GRANDPAS_SHACK && itemList[GameEntities.ITEM_CHEST].getItemFlag() !=1) {
 			description = description.split(", ")[0];
-		} else if ((roomNumber == ENTRANCE_CHAMBER && (itemList[TORCH].getItemLocation() != ENTRANCE_CHAMBER || itemList[TORCH].getItemFlag() != FLAG_HIDDEN ))
-				|| (roomNumber == PYRAMID && (itemList[FLINT].getItemLocation() != PYRAMID || itemList[FLINT].getItemFlag() != FLAG_HIDDEN))
-				|| (roomNumber == ABODE_HUT && !locationList[ABODE_HUT].getViewed()
+		} else if ((roomNumber == GameEntities.ROOM_ENTRANCE_CHAMBER 
+				&& (itemList[GameEntities.ITEM_TORCH].getItemLocation() != GameEntities.ROOM_ENTRANCE_CHAMBER 
+				|| itemList[GameEntities.ITEM_TORCH].getItemFlag() != FLAG_HIDDEN ))
+				|| (roomNumber == GameEntities.ROOM_PYRAMID_SPLIT 
+				&& (itemList[GameEntities.ITEM_FLINT].getItemLocation() != GameEntities.ROOM_PYRAMID_SPLIT 
+				|| itemList[GameEntities.ITEM_FLINT].getItemFlag() != FLAG_HIDDEN))
+				|| (roomNumber == GameEntities.ROOM_OUTSIDE_HUT && !locationList[GameEntities.ROOM_OUTSIDE_HUT].getViewed()
 				|| (roomNumber == GameEntities.ROOM_LAIR && 
 					(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR)))) {
 			description = "";
@@ -64,4 +57,5 @@ public class SpecialItemHandler implements Serializable {
 /* 16 March 2025 - Created file
  * 17 March 2025 - Made class serialisable
  * 16 July 2025 - Fixed error with flint and added parchment
+ * 17 July 2025 - Changed to GameEntities.
  */

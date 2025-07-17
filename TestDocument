@@ -13,13 +13,13 @@ Test Document
 
 
 
-- Omegan - attack message mispelled. Should be on separate line
+
 - Have message that says you are riding the beast
 - Look should also function for examine
 - update the code for the special panel messages
 
 - Changes hardcoded numbers to GameEntities in SpecialItemHandler
-
+- Move Trapdoor room to GameEntities in SpecialExitHandler
 
 
 

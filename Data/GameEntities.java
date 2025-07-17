@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 16 July 2025
+Version: 4.21
+Date: 17 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -74,6 +74,7 @@ public class GameEntities {
 	public static final int ITEM_STAFF = 11;
 	public static final int ITEM_CHIP = 12;
 	public static final int ITEM_COAL = 13;
+	public static final int ITEM_FLINT = 14;
 	public static final int ITEM_HAMMER = 15;
 	public static final int ITEM_BEAST = 16;
 	public static final int ITEM_BREAD = 17;
@@ -83,6 +84,7 @@ public class GameEntities {
 	public static final int ITEM_SAP = 23;
 	public static final int ITEM_WATER = 24;
 	public static final int ITEM_BOAT = 25;
+	public static final int ITEM_CHEST = 26;
 	public static final int ITEM_FRACTURE = 27;
 	public static final int ITEM_STONE = 28;
 	public static final int ITEM_TRAPDOOR = 29;
@@ -186,4 +188,5 @@ public class GameEntities {
  * 22 June 2025 - Added codes for post move events
  * 6 July 2025 - Fixed issue with going into and out of the hut
  * 16 July 2025 - Added parchment
+ * 17 July 2025 - Added Torch & Flint
  */
