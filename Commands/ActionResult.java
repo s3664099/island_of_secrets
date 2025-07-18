@@ -2,8 +2,8 @@
 Title: Island of Secrets Action Result
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 8 May 2025
+Version: 4.3
+Date: 17 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 - Change validation to return Action Result
@@ -12,7 +12,6 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package Commands;
 
-import Data.GameEntities;
 import Game.Game;
 import Game.Player;
 
@@ -62,4 +61,5 @@ public class ActionResult {
 /* 5 May 2025 - Created File
  * 7 May 2025 - Added null constructor
  * 8 May 2025 - Added constructor for all variables
+ * 17 July 2025 - Removed redundant include
 */

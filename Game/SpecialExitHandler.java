@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Exit Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 6 July 2025
+Version: 4.3
+Date: 18 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import Data.GameEntities;
 import Data.Item;
 
 public class SpecialExitHandler implements Serializable {
@@ -22,8 +23,6 @@ public class SpecialExitHandler implements Serializable {
 	//Map holds an array of 2 strings - direction & special direction name
 	private Map<Integer, String[]> specialExits = new HashMap<Integer, String[]>();
 
-	private int TRAPDOOR = 29;
-	private int TRAPDOOR_ROOM = 51;
 	private String TRAPDOOR_DESCRIPTION = " and a closed trapdoor in the floor";
 	
 	public SpecialExitHandler() {
@@ -63,7 +62,7 @@ public class SpecialExitHandler implements Serializable {
 		String baseDescription = exitDescriptions[1];
 		
 		//Is player in the trapdoor room
-		if (roomNumber == TRAPDOOR_ROOM && itemList[TRAPDOOR].getItemFlag() !=0) {
+		if (roomNumber == GameEntities.ROOM_STOREROOM && itemList[GameEntities.ITEM_TRAPDOOR].getItemFlag() !=0) {
 			baseDescription += TRAPDOOR_DESCRIPTION;
 		}
 		
@@ -73,5 +72,6 @@ public class SpecialExitHandler implements Serializable {
 
 /* 15 March 2025 - Created File
  * 17 March 2025 - Made class serialisable
- * 6 JUly 2025 - Updated directions out of cave
+ * 6 July 2025 - Updated directions out of cave
+ * 18 July 2025 - Move hardcoded trapdoor section to GameEntities.
  */
