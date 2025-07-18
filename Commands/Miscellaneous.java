@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 14 June 2025
+Version: 4.7
+Date: 18 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -311,7 +311,8 @@ public class Miscellaneous {
 	
 	private boolean checkCanSwim() {
 		boolean canSwim = false;
-		if (player.getRoom()==51 && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()>0) {
+		
+		if (player.getRoom()==GameEntities.ROOM_STOREROOM && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0) {
 			canSwim = true;
 		}
 		return canSwim;
@@ -503,4 +504,5 @@ public class Miscellaneous {
  * 9 June 2025 - Added ride and open commands
  * 10 June 2025 - Added swim & shelter commands
  * 14 July 2025 - Updated info section to prevent display from breaking
+ * 18 July 2025 - Fixed problem with not setting the swimming flag in the storeroom
  */
