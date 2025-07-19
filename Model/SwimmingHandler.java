@@ -19,9 +19,7 @@ import Game.Player;
 public class SwimmingHandler {
 	
 	public ActionResult execute(String command, Player player, Game game) {
-		
-		//Need to have it's own command Parser to separate concerns
-		
+				
 		game.addMessage("Ok",true,true);
 		Swimming swim = player.getSwimming();
 		

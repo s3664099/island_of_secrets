@@ -28,10 +28,11 @@ public class CommandExecutor {
 		
 		if (command.checkMoveState()) {
 			logger.info("Moving");
-			//Poisoned waters
+			//Poisoned waters - needs to be calling the swimming handler
+			//Also needs to check if the player is swimming
+			//Need to find out what this code is below.
 			if (command.getCodedCommand().equals("490051") && game.getItem(29).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
-				player.setPlayerStateStartSwimming();
 				result = new ActionResult(game,player);
 			
 			//Normal Move

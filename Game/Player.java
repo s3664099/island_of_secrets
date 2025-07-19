@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 25 June 2025
+Version: 4.9
+Date: 19 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -112,12 +112,9 @@ public class Player implements Serializable {
 		playerState = PlayerState.NORMAL;
 	}
 	
-	public void setPlayerStateStartSwimming() {
-		playerState = PlayerState.START_SWIM;
-	}
-	
 	public void setPlayerStateSwimming() {
 		playerState = PlayerState.SWIMMING;
+		setSwimming(new Swimming(5));
 	}
 	
 	public boolean isPlayerStateNormal() {
@@ -127,14 +124,6 @@ public class Player implements Serializable {
 		}
 		return state;
 	}
-	
-	public boolean isPlayerStateStartSwimming() {
-		boolean state = false;
-		if (playerState == PlayerState.START_SWIM) {
-			state = true;
-		}
-		return state;
-	}	
 	
 	public boolean isPlayerStateSwimming() {
 		boolean state = false;
@@ -192,4 +181,5 @@ public class Player implements Serializable {
  * 25 March 2025 - Added Enums Player State. Removed Message and Lightning states (should be in game)
  * 27 March 2025 - Added Swimming class to store swimming state. Created Start Swimming state
  * 25 June 2025 - Restored strength to correct starting value. Moved starting constants to the constants file
+ * 19 July 2025 - Removed start swimming state
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 18 July 2025
+Version: 4.8
+Date: 19 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -461,7 +461,7 @@ public class Miscellaneous {
 	
 	private ActionResult canSwim() {
 		game.addMessage("You dive into the water",true,true);
-		player.setPlayerStateStartSwimming();
+		player.setPlayerStateSwimming();
 		player.setRoom(rand.nextInt(5)+1);
 		return new ActionResult(game,player);
 	}
@@ -505,4 +505,5 @@ public class Miscellaneous {
  * 10 June 2025 - Added swim & shelter commands
  * 14 July 2025 - Updated info section to prevent display from breaking
  * 18 July 2025 - Fixed problem with not setting the swimming flag in the storeroom
+ * 19 July 2025 - Changes to setPlayerStateSwimming
  */
