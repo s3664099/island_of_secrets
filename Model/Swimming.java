@@ -2,20 +2,23 @@
 Title: Island of Secrets Initialise Swimming Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.0
-Date: 15 March 2025
+Version: 4.1
+Date: 20 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Model;
 
+import java.util.Random;
+
 public class Swimming {
 	
 	private int swimming = 0;
 	private int swimPosition = 0;
+	private Random rand = new Random();
 
-	public Swimming(int swimming) {
-		this.swimming = swimming;
+	public Swimming() {
+		this.swimming = rand.nextInt(5)+1;
 	}
 	
 	public void swim() {
@@ -35,4 +38,5 @@ public class Swimming {
 }
 
 /*15 March 2025 - Created File
+ * 20 July 2025 - Moved random position here.
  */

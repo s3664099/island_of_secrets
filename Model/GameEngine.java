@@ -93,7 +93,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	public String getRoom() {
 		
 		String description = "";
-		System.out.println(player.isPlayerStateSwimming());
 		if (player.isPlayerStateSwimming()) {
 			description = swimming.getDescription();
 		} else {
