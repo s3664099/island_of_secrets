@@ -27,10 +27,7 @@ public class CommandExecutor {
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkMoveState()) {
-			logger.info("Moving");
-			//Poisoned waters - needs to be calling the swimming handler
-			
-			//Need to find out what this code is below.
+			logger.info("Moving");			
 			if (command.getCodedCommand().equals("490051") && game.getItem(29).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
 				result = new ActionResult(game,player);

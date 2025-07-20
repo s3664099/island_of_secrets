@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.21
-Date: 17 July 2025
+Version: 4.22
+Date: 20 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -108,8 +108,9 @@ public class GameEntities {
 	public static final int CMD_PICK = 15;
 	public static final int CMD_TAP = 18;
 	public static final int CMD_BREAK = 19;
-	public static final int CMD_CATCH = 29;
+	public static final int CMD_SWIM = 25;
 	public static final int CMD_SCRATCH = 28;
+	public static final int CMD_CATCH = 29;
 	public static final int CMD_EXAMINE = 33;
 	
 	// === Codes ===
@@ -133,7 +134,8 @@ public class GameEntities {
 	public static final String CODE_OUT_LOG_HUT = "510041";
 	public static final String CODE_OUT_LOG_CABIN = "510043";
 	public static final String CODE_DOWN_PYRAMID = "490066";
-	public static final String CODE_DOWN_TRAPDOOR = "490051";
+	public static final String CODE_DOWN_TRAPDOOR = "490051"; 
+	public static final String CODE_ENTER_TRAPDOOR = "2951051";
 	public static final String CODE_OUT_ABODE_HUT = "510060";
 	public static final String CODE_UP_PYRAMID = "480056";
 	public static final String CODE_OUT_SHACK = "510044";
@@ -189,4 +191,5 @@ public class GameEntities {
  * 6 July 2025 - Fixed issue with going into and out of the hut
  * 16 July 2025 - Added parchment
  * 17 July 2025 - Added Torch & Flint
+ * 20 July 2025 - Added code for go trapdoor
  */

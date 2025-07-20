@@ -28,7 +28,7 @@ public class Player implements Serializable {
 	private int roomToDisplay = this.room;
 	private final Map<String,Object> stats = new HashMap<>();
 	private final Random rand = new Random();
-	private enum PlayerState { NORMAL,START_SWIM,SWIMMING };
+	private enum PlayerState { NORMAL,SWIMMING };
 	private PlayerState playerState = PlayerState.NORMAL;
 	private Swimming swim;
 		
@@ -182,5 +182,5 @@ public class Player implements Serializable {
  * 27 March 2025 - Added Swimming class to store swimming state. Created Start Swimming state
  * 25 June 2025 - Restored strength to correct starting value. Moved starting constants to the constants file
  * 19 July 2025 - Removed start swimming state
- * 20 July 2025 - Removed setting the swim position.
+ * 20 July 2025 - Removed setting the swim position. Removed START_SWIM state
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 25s June 2025
+Version: 4.18
+Date: 29 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -37,6 +37,10 @@ public class ParsedCommand {
 		setState(verbNumber);
 	}
 	
+	public void updateState(int verbNumber) {
+		setState(verbNumber);
+	}
+	
 	private void setState(int verbNumber) {
 		
 		if (verbNumber>0 && verbNumber<6) {
@@ -55,7 +59,7 @@ public class ParsedCommand {
 		}
 	}
 	
-	public void setSingleCommand(int verbNumber) {
+	private void setSingleCommand(int verbNumber) {
 		
 		if (verbNumber == 11) {
 			commandType = CommandType.EAT;
@@ -80,7 +84,7 @@ public class ParsedCommand {
 		}
 	}
 	
-	public void setMultipleCommand(int verbNumber) {
+	private void setMultipleCommand(int verbNumber) {
 		
 		if (verbNumber == 6 || verbNumber == 7 || verbNumber == 15 || verbNumber == 29) {
 			commandType = CommandType.TAKE;
@@ -274,4 +278,5 @@ public class ParsedCommand {
  * 16 June 2025 - Added checks for load,save & quit
  * 24 June 2025 - Added script to make single special movement commands to go special command
  * 25 June 2025 - Added function call to set multiple command
+ * 20 July 2025 - Added function to change command state
  */

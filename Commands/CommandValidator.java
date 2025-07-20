@@ -2,14 +2,17 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 5 July 2025
+Version: 4.13
+Date: 20 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package Commands;
 
+import java.util.logging.Logger;
+
 import Data.Constants;
+import Data.GameEntities;
 import Game.Game;
 import Game.Player;
 
@@ -17,6 +20,7 @@ public class CommandValidator {
 	
 	private boolean validCommand;
 	private Game game;
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	//Validations - an invalid command does not count as an action
 	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
@@ -29,10 +33,14 @@ public class CommandValidator {
 		validCommand = checkNoun(command);
 		
 		ActionResult result = new ActionResult(this.game,player,validCommand);
+		logger.info("Command Valid: "+validCommand+" Code: "+command.getCodedCommand());
 		
 		//Special command specfic validations
 		if (validCommand) {
-			if(command.checkMoveState()) {
+			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
+				command.updateState(GameEntities.CMD_SWIM);
+			} else if(command.checkMoveState()) {
 				Move moveValidator = new Move();
 				result = moveValidator.validateMove(command,this.game,player.getRoom());
 			} else if(command.checkTake()) {
@@ -137,4 +145,6 @@ public class CommandValidator {
  * 23 June 2025 - Added check to place game into result object
  * 2 July 2025 - Fixed give validator to reject items not carrying
  * 5 July 2025 - Added validation for multi-word commands
+ * 20 July 2025 - Added logging info for command.
+ * 				- Added Code to set command to swimming for special commands
  */
