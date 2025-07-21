@@ -97,7 +97,6 @@ public class CommandParser {
 				
 		//Only called if more than two words
 		if (noun.length()>1) {
-			
 			//Does not contain more than one word?
 			if (noun.split(" ").length>1) {
 				noun = noun.split(" ")[0];
@@ -112,11 +111,13 @@ public class CommandParser {
 			}
 		} else {
 			nounNumber = -1;
-			
 			if(verbNumber>0 && verbNumber<5) {
 				nounNumber = new Move().parseSingleDirection(nounNumber, verbNumber);
+			} else if (verbNumber==GameEntities.CMD_GO && nounNumber>0 && nounNumber<7) {
+				nounNumber = 8;
 			}
 		}
+				
 		return nounNumber;
 	}
 	

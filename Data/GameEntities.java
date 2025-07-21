@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.22
-Date: 20 July 2025
+Version: 4.23
+Date: 21 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -104,6 +104,7 @@ public class GameEntities {
 	public static final int ITEM_FLAG_49 = 49;
 	
 	// === Commands ===
+	public static final int CMD_GO = 5;
 	public static final int CMD_DROP = 9;
 	public static final int CMD_PICK = 15;
 	public static final int CMD_TAP = 18;
@@ -193,4 +194,5 @@ public class GameEntities {
  * 16 July 2025 - Added parchment
  * 17 July 2025 - Added Torch & Flint
  * 20 July 2025 - Added code for go trapdoor
+ * 21 July 2025 - Added code for go command
  */

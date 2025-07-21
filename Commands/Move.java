@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 6 July 2025
+Version: 4.12
+Date: 21 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,7 +32,9 @@ public class Move {
 		nounNumber = handleSpecialRooms(room, noun, nounNumber);
 		nounNumber = handleCodedCommand(code,nounNumber);
 		
-		if(nounNumber>4 && nounNumber != GameEntities.ITEM_BOAT) {
+		if (verbNumber == GameEntities.CMD_GO && nounNumber>0 && nounNumber<5) {
+			nounNumber = 8;
+		} else if(nounNumber>4 && nounNumber != GameEntities.ITEM_BOAT) {
 			nounNumber -= 43;
 		}
 		
@@ -41,7 +43,7 @@ public class Move {
 	}
 	
 	public int parseSingleDirection(int nounNumber, int verbNumber) {
-		
+
 		if (nounNumber == -1) {
 			nounNumber = verbNumber;
 		} else if (nounNumber>Constants.NUMBER_OF_ITEMS && nounNumber<Constants.NUMBER_OF_NOUNS) {
@@ -88,7 +90,9 @@ public class Move {
 		
 		if (isGoBoat(command.getNounNumber())) {
 			result = goBoat(game);
-		} else if (isNotDirection(command.getNounNumber())) {
+		} else if (isNonStandardDirection(command)) {
+			result = exitBlocked(game);
+		} else if (isNotDirection(command)) {
 			result = notDirection(game);
 		} else if (isExitBlocked(game,room,command.getNounNumber())) {
 			result = exitBlocked(game);
@@ -203,6 +207,14 @@ public class Move {
 		return swampmanPresent;
 	}
 	
+	private boolean isNonStandardDirection(ParsedCommand command) {
+		boolean nonStandard = false;
+		if (command.getNounNumber()>4 && command.getNounNumber()<8)  {
+			nonStandard = true;
+		}
+		return nonStandard;
+	}
+	
 	private boolean areRocksMoving(Game game, Player player) {
 		boolean rocksMoving = false;
 		if(player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
@@ -289,9 +301,9 @@ public class Move {
 		return new ActionResult(game,true);
 	}
 	
-	private boolean isNotDirection(int nounNumber) {
+	private boolean isNotDirection(ParsedCommand command) {
 		boolean notDirection = false;
-		if(nounNumber>4) {
+		if(command.getNounNumber()>4) {
 			notDirection = true;
 		}
 		return notDirection;
@@ -356,4 +368,5 @@ public class Move {
  * 24 June 2025 - Fixed error that resulted in movement number greater than 4
  * 25 June 2025 - Fixed problem with boat, and made move validation readable.
  * 6 July 2025 - Fixed problem going into and out of hut
+ * 21 July 2025 - Added check to prevent using first four nouns to move
  */
