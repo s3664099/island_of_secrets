@@ -14,7 +14,9 @@ Test Document
 
 
 
-
+- Fix Swimming - if trapdoor not open, simply says so (for down/go trapdoor).
+			   - Errors if noun negative for go - should simply say 'I cannot do that'
+			   - Move the check to a separate function to check for go down/trapdoor
 - Look should also function for examine
 - update the code for the special panel messages
 
@@ -32,10 +34,10 @@ Bugs
 
 	
 	- Carrying something new? For rubbing stone?
-	- check swim works - It's Not
+
 	- check shelter - kinda works
 	- confirm that you have enough water
-	- Sometimes miss swampman (probably because he moves).
+	- Sometimes miss swampman (probably because he moves) - If player in that room, swampman does not move.
 	
 	
 

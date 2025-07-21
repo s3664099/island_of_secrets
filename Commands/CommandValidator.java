@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 20 July 2025
+Version: 4.14
+Date: 21 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,7 +39,13 @@ public class CommandValidator {
 		if (validCommand) {
 			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
 				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
-				command.updateState(GameEntities.CMD_SWIM);
+				if (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1) {
+					result = closedTrapdoor(player);
+				} else {
+					command.updateState(GameEntities.CMD_SWIM);
+				}
+			} else if (isTrapdoorClosed(command)) {
+				result = closedTrapdoor(player);
 			} else if(command.checkMoveState()) {
 				Move moveValidator = new Move();
 				result = moveValidator.validateMove(command,this.game,player.getRoom());
@@ -130,6 +136,20 @@ public class CommandValidator {
 		}
 		return validCommand;
 	}
+	
+	private boolean isTrapdoorClosed(ParsedCommand command) {
+		boolean trapdoorClosed = false;
+		if (command.getCodedCommand().equals(GameEntities.CODE_CLOSED_TRAPDOOR)
+			&& !command.checkOpen()) {
+			trapdoorClosed = true;
+		} 
+		return trapdoorClosed;
+	}
+	
+	private ActionResult closedTrapdoor(Player player) {
+		game.addMessage("The trapdoor is closed", true, true);
+		return new ActionResult(game,player,false);
+	}
 }
 
 /* 28 April 2025 - Created File
@@ -147,4 +167,5 @@ public class CommandValidator {
  * 5 July 2025 - Added validation for multi-word commands
  * 20 July 2025 - Added logging info for command.
  * 				- Added Code to set command to swimming for special commands
+ * 21 July 2025 - Added script to respond correctly if trapdoor closed
  */

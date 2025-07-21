@@ -136,6 +136,7 @@ public class GameEntities {
 	public static final String CODE_DOWN_PYRAMID = "490066";
 	public static final String CODE_DOWN_TRAPDOOR = "490051"; 
 	public static final String CODE_ENTER_TRAPDOOR = "2951051";
+	public static final String CODE_CLOSED_TRAPDOOR = "2951151";
 	public static final String CODE_OUT_ABODE_HUT = "510060";
 	public static final String CODE_UP_PYRAMID = "480056";
 	public static final String CODE_OUT_SHACK = "510044";
