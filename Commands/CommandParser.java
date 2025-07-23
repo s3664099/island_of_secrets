@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 2 July 2025
+Version: 4.15
+Date: 23 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -144,9 +144,11 @@ public class CommandParser {
 		if (splitCommand[1].equals("well") && room==GameEntities.ROOM_WELL) {
 			splitCommand[1]="room";
 		}
+		
+		System.out.println(splitCommand[0]);
 				
 		splitCommand[0] = "examine";
-		int verbNumber = GameEntities.CMD_SCRATCH;
+		int verbNumber = getVerbNumber(splitCommand[0]);
 		
 		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
 								splitCommand,command.getCommand());
@@ -214,4 +216,5 @@ public class CommandParser {
  * 24 June 2025 - Added parser for single command movement commands
  * 29 June 2025 - Fixed problem with multiple words in noun.
  * 2 July 2025 - Added code to handle response to give
+ * 23 July 2025 - Fixed parse look so can use look command
  */
