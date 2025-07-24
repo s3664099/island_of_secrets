@@ -11,6 +11,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,11 +34,12 @@ public class MessagePanel extends JPanel implements GameView {
 	private GamePanel panel;
 	
 	private JLabel label;
-	private String game_messages;
+	private List<String> gameMessages;
 
 	private final int HEAD = 0;
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
+	private static final int DISPLAY_DURATION_SECONDS = 2;
 	
     public MessagePanel(GameController game, GamePanel panel) {
     	
@@ -46,88 +48,42 @@ public class MessagePanel extends JPanel implements GameView {
     	this.panel = panel;
     	
     	setLayout(new BorderLayout());
+    	label = createLabel("");
+    	add(label,BorderLayout.CENTER);
     }
 	
     private JLabel createLabel(String text) {
-        label = new JLabel(text, SwingConstants.CENTER);
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
         label.setFont(new Font(FONT, Font.BOLD, FONT_SIZE)); 
         return label;
     }
     
-    private void startSequence(List<String> messages) {
-            	
-    	// First delay: 2 seconds for initial message
-        new Thread(() -> {
-            try {
-            	            	
-            	int delay = 2;
-            	
-            	//Last Message
-            	if (messages.size()==0) {
-            		delay=5;
-            	}
-          	
-            	TimeUnit.SECONDS.sleep(delay);
-                
-            	if (messages.size()==0) {
-            		//SwingUtilities.invokeLater(() ->  resetPanel(game));
-            	} else {
-            		//setPanel(game,new MessagePanel(this.game,this.engine,messages,this.game_messages));
-            	}
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-    
-	private void setPanel(JPanel game,JPanel panel) {
-		game.removeAll();
-		game.add(panel);
-		game.revalidate();
-		game.repaint();
-	}
-    
-	private void resetPanel(MainGamePanel game) {
-		game.removeAll();
-		//game.add(this.engine);
-		game.revalidate();
-		game.repaint();
-	}
-	
     public void refreshUI(GameController controller) {
     	this.controller = controller;
     	this.state = controller.getState();
-    	refreshMap();
+    	this.gameMessages = new ArrayList<>(state.getPanelMessage());
+    	startMessageSequence();
     }
     
-    public void refreshMap() {
-    	SwingUtilities.invokeLater(() -> {
-    		this.state = controller.getState();
-            //this.game_messages = start_message+messages.get(HEAD);
-            
-            //Displays the first message
-            //label = createLabel("<html>"+this.game_messages+"</html>");
-            //add(label, BorderLayout.CENTER);
-            
-            //Updates the first message with the second and removes them
-            //if (messages.size() > 0) {
-            	
-            //	this.game_messages = this.game_messages+"<br>";
-            		
-            //	if (messages.size()>0) {
-            //		messages.remove(HEAD);
-            //	}
-            //}
-            
-            //startSequence(messages);
-    	});
+    private void startMessageSequence() {
+    	new Thread(() -> {
+    		for (String message:gameMessages) {
+    			SwingUtilities.invokeLater(() -> {
+    				label.setText("<html>"+message+"</html>");
+    			});
+    			try {
+    				TimeUnit.SECONDS.sleep(DISPLAY_DURATION_SECONDS);
+    			} catch (InterruptedException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    		//SwingUtilities.invokeLater(() -> controller.switchToView("main"));
+    	} ).start();
     }
 
 	@Override
 	public JComponent getViewComponent() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 }
 /* 30 November 2024 - Created File

@@ -81,9 +81,9 @@ public class GamePanel extends JPanel {
      * Refreshes the message view
      * @param controller The game controller providing current state
      */
-	//public void refreshMessageView(GameController controller) {
-	//	SwingUtilities.invokeLater(() -> messageView.refreshUI(controller));
-	//}
+	public void refreshMessageView(GameController controller) {
+		SwingUtilities.invokeLater(() -> messageView.refreshUI(controller));
+	}
 	
     /**
      * Shows the main game view and triggers activation
@@ -104,10 +104,10 @@ public class GamePanel extends JPanel {
     /**
      * Shows the message view and triggers activation
      */
-	//public void showMessageView() {
-	//	cardLayout.show(viewContainer, MAP_VIEW);
-	//	mapView.onViewActivated();
-	//}
+	public void showMessageView() {
+		cardLayout.show(viewContainer, MAP_VIEW);
+		mapView.onViewActivated();
+	}
 }
 
 /* 5 April 2025 - Created File

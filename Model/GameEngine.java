@@ -3,7 +3,7 @@ Title: Island of Secrets Game
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.21
-Date: 30 June 2025
+Date: 24 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -280,6 +280,12 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 	public void setRoom(int locationID) {
 		player.setRoom(locationID);
 	}
+
+	@Override
+	public List<String> getPanelMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 } 
 
 /*
@@ -370,4 +376,5 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
 5 May 2025 - Made game & player mutable (due to need for changing)
 		   - Updated for ActionResult
 30 June 2025 - Removed separate process for give
+24 July 2025 - Updated for messagePanel
 */

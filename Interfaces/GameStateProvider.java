@@ -2,8 +2,8 @@
 Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 23 April 2025
+Version: 4.6
+Date: 24 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -78,6 +78,11 @@ public interface GameStateProvider {
      * @return Unmodifiable list of game messages/notifications
      */
 	List<String> getMessage();
+	
+    /**
+     * @return Unmodifiable list of panel messages
+     */
+	List<String> getPanelMessage();
 	
     /* Map Data Access */
     
@@ -170,4 +175,5 @@ public interface GameStateProvider {
  * 20 April 2025 - Added getRoomName
  * 23 April 2025 - Removed response required
  * 25 April 2025 - Added 
+ * 24 July 2025 - Added getPanelMessage
  */
