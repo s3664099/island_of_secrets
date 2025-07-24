@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 26 March 2025
+Version: 4.4
+Date: 24 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -14,50 +14,38 @@ import java.awt.Font;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import Interfaces.GameView;
 import Model.GameEngine;
+import UISupport.GameController;
+import UISupport.GameState;
 
-public class MessagePanel extends JPanel {
+public class MessagePanel extends JPanel implements GameView {
 
-	private static final long serialVersionUID = 1L;
-	private JLabel label;
-	private MainGamePanel game;
-	private GameEngine engine;
-	private String game_messages;
+	private static final long serialVersionUID = 7193673927279090863L;
+	private GameController controller;
+	private GameState state;
+	private GamePanel panel;
 	
+	private JLabel label;
+	private String game_messages;
+
 	private final int HEAD = 0;
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	
-    public MessagePanel(MainGamePanel game,GameEngine engine,List<String> messages,String start_message) {
+    public MessagePanel(GameController game, GamePanel panel) {
     	
-        this.game = game;
-        this.engine = engine;
-                
-        // Set a BorderLayout to center the label
-        setLayout(new BorderLayout());
-        this.game_messages = start_message+messages.get(HEAD);
-        
-        //Displays the first message
-        label = createLabel("<html>"+this.game_messages+"</html>");
-        add(label, BorderLayout.CENTER);
-        
-        //Updates the first message with the second and removes them
-        if (messages.size() > 0) {
-        	
-        	this.game_messages = this.game_messages+"<br>";
-        		
-        	if (messages.size()>0) {
-        		messages.remove(HEAD);
-        	}
-        }
-        
-        startSequence(messages);
-
+    	this.controller = game;
+    	this.state = game.getState();
+    	this.panel = panel;
+    	
+    	setLayout(new BorderLayout());
     }
 	
     private JLabel createLabel(String text) {
@@ -82,9 +70,9 @@ public class MessagePanel extends JPanel {
             	TimeUnit.SECONDS.sleep(delay);
                 
             	if (messages.size()==0) {
-            		SwingUtilities.invokeLater(() ->  resetPanel(game));
+            		//SwingUtilities.invokeLater(() ->  resetPanel(game));
             	} else {
-            		setPanel(game,new MessagePanel(this.game,this.engine,messages,this.game_messages));
+            		//setPanel(game,new MessagePanel(this.game,this.engine,messages,this.game_messages));
             	}
 
             } catch (InterruptedException e) {
@@ -106,6 +94,41 @@ public class MessagePanel extends JPanel {
 		game.revalidate();
 		game.repaint();
 	}
+	
+    public void refreshUI(GameController controller) {
+    	this.controller = controller;
+    	this.state = controller.getState();
+    	refreshMap();
+    }
+    
+    public void refreshMap() {
+    	SwingUtilities.invokeLater(() -> {
+    		this.state = controller.getState();
+            //this.game_messages = start_message+messages.get(HEAD);
+            
+            //Displays the first message
+            //label = createLabel("<html>"+this.game_messages+"</html>");
+            //add(label, BorderLayout.CENTER);
+            
+            //Updates the first message with the second and removes them
+            //if (messages.size() > 0) {
+            	
+            //	this.game_messages = this.game_messages+"<br>";
+            		
+            //	if (messages.size()>0) {
+            //		messages.remove(HEAD);
+            //	}
+            //}
+            
+            //startSequence(messages);
+    	});
+    }
+
+	@Override
+	public JComponent getViewComponent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 /* 30 November 2024 - Created File
  * 1 December 2024 - Change name of class to specific name
@@ -118,4 +141,5 @@ public class MessagePanel extends JPanel {
  * 21 March 2025 - Updated for MessageBuilder class
  * 22 March 2025 - Fixed issue with MessagePanel - works now.
  * 26 March 2025 - Commented out code to allow code to run
+ * 24 July 2025 - Started updating message panel to display special messages
  */

@@ -144,9 +144,7 @@ public class CommandParser {
 		if (splitCommand[1].equals("well") && room==GameEntities.ROOM_WELL) {
 			splitCommand[1]="room";
 		}
-		
-		System.out.println(splitCommand[0]);
-				
+						
 		splitCommand[0] = "examine";
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		
