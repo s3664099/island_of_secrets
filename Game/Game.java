@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 15 July 2025
+Version: 4.13
+Date: 25 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -192,6 +192,7 @@ public class Game implements Serializable {
 	public void addPanelMessage(String message,boolean clear) {
 		logger.info("Adding Panel message: " + message);
 		panelMessage.addMessage(message, clear);
+		setMessageGameState();
 	}
 	
 	public String getCommand(int number) {
@@ -443,4 +444,5 @@ public class Game implements Serializable {
  * 30 June 2025 - Updated give state for holding object to give. Changed bools to represent the function
  * 14 July 2025 - Made the items passed through to a long message
  * 15 July 2025 - Moved array holding directions to top as a global variable
+ * 25 July 2025 - Added message state set when panel message added.
  */

@@ -256,6 +256,11 @@ public class GameState implements GameStateProvider {
 	public boolean isLightningState() {
 		return lightningState;
 	}
+
+	@Override
+	public List<String> getPanelMessage() {
+		return null;
+	}
 }
 
 /* 1 April 2025 - Created File
