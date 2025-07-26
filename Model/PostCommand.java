@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 16 July 2025
+Version: 4.5
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -254,7 +254,8 @@ public class PostCommand {
 		boolean loseGame = false;
 		if ((int) player.getStat("timeRemaining")<0 || 
 			(float) player.getStat("strength")<0 || 
-			game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1) {
+			(game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1 &&
+			!game.isMessageState())) {
 			loseGame = true;
 		}
 		return loseGame;
@@ -408,4 +409,5 @@ public class PostCommand {
  * 21 June 2025 - Continued with the post move events, up to Omegan, now up to logmen
  * 22 June 2025 - Finished the post move events. Made game and player changeable. Updated classes to get rid of result.
  * 16 July 2025 - Fixed error with omegan attacking
+ * 26 July 2025 - Updated so that set message panel taken into account
  */

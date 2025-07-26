@@ -84,6 +84,14 @@ public final class GameController implements GameCommandHandler {
 	}
 	
 	public void refreshUI() {
+		
+		/* - This is where it is refreshed, so the refresh UI should check if the 
+		 * message state is set, and if so, display the message panel.
+		 * Then it should reset it back to normal, unless the end game is triggered
+		 * then it will set it to end game state.
+		 * Check if messages come from success completion.
+		 */
+		
 		ui.refreshUI(this);
 	}
 	
