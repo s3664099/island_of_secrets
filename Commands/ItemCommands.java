@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 15 July 2025
+Version: 4.12
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -700,6 +700,7 @@ public class ItemCommands {
 			game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(43).setItemFlag(1);
 			
+			game.setMessageGameState();
 			game.addPanelMessage("He takes it ...", true);
 			if (player.getRoom()!=8) {
 				game.addPanelMessage("runs down the corridor, ...", false);
@@ -738,4 +739,5 @@ public class ItemCommands {
  * 10 July 2025 - Fixed problem with invalid object still being flagged as taken
  * 				- Fixed validation for take and catch
  * 15 July 2025 - Enabled cloak to be taken and dropped
+ * 26 July 2025 - Added setMessageGameState
  */

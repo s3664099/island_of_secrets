@@ -300,6 +300,7 @@ public class Combat {
 		Game game = result.getGame();
 		Player player = result.getPlayer();
 		
+		game.setMessageGameState();
 		game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
 		game.addPanelMessage("Omegan in its claws and flies away", false);
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
@@ -351,8 +352,7 @@ public class Combat {
 		player.setStat("strength",(float) 0);
 		player.setStat("wisdom",0);
 		player.setStat("timeRemaining",0);
-
-		game.setEndGameState();	
+		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		
 		return new ActionResult(game,player);
 	}
@@ -425,7 +425,8 @@ public class Combat {
 	}
 	
 	private ActionResult omeganCloakPresent() {
-		
+
+		game.setMessageGameState();
 		game.addPanelMessage("The coal burns with a red flame",true);
 		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
 		player.setStat("wisdom",(int) player.getStat("wisdom")+20);
@@ -444,4 +445,5 @@ public class Combat {
  * 15 June 2025 - Continued with Attack Function
  * 16 June 2025 - Completed attack function with strike flint. Updated damage for attack responses
  * 15 July 2025 - Updated code so win conditions work, and fails if omegan not present when staff is broken
+ * 26 July 2025 - Added set state changes to message states. Changed method of setting end game state
  */

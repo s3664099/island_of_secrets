@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 14 July 2025
+Version: 4.7
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -194,6 +194,7 @@ public class Consume {
 			game.setMessageGameState();
 			
 			int count = determineCount(game);
+			game.setMessageGameState();
 			game.addPanelMessage("You taste a drop and ...",true);
 			
 			for (int i=0;i<count;i++) {
@@ -214,12 +215,12 @@ public class Consume {
 	
 	private Game setMessage(int count,Game game) {
 		
+		game.setMessageGameState();
 		game.addPanelMessage("Time passes ...", true);
 		for (int i=1;i<count;i++) {
 			game.addPanelMessage("Time passes ...", false);
 		}
 		game.addMessage("Ok",true,true);
-		game.setMessageGameState();
 		
 		return game;
 	}
@@ -234,4 +235,5 @@ public class Consume {
  * 12 July 2025 - Fixed problem with eat not executing
  * 13 July 2025 - Fixed problem with drink not executing. Allowed eat apple.
  * 14 July 2025 - Fixed problem where eating and drinking more than you have
+ * 26 July 2025 - Added setMessageGameState
  */

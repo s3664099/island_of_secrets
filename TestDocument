@@ -17,7 +17,7 @@ Test Document
 
 
 
-
+- Check that the storm response is used (and can be removed from CommandExecutor)
 - update the code for the special panel messages
 
 

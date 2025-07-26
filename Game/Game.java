@@ -192,7 +192,6 @@ public class Game implements Serializable {
 	public void addPanelMessage(String message,boolean clear) {
 		logger.info("Adding Panel message: " + message);
 		panelMessage.addMessage(message, clear);
-		setMessageGameState();
 	}
 	
 	public String getCommand(int number) {

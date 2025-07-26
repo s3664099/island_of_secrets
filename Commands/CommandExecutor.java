@@ -74,12 +74,6 @@ public class CommandExecutor {
 			result = new Miscellaneous(game,player,command).swim();
 		} else if (command.checkShelter()) {
 			result = new Miscellaneous(game,player,command).shelter();
-			/*
-			 * 			int location = this.command.shelter(player, game, commands);
-						if (location != -1) {
-							executeShelter(game,player,location);
-						}
-			 */
 		} else if (command.checkChop()) {
 			logger.info("Chop");
 			result = new Combat(game,player,command).chop();
@@ -100,9 +94,7 @@ public class CommandExecutor {
 			logger.info("Quit");
 			result = new Persistence(game,player,command).quit();
 		}
-		
 		PostCommand updates = new PostCommand(result);
-		
 		return updates.postUpdates();
 	}
 		
@@ -111,6 +103,7 @@ public class CommandExecutor {
 		player.setRoom(location);
 		game.getItem(22).setItemFlag(-location);
 		game.addMessage("You reach shelter.",true,true);
+		game.setMessageGameState();
 		game.addPanelMessage("You blindly run through the storm",true);
 
 	}
