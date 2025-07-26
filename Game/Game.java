@@ -175,6 +175,8 @@ public class Game implements Serializable {
 	}
 	
 	public List<String> getPanelMessage() {
+		System.out.println("Hello");
+		System.out.println(panelMessage.getMessages());
 		return panelMessage.getMessages();
 	}
 			

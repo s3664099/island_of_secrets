@@ -131,7 +131,7 @@ public interface GameStateProvider {
      * @return True when game has ended
      */
 	public boolean isEndGameState();
-
+	
     /**
      * @return True when a give response is required
      */
@@ -158,7 +158,7 @@ public interface GameStateProvider {
 	public boolean isNormalState();
 	
     /**
-     * @return True when give player state
+     * @return True when message player state
      */
 	public boolean isMessageState();
 	

@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 8 April 2025
+Version: 4.4
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -48,7 +48,12 @@ public class GameFrame extends JFrame implements GameUI {
 
 	@Override
 	public void refreshUI(GameController game) {
-		gamePanel.refreshMainView(game);		
+		
+		if (game.isMessageState()) {
+			gamePanel.refreshMessageView(game);
+		} else {
+			gamePanel.refreshMainView(game);
+		}
 	}
 
 	@Override
@@ -72,4 +77,5 @@ public class GameFrame extends JFrame implements GameUI {
  * 29 March 2025 - Hid set command field
  * 4 April 2025 - Updated frame to build map panel
  * 8 April 2025 - Removed unusued code
+ * 26 July 2025 - Added check to display messages
  */

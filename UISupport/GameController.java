@@ -71,6 +71,10 @@ public final class GameController implements GameCommandHandler {
 		return engine.isGiveState();
 	}
 	
+	public boolean isMessageState() {
+		return engine.isMessageState();
+	}
+	
 	@Override
 	public void setShelterGameState() {
 		engine.setShelterGameState();

@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 24 July 2025
+Version: 4.5
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,7 +11,6 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import Interfaces.GameView;
-import Model.GameEngine;
 import UISupport.GameController;
 import UISupport.GameState;
 
@@ -36,7 +34,6 @@ public class MessagePanel extends JPanel implements GameView {
 	private JLabel label;
 	private List<String> gameMessages;
 
-	private final int HEAD = 0;
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
 	private static final int DISPLAY_DURATION_SECONDS = 2;
@@ -61,7 +58,7 @@ public class MessagePanel extends JPanel implements GameView {
     public void refreshUI(GameController controller) {
     	this.controller = controller;
     	this.state = controller.getState();
-    	this.gameMessages = new ArrayList<>(state.getPanelMessage());
+    	this.gameMessages = state.getPanelMessage();
     	startMessageSequence();
     }
     
@@ -98,4 +95,5 @@ public class MessagePanel extends JPanel implements GameView {
  * 22 March 2025 - Fixed issue with MessagePanel - works now.
  * 26 March 2025 - Commented out code to allow code to run
  * 24 July 2025 - Started updating message panel to display special messages
+ * 26 July 2025 - The class now works without errors, but does not display message
  */

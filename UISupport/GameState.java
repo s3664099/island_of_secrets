@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 23 April 2025
+Version: 4.7
+Date: 26 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -259,7 +259,7 @@ public class GameState implements GameStateProvider {
 
 	@Override
 	public List<String> getPanelMessage() {
-		return null;
+		return stateProvider.getPanelMessage();
 	}
 }
 
@@ -272,4 +272,5 @@ public class GameState implements GameStateProvider {
  * 20 April 2025 - Added get Room Name function
  * 23 April 2025 - Updated to enums instead if response required
  * 25 April 2025 - Updated based on enums in Player class.
+ * 26 July 2025 - Added getPanelmessages
  */
