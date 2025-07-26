@@ -46,7 +46,7 @@ public class MessagePanel extends JPanel implements GameView {
     	
     	setLayout(new BorderLayout());
     	label = createLabel("");
-    	add(label,BorderLayout.CENTER);
+    	this.panel.showMessageView();
     }
 	
     private JLabel createLabel(String text) {
@@ -65,9 +65,15 @@ public class MessagePanel extends JPanel implements GameView {
     private void startMessageSequence() {
     	new Thread(() -> {
     		for (String message:gameMessages) {
+    			panel.removeAll();
     			SwingUtilities.invokeLater(() -> {
     				label.setText("<html>"+message+"</html>");
+    				panel.add(label,BorderLayout.CENTER);
+    				panel.revalidate();
+    				panel.repaint();
     			});
+    			revalidate();
+    			repaint();
     			try {
     				TimeUnit.SECONDS.sleep(DISPLAY_DURATION_SECONDS);
     			} catch (InterruptedException e) {
@@ -76,6 +82,9 @@ public class MessagePanel extends JPanel implements GameView {
     		}
     		//SwingUtilities.invokeLater(() -> controller.switchToView("main"));
     	} ).start();
+    	
+    	//Reset the main state and reload the panel
+    	
     }
 
 	@Override
@@ -96,4 +105,5 @@ public class MessagePanel extends JPanel implements GameView {
  * 26 March 2025 - Commented out code to allow code to run
  * 24 July 2025 - Started updating message panel to display special messages
  * 26 July 2025 - The class now works without errors, but does not display message
+ * 				- Message now displays
  */
