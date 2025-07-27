@@ -18,7 +18,9 @@ Test Document
 
 
 - Check that the storm response is used (and can be removed from CommandExecutor)
-- update the code for the special panel messages
+- update the code for lightning display
+- have an end game check at the end of the message display
+	- should reset to running state as well.
 
 
 

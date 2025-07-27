@@ -49,7 +49,7 @@ public class GamePanel extends JPanel {
 		//Create views
 		this.mainView = new MainGamePanel(controller,this);
 		this.mapView = new MapPanel(controller,this);
-		this.messageView = new MessagePanel(controller,this);
+		this.messageView = new MessagePanel(this);
 
 		//Configure view container
 		viewContainer.add(mainView,MAIN_VIEW);
@@ -82,13 +82,19 @@ public class GamePanel extends JPanel {
      * @param controller The game controller providing current state
      */
 	public void refreshMessageView(GameController controller) {
-		SwingUtilities.invokeLater(() -> messageView.refreshUI(controller));
+		SwingUtilities.invokeLater(() -> 
+			messageView.displayMessages(controller.getState().getPanelMessage()));
 	}
 	
     /**
      * Shows the main game view and triggers activation
      */
 	public void showMainView() {
+		
+		//Check if not running
+    	//Check if the game has ended and set it as an end game
+    	//Otherwise set it as running
+		
 		cardLayout.show(viewContainer,MAIN_VIEW);
 		mainView.onViewActivated();
 	}
@@ -105,7 +111,7 @@ public class GamePanel extends JPanel {
      * Shows the message view and triggers activation
      */
 	public void showMessageView() {
-		cardLayout.show(viewContainer, MAP_VIEW);
+		cardLayout.show(viewContainer, MESSAGE_VIEW);
 		mapView.onViewActivated();
 	}
 }
