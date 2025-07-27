@@ -29,7 +29,6 @@ import UISupport.GameState;
 public class MessagePanel extends JPanel implements GameView {
 
 	private static final long serialVersionUID = 7193673927279090863L;
-	private GameController controller;
 	private GameState state;
 	private GamePanel panel;
 	
@@ -43,10 +42,8 @@ public class MessagePanel extends JPanel implements GameView {
 	
     public MessagePanel(GameController game, GamePanel panel) {
     	
-    	this.controller = game;
     	this.state = game.getState();
     	this.panel = panel;
-    	
     	setLayout(new BorderLayout());
     	label = createLabel("");
     	add(label,BorderLayout.CENTER);
@@ -59,7 +56,7 @@ public class MessagePanel extends JPanel implements GameView {
     }
     
     public void refreshUI(GameController controller) {
-    	this.controller = controller;
+    	
     	this.state = controller.getState();
     	this.gameMessages = state.getPanelMessage();
     	
@@ -70,39 +67,29 @@ public class MessagePanel extends JPanel implements GameView {
     }
     
     private void startMessageSequence() {
+    	
     	if (gameMessages == null || gameMessages.isEmpty()) {
     		panel.showMainView();
     	} else {
     		Iterator<String> messageIterator = gameMessages.iterator();
     		messageTimer = new Timer(DISPLAY_DURATION_MS,e-> {
     			if (messageIterator.hasNext()) {
+    				panel.removeAll();
     				String message = messageIterator.next();
+    				System.out.println(message);
     				label.setText("<html>"+message+"</html>");
-    				revalidate();
-    				repaint();
-    			} else {
-    				((Timer) e.getSource()).stop();
-    				SwingUtilities.invokeLater(()->panel.showMainView());
-    			}
-    		});
-    	}
-    	new Thread(() -> {
-    		for (String message:gameMessages) {
-    			panel.removeAll();
-    			SwingUtilities.invokeLater(() -> {
-    				
     				panel.add(label,BorderLayout.CENTER);
     				panel.revalidate();
     				panel.repaint();
-    			});
-    			try {
-    				TimeUnit.SECONDS.sleep(DISPLAY_DURATION_SECONDS);
-    			} catch (InterruptedException e) {
-    				e.printStackTrace();
+    			} else {
+    				((Timer) e.getSource()).stop();
+    					SwingUtilities.invokeLater(()->panel.showMainView()
+    				);
     			}
-    		}
-    		panel.showMainView();
-    	} ).start();
+    		});
+    		messageTimer.setInitialDelay(0);
+    		messageTimer.start();
+    	}
     }
 
 	@Override
