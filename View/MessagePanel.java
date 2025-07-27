@@ -11,6 +11,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import Interfaces.GameView;
 import UISupport.GameController;
@@ -33,10 +35,11 @@ public class MessagePanel extends JPanel implements GameView {
 	
 	private JLabel label;
 	private List<String> gameMessages;
+	private Timer messageTimer;
 
 	private final String FONT = "Arial";
 	private final int FONT_SIZE = 24;
-	private static final int DISPLAY_DURATION_SECONDS = 2;
+	private static final int DISPLAY_DURATION_MS = 2000;
 	
     public MessagePanel(GameController game, GamePanel panel) {
     	
@@ -46,7 +49,7 @@ public class MessagePanel extends JPanel implements GameView {
     	
     	setLayout(new BorderLayout());
     	label = createLabel("");
-    	this.panel.showMessageView();
+    	add(label,BorderLayout.CENTER);
     }
 	
     private JLabel createLabel(String text) {
@@ -59,32 +62,47 @@ public class MessagePanel extends JPanel implements GameView {
     	this.controller = controller;
     	this.state = controller.getState();
     	this.gameMessages = state.getPanelMessage();
+    	
+    	if (messageTimer != null && messageTimer.isRunning()) {
+    		messageTimer.stop();
+    	}
     	startMessageSequence();
     }
     
     private void startMessageSequence() {
+    	if (gameMessages == null || gameMessages.isEmpty()) {
+    		panel.showMainView();
+    	} else {
+    		Iterator<String> messageIterator = gameMessages.iterator();
+    		messageTimer = new Timer(DISPLAY_DURATION_MS,e-> {
+    			if (messageIterator.hasNext()) {
+    				String message = messageIterator.next();
+    				label.setText("<html>"+message+"</html>");
+    				revalidate();
+    				repaint();
+    			} else {
+    				((Timer) e.getSource()).stop();
+    				SwingUtilities.invokeLater(()->panel.showMainView());
+    			}
+    		});
+    	}
     	new Thread(() -> {
     		for (String message:gameMessages) {
     			panel.removeAll();
     			SwingUtilities.invokeLater(() -> {
-    				label.setText("<html>"+message+"</html>");
+    				
     				panel.add(label,BorderLayout.CENTER);
     				panel.revalidate();
     				panel.repaint();
     			});
-    			revalidate();
-    			repaint();
     			try {
     				TimeUnit.SECONDS.sleep(DISPLAY_DURATION_SECONDS);
     			} catch (InterruptedException e) {
     				e.printStackTrace();
     			}
     		}
-    		//SwingUtilities.invokeLater(() -> controller.switchToView("main"));
+    		panel.showMainView();
     	} ).start();
-    	
-    	//Reset the main state and reload the panel
-    	
     }
 
 	@Override

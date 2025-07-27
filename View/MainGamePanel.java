@@ -75,7 +75,6 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 		
 		SwingUtilities.invokeLater(()-> {
 			this.state = game.getState();
-			
 			statusPanel.refreshUI(state);
 			roomPanel.refreshUI(state);
 			commandPanel.refreshUI(state);

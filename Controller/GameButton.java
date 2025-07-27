@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 21 April 2025
+Version: 4.5
+Date: 27 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,42 +13,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-import UISupport.GameController;
 import View.GamePanel;
 
 public class GameButton implements ActionListener {
 
-	private final GameController controller;
 	private final GamePanel panel;
 	
-	public GameButton(GameController controller, GamePanel panel) {
-		
-		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");
-		this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
-		
+	public GameButton(GamePanel panel) {
+		this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		returnToMainGameView();
-	}
-	
-	private void returnToMainGameView() {
-		showMainView();
-		updateGameState();
-		refreshView();
-	}
-	
-	private void showMainView() {
 		panel.showMainView();
-	}
-	
-	private void updateGameState() {
-		controller.setRunningGameState();
-	}
-	
-	private void refreshView() {
-		panel.refreshMainView(controller);
 	}
 }
 
@@ -60,4 +37,5 @@ public class GameButton implements ActionListener {
  * 13 April 2025 - Updated button for changing the savedGameState
  * 21 April 2025 - Updated based on deepseek recommendations
  * 25 April 2025 - Changed based on updated to Enums
+ * 27 July 2025 - Removed functions not used
  */
