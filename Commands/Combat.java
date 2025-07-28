@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 15 July 2025
+Version: 4.7
+Date: 28 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -342,6 +342,7 @@ public class Combat {
 		game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
 		
 		game.setMessageGameState();
+		game.setEndGameState();
 		game.addPanelMessage("Thunder splits the sky!",true);
 		game.addPanelMessage("It is the triumphant voice of Omegan.",false);
 		game.addPanelMessage("Well done Alphan!",false);
@@ -446,4 +447,5 @@ public class Combat {
  * 16 June 2025 - Completed attack function with strike flint. Updated damage for attack responses
  * 15 July 2025 - Updated code so win conditions work, and fails if omegan not present when staff is broken
  * 26 July 2025 - Added set state changes to message states. Changed method of setting end game state
+ * 28 July 2025 - Added set endgame state to kill command
  */

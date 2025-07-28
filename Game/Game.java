@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 25 July 2025
+Version: 4.14
+Date: 28 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,7 +34,8 @@ public class Game implements Serializable {
 		
 	private String[] commands = {"","",""};
 	
-	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,MESSAGE,LIGHTNING }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,LIGHTNING }
+	private boolean hasMessage = false;
 	private GameState gameState = GameState.STARTED;
 	private String giveNoun = "";
 	
@@ -302,7 +303,7 @@ public class Game implements Serializable {
 	}
 	
 	public void setMessageGameState() {
-		gameState = GameState.MESSAGE;
+		hasMessage = !hasMessage;
 	}
 	
 	public void setLightingGameState() {
@@ -365,12 +366,7 @@ public class Game implements Serializable {
 	}
 	
 	public boolean isMessageState() {
-		
-		boolean messageState = false;
-		if (gameState == GameState.MESSAGE) {
-			messageState = true;
-		}
-		return messageState;
+		return hasMessage;
 	}
 	
 	public boolean isLightningState() {
@@ -444,4 +440,5 @@ public class Game implements Serializable {
  * 14 July 2025 - Made the items passed through to a long message
  * 15 July 2025 - Moved array holding directions to top as a global variable
  * 25 July 2025 - Added message state set when panel message added.
+ * 28 July 2025 - Created separate boolean for message state
  */

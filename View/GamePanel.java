@@ -30,6 +30,7 @@ public class GamePanel extends JPanel {
 	private static final String MAIN_VIEW = "MAIN";
 	private static final String MAP_VIEW = "MAP";
 	private static final String MESSAGE_VIEW = "MESSAGE";
+	private static final String LIGHTNING_VIEW = "LIGHTNING";
 
 	//UI Components
 	private final CardLayout cardLayout = new CardLayout();
@@ -37,6 +38,7 @@ public class GamePanel extends JPanel {
     private MainGamePanel mainView;
     private MapPanel mapView;
     private MessagePanel messageView;
+    private LightningPanel lightningView;
 	
 	public GamePanel(GameController controller) {
 		Objects.requireNonNull(controller, "GameController cannot be null");
@@ -50,11 +52,13 @@ public class GamePanel extends JPanel {
 		this.mainView = new MainGamePanel(controller,this);
 		this.mapView = new MapPanel(controller,this);
 		this.messageView = new MessagePanel(this);
+		this.lightningView = new LightningPanel(this,controller);
 
 		//Configure view container
 		viewContainer.add(mainView,MAIN_VIEW);
 		viewContainer.add(mapView,MAP_VIEW);
 		viewContainer.add(messageView,MESSAGE_VIEW);
+		viewContainer.add(lightningView,LIGHTNING_VIEW);
 		add(viewContainer,BorderLayout.CENTER);
 		
 		//Initial view

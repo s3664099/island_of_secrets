@@ -19,17 +19,17 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import Model.GameEngine;
+import UISupport.GameController;
 
 public class LightningPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private int number = 0;
 	private JLabel label;
-	private MainGamePanel game;
+	private GamePanel game;
 	
-    public LightningPanel(int initialNumber,MainGamePanel game,GameEngine engine) {
-        this.number = initialNumber;
-        this.game = game;
+    public LightningPanel(GamePanel gamePanel,GameController engine) {
+        this.game = gamePanel;
 
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
@@ -75,7 +75,7 @@ public class LightningPanel extends JPanel {
         timer.start();
     }
     
-	private void resetPanel(MainGamePanel game) {
+	private void resetPanel(GamePanel game) {
 		game.removeAll();
 		//game.add(this.engine);
 		game.revalidate();
