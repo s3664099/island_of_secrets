@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Pabel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 24 July 2025
+Version: 4.4
+Date: 28 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -91,6 +91,15 @@ public class GamePanel extends JPanel {
 	}
 	
     /**
+     * Refreshes the lightning view
+     * @param controller The game controller providing current state
+     */
+	public void refreshLightingView(GameController controller) {
+		SwingUtilities.invokeLater(() -> 
+			lightningView.startLightningEffect());
+	}
+	
+    /**
      * Shows the main game view and triggers activation
      */
 	public void showMainView() {
@@ -116,7 +125,15 @@ public class GamePanel extends JPanel {
      */
 	public void showMessageView() {
 		cardLayout.show(viewContainer, MESSAGE_VIEW);
-		mapView.onViewActivated();
+		messageView.onViewActivated();
+	}
+	
+    /**
+     * Shows the message view and triggers activation
+     */
+	public void showLightningView() {
+		cardLayout.show(viewContainer, MESSAGE_VIEW);
+		lightningView.onViewActivated();
 	}
 }
 
@@ -124,4 +141,5 @@ public class GamePanel extends JPanel {
  * 6 April 2025 - Fixed double display for main view. Fixed issue with map not displaying
  * 15 April 2025 - Update class based on DeepSeek Recommendations
  * 24 July 2025 - Added the messagePanel option
+ * 28 July 2025 - Added the lightningPanel option
 */

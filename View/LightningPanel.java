@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 30 March 2025
+Version: 4.4
+Date: 28 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -13,15 +13,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import Model.GameEngine;
+import Interfaces.GameView;
 import UISupport.GameController;
 
-public class LightningPanel extends JPanel {
+public class LightningPanel extends JPanel implements GameView {
 
 	private static final long serialVersionUID = 1L;
 	private int number = 0;
@@ -39,12 +40,10 @@ public class LightningPanel extends JPanel {
         label.setFont(new Font("Arial", Font.BOLD, 36));
         label.setForeground(Color.WHITE);
         add(label, BorderLayout.CENTER);
-
-        startLightningEffect();
     }
 	
 	
-    private void startLightningEffect() {
+    public void startLightningEffect() {
     	
         Timer timer = new Timer(200, e -> {
         	
@@ -81,6 +80,10 @@ public class LightningPanel extends JPanel {
 		game.revalidate();
 		game.repaint();
 	}
+	
+	public JComponent getViewComponent() {
+		return this;
+	}
 }
 /* 25 November 2024 - Created File
  * 23 December 2024 - Updated to version 2.
@@ -90,4 +93,5 @@ public class LightningPanel extends JPanel {
  * 21 March 2025 - Removed the notes
  * 26 March 2025 - Commented out code to allow to run
  * 30 March 2025 - Removed unusued code
+ * 28 July 2025 - Updated code for new architecture
 */
