@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 30 June 2025
+Version: 4.13
+Date: 28 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -65,6 +65,10 @@ public final class GameController implements GameCommandHandler {
 	public void setRunningGameState() {
 		engine.setRunningGameState();
 		refreshUI();
+	}
+	
+	public void setMessageState() {
+		engine.setMessageState();
 	}
 	
 	public boolean isGiveState() {
@@ -143,4 +147,5 @@ public final class GameController implements GameCommandHandler {
  * 				   from the controller, Removed processShelter
  * 25 April 2025 - Updated based on changes to enums in Game class and Player class
  * 30 June 2025 - Removed separate process for give
+ * 28 July 2025 - Updated code so as to set message state
  */

@@ -70,7 +70,10 @@ public class GamePanel extends JPanel {
      * @param controller The game controller providing current state
      */
 	public void refreshMainView(GameController controller) {
-		 SwingUtilities.invokeLater(() -> mainView.refreshUI(controller));
+		if (controller.isMessageState()) {
+			controller.setMessageState();
+		}
+		SwingUtilities.invokeLater(() -> mainView.refreshUI(controller));
 	}
 	
     /**
@@ -103,11 +106,6 @@ public class GamePanel extends JPanel {
      * Shows the main game view and triggers activation
      */
 	public void showMainView() {
-		
-		//Check if not running
-    	//Check if the game has ended and set it as an end game
-    	//Otherwise set it as running
-		
 		cardLayout.show(viewContainer,MAIN_VIEW);
 		mainView.onViewActivated();
 	}
