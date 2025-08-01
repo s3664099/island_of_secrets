@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 28 July 2025
+Version: 4.8
+Date: 1 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -41,33 +41,32 @@ public class Combat {
 
 		//Carrying Hammer or Axe
 		if (isCarryingWeapon()) {
-			result = carryingWeapon();
-		}
-		
-		//Chopping roots with Axe
-		if (isChoppingRoots()) {
-			result = choppingRoots();
-		}
-		
-		//Break the column with hammer
-		if (isBreakingColumn()) {
-			result = breakColumn();
-		}
-		
+				
+			//Chopping roots with Axe
+			if (isChoppingRoots()) {
+				result = choppingRoots();
+			}
+				
+			//Break the column with hammer
+			if (isBreakingColumn()) {
+				result = breakColumn();
+			}
+			
+			if (isTapPerson()) {
+				if(hasAxe()) {
+					result = kill();
+				} else {
+					result = annoyPerson();
+				}
+			}
+		} 
+				
 		if (isBreakStaff()) {
 			result = breakStaff();
 		} else if (isWasteStaff()) {
 			result = wasteStaff();
 		}
-
-		if (isTapPerson()) {
-			if(hasAxe()) {
-				result = kill();
-			} else {
-				result = annoyPerson();
-			}
-		}
-
+		
 		return result;
 	}
 	
@@ -259,12 +258,7 @@ public class Combat {
 		}
 		return omeganCloakPresent;
 	}
-	
-	private ActionResult carryingWeapon() {
-		game.addMessage("Ok",true,true);
-		return new ActionResult(game,player);
-	}
-	
+		
 	private ActionResult choppingRoots() {
 		game.getItem(GameEntities.ITEM_SAP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_SAP).setItemLocation(player.getRoom());
@@ -448,4 +442,5 @@ public class Combat {
  * 15 July 2025 - Updated code so win conditions work, and fails if omegan not present when staff is broken
  * 26 July 2025 - Added set state changes to message states. Changed method of setting end game state
  * 28 July 2025 - Added set endgame state to kill command
+ * 1 August 2025 - Removed response for carrying weapon, and moved results into if statement
  */
