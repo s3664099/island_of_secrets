@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 19 July 2025
+Version: 4.9
+Date: 12 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -385,7 +385,7 @@ public class Miscellaneous {
 		game.getItem(GameEntities.ITEM_PEBBLE).setItemFlag(GameEntities.ROOM_CARRYING);
 		game.getItem(GameEntities.ITEM_STONE).setItemFlag(99);
 		game.addMessage("The stone utters 'Stony Words'",true,true);
-		game.addMessage("You are carrying something new",false,true);
+		game.addMessage("Something falls out of the mouth",false,true);
 		return new ActionResult(game,player);
 	}
 	
@@ -506,4 +506,5 @@ public class Miscellaneous {
  * 14 July 2025 - Updated info section to prevent display from breaking
  * 18 July 2025 - Fixed problem with not setting the swimming flag in the storeroom
  * 19 July 2025 - Changes to setPlayerStateSwimming
+ * 12 August 2025 - Changed comment when rub mouth
  */
