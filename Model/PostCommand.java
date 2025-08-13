@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 26 July 2025
+Version: 4.6
+Date: 13 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -135,10 +135,10 @@ public class PostCommand {
 	}
 	
 	private boolean isSwampManPresent() {
-		boolean swampManPresent = true;
+		boolean swampManPresent = false;
 		if(!game.getItem(GameEntities.ITEM_SWAMPMAN).isAtLocation(player.getRoom()) && 
 			game.isRunningState()) {
-			swampManPresent = false;
+			swampManPresent = true;
 		}
 		return swampManPresent;
 	}
@@ -410,4 +410,5 @@ public class PostCommand {
  * 22 June 2025 - Finished the post move events. Made game and player changeable. Updated classes to get rid of result.
  * 16 July 2025 - Fixed error with omegan attacking
  * 26 July 2025 - Updated so that set message panel taken into account
+ * 13 August 2025 - Fixed swampman movement
  */

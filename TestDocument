@@ -10,11 +10,11 @@ Test Document
 
 
 
-- Check that the storm response is used (and can be removed from CommandExecutor)
+
 - update the code for lightning display
-- Sometimes miss swampman (probably because he moves) - If player in that room, swampman does not move.
-- check shelter - kinda works
-- Spaces between multi-line messages
+
+
+
 - commands disappear when cloak taken (or omegan attacks) - Buttons randomly disappearing (but reappears when view map and back).
 
 
