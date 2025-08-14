@@ -1,5 +1,24 @@
 # Island of Secrets
 
+A retro-type-in-text adventure that has been converted from BASIC to Java
+
+---
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation & Running](#installation--running)
+4. [Controls](#controls)
+5. [Program Structure](#program-structure)
+6. [Development Guide](#development-guide)
+7. [Known Issues & Roadmap](#known-issues--roadmap)
+8. [Credits](#credits)
+9. [License](#license)
+
+---
+
+##Overview
+
 This project is a modern translation of the game *Island of Secrets*, originally published as a BASIC listing in a book of the same name. Players would type the game into their computers to play it. However, the authors intentionally obfuscated the code to make it difficult for users to deduce the game’s solution, while still leaving the game playable. 
 
 This approach came with challenges: errors often crept in during transcription, and the lack of comments or documentation made it hard for users to learn the tricks of the BASIC language. The code’s readability was also notoriously poor, adding to the difficulty.
@@ -7,11 +26,15 @@ This approach came with challenges: errors often crept in during transcription, 
 - [Read the book on the Internet Archive](https://archive.org/details/island-of-secrets_202303)  
 - [View the original BASIC version on GitHub](https://github.com/s3664099/basic_scripts/tree/master/Island%20of%20Secrets)
 
-- Redo the classes using the same style as Command Process 
+**Tech Stack:**
+- Language: Java 18.0.2-ea
+- GUI Framework: Swing
+- Build Tool: JDK (javac/java)
 
-## Notes on the Basic Code
+### Notes on the Basic Code
 
-### Reading the Data
+**Reading the Data**
+
 Unlike many other games, this program doesn't load all data into memory at once, likely due to memory constraints of early computers. Instead, it reads one item at a time, which slows down the game as data must be read repeatedly.  
 
 - **Line 2780**: Repositions the pointer to the beginning of the data and iterates through all locations, discarding each one.  
@@ -23,24 +46,31 @@ The game operates on a 10x10 grid, with movement between nodes determined by:
 - Adding or subtracting **1** (east or west movement)
 - Adding or subtracting **10** (north or south movement)
 
-### Documentation
-A supplementary file contains detailed notes on:
-- The BASIC code sections and their functions
-- Variables, items, locations, verbs, and nouns
+## Installation & Running
 
-## Executing the Game
-To compile and run the game, follow these steps:
+### Prerequisites
+- Java 18.0.2-ea or higher
 
-1. Compile the Java files:
-   ```bash
-   javac *.java
-   ```
-2. Run the game:
-   ```bash
-   java Start
-   ```
+### Build & Run from the Command Line
+
+```bash
+# Compile
+javac -d out src/**/*.java
+
+# Rune
+java -cp out <package>.Main
+```
+
+### Run from IDE
+- Open project in Eclipse
+- Run the Start Class
 
 ---
+
+## Controls
+
+
+
 
 ## Development Notes ##
 
@@ -96,87 +126,6 @@ To compile and run the game, follow these steps:
   - Added link to open up book in Internet Archive
 
 ---
-
-## Program Structure
-
-### Default Package
-
-This package is used solely for launching the game and contains minimal logic.
-
-#### `Start` Class
-
-**Location:** `Default/Start.java`
-
-##### Overview
-
-The `Start` class provides a lightweight entry point for launching the game during development. It is especially useful in IDEs like Eclipse where you may want a simplified launcher for testing or debugging.
-
-This class simply delegates to the main game launcher and contains no additional logic.
-
-##### Key Responsibilities
-1. Provide an Eclipse-friendly entry point for launching the game.
-2. Delegate startup to `Main.startGame()`.
-
-##### Instance Variables
-
-None.
-
-##### Methods
-
-- **`main(String[] args)`**  
-  Instantiates `Main` and calls its `startGame()` method.
-
-##### Potential Flaws and Suggested Improvements
-
-###### 1. Redundancy with `Main.main()`
-- **Issue**: Both `Start` and `Main` define `main()` methods.
-- **Suggestion**: Consider removing `Start` if `Main` is sufficient for all use cases, unless a separate dev/testing entry point is required.
-
----
-
-### Model Package
-
-This package contains the core game logic and the primary launcher class used in production.
-
-#### `Main` Class
-
-**Location:** `Model/Main.java`
-
-##### Overview
-
-The `Main` class is the official launcher for the game. It initializes the game's internal state and launches the graphical user interface. This class is intended for standalone execution or deployment as a JAR.
-
-##### Key Responsibilities
-1. Initialize core game components (`Game`, `Player`, `GameEngine`).
-2. Launch the graphical interface (`GameFrame`) safely on the Swing Event Dispatch Thread.
-
-##### Instance Variables
-
-None (all logic is encapsulated within methods).
-
-##### Methods
-
-- **`main(String[] args)`**  
-  Standard Java entry point. Instantiates `Main` and calls `startGame()`.
-
-- **`startGame()`**  
-  Initializes game data and launches the UI via `SwingUtilities.invokeLater()` to ensure thread safety.
-
-##### Potential Flaws and Suggested Improvements
-
-###### 1. No visual feedback on startup failure
-- **Issue**: If an error occurs during initialization, the failure is only printed to the console.
-- **Suggestion**: Use a `JOptionPane` dialog to inform the user in a GUI-friendly way.
-
-
-### ** Potential flaws and possible changes
-
-
-
-
-
-
-
 
 
 ## Image Acknowledgements ##
