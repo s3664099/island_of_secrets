@@ -590,6 +590,7 @@ public class ItemCommands {
 
 			//Give pebble to Median
 			} else if (isMedian()) {
+				System.out.println("Dude");
 				result = giveToMedian();
 			}
 			
@@ -647,6 +648,7 @@ public class ItemCommands {
 			   objectNumber == GameEntities.ITEM_MEDIAN) {
 				isMedian = true;
 			}
+			System.out.println("Result "+isMedian);
 			return isMedian;
 		}
 		
@@ -691,16 +693,13 @@ public class ItemCommands {
 		}
 				
 		private ActionResult giveToMedian() {
-			
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-			game.setMessageGameState();
 			game.getItem(8).setItemFlag(-1);
 
 			//Removes Median from Game
 			game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(43).setItemFlag(1);
 			
-			game.setMessageGameState();
 			game.addPanelMessage("He takes it ...", true);
 			if (player.getRoom()!=8) {
 				game.addPanelMessage("runs down the corridor, ...", false);
@@ -710,7 +709,7 @@ public class ItemCommands {
 			game.addPanelMessage("purifying them with a clear blue light reaching far into the lakes and rivers", false);
 			game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
 			game.addMessage("It is accepted",true,true);
-			
+			game.setMessageGameState();
 			return new ActionResult(game,player);
 		}
 	}
