@@ -52,7 +52,7 @@ public class GamePanel extends JPanel {
 		this.mainView = new MainGamePanel(controller,this);
 		this.mapView = new MapPanel(controller,this);
 		this.messageView = new MessagePanel(this);
-		this.lightningView = new LightningPanel(this,controller);
+		this.lightningView = new LightningPanel(this);
 
 		//Configure view container
 		viewContainer.add(mainView,MAIN_VIEW);

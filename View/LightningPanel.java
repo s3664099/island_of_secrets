@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 28 July 2025
+Version: 4.5
+Date:15 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,6 +12,7 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Objects;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -20,67 +21,68 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import Interfaces.GameView;
-import UISupport.GameController;
 
 public class LightningPanel extends JPanel implements GameView {
 
-	private static final long serialVersionUID = 1L;
-	private int number = 0;
-	private JLabel label;
-	private GamePanel game;
+	private static final long serialVersionUID = 1370519661015151132L;
 	
-    public LightningPanel(GamePanel gamePanel,GameController engine) {
-        this.game = gamePanel;
-
-        // Set a BorderLayout to center the label
-        setLayout(new BorderLayout());
+	private int currentIndex;
+	private JLabel label;
+	private GamePanel panel;
+	private Timer lightningTimer;
+	
+	private final String FONT = "Arial";
+	private final int FONT_SIZE = 36;
+	private static final int DISPLAY_DURATION_MS = 100;
+	private static final int NUMB_EFFECTS = 31;
+	
+    public LightningPanel(GamePanel panel) {
+        this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");;
         
-        // Create and add the label to the center
+        // Set up label
         label = new JLabel("⚡⚡ Lightning Flashes ⚡⚡", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 36));
+        label.setFont(new Font(FONT, Font.BOLD, FONT_SIZE));
         label.setForeground(Color.WHITE);
+        setLayout(new BorderLayout());
         add(label, BorderLayout.CENTER);
+        
+        // Set up timer
+        lightningTimer = new Timer(DISPLAY_DURATION_MS, e -> showNextEffect());
     }
 	
 	
     public void startLightningEffect() {
     	
-        Timer timer = new Timer(200, e -> {
-        	
-            // Change background color based on even/odd number
-            if ((number & 1) == 0) {
-                setBackground(Color.YELLOW);
-            } else {
-                setBackground(Color.BLACK);
-            }
-
-            // Increment the number
-            number++;
-
-            // Optional: Stop the timer after 10 iterations
-            // Returns to original panel
-            if (number > 10) {
-                ((Timer) e.getSource()).stop();
-                resetPanel(game);
-            }
-            
-            JLabel label = new JLabel("Lightning Flashes!!");
-            this.add(label);
-
-            // Repaint the panel to reflect changes
-            repaint();
-        });
-
-        timer.start();
+        // Stop any current display
+        lightningTimer.stop();
+        this.currentIndex = 0;
+        
+        if (this.currentIndex<NUMB_EFFECTS) {
+        	panel.showLightningView();
+        	showNextEffect();
+        }
     }
     
-	private void resetPanel(GamePanel game) {
-		game.removeAll();
-		//game.add(this.engine);
-		game.revalidate();
-		game.repaint();
-	}
-	
+    private void showNextEffect() {
+    	
+    	if(this.currentIndex<NUMB_EFFECTS) {
+    		if ((this.currentIndex&1)==0) {
+    			setBackground(Color.YELLOW);
+    		} else {
+    			setBackground(Color.BLACK);
+    		}
+    		this.currentIndex++;
+    		
+            // Start timer for next message or auto-close
+            if (this.currentIndex<NUMB_EFFECTS) {
+            	lightningTimer.restart();
+            }
+    	} else {
+    		lightningTimer.stop();
+            panel.showMainView();
+    	}
+    }
+
 	public JComponent getViewComponent() {
 		return this;
 	}
@@ -94,4 +96,5 @@ public class LightningPanel extends JPanel implements GameView {
  * 26 March 2025 - Commented out code to allow to run
  * 30 March 2025 - Removed unusued code
  * 28 July 2025 - Updated code for new architecture
+ * 15 Aug 2025 - Panel now displays correctly
 */
