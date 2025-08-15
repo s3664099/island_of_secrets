@@ -34,7 +34,7 @@ public class LightningPanel extends JPanel implements GameView {
 
         // Set a BorderLayout to center the label
         setLayout(new BorderLayout());
-
+        
         // Create and add the label to the center
         label = new JLabel("⚡⚡ Lightning Flashes ⚡⚡", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 36));

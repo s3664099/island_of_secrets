@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Frame
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 26 July 2025
+Version: 4.5
+Date: 15 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -51,6 +51,8 @@ public class GameFrame extends JFrame implements GameUI {
 		
 		if (game.isMessageState()) {
 			gamePanel.refreshMessageView(game);
+		} else if (game.isLightningState()) {
+			gamePanel.refreshLightingView(game);
 		} else {
 			gamePanel.refreshMainView(game);
 		}
@@ -78,4 +80,5 @@ public class GameFrame extends JFrame implements GameUI {
  * 4 April 2025 - Updated frame to build map panel
  * 8 April 2025 - Removed unusued code
  * 26 July 2025 - Added check to display messages
+ * 15 August 2025 - Added check for lightning panel
  */

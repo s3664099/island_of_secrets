@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 28 July 2025
+Version: 4.14
+Date: 15 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -79,6 +79,10 @@ public final class GameController implements GameCommandHandler {
 		return engine.isMessageState();
 	}
 	
+	public boolean isLightningState() {
+		return engine.isLightningState();
+	}
+	
 	@Override
 	public void setShelterGameState() {
 		engine.setShelterGameState();
@@ -148,4 +152,5 @@ public final class GameController implements GameCommandHandler {
  * 25 April 2025 - Updated based on changes to enums in Game class and Player class
  * 30 June 2025 - Removed separate process for give
  * 28 July 2025 - Updated code so as to set message state
+ * 15 August 2025 - Added check Lightning mode
  */
