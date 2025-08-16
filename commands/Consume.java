@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package commands;
 
+import command_process.ActionResult;
+import command_process.ParsedCommand;
 import data.Constants;
 import data.GameEntities;
 import game.Game;

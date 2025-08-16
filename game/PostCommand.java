@@ -9,11 +9,12 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package game;
 
-import commands.ActionResult;
 import data.Constants;
 import data.GameEntities;
 
 import java.util.Random;
+
+import command_process.ActionResult;
 
 public class PostCommand {
 	

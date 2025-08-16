@@ -11,7 +11,7 @@ package game;
 
 import java.util.Random;
 
-import commands.ActionResult;
+import command_process.ActionResult;
 import data.Constants;
 
 public class SwimmingHandler {

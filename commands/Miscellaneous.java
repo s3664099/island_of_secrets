@@ -11,6 +11,8 @@ package commands;
 
 import java.util.Random;
 
+import command_process.ActionResult;
+import command_process.ParsedCommand;
 import data.Constants;
 import data.GameEntities;
 import game.Game;

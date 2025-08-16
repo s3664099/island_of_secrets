@@ -7,8 +7,10 @@ Date: 23 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package commands;
+package command_process;
 
+import commands.Consume;
+import commands.Move;
 import data.Constants;
 import data.GameEntities;
 import data.Item;

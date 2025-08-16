@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import command_process.ActionResult;
+import command_process.ParsedCommand;
+
 public class Move {
 	
 	private static final int[] DIRECTION_MODIFIERS = {-10, +10, +01, -01};

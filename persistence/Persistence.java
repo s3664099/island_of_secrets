@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import commands.ActionResult;
-import commands.ParsedCommand;
+import command_process.ActionResult;
+import command_process.ParsedCommand;
 import data.Constants;
 import game.Game;
 import game.Player;

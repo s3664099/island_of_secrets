@@ -1,18 +1,19 @@
 default
   - Start
-commands
+command_process
   - ActionResult
-  - Combat
   - CommandExecutor
   - CommandParser
   - CommandProcessor
   - CommandValidator
+  - ParsedCommand  
+commands
+  - Combat
   - Consume
   - Examine
   - ItemCommands
   - Miscellaneous
   - Move
-  - ParsedCommand
 controller
   - BookButton
   - CommandButton

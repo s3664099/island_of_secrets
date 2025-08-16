@@ -9,14 +9,15 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package game;
 
-import commands.ActionResult;
-import commands.CommandProcessor;
 import interfaces.GameCommandHandler;
 import interfaces.GameStateProvider;
 import test.Test;
 
 import java.io.IOException;
 import java.util.List;
+
+import command_process.ActionResult;
+import command_process.CommandProcessor;
 
 public class GameEngine implements GameCommandHandler,GameStateProvider {
 	

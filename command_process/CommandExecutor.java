@@ -7,11 +7,17 @@ Date: 25 June 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package commands;
+package command_process;
 
 import java.util.Random;
 import java.util.logging.Logger;
 
+import commands.Combat;
+import commands.Consume;
+import commands.Examine;
+import commands.ItemCommands;
+import commands.Miscellaneous;
+import commands.Move;
 import game.Game;
 import game.Player;
 import game.PostCommand;
