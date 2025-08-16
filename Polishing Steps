@@ -1,5 +1,6 @@
 default
-  - Start
+  - *Start
+  - *Main
 command_process
   - ActionResult
   - CommandExecutor
@@ -34,7 +35,7 @@ data
 game
   - Game
   - GameEngine
-  - GameInitialiser
+  - *GameInitialiser
   - MessageBuilder
   - Player
   - RandomExitHandler
@@ -63,37 +64,15 @@ view
   - RoomPanel
   - StatusPanel
   
- Your package structure is quite clean and well-segmented for a medium-to-large Java project—especially given Eclipse's limitation on nested packages. This modular layout makes it easier to document, maintain, and scale the codebase. Below is a suggested order of exploration for writing the `README.md` and applying polish like logging and Javadoc annotations, starting from the high-level entry points down to the fine-grained functionality:
 
----
 
-## ✅ **Suggested Order of Exploration**
-
-### **1. `Default` (Root)**
-
-* **`Start`**
-
-  * This is presumably your entry point or launcher.
-  * Start here to understand initialization flow and dependencies.
-
-### **2. `Model`**
-
-* **`Main` / `GameEngine` / `GameInitialiser`**
-
-  * These are likely the core logic hubs.
-  * Useful for understanding the lifecycle of the game and state management.
+* **`GameEngine`**
 * **`PostCommand` / `Swimming` / `SwimmingHandler`**
-
-  * Support features—look after core is clear.
 
 ### **3. `Game`**
 
 * **`Game` / `Player`**
-
-  * Core domain model. Should be clearly documented.
 * **`MessageBuilder` / `RandomExitHandler` / `SpecialExitHandler` / `SpecialItemHandler`**
-
-  * Utility and logic handlers—describe their specific rule-sets and integrations.
 
 ### **4. `Commands`**
 
