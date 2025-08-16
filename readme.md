@@ -55,9 +55,12 @@ The game operates on a 10x10 grid, with movement between nodes determined by:
 
 ```bash
 # Compile
-javac -d out src/**/*.java
+javac -d out $(find . -name "*.java")
 
-# Rune
+You will need to copy the Images directory across to the compiled directory
+cp -r /Images /out
+
+# Run
 java -cp out <package>.Main
 ```
 
@@ -69,8 +72,42 @@ java -cp out <package>.Main
 
 ## Controls
 
+The game is controlled through an input line where a verb/noun command is entered. Most actions use either one or two commands. With the give command, you can include who you are giving the item to, and the say command can also have a phrase.
+
+There are buttons for use, including a map button which will display a map of the game, with locations visited.
+
+Below the map buttons are the three previous commands entered, and clicking on the button repeats the command.
+
+On startup there is a button that opens a webpage in the Internet Archive which contains a copy of the book (since the original book contains hints and clues for the game).
+
+The load command, and the shelter command (when available) will display a list of options that can be clicked. With the load command you have buttons that will allow you to cycle through the options.
+
+## Program Structure
+
+### Packages
+
+* **default package** — Entry point only, contains `Start` class.
+* **Model** — Core game logic and state (`Main`, `Game`, `Player`, etc.).
+* **Game** — Contains the classes that hold the game variables
+* **View** — GUI components and rendering logic.
+* **Controller** — Handles input and game loop logic.
+* **Commands** — Processes the commands
+* **Data** — Holds all of the data
+* **Images** — Holds the images for the map
+* **Interfaces** — Contains the interfaces for the game
+
+### Main Entry Points
+
+* `Start` — Development/test launcher.
+* `Main` — Official game entry point for production (needs to be updated).
 
 
+
+--- 
+Problems
+* Command Buttons Disappear
+* Runs through Start, so will need to set up to run through main, and move logging set up to shared file
+---
 
 ## Development Notes ##
 
