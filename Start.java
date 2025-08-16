@@ -7,8 +7,6 @@ Date: 20 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-import Model.Main;
-
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;

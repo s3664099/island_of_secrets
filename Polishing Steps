@@ -1,6 +1,6 @@
-Default
+default
   - Start
-Commands
+commands
   - ActionResult
   - Combat
   - CommandExecutor
@@ -13,8 +13,7 @@ Commands
   - Miscellaneous
   - Move
   - ParsedCommand
-  - Persistence
-Controller
+controller
   - BookButton
   - CommandButton
   - CommandListener
@@ -24,35 +23,35 @@ Controller
   - QuitButton
   - SearchGameButton
   - ShelterButton
-Data
+  - GameController
+data
   - Constants
   - GameEntities
   - Item
   - Location
   - RawData
-Game
+game
   - Game
+  - GameEngine
+  - GameInitialiser
   - MessageBuilder
   - Player
   - RandomExitHandler
   - SpecialExitHandler
   - SpecialItemHandler
-Interfaces
+  - PostCommand
+  - Swimming
+  - SwimmingHandler
+interfaces
   - GameCommandHandler
   - GameStateProvider
   - GameUI
   - GameView
-Model
-  - GameEngine
-  - GameInitialiser
-  - Main
-  - PostCommand
-  - Swimming
-  - SwimmingHandler
-UISupport
-  - GameController
+persistence
+  - Persistence
+ui
   - GameState
-View
+view
   - CommandPanel
   - GameFrame
   - GamePanel

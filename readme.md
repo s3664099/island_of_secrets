@@ -101,7 +101,14 @@ The load command, and the shelter command (when available) will display a list o
 * `Start` — Development/test launcher.
 * `Main` — Official game entry point for production (needs to be updated).
 
+### Game Flow
 
+1. Game starts via `Main.main()` or `Start.main()`
+2. Initializes `Game` and `Player`
+3. Loads assets and GUI via `GameFrame`
+4. Enters main game loop until exit
+
+*Full JavaDocs available in `/docs`.*
 
 --- 
 Problems
