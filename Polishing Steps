@@ -34,14 +34,14 @@ data
   - RawData
 game
   - Game
-  - GameEngine
+  - *GameEngine
   - *GameInitialiser
   - MessageBuilder
   - Player
   - RandomExitHandler
   - SpecialExitHandler
   - SpecialItemHandler
-  - PostCommand
+  - *PostCommand
   - Swimming
   - SwimmingHandler
 interfaces
@@ -67,7 +67,7 @@ view
 
 
 
-* **`PostCommand` / `Swimming` / `SwimmingHandler`**
+* **`Swimming` / `SwimmingHandler`**
 
 ### **3. `Game`**
 

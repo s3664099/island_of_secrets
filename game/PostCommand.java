@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 13 August 2025
+Version: 4.7
+Date: 17 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -16,18 +16,44 @@ import java.util.Random;
 
 import command_process.ActionResult;
 
+/**
+ * Handles post-command updates in the adventure game.
+ *
+ * <p>{@code PostCommand} manages game state changes that occur automatically
+ * after a player executes a command. This includes environmental effects,
+ * NPC actions, item movements, and win/loss checks.</p>
+ *
+ * <p>The class is designed to be used after every player action to update the game state
+ * according to the game's logic rules, including random events like storms,
+ * attacks by Omegan, swamp man interactions, and other events tied to rooms
+ * or items.</p>
+ */
 public class PostCommand {
 	
 	private Game game;
 	private Player player;
 	private final Random rand = new Random();
 	private final int stormRand = rand.nextInt(3);
-	
+
+    /**
+     * Constructs a {@code PostCommand} handler from an {@link ActionResult}.
+     *
+     * @param result the result of the previous player action containing game and player states
+     */
 	public PostCommand(ActionResult result) {
 		game = result.getGame();
 		player = result.getPlayer();
 	}
 	
+    /**
+     * Processes all post-command updates.
+     *
+     * <p>This method checks and executes all environmental effects,
+     * NPC movements, item effects, win/lose conditions, and other
+     * state changes that occur after a player command.</p>
+     *
+     * @return the updated {@link ActionResult} containing the game and player
+     */	
 	public ActionResult postUpdates() {
 
 		if (isAtOrchids()) {atOrchids();}
@@ -70,6 +96,8 @@ public class PostCommand {
 		
 		return new ActionResult(game,player);
 	}
+
+    // ================== Condition Checks ================== //
 	
 	private boolean isAtOrchids() {
 		boolean atOrchids = false;
@@ -260,6 +288,8 @@ public class PostCommand {
 		}
 		return loseGame;
 	}
+
+    // ================== Actions ================== //
 	
 	private void atOrchids() {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+rand.nextInt(2)+1);
@@ -411,4 +441,5 @@ public class PostCommand {
  * 16 July 2025 - Fixed error with omegan attacking
  * 26 July 2025 - Updated so that set message panel taken into account
  * 13 August 2025 - Fixed swampman movement
+ * 17 August 2025 - Added JavaDocs
  */
