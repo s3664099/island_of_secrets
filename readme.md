@@ -110,11 +110,27 @@ The load command, and the shelter command (when available) will display a list o
 
 *Full JavaDocs available in `/docs`.*
 
---- 
-Problems
+## Development Guide
+
+### Coding Conventions
+
+* Follow standard Java naming conventions.
+* All public methods/classes must have Javadoc comments.
+* Use `TODO` tags for unfinished sections.
+
+### Adding New Content
+
+Since this is a conversion from a program written in BASIC it was not intented to be extensible.
+However, changing or adding icons should be added to the \images file.
+
+### Testing
+
+No testing has been added to the program. However, logging has been kept.
+
+## Known Issues & Roadmap
+
 * Command Buttons Disappear
 * Runs through Start, so will need to set up to run through main, and move logging set up to shared file
----
 
 ## Development Notes ##
 
@@ -168,11 +184,19 @@ Problems
   - Added a restart game button
   - Added extra sections to examine so book isn't relied upon
   - Added link to open up book in Internet Archive
+  
+### Version 5
+- **Status**: Completed Game
+- **Additions**:
+  - Updated game using stronger Java conventions
+  - The updates were recommended by ChatGPT and Deepseek.
 
 ---
 
+## Credits
+* **Lead Developer:** David Sarkies
 
-## Image Acknowledgements ##
+### Image Acknowledgements ###
 forest <a href="https://www.flaticon.com/free-icons/forest" title="forest icons">Forest icons created by Smashicons - Flaticon</a>
 eviltree <a href="https://www.flaticon.com/free-icons/spooky" title="spooky icons">Spooky icons created by Graphiverse - Flaticon</a>
 pods <a href="https://www.flaticon.com/free-icons/vaping" title="vaping icons">Vaping icons created by Freepik - Flaticon</a>
