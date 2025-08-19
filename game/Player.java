@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 20 July 2025
+Version: 4.11
+Date: 19 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -21,7 +21,7 @@ import data.Constants;
 public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 495300605316911022L;
-	private static final Logger logger = Logger.getLogger(Game.class.getName());
+	private static final Logger logger = Logger.getLogger(Player.class.getName());
 	
 	private int room = 23;
 	private int roomToDisplay = this.room;
@@ -103,12 +103,14 @@ public class Player implements Serializable {
 	
 	public void reduceStat(String statName) {
 		int stat = (int) stats.get(statName);
-		stat --;
-		stats.put(statName, stat);
+		if(stat>0) {
+			stats.put(statName, stat-1);
+		}
 	}
 	
 	public void setPlayerStateNormal() {
 		playerState = PlayerState.NORMAL;
+		swim = null;
 	}
 	
 	public void setPlayerStateSwimming() {
@@ -117,19 +119,11 @@ public class Player implements Serializable {
 	}
 	
 	public boolean isPlayerStateNormal() {
-		boolean state = false;
-		if (playerState == PlayerState.NORMAL) {
-			state = true;
-		}
-		return state;
+		return playerState == PlayerState.NORMAL;
 	}
 	
 	public boolean isPlayerStateSwimming() {
-		boolean state = false;
-		if (playerState == PlayerState.SWIMMING) {
-			state = true;
-		}
-		return state;
+		return playerState == PlayerState.SWIMMING;
 	}		
 		
 	//ToString Methods
@@ -182,4 +176,5 @@ public class Player implements Serializable {
  * 25 June 2025 - Restored strength to correct starting value. Moved starting constants to the constants file
  * 19 July 2025 - Removed start swimming state
  * 20 July 2025 - Removed setting the swim position. Removed START_SWIM state
+ * 19 August 2025 - Made minor fixes. 
  */
