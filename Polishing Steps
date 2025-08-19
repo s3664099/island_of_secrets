@@ -42,8 +42,8 @@ game
   - SpecialExitHandler
   - SpecialItemHandler
   - *PostCommand
-  - Swimming
-  - SwimmingHandler
+  - *Swimming
+  - *SwimmingHandler
 interfaces
   - GameCommandHandler
   - GameStateProvider
@@ -69,7 +69,7 @@ view
 
 
 
-### **3. `Game`**
+
 
 * **`Game` / `Player`**
 * **`MessageBuilder` / `RandomExitHandler` / `SpecialExitHandler` / `SpecialItemHandler`**

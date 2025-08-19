@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 14 July 2025
+Version: 4.6
+Date: 19 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -40,16 +40,19 @@ public class Constants {
 	public static final int RANDOM_ROOM = 39;
 	public static final int RANDOM_EXIT_COMBO = 5;
 	public static final int NUMBER_RESPONSES = 2;
+	public static final int INITIAL_APPLE_COUNT = 3;
+	public static final int INITIAL_START_COUNT = 2;
 	
 	//Constants for the player starting values
 	public static final float STARTING_STRENGTH = 100;
 	public static final int STARTING_WISDOM = 35;
 	public static final int STARTING_TIME = 1000;
 	
-	public static final String NORTH = "North";
-	public static final String SOUTH = "South";
-	public static final String EAST = "East";
-	public static final String WEST = "West";
+	private static final String NORTH = "North";
+	private static final String SOUTH = "South";
+	private static final String EAST = "East";
+	private static final String WEST = "West";
+	public static final String[] DIRECTIONS = {NORTH, SOUTH, EAST,WEST};
 }
 
 /* 1 November 2024 - Created File
@@ -64,4 +67,5 @@ public class Constants {
  * 25 June 2025 - Added constants for player starting values
  * 28 June 2025 - Changed type for strength from int to float
  * 14 July 2025 - Increased size of message
+ * 19 August 2025 - Added more constants from the game class
 */

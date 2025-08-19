@@ -2,14 +2,15 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 28 July 2025
+Version: 4.15
+Date: 19 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
 package game;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,16 +36,17 @@ public class Game implements Serializable {
 	private String[] commands = {"","",""};
 	
 	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,LIGHTNING }
+	
 	private boolean hasMessage = false;
 	private GameState gameState = GameState.STARTED;
 	private String giveNoun = "";
 	
 	private int saveGameCount = 0;
-	private int startGameCount = 2;
+	private int startGameCount = Constants.INITIAL_START_COUNT;
 	private boolean upperLimitSavedGames = false;
 	private boolean lowerLimitSavedGames = false;
 	private String[] savedGamesDisplayed = {"","","","",""};
-	private int apple_count = 3;
+	private int apple_count = Constants.INITIAL_APPLE_COUNT;
 	
 	public Game(Location[] locations, Item[] items,SpecialExitHandler specialExitHandler) {
 		
@@ -72,61 +74,39 @@ public class Game implements Serializable {
 	    if (roomNumber < 0 || roomNumber >= locationList.length) {
 	        throw new IllegalArgumentException("Invalid room number: " + roomNumber);
 	    }
+	    
+	    List<String> itemsFound = new ArrayList<>();
 		
-		String items = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
-		int count = items.isEmpty() ? 0:1;
+		String specialItems = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
+		if(!specialItems.isEmpty()) {
+			itemsFound.add(specialItems);
+		}
 				
 		//Goes through each of the items
 		for (Item item:itemList) {
 			if(item != null && item.isAtLocation(roomNumber) && item.getItemFlag()<1) {
-				count ++;
-				if (count>1) {
-					items = String.format("%s, %s",items,item.getItemName());
-				} else {
-					items = String.format("%s %s",items,item.getItemName());
-				}
+				itemsFound.add(item.getItemName());
 			}
 		}
-				
-		if (count>0) {
-			items = String.format("%s %s","You see:",items);
-		}
-		
-		return items;
+						
+		return itemsFound.isEmpty()?"":"You see: "+String.join(", ",itemsFound);
 	}
 	
 	//Returns a display of the available exits.
 	public String getExits(int roomNumber) {
 		
 		exitNumbers = locationList[roomNumber].getExits();
-		String exits = "";
-		
 		if (roomNumber == Constants.RANDOM_ROOM) {
 			exitNumbers = randomExitHandler.generateRandomExits();			
 		}
-		
-		//Checks if the exit is a special exit. If not, displays it normally.
-		if (exitNumbers[0] && (specialExitHandler.displayExit(roomNumber,Constants.NORTH))) {
-			exits = addExit(Constants.NORTH,exits);
+		String exits = "";
+		for (int i=0;i<Constants.DIRECTIONS.length;i++) {
+			if (exitNumbers[i] && specialExitHandler.displayExit(roomNumber, Constants.DIRECTIONS[i])) {
+				exits = addExit(Constants.DIRECTIONS[i],exits);
+			}
 		}
 		
-		if (exitNumbers[1] && (specialExitHandler.displayExit(roomNumber,Constants.SOUTH))) {
-			exits = addExit(Constants.SOUTH,exits);
-		}
-		
-		if (exitNumbers[2] && (specialExitHandler.displayExit(roomNumber,Constants.EAST))) {
-			exits = addExit(Constants.EAST,exits);
-		}
-		
-		if (exitNumbers[3] && (specialExitHandler.displayExit(roomNumber,Constants.WEST))) {
-			exits = addExit(Constants.WEST,exits);
-		}
-		
-		if (exits.length()>0) {
-			exits = String.format("You can go:%s",exits);
-		}
-		
-		return exits;
+		return exits.isEmpty()?"":"You can go:"+exits;
 	}
 	
 	//Displays the special location.
@@ -339,30 +319,15 @@ public class Game implements Serializable {
 	}
 	
 	public boolean isEndGameState() {
-		
-		boolean endGame = false;
-		if (gameState == GameState.ENDED) {
-			endGame = true;
-		}
-		return endGame;
+		return gameState == GameState.ENDED;
 	}
 	
 	public boolean isGiveState() {
-		
-		boolean giveState = false;
-		if (gameState == GameState.GIVE) {
-			giveState = true;
-		}
-		return giveState;
+		return gameState == GameState.GIVE;
 	}
 	
 	public boolean isShelterState() {
-		
-		boolean shelterState = false;
-		if (gameState == GameState.SHELTER) {
-			shelterState = true;
-		}
-		return shelterState;
+		return gameState == GameState.SHELTER;
 	}
 	
 	public boolean isMessageState() {
@@ -370,21 +335,11 @@ public class Game implements Serializable {
 	}
 	
 	public boolean isLightningState() {
-		
-		boolean lightningState = false;
-		if (gameState == GameState.LIGHTNING) {
-			lightningState = true;
-		}
-		return lightningState;
+		return gameState == GameState.LIGHTNING;
 	}
 	
 	public boolean isRunningState() {
-		
-		boolean runningState = false;
-		if (gameState == GameState.RUNNING) {
-			runningState = true;
-		}
-		return runningState;
+		return gameState == GameState.RUNNING;
 	}
 }
 
@@ -441,4 +396,5 @@ public class Game implements Serializable {
  * 15 July 2025 - Moved array holding directions to top as a global variable
  * 25 July 2025 - Added message state set when panel message added.
  * 28 July 2025 - Created separate boolean for message state
+ * 19 August 2025 - Tightened code based on recommendations
  */
