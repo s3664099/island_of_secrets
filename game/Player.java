@@ -18,6 +18,12 @@ import java.util.logging.Logger;
 
 import data.Constants;
 
+/**
+ * Represents the player in the game.
+ * <p>
+ * The player has stats such as strength, wisdom, time, weight, food, and drink. 
+ * They can move between rooms, swim, and their stats change over time.
+ */
 public class Player implements Serializable {
 	
 	private static final long serialVersionUID = 495300605316911022L;
@@ -33,6 +39,9 @@ public class Player implements Serializable {
 		
 	private static final int RANDOM_ROOM_TRIGGER = 20;
 	
+    /**
+     * Creates a new player with default starting stats.
+     */
 	public Player() {
 		
 		//Initialize Stats
@@ -44,10 +53,22 @@ public class Player implements Serializable {
 		stats.put("drink", 2);
 	}
 	
+    /**
+     * Gets the current display room for the player.
+     *
+     * @return the room number to display
+     */
 	public int getDisplayRoom() {
 		return this.roomToDisplay;
 	}
-		
+	
+    /**
+     * Updates and returns the room to display.
+     * If the player is in the {@link #RANDOM_ROOM_TRIGGER}, 
+     * they are shown a random room instead.
+     *
+     * @return the updated display room
+     */
 	public int updateDisplayRoom() {
 		
 		this.roomToDisplay = this.room;
@@ -59,6 +80,10 @@ public class Player implements Serializable {
 		return this.roomToDisplay;
 	}
 	
+    /**
+     * Applies turn-based updates to the player's stats.
+     * Decreases time remaining and reduces strength based on weight carried.
+     */
 	public void turnUpdateStats() {
 		
 		int timeRemaining = (int) stats.get("timeRemaining");
@@ -68,39 +93,72 @@ public class Player implements Serializable {
 		int weight = (int) stats.get("weight");
 		stats.put("strength", strength - (weight/Constants.NUMBER_OF_ITEMS+0.1f));
 	}
-		
+	
+    /**
+     * Gets a combined value of strength and wisdom.
+     *
+     * @return strength + wisdom
+     */
 	public float getStrengthWisdon() {
 		return ((float) stats.get("strength"))+((int) getStat("wisdom"));
 	}
 
-	//Getters & Setters
+    /** @return the current room number */
 	public int getRoom() {
 		return this.room;
 	}
 	
+    /**
+     * Sets the player's current room.
+     *
+     * @param room the new room number
+     */
 	public void setRoom(int room) {
 		logger.log(Level.INFO, "Player moved to room: " + room);
 
 		this.room = room;
 		this.roomToDisplay = room;
 	}
-		
+	
+    /**
+     * Retrieves a stat by name.
+     *
+     * @param statName the stat key (e.g., "strength", "wisdom")
+     * @return the stat value, or {@code null} if not found
+     */
 	public Object getStat(String statName) {
 		return stats.get(statName);
 	}
 	
+    /**
+     * Updates a stat.
+     *
+     * @param statName the stat key
+     * @param value    the new value
+     */
 	public void setStat(String statName,Object value) {
 		stats.put(statName,value);
 	}
 	
+    /** @return the {@link Swimming} instance if player is swimming */
 	public Swimming getSwimming() {
 		return swim;
 	}
 	
+    /**
+     * Sets the player's swimming state handler.
+     *
+     * @param swim the swimming instance
+     */
 	public void setSwimming(Swimming swim) {
 		this.swim = swim;
 	}
 	
+    /**
+     * Reduces a named stat by 1.
+     *
+     * @param statName the stat key
+     */
 	public void reduceStat(String statName) {
 		int stat = (int) stats.get(statName);
 		if(stat>0) {
@@ -108,33 +166,47 @@ public class Player implements Serializable {
 		}
 	}
 	
+    /** Sets the player back to the {@link PlayerState#NORMAL} state. */
 	public void setPlayerStateNormal() {
 		playerState = PlayerState.NORMAL;
 		swim = null;
 	}
 	
+    /** Puts the player into the {@link PlayerState#SWIMMING} state. */
 	public void setPlayerStateSwimming() {
 		playerState = PlayerState.SWIMMING;
 		setSwimming(new Swimming());
 	}
 	
+    /**
+     * Checks if the player is in the {@link PlayerState#NORMAL} state.
+     *
+     * @return true if normal
+     */
 	public boolean isPlayerStateNormal() {
 		return playerState == PlayerState.NORMAL;
 	}
 	
+    /**
+     * Checks if the player is in the {@link PlayerState#SWIMMING} state.
+     *
+     * @return true if swimming
+     */
 	public boolean isPlayerStateSwimming() {
 		return playerState == PlayerState.SWIMMING;
 	}		
 		
-	//ToString Methods
+    /** @return formatted string of strength and wisdom */
 	public String toStringStatus() {
 		return String.format("Strength: %.2f         wisdom: %d", stats.get("strength"),stats.get("wisdom"));
 	}
 
+    /** @return formatted string of time remaining */
 	public String toStringTimeRemaining() {
 		return String.format("Time Remaining: %d",stats.get("timeRemaining"));
 	}
 	
+    /** {@inheritDoc} */
 	@Override
 	public String toString() {
 	    return "Player{" +
@@ -176,5 +248,5 @@ public class Player implements Serializable {
  * 25 June 2025 - Restored strength to correct starting value. Moved starting constants to the constants file
  * 19 July 2025 - Removed start swimming state
  * 20 July 2025 - Removed setting the swim position. Removed START_SWIM state
- * 19 August 2025 - Made minor fixes. 
+ * 19 August 2025 - Made minor fixes. Added JavaDocs
  */

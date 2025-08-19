@@ -71,7 +71,7 @@ view
 
 
 
-* **`Player`**
+
 * **`MessageBuilder` / `RandomExitHandler` / `SpecialExitHandler` / `SpecialItemHandler`**
 
 ### **4. `Commands`**
