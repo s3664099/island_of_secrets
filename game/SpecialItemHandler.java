@@ -5,6 +5,14 @@ Translator: David Sarkies
 Version: 4.3
 Date: 17 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
+
+Move the checks to special methods.
+	private boolean shouldHideTorch(Item[] itemList) { ... }
+	private boolean shouldHideFlint(Item[] itemList) { ... }
+	private boolean shouldHideParchment(Item[] itemList) { ... }
+	private boolean inGrandPasHut
+	
+	Remove the spit hack and have the alternate store elsewhere
 */
 
 package game;
@@ -13,6 +21,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import data.Constants;
 import data.GameEntities;
 import data.Item;
 import data.Location;
@@ -21,16 +30,16 @@ public class SpecialItemHandler implements Serializable {
 
 	private static final long serialVersionUID = -3392796825592359959L;
 
-	private Map<Integer, String> itemDescriptions = new HashMap<>();	
-	private int FLAG_HIDDEN = 9;
+	private static final Map<Integer, String> itemDescriptions = new HashMap<>();	
+
 	
 	public SpecialItemHandler() {
-		itemDescriptions.put(45,"A tree bristling with apples");
-		itemDescriptions.put(27,"A torch hanging in a bracket on the wall");
-		itemDescriptions.put(44, "A coffee table against the wall, an open oak chest");
-		itemDescriptions.put(67,"A piece of flint stuck in the crack");
-		itemDescriptions.put(60, "A map, along with a collection of papers which seem to make up a diary");
-		itemDescriptions.put(11, "A parchment stuck amongst the mushrooms");
+		itemDescriptions.put(GameEntities.ROOM_CLEARING,"A tree bristling with apples");
+		itemDescriptions.put(GameEntities.ROOM_ENTRANCE_CHAMBER,"A torch hanging in a bracket on the wall");
+		itemDescriptions.put(GameEntities.ROOM_GRANDPAS_SHACK, "A coffee table against the wall, an open oak chest");
+		itemDescriptions.put(GameEntities.ROOM_PYRAMID_SPLIT,"A piece of flint stuck in the crack");
+		itemDescriptions.put(GameEntities.ROOM_OUTSIDE_HUT, "A map, along with a collection of papers which seem to make up a diary");
+		itemDescriptions.put(GameEntities.ROOM_LAIR, "A parchment stuck amongst the mushrooms");
 	}
 	
 	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList) {
@@ -41,10 +50,10 @@ public class SpecialItemHandler implements Serializable {
 			description = description.split(", ")[0];
 		} else if ((roomNumber == GameEntities.ROOM_ENTRANCE_CHAMBER 
 				&& (itemList[GameEntities.ITEM_TORCH].getItemLocation() != GameEntities.ROOM_ENTRANCE_CHAMBER 
-				|| itemList[GameEntities.ITEM_TORCH].getItemFlag() != FLAG_HIDDEN ))
+				|| itemList[GameEntities.ITEM_TORCH].getItemFlag() != Constants.FLAG_HIDDEN ))
 				|| (roomNumber == GameEntities.ROOM_PYRAMID_SPLIT 
 				&& (itemList[GameEntities.ITEM_FLINT].getItemLocation() != GameEntities.ROOM_PYRAMID_SPLIT 
-				|| itemList[GameEntities.ITEM_FLINT].getItemFlag() != FLAG_HIDDEN))
+				|| itemList[GameEntities.ITEM_FLINT].getItemFlag() != Constants.FLAG_HIDDEN))
 				|| (roomNumber == GameEntities.ROOM_OUTSIDE_HUT && !locationList[GameEntities.ROOM_OUTSIDE_HUT].getViewed()
 				|| (roomNumber == GameEntities.ROOM_LAIR && 
 					(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR)))) {
