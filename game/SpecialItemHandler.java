@@ -18,14 +18,30 @@ import data.GameEntities;
 import data.Item;
 import data.Location;
 
+/**
+ * Computes special item descriptions for specific rooms based on game state.
+ * <br>
+ * This handler returns contextual descriptions (e.g., items mounted, hidden, or revealed)
+ * depending on item flags/locations and whether a room has been viewed.
+ * If no special description should be shown, an empty string is returned.
+ */
 public class SpecialItemHandler implements Serializable {
 
 	private static final long serialVersionUID = -3392796825592359959L;
 
-	private static final Map<Integer, String> itemDescriptions = new HashMap<>();	
+    /** Static mapping of room number to its base special description. */
+	private static final Map<Integer, String> itemDescriptions = new HashMap<>();
+	
+    /**
+     * Alternative description for Grandpa's shack when the chest is not open.
+     * Used instead of splitting strings inline.
+     */
 	private static final String shackDescription = "A coffee table against the wall,";
 
-	
+    /**
+     * Initializes the static special descriptions for known rooms.
+     * Uses {@link GameEntities} room constants as keys.
+     */
 	public SpecialItemHandler() {
 		itemDescriptions.put(GameEntities.ROOM_CLEARING,"A tree bristling with apples");
 		itemDescriptions.put(GameEntities.ROOM_ENTRANCE_CHAMBER,"A torch hanging in a bracket on the wall");
@@ -35,6 +51,19 @@ public class SpecialItemHandler implements Serializable {
 		itemDescriptions.put(GameEntities.ROOM_LAIR, "A parchment stuck amongst the mushrooms");
 	}
 	
+    /**
+     * Returns the context-sensitive special item description for a room.
+     * <ul>
+     *   <li>If the room has no special description, returns an empty string.</li>
+     *   <li>If a special item is not present/visible (based on item flags/locations or room viewed state), returns an empty string.</li>
+     *   <li>Grandpa's shack returns a shorter description when the chest is not open.</li>
+     * </ul>
+     *
+     * @param roomNumber   the current room number
+     * @param itemList     the array of {@link Item} instances (indexed by {@link GameEntities} item constants)
+     * @param locationList the array of {@link Location} instances (indexed by room number)
+     * @return the special description for the room, or an empty string if none should be shown
+     */
 	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList) {
 		
 		String description = itemDescriptions.getOrDefault(roomNumber,"");
@@ -50,29 +79,69 @@ public class SpecialItemHandler implements Serializable {
 		return description;
 	}
 	
+    /**
+     * Determines whether the Grandpa's shack description should be shortened.
+     * The description is shortened when the chest item flag != 1.
+     *
+     * @param roomNumber the room number
+     * @param itemList   the item array
+     * @return true if the shortened shack description should be used
+     */
 	public boolean shouldSplitDescription(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_GRANDPAS_SHACK && itemList[GameEntities.ITEM_CHEST].getItemFlag() !=1);
 	}
 	
+    /**
+     * Determines whether the torch description in the entrance chamber should be hidden.
+     * Hidden if the torch item is visible {@code Constants.FLAG_HIDDEN}.
+     *
+     * @param roomNumber the room number
+     * @param itemList   the item array
+     * @return true if the torch description should be hidden
+     */
 	public boolean shouldHideTorch(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_ENTRANCE_CHAMBER 
 				&& (itemList[GameEntities.ITEM_TORCH].getItemLocation() != GameEntities.ROOM_ENTRANCE_CHAMBER 
 				|| itemList[GameEntities.ITEM_TORCH].getItemFlag() != Constants.FLAG_HIDDEN));
 	}
 	
+    /**
+     * Determines whether the flint description in the pyramid split should be hidden.
+     * Hidden if the flint item is visible {@code Constants.FLAG_HIDDEN}.
+     *
+     * @param roomNumber the room number
+     * @param itemList   the item array
+     * @return true if the flint description should be hidden
+     */
 	public boolean shouldHideFlint(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_PYRAMID_SPLIT 
 				&& (itemList[GameEntities.ITEM_FLINT].getItemLocation() != GameEntities.ROOM_PYRAMID_SPLIT 
 				|| itemList[GameEntities.ITEM_FLINT].getItemFlag() != Constants.FLAG_HIDDEN));
 	}
-	
+
+    /**
+     * Determines whether the papers/map description outside the hut should be hidden.
+     * Hidden until the room has been viewed.
+     *
+     * @param roomNumber   the room number
+     * @param locationList the location array
+     * @return true if the papers description should be hidden
+     */
 	public boolean shouldHidePapers(int roomNumber,Location[] locationList) {
 		return (roomNumber == GameEntities.ROOM_OUTSIDE_HUT && !locationList[GameEntities.ROOM_OUTSIDE_HUT].getViewed());
 	}
 	
+    /**
+     * Determines whether the parchment description in the lair should be hidden.
+     * Hidden if the parchment iitem is visible
+     *
+     * @param roomNumber the room number
+     * @param itemList   the item array
+     * @return true if the parchment description should be hidden
+     */
 	public boolean shouldHideParchment(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_LAIR && 
-				(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR)));
+				(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR));
 	}
 }
 
@@ -80,5 +149,5 @@ public class SpecialItemHandler implements Serializable {
  * 17 March 2025 - Made class serialisable
  * 16 July 2025 - Fixed error with flint and added parchment
  * 17 July 2025 - Changed to GameEntities.
- * 22 August 2025 - Updated class to make it more readable
+ * 22 August 2025 - Updated class to make it more readable. Added JavaDocs
  */
