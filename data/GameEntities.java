@@ -106,17 +106,33 @@ public class GameEntities {
 	public static final int ITEM_ROCKS = 44;
 	public static final int ITEM_DACTYL = 46;
 	public static final int ITEM_FLAG_49 = 49;
-	
+
 	// === Commands ===
+	public static final int MOVE_BOTTOM = 0;
+	public static final int MOVE_TOP = 6;
+	
 	public static final int CMD_GO = 5;
+	public static final int CMD_TAKE = 6;
+	public static final int CMD_GET = 7;
+	public static final int CMD_GIVE = 8;
 	public static final int CMD_DROP = 9;
+	public static final int CMD_EAT = 11;
+	public static final int CMD_DRINK = 12;
 	public static final int CMD_PICK = 15;
 	public static final int CMD_TAP = 18;
 	public static final int CMD_BREAK = 19;
 	public static final int CMD_SWIM = 25;
+	public static final int CMD_SHELTER = 26;
 	public static final int CMD_SCRATCH = 28;
 	public static final int CMD_CATCH = 29;
 	public static final int CMD_EXAMINE = 33;
+	public static final int CMD_WAIT = 36;
+	public static final int CMD_REST = 37;
+	public static final int CMD_WAVE = 38;
+	public static final int CMD_INFO = 39;
+	public static final int CMD_LOAD = 40;
+	public static final int CMD_SAVE = 41;
+	public static final int CMD_QUIT = 42;
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
@@ -170,7 +186,7 @@ public class GameEntities {
 	public static final int SOUTH = 2;
 	public static final int EAST = 3;
 	public static final int WEST = 4;
-	
+
 }
 
 /* 21 May 2025 - Created File
@@ -199,5 +215,5 @@ public class GameEntities {
  * 17 July 2025 - Added Torch & Flint
  * 20 July 2025 - Added code for go trapdoor
  * 21 July 2025 - Added code for go command
- * 23 August 2025 - Added 
+ * 23 August 2025 - Added further variables
  */

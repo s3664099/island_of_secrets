@@ -108,16 +108,22 @@ public class SpecialExitHandler implements Serializable {
      */
 	public boolean displayExit(int roomNumber,String exit) {
 		
-		boolean displayExit = true;
 		String[] exitDescriptions =  specialExits.getOrDefault(roomNumber, new String[] {"",""});
-		
-		if (exitDescriptions[0].equals(exit)) {
-			displayExit = false;
-		}
-		
-		return displayExit;
+		return !exitDescriptions[0].equals(exit);
 	}
 	
+    /**
+     * Retrieves the special exit description for a given room.
+     * <p>
+     * If the room has a custom exit description, that string is returned.
+     * In the storeroom, if the trapdoor is still closed (based on the item state),
+     * an additional line about the trapdoor is appended.
+     * </p>
+     * 
+     * @param roomNumber the ID of the current room
+     * @param itemList   the list of all items, used to check trapdoor state
+     * @return the custom exit description, or an empty string if none exists
+     */
 	public String getSpecialExit(int roomNumber, Item[] itemList) {
 		
 		String[] exitDescriptions = specialExits.getOrDefault(roomNumber, new String[]{"", ""});
@@ -136,5 +142,5 @@ public class SpecialExitHandler implements Serializable {
  * 17 March 2025 - Made class serialisable
  * 6 July 2025 - Updated directions out of cave
  * 18 July 2025 - Move hardcoded trapdoor section to GameEntities.
- * 23 August 2025 - Updated Class by removing magic numbers
+ * 23 August 2025 - Updated Class by removing magic numbers. Added JavaDocs
  */

@@ -9,6 +9,8 @@ Source: https://archive.org/details/island-of-secrets_202303
 
 package command_process;
 
+import data.GameEntities;
+
 public class ParsedCommand {
 	
 	private final String command;
@@ -43,14 +45,14 @@ public class ParsedCommand {
 	
 	private void setState(int verbNumber) {
 		
-		if (verbNumber>0 && verbNumber<6) {
+		if (verbNumber>GameEntities.MOVE_BOTTOM && verbNumber<GameEntities.MOVE_TOP) {
 			commandState = CommandState.MOVE;
-		} else if (verbNumber == 11 || verbNumber == 12 || 
-					verbNumber == 25 || verbNumber == 26 ||
-					verbNumber == 37 || verbNumber == 37 ||
-					verbNumber == 38 || verbNumber == 39 ||
-					verbNumber == 40 || verbNumber == 41 ||
-					verbNumber == 42) {
+		} else if (verbNumber == GameEntities.CMD_EAT || verbNumber == GameEntities.CMD_DRINK || 
+					verbNumber == GameEntities.CMD_SWIM || verbNumber == GameEntities.CMD_SHELTER ||
+					verbNumber == GameEntities.CMD_WAIT || verbNumber == GameEntities.CMD_WAVE || 
+					verbNumber == GameEntities.CMD_INFO || verbNumber == GameEntities.CMD_LOAD || 
+					verbNumber == GameEntities.CMD_SAVE || verbNumber == GameEntities.CMD_QUIT ||
+					verbNumber == GameEntities.CMD_REST) {
 			commandState = CommandState.SINGLE_COMMAND;
 			setSingleCommand(verbNumber);
 		} else {
@@ -61,34 +63,35 @@ public class ParsedCommand {
 	
 	private void setSingleCommand(int verbNumber) {
 		
-		if (verbNumber == 11) {
+		if (verbNumber == GameEntities.CMD_EAT) {
 			commandType = CommandType.EAT;
-		} else if (verbNumber == 12) {
+		} else if (verbNumber == GameEntities.CMD_DRINK) {
 			commandType = CommandType.DRINK;
-		} else if (verbNumber == 39) {
+		} else if (verbNumber == GameEntities.CMD_INFO) {
 			commandType = CommandType.INFO;
-		} else if (verbNumber == 38) {
+		} else if (verbNumber == GameEntities.CMD_WAVE) {
 			commandType = CommandType.WAVE;
-		} else if (verbNumber == 40) {
+		} else if (verbNumber == GameEntities.CMD_LOAD) {
 			commandType = CommandType.LOAD;
-		} else if (verbNumber == 41) {
+		} else if (verbNumber == GameEntities.CMD_SAVE) {
 			commandType = CommandType.SAVE;
-		} else if (verbNumber == 36 || verbNumber == 37) {
+		} else if (verbNumber == GameEntities.CMD_REST || verbNumber == GameEntities.CMD_WAIT) {
 			commandType = CommandType.WAIT;
-		} else if (verbNumber == 42) {
+		} else if (verbNumber == GameEntities.CMD_QUIT) {
 			commandType = CommandType.QUIT;
-		} else if (verbNumber == 25) {
+		} else if (verbNumber == GameEntities.CMD_SWIM) {
 			commandType = CommandType.SWIM;
-		} else if (verbNumber == 26) {
+		} else if (verbNumber == GameEntities.CMD_SHELTER) {
 			commandType = CommandType.SHELTER;
 		}
 	}
 	
 	private void setMultipleCommand(int verbNumber) {
 		
-		if (verbNumber == 6 || verbNumber == 7 || verbNumber == 15 || verbNumber == 29) {
+		if (verbNumber == GameEntities.CMD_TAKE || verbNumber == GameEntities.CMD_GET || 
+			verbNumber == GameEntities.CMD_PICK || verbNumber == GameEntities.CMD_CATCH) {
 			commandType = CommandType.TAKE;
-		} else if (verbNumber == 8) {
+		} else if (verbNumber == GameEntities.CMD_GIVE) {
 			commandType = CommandType.GIVE;
 		} else if (verbNumber == 9||verbNumber == 10) {
 			commandType = CommandType.DROP;

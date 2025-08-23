@@ -39,7 +39,7 @@ game
   - *MessageBuilder
   - Player
   - *RandomExitHandler
-  - SpecialExitHandler
+  - *SpecialExitHandler
   - *SpecialItemHandler
   - *PostCommand
   - *Swimming
@@ -66,18 +66,17 @@ view
   
 
 **** Test the special items that the rules in SpecialItemHandler work
+**** Make sure the special exits are correct
 
 
 
 
 
 
-* `SpecialExitHandler` 
 
-### **4. `Commands`**
 
-* Understand the command structure after the core game logic.
-* Suggested order:
+
+
 
   * `ParsedCommand`
   * `CommandParser` / `CommandValidator`
