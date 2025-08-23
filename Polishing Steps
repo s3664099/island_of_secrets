@@ -38,9 +38,9 @@ game
   - *GameInitialiser
   - *MessageBuilder
   - Player
-  - RandomExitHandler
+  - *RandomExitHandler
   - SpecialExitHandler
-  - SpecialItemHandler
+  - *SpecialItemHandler
   - *PostCommand
   - *Swimming
   - *SwimmingHandler
@@ -65,14 +65,14 @@ view
   - StatusPanel
   
 
+**** Test the special items that the rules in SpecialItemHandler work
 
 
 
 
 
 
-
-* `RandomExitHandler` / `SpecialExitHandler` / `SpecialItemHandler`**
+* `SpecialExitHandler` 
 
 ### **4. `Commands`**
 

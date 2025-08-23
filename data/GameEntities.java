@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.23
-Date: 21 July 2025
+Version: 4.24
+Date: 23 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -39,13 +39,17 @@ public class GameEntities {
 	public static final int ROOM_POOL = 32;
 	public static final int ROOM_JETTY = 33;
 	public static final int ROOM_DUNES = 34;
+	public static final int ROOM_CASTLE_WALL = 37;
 	public static final int ROOM_HUT = 41;
 	public static final int ROOM_TABLE = 42;
+	public static final int ROOM_LOGMAN_HUT = 43;
 	public static final int ROOM_GRANDPAS_SHACK = 44;
 	public static final int ROOM_CLEARING = 45;
 	public static final int ROOM_CASTLE_ENTRANCE = 47;
 	public static final int ROOM_STOREROOM = 51;
+	public static final int ROOM_LOGMAN_HALL = 52;
 	public static final int ROOM_BUILDING = 53;
+	public static final int ROOM_PYRAMID_STEP = 56;
 	public static final int ROOM_ISLAND = 57;
 	public static final int ROOM_COLUMN = 58;
 	public static final int ROOM_OUTSIDE_HUT = 60;
@@ -195,4 +199,5 @@ public class GameEntities {
  * 17 July 2025 - Added Torch & Flint
  * 20 July 2025 - Added code for go trapdoor
  * 21 July 2025 - Added code for go command
+ * 23 August 2025 - Added 
  */
