@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.24
-Date: 23 August 2025
+Version: 4.25
+Date: 24 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -110,22 +110,36 @@ public class GameEntities {
 	// === Commands ===
 	public static final int MOVE_BOTTOM = 0;
 	public static final int MOVE_TOP = 6;
+	public static final int CHOP_BOTTOM = 15;
+	public static final int CHOP_TOP = 20;
+	public static final int ATTACK_BOTTOM = 19;
+	public static final int ATTACK_TOP = 24;
 	
 	public static final int CMD_GO = 5;
 	public static final int CMD_TAKE = 6;
 	public static final int CMD_GET = 7;
 	public static final int CMD_GIVE = 8;
 	public static final int CMD_DROP = 9;
+	public static final int CMD_LEAVE = 10;
 	public static final int CMD_EAT = 11;
 	public static final int CMD_DRINK = 12;
+	public static final int CMD_RIDE = 13;
+	public static final int CMD_OPEN = 14;
 	public static final int CMD_PICK = 15;
 	public static final int CMD_TAP = 18;
 	public static final int CMD_BREAK = 19;
+	public static final int CMD_KILL = 24;
 	public static final int CMD_SWIM = 25;
 	public static final int CMD_SHELTER = 26;
+	public static final int CMD_HELP = 27;
 	public static final int CMD_SCRATCH = 28;
 	public static final int CMD_CATCH = 29;
+	public static final int CMD_RUB = 30;
+	public static final int CMD_POLISH = 31;
+	public static final int CMD_READ = 32;
 	public static final int CMD_EXAMINE = 33;
+	public static final int CMD_FILL = 34;
+	public static final int CMD_SAY = 35;
 	public static final int CMD_WAIT = 36;
 	public static final int CMD_REST = 37;
 	public static final int CMD_WAVE = 38;
@@ -216,4 +230,5 @@ public class GameEntities {
  * 20 July 2025 - Added code for go trapdoor
  * 21 July 2025 - Added code for go command
  * 23 August 2025 - Added further variables
+ * 24 August 2025 - Added remaining commands
  */

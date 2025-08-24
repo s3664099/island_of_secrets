@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.18
-Date: 29 July 2025
+Version: 4.19
+Date: 24 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -93,27 +93,27 @@ public class ParsedCommand {
 			commandType = CommandType.TAKE;
 		} else if (verbNumber == GameEntities.CMD_GIVE) {
 			commandType = CommandType.GIVE;
-		} else if (verbNumber == 9||verbNumber == 10) {
+		} else if (verbNumber == GameEntities.CMD_DROP||verbNumber == GameEntities.CMD_LEAVE) {
 			commandType = CommandType.DROP;
-		} else if (verbNumber == 13) {
+		} else if (verbNumber == GameEntities.CMD_RIDE) {
 			commandType = CommandType.RIDE;
-		} else if (verbNumber == 14) {
+		} else if (verbNumber == GameEntities.CMD_OPEN) {
 			commandType = CommandType.OPEN;
-		} else if (verbNumber>15 && verbNumber <20) {
+		} else if (verbNumber>GameEntities.CHOP_BOTTOM && verbNumber <GameEntities.CHOP_TOP) {
 			commandType = CommandType.CHOP;
-		} else if (verbNumber>19 && verbNumber <24) {
+		} else if (verbNumber>GameEntities.ATTACK_BOTTOM && verbNumber <GameEntities.ATTACK_TOP) {
 			commandType = CommandType.ATTACK;
-		} else if (verbNumber == 24) {
+		} else if (verbNumber == GameEntities.CMD_KILL) {
 			commandType = CommandType.KILL;
-		} else if (verbNumber == 27 || verbNumber == 28) {
+		} else if (verbNumber == GameEntities.CMD_HELP || verbNumber == GameEntities.CMD_SCRATCH) {
 			commandType = CommandType.HELP;
-		} else if (verbNumber == 30 || verbNumber == 31) {
+		} else if (verbNumber == GameEntities.CMD_RUB || verbNumber == GameEntities.CMD_POLISH) {
 			commandType = CommandType.RUB;
-		} else if (verbNumber == 32 || verbNumber == 33) {
+		} else if (verbNumber == GameEntities.CMD_READ || verbNumber == GameEntities.CMD_EXAMINE) {
 			commandType = CommandType.EXAMINE;
-		} else if (verbNumber == 34) {
+		} else if (verbNumber == GameEntities.CMD_FILL) {
 			commandType = CommandType.FILL;
-		} else if (verbNumber == 35) {
+		} else if (verbNumber == GameEntities.CMD_SAY) {
 			commandType = CommandType.SAY;
 		}
 	}
@@ -282,4 +282,5 @@ public class ParsedCommand {
  * 24 June 2025 - Added script to make single special movement commands to go special command
  * 25 June 2025 - Added function call to set multiple command
  * 20 July 2025 - Added function to change command state
+ * 24 August 2025 - Updated remaining commands.
  */
