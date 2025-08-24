@@ -11,6 +11,15 @@ package command_process;
 
 import data.GameEntities;
 
+/**
+ * Represents a parsed player command in the game.
+ * <p>
+ * This class encapsulates the raw command string entered by the player,
+ * its parsed verb/noun components, and the derived command state and type.
+ * Commands are categorized as movement, single-command, or multi-command,
+ * and mapped to specific {@link CommandType} values for handling.
+ * </p>
+ */
 public class ParsedCommand {
 	
 	private final String command;
@@ -19,13 +28,44 @@ public class ParsedCommand {
 	private final String codedCommand;
 	private final int verbNumber;
 	private final int nounNumber;
-	private enum CommandState { NONE, MOVE, SINGLE_COMMAND, MULTIPLE_COMMAND };
+	
+    /**
+     * Represents the general structure/state of a parsed command.
+     */
+	private enum CommandState {
+		
+        /** Command does not map to a known state. */
+		NONE,
+		
+		/** Movement command (e.g. north, south, etc.). */
+		MOVE,
+		
+		/** Standalone command with no noun (e.g. WAIT, SAVE, QUIT). */
+		SINGLE_COMMAND, 
+		
+		/** Command requiring an additional noun (e.g. TAKE SWORD). */
+		MULTIPLE_COMMAND 
+	};
+	
+    /**
+     * Represents the specific type of command identified by the parser.
+     */
 	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,ATTACK,KILL,SWIM,SHELTER,
 								HELP,SCRATCH,CATCH,RUB,READ,EXAMINE,FILL,SAY,WAIT,WAVE,INFO,
-								LOAD,SAVE,QUIT}; //(-5)
+								LOAD,SAVE,QUIT};
+	
 	private CommandState commandState = CommandState.NONE;
 	private CommandType commandType = CommandType.NONE;
 	
+    /**
+     * Creates a new parsed command instance.
+     *
+     * @param verbNumber   numeric identifier for the verb portion of the command
+     * @param nounNumber   numeric identifier for the noun portion of the command
+     * @param codedCommand encoded representation of the command
+     * @param splitCommand split command array (up to two words: verb and noun)
+     * @param command      the full raw command string as entered by the player
+     */
 	public ParsedCommand(int verbNumber, int nounNumber, String codedCommand, 
 						String[] splitCommand, String command) {
 				
@@ -39,6 +79,11 @@ public class ParsedCommand {
 		setState(verbNumber);
 	}
 	
+    /**
+     * Updates the command state based on a new verb number.
+     *
+     * @param verbNumber numeric identifier for the new verb
+     */
 	public void updateState(int verbNumber) {
 		setState(verbNumber);
 	}
@@ -118,144 +163,208 @@ public class ParsedCommand {
 		}
 	}
 	
+    // --------------------
+    // Getters
+    // --------------------
+
+    /**
+     * @return the numeric identifier of the verb portion
+     */
 	public int getVerbNumber() {
 		return verbNumber;
 	}
 	
+    /**
+     * @return the numeric identifier of the noun portion
+     */
 	public int getNounNumber() {
 		return nounNumber;
 	}
 	
+    /**
+     * @return the raw command string entered by the player
+     */
 	public String getCommand() {
 		return command;
 	}
 	
+    /**
+     * @return the encoded form of the command
+     */
 	public String getCodedCommand() {
 		return codedCommand;
 	}
 	
+    /**
+     * @return an array of up to two elements: verb and noun
+     */
 	public String[] getSplitTwoCommand() {
 		return splitTwoCommand;
 	}
 	
+    /**
+     * @return the full command split into tokens
+     */
 	public String[] getSplitFullCommand() {
 		return splitFullCommand;
 	}
 	
+    // --------------------
+    // State checks
+    // --------------------
+
+    /**
+     * Checks whether the noun part of the command is present and non-empty.
+     *
+     * @return true if a valid noun is supplied, false otherwise
+     */
 	public boolean checkNounLength() {
-		boolean nounLength = true;
-		
-		if (splitTwoCommand[1].length()==0) {
-			nounLength = false;
-		}
-		
-		return nounLength;
+		return splitTwoCommand.length > 1 && !splitTwoCommand[1].isEmpty();
 	}
 	
+    /**
+     * @return true if this command is a movement command
+     */
 	public boolean checkMoveState() {
 		return commandState == CommandState.MOVE;
 	}
 	
+    /**
+     * @return true if this command is a single-command (no noun required)
+     */
 	public boolean checkSingleCommandState() {
 		return commandState == CommandState.SINGLE_COMMAND;
 	}
 	
+    /**
+     * @return true if this command is a multi-command (noun required)
+     */
 	public boolean checkMultipleCommandState() {
 		return commandState == CommandState.MULTIPLE_COMMAND;
 	}
 	
+    /**
+     * @return true if the command type is {@link CommandType#NONE}
+     */
 	public boolean checkNoneCommandType() {
 		return commandType == CommandType.NONE;
 	}
 	
+    // --------------------
+    // Command type checks
+    // --------------------
+
+    /** @return true if the command is a TAKE command */
 	public boolean checkTake() {
 		return commandType == CommandType.TAKE;
 	}
 	
+    /** @return true if the command is a DROP command */
 	public boolean checkDrop() {
 		return commandType == CommandType.DROP;
 	}
 	
+    /** @return true if the command is a GIVE command */
 	public boolean checkGive() {
 		return commandType == CommandType.GIVE;
 	}
 	
+    /** @return true if the command is an EAT command */	
 	public boolean checkEat() {
 		return commandType == CommandType.EAT;
 	}
 	
+    /** @return true if the command is a DRINK command */
 	public boolean checkDrink() {
 		return commandType == CommandType.DRINK;
 	}
 	
+	/** @return true if the command is a WAIT/REST command */
 	public boolean checkRest() {
 		return commandType == CommandType.WAIT;
 	}
 	
+	/** @return true if the command is an INFO command */
 	public boolean checkInfo() {
 		return commandType == CommandType.INFO;
 	}
 	
+	/** @return true if the command is a WAVE command */
 	public boolean checkWave() {
 		return commandType == CommandType.WAVE;
 	}
 	
+	/** @return true if the command is a HELP command */
 	public boolean checkHelp() {
 		return commandType == CommandType.HELP;
 	}
 	
+	/** @return true if the command is a RUB/POLISH command */
 	public boolean checkPolish() {
 		return commandType == CommandType.RUB;
 	}
 	
+    /** @return true if the command is a SAY command */
 	public boolean checkSay() {
 		return commandType == CommandType.SAY;
 	}
 	
+    /** @return true if the command is a READ/EXAMINE command */
 	public boolean checkExamine() {
 		return commandType == CommandType.EXAMINE;
 	}
 	
+    /** @return true if the command is a FILL command */
 	public boolean checkFill() {
 		return commandType == CommandType.FILL;
 	}
 	
+    /** @return true if the command is a RIDE command */
 	public boolean checkRide() {
 		return commandType == CommandType.RIDE;
 	}
 	
+    /** @return true if the command is an OPEN command */
 	public boolean checkOpen() {
 		return commandType == CommandType.OPEN;
 	}
 	
+    /** @return true if the command is a SWIM command */
 	public boolean checkSwim() {
 		return commandType == CommandType.SWIM;
 	}
 	
+    /** @return true if the command is a SHELTER command */
 	public boolean checkShelter() {
 		return commandType == CommandType.SHELTER;
 	}
 	
+    /** @return true if the command is a CHOP command */
 	public boolean checkChop() {
 		return commandType == CommandType.CHOP;
 	}
 	
+    /** @return true if the command is a KILL command */
 	public boolean checkKill() {
 		return commandType == CommandType.KILL;
 	}
 	
+    /** @return true if the command is an ATTACK command */
 	public boolean checkAttack() {
 		return commandType == CommandType.ATTACK;
 	}
 	
+    /** @return true if the command is a LOAD command */
 	public boolean checkLoad() {
 		return commandType == CommandType.LOAD;
 	}
 	
+    /** @return true if the command is a SAVE command */
 	public boolean checkSave() {
 		return commandType == CommandType.SAVE;
 	}
 	
+    /** @return true if the command is a QUIT command */
 	public boolean checkQuit() {
 		return commandType == CommandType.QUIT;
 	}	
