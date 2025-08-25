@@ -17,14 +17,34 @@ import data.Item;
 import data.RawData;
 import game.Game;
 
+/**
+ * CommandParser is responsible for parsing raw user input into structured
+ * {@link ParsedCommand} objects that the game engine can interpret.
+ * <p>
+ * It handles normalization of shorthand commands, identification of verbs and nouns,
+ * and special cases such as movement, eating, and looking at objects.
+ */
 public class CommandParser {
 	
 	private final CommandNormaliser normaliser;
 	
+	/**
+	 * Constructs a new {@code CommandParser} with its own internal
+	 * {@link CommandNormaliser}.
+	 */
 	public CommandParser() {
 		normaliser = new CommandNormaliser();
 	}
-		
+	
+	/**
+	 * Parses the raw input string into a {@link ParsedCommand}, performing
+	 * normalization, verb/noun lookup, and context-sensitive adjustments.
+	 *
+	 * @param rawInput the raw user input string
+	 * @param game the current game instance, used for item lookups and state checks
+	 * @param room the current room identifier where the command is issued
+	 * @return a fully parsed {@link ParsedCommand} instance
+	 */
 	public ParsedCommand parse(String rawInput, Game game, int room) {
 		
 		rawInput = normaliser.normalise(rawInput);
@@ -64,7 +84,16 @@ public class CommandParser {
 		
 		return command;
 	}
-		
+	
+	/**
+	 * Splits a raw command string into verb and noun components.
+	 * <p>
+	 * Always returns an array of length 2. The first element is the verb,
+	 * the second is the remainder (noun phrase or empty string).
+	 *
+	 * @param rawInput the normalized command string
+	 * @return a two-element array: [verb, noun phrase]
+	 */
 	private String[] splitCommand(String rawInput) {
 		
 		String[] splitCommand = {"",""};
@@ -78,6 +107,14 @@ public class CommandParser {
 		return splitCommand;
 	}
 	
+	/**
+	 * Retrieves the verb index corresponding to a given verb string.
+	 * <p>
+	 * Verbs are matched against the list provided by {@link RawData#getVerbs()}.
+	 *
+	 * @param verb the verb string to look up
+	 * @return the verb number if found, otherwise {@code Constants.NUMBER_OF_VERBS + 1}
+	 */
 	private int getVerbNumber(String verb) {
 		
 		int verbNumber = Constants.NUMBER_OF_VERBS+1;
@@ -94,6 +131,16 @@ public class CommandParser {
 		return verbNumber;
 	}
 	
+	/**
+	 * Retrieves the noun index corresponding to a given noun string.
+	 * <p>
+	 * Handles single-word and multi-word nouns, as well as special cases such
+	 * as directional movement commands.
+	 *
+	 * @param noun the noun string to look up
+	 * @param verbNumber the associated verb number, used for context-sensitive resolution
+	 * @return the noun number if found, otherwise -1
+	 */
 	private int getNounNumber(String noun,int verbNumber) {
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
@@ -124,6 +171,16 @@ public class CommandParser {
 		return nounNumber;
 	}
 	
+	/**
+	 * Encodes a command into a numeric string representation, including the
+	 * noun number, item location, item flag, and current room.
+	 *
+	 * @param splitCommand the split verb/noun components
+	 * @param nounNumber the resolved noun number
+	 * @param game the current game instance
+	 * @param room the current room identifier
+	 * @return the coded command string, or empty string if noun is invalid
+	 */
 	private String codeCommand(String[] splitCommand, int nounNumber, Game game, int room) {
 		
 		String codedCommand = "";
@@ -137,7 +194,18 @@ public class CommandParser {
 		
 		return codedCommand;
 	}
-		
+	
+	/**
+	 * Special-case parsing for the "look" command.
+	 * <p>
+	 * Converts "look" into "examine" and adjusts noun resolution, particularly
+	 * for context-sensitive cases like looking into a well.
+	 *
+	 * @param splitCommand the split verb/noun components
+	 * @param command the partially parsed command
+	 * @param room the current room identifier
+	 * @return a new {@link ParsedCommand} reflecting the look/examine action
+	 */
 	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command,int room) {
 			
 		if (splitCommand[1].length()==0) {
@@ -155,16 +223,42 @@ public class CommandParser {
 								splitCommand,command.getCommand());
 	}
 	
+	/**
+	 * Delegates movement command parsing to the {@link Move} class.
+	 *
+	 * @param command the parsed command to refine
+	 * @param room the current room identifier
+	 * @return the updated {@link ParsedCommand} after movement parsing
+	 */
 	private ParsedCommand parseMove(ParsedCommand command,int room) {
 		return new Move().parseMove(command, room);
 	}
 	
+	/**
+	 * Delegates "eat" command parsing to the {@link Consume} class.
+	 *
+	 * @param command the parsed command to refine
+	 * @return the updated {@link ParsedCommand} after consumption parsing
+	 */
 	private ParsedCommand parseEat(ParsedCommand command) {
 		return new Consume().parseEat(command);
 	}
 	
+	/**
+	 * Helper class that normalizes shorthand or alternative user inputs
+	 * into canonical command forms.
+	 */
 	private class CommandNormaliser {
-
+		
+		/**
+		 * Converts shorthand, synonyms, or alternate command forms into
+		 * normalized commands understood by the parser.
+		 * <p>
+		 * For example, "u" or "up" become "go up", "north" becomes "n", etc.
+		 *
+		 * @param input the raw user input
+		 * @return the normalized command string
+		 */
 		public String normalise(String input) {
 
 			input = input.toLowerCase();
@@ -192,6 +286,13 @@ public class CommandParser {
 		}
 	}
 	
+	/**
+	 * Ensures movement-related commands ("in", "out", "up", "down") are prefixed
+	 * with "go" for consistency.
+	 *
+	 * @param command the input command string
+	 * @return the normalized movement command string
+	 */
 	public String parseMovement(String command) {
 		
 		if (command.equals("in") || command.equals("out") ||
@@ -218,5 +319,5 @@ public class CommandParser {
  * 29 June 2025 - Fixed problem with multiple words in noun.
  * 2 July 2025 - Added code to handle response to give
  * 23 July 2025 - Fixed parse look so can use look command
- * 25 August 2025 - Removed some of the magic variables
+ * 25 August 2025 - Removed some of the magic variables. Added JavaDocs
  */

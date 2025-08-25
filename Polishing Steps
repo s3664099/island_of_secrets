@@ -4,10 +4,10 @@ default
 command_process
   - ActionResult
   - CommandExecutor
-  - CommandParser
+  - *CommandParser
   - CommandProcessor
   - CommandValidator
-  - ParsedCommand  
+  - *ParsedCommand  
 commands
   - Combat
   - Consume
@@ -79,7 +79,7 @@ view
 
 
 
-  * `CommandParser` / `CommandValidator`
+  * `CommandValidator`
   * `CommandProcessor` / `CommandExecutor`
   * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
