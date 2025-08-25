@@ -78,7 +78,7 @@ view
 
 
 
-  * `ParsedCommand`
+
   * `CommandParser` / `CommandValidator`
   * `CommandProcessor` / `CommandExecutor`
   * Then each specific handler: `Move`, `Consume`, `Combat`, etc.

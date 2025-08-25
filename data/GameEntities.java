@@ -147,6 +147,15 @@ public class GameEntities {
 	public static final int CMD_LOAD = 40;
 	public static final int CMD_SAVE = 41;
 	public static final int CMD_QUIT = 42;
+	public static final int CMD_NO_VERB = 43;
+	
+	public static final String WORD_EXAMINE = "examine";
+	public static final String WORD_GIVE = "give";
+	public static final String WORD_LOOK = "look";
+	public static final String WORD_ROOM = "room";
+	public static final String WORD_TO = "to";
+	public static final String WORD_WELL = "well";
+	public static final String SPACE = " ";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";

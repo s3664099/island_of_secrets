@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 23 July 2025
+Version: 4.16
+Date: 25 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,11 +34,12 @@ public class CommandParser {
 		
 		if (game.isGiveState()) {
 			boolean giveResponse = false;
-			if(splitCommand[0].equals("to")) {
-				rawInput = "give "+game.getGiveNoun()+" "+rawInput;
+			if(splitCommand[0].equals(GameEntities.WORD_TO)) {
+				rawInput = GameEntities.WORD_GIVE+GameEntities.SPACE+game.getGiveNoun()+GameEntities.SPACE+rawInput;
 				giveResponse = true;
-			} else if (verbNumber == 43) {
-				rawInput = "give "+game.getGiveNoun()+" to "+rawInput;
+			} else if (verbNumber == GameEntities.CMD_NO_VERB) {
+				rawInput = GameEntities.WORD_GIVE+GameEntities.SPACE+game.getGiveNoun()+GameEntities.SPACE
+						+GameEntities.WORD_TO+GameEntities.SPACE+rawInput;
 				giveResponse = true;
 			}
 			
@@ -53,7 +54,7 @@ public class CommandParser {
 		String codedCommand = codeCommand(splitCommand,nounNumber,game,room);
 		ParsedCommand command = new ParsedCommand(verbNumber,nounNumber,codedCommand,splitCommand,rawInput);
 
-		if (splitCommand[0].equals("look")) {
+		if (splitCommand[0].equals(GameEntities.WORD_LOOK)) {
 			command = parseLook(splitCommand,command,room);
 		} else if (command.checkMoveState()) {
 			command = parseMove(command,room);
@@ -67,7 +68,7 @@ public class CommandParser {
 	private String[] splitCommand(String rawInput) {
 		
 		String[] splitCommand = {"",""};
-		String[] commands = rawInput.split(" ");
+		String[] commands = rawInput.split(GameEntities.SPACE);
 		splitCommand[0] = commands[0];
 		
 		if(commands.length>1) {
@@ -100,7 +101,7 @@ public class CommandParser {
 		//Only called if more than two words
 		if (noun.length()>1) {
 			//Does not contain more than one word?
-			if (noun.split(" ").length>1) {
+			if (noun.split(GameEntities.SPACE).length>1) {
 				noun = noun.split(" ")[0];
 			}
 			
@@ -140,14 +141,14 @@ public class CommandParser {
 	private ParsedCommand parseLook(String[] splitCommand,ParsedCommand command,int room) {
 			
 		if (splitCommand[1].length()==0) {
-			splitCommand[1] = "room";
+			splitCommand[1] = GameEntities.WORD_ROOM;
 		}
 		
-		if (splitCommand[1].equals("well") && room==GameEntities.ROOM_WELL) {
-			splitCommand[1]="room";
+		if (splitCommand[1].equals(GameEntities.WORD_WELL) && room==GameEntities.ROOM_WELL) {
+			splitCommand[1]=GameEntities.WORD_ROOM;
 		}
 						
-		splitCommand[0] = "examine";
+		splitCommand[0] = GameEntities.WORD_EXAMINE;
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		
 		return new ParsedCommand(verbNumber,command.getNounNumber(),command.getCodedCommand(),
@@ -217,4 +218,5 @@ public class CommandParser {
  * 29 June 2025 - Fixed problem with multiple words in noun.
  * 2 July 2025 - Added code to handle response to give
  * 23 July 2025 - Fixed parse look so can use look command
+ * 25 August 2025 - Removed some of the magic variables
  */

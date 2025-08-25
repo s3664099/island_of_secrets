@@ -88,6 +88,18 @@ public class ParsedCommand {
 		setState(verbNumber);
 	}
 	
+    /**
+     * Determines the {@link CommandState} of the current command based on the given verb number.  
+     * <p>
+     * - If the verb is within the MOVE range, the command is classified as {@link CommandState#MOVE}.  
+     * - If the verb matches one of the recognized single-action commands (e.g., EAT, DRINK, WAIT),  
+     *   the command is classified as {@link CommandState#SINGLE_COMMAND} and forwarded to 
+     *   {@link #setSingleCommand(int)} for further classification.  
+     * - Otherwise, the command is treated as a {@link CommandState#MULTIPLE_COMMAND} and delegated 
+     *   to {@link #setMultipleCommand(int)}.  
+     *
+     * @param verbNumber the numeric identifier of the parsed verb, as defined in {@link GameEntities}
+     */
 	private void setState(int verbNumber) {
 		
 		if (verbNumber>GameEntities.MOVE_BOTTOM && verbNumber<GameEntities.MOVE_TOP) {
@@ -106,6 +118,15 @@ public class ParsedCommand {
 		}
 	}
 	
+    /**
+     * Assigns the {@link CommandType} for commands that operate independently (no target needed).  
+     * Examples include simple actions like EAT, DRINK, WAIT, or SAVE.  
+     * <p>
+     * This method is called when {@link #setState(int)} identifies the command as a 
+     * {@link CommandState#SINGLE_COMMAND}.
+     *
+     * @param verbNumber the numeric identifier of the verb to classify as a single command
+     */
 	private void setSingleCommand(int verbNumber) {
 		
 		if (verbNumber == GameEntities.CMD_EAT) {
@@ -131,6 +152,15 @@ public class ParsedCommand {
 		}
 	}
 	
+    /**
+     * Assigns the {@link CommandType} for commands that usually involve a target object or entity.  
+     * Examples include TAKE, GIVE, DROP, ATTACK, or EXAMINE.  
+     * <p>
+     * This method is called when {@link #setState(int)} identifies the command as a 
+     * {@link CommandState#MULTIPLE_COMMAND}.
+     *
+     * @param verbNumber the numeric identifier of the verb to classify as a multiple command
+     */
 	private void setMultipleCommand(int verbNumber) {
 		
 		if (verbNumber == GameEntities.CMD_TAKE || verbNumber == GameEntities.CMD_GET || 
