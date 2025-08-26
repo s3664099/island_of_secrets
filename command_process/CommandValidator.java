@@ -5,6 +5,8 @@ Translator: David Sarkies
 Version: 4.14
 Date: 21 July 2025
 Source: https://archive.org/details/island-of-secrets_202303
+
+For the validators - Separate the concerns - so return boolean and then add the message in a separate class
 */
 
 package command_process;
