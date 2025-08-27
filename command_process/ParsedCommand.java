@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 24 August 2025
+Version: 4.20
+Date: 27 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -109,7 +109,9 @@ public class ParsedCommand {
 					verbNumber == GameEntities.CMD_WAIT || verbNumber == GameEntities.CMD_WAVE || 
 					verbNumber == GameEntities.CMD_INFO || verbNumber == GameEntities.CMD_LOAD || 
 					verbNumber == GameEntities.CMD_SAVE || verbNumber == GameEntities.CMD_QUIT ||
-					verbNumber == GameEntities.CMD_REST) {
+					verbNumber == GameEntities.CMD_REST || verbNumber == GameEntities.CMD_NORTH ||
+					verbNumber == GameEntities.CMD_SOUTH || verbNumber == GameEntities.CMD_EAST ||
+					verbNumber == GameEntities.CMD_WEST) {
 			commandState = CommandState.SINGLE_COMMAND;
 			setSingleCommand(verbNumber);
 		} else {
@@ -277,7 +279,7 @@ public class ParsedCommand {
      * @return true if the command type is {@link CommandType#NONE}
      */
 	public boolean checkNoneCommandType() {
-		return commandType == CommandType.NONE;
+		return commandState == CommandState.NONE;
 	}
 	
     // --------------------
@@ -422,4 +424,5 @@ public class ParsedCommand {
  * 25 June 2025 - Added function call to set multiple command
  * 20 July 2025 - Added function to change command state
  * 24 August 2025 - Updated remaining commands.
+ * 27 August 2025 - Fixed checkNonCommand
  */

@@ -3,10 +3,12 @@ Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.14
-Date: 21 July 2025
+Date: 27 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 For the validators - Separate the concerns - so return boolean and then add the message in a separate class
+Move the take validators et al to Executor class
+Move the Trapdoor to the Move command
 */
 
 package command_process;
@@ -29,13 +31,13 @@ public class CommandValidator {
 	
 	//Validations - an invalid command does not count as an action
 	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
-		
+
 		this.game = game;
-		validCommand = eitherExists(command,this.game);
-		validCommand = neitherExists(command,this.game);
-		validCommand = missingNoun(command,this.game);
-		validCommand = checkNone(command,this.game);
-		validCommand = checkNoun(command);
+		validCommand = eitherExists(command, game) 
+	            && neitherExists(command, game)
+	            && missingNoun(command, game)
+	            && checkNone(command, game)
+	            && checkNoun(command);
 		
 		ActionResult result = new ActionResult(this.game,player,validCommand);
 		logger.info("Command Valid: "+validCommand+" Code: "+command.getCodedCommand());
@@ -84,13 +86,11 @@ public class CommandValidator {
 	private boolean eitherExists(ParsedCommand command, Game game) {
 		
 		boolean validCommand = true;
-		
 		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
 			command.getNounNumber() == Constants.NUMBER_OF_NOUNS) {
 			game.addMessage("You can't "+command.getCommand(), true, true);
 			validCommand = false;
 		}
-		
 		return validCommand;
 	}
 	
@@ -98,20 +98,17 @@ public class CommandValidator {
 	private boolean neitherExists(ParsedCommand command,Game game) {
 		
 		boolean validCommand = true;
-		
 		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
 				command.getNounNumber() == 52) {
 			game.addMessage("What!!",true,true);
 			validCommand = false;
 		}
-		
 		return validCommand;
 	}
 	
 	private boolean missingNoun(ParsedCommand command,Game game) {
 		
 		boolean validCommand = true;
-		
 		if (command.checkMultipleCommandState() && !command.checkNounLength()) {
 			game.addMessage("Most commands need two words", true, true);
 			validCommand = false;
@@ -122,7 +119,6 @@ public class CommandValidator {
 	private boolean checkNone(ParsedCommand command,Game game) {
 		
 		boolean validCommand = true;
-		
 		if (command.checkNoneCommandType()) {
 			validCommand = false;
 			game.addMessage("I don't understand", true, true);
@@ -173,4 +169,5 @@ public class CommandValidator {
  * 20 July 2025 - Added logging info for command.
  * 				- Added Code to set command to swimming for special commands
  * 21 July 2025 - Added script to respond correctly if trapdoor closed
+ * 27 August 2025 - Updated valid Command Detector
  */

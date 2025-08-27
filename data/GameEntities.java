@@ -115,6 +115,10 @@ public class GameEntities {
 	public static final int ATTACK_BOTTOM = 19;
 	public static final int ATTACK_TOP = 24;
 	
+	public static final int CMD_NORTH = 1;
+	public static final int CMD_SOUTH = 2;
+	public static final int CMD_EAST = 3;
+	public static final int CMD_WEST =4;
 	public static final int CMD_GO = 5;
 	public static final int CMD_TAKE = 6;
 	public static final int CMD_GET = 7;
