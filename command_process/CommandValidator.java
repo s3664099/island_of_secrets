@@ -2,11 +2,10 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 27 August 2025
+Version: 4.15
+Date: 29 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
-For the validators - Separate the concerns - so return boolean and then add the message in a separate class
 Move the take validators et al to Executor class
 Move the Trapdoor to the Move command
 */
@@ -24,22 +23,32 @@ import game.Game;
 import game.Player;
 
 public class CommandValidator {
-	
-	private boolean validCommand;
-	private Game game;
+
 	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
 	//Validations - an invalid command does not count as an action
 	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
 
-		this.game = game;
-		validCommand = eitherExists(command, game) 
-	            && neitherExists(command, game)
-	            && missingNoun(command, game)
-	            && checkNone(command, game)
-	            && checkNoun(command);
+		boolean validCommand = true;
 		
-		ActionResult result = new ActionResult(this.game,player,validCommand);
+		if (neitherExists(command)) {
+			validCommand = false;
+			game = handleNeitherExistsFails(game);
+		} else if (eitherExists(command)) {
+			validCommand = false;
+			game = handleEitherExistsFails(game,command);
+		} else if (missingNoun(command)) {
+			validCommand = false;
+			game = handleMissingNounFails(game);
+		} else if (checkNone(command)) {
+			validCommand = false;
+			game = handleCheckNoneFails(game);
+		} else if (checkNoun(command)) {
+			validCommand = false;
+			game = handleCheckNounFails(game);
+		}
+		
+		ActionResult result = new ActionResult(game,player,validCommand);
 		logger.info("Command Valid: "+validCommand+" Code: "+command.getCodedCommand());
 		
 		//Special command specfic validations
@@ -47,21 +56,21 @@ public class CommandValidator {
 			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
 				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
 				if (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1) {
-					result = closedTrapdoor(player);
+					result = closedTrapdoor(player,game);
 				} else {
 					command.updateState(GameEntities.CMD_SWIM);
 				}
 			} else if (isTrapdoorClosed(command)) {
-				result = closedTrapdoor(player);
+				result = closedTrapdoor(player,game);
 			} else if(command.checkMoveState()) {
 				Move moveValidator = new Move();
-				result = moveValidator.validateMove(command,this.game,player.getRoom());
+				result = moveValidator.validateMove(command,game,player.getRoom());
 			} else if(command.checkTake()) {
 				ItemCommands takeValidator = new ItemCommands();
-				result = takeValidator.validateTake(this.game, player.getRoom(), command);
+				result = takeValidator.validateTake(game, player.getRoom(), command);
 			} else if (command.checkDrop() || command.checkGive()) {
 				ItemCommands carryingValidator = new ItemCommands();
-				result = carryingValidator.validateCarrying(this.game,command);
+				result = carryingValidator.validateCarrying(game,command);
 
 				if (command.checkGive() && result.getValid()) {
 					result = carryingValidator.validateGive(game, player.getRoom(), command);
@@ -82,60 +91,58 @@ public class CommandValidator {
 		return result;
 	}
 	
-	//Either verb or noun doesn't exist
-	private boolean eitherExists(ParsedCommand command, Game game) {
-		
-		boolean validCommand = true;
-		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
-			command.getNounNumber() == Constants.NUMBER_OF_NOUNS) {
-			game.addMessage("You can't "+command.getCommand(), true, true);
-			validCommand = false;
-		}
-		return validCommand;
+	private boolean eitherExists(ParsedCommand command) {
+		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
+				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
-	//Neither exists
-	private boolean neitherExists(ParsedCommand command,Game game) {
-		
-		boolean validCommand = true;
-		if (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
-				command.getNounNumber() == 52) {
-			game.addMessage("What!!",true,true);
-			validCommand = false;
-		}
-		return validCommand;
+	private boolean neitherExists(ParsedCommand command) {
+		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
+				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
-	private boolean missingNoun(ParsedCommand command,Game game) {
-		
-		boolean validCommand = true;
-		if (command.checkMultipleCommandState() && !command.checkNounLength()) {
-			game.addMessage("Most commands need two words", true, true);
-			validCommand = false;
-		}
-		return validCommand;
+	private boolean missingNoun(ParsedCommand command) {
+		return (command.checkMultipleCommandState() && !command.checkNounLength());
 	}
 	
-	private boolean checkNone(ParsedCommand command,Game game) {
-		
-		boolean validCommand = true;
-		if (command.checkNoneCommandType()) {
-			validCommand = false;
-			game.addMessage("I don't understand", true, true);
-		}
-		return validCommand;
+	private boolean checkNone(ParsedCommand command) {
+		return (command.checkNoneCommandType());
 	}
 	
 	private boolean checkNoun(ParsedCommand command) {
-		boolean validCommand = true;
+		boolean validCommand = false;
 		if (command.checkMultipleCommandState()||
 			(command.checkMoveState() && command.getSplitTwoCommand()[0].equals("go"))) {
 			if(command.getSplitFullCommand().length==1) {
-				game.addMessage("Most commands need two words",true,true);
-				validCommand = false;
+				validCommand = true;
 			}
 		}
 		return validCommand;
+	}
+	
+	private Game handleEitherExistsFails(Game game, ParsedCommand command) {
+		game.addMessage("You can't "+command.getCommand(), true, true);
+		return game;
+	}
+	
+	private Game handleNeitherExistsFails(Game game) {
+		game.addMessage("What!!",true,true);
+		return game;
+	}
+	
+	private Game handleMissingNounFails(Game game) {
+		game.addMessage("Most commands need two words", true, true);
+		return game;
+	}
+
+	private Game handleCheckNoneFails(Game game) {
+		game.addMessage("I don't understand", true, true);
+		return game;
+	}
+
+	private Game handleCheckNounFails(Game game) {
+		game.addMessage("Most commands need two words",true,true);
+		return game;
 	}
 	
 	private boolean isTrapdoorClosed(ParsedCommand command) {
@@ -147,7 +154,7 @@ public class CommandValidator {
 		return trapdoorClosed;
 	}
 	
-	private ActionResult closedTrapdoor(Player player) {
+	private ActionResult closedTrapdoor(Player player,Game game) {
 		game.addMessage("The trapdoor is closed", true, true);
 		return new ActionResult(game,player,false);
 	}
@@ -170,4 +177,5 @@ public class CommandValidator {
  * 				- Added Code to set command to swimming for special commands
  * 21 July 2025 - Added script to respond correctly if trapdoor closed
  * 27 August 2025 - Updated valid Command Detector
+ * 29 August 2025 - Updated the validators to handle separate concerns and to return modified game object
  */
