@@ -31,13 +31,13 @@ public class CommandValidator {
 
 		boolean validCommand = true;
 		
-		if (neitherExists(command)) {
+		if (checkVerbAndNounInvalid(command)) {
 			validCommand = false;
-			game = handleNeitherExistsFails(game);
-		} else if (eitherExists(command)) {
+			game = handleCheckVerbAndNounInvalidFails(game);
+		} else if (checkVerbOrNounInvalid(command)) {
 			validCommand = false;
-			game = handleEitherExistsFails(game,command);
-		} else if (missingNoun(command)) {
+			game = handleVerbOrNounInvalidFails(game,command);
+		} else if (checkMissingNoun(command)) {
 			validCommand = false;
 			game = handleMissingNounFails(game);
 		} else if (checkNone(command)) {
@@ -91,17 +91,17 @@ public class CommandValidator {
 		return result;
 	}
 	
-	private boolean eitherExists(ParsedCommand command) {
+	private boolean checkVerbOrNounInvalid(ParsedCommand command) {
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
-	private boolean neitherExists(ParsedCommand command) {
+	private boolean checkVerbAndNounInvalid(ParsedCommand command) {
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
-	private boolean missingNoun(ParsedCommand command) {
+	private boolean checkMissingNoun(ParsedCommand command) {
 		return (command.checkMultipleCommandState() && !command.checkNounLength());
 	}
 	
@@ -120,12 +120,12 @@ public class CommandValidator {
 		return validCommand;
 	}
 	
-	private Game handleEitherExistsFails(Game game, ParsedCommand command) {
+	private Game handleVerbOrNounInvalidFails(Game game, ParsedCommand command) {
 		game.addMessage("You can't "+command.getCommand(), true, true);
 		return game;
 	}
 	
-	private Game handleNeitherExistsFails(Game game) {
+	private Game handleCheckVerbAndNounInvalidFails(Game game) {
 		game.addMessage("What!!",true,true);
 		return game;
 	}
