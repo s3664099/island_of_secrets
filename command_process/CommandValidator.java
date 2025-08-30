@@ -2,12 +2,9 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 29 August 2025
+Version: 4.16
+Date: 30 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
-
-Move the take validators et al to Executor class
-Move the Trapdoor to the Move command
 */
 
 package command_process;
@@ -53,41 +50,50 @@ public class CommandValidator {
 		
 		//Special command specfic validations
 		if (validCommand) {
-			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
-				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
-				if (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1) {
-					result = closedTrapdoor(player,game);
-				} else {
-					command.updateState(GameEntities.CMD_SWIM);
-				}
-			} else if (isTrapdoorClosed(command)) {
-				result = closedTrapdoor(player,game);
-			} else if(command.checkMoveState()) {
-				Move moveValidator = new Move();
-				result = moveValidator.validateMove(command,game,player.getRoom());
-			} else if(command.checkTake()) {
-				ItemCommands takeValidator = new ItemCommands();
-				result = takeValidator.validateTake(game, player.getRoom(), command);
-			} else if (command.checkDrop() || command.checkGive()) {
-				ItemCommands carryingValidator = new ItemCommands();
-				result = carryingValidator.validateCarrying(game,command);
-
-				if (command.checkGive() && result.getValid()) {
-					result = carryingValidator.validateGive(game, player.getRoom(), command);
-				}
-			} else if (command.checkEat()) {
-				Consume consume = new Consume();
-				result = consume.validateEat(command, game, player);
-			} else if (command.checkDrink()) {
-				Consume consume = new Consume();
-				result = consume.validateDrink(command,game,player);
-			}
-			
-			if (result.getPlayer()==null && !result.getValid()) {
-				result = new ActionResult(result.getGame(),player,result.getValid());
-			}
+			result = specialCommandValidator(command,result);
 		}
 		
+		if (checkResultNull(result)) {
+			result = new ActionResult(result.getGame(),player,result.getValid());
+		}
+		
+		return result;
+	}
+	
+	private ActionResult specialCommandValidator(ParsedCommand command,ActionResult result) {
+		
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		
+		if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+			command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
+			if (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1) {
+				result = closedTrapdoor(player,game);
+			} else {
+				command.updateState(GameEntities.CMD_SWIM);
+			}
+		} else if (isTrapdoorClosed(command)) {
+			result = closedTrapdoor(player,game);
+		} else if(command.checkMoveState()) {
+			Move moveValidator = new Move();
+			result = moveValidator.validateMove(command,game,player.getRoom());
+		} else if(command.checkTake()) {
+			ItemCommands takeValidator = new ItemCommands();
+			result = takeValidator.validateTake(game, player.getRoom(), command);
+		} else if (command.checkDrop() || command.checkGive()) {
+			ItemCommands carryingValidator = new ItemCommands();
+			result = carryingValidator.validateCarrying(game,command);
+			if (command.checkGive() && result.getValid()) {
+				result = carryingValidator.validateGive(game, player.getRoom(), command);
+			}
+		} else if (command.checkEat()) {
+			Consume consume = new Consume();
+			result = consume.validateEat(command, game, player);
+		} else if (command.checkDrink()) {
+			Consume consume = new Consume();
+			result = consume.validateDrink(command,game,player);
+		}
+					
 		return result;
 	}
 	
@@ -118,6 +124,10 @@ public class CommandValidator {
 			}
 		}
 		return validCommand;
+	}
+	
+	private boolean checkResultNull(ActionResult result) {
+		return result.getPlayer()==null && !result.getValid();
 	}
 	
 	private Game handleVerbOrNounInvalidFails(Game game, ParsedCommand command) {
@@ -178,4 +188,5 @@ public class CommandValidator {
  * 21 July 2025 - Added script to respond correctly if trapdoor closed
  * 27 August 2025 - Updated valid Command Detector
  * 29 August 2025 - Updated the validators to handle separate concerns and to return modified game object
+ * 30 August 2025 - Moved special validators to new validator method, and also created check for null in result
  */

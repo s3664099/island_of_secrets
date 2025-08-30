@@ -53,7 +53,7 @@ public class ParsedCommand {
 	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,ATTACK,KILL,SWIM,SHELTER,
 								HELP,SCRATCH,CATCH,RUB,READ,EXAMINE,FILL,SAY,WAIT,WAVE,INFO,
 								LOAD,SAVE,QUIT};
-	
+
 	private CommandState commandState = CommandState.NONE;
 	private CommandType commandType = CommandType.NONE;
 	
