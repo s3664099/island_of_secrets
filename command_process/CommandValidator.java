@@ -65,18 +65,16 @@ public class CommandValidator {
 		Game game = result.getGame();
 		Player player = result.getPlayer();
 		
-		if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
-			command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) {
-			if (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1) {
-				result = closedTrapdoor(player,game);
-			} else {
-				command.updateState(GameEntities.CMD_SWIM);
-			}
-		} else if (isTrapdoorClosed(command)) {
-			result = closedTrapdoor(player,game);
-		} else if(command.checkMoveState()) {
-			Move moveValidator = new Move();
-			result = moveValidator.validateMove(command,game,player.getRoom());
+		if (checkGoTrapdoorClosed(command,game)) {
+			result = handleTrapdoorClosed(player,game);
+		} else if (checkGoTrapdoorOpen(command,game)) {
+			command = handleGoTrapdoorOpen(command);
+		} else if (checkTrapdoorClosed(command)) {
+			result = handleTrapdoorClosed(player,game);
+		} else if(checkMoveState(command)) {
+			result = handleCheckMoveStateTrue(command,game,player);
+
+		
 		} else if(command.checkTake()) {
 			ItemCommands takeValidator = new ItemCommands();
 			result = takeValidator.validateTake(game, player.getRoom(), command);
@@ -126,10 +124,30 @@ public class CommandValidator {
 		return validCommand;
 	}
 	
+	private boolean checkGoTrapdoorClosed(ParsedCommand command,Game game) {
+		return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
+				(game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1));
+	}
+	
+	private boolean checkGoTrapdoorOpen(ParsedCommand command, Game game) {
+		return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
+				(game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()!=1));		
+	}
+	
 	private boolean checkResultNull(ActionResult result) {
 		return result.getPlayer()==null && !result.getValid();
 	}
 	
+	private boolean checkTrapdoorClosed(ParsedCommand command) {
+		return command.getCodedCommand().equals(GameEntities.CODE_CLOSED_TRAPDOOR) && !command.checkOpen();
+	}
+	
+	private boolean checkMoveState(ParsedCommand command) {
+		return command.checkMoveState();
+	}
+
 	private Game handleVerbOrNounInvalidFails(Game game, ParsedCommand command) {
 		game.addMessage("You can't "+command.getCommand(), true, true);
 		return game;
@@ -155,18 +173,19 @@ public class CommandValidator {
 		return game;
 	}
 	
-	private boolean isTrapdoorClosed(ParsedCommand command) {
-		boolean trapdoorClosed = false;
-		if (command.getCodedCommand().equals(GameEntities.CODE_CLOSED_TRAPDOOR)
-			&& !command.checkOpen()) {
-			trapdoorClosed = true;
-		} 
-		return trapdoorClosed;
-	}
-	
-	private ActionResult closedTrapdoor(Player player,Game game) {
+	private ActionResult handleTrapdoorClosed(Player player,Game game) {
 		game.addMessage("The trapdoor is closed", true, true);
 		return new ActionResult(game,player,false);
+	}
+	
+	private ParsedCommand handleGoTrapdoorOpen(ParsedCommand command) {
+		command.updateState(GameEntities.CMD_SWIM);
+		return command;
+	}
+	
+	private ActionResult handleCheckMoveStateTrue(ParsedCommand command, Game game, Player player) {
+		Move moveValidator = new Move();
+		return moveValidator.validateMove(command,game,player.getRoom());
 	}
 }
 
