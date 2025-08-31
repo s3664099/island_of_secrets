@@ -68,6 +68,8 @@ view
 **** Test the special items that the rules in SpecialItemHandler work
 **** Make sure the special exits are correct
 
+- Give when subject not present - it is refused, should respond otherwise
+- See Below for issue with Trapdoor
 
 
 
@@ -79,7 +81,8 @@ view
 
 
 
-  * `CommandValidator`
+
+
   * `CommandProcessor` / `CommandExecutor`
   * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
@@ -165,4 +168,26 @@ Would you like me to generate a `README.md` template based on this structure? I 
 * Explain your module layout
 * Provide build/run instructions
 * Include contribution/dev guidelines if relevant
+
+TRAPDOOR ISSUE IDENTIFIED:
+Operator Precedence Bug ⚠️
+
+return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+        command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
+        (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1));
+
+
+Because && binds more tightly than ||, this is evaluated as:
+
+(CODE_DOWN_TRAPDOOR) || (CODE_ENTER_TRAPDOOR && trapdoorClosed)
+
+
+which is not what you intend. You want parentheses around the ||:
+
+return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+        command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) &&
+        game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag() == 1;
+
+
+Same issue in checkGoTrapdoorOpen.
 

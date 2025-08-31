@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 30 August 2025
+Version: 4.17
+Date: 31 August 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -72,24 +72,15 @@ public class CommandValidator {
 		} else if (checkTrapdoorClosed(command)) {
 			result = handleTrapdoorClosed(player,game);
 		} else if(checkMoveState(command)) {
-			result = handleCheckMoveStateTrue(command,game,player);
-
-		
-		} else if(command.checkTake()) {
-			ItemCommands takeValidator = new ItemCommands();
-			result = takeValidator.validateTake(game, player.getRoom(), command);
-		} else if (command.checkDrop() || command.checkGive()) {
-			ItemCommands carryingValidator = new ItemCommands();
-			result = carryingValidator.validateCarrying(game,command);
-			if (command.checkGive() && result.getValid()) {
-				result = carryingValidator.validateGive(game, player.getRoom(), command);
-			}
-		} else if (command.checkEat()) {
-			Consume consume = new Consume();
-			result = consume.validateEat(command, game, player);
-		} else if (command.checkDrink()) {
-			Consume consume = new Consume();
-			result = consume.validateDrink(command,game,player);
+			result = validateMoveCommand(command,game,player);
+		} else if(checkTakeState(command)) {
+			result = validateTakeCommand(command,game,player);
+		} else if (checkDropOrGive(command)) {
+			result = validateDropOrGive(command,game,player);
+		} else if (checkEat(command)) {
+			result = validateEat(command,game,player);
+		} else if (checkDrink(command)) {
+			result = validateDrink(command,game,player);
 		}
 					
 		return result;
@@ -147,6 +138,26 @@ public class CommandValidator {
 	private boolean checkMoveState(ParsedCommand command) {
 		return command.checkMoveState();
 	}
+	
+	private boolean checkTakeState(ParsedCommand command) {
+		return command.checkTake();
+	}
+	
+	private boolean checkDropOrGive(ParsedCommand command) {
+		return command.checkDrop() || command.checkGive();
+	}
+	
+	private boolean checkGive(ParsedCommand command,ActionResult result) {
+		return command.checkGive() && result.getValid();
+	}
+	
+	private boolean checkEat(ParsedCommand command) {
+		return command.checkEat();
+	}
+	
+	private boolean checkDrink(ParsedCommand command) {
+		return command.checkDrink();
+	}
 
 	private Game handleVerbOrNounInvalidFails(Game game, ParsedCommand command) {
 		game.addMessage("You can't "+command.getCommand(), true, true);
@@ -183,9 +194,37 @@ public class CommandValidator {
 		return command;
 	}
 	
-	private ActionResult handleCheckMoveStateTrue(ParsedCommand command, Game game, Player player) {
+	private ActionResult validateMoveCommand(ParsedCommand command, Game game, Player player) {
 		Move moveValidator = new Move();
 		return moveValidator.validateMove(command,game,player.getRoom());
+	}
+	
+	private ActionResult validateTakeCommand(ParsedCommand command, Game game, Player player) {
+		ItemCommands takeValidator = new ItemCommands();
+		return takeValidator.validateTake(game, player.getRoom(), command);
+	}
+	
+	private ActionResult validateDropOrGive(ParsedCommand command, Game game, Player player) {
+		ItemCommands carryingValidator = new ItemCommands();
+		ActionResult result = carryingValidator.validateCarrying(game,command);
+		if (checkGive(command,result)) {
+			result = validateGive(command,game,player,carryingValidator);
+		}
+		return result;
+	}
+	
+	private ActionResult validateGive(ParsedCommand command, Game game, Player player,ItemCommands carryingValidator) {
+		return carryingValidator.validateGive(game, player.getRoom(), command);
+	}
+	
+	private ActionResult validateEat(ParsedCommand command, Game game, Player player) {
+		Consume consume = new Consume();
+		return consume.validateEat(command, game, player);
+	}
+	
+	private ActionResult validateDrink(ParsedCommand command, Game game, Player player) {
+		Consume consume = new Consume();
+		return consume.validateDrink(command,game,player);
 	}
 }
 
@@ -208,4 +247,5 @@ public class CommandValidator {
  * 27 August 2025 - Updated valid Command Detector
  * 29 August 2025 - Updated the validators to handle separate concerns and to return modified game object
  * 30 August 2025 - Moved special validators to new validator method, and also created check for null in result
+ * 31 August 2025 - Completed special validation
  */
