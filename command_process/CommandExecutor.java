@@ -24,17 +24,41 @@ import game.Player;
 import game.PostCommand;
 import persistence.Persistence;
 
+/**
+ * The {@code CommandExecutor} is responsible for carrying out parsed and validated
+ * commands issued by the player. It interprets the {@link ParsedCommand} type and
+ * dispatches execution to the appropriate command handler (movement, item handling,
+ * combat, persistence, etc.). It acts as the final stage of the command-processing
+ * pipeline after parsing and validation.
+ */
 public class CommandExecutor {
 	
 	private Random rand = new Random();
 	private static final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 	
+	/**
+	 * Executes a player command within the context of the current {@link Game} state.
+	 * <p>
+	 * This method determines the category of the {@link ParsedCommand}, then delegates
+	 * execution to the relevant command class such as {@link Move}, {@link ItemCommands},
+	 * {@link Combat}, {@link Miscellaneous}, or {@link Persistence}.
+	 * <p>
+	 * Special cases, such as moving through a trapdoor, are also handled here.
+	 *
+	 * @param game    the current game instance containing rooms, items, and global state
+	 * @param player  the player issuing the command
+	 * @param command the parsed player command to be executed
+	 * @return an {@link ActionResult} describing the outcome of the command execution,
+	 *         including updated game state and feedback messages
+	 */
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkMoveState()) {
-			logger.info("Moving");			
+			logger.info("Moving");
+			
+			//Entering Trapdoor
 			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_STOREROOM) && 
 				game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
@@ -44,6 +68,8 @@ public class CommandExecutor {
 			}	else {
 				result = new Move().executeMove(game,player,command);
 			}
+			
+		
 		} else if (command.checkTake() || command.checkDrop() || command.checkGive()) {
 			logger.info("Take/Drop/Give");
 			result = new ItemCommands().executeCommand(game,player,command);
@@ -105,7 +131,17 @@ public class CommandExecutor {
 		PostCommand updates = new PostCommand(result);
 		return updates.postUpdates();
 	}
-		
+	
+	/**
+	 * Executes a special-case "shelter" action, moving the player into a safe location
+	 * and updating game state accordingly.
+	 * <p>
+	 * This method is typically invoked during storm events or scripted sequences.
+	 *
+	 * @param game     the current game instance
+	 * @param player   the player seeking shelter
+	 * @param location the identifier of the shelter room/location
+	 */
 	public void executeShelter(Game game, Player player, int location) {
 		
 		player.setRoom(location);
