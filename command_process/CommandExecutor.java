@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.21
-Date: 25 June 2025
+Version: 4.22
+Date: 1 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import commands.Examine;
 import commands.ItemCommands;
 import commands.Miscellaneous;
 import commands.Move;
+import data.GameEntities;
 import game.Game;
 import game.Player;
 import game.PostCommand;
@@ -28,14 +29,14 @@ public class CommandExecutor {
 	private Random rand = new Random();
 	private static final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 	
-	//Executes the command
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
 		ActionResult result = new ActionResult(game,player);
 		
 		if (command.checkMoveState()) {
 			logger.info("Moving");			
-			if (command.getCodedCommand().equals("490051") && game.getItem(29).getItemFlag()==0) {
+			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_STOREROOM) && 
+				game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
 				result = new ActionResult(game,player);
 			
@@ -112,7 +113,6 @@ public class CommandExecutor {
 		game.addMessage("You reach shelter.",true,true);
 		game.setMessageGameState();
 		game.addPanelMessage("You blindly run through the storm",true);
-
 	}
 }
 
@@ -193,4 +193,5 @@ public class CommandExecutor {
  * 23 June 2025 - Tightened code
  * 24 June 2025 - Moved creation of action result to main code
  * 25 June 2025 - Added logging to the actions to flag what actions are occuring
+ * 1 September 2025 - Removed Magic Numbers
  */

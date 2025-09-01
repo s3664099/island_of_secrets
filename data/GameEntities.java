@@ -181,6 +181,7 @@ public class GameEntities {
 	public static final String CODE_OUT_LAIR = "510011";
 	public static final String CODE_OUT_LOG_HUT = "510041";
 	public static final String CODE_OUT_LOG_CABIN = "510043";
+	public static final String CODE_DOWN_STOREROOM = "490051";
 	public static final String CODE_DOWN_PYRAMID = "490066";
 	public static final String CODE_DOWN_TRAPDOOR = "490051"; 
 	public static final String CODE_ENTER_TRAPDOOR = "2951051";

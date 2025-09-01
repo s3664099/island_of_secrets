@@ -182,7 +182,6 @@ public class RawData {
 		"liquid","swampman","sage","books","roots","storm","wraiths","cloak","omegan","snake",   //40
 		"logmen","scavenger","median","north","south","east","west","up","down","in","out"       //51
 	};
-	//   48,49,50,51
 			
 	private static final String ITEM_LOCATION = "MNgIL5;/U^kZpcL%LJ£5LJm-ALZ/SkIngRm73**MJFF          ";
 	private static final String ITEM_FLAG = "90101191001109109000901000111000000100000010000000000";
