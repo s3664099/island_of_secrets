@@ -83,7 +83,7 @@ view
 
 
 
-  * `CommandExecutor`,`Action Result`
+  * `Action Result`
   * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
 

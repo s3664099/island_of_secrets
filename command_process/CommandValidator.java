@@ -67,7 +67,7 @@ public class CommandValidator {
 		}
 		
 		if (checkResultNull(result)) {
-			result = new ActionResult(result.getGame(),player,result.getValid());
+			result = new ActionResult(result.getGame(),player,result.isValid());
 		}
 		
 		return result;
@@ -176,7 +176,7 @@ public class CommandValidator {
      * @return true if the result is invalid and lacks a player reference.
      */
 	private boolean checkResultNull(ActionResult result) {
-		return result.getPlayer()==null && !result.getValid();
+		return result.getPlayer()==null && !result.isValid();
 	}
 	
     /**
@@ -201,7 +201,7 @@ public class CommandValidator {
 	}
 	
 	private boolean checkGive(ParsedCommand command,ActionResult result) {
-		return command.checkGive() && result.getValid();
+		return command.checkGive() && result.isValid();
 	}
 	
 	private boolean checkEat(ParsedCommand command) {

@@ -71,9 +71,9 @@ public class CommandProcessor {
 			ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
 			logger.info("Parsed command: " + command.getCommand());
 			result = validator.validateCommand(command,game,player);
-			logger.info("Validation result: " + result.getValid());
+			logger.info("Validation result: " + result.isValid());
 		
-			if(result.getValid()) {
+			if(result.isValid()) {
 				result = executor.executeCommand(game,player,command);
 			}
 		} catch (Exception e) {

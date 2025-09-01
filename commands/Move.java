@@ -109,7 +109,7 @@ public class Move {
 		ActionResult blockedCheck = checkMoveBlocked(game,player,command);
 		
 		//Move is not blocked
-		if (!blockedCheck.getValid()) {
+		if (!blockedCheck.isValid()) {
 			int direction = command.getNounNumber();
 			
 			if(command.getNounNumber()!=GameEntities.ITEM_BOAT) {
