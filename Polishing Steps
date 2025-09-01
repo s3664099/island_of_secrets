@@ -6,7 +6,7 @@ command_process
   - CommandExecutor
   - *CommandParser
   - CommandProcessor
-  - CommandValidator
+  - *CommandValidator
   - *ParsedCommand  
 commands
   - Combat
@@ -83,7 +83,7 @@ view
 
 
 
-  * `CommandProcessor` / `CommandExecutor`
+  * `CommandExecutor`
   * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
 

@@ -19,11 +19,25 @@ import data.GameEntities;
 import game.Game;
 import game.Player;
 
+/**
+ * Validates parsed player commands and ensures they are executable within the game rules. 
+ * 
+ * <p>This class checks for invalid or incomplete commands, provides feedback to the player,
+ * and delegates valid commands to the appropriate handlers (e.g., movement, item actions, consumption). 
+ * Special handling is included for game-specific entities such as trapdoors.</p>
+ */
 public class CommandValidator {
 
 	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
-	//Validations - an invalid command does not count as an action
+    /**
+     * Validates a parsed command against the current game and player state.
+     *
+     * @param command the parsed player command
+     * @param game the current game instance
+     * @param player the player issuing the command
+     * @return an {@link ActionResult} representing the outcome of the validation
+     */
 	public ActionResult validateCommand(ParsedCommand command, Game game, Player player) {
 
 		boolean validCommand = true;
@@ -40,7 +54,7 @@ public class CommandValidator {
 		} else if (checkNone(command)) {
 			validCommand = false;
 			game = handleCheckNoneFails(game);
-		} else if (checkNoun(command)) {
+		} else if (isNounMissing(command)) {
 			validCommand = false;
 			game = handleCheckNounFails(game);
 		}
@@ -48,7 +62,6 @@ public class CommandValidator {
 		ActionResult result = new ActionResult(game,player,validCommand);
 		logger.info("Command Valid: "+validCommand+" Code: "+command.getCodedCommand());
 		
-		//Special command specfic validations
 		if (validCommand) {
 			result = specialCommandValidator(command,result);
 		}
@@ -60,14 +73,22 @@ public class CommandValidator {
 		return result;
 	}
 	
+    /**
+     * Applies specialized command checks for movement, item interactions, 
+     * and unique entities like trapdoors.
+     *
+     * @param command the parsed player command
+     * @param result the current validation result
+     * @return the updated {@link ActionResult} after applying special rules
+     */
 	private ActionResult specialCommandValidator(ParsedCommand command,ActionResult result) {
 		
 		Game game = result.getGame();
 		Player player = result.getPlayer();
 		
-		if (checkGoTrapdoorClosed(command,game)) {
+		if (isTrapdoorClosed(command,game)) {
 			result = handleTrapdoorClosed(player,game);
-		} else if (checkGoTrapdoorOpen(command,game)) {
+		} else if (isTrapdoorOpen(command,game)) {
 			command = handleGoTrapdoorOpen(command);
 		} else if (checkTrapdoorClosed(command)) {
 			result = handleTrapdoorClosed(player,game);
@@ -86,25 +107,43 @@ public class CommandValidator {
 		return result;
 	}
 	
+    // ===== Command checks =====
+
+    /**
+     * @return true if the command contains an invalid verb or noun.
+     */
 	private boolean checkVerbOrNounInvalid(ParsedCommand command) {
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
+
+    /**
+     * @return true if both the verb and noun are invalid.
+     */
 	private boolean checkVerbAndNounInvalid(ParsedCommand command) {
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
 	
+    /**
+     * @return true if a noun is required but missing.
+     */
 	private boolean checkMissingNoun(ParsedCommand command) {
 		return (command.checkMultipleCommandState() && !command.checkNounLength());
 	}
 	
+    /**
+     * @return true if the command is unrecognized.
+     */
 	private boolean checkNone(ParsedCommand command) {
 		return (command.checkNoneCommandType());
 	}
 	
-	private boolean checkNoun(ParsedCommand command) {
+    /**
+     * @return true if the noun is missing in a multi-word or movement command.
+     */
+	private boolean isNounMissing(ParsedCommand command) {
 		boolean validCommand = false;
 		if (command.checkMultipleCommandState()||
 			(command.checkMoveState() && command.getSplitTwoCommand()[0].equals("go"))) {
@@ -115,25 +154,39 @@ public class CommandValidator {
 		return validCommand;
 	}
 	
-	private boolean checkGoTrapdoorClosed(ParsedCommand command,Game game) {
+    /**
+     * @return true if the trapdoor command is issued and the trapdoor is closed.
+     */
+	private boolean isTrapdoorClosed(ParsedCommand command,Game game) {
 		return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
 				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
 				(game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1));
 	}
 	
-	private boolean checkGoTrapdoorOpen(ParsedCommand command, Game game) {
+    /**
+     * @return true if the trapdoor command is issued and the trapdoor is open.
+     */
+	private boolean isTrapdoorOpen(ParsedCommand command, Game game) {
 		return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
 				command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
 				(game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()!=1));		
 	}
 	
+    /**
+     * @return true if the result is invalid and lacks a player reference.
+     */
 	private boolean checkResultNull(ActionResult result) {
 		return result.getPlayer()==null && !result.getValid();
 	}
 	
+    /**
+     * @return true if the command targets a closed trapdoor without an open action.
+     */
 	private boolean checkTrapdoorClosed(ParsedCommand command) {
 		return command.getCodedCommand().equals(GameEntities.CODE_CLOSED_TRAPDOOR) && !command.checkOpen();
 	}
+	
+    // ===== State checks =====
 	
 	private boolean checkMoveState(ParsedCommand command) {
 		return command.checkMoveState();
@@ -159,40 +212,53 @@ public class CommandValidator {
 		return command.checkDrink();
 	}
 
+    // ===== Error handling =====
+
+	/** Adds a "You can't do that" message when verb/noun invalid. */
 	private Game handleVerbOrNounInvalidFails(Game game, ParsedCommand command) {
 		game.addMessage("You can't "+command.getCommand(), true, true);
 		return game;
 	}
-	
+
+    /** Adds a generic "What!!" message for both verb and noun invalid. */
 	private Game handleCheckVerbAndNounInvalidFails(Game game) {
 		game.addMessage("What!!",true,true);
 		return game;
 	}
 	
+    /** Adds a missing noun message. */
 	private Game handleMissingNounFails(Game game) {
 		game.addMessage("Most commands need two words", true, true);
 		return game;
 	}
 
+	/** Adds an "I don't understand" message. */
 	private Game handleCheckNoneFails(Game game) {
 		game.addMessage("I don't understand", true, true);
 		return game;
 	}
 
+    /** Adds a two-word requirement message. */
 	private Game handleCheckNounFails(Game game) {
 		game.addMessage("Most commands need two words",true,true);
 		return game;
 	}
 	
+    // ===== Trapdoor handling =====
+
+    /** Returns an invalid result with a trapdoor closed message. */
 	private ActionResult handleTrapdoorClosed(Player player,Game game) {
 		game.addMessage("The trapdoor is closed", true, true);
 		return new ActionResult(game,player,false);
 	}
 	
+    /** Updates command state when trapdoor is open. */
 	private ParsedCommand handleGoTrapdoorOpen(ParsedCommand command) {
 		command.updateState(GameEntities.CMD_SWIM);
 		return command;
 	}
+	
+	   // ===== Validators for specific actions =====
 	
 	private ActionResult validateMoveCommand(ParsedCommand command, Game game, Player player) {
 		Move moveValidator = new Move();

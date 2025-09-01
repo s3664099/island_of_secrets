@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 30 June 2025
+Version: 4.8
+Date: 1 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -11,28 +11,38 @@ package command_process;
 
 import game.Game;
 import game.Player;
+import java.util.logging.Logger;
 
 public class CommandProcessor {
 
 	private final CommandParser parser;
 	private final CommandValidator validator;
 	private final CommandExecutor executor;
-	private ActionResult result;
+	private static final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 	
 	public CommandProcessor() {
 		this.parser = new CommandParser();
 		this.validator = new CommandValidator();
 		this.executor = new CommandExecutor();
-		this.result = new ActionResult();
 	}
 	
 	public ActionResult execute(String rawInput,Game game, Player player) {
 		
-		ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
-		result = validator.validateCommand(command,game,player);
+		ActionResult result = new ActionResult();
 		
-		if(result.getValid()) {
-			result = executor.executeCommand(game,player,command);
+		try {
+			logger.info("Executing command: " + rawInput);
+			ParsedCommand command = parser.parse(rawInput, game,player.getRoom());
+			logger.info("Parsed command: " + command.getCommand());
+			result = validator.validateCommand(command,game,player);
+			logger.info("Validation result: " + result.getValid());
+		
+			if(result.getValid()) {
+				result = executor.executeCommand(game,player,command);
+			}
+		} catch (Exception e) {
+			logger.severe("An error occurred while processing the command.");
+	        result = new ActionResult(game, player, false);
 		}
 		return result;
 	}

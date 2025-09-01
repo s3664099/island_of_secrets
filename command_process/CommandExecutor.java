@@ -26,7 +26,7 @@ import persistence.Persistence;
 public class CommandExecutor {
 	
 	private Random rand = new Random();
-	private static final Logger logger = Logger.getLogger(Game.class.getName());
+	private static final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 	
 	//Executes the command
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
