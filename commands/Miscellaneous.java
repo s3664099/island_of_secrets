@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 12 August 2025
+Version: 4.10
+Date: 2 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -46,7 +46,7 @@ public class Miscellaneous {
 	
 	public ActionResult info() {
 		Game game = getDetails();
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	public ActionResult wave() {
@@ -54,7 +54,7 @@ public class Miscellaneous {
 		ActionResult result = new ActionResult();
 		if (isBoatmanPresent()) {
 			game.addMessage("The boatman waves back.",true,true);
-			result = new ActionResult(game,player);
+			result = new ActionResult(game,player,true);
 		} else if (isWavingTorch()) {
 			result = waveTorch();
 		}
@@ -65,13 +65,13 @@ public class Miscellaneous {
 	public ActionResult help() {
 		
 		game.addMessage("?!?",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		if(isScratchSage()) {
 			result = scratchSage();
 		} else if (isHelpVillagerSage()) {
 			game.addMessage("How will you do that?",true,true);
-			result = new ActionResult(game,player);
+			result = new ActionResult(game,player,true);
 		}
 		return result;
 	}
@@ -79,7 +79,7 @@ public class Miscellaneous {
 	public ActionResult polish() {
 		
 		game.addMessage("A-dub-dub",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		//Rub the stone
 		if (isPolishStone()) {
@@ -94,7 +94,7 @@ public class Miscellaneous {
 		
 		String noun = command.getSplitTwoCommand()[1];
 		game.addMessage(noun,true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if(isSayStonyWords(noun)) {
 			result = sayStonyWords();
@@ -107,7 +107,7 @@ public class Miscellaneous {
 	
 	public ActionResult fill() {
 		game.addMessage("Not sure that can be done.",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (isFillJug()) {
 			result = fillJug();
@@ -122,7 +122,7 @@ public class Miscellaneous {
 	public ActionResult ride() {
 		
 		game.addMessage("How?",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		if (isRideBeast()) {
 			result = rideBeast();
 		} else if (isAlreadyRidingBeast()) {
@@ -133,7 +133,7 @@ public class Miscellaneous {
 	
 	public ActionResult open() {
 		game.addMessage("I'm unable to do that",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (isOpenChest()) {
 			result = openChest();
@@ -158,7 +158,7 @@ public class Miscellaneous {
 
 	public ActionResult shelter() {
 		game.addMessage("Not possible at the moment.",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if(isStormBlowing()) {
 			result = shelterFromStorm();
@@ -366,20 +366,20 @@ public class Miscellaneous {
 		
 		game.getItem(GameEntities.ITEM_TORCH).setItemName("a brightly glowing torch");
 		player.setStat("wisdom",(int) player.getStat("wisdom")+8);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult scratchSage() {
 		game.getItem(3).setItemFlag(0);
 		game.addMessage("She nods slowly.",true,true);
 		player.setStat("wisdom",(int) player.getStat("wisdom")+5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult polishStone() {
 		game.getItem(28).setItemFlag(0);
 		game.addMessage("Reflections stir within.",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult stonePolished() {
@@ -388,13 +388,13 @@ public class Miscellaneous {
 		game.getItem(GameEntities.ITEM_STONE).setItemFlag(99);
 		game.addMessage("The stone utters 'Stony Words'",true,true);
 		game.addMessage("Something falls out of the mouth",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult sayStonyWords() {
 		game.addMessage("The stones are fixed.",false,false);
 		game.getItem(GameEntities.ITEM_ROCKS).setItemFlag(1);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult speakScavenger() {
@@ -402,19 +402,19 @@ public class Miscellaneous {
 		game.getItem(GameEntities.ITEM_SCAVENGER).setItemFlag(1);
 		game.getItem(GameEntities.ITEM_MEDIAN).setItemFlag(0);
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult fillJug() {
 		game.getItem(GameEntities.ITEM_JUG).setItemFlag(-1);
 		game.addMessage("Filled",true,true);
 		game.getItem(GameEntities.ITEM_JUG).setItemName("A jug full of bubbling green liquid");
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult fillJugWater() {
 		game.addMessage("The water streams out of the jug",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult jugFull() {
@@ -424,19 +424,19 @@ public class Miscellaneous {
 				game.addMessage("The jug is already full",true,true);
 			}
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult rideBeast() {
 		int nounNumber = command.getNounNumber();
 		game.getItem(nounNumber).setItemFlag(-1);
 		game.addMessage("It allows you to ride.",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult alreadyRidingBeast() {
 		game.addMessage("You are already riding the beast.",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult openChest() {
@@ -445,27 +445,27 @@ public class Miscellaneous {
 		game.getItem(5).setItemFlag(9);
 		game.getItem(15).setItemFlag(9);
 		game.getItem(26).setItemFlag(1);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult openTrapdoor() {
 		game.addMessage("The trapdoor creaks",true,true);
 		game.getItem(29).setItemFlag(0);
 		player.setStat("wisdom",(int) player.getStat("wisdom")+3);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult cannotSwim() {
 		game.addMessage("You can't swim here!",true,true);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-1);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult canSwim() {
 		game.addMessage("You dive into the water",true,true);
 		player.setPlayerStateSwimming();
 		player.setRoom(rand.nextInt(5)+1);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult shelterFromStorm() {
@@ -495,7 +495,7 @@ public class Miscellaneous {
 			game.addMessage("You can shelter in:",true,true);
 			game.setShelterGameState();
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 }
 
@@ -509,4 +509,5 @@ public class Miscellaneous {
  * 18 July 2025 - Fixed problem with not setting the swimming flag in the storeroom
  * 19 July 2025 - Changes to setPlayerStateSwimming
  * 12 August 2025 - Changed comment when rub mouth
+ * 2 September 2025 - Updated based on new ActionResult
  */
