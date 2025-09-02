@@ -86,7 +86,7 @@ public class ItemCommands {
 		return notValidCatch;
 	}
 	
-	public ActionResult validateCarrying(Game game,ParsedCommand command) {
+	public ActionResult validateCarrying(Game game,Player player,ParsedCommand command) {
 		
 		int noun = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player,true);
@@ -108,18 +108,19 @@ public class ItemCommands {
 		return result;
 	}
 	
-	public ActionResult validateGive(Game game, int playerRoom, ParsedCommand command) {
+	public ActionResult validateGive(Game game, Player player, ParsedCommand command) {
 		
+		int playerRoom = player.getRoom();
 		String[] commands = command.getSplitFullCommand();
-		boolean validCommand = true;
+		ActionResult result = new ActionResult(game,player,true);
 		
 		if (commands.length<3) {
 			game.addMessage("Give to whom?",true,true);
 			game.setGiveState(command.getSplitFullCommand()[1]);
-			validCommand = false;
+			result = result.failure(game, player);
 		} else if (commands[2].equals("to") && commands.length<4) {
 			game.addMessage("I don't understand",true,true);
-			validCommand  = false;
+			result = result.failure(game, player);
 		
 		//Validates the reciever
 		} else {
@@ -129,13 +130,14 @@ public class ItemCommands {
 
 			if (objectNumber == -1) {
 				game.addMessage("I do not see the "+object+" here!", true, true);
-				validCommand = false;
+				result = result.failure(game, player);
 			} else if (playerRoom != game.getItem(objectNumber).getItemLocation()) {
 				game.addMessage("The "+object+" is not here.",true,true);
+				result = result.failure(game, player);
 			}
 		}
 		
-		return new ActionResult(game,validCommand);
+		return result;
 	}
 	
 	//Determines the receiver of the noun
@@ -369,7 +371,7 @@ public class ItemCommands {
 			game.addMessage("You pick an apple from the tree",true,true);
 			player.setStat("weight",((int) player.getStat("weight"))+1);
 					
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult takeSustanence(String sustanence) {
@@ -389,7 +391,7 @@ public class ItemCommands {
 			player.setStat("strength",(float) player.getStat("strength")-8);
 			game.setLightingGameState();
 			
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult takeEgg() {
@@ -414,7 +416,7 @@ public class ItemCommands {
 					game.getItem(16).setItemFlag(0);
 				}
 			}
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult takeBooks() {
@@ -423,12 +425,12 @@ public class ItemCommands {
 			player.setStat("strength",(float) player.getStat("strength")-8);
 			game.addMessage("They are cursed",true,true);
 
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult takeBeastFailed() {
 			game.addMessage("It escaped",true,true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult finaliseTake(Game game, Player player, int nounNumber, boolean taken) {
@@ -449,7 +451,7 @@ public class ItemCommands {
 			player.setStat("weight",((int) player.getStat("weight"))+1);
 			game.addMessage("Taken",true,true);
 			
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 	}
 	
@@ -475,7 +477,7 @@ public class ItemCommands {
 			game.getItem(nounNumber).setItemLocation(playerRoom);
 			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.addMessage("Done",true,true);
-			ActionResult result = new ActionResult(game,player);
+			ActionResult result = new ActionResult(game,player,true);
 			
 			if(isJug()) {
 				result = dropJug();
@@ -521,7 +523,7 @@ public class ItemCommands {
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 			player.setStat("weight",((int) player.getStat("weight"))-1);
 			game.addMessage("It breaks!",true,true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 				
 		private ActionResult dropTorch() {
@@ -533,14 +535,14 @@ public class ItemCommands {
 			if (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
 				game.addMessage("Upon dropping the torch the arms reach out and grab you, preventing you from moving.",false,true);
 			}
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult releaseBeast() {
 			game.getItem(nounNumber).setItemFlag(0);
 			game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
 			game.addMessage("The Canyon Beast runs away", true, true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 	}
 	
@@ -569,7 +571,7 @@ public class ItemCommands {
 		private ActionResult execute() {
 			
 			game.addMessage("It is refused.",true,true);
-			ActionResult result = new ActionResult(game,player);
+			ActionResult result = new ActionResult(game,player,true);
 			
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
@@ -659,7 +661,7 @@ public class ItemCommands {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(objectNumber).setItemFlag(1);
 			game.addMessage("The snake uncoils",true,true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult giveToVillager() {
@@ -671,7 +673,7 @@ public class ItemCommands {
 			}
 			game.getItem(11).setItemFlag(0);
 			player.setStat("drink",((int) player.getStat("drink"))-1);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		
@@ -679,20 +681,20 @@ public class ItemCommands {
 			game.getItem(objectNumber).setItemFlag(1);
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.addMessage("The Swampman takes the jug and leaves",true,true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 				
 		private ActionResult giveToLogmen() {
 			game.addMessage("It is taken",true,true);
 			game.getItem(nounNumber).setItemLocation(51);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 		
 		private ActionResult giveToScavenger() {
 			player.setStat("wisdom",(int) player.getStat("wisdom")+10);
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.addMessage("It is accepted",true,true);
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 				
 		private ActionResult giveToMedian() {
@@ -713,7 +715,7 @@ public class ItemCommands {
 			game.addPanelMessage("reaching far into the lakes and rivers beyond.", false);
 			game.addMessage("It is accepted",true,true);
 			game.setMessageGameState();
-			return new ActionResult(game,player);
+			return new ActionResult(game,player,true);
 		}
 	}
 }

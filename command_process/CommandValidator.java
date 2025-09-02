@@ -272,7 +272,7 @@ public class CommandValidator {
 	
 	private ActionResult validateDropOrGive(ParsedCommand command, Game game, Player player) {
 		ItemCommands carryingValidator = new ItemCommands();
-		ActionResult result = carryingValidator.validateCarrying(game,command);
+		ActionResult result = carryingValidator.validateCarrying(game,player,command);
 		if (checkGive(command,result)) {
 			result = validateGive(command,game,player,carryingValidator);
 		}
@@ -280,7 +280,7 @@ public class CommandValidator {
 	}
 	
 	private ActionResult validateGive(ParsedCommand command, Game game, Player player,ItemCommands carryingValidator) {
-		return carryingValidator.validateGive(game, player.getRoom(), command);
+		return carryingValidator.validateGive(game, player, command);
 	}
 	
 	private ActionResult validateEat(ParsedCommand command, Game game, Player player) {
