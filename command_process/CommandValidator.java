@@ -267,7 +267,7 @@ public class CommandValidator {
 	
 	private ActionResult validateTakeCommand(ParsedCommand command, Game game, Player player) {
 		ItemCommands takeValidator = new ItemCommands();
-		return takeValidator.validateTake(game, player.getRoom(), command);
+		return takeValidator.validateTake(game, player, command);
 	}
 	
 	private ActionResult validateDropOrGive(ParsedCommand command, Game game, Player player) {

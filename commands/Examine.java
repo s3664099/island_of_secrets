@@ -3,7 +3,7 @@ Title: Island of Secrets Examine Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.3
-Date: 6 June 2025
+Date: 2 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -39,7 +39,7 @@ public class Examine {
 	public ActionResult examine() {
 		
 		game.addMessage("Examine the book for clues",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if(isReadParchment() ) {
 			result = readParchment();
@@ -159,12 +159,12 @@ public class Examine {
 	
 	private ActionResult readParchment() {
 		game.addMessage("Remember Aladin. It Worked for him.",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult lookClosedChest() {
 		game.addMessage("The chest is closed",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult lookOpenChest() {
@@ -194,7 +194,7 @@ public class Examine {
 			game.addMessage(hammer+" a geologist's hammer",false,true);
 			game.getItem(GameEntities.ITEM_HAMMER).setItemFlag(0);
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineTable() {
@@ -220,17 +220,17 @@ public class Examine {
 			game.getItem(GameEntities.ITEM_BOTTLE).setItemFlag(0);
 		}
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineColumn() {
 		game.addMessage("At the bottom of the column are the words 'remember old times'",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineRoom() {
 		game.addMessage("There doesn't seem anything out of the ordinary here",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		if (isPyramid()) {
 			result = examinePyramid();
 		} else if (isWell()) {
@@ -254,20 +254,20 @@ public class Examine {
 		game.addMessage("while to the west you can see a log village on a lake. The the south is a swamp, while",false,true);
 		game.addMessage("blasted lands disappear to the east. In the middle of a lake, shrouded in mist, appears",false,true);
 		game.addMessage("to be an ancient castle.",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineWell() {
 		game.addMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting",true,true);
 		game.addMessage("to add you to their number",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineVillage() {
 		game.addMessage("You see a village that appears to have been frozen in time, with buildings and",true,true);
 		game.addMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp",false,true);
 		game.addMessage("seems to be ever so slowly enveloping it.",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineCloneFactory() {
@@ -275,21 +275,21 @@ public class Examine {
 		game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number",false,true);
 		game.addMessage("appear to be cracked, or even broken, and the bodies inside are either corposes or",false,true);
 		game.addMessage("have rotted away. A foul, almost toxic, smell seems to be present.",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineSanctum() {
 		game.addMessage("This room has an evil presence in it, with strange symbols on the floor and wall",true,true);
 		game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from",false,true);
 		game.addMessage("long forgotten family. A crystaline glass window looks out over the island.",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineColumnRoom() {
 		game.addMessage("The column looks like it has seen better days. It is crumbling and appears that a",true,true);
 		game.addMessage("peice could easily be removed if you had the right equipment. There is a message",false,true);
 		game.addMessage("inscribed at the base of the column.",false,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examineAbodeHut() {
@@ -298,7 +298,7 @@ public class Examine {
 		game.addMessage("considering the contents. There is a desk that is covered in papers, which includes",false,true); 
 		game.addMessage("what looks like a map.",false,true);
 		game.getRoom(player.getRoom()).setViewed();
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult readMap() {
@@ -310,7 +310,7 @@ public class Examine {
 				game.getRoom((x*10)+y).setVisited();
 			}
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult examinePapers() {
@@ -319,7 +319,7 @@ public class Examine {
 		game.addMessage("for this poison. In addition, you notice the following",false,true);
 		game.addMessage(getClue(rand.nextInt(10)), false, true);
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private String getClue(int clueNumber) {
@@ -349,4 +349,5 @@ public class Examine {
  * 5 June 2025 - Added examine rooms and began splitting into separate methods
  * 6 June 2025 - Finished Examine Room. Added Read Map
  * 8 June 2025 - Finished examine function with examine papers
+ * 2 September 2025 - Updated based on new ActionResult
 */

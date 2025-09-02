@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 26 July 2025
+Version: 4.13
+Date: 2 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -24,29 +24,30 @@ public class ItemCommands {
 		
 	private Random rand = new Random();
 	
-	public ActionResult validateTake(Game game,int currentRoom, ParsedCommand command) {
+	public ActionResult validateTake(Game game,Player player, ParsedCommand command) {
 		
 		int noun = command.getNounNumber();	
+		int currentRoom = player.getRoom();
 		Item item = game.getItem(noun);
-		boolean commandSuccessful = true;
+		ActionResult result = new ActionResult(game,player,true);
 		
 		if (((flaggedUntakeable(item)) || itemNotInRoom(item,currentRoom)) && 
 			(noun<=Constants.MAX_CARRIABLE_ITEMS || noun ==38)) {
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
-				commandSuccessful = false;
+				result = result.failure(game, player);
 			}
 		//Validates Pick and Catch commands
 		} else if ((notValidPick(command)) || (notValidCatch(command))){
 				System.out.println("Not Valid");
 				game.addMessage("You can't "+command.getCommand(),true,true);
-				commandSuccessful = false;
+				result = result.failure(game, player);
 		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != 38) {
 			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
-			commandSuccessful = false;
+			result = result.failure(game, player);
 		}
 		
-		return new ActionResult(game,commandSuccessful);
+		return result;
 	}
 	
 	private boolean flaggedUntakeable(Item item) {
@@ -88,23 +89,23 @@ public class ItemCommands {
 	public ActionResult validateCarrying(Game game,ParsedCommand command) {
 		
 		int noun = command.getNounNumber();
-		boolean validCommand = true;
+		ActionResult result = new ActionResult(game,player,true);
 		
 		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
 			(noun>=Constants.FOOD_THRESHOLD && noun != 38)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
-			validCommand = false;
+			result = result.failure(game, player);
 		}
 		
 		//Give specific validations
 		if (command.checkGive()) {
 			
 			if(noun == GameEntities.ITEM_WATER) {
-				validCommand = true;
+				result = result.failure(game, player);
 			}			
 		}
 		
-		return new ActionResult(game,validCommand);
+		return result;
 	}
 	
 	public ActionResult validateGive(Game game, int playerRoom, ParsedCommand command) {
@@ -741,4 +742,5 @@ public class ItemCommands {
  * 				- Fixed validation for take and catch
  * 15 July 2025 - Enabled cloak to be taken and dropped
  * 26 July 2025 - Added setMessageGameState
+ * 2 September 2025 - Updated based on new ActionResult
  */

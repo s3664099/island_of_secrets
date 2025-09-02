@@ -39,7 +39,7 @@ public class Combat {
 		
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		game.addMessage("Nothing happens",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 
 		//Carrying Hammer or Axe
 		if (isCarryingWeapon()) {
@@ -264,14 +264,14 @@ public class Combat {
 	private ActionResult choppingRoots() {
 		game.getItem(GameEntities.ITEM_SAP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_SAP).setItemLocation(player.getRoom());
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult breakColumn() {
 		game.getItem(GameEntities.ITEM_CHIP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_FRACTURE).setItemFlag(0);
 		game.addMessage("Crack",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult breakStaff() {
@@ -289,7 +289,7 @@ public class Combat {
 		game.getItem(nounNumber).setItemFlag(-9);
 		game.setMessageGameState();
 		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult releaseDactyl(ActionResult result) {
@@ -304,7 +304,7 @@ public class Combat {
 		game.getItem(nounNumber).setItemFlag(-1);
 		player.setStat("strength",(float) player.getStat("strength")+40);
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult wasteStaff() {
@@ -312,26 +312,26 @@ public class Combat {
 		game.getItem(nounNumber).setItemFlag(-1);
 		game.setMessageGameState();
 		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult annoyPerson() {
 		game.addMessage("You annoy the "+game.getItem(nounNumber).getItemName(),true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult defaultAttackRespond() {
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 		game.addMessage("That would be unwise",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult defaultKillRespond() {
 		player.setStat("strength",(float) player.getStat("strength")-12);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
 		game.addMessage("That would be unwise",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult fatalResponse() {
@@ -351,14 +351,14 @@ public class Combat {
 		player.setStat("timeRemaining",0);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitOmegan() {
 		game.addMessage("He laughs dangerously.",true,true);
 		player.setStat("strength",(float) player.getStat("strength")-8);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitSage() {
@@ -366,7 +366,7 @@ public class Combat {
 		game.getItem(3).setItemLocation(81);
 		player.setStat("strength",(float) player.getStat("strength")-8);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitDactyl() {
@@ -380,26 +380,26 @@ public class Combat {
 		game.addMessage("",true,true);
 		player.setStat("strength",(float) player.getStat("strength")-8);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitLogmen() {
 		game.addMessage("They think that's funny!",true,true);
 		player.setStat("strength",(float) player.getStat("strength")-8);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitSwampman() {
 		game.addMessage("The swampman is unmoved.",true,true);
 		player.setStat("strength",(float) player.getStat("strength")-8);
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult strikeFlint() {
 		game.addMessage("Sparks fly",true,true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		//Coal in room
 		if (isCoalPresent()) {
@@ -413,7 +413,7 @@ public class Combat {
 		game.getItem(GameEntities.ITEM_COAL).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.setMessageGameState();
 		game.addPanelMessage("The coal burns with a red flame",true);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		if (isOmeganCloakPresent()) {
 			result = omeganCloakPresent();
@@ -429,7 +429,7 @@ public class Combat {
 		player.setStat("wisdom",(int) player.getStat("wisdom")+20);
 		game.getItem(GameEntities.ITEM_COAL).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_CLOAK).setItemLocation(GameEntities.ROOM_DESTROYED);
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		return result;
 	}
@@ -445,4 +445,5 @@ public class Combat {
  * 26 July 2025 - Added set state changes to message states. Changed method of setting end game state
  * 28 July 2025 - Added set endgame state to kill command
  * 1 August 2025 - Removed response for carrying weapon, and moved results into if statement
+ * 2 September 2025 - Updated based on new ActionResult
  */

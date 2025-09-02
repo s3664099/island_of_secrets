@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 26 July 2025
+Version: 4.8
+Date: 2 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -73,7 +73,7 @@ public class Consume {
 	
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (command.checkEat()) {
 			result = executeEat(game,player,command);
@@ -88,7 +88,7 @@ public class Consume {
 	private ActionResult executeEat(Game game,Player player, ParsedCommand command) {
 		
 		int nounNumber = command.getNounNumber();
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (isEatingLillies(nounNumber,game)) {
 			result = eatLillies(game,player);
@@ -100,7 +100,7 @@ public class Consume {
 	
 	private ActionResult executeDrink(Game game,Player player,ParsedCommand command) {
 		int nounNumber = command.getNounNumber();
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 
 		if (isDrinkingLiquid(nounNumber)) {
 			result = drinkLiquid(game,player,nounNumber);
@@ -112,7 +112,6 @@ public class Consume {
 	
 	private ActionResult executeRest(Game game, Player player, ParsedCommand command) {
 		
-		
 		int count = determineCount(game);
 		player = determineRestPeriod(count,game,player);
 
@@ -123,7 +122,7 @@ public class Consume {
 				
 		game = setMessage(count,game);
 		
-		return new ActionResult(game,player);	
+		return new ActionResult(game,player,true);	
 	}
 	
 	private int determineCount(Game game) {
@@ -175,14 +174,14 @@ public class Consume {
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		game.addMessage("They make you very ill",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult eatFood(Game game, Player player) {
 		player.setStat("food",((int) player.getStat("food"))-1);
 		player.setStat("strength",(float) player.getStat("strength")+10);
 		game.addMessage("Ok",true,true);
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult drinkLiquid(Game game,Player player,int nounNumber) {
@@ -203,7 +202,7 @@ public class Consume {
 				game.addPanelMessage("Time passes ...", false);
 			}
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult drink(Game game,Player player) {
@@ -212,7 +211,7 @@ public class Consume {
 		player.setStat("strength",(float) player.getStat("strength")+7);
 		game.addMessage("Ok",true,true);
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private Game setMessage(int count,Game game) {
@@ -238,4 +237,5 @@ public class Consume {
  * 13 July 2025 - Fixed problem with drink not executing. Allowed eat apple.
  * 14 July 2025 - Fixed problem where eating and drinking more than you have
  * 26 July 2025 - Added setMessageGameState
+ * 2 September 2025 - Updated based on new ActionResult
  */

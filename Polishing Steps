@@ -70,7 +70,7 @@ view
 
 - Give when subject not present - it is refused, should respond otherwise
 - See Below for issue with Trapdoor
-
+- HandleGoTrapdoor looks odd in CommandValidator
 
 
 

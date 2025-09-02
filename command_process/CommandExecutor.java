@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.22
-Date: 1 September 2025
+Version: 4.23
+Date: 2 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -53,18 +53,16 @@ public class CommandExecutor {
 	 */
 	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
 		
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (command.checkMoveState()) {
 			logger.info("Moving");
 			
-			//Entering Trapdoor
 			if (command.getCodedCommand().equals(GameEntities.CODE_DOWN_STOREROOM) && 
 				game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0) {
 				player.setRoom(rand.nextInt(5)+1);
-				result = new ActionResult(game,player);
+				result = result.success(game, player);
 			
-			//Normal Move
 			}	else {
 				result = new Move().executeMove(game,player,command);
 			}
@@ -230,4 +228,5 @@ public class CommandExecutor {
  * 24 June 2025 - Moved creation of action result to main code
  * 25 June 2025 - Added logging to the actions to flag what actions are occuring
  * 1 September 2025 - Removed Magic Numbers
+ * 2 September 2025 - Updated based on new ActionResult
  */
