@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 21 July 2025
+Version: 4.13
+Date: 3 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -86,19 +86,21 @@ public class Move {
 		return nounNumber;	
 	}
 
-	public ActionResult validateMove(ParsedCommand command, Game game, int room) {
+	public ActionResult validateMove(ParsedCommand command, Game game, Player player) {
 		
 		boolean validMove = true;
-		ActionResult result = new ActionResult(game,validMove);
+		int room = player.getRoom();
+		ActionResult result = new ActionResult(game,player,validMove);
 		
+		//Send the result instead of the game.
 		if (isGoBoat(command.getNounNumber())) {
-			result = goBoat(game);
+			result = goBoat(game,player);
 		} else if (isNonStandardDirection(command)) {
-			result = exitBlocked(game);
+			result = exitBlocked(game,player);
 		} else if (isNotDirection(command)) {
-			result = notDirection(game);
+			result = notDirection(game,player);
 		} else if (isExitBlocked(game,room,command.getNounNumber())) {
-			result = exitBlocked(game);
+			result = exitBlocked(game,player);
 		} 
 		
 		return result;
@@ -182,7 +184,7 @@ public class Move {
 			game.addMessage("The beast runs away",false,true);
 		}
 		
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,true);
 		
 		//Handling the ferry man - MOVE TO SEPARATE FUNCTION
 		if (isCatchingFerry(game,player,command)) {
@@ -299,9 +301,9 @@ public class Move {
 		return goBoat;
 	}
 	
-	private ActionResult goBoat(Game game) {
+	private ActionResult goBoat(Game game,Player player) {
 		game.addMessage("That is not possible",true,true);
-		return new ActionResult(game,true);
+		return new ActionResult(game,player,true);
 	}
 	
 	private boolean isNotDirection(ParsedCommand command) {
@@ -312,9 +314,9 @@ public class Move {
 		return notDirection;
 	}
 	
-	private ActionResult notDirection(Game game) {
+	private ActionResult notDirection(Game game,Player player) {
 		game.addMessage("I don't understand",true,true);
-		return new ActionResult(game,false);
+		return new ActionResult(game,player,false);
 	}
 	
 	private boolean isExitBlocked(Game game, int room, int nounNumber) {
@@ -325,9 +327,9 @@ public class Move {
 		return exitBlocked;
 	}
 	
-	private ActionResult exitBlocked(Game game) {
+	private ActionResult exitBlocked(Game game, Player player) {
 		game.addMessage("You can't go that way",true,true);
-		return new ActionResult(game, false);
+		return new ActionResult(game, player, false);
 	}
 	
 	private boolean isCatchingFerry(Game game,Player player,ParsedCommand command) {
@@ -355,7 +357,7 @@ public class Move {
 		game.addMessage("The boat skims the dark and silent waters.",true,true);
 		game.setMessageGameState();
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 }
 
@@ -372,4 +374,5 @@ public class Move {
  * 25 June 2025 - Fixed problem with boat, and made move validation readable.
  * 6 July 2025 - Fixed problem going into and out of hut
  * 21 July 2025 - Added check to prevent using first four nouns to move
+ * 3 September 2025 - Updated for new ActionResult
  */

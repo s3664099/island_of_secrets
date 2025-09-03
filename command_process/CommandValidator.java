@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 31 August 2025
+Version: 4.18
+Date: 3 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -262,7 +262,7 @@ public class CommandValidator {
 	
 	private ActionResult validateMoveCommand(ParsedCommand command, Game game, Player player) {
 		Move moveValidator = new Move();
-		return moveValidator.validateMove(command,game,player.getRoom());
+		return moveValidator.validateMove(command,game,player);
 	}
 	
 	private ActionResult validateTakeCommand(ParsedCommand command, Game game, Player player) {
@@ -314,4 +314,5 @@ public class CommandValidator {
  * 29 August 2025 - Updated the validators to handle separate concerns and to return modified game object
  * 30 August 2025 - Moved special validators to new validator method, and also created check for null in result
  * 31 August 2025 - Completed special validation
+ * 3 September 2025 - Changed parameters for the move function
  */
