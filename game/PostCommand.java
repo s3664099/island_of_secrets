@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 17 August 2025
+Version: 4.8
+Date: 3 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -94,7 +94,7 @@ public class PostCommand {
 		
 		if(isLoseGame()) {loseGame();}
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 
     // ================== Condition Checks ================== //
@@ -442,4 +442,5 @@ public class PostCommand {
  * 26 July 2025 - Updated so that set message panel taken into account
  * 13 August 2025 - Fixed swampman movement
  * 17 August 2025 - Added JavaDocs
+ * 3 September 2025 - Updated with new ActionResult changes
  */
