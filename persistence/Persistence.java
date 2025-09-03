@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 7 July 2025
+Version: 4.4
+Date: 3 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -47,12 +47,12 @@ public class Persistence {
 		} else {
 			game = saveGame();
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	public ActionResult load() {
 		
-		ActionResult result = new ActionResult(game,player);
+		ActionResult result = new ActionResult(game,player,false);
 		
 		if (splitCommand.length==1) {
 			result = displayGames();
@@ -68,7 +68,7 @@ public class Persistence {
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
 		player.setStat("timeRemaining",1);
 		game.setEndGameState();
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult displayGames() {
@@ -108,7 +108,7 @@ public class Persistence {
 			game.setSavedGameState();
 		}
 		
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 		
 	private File[] getSavedGames(File directory) {
@@ -210,7 +210,7 @@ public class Persistence {
 				game.addMessage("Game Failed to load.",true,true);
 			}
 		}
-		return new ActionResult(game,player);
+		return new ActionResult(game,player,true);
 	}
 }
 
@@ -220,4 +220,5 @@ public class Persistence {
  * 7 July 2025 - Fixed code so reason for save game fail displays
  * 			   - Added logger for game failed to save & load
  * 			   - Stripped .sav from load game displays
+ * 3 September 2025 - Changed for updated ActionResult changes
  */
