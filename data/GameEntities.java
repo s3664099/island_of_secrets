@@ -109,6 +109,8 @@ public class GameEntities {
 
 	// === Commands ===
 	public static final int MOVE_BOTTOM = 0;
+	public static final int MOVE_DIRECTION = 5;
+	public static final int MOVE_NOT_DIRECTION = 4;
 	public static final int MOVE_TOP = 6;
 	public static final int CHOP_BOTTOM = 15;
 	public static final int CHOP_TOP = 20;

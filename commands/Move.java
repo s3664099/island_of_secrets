@@ -26,18 +26,16 @@ public class Move {
 	private static final int[] DIRECTION_MODIFIERS = {-10, +10, +01, -01};
 	private final Random rand = new Random();
 	
-	public ParsedCommand parseMove(ParsedCommand command,int room) {
+	public ParsedCommand normaliseMoveCommand(ParsedCommand command,int room) {
 		
 		int verbNumber = command.getVerbNumber();
 		int nounNumber = command.getNounNumber();
 		String noun = command.getSplitTwoCommand()[1];
 		String code = command.getCodedCommand();
 		nounNumber = handleSpecialRooms(room, noun, nounNumber);
-		nounNumber = handleCodedCommand(code,nounNumber);
+		nounNumber = mapCodedCommandToDirection(code,nounNumber);
 		
-		if (verbNumber == GameEntities.CMD_GO && nounNumber>0 && nounNumber<5) {
-			nounNumber = 8;
-		} else if(nounNumber>4 && nounNumber != GameEntities.ITEM_BOAT) {
+		if(nounNumber>GameEntities.MOVE_NOT_DIRECTION && nounNumber != GameEntities.ITEM_BOAT) {
 			nounNumber -= 43;
 		}
 		
@@ -55,7 +53,7 @@ public class Move {
 		return nounNumber;
 	}
 	
-	private int handleCodedCommand(String code,int nounNumber) {
+	private int mapCodedCommandToDirection(String code,int nounNumber) {
 		Map<String,Integer> codeToDirection = new HashMap<>();
 		codeToDirection.put(GameEntities.CODE_IN_LAIR,GameEntities.WEST);
 		codeToDirection.put(GameEntities.CODE_IN_LOG_HUT,GameEntities.WEST);
@@ -87,7 +85,7 @@ public class Move {
 	}
 
 	public ActionResult validateMove(ParsedCommand command, Game game, Player player) {
-		
+
 		boolean validMove = true;
 		int room = player.getRoom();
 		ActionResult result = new ActionResult(game,player,validMove);
@@ -95,8 +93,6 @@ public class Move {
 		//Send the result instead of the game.
 		if (isGoBoat(command.getNounNumber())) {
 			result = goBoat(game,player);
-		} else if (isNonStandardDirection(command)) {
-			result = exitBlocked(game,player);
 		} else if (isNotDirection(command)) {
 			result = notDirection(game,player);
 		} else if (isExitBlocked(game,room,command.getNounNumber())) {
@@ -108,7 +104,7 @@ public class Move {
 	
 	public ActionResult executeMove(Game game, Player player, ParsedCommand command) {
 		
-		ActionResult blockedCheck = checkMoveBlocked(game,player,command);
+		ActionResult blockedCheck = evaluateMovementRestrictions(game,player,command);
 		
 		//Move is not blocked
 		if (!blockedCheck.isValid()) {
@@ -132,7 +128,7 @@ public class Move {
 	}
 	
 	//Can move but event blocks movement
-	private ActionResult checkMoveBlocked(Game game, Player player, ParsedCommand command) {
+	private ActionResult evaluateMovementRestrictions(Game game, Player player, ParsedCommand command) {
 		
 		ActionResult result = new ActionResult(game,player,false);
 		
@@ -194,111 +190,59 @@ public class Move {
 	}
 	
 	private boolean isOmeganPresent(Game game, Player player) {
-		boolean omeganPresent = false;
-		if (game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
-		   (player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM)) {
-			omeganPresent = true;
-		}
-		return omeganPresent;
+		return game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
+				   (player.getStrengthWisdon()<180 || player.getRoom()==GameEntities.ROOM_SANCTUM);
 	}
 	
 	private boolean isSwampmanPresent(Game game, Player player, ParsedCommand command) {
-		boolean swampmanPresent = false;
-		if(player.getRoom() == game.getItem(GameEntities.ITEM_SWAMPMAN).getItemLocation() && 
-		   game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()<1 && 
-		   command.getNounNumber() == GameEntities.EAST) {
-			swampmanPresent = true;
-		}
-		return swampmanPresent;
+		return player.getRoom() == game.getItem(GameEntities.ITEM_SWAMPMAN).getItemLocation() && 
+				   game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()<1 && 
+				   command.getNounNumber() == GameEntities.EAST;
 	}
-	
-	private boolean isNonStandardDirection(ParsedCommand command) {
-		boolean nonStandard = false;
-		if (command.getNounNumber()>4 && command.getNounNumber()<8)  {
-			nonStandard = true;
-		}
-		return nonStandard;
-	}
-	
+		
 	private boolean areRocksMoving(Game game, Player player) {
-		boolean rocksMoving = false;
-		if(player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
-		   game.getItem(GameEntities.ITEM_ROCKS).getItemFlag()==0) {
-			rocksMoving = true;
-		}
-		return rocksMoving;
+		return player.getRoom() == GameEntities.ROOM_CASTLE_ENTRANCE && 
+				   game.getItem(GameEntities.ITEM_ROCKS).getItemFlag()==0;
 	}
 	
 	private boolean doArmsHoldYou(Game game,Player player) {
-		boolean armsHoldYou = false;
-		if(player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
-		   game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
-			armsHoldYou = true;
-		}
-		return armsHoldYou;
+		return player.getRoom() == GameEntities.ROOM_WITH_HANDS && 
+			   game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1;
 	}
 	
 	private boolean isSnakePresent(Game game,Player player,ParsedCommand command) {
-		boolean snakePresent = false;
-		if(player.getRoom()==GameEntities.ROOM_CLEARING && 
-		   game.getItem(GameEntities.ITEM_SNAKE).getItemFlag()==0 && 
-		   command.getNounNumber() == GameEntities.WEST) {
-			snakePresent = true;
-		}
-		return snakePresent;
+		return player.getRoom()==GameEntities.ROOM_CLEARING && 
+				game.getItem(GameEntities.ITEM_SNAKE).getItemFlag()==0 && 
+				command.getNounNumber() == GameEntities.WEST;
 	}
 	
 	private boolean isPlayerRidingBeast(Game game,Player player,ParsedCommand command) {
-		boolean playerRidingBeast = false;
-		if(player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
-		   game.getItemFlagSum(GameEntities.ITEM_BEAST) != -1 && 
-		   command.getNounNumber() == GameEntities.EAST) {
-			playerRidingBeast = true;
-		}
-		return playerRidingBeast;
+		return player.getRoom() == GameEntities.ROOM_ROCKY_PATH && 
+				game.getItemFlagSum(GameEntities.ITEM_BEAST) != -1 && 
+				command.getNounNumber() == GameEntities.EAST;
 	}
 	
 	private boolean isDoorClosed(Player player,ParsedCommand command) {
-		boolean doorClosed = false;
-		if(player.getRoom() == GameEntities.ROOM_STOREROOM && 
-		   command.getNounNumber() == GameEntities.EAST) {
-			doorClosed = true;
-		}
-		return doorClosed;
+		return player.getRoom() == GameEntities.ROOM_STOREROOM && 
+				command.getNounNumber() == GameEntities.EAST;
 	}
 	
 	private boolean isInHandsRoom(Game game,Player player) {
-		boolean isInHandsRoom = false;
-		if (player.getRoom()==GameEntities.ROOM_WITH_HANDS && 
-			game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1) {
-			isInHandsRoom = true;
-		}
-		return isInHandsRoom;
+		return player.getRoom()==GameEntities.ROOM_WITH_HANDS && 
+				game.getItem(GameEntities.ITEM_TORCH).getItemFlag()!=1;
 	}
 	
 	private boolean isInEntranceHall(Player player, ParsedCommand command) {
-		boolean isInEntranceHall = false;
-		if(player.getRoom()==GameEntities.ROOM_ENTRANCE_CHAMBER && command.getNounNumber()==1) {
-			isInEntranceHall = true;
-		}
-		return isInEntranceHall;
+		return player.getRoom()==GameEntities.ROOM_ENTRANCE_CHAMBER && command.getNounNumber()==1;
 	}
 	
 	private boolean isOnJetty(Game game, Player player) {
-		boolean isOnJetty = false;
-		if(player.getRoom() == GameEntities.ROOM_JETTY && 
-		   game.getItem(GameEntities.ITEM_BEAST).getItemLocation()==0) {
-			isOnJetty = true;
-		}
-		return isOnJetty;
+		return player.getRoom() == GameEntities.ROOM_JETTY && 
+				game.getItem(GameEntities.ITEM_BEAST).getItemLocation()==0;
 	}
 	
 	private boolean isGoBoat(int nounNumber) {
-		boolean goBoat = false;
-		if (nounNumber == GameEntities.ITEM_BOAT) {
-			goBoat = true;
-		}
-		return goBoat;
+		return nounNumber == GameEntities.ITEM_BOAT;
 	}
 	
 	private ActionResult goBoat(Game game,Player player) {
@@ -307,11 +251,7 @@ public class Move {
 	}
 	
 	private boolean isNotDirection(ParsedCommand command) {
-		boolean notDirection = false;
-		if(command.getNounNumber()>4) {
-			notDirection = true;
-		}
-		return notDirection;
+		return command.getNounNumber()>GameEntities.MOVE_NOT_DIRECTION;
 	}
 	
 	private ActionResult notDirection(Game game,Player player) {
@@ -320,11 +260,7 @@ public class Move {
 	}
 	
 	private boolean isExitBlocked(Game game, int room, int nounNumber) {
-		boolean exitBlocked = false;
-		if (!game.checkExit(room,nounNumber-1)) {
-			exitBlocked = true;
-		}
-		return exitBlocked;
+		return !game.checkExit(room,nounNumber-1);
 	}
 	
 	private ActionResult exitBlocked(Game game, Player player) {
@@ -333,12 +269,8 @@ public class Move {
 	}
 	
 	private boolean isCatchingFerry(Game game,Player player,ParsedCommand command) {
-		boolean isCatchingFerry = false;
-		if(player.getRoom()==game.getItem(GameEntities.ITEM_BOAT).getItemLocation() && 
-		   command.getNounNumber() == GameEntities.ITEM_BOAT) {
-			isCatchingFerry = true;
-		}
-		return isCatchingFerry;
+		return player.getRoom()==game.getItem(GameEntities.ITEM_BOAT).getItemLocation() && 
+				command.getNounNumber() == GameEntities.ITEM_BOAT;
 	}
 	
 	private ActionResult catchingFerry(Game game,Player player) {
@@ -375,4 +307,5 @@ public class Move {
  * 6 July 2025 - Fixed problem going into and out of hut
  * 21 July 2025 - Added check to prevent using first four nouns to move
  * 3 September 2025 - Updated for new ActionResult
+ * 					- Updated based on recommendations
  */

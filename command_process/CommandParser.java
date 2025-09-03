@@ -231,7 +231,7 @@ public class CommandParser {
 	 * @return the updated {@link ParsedCommand} after movement parsing
 	 */
 	private ParsedCommand parseMove(ParsedCommand command,int room) {
-		return new Move().parseMove(command, room);
+		return new Move().normaliseMoveCommand(command, room);
 	}
 	
 	/**

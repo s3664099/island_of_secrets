@@ -71,6 +71,7 @@ view
 - Give when subject not present - it is refused, should respond otherwise
 - See Below for issue with Trapdoor
 - HandleGoTrapdoor looks odd in CommandValidator
+- Game does not end if go boat
 
 
 
@@ -83,8 +84,7 @@ view
 
 
 
-
-  * Then each specific handler: `Move`, `Consume`, `Combat`, etc.
+  * Then each specific handler: `Consume`, `Combat`, 'Examine','ItemCommands','Miscellaneous'
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
 
 ### **5. `Interfaces`**
