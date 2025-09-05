@@ -18,22 +18,28 @@ import game.Player;
 
 public class Consume {
 	
-	public ParsedCommand parseEat(ParsedCommand command) {
-		
-		int nounNumber = command.getNounNumber();
-		String noun = command.getSplitTwoCommand()[1];
-		
+	private int nounNumber;
+	private String noun;
+	private ParsedCommand command;
+	
+	public Consume(ParsedCommand command) {
+		nounNumber = command.getNounNumber();
+		noun = command.getSplitTwoCommand()[1];
+		this.command = command;
+	}
+	
+	public ParsedCommand parseEat() {
+				
 		if (noun.equals("food")) {
-			nounNumber = 17;
+			nounNumber = GameEntities.ITEM_BREAD;
 		}
 		
 		return new ParsedCommand(command.getVerbNumber(),nounNumber,command.getCodedCommand(),
 				command.getSplitTwoCommand(),command.getCommand());
 	}
 	
-	public ActionResult validateEat(ParsedCommand command, Game game, Player player) {
-		int nounNumber = command.getNounNumber();
-		String noun = command.getSplitTwoCommand()[1];
+	public ActionResult validateEat(Game game, Player player) {
+
 		boolean validEat = true;
 		
 		if (noun.equals("apple")) {
@@ -54,9 +60,8 @@ public class Consume {
 		return new ActionResult(game,player,validEat);
 	}
 	
-	public ActionResult validateDrink(ParsedCommand command, Game game, Player player) {
-		int nounNumber = command.getNounNumber();
-		String noun = command.getSplitTwoCommand()[1];
+	public ActionResult validateDrink(Game game, Player player) {
+
 		boolean validDrink = true;
 		
 		if ((nounNumber<Constants.DRINK_THRESHOLD || nounNumber>Constants.MAX_CARRIABLE_ITEMS) 
@@ -71,23 +76,22 @@ public class Consume {
 		return new ActionResult(game,player,validDrink);
 	}
 	
-	public ActionResult executeCommand(Game game,Player player,ParsedCommand command) {
+	public ActionResult executeCommand(Game game,Player player) {
 		
 		ActionResult result = new ActionResult(game,player,false);
 		
 		if (command.checkEat()) {
-			result = executeEat(game,player,command);
+			result = executeEat(game,player);
 		} else if (command.checkDrink()) {
-			result = executeDrink(game,player,command);
+			result = executeDrink(game,player);
 		} else if (command.checkRest()) {
-			result = executeRest(game,player,command);
+			result = executeRest(game,player);
 		}
 		return result;
 	}
 	
-	private ActionResult executeEat(Game game,Player player, ParsedCommand command) {
+	private ActionResult executeEat(Game game,Player player) {
 		
-		int nounNumber = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player,false);
 		
 		if (isEatingLillies(nounNumber,game)) {
@@ -98,8 +102,8 @@ public class Consume {
 		return result;
 	}
 	
-	private ActionResult executeDrink(Game game,Player player,ParsedCommand command) {
-		int nounNumber = command.getNounNumber();
+	private ActionResult executeDrink(Game game,Player player) {
+
 		ActionResult result = new ActionResult(game,player,false);
 
 		if (isDrinkingLiquid(nounNumber)) {
@@ -110,7 +114,7 @@ public class Consume {
 		return result;
 	}
 	
-	private ActionResult executeRest(Game game, Player player, ParsedCommand command) {
+	private ActionResult executeRest(Game game, Player player) {
 		
 		int count = determineCount(game);
 		player = determineRestPeriod(count,game,player);
@@ -143,31 +147,17 @@ public class Consume {
 	}
 	
 	private boolean isEatingLillies(int nounNumber,Game game) {
-		
-		boolean isEatingLillies = false;
-		if(nounNumber == GameEntities.ITEM_LILY && 
-		   game.getItem(GameEntities.ITEM_LILY).getItemLocation()==0) {
-			   isEatingLillies = true;
-		   }
-		return isEatingLillies;
+		return nounNumber == GameEntities.ITEM_LILY && 
+				game.getItem(GameEntities.ITEM_LILY).getItemLocation()==0;
 	}
 	
 	private boolean isDrinkingLiquid(int nounNumber) {
-		boolean isDrinkingLiquid = false;
-		if (nounNumber == GameEntities.ITEM_LIQUID) {
-			isDrinkingLiquid = true;
-		}
-		return isDrinkingLiquid;
+		return nounNumber == GameEntities.ITEM_LIQUID;
 	}
 	
 	private boolean isEnoughTime(Game game, Player player) {
-		
-		boolean enoughTime = false;
-		if ((int) player.getStat("timeRemaining")>100 || 
-			game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1) {
-			enoughTime = true;
-		}
-		return enoughTime;
+		return (int) player.getStat("timeRemaining")>100 || 
+				game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1;
 	}
 	
 	private ActionResult eatLillies(Game game, Player player) {
@@ -186,6 +176,8 @@ public class Consume {
 	
 	private ActionResult drinkLiquid(Game game,Player player,int nounNumber) {
 		
+		boolean success = false;
+		
 		if(game.getItemFlagSum(GameEntities.ITEM_JUG)!=-1) {
 			game.addMessage("You don't have "+game.getItem(nounNumber).getItemName(),true,true);
 		} else {
@@ -193,6 +185,7 @@ public class Consume {
 			player.setStat("strength",(float) player.getStat("strength")-4);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-7);
 			game.setMessageGameState();
+			success = true;
 			
 			int count = determineCount(game);
 			game.setMessageGameState();
@@ -202,7 +195,7 @@ public class Consume {
 				game.addPanelMessage("Time passes ...", false);
 			}
 		}
-		return new ActionResult(game,player,true);
+		return new ActionResult(game,player,success);
 	}
 	
 	private ActionResult drink(Game game,Player player) {
@@ -238,4 +231,5 @@ public class Consume {
  * 14 July 2025 - Fixed problem where eating and drinking more than you have
  * 26 July 2025 - Added setMessageGameState
  * 2 September 2025 - Updated based on new ActionResult
+ * 4 September 2025 - Removed extraneous code and tightened if statements
  */

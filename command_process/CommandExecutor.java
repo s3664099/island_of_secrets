@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.23
-Date: 2 September 2025
+Version: 4.24
+Date: 4 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -73,7 +73,7 @@ public class CommandExecutor {
 			result = new ItemCommands().executeCommand(game,player,command);
 		} else if (command.checkEat() || command.checkDrink() || command.checkRest()) {
 			logger.info("Eat/Drink/Rest");
-			result = new Consume().executeCommand(game,player,command);
+			result = new Consume(command).executeCommand(game,player);
 		} else if (command.checkInfo()) {
 			logger.info("Info");
 			result = new Miscellaneous(game,player).info();
@@ -229,4 +229,5 @@ public class CommandExecutor {
  * 25 June 2025 - Added logging to the actions to flag what actions are occuring
  * 1 September 2025 - Removed Magic Numbers
  * 2 September 2025 - Updated based on new ActionResult
+ * 4 September 2025 - Updated based on changes to Consume
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 25 August 2025
+Version: 4.17
+Date: 5 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -241,7 +241,7 @@ public class CommandParser {
 	 * @return the updated {@link ParsedCommand} after consumption parsing
 	 */
 	private ParsedCommand parseEat(ParsedCommand command) {
-		return new Consume().parseEat(command);
+		return new Consume(command).parseEat();
 	}
 	
 	/**
@@ -320,4 +320,5 @@ public class CommandParser {
  * 2 July 2025 - Added code to handle response to give
  * 23 July 2025 - Fixed parse look so can use look command
  * 25 August 2025 - Removed some of the magic variables. Added JavaDocs
+ * 5 Sepember 2025 - Updated based on changes to consume
  */
