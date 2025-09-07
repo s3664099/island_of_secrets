@@ -18,6 +18,14 @@ import data.GameEntities;
 import game.Game;
 import game.Player;
 
+/**
+ * Handles combat-related actions within the game, including attacking,
+ * chopping, killing, and special interactions with items and creatures.
+ * <p>
+ * This class interprets a parsed command (verb and noun), evaluates the 
+ * current game and player state, and returns an {@link ActionResult} 
+ * describing the outcome of the action.
+ */
 public class Combat {
 
 	private final Game game;
@@ -27,10 +35,22 @@ public class Combat {
 	private final int nounNumber;
 	private final Random rand = new Random();
 	
+    /** Constant for the "strength" stat key. */
 	public static final String STAT_STRENGTH = "strength";
+	
+    /** Constant for the "wisdom" stat key. */
 	public static final String STAT_WISDOM = "wisdom";
+	
+    /** Constant for the "timeRemaining" stat key. */
 	public static final String STAT_TIME = "timeRemaining";
-		
+	
+    /**
+     * Constructs a Combat handler for the given game, player, and command.
+     *
+     * @param game    the current game state
+     * @param player  the player performing the action
+     * @param command the parsed command containing verb, noun, and code
+     */
 	public Combat(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
@@ -38,7 +58,13 @@ public class Combat {
 		this.verbNumber = command.getVerbNumber();
 		this.nounNumber = command.getNounNumber();
 	}
-		
+	
+    /**
+     * Handles chopping-related actions, such as chopping roots, breaking columns,
+     * or breaking staffs, depending on the player's weapon and command.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	public ActionResult chop() {
 		
 		reduceStats(2,0);
@@ -76,6 +102,12 @@ public class Combat {
 		return result;
 	}
 	
+    /**
+     * Handles attack-related actions, including strikes against creatures,
+     * objects, or special interactions such as striking flint.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	public ActionResult attack() {
 		ActionResult result = defaultAttackRespond();
 		
@@ -94,45 +126,86 @@ public class Combat {
 				result = strikeFlint();
 			}
 		}
-		
 		return result;
 	}
 
+    /**
+     * Handles kill commands. If the target is fatal, triggers the end-game sequence.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	public ActionResult kill() {
 		return (isFatalResponse()) ? fatalResponse():defaultKillRespond();
 	}
 	
+    // === Private Helper Methods ===
+	
+    /**
+     * Checks if the player is carrying either an axe or hammer.
+     *
+     * @return true if the player has a weapon, false otherwise
+     */
 	private boolean isCarryingWeapon() {
 		return game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING || 
 				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
+    /**
+     * Checks if the player is chopping roots with an axe.
+     *
+     * @return true if chopping roots, false otherwise
+     */
 	private boolean isChoppingRoots() {
 		return codedCommand.equals(GameEntities.CODE_CHOPPING_ROOTS) && 
 				game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
+    /**
+     * Checks if the player is attempting to break a column with a hammer.
+     *
+     * @return true if breaking a column, false otherwise
+     */
 	private boolean isBreakingColumn() {
 		return (codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
 				codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO)) && 
 				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
+    /**
+     * Checks if the player is attempting to break a staff in the sanctum.
+     *
+     * @return true if breaking a staff, false otherwise
+     */
 	private boolean isBreakStaff() {
 		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
 				player.getRoom()==GameEntities.ROOM_SANCTUM;
 	}
 	
+    /**
+     * Checks if both the egg and Omegan are present in the player's room.
+     *
+     * @return true if both are present, false otherwise
+     */
 	private boolean ifHaveEggAndOmegan() {
 		return game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom() &&
 				game.getItem(GameEntities.ITEM_OMEGAN).getItemLocation() == player.getRoom();
 	}
 	
+    /**
+     * Checks if the player is wasting a staff (breaking it with a break command).
+     *
+     * @return true if wasting a staff, false otherwise
+     */
 	private boolean isWasteStaff() {
 		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
 				verbNumber == GameEntities.CMD_BREAK;
 	}
 	
+    /**
+     * Checks if the player is tapping a valid character or creature.
+     *
+     * @return true if tapping a person/creature, false otherwise
+     */
 	private boolean isTapPerson() {
 		return (verbNumber==GameEntities.CMD_TAP && 
 				(nounNumber>GameEntities.ITEM_TRAPDOOR && nounNumber<GameEntities.ITEM_BOOKS) || 
@@ -140,58 +213,123 @@ public class Combat {
 				 nounNumber==GameEntities.ITEM_BEAST);
 	}
 	
+    /**
+     * Checks if the player has an axe.
+     *
+     * @return true if carrying an axe, false otherwise
+     */
 	private boolean hasAxe() {
 		return game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
+    /**
+     * Checks if the current kill attempt will trigger a fatal response.
+     *
+     * @return true if the kill is fatal, false otherwise
+     */
 	private boolean isFatalResponse() {
 		return game.getItem(nounNumber).getItemLocation() == player.getRoom();
 	}
 	
+    /**
+     * Checks if the target noun is present either in the room or in inventory.
+     *
+     * @return true if the item/creature is present, false otherwise
+     */
 	private boolean isPresent() {
 		return game.getItem(nounNumber).getItemLocation() == player.getRoom() || 
 				game.getItem(nounNumber).getItemLocation() ==GameEntities.ROOM_CARRYING;
 	}
 	
+    /**
+     * Checks if the current attack targets Omegan.
+     *
+     * @return true if attacking Omegan, false otherwise
+     */
 	private boolean isHitOmegan() {
 		return nounNumber == GameEntities.ITEM_OMEGAN;
 	}
 	
+    /**
+     * Checks if the current attack targets the sage.
+     *
+     * @return true if attacking the sage, false otherwise
+     */
 	private boolean isHitSage() {
 		return nounNumber == GameEntities.ITEM_LILY;
 	}
 	
+    /**
+     * Checks if the current attack targets the dactyl.
+     *
+     * @return true if attacking the dactyl, false otherwise
+     */
 	private boolean isHitDactyl() {
 		return nounNumber == GameEntities.ITEM_DACTYL;
 	}
 	
+	/**
+     * Checks if the current attack targets the logmen.
+     *
+     * @return true if attacking the logmen, false otherwise
+     */
 	private boolean isLogmen() {
 		return nounNumber==GameEntities.ITEM_LOGMEN;
 	}
 	
+    /**
+     * Checks if the current attack targets the swampman.
+     *
+     * @return true if attacking the swampman, false otherwise
+     */
 	private boolean isSwampman() {
 		return nounNumber == GameEntities.ITEM_SWAMPMAN;
 	}
 	
+    /**
+     * Checks if the player is striking flint.
+     *
+     * @return true if striking flint, false otherwise
+     */
 	private boolean isStrikeFlint() {
 		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT);
 	}
 	
+    /**
+     * Checks if coal is present in the player's room.
+     *
+     * @return true if coal is present, false otherwise
+     */
 	private boolean isCoalPresent() {
 		return player.getRoom()==game.getItem(GameEntities.ITEM_COAL).getItemLocation();
 	}
 	
+    /**
+     * Checks if Omegan's Cloak is present in the sanctum with the player.
+     *
+     * @return true if present, false otherwise
+     */
 	private boolean isOmeganCloakPresent() {
 		return player.getRoom()==game.getItem(GameEntities.ITEM_CLOAK).getItemLocation() && 
 				player.getRoom()==GameEntities.ROOM_SANCTUM;
 	}
-		
+	
+    /**
+     * Handles chopping roots with an axe, releasing sap.
+     *
+     * @return an {@link ActionResult} indicating success
+     */
 	private ActionResult choppingRoots() {
 		game.getItem(GameEntities.ITEM_SAP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_SAP).setItemLocation(player.getRoom());
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles breaking a column with a hammer.
+     *
+     * @return an {@link ActionResult} indicating success
+     */
 	private ActionResult breakColumn() {
 		game.getItem(GameEntities.ITEM_CHIP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_FRACTURE).setItemFlag(0);
@@ -199,10 +337,20 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 
+    /**
+     * Handles breaking a staff, with a special case if egg and Omegan are present.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult breakStaff() {
 		return (ifHaveEggAndOmegan()) ? releaseDactyl():breakStaffNormal();
 	}
 	
+    /**
+     * Handles normal staff breaking without special conditions.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult breakStaffNormal() {
 		reduceStats(0,10);
 		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
@@ -212,6 +360,11 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the release of a dactyl when the egg and Omegan are present.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult releaseDactyl() {		
 		game.setMessageGameState();
 		game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
@@ -224,6 +377,11 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles wasting a staff (breaking without special conditions).
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult wasteStaff() {
 		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(nounNumber).setItemFlag(-1);
@@ -232,23 +390,43 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the case where tapping someone annoys them rather than killing.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult annoyPerson() {
 		game.addMessage("You annoy the "+game.getItem(nounNumber).getItemName(),true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the default response to an attack command.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult defaultAttackRespond() {
 		reduceStats(2,2);
 		game.addMessage("That would be unwise",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the default response to a kill command.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult defaultKillRespond() {
 		reduceStats(12,10);
 		game.addMessage("That would be unwise",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles a fatal kill response, triggering the end-game sequence.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult fatalResponse() {
 		game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
 		
@@ -269,12 +447,22 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles attacking Omegan.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult hitOmegan() {
 		game.addMessage("He laughs dangerously.",true,true);
 		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles attacking the sage.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult hitSage() {
 		game.addMessage("You can't touch her",true,true);
 		game.getItem(GameEntities.ITEM_LILY).setItemLocation(GameEntities.ROOM_DESTROYED);
@@ -282,6 +470,11 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles attacking the dactyl.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult hitDactyl() {
 		game.setMessageGameState();
 		game.addPanelMessage("You anger the bird!",true);
@@ -295,23 +488,43 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles attacking the logmen.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult hitLogmen() {
 		game.addMessage("They think that's funny!",true,true);
 		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles attacking the swampman.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult hitSwampman() {
 		game.addMessage("The swampman is unmoved.",true,true);
 		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles striking flint, possibly igniting coal.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult strikeFlint() {
 		game.addMessage("Sparks fly",true,true);
 		return (isCoalPresent()) ? coalPresent():new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the case where coal is present when flint is struck.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult coalPresent() {
 		game.getItem(nounNumber).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_COAL).setItemLocation(GameEntities.ROOM_DESTROYED);
@@ -320,6 +533,11 @@ public class Combat {
 		return (isOmeganCloakPresent())? omeganCloakPresent(): new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Handles the case where Omegan's Cloak is present and destroyed by flame.
+     *
+     * @return an {@link ActionResult} indicating the outcome
+     */
 	private ActionResult omeganCloakPresent() {
 
 		game.setMessageGameState();
@@ -333,6 +551,12 @@ public class Combat {
 		return result;
 	}
 	
+    /**
+     * Reduces the player's strength and wisdom stats by the given amounts.
+     *
+     * @param strength the strength reduction
+     * @param wisdom   the wisdom reduction
+     */
 	private void reduceStats(int strength, int wisdom) {
 	    player.setStat(STAT_STRENGTH, (float) player.getStat(STAT_STRENGTH) - strength);
 	    player.setStat(STAT_WISDOM, (int) player.getStat(STAT_WISDOM) - wisdom);
