@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 1 August 2025
+Version: 4.9
+Date: 7 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -26,6 +26,10 @@ public class Combat {
 	private final int verbNumber;
 	private final int nounNumber;
 	private final Random rand = new Random();
+	
+	public static final String STAT_STRENGTH = "strength";
+	public static final String STAT_WISDOM = "wisdom";
+	public static final String STAT_TIME = "timeRemaining";
 		
 	public Combat(Game game,Player player, ParsedCommand command) {
 		this.game = game;
@@ -34,10 +38,10 @@ public class Combat {
 		this.verbNumber = command.getVerbNumber();
 		this.nounNumber = command.getNounNumber();
 	}
-	
+		
 	public ActionResult chop() {
 		
-		player.setStat("strength",(float) player.getStat("strength")-2);
+		reduceStats(2,0);
 		game.addMessage("Nothing happens",true,true);
 		ActionResult result = new ActionResult(game,player,false);
 
@@ -109,13 +113,13 @@ public class Combat {
 	}
 	
 	private boolean isBreakingColumn() {
-		return codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
-				(codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO) && 
-				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING);
+		return (codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
+				codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO)) && 
+				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isBreakStaff() {
-		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
 				player.getRoom()==GameEntities.ROOM_SANCTUM;
 	}
 	
@@ -125,7 +129,7 @@ public class Combat {
 	}
 	
 	private boolean isWasteStaff() {
-		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
 				verbNumber == GameEntities.CMD_BREAK;
 	}
 	
@@ -170,7 +174,7 @@ public class Combat {
 	}
 	
 	private boolean isStrikeFlint() {
-		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT);
+		return codedCommand.length() >= 4 && codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT);
 	}
 	
 	private boolean isCoalPresent() {
@@ -196,11 +200,11 @@ public class Combat {
 	}
 
 	private ActionResult breakStaff() {
-		return (ifHaveEggAndOmegan()) ? releaseDactyl(breakStaffNormal()):breakStaffNormal();
+		return (ifHaveEggAndOmegan()) ? releaseDactyl():breakStaffNormal();
 	}
 	
 	private ActionResult breakStaffNormal() {
-		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
+		reduceStats(0,10);
 		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(nounNumber).setItemFlag(-9);
 		game.setMessageGameState();
@@ -208,17 +212,14 @@ public class Combat {
 		return new ActionResult(game,player,true);
 	}
 	
-	private ActionResult releaseDactyl(ActionResult result) {
-		Game game = result.getGame();
-		Player player = result.getPlayer();
-		
+	private ActionResult releaseDactyl() {		
 		game.setMessageGameState();
 		game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
 		game.addPanelMessage("Omegan in its claws and flies away", false);
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(GameEntities.ITEM_EGG).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(nounNumber).setItemFlag(-1);
-		player.setStat("strength",(float) player.getStat("strength")+40);
+		player.setStat(STAT_STRENGTH,(float) player.getStat(STAT_STRENGTH)+40);
 		
 		return new ActionResult(game,player,true);
 	}
@@ -237,15 +238,13 @@ public class Combat {
 	}
 	
 	private ActionResult defaultAttackRespond() {
-		player.setStat("strength",(float) player.getStat("strength")-2);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-2);
+		reduceStats(2,2);
 		game.addMessage("That would be unwise",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult defaultKillRespond() {
-		player.setStat("strength",(float) player.getStat("strength")-12);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-10);
+		reduceStats(12,10);
 		game.addMessage("That would be unwise",true,true);
 		return new ActionResult(game,player,true);
 	}
@@ -262,9 +261,9 @@ public class Combat {
 		game.addPanelMessage("I claim you as my own!",false);
 		game.addPanelMessage("Ha Ha Hah!",false);
 
-		player.setStat("strength",(float) 0);
-		player.setStat("wisdom",0);
-		player.setStat("timeRemaining",0);
+		player.setStat(STAT_STRENGTH,(float) 0);
+		player.setStat(STAT_WISDOM,0);
+		player.setStat(STAT_TIME,0);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		
 		return new ActionResult(game,player,true);
@@ -272,16 +271,14 @@ public class Combat {
 	
 	private ActionResult hitOmegan() {
 		game.addMessage("He laughs dangerously.",true,true);
-		player.setStat("strength",(float) player.getStat("strength")-8);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitSage() {
 		game.addMessage("You can't touch her",true,true);
-		game.getItem(3).setItemLocation(81);
-		player.setStat("strength",(float) player.getStat("strength")-8);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		game.getItem(GameEntities.ITEM_LILY).setItemLocation(GameEntities.ROOM_DESTROYED);
+		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -294,22 +291,19 @@ public class Combat {
 		game.getItem(16).setItemLocation(1);
 		game.getItem(16).setItemFlag(0);
 		game.addMessage("",true,true);
-		player.setStat("strength",(float) player.getStat("strength")-8);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitLogmen() {
 		game.addMessage("They think that's funny!",true,true);
-		player.setStat("strength",(float) player.getStat("strength")-8);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
 	private ActionResult hitSwampman() {
 		game.addMessage("The swampman is unmoved.",true,true);
-		player.setStat("strength",(float) player.getStat("strength")-8);
-		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
+		reduceStats(8,5);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -331,12 +325,17 @@ public class Combat {
 		game.setMessageGameState();
 		game.addPanelMessage("The coal burns with a red flame",true);
 		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
-		player.setStat("wisdom",(int) player.getStat("wisdom")+20);
+		player.setStat(STAT_WISDOM,(int) player.getStat(STAT_WISDOM)+20);
 		game.getItem(GameEntities.ITEM_COAL).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_CLOAK).setItemLocation(GameEntities.ROOM_DESTROYED);
 		ActionResult result = new ActionResult(game,player,true);
 		
 		return result;
+	}
+	
+	private void reduceStats(int strength, int wisdom) {
+	    player.setStat(STAT_STRENGTH, (float) player.getStat(STAT_STRENGTH) - strength);
+	    player.setStat(STAT_WISDOM, (int) player.getStat(STAT_WISDOM) - wisdom);
 	}
 }
 
@@ -351,4 +350,6 @@ public class Combat {
  * 28 July 2025 - Added set endgame state to kill command
  * 1 August 2025 - Removed response for carrying weapon, and moved results into if statement
  * 2 September 2025 - Updated based on new ActionResult
+ * 7 September 2025 - Fixed and tightened code
+ * 					- Add JavaDocs
  */
