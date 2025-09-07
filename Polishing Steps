@@ -84,7 +84,7 @@ view
 
 
 
-  * Then each specific handler: `Consume`, `Combat`, 'Examine','ItemCommands','Miscellaneous'
+  * Then each specific handler: `Combat`, 'Examine','ItemCommands','Miscellaneous'
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
 
 ### **5. `Interfaces`**

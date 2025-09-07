@@ -93,172 +93,93 @@ public class Combat {
 		
 		return result;
 	}
-		
+
 	public ActionResult kill() {
-		
-		ActionResult result = defaultKillRespond();
-		if (isFatalResponse()) {
-			result = fatalResponse();
-		}
-		return result;
+		return (isFatalResponse()) ? fatalResponse():defaultKillRespond();
 	}
 	
 	private boolean isCarryingWeapon() {
-		boolean carryingWeapon = false;
-		if(game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING || 
-		   game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING) {
-			carryingWeapon = true;
-		}
-		return carryingWeapon;
+		return game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING || 
+				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isChoppingRoots() {
-		boolean choppingRoots = false;
-		if(codedCommand.equals(GameEntities.CODE_CHOPPING_ROOTS) && 
-		   game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING) {
-			choppingRoots = true;
-		}
-		return choppingRoots;
+		return codedCommand.equals(GameEntities.CODE_CHOPPING_ROOTS) && 
+				game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isBreakingColumn() {
-		boolean breakingColumn = false;
-		if(codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
-		   codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO) && 
-		   game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING) {
-			breakingColumn=true;
-		}
-		return breakingColumn;
+		return codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_ONE) || 
+				(codedCommand.equals(GameEntities.CODE_BREAK_COLUMN_TWO) && 
+				game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_CARRYING);
 	}
 	
 	private boolean isBreakStaff() {
-		boolean breakStaff = false;
-		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
-		   player.getRoom()==GameEntities.ROOM_SANCTUM) {
-			breakStaff = true;
-		}
-		return breakStaff;
+		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+				player.getRoom()==GameEntities.ROOM_SANCTUM;
 	}
 	
 	private boolean ifHaveEggAndOmegan() {
-		boolean haveEgg = false;
-		
-		if(game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom() &&
-			game.getItem(GameEntities.ITEM_OMEGAN).getItemLocation() == player.getRoom()) {
-			haveEgg = true;
-		}
-		return haveEgg;
+		return game.getItem(GameEntities.ITEM_EGG).getItemLocation() == player.getRoom() &&
+				game.getItem(GameEntities.ITEM_OMEGAN).getItemLocation() == player.getRoom();
 	}
 	
 	private boolean isWasteStaff() {
-		boolean wasteStaff = false;
-		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
-		  verbNumber == GameEntities.CMD_BREAK) {
-			wasteStaff = true;
-		}
-		return wasteStaff;
+		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_STAFF) && 
+				verbNumber == GameEntities.CMD_BREAK;
 	}
 	
 	private boolean isTapPerson() {
-		boolean tapPerson = false;
-		if((verbNumber==GameEntities.CMD_TAP && 
-		   (nounNumber>GameEntities.ITEM_TRAPDOOR && nounNumber<GameEntities.ITEM_BOOKS) || 
-		   (nounNumber>GameEntities.ITEM_CLOAK && nounNumber<GameEntities.ITEM_ROCKS) || 
-		   nounNumber==GameEntities.ITEM_BEAST)) {
-			tapPerson = true;
-		}
-		return tapPerson;
+		return (verbNumber==GameEntities.CMD_TAP && 
+				(nounNumber>GameEntities.ITEM_TRAPDOOR && nounNumber<GameEntities.ITEM_BOOKS) || 
+				(nounNumber>GameEntities.ITEM_CLOAK && nounNumber<GameEntities.ITEM_ROCKS) || 
+				 nounNumber==GameEntities.ITEM_BEAST);
 	}
 	
 	private boolean hasAxe() {
-		boolean hasAxe = false;
-		if(game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING) {
-			hasAxe = true;
-		}
-		return hasAxe;
+		return game.getItem(GameEntities.ITEM_AXE).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isFatalResponse() {
-		boolean isFatal = false;
-		if(game.getItem(nounNumber).getItemLocation() == player.getRoom()) {
-			isFatal = true;
-		}
-		return isFatal;
+		return game.getItem(nounNumber).getItemLocation() == player.getRoom();
 	}
 	
 	private boolean isPresent() {
-		boolean present = false;
-		if(game.getItem(nounNumber).getItemLocation() == player.getRoom() || 
-		   game.getItem(nounNumber).getItemLocation() ==GameEntities.ROOM_CARRYING) {
-			present = true;
-		}
-		return present;
+		return game.getItem(nounNumber).getItemLocation() == player.getRoom() || 
+				game.getItem(nounNumber).getItemLocation() ==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isHitOmegan() {
-		boolean hitOmegan = false;
-		if(nounNumber == GameEntities.ITEM_OMEGAN) {
-			hitOmegan = true;
-		}
-		return hitOmegan;
+		return nounNumber == GameEntities.ITEM_OMEGAN;
 	}
 	
 	private boolean isHitSage() {
-		boolean hitSage = false;
-		if(nounNumber == GameEntities.ITEM_LILY) {
-			hitSage = true;
-		}
-		return hitSage;
+		return nounNumber == GameEntities.ITEM_LILY;
 	}
 	
 	private boolean isHitDactyl() {
-		boolean hitDactyl = false;
-		if(nounNumber == GameEntities.ITEM_DACTYL) {
-			hitDactyl = true;
-		}
-		return hitDactyl;
+		return nounNumber == GameEntities.ITEM_DACTYL;
 	}
 	
 	private boolean isLogmen() {
-		boolean isLogmen = false;
-		if(nounNumber==GameEntities.ITEM_LOGMEN) {
-			isLogmen = true;
-		}
-		return isLogmen;
+		return nounNumber==GameEntities.ITEM_LOGMEN;
 	}
 	
 	private boolean isSwampman() {
-		boolean isSwampman = false;
-		if(nounNumber == GameEntities.ITEM_SWAMPMAN) {
-			isSwampman = true;
-		}
-		return isSwampman;
+		return nounNumber == GameEntities.ITEM_SWAMPMAN;
 	}
 	
 	private boolean isStrikeFlint() {
-		boolean strikeFlint = false;
-		
-		if(codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT)) {
-			strikeFlint = true;
-		}
-		return strikeFlint;
+		return codedCommand.substring(0,4).equals(GameEntities.CODE_HAS_FLINT);
 	}
 	
 	private boolean isCoalPresent() {
-		boolean coalPresent = false;
-		if(player.getRoom()==game.getItem(GameEntities.ITEM_COAL).getItemLocation()) {
-			coalPresent = true;
-		}
-		return coalPresent;
+		return player.getRoom()==game.getItem(GameEntities.ITEM_COAL).getItemLocation();
 	}
 	
 	private boolean isOmeganCloakPresent() {
-		boolean omeganCloakPresent = false;
-		if(player.getRoom()==game.getItem(GameEntities.ITEM_CLOAK).getItemLocation() && 
-		   player.getRoom()==GameEntities.ROOM_SANCTUM) {
-			omeganCloakPresent = true;
-		}
-		return omeganCloakPresent;
+		return player.getRoom()==game.getItem(GameEntities.ITEM_CLOAK).getItemLocation() && 
+				player.getRoom()==GameEntities.ROOM_SANCTUM;
 	}
 		
 	private ActionResult choppingRoots() {
@@ -273,14 +194,9 @@ public class Combat {
 		game.addMessage("Crack",true,true);
 		return new ActionResult(game,player,true);
 	}
-	
+
 	private ActionResult breakStaff() {
-		ActionResult result = breakStaffNormal();
-		
-		if (ifHaveEggAndOmegan()) {
-			result = releaseDactyl(result);
-		}
-		return result;
+		return (ifHaveEggAndOmegan()) ? releaseDactyl(breakStaffNormal()):breakStaffNormal();
 	}
 	
 	private ActionResult breakStaffNormal() {
@@ -399,13 +315,7 @@ public class Combat {
 	
 	private ActionResult strikeFlint() {
 		game.addMessage("Sparks fly",true,true);
-		ActionResult result = new ActionResult(game,player,true);
-		
-		//Coal in room
-		if (isCoalPresent()) {
-			result = coalPresent();
-		}
-		return result;
+		return (isCoalPresent()) ? coalPresent():new ActionResult(game,player,true);
 	}
 	
 	private ActionResult coalPresent() {
@@ -413,12 +323,7 @@ public class Combat {
 		game.getItem(GameEntities.ITEM_COAL).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.setMessageGameState();
 		game.addPanelMessage("The coal burns with a red flame",true);
-		ActionResult result = new ActionResult(game,player,true);
-		
-		if (isOmeganCloakPresent()) {
-			result = omeganCloakPresent();
-		} 
-		return result;
+		return (isOmeganCloakPresent())? omeganCloakPresent(): new ActionResult(game,player,true);
 	}
 	
 	private ActionResult omeganCloakPresent() {
