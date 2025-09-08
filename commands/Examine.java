@@ -17,6 +17,14 @@ import data.GameEntities;
 import game.Game;
 import game.Player;
 
+/**
+ * Handles the "examine" action for a player within the game.
+ * <p>
+ * This class evaluates the player's current command, room, and context to
+ * determine what description or outcome should be produced. Depending on
+ * the command, the player may receive narrative text, discover items, or
+ * unlock clues that progress the game.
+ */
 public class Examine {
 	
 	private final Game game;
@@ -27,6 +35,13 @@ public class Examine {
 	private final int playerRoom;
 	private final Random rand = new Random();
 	
+    /**
+     * Creates a new Examine action handler.
+     *
+     * @param game    the current game instance
+     * @param player  the player performing the action
+     * @param command the parsed player command containing verb/noun and encoded form
+     */
 	public Examine(Game game, Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
@@ -35,7 +50,15 @@ public class Examine {
 		this.noun = command.getSplitTwoCommand()[1];
 		this.playerRoom = player.getRoom();
 	}
-	
+		
+    /**
+     * Executes the examine action, branching based on the command context.
+     * <p>
+     * This may trigger different narrative responses such as examining
+     * chests, tables, columns, rooms, parchments, or papers.
+     *
+     * @return the result of the action, including validity and updated game state
+     */
 	public ActionResult examine() {
 		
 		game.addMessage("Examine the book for clues",true,true);
@@ -62,67 +85,86 @@ public class Examine {
 		return result;
 	}
 	
+    // --- Condition Checks ---
+
+    /** @return true if the command indicates reading a parchment */
 	private boolean isReadParchment() {
 		return codedCommand.substring(0,3).equals(GameEntities.CODE_READ_PARCHMENT);
 	}
 	
+    /** @return true if the closed chest is being examined */
 	private boolean isChestClosed() {
 		return codedCommand.equals(GameEntities.CODE_CHEST_CLOSED) && verb.equals("examine");
 	}
 	
+    /** @return true if the open chest is being examined */
 	private boolean isChestOpen() {
 		return codedCommand.equals(GameEntities.CODE_CHEST_OPEN) && verb.equals("examine");
 	}
 	
+    /** @return true if the table in Grandpa's shack is being examined */
 	private boolean isExamineTable() {
 		return noun.equals("table") && playerRoom==GameEntities.ROOM_GRANDPAS_SHACK && verb.equals("examine");
 	}
 	
+    /** @return true if the column in the column room is being examined */
 	private boolean isExamineColumn() {
 		return noun.equals("column") && playerRoom==GameEntities.ROOM_COLUMN && verb.equals("examine");
 	}
 	
+    /** @return true if the command is "examine room" */
 	private boolean isExamineRoom() {
 		return noun.equals("examine") && verb.equals("room");
 	}
 	
+
+    /** @return true if the player is at a pyramid-related location */
 	private boolean isPyramid() {
 		return playerRoom==GameEntities.ROOM_PYRAMID_EDGE || 
 				playerRoom==GameEntities.ROOM_PYRAMID_ROOF || 
 				playerRoom==GameEntities.ROOM_PYRAMID_SPLIT;
 	}
 	
+    /** @return true if the player is at the well location */
 	private boolean isWell() {
 		return playerRoom==GameEntities.ROOM_WELL;
 	}
 	
+    /** @return true if the player is in one of the stone village rooms */
 	private boolean isStoneVillage() {
 		return playerRoom==GameEntities.ROOM_VILLAGE_ENTRANCE || 
 				playerRoom==GameEntities.ROOM_VILLAGE_PETRIFIED||
 				playerRoom==GameEntities.ROOM_VILLAGE_REMAINS;
 	}
 	
+    /** @return true if the player is attempting to read the map outside the hut */
 	private boolean isReadMap() {
 		return noun.equals("map") && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
 				game.getRoom(player.getRoom()).getViewed();
 	}
 	
+    /** @return true if the player is examining papers or a diary outside the hut */
 	private boolean isExaminePapers() {
 		return (noun.equals("papers") || noun.equals("diary")) && 
 				player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
 				game.getRoom(playerRoom).getViewed();
 	}
 	
+    // --- Action Handlers ---
+
+    /** @return result of reading a parchment, including narrative clue */
 	private ActionResult readParchment() {
 		game.addMessage("Remember Aladin. It Worked for him.",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining a closed chest */
 	private ActionResult lookClosedChest() {
 		game.addMessage("The chest is closed",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining an open chest, possibly revealing items */
 	private ActionResult lookOpenChest() {
 		
 		boolean ragSeen = false;
@@ -153,6 +195,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the table, possibly revealing bread or bottle */
 	private ActionResult examineTable() {
 		boolean breadSeen = false;
 		String bottle = "";
@@ -179,11 +222,19 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the column, showing inscription */
 	private ActionResult examineColumn() {
 		game.addMessage("At the bottom of the column are the words 'remember old times'",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
+
+    /** 
+     * Examines the current room. 
+     * May delegate to pyramid, well, village, sanctum, column, hut, or clone factory descriptions.
+     *
+     * @return result of examining the room
+     */
 	private ActionResult examineRoom() {
 		game.addMessage("There doesn't seem anything out of the ordinary here",true,true);
 		ActionResult result = new ActionResult(game,player,false);
@@ -205,6 +256,7 @@ public class Examine {
 		return result;
 	}
 	
+    /** @return result of examining the pyramid location */
 	private ActionResult examinePyramid() {
 		game.addMessage("You can see quite a distance from here. To the north a forest rises into ragged peaks",true,true);
 		game.addMessage("while to the west you can see a log village on a lake. The the south is a swamp, while",false,true);
@@ -213,12 +265,14 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the well */
 	private ActionResult examineWell() {
 		game.addMessage("The well emits deathly energy. Surrounding the well are incorporeal creatures attempting",true,true);
 		game.addMessage("to add you to their number",false,true);
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the stone village */
 	private ActionResult examineVillage() {
 		game.addMessage("You see a village that appears to have been frozen in time, with buildings and",true,true);
 		game.addMessage("inhabitants having been turned to stone. The silence is eerie, and the swamp",false,true);
@@ -226,6 +280,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the clone factory */
 	private ActionResult examineCloneFactory() {
 		game.addMessage("This room has rows and rows of pods with glass lids containing what appears",true,true);
 		game.addMessage("appears to be identical people fast asleep, or even in a coma. However a number",false,true);
@@ -234,6 +289,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the sanctum */
 	private ActionResult examineSanctum() {
 		game.addMessage("This room has an evil presence in it, with strange symbols on the floor and wall",true,true);
 		game.addMessage("Shadows seem to flicker across the wall, and the floor is covered in a crest, from",false,true);
@@ -241,6 +297,8 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+
+    /** @return result of examining the column room */
 	private ActionResult examineColumnRoom() {
 		game.addMessage("The column looks like it has seen better days. It is crumbling and appears that a",true,true);
 		game.addMessage("peice could easily be removed if you had the right equipment. There is a message",false,true);
@@ -248,6 +306,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining the hut outside the abode */
 	private ActionResult examineAbodeHut() {
 		game.addMessage("This hut looks like it has been well used, but hasn't been occupied for a long time.",true,true);
 		game.addMessage("Whoever lived here, or worked from here, must have been some sort of scholar,",false,true);
@@ -257,6 +316,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of reading the map, unlocking new rooms on the map */
 	private ActionResult readMap() {
 		game.addMessage("The map looks like it is of a castle located on an island",true,true);
 		game.getRoom(57).setVisited();
@@ -269,6 +329,7 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /** @return result of examining papers, possibly revealing random clues */
 	private ActionResult examinePapers() {
 		game.addMessage("The papers look like the belong to somebody by the name Median. It chronicles his search",true,true);
 		game.addMessage("for somebody name Omegan who has poisoned the land. It looks like he is also seeing a cure",false,true);
@@ -278,6 +339,12 @@ public class Examine {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Retrieves a clue based on a random number.
+     *
+     * @param clueNumber index of the clue to retrieve
+     * @return textual clue string
+     */
 	private String getClue(int clueNumber) {
 		String clue = "'I think it is time to head to the island. I hope I remember.'";
 		
