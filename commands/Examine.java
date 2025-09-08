@@ -63,98 +63,54 @@ public class Examine {
 	}
 	
 	private boolean isReadParchment() {
-		boolean readParchment = false;
-		if (codedCommand.substring(0,3).equals(GameEntities.CODE_READ_PARCHMENT)) {
-			readParchment = true;
-		}
-		return readParchment;
+		return codedCommand.substring(0,3).equals(GameEntities.CODE_READ_PARCHMENT);
 	}
 	
 	private boolean isChestClosed() {
-		boolean chestClosed = false;
-		if (codedCommand.equals(GameEntities.CODE_CHEST_CLOSED) && verb.equals("examine")) {
-			chestClosed = true;
-		}
-		return chestClosed;
+		return codedCommand.equals(GameEntities.CODE_CHEST_CLOSED) && verb.equals("examine");
 	}
 	
 	private boolean isChestOpen() {
-		boolean chestOpen = false;
-		if (codedCommand.equals(GameEntities.CODE_CHEST_OPEN) && verb.equals("examine")) {
-			chestOpen = true;
-		}
-		return chestOpen;
+		return codedCommand.equals(GameEntities.CODE_CHEST_OPEN) && verb.equals("examine");
 	}
 	
 	private boolean isExamineTable() {
-		boolean examineTable = false;
-		if (noun.equals("table") && playerRoom==44 && verb.equals("examine")) {
-			examineTable = true;
-		}
-		return examineTable;
+		return noun.equals("table") && playerRoom==GameEntities.ROOM_GRANDPAS_SHACK && verb.equals("examine");
 	}
 	
 	private boolean isExamineColumn() {
-		boolean examineColumn = false;
-		if(noun.equals("column") && playerRoom==GameEntities.ROOM_COLUMN && verb.equals("examine")) {
-			examineColumn = true;
-		}
-		return examineColumn;
+		return noun.equals("column") && playerRoom==GameEntities.ROOM_COLUMN && verb.equals("examine");
 	}
 	
 	private boolean isExamineRoom() {
-		boolean examineRoom = false;
-		if (noun.equals("examine") && verb.equals("room")) {
-			examineRoom = true;
-		}
-		return examineRoom;
+		return noun.equals("examine") && verb.equals("room");
 	}
 	
 	private boolean isPyramid() {
-		boolean isPyramid = false;
-		if (playerRoom==GameEntities.ROOM_PYRAMID_EDGE || 
-			playerRoom==GameEntities.ROOM_PYRAMID_ROOF || 
-			playerRoom==GameEntities.ROOM_PYRAMID_SPLIT) {
-			isPyramid = true;
-		}
-		return isPyramid;
+		return playerRoom==GameEntities.ROOM_PYRAMID_EDGE || 
+				playerRoom==GameEntities.ROOM_PYRAMID_ROOF || 
+				playerRoom==GameEntities.ROOM_PYRAMID_SPLIT;
 	}
 	
 	private boolean isWell() {
-		boolean isWell = false;
-		if(playerRoom==GameEntities.ROOM_WELL) {
-			isWell = true;
-		}
-		return isWell;
+		return playerRoom==GameEntities.ROOM_WELL;
 	}
 	
 	private boolean isStoneVillage() {
-		boolean isStoneVillage = false;
-		if(playerRoom==GameEntities.ROOM_VILLAGE_ENTRANCE || 
-		   playerRoom==GameEntities.ROOM_VILLAGE_PETRIFIED||
-		   playerRoom==GameEntities.ROOM_VILLAGE_REMAINS) {
-			isStoneVillage = true;
-		}
-		return isStoneVillage;
+		return playerRoom==GameEntities.ROOM_VILLAGE_ENTRANCE || 
+				playerRoom==GameEntities.ROOM_VILLAGE_PETRIFIED||
+				playerRoom==GameEntities.ROOM_VILLAGE_REMAINS;
 	}
 	
 	private boolean isReadMap() {
-		boolean isReadMap = false;
-		if(noun.equals("map") && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
-		   game.getRoom(player.getRoom()).getViewed()) {
-			isReadMap = true;
-		}
-		return isReadMap;
+		return noun.equals("map") && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
+				game.getRoom(player.getRoom()).getViewed();
 	}
 	
 	private boolean isExaminePapers() {
-		boolean examinePapers = false;
-		if((noun.equals("papers") || noun.equals("diary")) && 
-			player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
-			game.getRoom(playerRoom).getViewed()) {
-			examinePapers = true;
-		}
-		return examinePapers;
+		return (noun.equals("papers") || noun.equals("diary")) && 
+				player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
+				game.getRoom(playerRoom).getViewed();
 	}
 	
 	private ActionResult readParchment() {
