@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 2 September 2025
+Version: 4.14
+Date: 10 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -501,58 +501,33 @@ public class ItemCommands {
 		}
 		
 		private boolean isSnake() {
-			boolean isSnake = false;
-			if (validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE) {
-				isSnake = true;
-			}
-			return isSnake;
+			return validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE;
 		}
 		
 		private boolean isVillager() {
-			boolean isVillager = false;
-			if (validateCode(codedCommand,GameEntities.CODE_VILLAGER) && objectNumber==GameEntities.ITEM_VILLAGER && 
-				((int) player.getStat("drink"))>1) {
-				isVillager = true;
-			}
-			return isVillager;
+			return validateCode(codedCommand,GameEntities.CODE_VILLAGER) && objectNumber==GameEntities.ITEM_VILLAGER && 
+					((int) player.getStat("drink"))>1;
 		}
 		
 		private boolean isSwampman() {
-			boolean isSwampman = false;
-			if (validateCode(codedCommand.substring(0,2),GameEntities.CODE_JUG) &&
-				game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 &&
-				objectNumber == GameEntities.ITEM_SWAMPMAN) {
-				isSwampman = true;
-			}
-			return isSwampman;
+			return validateCode(codedCommand.substring(0,2),GameEntities.CODE_JUG) &&
+					game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 &&
+					objectNumber == GameEntities.ITEM_SWAMPMAN;
 		}
 				
 		private boolean isLogmen() {
-			boolean isLogmen = false;
-			if(objectNumber == GameEntities.ITEM_LOGMEN) {
-				isLogmen = true;
-			}
-			return isLogmen;
+			return objectNumber == GameEntities.ITEM_LOGMEN;
 		}
 		
 		private boolean isScavenger() {
-			boolean isScavenger = false;
-			if ((validateCode(codedCommand.substring(0,3),GameEntities.CODE_LILY) || 
-				validateCode(codedCommand.substring(0,3),GameEntities.CODE_CHIP)) &&
-					objectNumber == GameEntities.ITEM_SCAVENGER) {
-				isScavenger = true;
-			}
-			return isScavenger;
+			return (validateCode(codedCommand.substring(0,3),GameEntities.CODE_LILY) || 
+					validateCode(codedCommand.substring(0,3),GameEntities.CODE_CHIP)) &&
+					objectNumber == GameEntities.ITEM_SCAVENGER;
 		}
 		
 		private boolean isMedian() {
-			boolean isMedian = false;
-			if(validateCode(codedCommand.substring(0,2),GameEntities.CODE_PEBBLE) &&
-			   objectNumber == GameEntities.ITEM_MEDIAN) {
-				isMedian = true;
-			}
-			System.out.println("Result "+isMedian);
-			return isMedian;
+			return validateCode(codedCommand.substring(0,2),GameEntities.CODE_PEBBLE) &&
+					objectNumber == GameEntities.ITEM_MEDIAN;
 		}
 		
 		private ActionResult giveToSnake() {
@@ -643,4 +618,5 @@ public class ItemCommands {
  * 15 July 2025 - Enabled cloak to be taken and dropped
  * 26 July 2025 - Added setMessageGameState
  * 2 September 2025 - Updated based on new ActionResult
+ * 10 September 2025 - Tightened code
  */
