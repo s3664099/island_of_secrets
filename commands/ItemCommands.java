@@ -403,31 +403,17 @@ public class ItemCommands {
 		}
 		
 		private boolean isJug() {
-			
-			boolean isJug = false;
-			if (nounNumber == GameEntities.ITEM_JUG && 
-				game.getItem(nounNumber).getItemLocation()==GameEntities.ROOM_CARRYING && 
-				verbNumber==GameEntities.CMD_DROP) {
-				isJug = true;
-			}
-			return isJug;
+			return nounNumber == GameEntities.ITEM_JUG && 
+					game.getItem(nounNumber).getItemLocation()==GameEntities.ROOM_CARRYING && 
+					verbNumber==GameEntities.CMD_DROP;
 		}
 		
 		private boolean isTorch() {
-			
-			boolean isTorch = false;
-			if (validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH_BRIGHT)) {
-				isTorch = true;
-			}
-			return isTorch;
+			return validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH_BRIGHT);
 		}
 		
 		private boolean isBeast() {
-			boolean isBeast = false;
-			if (nounNumber == GameEntities.ITEM_BEAST) {
-				isBeast = true;
-			}
-			return isBeast;
+			return nounNumber == GameEntities.ITEM_BEAST;
 		}
 		
 		private ActionResult dropJug() {
