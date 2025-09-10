@@ -22,6 +22,7 @@ public class GameEntities {
 	// === Rooms ===
 	public static final int ROOM_CARRYING = 0;
 	public static final int ROOM_FOREST = 1;
+	public static final int ROOM_VATS = 8;
 	public static final int ROOM_BATTLEMENTS = 9;
 	public static final int ROOM_SANCTUM = 10;
 	public static final int ROOM_LAIR = 11;
@@ -54,6 +55,7 @@ public class GameEntities {
 	public static final int ROOM_COLUMN = 58;
 	public static final int ROOM_OUTSIDE_HUT = 60;
 	public static final int ROOM_ORCHIDS = 61;
+	public static final int ROOM_LOG_BRIDGE = 63;
 	public static final int ROOM_PYRAMID_EDGE = 65;
 	public static final int ROOM_PYRAMID_ROOF = 66;
 	public static final int ROOM_PYRAMID_SPLIT = 67;

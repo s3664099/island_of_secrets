@@ -75,7 +75,7 @@ public class ItemCommands {
 		ActionResult result = new ActionResult(game,player,true);
 		
 		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
-			(noun>=Constants.FOOD_THRESHOLD && noun != 38)) {
+			(noun>=Constants.FOOD_THRESHOLD && noun != GameEntities.ITEM_CLOAK)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			result = result.failure(game, player);
 		}
@@ -319,13 +319,11 @@ public class ItemCommands {
 			} else {
 				game.addMessage("You anger the bird",true,true);
 				
-				//One in three bird takes you to random spot & replaces wild canyon beast
-				//Needed beast to actually get here
 				if (rand.nextInt(3)>1) {
 					game.addMessage(" which flies you to a remote place.",false,true);
-					player.setRoom(63+rand.nextInt(6));
-					game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
-					game.getItem(16).setItemFlag(0);
+					player.setRoom(GameEntities.ROOM_LOG_BRIDGE+rand.nextInt(6));
+					game.getItem(GameEntities.ITEM_BEAST).setItemLocation(GameEntities.ROOM_FOREST);
+					game.getItem(GameEntities.ITEM_BEAST).setItemFlag(0);
 				}
 			}
 			return new ActionResult(game,player,true);
@@ -438,7 +436,7 @@ public class ItemCommands {
 		
 		private ActionResult releaseBeast() {
 			game.getItem(nounNumber).setItemFlag(0);
-			game.getItem(16).setItemLocation(GameEntities.ROOM_FOREST);
+			game.getItem(GameEntities.ITEM_BEAST).setItemLocation(GameEntities.ROOM_FOREST);
 			game.addMessage("The Canyon Beast runs away", true, true);
 			return new ActionResult(game,player,true);
 		}
@@ -559,7 +557,7 @@ public class ItemCommands {
 				
 		private ActionResult giveToLogmen() {
 			game.addMessage("It is taken",true,true);
-			game.getItem(nounNumber).setItemLocation(51);
+			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_STOREROOM);
 			return new ActionResult(game,player,true);
 		}
 		
@@ -572,14 +570,14 @@ public class ItemCommands {
 				
 		private ActionResult giveToMedian() {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-			game.getItem(8).setItemFlag(-1);
+			game.getItem(GameEntities.ITEM_PEBBLE).setItemFlag(-1);
 
 			//Removes Median from Game
-			game.getItem(43).setItemLocation(GameEntities.ROOM_DESTROYED);
-			game.getItem(43).setItemFlag(1);
+			game.getItem(GameEntities.ITEM_MEDIAN).setItemLocation(GameEntities.ROOM_DESTROYED);
+			game.getItem(GameEntities.ITEM_MEDIAN).setItemFlag(1);
 			
 			game.addPanelMessage("He takes it ...", true);
-			if (player.getRoom()!=8) {
+			if (player.getRoom()!=GameEntities.ROOM_VATS) {
 				game.addPanelMessage("runs down the corridor, ...", false);
 			} 
 			
