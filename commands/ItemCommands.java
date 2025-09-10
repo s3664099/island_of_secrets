@@ -32,17 +32,16 @@ public class ItemCommands {
 		ActionResult result = new ActionResult(game,player,true);
 		
 		if (((flaggedUntakeable(item)) || itemNotInRoom(item,currentRoom)) && 
-			(noun<=Constants.MAX_CARRIABLE_ITEMS || noun ==38)) {
+			(noun<=Constants.MAX_CARRIABLE_ITEMS || noun == GameEntities.ITEM_CLOAK)) {
 			if (!extraValidTake(currentRoom, noun)) {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				result = result.failure(game, player);
 			}
 		//Validates Pick and Catch commands
 		} else if ((notValidPick(command)) || (notValidCatch(command))){
-				System.out.println("Not Valid");
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				result = result.failure(game, player);
-		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != 38) {
+		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != GameEntities.ITEM_CLOAK) {
 			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
 			result = result.failure(game, player);
 		}
@@ -51,39 +50,23 @@ public class ItemCommands {
 	}
 	
 	private boolean flaggedUntakeable(Item item) {
-		boolean untakeable = false;
-		if (item.getItemFlag()>0 && item.getItemFlag()<9) {
-			untakeable = true;
-		}
-		return untakeable;
+		return item.getItemFlag()>0 && item.getItemFlag()<9;
 	}
 	
 	private boolean itemNotInRoom(Item item,int currentRoom) {
-		boolean notInRoom = false;
-		if (item.getItemLocation()!=currentRoom) {
-			notInRoom = true;
-		}
-		return notInRoom;
+		return item.getItemLocation()!=currentRoom;
 	}
 	
 	private boolean notValidPick(ParsedCommand command) {
-		boolean notValidPick = false;
 		int noun = command.getNounNumber();
-		if (command.getVerbNumber() == GameEntities.CMD_PICK && 
-			noun != GameEntities.ITEM_APPLE && 
-			noun != GameEntities.ITEM_MUSHROOM) {
-			notValidPick = true;
-		}
-		return notValidPick;
+		return command.getVerbNumber() == GameEntities.CMD_PICK && 
+				noun != GameEntities.ITEM_APPLE && 
+				noun != GameEntities.ITEM_MUSHROOM;
 	}
 	
 	private boolean notValidCatch(ParsedCommand command) {
-		boolean notValidCatch = false;
 		int noun = command.getNounNumber();
-		if(command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST) {
-			notValidCatch = true;
-		}
-		return notValidCatch;
+		return command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST;
 	}
 	
 	public ActionResult validateCarrying(Game game,Player player,ParsedCommand command) {
@@ -99,7 +82,6 @@ public class ItemCommands {
 		
 		//Give specific validations
 		if (command.checkGive()) {
-			
 			if(noun == GameEntities.ITEM_WATER) {
 				result = result.failure(game, player);
 			}			
@@ -165,27 +147,13 @@ public class ItemCommands {
 		return nounNumber;
 	}
 	
-	private boolean validateCode(String playerCode, String code) {
-		
-		boolean codeValid = false;
-		
-		if (playerCode.equals(code)) {
-			codeValid = true;
-		}
-		
-		return codeValid;
+	private boolean validateCode(String playerCode, String code) {		
+		return playerCode.equals(code);
 	}
 	
-	private boolean extraValidTake(int currentRoom,int noun) {
-		
-		boolean valid = false;
-		
-		if ((currentRoom==GameEntities.ROOM_CLEARING && noun==GameEntities.ITEM_APPLE) || 
-			(currentRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && noun==GameEntities.ITEM_TORCH)) {
-			valid=true;
-		}
-		
-		return valid;
+	private boolean extraValidTake(int currentRoom,int noun) {		
+		return (currentRoom==GameEntities.ROOM_CLEARING && noun==GameEntities.ITEM_APPLE) || 
+				(currentRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && noun==GameEntities.ITEM_TORCH);
 	}
 	
 	public ActionResult executeCommand(Game game,Player player, ParsedCommand command) {
@@ -260,109 +228,53 @@ public class ItemCommands {
 		}
 		
 		private boolean areApples() {
-			boolean isApple = false;
-			if (playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
-				nounNumber == GameEntities.ITEM_APPLE && game.getItem(nounNumber).getItemLocation()
-				!= playerRoom) {
-				isApple = true;
-			}
-			return isApple;
+			return playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
+					nounNumber == GameEntities.ITEM_APPLE && game.getItem(nounNumber).getItemLocation()
+					!= playerRoom;
 		}
 		
 		private boolean areNoApples() {
-			
-			boolean noApples = false;
-			
-			//checkApples() will be false.
-			if (playerRoom == GameEntities.ROOM_CLEARING && nounNumber == GameEntities.ITEM_APPLE &&
-				game.getItem(nounNumber).getItemLocation() != playerRoom) {
-				noApples = true;
-			}
-
-			return noApples;
+			return playerRoom == GameEntities.ROOM_CLEARING && nounNumber == GameEntities.ITEM_APPLE &&
+					game.getItem(nounNumber).getItemLocation() != playerRoom;
 		}
 		
 		private boolean isNoTorch() {
-			
-			boolean isNoTorch = false;
-			
-			if(playerRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && nounNumber == GameEntities.ITEM_TORCH && 
-			   game.getItem(nounNumber).getItemLocation() != playerRoom) {
-				isNoTorch = true;
-			}
-			return isNoTorch;
+			return playerRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && nounNumber == GameEntities.ITEM_TORCH && 
+					game.getItem(nounNumber).getItemLocation() != playerRoom;
 		}
 		
 		private boolean isFood() {
-			
-			boolean isFood = false;
-			if(nounNumber>Constants.FOOD_THRESHOLD && nounNumber<Constants.DRINK_THRESHOLD) {
-				isFood = true;
-			}
-			return isFood;
+			return nounNumber>Constants.FOOD_THRESHOLD && nounNumber<Constants.DRINK_THRESHOLD;
 		}
 		
 		private boolean isDrink() {
-			
-			boolean isDrink = false;
-			if(nounNumber>=Constants.DRINK_THRESHOLD && nounNumber<Constants.MAX_CARRIABLE_ITEMS) {
-				isDrink = true;
-			}
-			return isDrink;
+			return nounNumber>=Constants.DRINK_THRESHOLD && nounNumber<Constants.MAX_CARRIABLE_ITEMS;
 		}
 		
 		private boolean isTakingCloak() {
-			
-			boolean isTakingCloak = false;
-			if(validateCode(codedCommand,GameEntities.CODE_CLOAK)) {
-				isTakingCloak = true;
-			}
-			return isTakingCloak;
+			return validateCode(codedCommand,GameEntities.CODE_CLOAK);
 		}
 		
 		private boolean isTakingEgg() {
-			boolean isTakingEgg = false;
-			if (validateCode(codedCommand,GameEntities.CODE_EGG)) {
-				isTakingEgg = true;
-			}
-			return isTakingEgg;
+			return validateCode(codedCommand,GameEntities.CODE_EGG);
 		}
 		
 		private boolean isTakingBooks() {
-			
-			boolean isTakingBooks = false;
-			if(validateCode(codedCommand,GameEntities.CODE_EVIL_BOOKS)) {
-				isTakingBooks = true;
-			}
-			return isTakingBooks;
+			return validateCode(codedCommand,GameEntities.CODE_EVIL_BOOKS);
 		}
 		
 		private boolean hasTakeBeastFailed() {
-			
-			boolean isTakingBeast = false;
-			if (nounNumber == GameEntities.ITEM_BEAST && 
-				game.getItem(GameEntities.ITEM_ROPE).getItemLocation() !=
-				GameEntities.ROOM_CARRYING) {
-				isTakingBeast = true;
-			}
-			return isTakingBeast;
+			return nounNumber == GameEntities.ITEM_BEAST && 
+					game.getItem(GameEntities.ITEM_ROPE).getItemLocation() !=
+					GameEntities.ROOM_CARRYING;
 		}
 		
 		private boolean hasStaff() {
-			boolean hasStaff = false;
-			if (game.getItem(GameEntities.ITEM_STAFF).getItemLocation() == GameEntities.ROOM_CARRYING){
-				hasStaff = true;
-			}
-			return hasStaff;
+			return game.getItem(GameEntities.ITEM_STAFF).getItemLocation() == GameEntities.ROOM_CARRYING;
 		}
 		
 		private boolean hasWisdomAcquired() {
-			
-			boolean wisdomAcquired = false;
-			if (game.getItem(nounNumber).hasWisdonAcquired()) {
-				wisdomAcquired = true;
-			}
-			return wisdomAcquired;
+			return game.getItem(nounNumber).hasWisdonAcquired();
 		}
 				
 		private ActionResult handleApple() {
