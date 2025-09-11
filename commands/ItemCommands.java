@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 10 September 2025
+Version: 4.15
+Date: 11 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -20,10 +20,24 @@ import data.RawData;
 import game.Game;
 import game.Player;
 
+/**
+ * Handles validation and execution of item-related player commands
+ * such as take, drop, and give. This class is responsible for ensuring
+ * that commands are legal within the current game state, and then
+ * applying the appropriate changes to the {@link Game} and {@link Player}.
+ */
 public class ItemCommands {
 		
 	private Random rand = new Random();
 	
+	/**
+	 * Validates whether a "take" command is allowed in the given context.
+	 *
+	 * @param game   the current game state
+	 * @param player the player attempting the action
+	 * @param command the parsed command to validate
+	 * @return an {@link ActionResult} indicating whether the action is valid
+	 */
 	public ActionResult validateTake(Game game,Player player, ParsedCommand command) {
 		
 		int noun = command.getNounNumber();	
@@ -49,14 +63,33 @@ public class ItemCommands {
 		return result;
 	}
 	
+	/**
+	 * Checks if the given item is flagged as untakeable.
+	 *
+	 * @param item the item to check
+	 * @return true if the item cannot be taken, false otherwise
+	 */
 	private boolean flaggedUntakeable(Item item) {
 		return item.getItemFlag()>0 && item.getItemFlag()<9;
 	}
 	
+	/**
+	 * Determines if the item is not located in the current room.
+	 *
+	 * @param item        the item being checked
+	 * @param currentRoom the room the player is currently in
+	 * @return true if the item is not in the current room
+	 */
 	private boolean itemNotInRoom(Item item,int currentRoom) {
 		return item.getItemLocation()!=currentRoom;
 	}
 	
+	/**
+	 * Checks if a PICK command was used on an invalid item.
+	 *
+	 * @param command the parsed command
+	 * @return true if the pick is invalid
+	 */
 	private boolean notValidPick(ParsedCommand command) {
 		int noun = command.getNounNumber();
 		return command.getVerbNumber() == GameEntities.CMD_PICK && 
@@ -64,11 +97,25 @@ public class ItemCommands {
 				noun != GameEntities.ITEM_MUSHROOM;
 	}
 	
+	/**
+	 * Checks if a CATCH command was used on an invalid item.
+	 *
+	 * @param command the parsed command
+	 * @return true if the catch is invalid
+	 */
 	private boolean notValidCatch(ParsedCommand command) {
 		int noun = command.getNounNumber();
 		return command.getVerbNumber() == GameEntities.CMD_CATCH && noun != GameEntities.ITEM_BEAST;
 	}
 	
+	/**
+	 * Validates whether the player is currently carrying the given item.
+	 *
+	 * @param game    the current game state
+	 * @param player  the player attempting the action
+	 * @param command the parsed command to validate
+	 * @return an {@link ActionResult} indicating whether the action is valid
+	 */
 	public ActionResult validateCarrying(Game game,Player player,ParsedCommand command) {
 		
 		int noun = command.getNounNumber();
@@ -89,6 +136,14 @@ public class ItemCommands {
 		return result;
 	}
 	
+	/**
+	 * Validates whether a "give" command is allowed in the given context.
+	 *
+	 * @param game    the current game state
+	 * @param player  the player attempting the action
+	 * @param command the parsed command to validate
+	 * @return an {@link ActionResult} indicating whether the action is valid
+	 */
 	public ActionResult validateGive(Game game, Player player, ParsedCommand command) {
 		
 		int playerRoom = player.getRoom();
@@ -121,7 +176,12 @@ public class ItemCommands {
 		return result;
 	}
 	
-	//Determines the receiver of the noun
+	/**
+	 * Extracts the object of a "give" command (the receiver).
+	 *
+	 * @param commands the tokenized command array
+	 * @return the object name as a string
+	 */
 	private String getObject(String[] commands) {
 		
 		String object = commands[3];
@@ -132,6 +192,12 @@ public class ItemCommands {
 		return object;
 	}
 	
+	/**
+	 * Looks up the numeric ID of a noun based on its string form.
+	 *
+	 * @param object the noun string
+	 * @return the item ID, or -1 if not found
+	 */
 	private int getNounNumber(String object) {
 		
 		int nounCount = 0;
@@ -149,19 +215,41 @@ public class ItemCommands {
 		return nounNumber;
 	}
 	
+	/**
+	 * Compares two codes for equality.
+	 *
+	 * @param playerCode the player's provided code
+	 * @param code       the expected code
+	 * @return true if the codes match
+	 */
 	private boolean validateCode(String playerCode, String code) {		
 		return playerCode.equals(code);
 	}
 	
+	/**
+	 * Checks for exceptions where items may be validly taken
+	 * despite appearing unavailable.
+	 *
+	 * @param currentRoom the current room of the player
+	 * @param noun        the item number
+	 * @return true if this is a valid exception
+	 */
 	private boolean extraValidTake(int currentRoom,int noun) {		
 		return (currentRoom==GameEntities.ROOM_CLEARING && noun==GameEntities.ITEM_APPLE) || 
 				(currentRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && noun==GameEntities.ITEM_TORCH);
 	}
 	
+	/**
+	 * Executes the appropriate command (take, drop, give).
+	 *
+	 * @param game    the current game state
+	 * @param player  the player executing the command
+	 * @param command the parsed command
+	 * @return an {@link ActionResult} with the result of execution
+	 */
 	public ActionResult executeCommand(Game game,Player player, ParsedCommand command) {
 		
 		ActionResult result = new ActionResult();
-		
 		if (command.checkTake()) {
 			result = executeTake(game,player,command);
 		} else if (command.checkDrop()) {
@@ -169,22 +257,34 @@ public class ItemCommands {
 		} else if (command.checkGive()) {
 			result = executeGive(game,player,command);
 		}
-		
 		return result;
 	}
-		
+	
+	/**
+	 * Executes a take command via the {@link TakeHandler}.
+	 */
 	private ActionResult executeTake(Game game,Player player,ParsedCommand command) {
 		return new TakeHandler(game,player,command).execute();
 	}
 	
+	/**
+	 * Executes a drop command via the {@link DropHandler}.
+	 */
 	private ActionResult executeDrop(Game game, Player player, ParsedCommand command) {
 		return new DropHandler(game,player,command).execute();
 	}
 	
+	/**
+	 * Executes a give command via the {@link GiveHandler}.
+	 */
 	private ActionResult executeGive(Game game,Player player, ParsedCommand command) {
 		return new GiveHandler(game,player,command).execute();
 	}
 	
+	/**
+	 * Handles execution of "take" commands. Encapsulates
+	 * all logic for picking up items and applying effects.
+	 */
 	private class TakeHandler {
 		private final Game game;
 		private final Player player;
@@ -200,6 +300,11 @@ public class ItemCommands {
 			codedCommand = command.getCodedCommand();
 		}
 		
+		/**
+		 * Executes the "take" command based on current context.
+		 *
+		 * @return an {@link ActionResult} with the result
+		 */
 		public ActionResult execute() {
 			
 			ActionResult result = new ActionResult();
@@ -229,56 +334,72 @@ public class ItemCommands {
 			return result;
 		}
 		
+		/** @return true if the player is taking apples under valid conditions */
 		private boolean areApples() {
 			return playerRoom == GameEntities.ROOM_CLEARING && game.checkApples() &&
 					nounNumber == GameEntities.ITEM_APPLE && game.getItem(nounNumber).getItemLocation()
 					!= playerRoom;
 		}
 		
+		/** @return true if the player attempts apples but none are present */
 		private boolean areNoApples() {
 			return playerRoom == GameEntities.ROOM_CLEARING && nounNumber == GameEntities.ITEM_APPLE &&
 					game.getItem(nounNumber).getItemLocation() != playerRoom;
 		}
 		
+		/** @return true if no torch is available in the entrance chamber */
 		private boolean isNoTorch() {
 			return playerRoom==GameEntities.ROOM_ENTRANCE_CHAMBER && nounNumber == GameEntities.ITEM_TORCH && 
 					game.getItem(nounNumber).getItemLocation() != playerRoom;
 		}
 		
+		/** @return true if user taking food */
 		private boolean isTakingFood() {
 			return nounNumber>Constants.FOOD_THRESHOLD && nounNumber<Constants.DRINK_THRESHOLD;
 		}
 		
+		/** @return true if user taking drink */
 		private boolean isTakingDrink() {
 			return nounNumber>=Constants.DRINK_THRESHOLD && nounNumber<Constants.MAX_CARRIABLE_ITEMS;
 		}
 		
+		/** @return true if user taking cloak */
 		private boolean isTakingCloak() {
 			return validateCode(codedCommand,GameEntities.CODE_CLOAK);
 		}
 		
+		/** @return true if user taking egg */
 		private boolean isTakingEgg() {
 			return validateCode(codedCommand,GameEntities.CODE_EGG);
 		}
 		
+		/** @return true if user taking book */
 		private boolean isTakingBooks() {
 			return validateCode(codedCommand,GameEntities.CODE_EVIL_BOOKS);
 		}
 		
+		/** @return true if user failed to take beast */
 		private boolean hasTakeBeastFailed() {
 			return nounNumber == GameEntities.ITEM_BEAST && 
 					game.getItem(GameEntities.ITEM_ROPE).getItemLocation() !=
 					GameEntities.ROOM_CARRYING;
 		}
 		
+		/** @return true if user has the staff */
 		private boolean hasStaff() {
 			return game.getItem(GameEntities.ITEM_STAFF).getItemLocation() == GameEntities.ROOM_CARRYING;
 		}
 		
+		/** @return true if user has acquired wisdom */
 		private boolean hasWisdomAcquired() {
 			return game.getItem(nounNumber).hasWisdonAcquired();
 		}
-				
+		
+		/** 
+		 * Takes an apple from the tree and adds to the player's food
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeApple() {
 			
 			player.setStat("food", ((int) player.getStat("food"))+1);
@@ -288,6 +409,11 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * Adds to the players food or drink and removes item from play
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeSustanence(String sustanence) {
 			
 			player.setStat(sustanence,((int) player.getStat(sustanence))+2);
@@ -296,6 +422,11 @@ public class ItemCommands {
 			return finaliseTake(game, player, nounNumber, true);
 		}
 		
+		/** 
+		 * Takes the cloak and executes the result
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeCloak() {
 			
 			game.addMessage("Lightning Flashes",true,true);
@@ -308,6 +439,11 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * Determines the result of the player taking the Dactyl's Egg
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeEgg() {
 			
 			Game game = this.game;
@@ -331,6 +467,11 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * Determines the result of the player taking the books
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeBooks() {
 			
 			player.setStat("wisdom",(int) player.getStat("wisdom")-5);
@@ -340,11 +481,26 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * generates the result of the player failing to take the beast
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult takeBeastFailed() {
 			game.addMessage("It escaped",true,true);
 			return new ActionResult(game,player,true);
 		}
 		
+		/**
+		 * Finalizes the take action: updates item state, adjusts player stats,
+		 * and posts a confirmation message.
+		 *
+		 * @param game       the current game
+		 * @param player     the current player
+		 * @param nounNumber the item being taken
+		 * @param taken      whether the item was already marked as taken
+		 * @return the resulting {@link ActionResult}
+		 */
 		private ActionResult finaliseTake(Game game, Player player, int nounNumber, boolean taken) {
 
 			if (!taken) {
@@ -618,4 +774,5 @@ public class ItemCommands {
  * 26 July 2025 - Added setMessageGameState
  * 2 September 2025 - Updated based on new ActionResult
  * 10 September 2025 - Tightened code
+ * 11 September 2025 - Added JavaDocs for Take and main section of the class
  */
