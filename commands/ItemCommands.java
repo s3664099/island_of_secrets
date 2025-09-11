@@ -37,7 +37,7 @@ public class ItemCommands {
 				game.addMessage("What "+item.getItemName()+"?",true,true);
 				result = result.failure(game, player);
 			}
-		//Validates Pick and Catch commands
+		
 		} else if ((notValidPick(command)) || (notValidCatch(command))){
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				result = result.failure(game, player);
@@ -80,7 +80,6 @@ public class ItemCommands {
 			result = result.failure(game, player);
 		}
 		
-		//Give specific validations
 		if (command.checkGive()) {
 			if(noun == GameEntities.ITEM_WATER) {
 				result = result.failure(game, player);
@@ -104,7 +103,7 @@ public class ItemCommands {
 			game.addMessage("I don't understand",true,true);
 			result = result.failure(game, player);
 		
-		//Validates the reciever
+		//Validates the receiver
 		} else {
 			
 			String object = getObject(commands);
@@ -137,11 +136,14 @@ public class ItemCommands {
 		
 		int nounCount = 0;
 		int nounNumber = -1;
-		for (String command:RawData.getNouns()) {
-			nounCount ++;
+		
+		if (object != null) {
+			for (String command:RawData.getNouns()) {
+				nounCount ++;
 							
-			if (object.equals(command)) {
-				nounNumber = nounCount;
+				if (object.equals(command)) {
+					nounNumber = nounCount;
+				}
 			}
 		}
 		return nounNumber;
@@ -202,16 +204,16 @@ public class ItemCommands {
 			
 			ActionResult result = new ActionResult();
 			if (areApples()) {
-				result = handleApple();
+				result = takeApple();
 			} else if (areNoApples()) {
 				game.addMessage("There are no more apples within reach",true,true);
 				result = new ActionResult(game,player,true);
 			} else if (isNoTorch()) {
 				game.addMessage("There are no more within reach",true,true);
 				result = new ActionResult(game,player,true);
-			} else if (isFood()) {
+			} else if (isTakingFood()) {
 				result = takeSustanence("food") ;
-			} else if (isDrink()) {
+			} else if (isTakingDrink()) {
 				result = takeSustanence("drink");
 			} else if (isTakingCloak()) {
 				result = takeCloak();
@@ -243,11 +245,11 @@ public class ItemCommands {
 					game.getItem(nounNumber).getItemLocation() != playerRoom;
 		}
 		
-		private boolean isFood() {
+		private boolean isTakingFood() {
 			return nounNumber>Constants.FOOD_THRESHOLD && nounNumber<Constants.DRINK_THRESHOLD;
 		}
 		
-		private boolean isDrink() {
+		private boolean isTakingDrink() {
 			return nounNumber>=Constants.DRINK_THRESHOLD && nounNumber<Constants.MAX_CARRIABLE_ITEMS;
 		}
 		
@@ -277,7 +279,7 @@ public class ItemCommands {
 			return game.getItem(nounNumber).hasWisdonAcquired();
 		}
 				
-		private ActionResult handleApple() {
+		private ActionResult takeApple() {
 			
 			player.setStat("food", ((int) player.getStat("food"))+1);
 			game.addMessage("You pick an apple from the tree",true,true);
@@ -491,7 +493,6 @@ public class ItemCommands {
 
 			//Give pebble to Median
 			} else if (isMedian()) {
-				System.out.println("Dude");
 				result = giveToMedian();
 			}
 			
