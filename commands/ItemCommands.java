@@ -523,6 +523,10 @@ public class ItemCommands {
 		}
 	}
 	
+	/**
+	 * Handles execution of "drop" commands. Encapsulates logic
+	 * for placing items into rooms and applying effects.
+	 */
 	private class DropHandler {
 		private final Game game;
 		private final Player player;
@@ -531,6 +535,7 @@ public class ItemCommands {
 		private final int playerRoom;
 		private final String codedCommand;
 		
+
 		public DropHandler(Game game, Player player, ParsedCommand command) {
 			this.game = game;
 			this.player = player;
@@ -539,7 +544,11 @@ public class ItemCommands {
 			this.playerRoom = player.getRoom();
 			this.codedCommand = command.getCodedCommand();
 		}
-		
+		/**
+		 * Executes the "drop" command.
+		 *
+		 * @return an {@link ActionResult} with the result
+		 */
 		public ActionResult execute() {
 			
 			game.getItem(nounNumber).setItemLocation(playerRoom);
@@ -558,20 +567,28 @@ public class ItemCommands {
 			return result;
 		}
 		
+		/** @return true if the item is a jug being dropped */
 		private boolean isJug() {
 			return nounNumber == GameEntities.ITEM_JUG && 
 					game.getItem(nounNumber).getItemLocation()==GameEntities.ROOM_CARRYING && 
 					verbNumber==GameEntities.CMD_DROP;
 		}
 		
+		/** @return true if the item is a torch being dropped */
 		private boolean isTorch() {
 			return validateCode(codedCommand.substring(0,3),GameEntities.CODE_TORCH_BRIGHT);
 		}
 		
+		/** @return true if the item is the beast being dropped */
 		private boolean isBeast() {
 			return nounNumber == GameEntities.ITEM_BEAST;
 		}
 		
+		/** 
+		 * generates the result of the player dropping the torch
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult dropJug() {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-1);
@@ -579,7 +596,12 @@ public class ItemCommands {
 			game.addMessage("It breaks!",true,true);
 			return new ActionResult(game,player,true);
 		}
-				
+		
+		/** 
+		 * generates the result of the player dropping the torch
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult dropTorch() {
 			game.getItem(nounNumber).setItemLocation(player.getRoom());
 			game.addMessage("The torch dims when you drop it.",true,true);	
@@ -592,6 +614,11 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * generates the result of the player dropping the beast
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult releaseBeast() {
 			game.getItem(nounNumber).setItemFlag(0);
 			game.getItem(GameEntities.ITEM_BEAST).setItemLocation(GameEntities.ROOM_FOREST);
@@ -600,6 +627,10 @@ public class ItemCommands {
 		}
 	}
 	
+	/**
+	 * Handles execution of "give" commands. Encapsulates
+	 * all logic for transferring items to NPCs or entities.
+	 */
 	private class GiveHandler {
 		
 		private final Game game;
@@ -622,6 +653,11 @@ public class ItemCommands {
 			
 		}
 		
+		/**
+		 * Executes the "give" command.
+		 *
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult execute() {
 			
 			game.addMessage("It is refused.",true,true);
@@ -655,36 +691,47 @@ public class ItemCommands {
 			return result;
 		}
 		
+		/** @return true if the recipient is a snake */
 		private boolean isSnake() {
 			return validateCode(codedCommand,GameEntities.CODE_SNAKE) && objectNumber==GameEntities.ITEM_SNAKE;
 		}
 		
+		/** @return true if the recipient is a villager */
 		private boolean isVillager() {
 			return validateCode(codedCommand,GameEntities.CODE_VILLAGER) && objectNumber==GameEntities.ITEM_VILLAGER && 
 					((int) player.getStat("drink"))>1;
 		}
 		
+		/** @return true if the recipient is the swampman */
 		private boolean isSwampman() {
 			return validateCode(codedCommand.substring(0,2),GameEntities.CODE_JUG) &&
 					game.getItem(GameEntities.ITEM_JUG).getItemFlag()<0 &&
 					objectNumber == GameEntities.ITEM_SWAMPMAN;
 		}
-				
+			
+		/** @return true if the recipient is logmen */
 		private boolean isLogmen() {
 			return objectNumber == GameEntities.ITEM_LOGMEN;
 		}
 		
+		/** @return true if the recipient is the scavenger */
 		private boolean isScavenger() {
 			return (validateCode(codedCommand.substring(0,3),GameEntities.CODE_LILY) || 
 					validateCode(codedCommand.substring(0,3),GameEntities.CODE_CHIP)) &&
 					objectNumber == GameEntities.ITEM_SCAVENGER;
 		}
 		
+		/** @return true if the recipient is Median */
 		private boolean isMedian() {
 			return validateCode(codedCommand.substring(0,2),GameEntities.CODE_PEBBLE) &&
 					objectNumber == GameEntities.ITEM_MEDIAN;
 		}
 		
+		/** 
+		 * generates the result of the player giving to the snake
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToSnake() {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(objectNumber).setItemFlag(1);
@@ -692,6 +739,11 @@ public class ItemCommands {
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * generates the result of the player giving to the villager
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToVillager() {
 			if (game.getItem(11).getItemFlag() != 0) {
 				game.addMessage("He drinks the water and offers his staff",true,true);
@@ -705,26 +757,46 @@ public class ItemCommands {
 		}
 		
 		
+		/** 
+		 * generates the result of the player giving to the swampman
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToSwampman() {
 			game.getItem(objectNumber).setItemFlag(1);
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.addMessage("The Swampman takes the jug and leaves",true,true);
 			return new ActionResult(game,player,true);
 		}
-				
+		
+		/** 
+		 * generates the result of the player giving to the logman
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToLogmen() {
 			game.addMessage("It is taken",true,true);
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_STOREROOM);
 			return new ActionResult(game,player,true);
 		}
 		
+		/** 
+		 * generates the result of the player giving to the Scavenger
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToScavenger() {
 			player.setStat("wisdom",(int) player.getStat("wisdom")+10);
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.addMessage("It is accepted",true,true);
 			return new ActionResult(game,player,true);
 		}
-				
+		
+		/** 
+		 * generates the result of the player giving to Median
+		 * 
+		 * @return an {@link ActionResult} with the result
+		 */
 		private ActionResult giveToMedian() {
 			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 			game.getItem(GameEntities.ITEM_PEBBLE).setItemFlag(-1);
