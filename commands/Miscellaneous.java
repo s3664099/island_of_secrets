@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 2 September 2025
+Version: 4.11
+Date: 14 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -45,7 +45,7 @@ public class Miscellaneous {
 	}
 	
 	public ActionResult info() {
-		return new ActionResult(getDetails(),player,true);
+		return new ActionResult(displayPlayerDetails(),player,true);
 	}
 	
 	public ActionResult wave() {
@@ -239,7 +239,7 @@ public class Miscellaneous {
 		return player.getRoom()==GameEntities.ROOM_STOREROOM && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0;
 	}
 	
-	private Game getDetails() {
+	private Game displayPlayerDetails() {
 		
 		String items = getItemDetails();
 		String infoDisplay = "Info: "+"Food: "+((int) player.getStat("food"));
@@ -360,10 +360,10 @@ public class Miscellaneous {
 	
 	private ActionResult openChest() {
 		game.addMessage("The chest opens. There is something inside",true,true);
-		game.getItem(6).setItemFlag(9);
-		game.getItem(5).setItemFlag(9);
-		game.getItem(15).setItemFlag(9);
-		game.getItem(26).setItemFlag(1);
+		game.getItem(GameEntities.ITEM_PARCHMENT).setItemFlag(9);
+		game.getItem(GameEntities.ITEM_RAG).setItemFlag(9);
+		game.getItem(GameEntities.ITEM_HAMMER).setItemFlag(9);
+		game.getItem(GameEntities.ITEM_CHEST).setItemFlag(1);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -429,4 +429,5 @@ public class Miscellaneous {
  * 19 July 2025 - Changes to setPlayerStateSwimming
  * 12 August 2025 - Changed comment when rub mouth
  * 2 September 2025 - Updated based on new ActionResult
+ * 14 September 2025 - Tightened Up Code.
  */
