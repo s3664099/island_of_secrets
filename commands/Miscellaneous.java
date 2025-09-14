@@ -45,8 +45,7 @@ public class Miscellaneous {
 	}
 	
 	public ActionResult info() {
-		Game game = getDetails();
-		return new ActionResult(game,player,true);
+		return new ActionResult(getDetails(),player,true);
 	}
 	
 	public ActionResult wave() {
@@ -145,62 +144,32 @@ public class Miscellaneous {
 		return result;
 	}
 		
-	public ActionResult swim() {
-		
-		ActionResult result = cannotSwim();
-		
-		if (checkCanSwim()) {
-			result = canSwim();
-		}
-		
-		return result;
+	public ActionResult swim() {		
+		return checkCanSwim()?canSwim():cannotSwim();
 	}
 
 	public ActionResult shelter() {
-		game.addMessage("Not possible at the moment.",true,true);
-		ActionResult result = new ActionResult(game,player,false);
-		
-		if(isStormBlowing()) {
-			result = shelterFromStorm();
-		}
-		
-		return result; 
+		game.addMessage("Not possible at the moment.",true,true);		
+		return isStormBlowing()?shelterFromStorm():new ActionResult(game,player,false); 
 	}
 	
 	private boolean isBoatmanPresent() {
-		
-		boolean boatmanPresent = false;
-		if(game.getItem(GameEntities.ITEM_BOAT).isAtLocation(player.getRoom()) &&
-		   !isWavingTorch()) {
-			boatmanPresent = true;
-		}
-		return boatmanPresent;
+		return game.getItem(GameEntities.ITEM_BOAT).isAtLocation(player.getRoom()) &&
+				   !isWavingTorch();
 	}
 	
 	private boolean isWavingTorch() {
-		boolean wavingTorch = false;
-		if(codedCommand.substring(0,3).equals(GameEntities.CODE_TORCH_DIM)) {
-			wavingTorch = true;
-		}
-		return wavingTorch;
+		return codedCommand.substring(0,3).equals(GameEntities.CODE_TORCH_DIM);
 	}
 	
 	private boolean isScratchSage() {
-		boolean isScratchSage = false;
-		if (codedCommand.equals(GameEntities.CODE_SCRATCH_SAGE) 
-			&& verbNumber == GameEntities.CMD_SCRATCH) {
-			isScratchSage = true;
-		}
-		return isScratchSage;
+		return codedCommand.equals(GameEntities.CODE_SCRATCH_SAGE) 
+				&& verbNumber == GameEntities.CMD_SCRATCH;
 	}
 	
 	private boolean isHelpVillagerSage() {
-		boolean helpVillageSage = false;
-		if (codedCommand.equals(GameEntities.CODE_HELP_VILLAGER) || 
-			codedCommand.equals(GameEntities.CODE_HELP_SAGE)) {
-			helpVillageSage = true;
-		}
-		return helpVillageSage;
+		return codedCommand.equals(GameEntities.CODE_HELP_VILLAGER) || 
+				codedCommand.equals(GameEntities.CODE_HELP_SAGE);
 	}
 	
 	private boolean isPolishStone() {
@@ -217,107 +186,57 @@ public class Miscellaneous {
 	}
 	
 	private boolean isPolishStoneAgain() {
-		boolean polishStone = false;
-		if(codedCommand.substring(0,4).equals("2815") && player.getRoom()==GameEntities.ROOM_STONE
-			&& game.getItem(GameEntities.ITEM_STONE).getItemFlag()==0
-			&& game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_CARRYING) {
-			polishStone = true;
-		}
-		return polishStone;
+		return codedCommand.substring(0,4).equals("2815") && player.getRoom()==GameEntities.ROOM_STONE
+				&& game.getItem(GameEntities.ITEM_STONE).getItemFlag()==0
+				&& game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean isSayStonyWords(String noun) {
-		
-		boolean sayStonyWords = false;
-		if(noun.toLowerCase().equals("stony words") && player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE &&
-			game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()==0) {
-			sayStonyWords = true;
-		}
-		return sayStonyWords;
+		return noun.toLowerCase().equals("stony words") && player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE &&
+				game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()==0;
 	}
 	
 	private boolean isSpeakScavenger(String noun) {
-		boolean speakScavenger = false;
-		if (noun.toLowerCase().equals("remember old times") && 
-			player.getRoom()==game.getItem(GameEntities.ITEM_SCAVENGER).getItemLocation() && 
-			game.getItem(GameEntities.ITEM_LILY).getItemLocation()==GameEntities.ROOM_DESTROYED &&
-			game.getItem(GameEntities.ITEM_CHIP).getItemLocation()==GameEntities.ROOM_DESTROYED) {
-			speakScavenger = true;
-		}
-		return speakScavenger;
+		return noun.toLowerCase().equals("remember old times") && 
+				player.getRoom()==game.getItem(GameEntities.ITEM_SCAVENGER).getItemLocation() && 
+				game.getItem(GameEntities.ITEM_LILY).getItemLocation()==GameEntities.ROOM_DESTROYED &&
+				game.getItem(GameEntities.ITEM_CHIP).getItemLocation()==GameEntities.ROOM_DESTROYED;
 	}
 	
 	private boolean isFillJug() {
-		boolean fillJug = false;
-		if(codedCommand.equals(GameEntities.CODE_FILL_JUG)) {
-			fillJug = true;
-		}
-		return fillJug;
+		return codedCommand.equals(GameEntities.CODE_FILL_JUG);
 	}
 	
 	private boolean isFillJugWater() {
-		boolean fillJugWater = false;
-		if(codedCommand.equals(GameEntities.CODE_FILL_JUG_WATER)) {
-			fillJugWater = true;
-		}
-		return fillJugWater;
+		return codedCommand.equals(GameEntities.CODE_FILL_JUG_WATER);
 	}
 	
 	private boolean isJugFull() {
-		boolean jugFull = false;
-		if(codedCommand.substring(0,2).equals(GameEntities.CODE_JUG_FULL)) {
-			jugFull = true;
-		}
-		return jugFull;
+		return codedCommand.substring(0,2).equals(GameEntities.CODE_JUG_FULL);
 	}
 	
 	private boolean isRideBeast() {
-		boolean ridingBeast = false;
-		if(codedCommand.substring(0,4).equals(GameEntities.CODE_RIDE_BEAST)) {
-			ridingBeast = true;
-		}
-		return ridingBeast;
+		return codedCommand.substring(0,4).equals(GameEntities.CODE_RIDE_BEAST);
 	}
 	
 	private boolean isAlreadyRidingBeast() {
-		boolean alreadyRidingBeast = false;
-		if(codedCommand.substring(0,4).equals(GameEntities.CODE_RIDING_BEAST)) {
-			alreadyRidingBeast = true;
-		}
-		return alreadyRidingBeast;
+		return codedCommand.substring(0,4).equals(GameEntities.CODE_RIDING_BEAST);
 	}
 	
 	private boolean isOpenChest() {
-		boolean openingChest = false;
-		if(codedCommand.equals(GameEntities.CODE_OPEN_CHEST)) {
-			openingChest = true;
-		}
-		return openingChest;
+		return codedCommand.equals(GameEntities.CODE_OPEN_CHEST);
 	}
 	
 	private boolean isOpenTrapdoor() {
-		boolean openingTrapdoor = false;
-		if(codedCommand.equals(GameEntities.CODE_OPEN_TRAPDOOR)) {
-			openingTrapdoor = true;
-		}
-		return openingTrapdoor;
+		return codedCommand.equals(GameEntities.CODE_OPEN_TRAPDOOR);
 	}
 	
 	private boolean isStormBlowing() {
-		boolean stormBlowing = false;
-		if(game.getItem(GameEntities.ITEM_STORM).getItemFlag()<0) {
-			stormBlowing = true;
-		}
-		return stormBlowing;
+		return game.getItem(GameEntities.ITEM_STORM).getItemFlag()<0;
 	}
 	
 	private boolean checkCanSwim() {
-		boolean canSwim = false;
-		
-		if (player.getRoom()==GameEntities.ROOM_STOREROOM && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0) {
-			canSwim = true;
-		}
-		return canSwim;
+		return player.getRoom()==GameEntities.ROOM_STOREROOM && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0;
 	}
 	
 	private Game getDetails() {
