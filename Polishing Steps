@@ -2,19 +2,19 @@ default
   - *Start
   - *Main
 command_process
-  - ActionResult
+  - *ActionResult
   - *CommandExecutor
   - *CommandParser
   - *CommandProcessor
   - *CommandValidator
   - *ParsedCommand  
 commands
-  - Combat
-  - Consume
-  - Examine
-  - ItemCommands
-  - Miscellaneous
-  - Move
+  - *Combat
+  - *Consume
+  - *Examine
+  - *ItemCommands
+  - *Miscellaneous
+  - *Move
 controller
   - BookButton
   - CommandButton
@@ -84,7 +84,7 @@ view
 
 
 
-  * Then each specific handler: 'Miscellaneous'
+
 * **Note**: `Persistence` should be treated separately—it handles saving/loading.
 
 ### **5. `Interfaces`**

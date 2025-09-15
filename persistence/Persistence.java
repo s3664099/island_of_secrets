@@ -50,17 +50,8 @@ public class Persistence {
 		return new ActionResult(game,player,true);
 	}
 	
-	public ActionResult load() {
-		
-		ActionResult result = new ActionResult(game,player,false);
-		
-		if (splitCommand.length==1) {
-			result = displayGames();
-		} else {
-			result = loadGame();
-		}
-		
-		return result;
+	public ActionResult load() {		
+		return splitCommand.length==1?displayGames():loadGame();
 	}
 	
 	public ActionResult quit() {
@@ -73,7 +64,6 @@ public class Persistence {
 	
 	private ActionResult displayGames() {
 		
-		//Checks to see if the file exists
 		final int MAX_DISPLAY = 4;
 		File saveGameDirectory = new File("savegames");
 		String[] gameDisplayed = game.getDisplayedSavedGames();
@@ -112,16 +102,9 @@ public class Persistence {
 	}
 		
 	private File[] getSavedGames(File directory) {
-		
-		File[] files = new File[0];
-		
-		if(!directory.exists() || !directory.isDirectory()) {
-			files = new File[0];
-		} else {
-			files = directory.listFiles((dir,name) ->
-			name.toLowerCase().endsWith(".sav"));
-		}
-		return files;
+		return !directory.exists() || !directory.isDirectory()?
+				new File[0]:files = directory.listFiles((dir,name) ->
+				name.toLowerCase().endsWith(".sav"));
 	}
 	
 	public Game saveGame() {
