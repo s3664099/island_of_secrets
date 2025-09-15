@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 3 September 2025
+Version: 4.5
+Date: 15 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import command_process.ActionResult;
 import command_process.ParsedCommand;
@@ -25,19 +26,74 @@ import data.Constants;
 import game.Game;
 import game.Player;
 
+/**
+ * Handles persistence operations for the adventure game, including
+ * saving, loading, and listing saved games.  
+ * <p>
+ * This class sanitizes filenames to prevent directory traversal attacks
+ * and ensures that all game and player state is safely serialized.
+ */
 public class Persistence {
 
+    /**
+     * The current game instance to save or update.
+     */
 	private final Game game;
+
+    /**
+     * The current player instance to save or update.
+     */
 	private final Player player;
+	
+    /**
+     * Tokenized user command used to determine persistence actions.
+     */
 	private final String[] splitCommand;
+	
+    /**
+     * Logger for recording save/load errors and events.
+     */
 	private static final Logger logger = Logger.getLogger(Game.class.getName());
-		
+	
+    /**
+     * Directory in which save files are stored.
+     */
+	private final String SAVE_GAME_DIRECTORY = "savegames";
+	
+    /**
+     * File extension used for saved games.
+     */
+	private final String SAVE_GAME_EXTENSION = ".sav";
+	
+    /**
+     * Overwrite flag expected in the command to overwrite an existing save.
+     */
+	private final String OVERWRITE = "o";
+	
+    /**
+     * Pattern that restricts save names to letters, digits, underscores, and hyphens.
+     */
+	private static final Pattern SAFE_NAME = Pattern.compile("^[A-Za-z0-9_-]+$");
+	
+    /**
+     * Creates a new {@code Persistence} object to manage saving and loading game data.
+     *
+     * @param game    the current {@link Game} instance
+     * @param player  the current {@link Player} instance
+     * @param command the parsed user command containing action and arguments
+     */
 	public Persistence(Game game,Player player, ParsedCommand command) {
 		this.game = game;
 		this.player = player;
 		this.splitCommand = command.getSplitFullCommand();
 	}
 	
+    /**
+     * Saves the current game state to disk.  
+     * If no filename is provided, prompts the user to supply one.
+     *
+     * @return an {@link ActionResult} representing the outcome of the save request
+     */
 	public ActionResult save() {
 		
 		Game game = this.game;
@@ -50,10 +106,22 @@ public class Persistence {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Loads a saved game.  
+     * If no game name is provided, displays a paginated list of available saved games.
+     *
+     * @return an {@link ActionResult} representing the outcome of the load request
+     */
 	public ActionResult load() {		
 		return splitCommand.length==1?displayGames():loadGame();
 	}
 	
+    /**
+     * Ends the current game session, sets end-game state, and signals the player
+     * is quitting.
+     *
+     * @return an {@link ActionResult} indicating the game has been terminated
+     */
 	public ActionResult quit() {
 		game.addMessage("You relinquish your quest",true,true);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
@@ -62,10 +130,17 @@ public class Persistence {
 		return new ActionResult(game,player,true);
 	}
 	
+    /**
+     * Displays a paginated list of saved games to the user.
+     * The list shows up to four saves at a time and updates the
+     * {@link Game} state for navigation between pages.
+     *
+     * @return an {@link ActionResult} with the updated game state
+     */
 	private ActionResult displayGames() {
 		
 		final int MAX_DISPLAY = 4;
-		File saveGameDirectory = new File("savegames");
+		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
 		String[] gameDisplayed = game.getDisplayedSavedGames();
 		
 		//Clear previous Entries
@@ -100,27 +175,40 @@ public class Persistence {
 		
 		return new ActionResult(game,player,true);
 	}
-		
+	
+    /**
+     * Returns an array of valid saved-game files in the specified directory.
+     *
+     * @param directory the directory to scan
+     * @return an array of save files with {@code .sav} extension, or an empty array if none exist
+     */
 	private File[] getSavedGames(File directory) {
 		return !directory.exists() || !directory.isDirectory()?
-				new File[0]:files = directory.listFiles((dir,name) ->
-				name.toLowerCase().endsWith(".sav"));
+				new File[0]:directory.listFiles((dir,name) ->
+				name.toLowerCase().endsWith(SAVE_GAME_EXTENSION));
 	}
 	
-	public Game saveGame() {
+    /**
+     * Serializes the current game and player objects to a save file.
+     * Performs validation to prevent overwriting unless the user includes the
+     * overwrite flag and sanitizes the save name to prevent path traversal.
+     *
+     * @return the updated {@link Game} object after save attempt
+     */
+	private Game saveGame() {
 		
 		boolean writeFile = false;
-		File saveGameDirectory = new File("savegames");
+		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
 		
 		//Checks to see if the directory exists. If it doesn't it creates the directory
 		if(!saveGameDirectory.exists()) {
 			saveGameDirectory.mkdir();
 		}
 			
-		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");
+		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+SAVE_GAME_EXTENSION);
 			
 		//Checks to see if the file exists
-		if (saveFile.exists() && (splitCommand.length<3 || !splitCommand[2].equals("o"))) {
+		if (saveFile.exists() && (splitCommand.length<3 || !splitCommand[2].equals(OVERWRITE))) {
 				
 			//If file exists tells user how to overwrite it
 			game.addMessage("File already exists. Please add 'o' to the end to overwrite.",true,true);
@@ -134,7 +222,8 @@ public class Persistence {
 		if (writeFile) {
 		
 			try {
-				FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+splitCommand[1]+".sav");
+				String fileName = sanitiseFileName(splitCommand[1]);
+				FileOutputStream file = new FileOutputStream(saveGameDirectory+"/"+fileName+SAVE_GAME_EXTENSION);
 				ObjectOutputStream out = new ObjectOutputStream(file);
 				out.writeObject(game);
 				out.writeObject(player);
@@ -148,13 +237,33 @@ public class Persistence {
 			}
 		} else {
 			
-			if (splitCommand.length>2 && !splitCommand[2].equals("o")) {
+			if (splitCommand.length>2 && !splitCommand[2].equals(OVERWRITE)) {
 				game.addMessage("Game not saved",true,true);
 			}
 		}
 		return game;
 	}
 	
+    /**
+     * Ensures that a proposed save name contains only allowed characters.
+     *
+     * @param name the raw save name provided by the user
+     * @return a validated and safe save name
+     * @throws IllegalArgumentException if the name contains invalid characters
+     */
+	private String sanitiseFileName(String name) throws IllegalArgumentException {
+	    if (!SAFE_NAME.matcher(name).matches()) {
+	        throw new IllegalArgumentException("Invalid save name. Use letters, numbers, _ or - only.");
+	    }
+	    return name;
+	}
+	
+    /**
+     * Attempts to load a previously saved game and player state from disk.
+     * The save name is sanitized to prevent path traversal.
+     *
+     * @return an {@link ActionResult} representing success or failure of the load operation
+     */
 	private ActionResult loadGame() {
 		
 		Game game = this.game;
@@ -162,9 +271,10 @@ public class Persistence {
 		
 		boolean loadFile = false;
 				
-		File saveGameDirectory = new File("savegames");				
-		File saveFile = new File(saveGameDirectory+"/"+splitCommand[1]+".sav");		
-		//If not available
+		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
+		String fileName = sanitiseFileName(splitCommand[1]);
+		File saveFile = new File(saveGameDirectory+"/"+fileName+SAVE_GAME_EXTENSION);		
+		
 		if (!saveFile.exists()) {			
 			game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
 		} else {
@@ -175,7 +285,7 @@ public class Persistence {
 	
 			//Attempts to load the file
 			try {
-				FileInputStream file = new FileInputStream(saveGameDirectory+"/"+splitCommand[1]+".sav");
+				FileInputStream file = new FileInputStream(saveGameDirectory+"/"+fileName+SAVE_GAME_EXTENSION);
 				ObjectInputStream fileIn = new ObjectInputStream(file);
 			
 				//Load successful. Update the objects
@@ -204,4 +314,5 @@ public class Persistence {
  * 			   - Added logger for game failed to save & load
  * 			   - Stripped .sav from load game displays
  * 3 September 2025 - Changed for updated ActionResult changes
+ * 15 September 2025 - Tightened Code and added JavaDocs
  */

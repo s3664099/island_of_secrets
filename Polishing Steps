@@ -37,7 +37,7 @@ game
   - *GameEngine
   - *GameInitialiser
   - *MessageBuilder
-  - Player
+  - *Player
   - *RandomExitHandler
   - *SpecialExitHandler
   - *SpecialItemHandler
@@ -50,7 +50,7 @@ interfaces
   - GameUI
   - GameView
 persistence
-  - Persistence
+  - *Persistence
 ui
   - GameState
 view
@@ -85,12 +85,9 @@ view
 
 
 
-* **Note**: `Persistence` should be treated separately—it handles saving/loading.
 
-### **5. `Interfaces`**
 
-* Work backward from `GameUI` and `GameView` to understand UI abstraction.
-* Document contracts expected for each interface.
+
 
 ### **6. `Controller`**
 
