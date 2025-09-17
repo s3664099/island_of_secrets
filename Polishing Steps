@@ -92,7 +92,8 @@ view
 ### **6. `Controller`**
 
 * These are the glue between user interaction and backend logic.
-* Start with `CommandButton`, `CommandListener`, then move to higher-level components like `MapButton`, `QuitButton`.
+* Start with `CommandButton`, `CommandListener`, then move to higher-level components like "MapController'
+`MapButton`,`QuitButton`,'Search Game Button','Game Button','Game Controller','Shelter Button','Book Button'
 
 ### **7. `View`**
 
