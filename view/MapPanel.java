@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 27 July 2025
+Version: 4.7
+Date: 18 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -63,7 +63,7 @@ public class MapPanel extends JPanel implements GameView {
 		this.controller = game;
 		this.state = game.getState();
 		this.panel = panel;
-		this.mapController = new MapController(game,panel);
+		this.mapController = new MapController();
 		
 		setLayout(new GridLayout(MAP_ROWS,MAP_COLS));
 	}
@@ -287,4 +287,5 @@ public class MapPanel extends JPanel implements GameView {
  * 				 - Added tool tips to display location name when hovering
  * 21 April 2025 - Moved MapController to a separate class in  Controller
  * 27 July 2025 - Updated game button to remove code not used.
+ * 18 September 2025 - Removed game and panel from Map Controller
  */

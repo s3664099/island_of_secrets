@@ -15,11 +15,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import view.GamePanel;
-
 public class MapController {
 	
-	public MapController(GameController gameController, GamePanel gamePanel) {}
+	private static final Color HOVER_COLOUR = new Color(240, 240, 255);
+	
+	public MapController() {}
 	
 	public MouseAdapter createMouseAdapter(int roomId) {
 		return new MouseAdapter() {
@@ -27,7 +27,7 @@ public class MapController {
 			public void mouseEntered(MouseEvent e) {
 				
 				JPanel panel = (JPanel) e.getSource();
-				panel.setBackground(new Color(240,240,255));
+				panel.setBackground(HOVER_COLOUR);
 				panel.repaint();
 			}
 			
@@ -42,5 +42,6 @@ public class MapController {
 }
 
 /* 21 April 2025 - Created File
+ * 18 September 2025 - Update file by adding HOVER_COLOUR and removing unused variables
  * 
  */
