@@ -89,7 +89,7 @@ view
 
 
 
-"MapController',`MapButton`,`QuitButton`,'Search Game Button','Game Button','Game Controller','Shelter Button','Book Button'
+`MapButton`,`QuitButton`,'Search Game Button','Game Button','Game Controller','Shelter Button','Book Button'
 
 ### **7. `View`**
 
