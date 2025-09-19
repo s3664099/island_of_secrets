@@ -17,13 +17,13 @@ commands
   - *Move
 controller
   - BookButton
-  - CommandButton
-  - CommandListener
+  - *CommandButton
+  - *CommandListener
   - GameButton
-  - MapButton
-  - MapController
-  - QuitButton
-  - SearchGameButton
+  - *MapButton
+  - *MapController
+  - *QuitButton
+  - *SearchGameButton
   - ShelterButton
   - GameController
 data
@@ -89,7 +89,7 @@ view
 
 
 
-`QuitButton`,'Search Game Button','Game Button','Game Controller','Shelter Button','Book Button'
+'Search Game Button','Game Button','Game Controller','Shelter Button','Book Button'
 
 ### **7. `View`**
 
