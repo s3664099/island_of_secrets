@@ -25,7 +25,7 @@ controller
   - *QuitButton
   - *SearchGameButton
   - ShelterButton
-  - GameController
+  - *GameController
 data
   - Constants
   - GameEntities
@@ -89,7 +89,7 @@ view
 
 
 
-'Game Button','Game Controller','Shelter Button','Book Button'
+'Shelter Button','Book Button'
 
 ### **7. `View`**
 
