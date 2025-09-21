@@ -33,7 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
-import controller.GameButton;
+import controller.ShowMainViewButton;
 import controller.GameController;
 import controller.MapController;
 import data.Constants;
@@ -217,7 +217,7 @@ public class MapPanel extends JPanel implements GameView {
     private void addNavigationButton(JPanel panel) {
     	    	
     	JButton backButton = new JButton("Back");
-    	backButton.addActionListener(new GameButton(this.panel));
+    	backButton.addActionListener(new ShowMainViewButton(this.panel));
     	panel.add(backButton);
     }
 	

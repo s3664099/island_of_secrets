@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import controller.BookButton;
 import controller.CommandButton;
 import controller.CommandListener;
-import controller.GameButton;
+import controller.ShowMainViewButton;
 import controller.GameController;
 import controller.MapButton;
 import controller.QuitButton;
@@ -189,7 +189,7 @@ public class CommandPanel  extends JPanel  {
 			add(createButtonPanel("Next",new SearchGameButton(game,true),BUTTON_INDENT));
 		}
 		
-		add(createButtonPanel("Back to Game",new GameButton(panel),BUTTON_INDENT));
+		add(createButtonPanel("Back to Game",new ShowMainViewButton(panel),BUTTON_INDENT));
 	}
 	
 	private void addSavedGameButton(String gameName) {
