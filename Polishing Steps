@@ -16,7 +16,7 @@ commands
   - *Miscellaneous
   - *Move
 controller
-  - BookButton
+  - *BookButton
   - *CommandButton
   - *CommandListener
   - *GameButton
@@ -24,7 +24,7 @@ controller
   - *MapController
   - *QuitButton
   - *SearchGameButton
-  - ShelterButton
+  - *ShelterButton
   - *GameController
 data
   - Constants
@@ -89,7 +89,7 @@ view
 
 
 
-'Shelter Button','Book Button'
+
 
 ### **7. `View`**
 
