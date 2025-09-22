@@ -40,11 +40,24 @@ public class GamePanel extends JPanel {
     private MessagePanel messageView;
     private LightningPanel lightningView;
 	
+    /**
+     * Constructs the GamePanel and initializes all game sub-views.
+     *
+     * @param controller the {@link GameController} that provides
+     *                   state updates and handles game commands;
+     *                   must not be {@code null}
+     */
 	public GamePanel(GameController controller) {
 		Objects.requireNonNull(controller, "GameController cannot be null");
 		initialiseUI(controller);
 	}
 	
+    /**
+     * Creates and configures all sub-panels, adds them to the
+     * CardLayout container, and sets the initial view.
+     *
+     * @param controller the active {@link GameController}
+     */
 	private void initialiseUI(GameController controller) {
 		
 		setLayout(new BorderLayout());
