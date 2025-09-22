@@ -104,7 +104,7 @@ public class GameFrame extends JFrame implements GameUI {
 		if (game.isMessageState()) {
 			gamePanel.refreshMessageView(game);
 		} else if (game.isLightningState()) {
-			gamePanel.refreshLightingView(game);
+			gamePanel.refreshLightningView(game);
 		} else {
 			gamePanel.refreshMainView(game);
 		}
