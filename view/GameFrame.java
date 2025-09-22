@@ -11,23 +11,29 @@ package view;
 
 import javax.swing.JFrame;
 
-import controller.GameController;
 import game.GameEngine;
 import interfaces.GameUI;
+import ui.GameController;
 
 public class GameFrame extends JFrame implements GameUI {
 
 	private static final long serialVersionUID = -5095376582483866399L;
 	private final GamePanel gamePanel;
+	
+	private final int X_BOUND = 100;
+	private final int Y_BOUND = 100;
+	private final int BOUND_WIDTH = 800;
+	private final int BOUND_HEIGHT = 600;
+	
 
 	public GameFrame(GameEngine engine) {
 		super("Island of Secrets");
 		GameController controller = new GameController(engine,this);
 		this.gamePanel = new GamePanel(controller);
-		initiliseUI();
+		initialiseUI();
 	}
 	
-	private void initiliseUI() {
+	private void initialiseUI() {
 
 		//kills the window when the 'x' is clicked at the top
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,7 +45,7 @@ public class GameFrame extends JFrame implements GameUI {
 	public void configureWindow()  {
 		
 		//sets the boundaries of the frame.
-		setBounds(100,100, 800,600);
+		setBounds(X_BOUND,Y_BOUND,BOUND_WIDTH,BOUND_HEIGHT);
 		setResizable(false);
 		
 		//Center
@@ -59,10 +65,7 @@ public class GameFrame extends JFrame implements GameUI {
 	}
 
 	@Override
-	public void showMapView(GameController game) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void showMapView(GameController game) {}
 	
 	public void closeUI() {
 		setVisible(false);

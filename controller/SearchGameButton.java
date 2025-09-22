@@ -16,6 +16,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ui.GameController;
+
 /**
  * A Swing {@link ActionListener} that allows the user to navigate through
  * saved-game listings in the UI.

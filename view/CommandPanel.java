@@ -25,12 +25,12 @@ import controller.BookButton;
 import controller.CommandButton;
 import controller.CommandListener;
 import controller.ShowMainViewButton;
-import controller.GameController;
 import controller.MapButton;
 import controller.QuitButton;
 import controller.SearchGameButton;
 import controller.ShelterButton;
 import interfaces.GameStateProvider;
+import ui.GameController;
 
 public class CommandPanel  extends JPanel  {
 	

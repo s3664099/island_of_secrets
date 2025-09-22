@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ui.GameController;
+
 /**
  * A button action listener that quits or restarts the game when triggered.
  * <p>

@@ -16,6 +16,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ui.GameController;
+
 /**
  * Represents a button in the game's GUI that triggers a specific command
  * when clicked. This class acts as a bridge between the button and the

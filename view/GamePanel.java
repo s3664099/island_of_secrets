@@ -16,7 +16,7 @@ import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import controller.GameController;
+import ui.GameController;
 
 /**
  * Main container panel that manages game views using CardLayout.

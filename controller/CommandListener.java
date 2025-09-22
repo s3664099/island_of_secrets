@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JTextField;
 
+import ui.GameController;
+
 /**
  * Listens for keyboard input in a {@link JTextField} and delegates
  * commands to the {@link GameController}.  

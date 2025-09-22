@@ -34,10 +34,10 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import controller.ShowMainViewButton;
-import controller.GameController;
 import controller.MapController;
 import data.Constants;
 import interfaces.GameView;
+import ui.GameController;
 import ui.GameState;
 
 public class MapPanel extends JPanel implements GameView {

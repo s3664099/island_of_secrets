@@ -7,7 +7,7 @@ Date: 21 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package controller;
+package ui;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -19,7 +19,6 @@ import game.GameInitialiser;
 import game.Player;
 import interfaces.GameCommandHandler;
 import interfaces.GameUI;
-import ui.GameState;
 
 /**
  * Mediates between the {@link GameEngine} and {@link GameUI}, handling

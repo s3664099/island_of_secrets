@@ -16,10 +16,10 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import controller.GameController;
 import interfaces.GameStateProvider;
 import interfaces.GameUI;
 import interfaces.GameView;
+import ui.GameController;
 
 /**
  * Main game view panel combining status, room, and command components.

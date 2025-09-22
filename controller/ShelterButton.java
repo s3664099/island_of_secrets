@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+import ui.GameController;
+
 /**
  * A button that navigates the player to a designated shelter location in the game.
  * <p>

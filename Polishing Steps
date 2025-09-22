@@ -25,7 +25,6 @@ controller
   - *QuitButton
   - *SearchGameButton
   - *ShelterButton
-  - *GameController
 data
   - Constants
   - GameEntities
@@ -53,6 +52,7 @@ persistence
   - *Persistence
 ui
   - GameState
+  - *GameController
 view
   - CommandPanel
   - GameFrame
@@ -99,8 +99,7 @@ view
 
 ### **8. `UISupport`**
 
-* Likely cross-cutting utility classes like `GameState`, `GameController`.
-* Should be looked at after the main UI flow is understood.
+* Likely cross-cutting utility classes like `GameState`
 
 ### **9. `Data`**
 
