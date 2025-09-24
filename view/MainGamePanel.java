@@ -2,8 +2,8 @@
 Title: Island of Secrets Main Game Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 28 April 2025
+Version: 4.15
+Date: 24 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -101,7 +101,7 @@ class MainGamePanel extends JPanel implements GameUI, GameView {
 		// Top section for status and label panels
 		statusPanel = new StatusPanel(state);
 		roomPanel = new RoomPanel(state);
-		commandPanel = new CommandPanel(game,state,parentPanel);
+		commandPanel = new CommandPanel(controller,state,parentPanel);
 		
 		this.add(statusPanel, BorderLayout.NORTH); 
 		this.add(roomPanel,BorderLayout.CENTER);
@@ -203,4 +203,5 @@ class MainGamePanel extends JPanel implements GameUI, GameView {
  * 8 April 2025 - Added close panel function due to interface
  * 15 April 2025 - Started updating code based on Deepseek recommendations
  * 16 April 2025 - Completed recommended changes
+ * 24 September 2025 - Added JavaDocs
  */

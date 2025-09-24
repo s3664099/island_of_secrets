@@ -94,8 +94,7 @@ view
 ### **7. `View`**
 
 * After you understand how state and interaction are managed, look at UI rendering.
-* `MainGamePanel`, `RoomPanel`, 'StatusPanel','CommandPanel','MapPanel','MessagePanel',
-  'LightningPane' etc. define the game's display.
+* 'StatusPanel','CommandPanel','MapPanel','MessagePanel','LightningPane' etc. define the game's display.
 
 ### **8. `UISupport`**
 
