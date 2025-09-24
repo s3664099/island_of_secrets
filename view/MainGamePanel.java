@@ -23,32 +23,61 @@ import ui.GameController;
 
 /**
  * Main game view panel combining status, room, and command components.
- * Implements both GameUI and GameView interfaces for dual functionality.
- */
-public class MainGamePanel extends JPanel implements GameUI, GameView {
+ * <p>
+ * This panel serves as the primary in-game view, displaying the player’s
+ * current status, the room description, and a command input area. It
+ * implements both {@link GameUI} and {@link GameView} so that it can be
+ * refreshed by the controller and participate in the card-layout view
+ * switching handled by {@link GamePanel}.
+ * </p>
+ */ 
+class MainGamePanel extends JPanel implements GameUI, GameView {
 	
 	private static final long serialVersionUID = -9087851496246015145L;
 	
-	//Components
-	private final GameController game;
+    /** Game controller that drives state updates and handles commands. */
+	private final GameController controller;
+	
+    /** Parent container that manages multiple game views. */
 	private final GamePanel parentPanel;
+	
+    /** Displays current player status such as score, health, etc. */
 	private StatusPanel statusPanel;
+	
+    /** Displays the current room description and related visuals. */
 	private RoomPanel roomPanel;
+	
+    /** Provides the command input area for player actions. */
 	private CommandPanel commandPanel;
 	
-	//State
+    /** Current immutable snapshot of the game state. */
 	private GameStateProvider state;
+	
+    /** Indicates whether child components have been created and added. */
 	private boolean isInitialised = false;
 
-	public MainGamePanel(GameController game, GamePanel panel) {
+    /**
+     * Constructs the main game panel.
+     *
+     * @param controller the {@link GameController} managing game logic,
+     *                   must not be {@code null}
+     * @param panel      the parent {@link GamePanel} managing this view,
+     *                   must not be {@code null}
+     * @throws NullPointerException if {@code controller} or {@code panel} is null
+     */
+	public MainGamePanel(GameController controller, GamePanel panel) {
 		
-		this.state = game.getState();
-        this.game = Objects.requireNonNull(game, "GameController cannot be null");
+		this.state = controller.getState();
+        this.controller = Objects.requireNonNull(controller, "GameController cannot be null");
         this.parentPanel = Objects.requireNonNull(panel, "Parent panel cannot be null");
         
         setLayout(new BorderLayout());
 	}
 	
+    /**
+     * Called when this view is activated (brought to the foreground).
+     * Lazily initialises sub-components on first activation and refreshes the UI.
+     */
 	@Override
 	public void onViewActivated() {
 		if (!isInitialised) {
@@ -56,13 +85,17 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 			isInitialised=true;
 		}
 		
-		if (game.isMessageState()) {
-			game.setMessageState();
+		if (controller.isMessageState()) {
+			controller.setMessageState();
 		}
 		
-		refreshUI(game);
+		refreshUI(controller);
 	}
 	
+    /**
+     * Creates and adds all sub-components (status, room, command panels).
+     * Called only once, during the first activation of the view.
+     */
 	public void initialiseComponents() {
 				
 		// Top section for status and label panels
@@ -75,6 +108,12 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 		this.add(commandPanel,BorderLayout.SOUTH);
 	}
 
+    /**
+     * Refreshes all child panels to reflect the latest game state.
+     * Ensures updates occur on the Swing Event Dispatch Thread.
+     *
+     * @param game the current {@link GameController} providing fresh state
+     */
 	@Override
 	public void refreshUI(GameController game) {
 		
@@ -90,24 +129,37 @@ public class MainGamePanel extends JPanel implements GameUI, GameView {
 		});
 	}
 
+    /**
+     * No-op for this view. Map switching is handled by the parent container.
+     *
+     * @param game ignored
+     */
 	@Override
-	public void showMapView(GameController game) {
-		// Intentional no-op - handled by parent container
-	}
+	public void showMapView(GameController game) {}
 
+    /**
+     * Called when this view is deactivated.
+     * Currently does nothing but may be extended for cleanup.
+     */
 	@Override
-	public void onViewDeactivated() {
-		// Optional cleanup can be added here
-	}
+	public void onViewDeactivated() {}
 
+    /**
+     * Returns this panel as the Swing component representing the view.
+     *
+     * @return this {@code MainGamePanel} instance
+     */
 	@Override
 	public JComponent getViewComponent() {
 		return this;
 	}
 
+    /**
+     * Closes the view and marks it uninitialised,
+     * allowing components to be rebuilt if needed later.
+     */
 	@Override
 	public void closeUI() {
-        // Cleanup resources if needed
         isInitialised = false;
 	}
 }
