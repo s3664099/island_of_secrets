@@ -64,23 +64,31 @@ public class StatusPanel extends JPanel {
      * @param state The current game state provider
      */
 	public void refreshUI(GameStateProvider state) {
-		this.state = state;
-		updateDisplay();
+		GameStateProvider newState = 
+				Objects.requireNonNull(state, "GameStateProvider cannot be null");
+		
+		if(checkChange(newState.getTime(),state.getTime()) || 
+				checkChange(newState.getStatus(),state.getStatus())) {
+			this.state = newState;
+			updateDisplay();
+		}
 	}
 	
-	public void updateDisplay() {
-		SwingUtilities.invokeLater(()->{
-			String timeText="";
-			String statusText="";
-			
-			if (state != null) {
-				timeText = state.getTime();
-				statusText = state.getStatus();
-			}
-			
-			timeLabel.setText(timeText);
-			statusLabel.setText(statusText);
-		});
+	private boolean checkChange(String newState, String oldState) {
+		return oldState.equals(newState);
+	}
+	
+	private void updateDisplay() {
+		if (SwingUtilities.isEventDispatchThread()) {
+		    applyDisplay();
+		} else {
+		    SwingUtilities.invokeLater(this::applyDisplay);
+		}
+	}
+	
+	private void applyDisplay() {
+		timeLabel.setText(state.getTime());
+		statusLabel.setText(state.getStatus());
 	}
 }
 
@@ -88,4 +96,5 @@ public class StatusPanel extends JPanel {
  * 26 March 2025 - Fixed error with time not showing
  * 3 April 2025 - Updated code to take Game State
  * 16 April 2025 - Updated code based on DeepSeek
+ * 25 September 2025 - Updated code based on recommendations
  */
