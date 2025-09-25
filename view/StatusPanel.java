@@ -22,26 +22,44 @@ import javax.swing.SwingUtilities;
 import interfaces.GameStateProvider;
 
 /**
- * Displays game status information including time and player status.
- * Updates automatically when game state changes.
+ * A Swing panel that displays the current game time and player status.
+ * <p>
+ * The panel consists of two centered labels arranged in a vertical
+ * {@link GridLayout}. It observes a {@link GameStateProvider} and updates
+ * its labels whenever the game state changes, but only if the displayed
+ * values differ from the previous state to avoid unnecessary repaints.
+ * </p>
  */
 public class StatusPanel extends JPanel {
 	
 	private static final long serialVersionUID = 582607980142319020L;
 	
-	//UI Components
+    /** Label showing the current game time. */
 	private final JLabel timeLabel = new JLabel();
+	
+    /** Label showing the current player status. */
 	private final JLabel statusLabel = new JLabel();
 	
-	//State
+    /** Provides the latest game time and status values. */
 	private GameStateProvider state;
 	
+    /**
+     * Constructs a new {@code StatusPanel} bound to the given
+     * {@link GameStateProvider}.
+     *
+     * @param state the non-null game state provider supplying time and status
+     * @throws NullPointerException if {@code state} is {@code null}
+     */
 	public StatusPanel(GameStateProvider state) {
 		this.state = Objects.requireNonNull(state, "GameStateProvider cannot be null");
 		initialiseComponents();
 		updateDisplay();
 	}
 	
+    /**
+     * Initializes the panel’s layout and child components.
+     * Creates two sub-panels, each centering a single label.
+     */
 	private void initialiseComponents() {
 		setLayout(new GridLayout(2, 1));
 		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -53,6 +71,12 @@ public class StatusPanel extends JPanel {
 		add(statusPanel);
 	}
 	
+    /**
+     * Wraps a {@link JLabel} in a panel with centered {@link FlowLayout}.
+     *
+     * @param label the label to be placed in the panel
+     * @return a new panel containing the provided label
+     */
 	private JPanel createLabelPanel(JLabel label) {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panel.add(label);
@@ -60,8 +84,14 @@ public class StatusPanel extends JPanel {
 	}
 	
     /**
-     * Updates the panel with new game state
-     * @param state The current game state provider
+     * Refreshes the UI with a new game state if the displayed values have changed.
+     * <p>
+     * If the supplied provider reports the same time and status as the current
+     * provider, no update occurs.
+     * </p>
+     *
+     * @param state a non-null provider of the latest game state
+     * @throws NullPointerException if {@code state} is {@code null}
      */
 	public void refreshUI(GameStateProvider state) {
 		GameStateProvider newState = 
@@ -74,10 +104,20 @@ public class StatusPanel extends JPanel {
 		}
 	}
 	
+    /**
+     * Determines whether two string values differ.
+     *
+     * @param newState the new string value
+     * @param oldState the previous string value
+     * @return {@code true} if the values differ, {@code false} otherwise
+     */
 	private boolean checkChange(String newState, String oldState) {
-		return oldState.equals(newState);
+		return !oldState.equals(newState);
 	}
 	
+    /**
+     * Schedules a UI refresh. Ensures updates run on the Event Dispatch Thread.
+     */
 	private void updateDisplay() {
 		if (SwingUtilities.isEventDispatchThread()) {
 		    applyDisplay();
@@ -86,6 +126,10 @@ public class StatusPanel extends JPanel {
 		}
 	}
 	
+    /**
+     * Applies the latest time and status values to their respective labels.
+     * Must be called on the Event Dispatch Thread.
+     */
 	private void applyDisplay() {
 		timeLabel.setText(state.getTime());
 		statusLabel.setText(state.getStatus());
@@ -97,4 +141,5 @@ public class StatusPanel extends JPanel {
  * 3 April 2025 - Updated code to take Game State
  * 16 April 2025 - Updated code based on DeepSeek
  * 25 September 2025 - Updated code based on recommendations
+ * 					 - Added JavaDocs
  */
