@@ -94,7 +94,7 @@ Redo the Panels
 ### **7. `View`**
 
 * After you understand how state and interaction are managed, look at UI rendering.
-* 'StatusPanel','CommandPanel','MapPanel','MessagePanel','LightningPane' etc. define the game's display.
+* CommandPanel','MapPanel','MessagePanel','LightningPane' etc. define the game's display.
 
 ### **8. `UISupport`**
 

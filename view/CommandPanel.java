@@ -25,6 +25,7 @@ import controller.BookButton;
 import controller.CommandButton;
 import controller.CommandListener;
 import controller.ShowMainViewButton;
+import data.GameEntities;
 import controller.MapButton;
 import controller.QuitButton;
 import controller.SearchGameButton;
@@ -139,7 +140,7 @@ public class CommandPanel  extends JPanel  {
 	
 	private void addShelterButtonPanels() {
 		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
-		Integer[] shelterLocations = {44,11,41};
+		Integer[] shelterLocations = {GameEntities.ROOM_GRANDPAS_SHACK,GameEntities.ROOM_LAIR,GameEntities.ROOM_HUT};
 		
 		for (int i=0;i<SHELTER_COUNT;i++) {
 			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
