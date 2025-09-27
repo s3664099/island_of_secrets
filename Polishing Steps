@@ -54,15 +54,15 @@ ui
   - GameState
   - *GameController
 view
-  - CommandPanel
-  - GameFrame
-  - GamePanel
+  - *CommandPanel
+  - *GameFrame
+  - *GamePanel
   - LightningPanel
-  - MainGamePanel
-  - MapPanel
-  - MessagePanel
-  - RoomPanel
-  - StatusPanel
+  - *MainGamePanel
+  - *MapPanel
+  - *MessagePanel
+  - *RoomPanel
+  - *StatusPanel
   
 
 **** Test the special items that the rules in SpecialItemHandler work
@@ -72,95 +72,26 @@ view
 - See Below for issue with Trapdoor
 - HandleGoTrapdoor looks odd in CommandValidator
 - Game does not end if go boat
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Redo the Panels
 
 
 
-### **7. `View`**
 
-* After you understand how state and interaction are managed, look at UI rendering.
-* 'MapPanel','MessagePanel','LightningPane' etc. define the game's display.
 
-### **8. `UISupport`**
 
-* Likely cross-cutting utility classes like `GameState`
 
-### **9. `Data`**
 
-* **Constants**: Should be reviewed early and used consistently.
-* **RawData**: Source of level/item data—deserves cleanup & docs.
-* **GameEntities**, `Location`, `Item`: Part of core model—document field meanings.
 
----
 
-## 🛠️ **Minor Polishing Suggestions**
 
-### **1. Add Logging**
 
-Use `java.util.logging.Logger` or `slf4j` with `logback` for consistency.
 
-Examples:
 
-```java
-private static final Logger LOGGER = Logger.getLogger(GameEngine.class.getName());
-LOGGER.info("Game initialized successfully.");
-LOGGER.warning("Invalid command received: " + command);
-```
 
-### **2. Add Javadoc Comments**
 
-Start with:
 
-* All public classes/interfaces
-* All public methods (especially in `Commands`, `Game`, `GameEngine`, and `GamePanel`)
-* All model/entity fields
 
-Example:
 
-```java
-/**
- * Parses and validates user commands before execution.
- */
-public class CommandParser {
-    /**
-     * Parses a raw command string into a ParsedCommand object.
-     *
-     * @param input Raw user input
-     * @return ParsedCommand object containing verb and noun
-     */
-    public ParsedCommand parse(String input) { ... }
-}
-```
-
-### **3. Miscellaneous Cleanup**
-
-* Remove commented-out `System.out.println` lines or replace with logs.
-* Move any magic numbers to `Constants`.
-* Add `.gitignore` if not already present (ignore `bin/`, `.class`, `*.log`, etc.).
-* Check for repeated UI layout logic—consider abstracting repeated code.
-
----
-
-Would you like me to generate a `README.md` template based on this structure? I can tailor it to:
-
-* Explain your module layout
-* Provide build/run instructions
-* Include contribution/dev guidelines if relevant
 
 TRAPDOOR ISSUE IDENTIFIED:
 Operator Precedence Bug ⚠️

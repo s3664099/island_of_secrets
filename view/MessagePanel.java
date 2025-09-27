@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 26 July 2025
+Version: 4.6
+Date: 27 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -32,8 +32,8 @@ public class MessagePanel extends JPanel implements GameView {
 	private Timer messageTimer;
 	private int currentIndex;
 
-	private final String FONT = "Arial";
-	private final int FONT_SIZE = 24;
+	private static final String FONT = "Serif";
+	private static final int FONT_SIZE = 24;
 	private static final int DISPLAY_DURATION_MS = 2000;
 	
     public MessagePanel(GamePanel panel) {
@@ -55,7 +55,7 @@ public class MessagePanel extends JPanel implements GameView {
         messageTimer.stop();
         
         // Set new messages
-        this.gameMessages = messages;
+        this.gameMessages = Objects.requireNonNull(messages,"Messages can't be null");
         this.currentIndex = 0;
         
         // Start displaying if we have messages
@@ -74,7 +74,7 @@ public class MessagePanel extends JPanel implements GameView {
             currentIndex++;
             
             // Start timer for next message or auto-close
-            if (currentIndex <= gameMessages.size()) {
+            if (currentIndex < gameMessages.size()) {
                 messageTimer.restart();
             }
         } else {        	
@@ -103,4 +103,6 @@ public class MessagePanel extends JPanel implements GameView {
  * 26 July 2025 - The class now works without errors, but does not display message
  * 				- Message now displays
  * 				- Message now returns to the main at the end
+ * 27 September 2025 - Updated code based on recommendations.
+ * 					 - Added JavaDocs
  */
