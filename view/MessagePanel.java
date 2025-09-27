@@ -22,20 +22,53 @@ import javax.swing.Timer;
 
 import interfaces.GameView;
 
+/**
+ * MessagePanel is a Swing component that displays a sequence of messages
+ * in the game UI, one at a time, for a fixed duration. It switches to
+ * the main game view once all messages have been shown.
+ *
+ * <p>Usage example:
+ * <pre>
+ *     MessagePanel panel = new MessagePanel(gamePanel);
+ *     panel.displayMessages(List.of("Welcome!", "Good luck!"));
+ * </pre>
+ * This will show each message for {@value #DISPLAY_DURATION_MS} ms and then
+ * return to the main view.
+ */
 public class MessagePanel extends JPanel implements GameView {
 
 	private static final long serialVersionUID = 7193673927279090863L;
+	
+    /** Parent container that controls view switching. */
 	private GamePanel panel;
+	
+    /** Label used to render the current message text. */
 	private JLabel label;
 
+    /** Queue of messages currently being displayed. */
 	private List<String> gameMessages;
+	
+    /** Swing timer that controls the display interval between messages. */
 	private Timer messageTimer;
+	
+    /** Index of the message currently being displayed. */
 	private int currentIndex;
 
+    /** Logical font family for the message text. */
 	private static final String FONT = "Serif";
+	
+    /** Font size for the message text. */
 	private static final int FONT_SIZE = 24;
+	
+    /** Duration (in milliseconds) each message remains visible. */	
 	private static final int DISPLAY_DURATION_MS = 2000;
 	
+    /**
+     * Constructs a new MessagePanel.
+     *
+     * @param panel the {@link GamePanel} used to switch views; must not be {@code null}
+     * @throws NullPointerException if {@code panel} is {@code null}
+     */
     public MessagePanel(GamePanel panel) {
     	
     	this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");
@@ -50,7 +83,16 @@ public class MessagePanel extends JPanel implements GameView {
         messageTimer = new Timer(DISPLAY_DURATION_MS, e -> showNextMessage());
     }
 	
+    /**
+     * Starts displaying the provided list of messages sequentially.
+     * Each message is shown for {@value #DISPLAY_DURATION_MS} milliseconds.
+     * When all messages have been displayed, control returns to the main view.
+     *
+     * @param messages list of messages to display; must not be {@code null}
+     * @throws NullPointerException if {@code messages} is {@code null}
+     */
     public void displayMessages(List<String> messages) {
+    	
         // Stop any current display
         messageTimer.stop();
         
@@ -65,6 +107,11 @@ public class MessagePanel extends JPanel implements GameView {
         }
     }
 
+    /**
+     * Shows the next message in the list or returns to the main view
+     * if all messages have been displayed. This method is called
+     * automatically by the {@link Timer}.
+     */
     private void showNextMessage() {
         if (currentIndex < gameMessages.size()) {
         	
@@ -83,6 +130,11 @@ public class MessagePanel extends JPanel implements GameView {
         }
     }
     
+    /**
+     * Returns the Swing component representing this view.
+     *
+     * @return this panel as a {@link JComponent}
+     */
 	@Override
 	public JComponent getViewComponent() {
 		return this;
