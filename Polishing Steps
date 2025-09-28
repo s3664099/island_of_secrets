@@ -1,4 +1,5 @@
 
+**** Problem with load - game not loading
 
 **** Test the special items that the rules in SpecialItemHandler work
 **** Make sure the special exits are correct
@@ -7,7 +8,12 @@
 - See Below for issue with Trapdoor
 - HandleGoTrapdoor looks odd in CommandValidator
 - Game does not end if go boat
-Redo the Panels
+
+- Redo the Panels
+
+- Add Accessiblity Warning with flashing light
+- Add Flag (noted) that will just to a normal message
+- Add option that if emoji's not available to just do normal
 
 
 

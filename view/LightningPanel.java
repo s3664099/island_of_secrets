@@ -22,22 +22,56 @@ import javax.swing.Timer;
 
 import interfaces.GameView;
 
+/**
+ * A Swing panel that displays a timed lightning-flash animation
+ * by alternating the background color between yellow and black.
+ * <p>
+ * The panel shows a centered text label and flashes for a fixed
+ * number of iterations, after which control returns to the
+ * {@link GamePanel}'s main view.
+ * </p>
+ *
+ * <p><b>Usage:</b>
+ * <pre>{@code
+ * LightningPanel lightningPanel = new LightningPanel(gamePanel);
+ * lightningPanel.startLightningEffect();
+ * }</pre>
+ * </p>
+ */
 public class LightningPanel extends JPanel implements GameView {
 
 	private static final long serialVersionUID = 1370519661015151132L;
 	
+    /** Current index of the lightning flash cycle. */
 	private int currentIndex;
+	
+    /** Label displayed at the center of the panel. */
 	private JLabel label;
+	
+    /** Parent {@link GamePanel} that controls view switching. */
 	private final GamePanel panel;
+	
+    /** Swing timer that schedules background color updates. */
 	private Timer lightningTimer;
 	
+    /** Font family used for the label text. */
 	private static final String FONT = "Serif";
+	
+    /** Font size (points) for the label text. */
 	private static final int FONT_SIZE = 36;
 	
 	/** Duration of the Lightning Effect displayed by the panel in Microseconds */
 	private static final int DISPLAY_DURATION_MS = 100;
+	
+    /** Total number of background flashes to perform. */
 	private static final int NUMB_FLASHES = 31;
 	
+    /**
+     * Constructs a {@code LightningPanel} and initializes the label and timer.
+     *
+     * @param panel the parent {@link GamePanel}; must not be {@code null}
+     * @throws NullPointerException if {@code panel} is {@code null}
+     */
     public LightningPanel(GamePanel panel) {
         this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");;
         
@@ -52,7 +86,11 @@ public class LightningPanel extends JPanel implements GameView {
         lightningTimer = new Timer(DISPLAY_DURATION_MS, e -> showNextEffect());
     }
 	
-	
+    /**
+     * Starts the lightning effect. Stops any ongoing effect,
+     * resets the flash index, switches to the lightning view,
+     * and begins the timed color changes.
+     */
     public void startLightningEffect() {
     	
         // Stop any current display
@@ -65,6 +103,12 @@ public class LightningPanel extends JPanel implements GameView {
         }
     }
     
+    /**
+     * Handles a single flash step: toggles the background color
+     * between yellow and black until the total number of flashes
+     * is reached. When complete, stops the timer and returns the
+     * parent {@link GamePanel} to its main view.
+     */
     private void showNextEffect() {
     	
     	if(this.currentIndex<NUMB_FLASHES) {
@@ -80,6 +124,12 @@ public class LightningPanel extends JPanel implements GameView {
     	}
     }
 
+    /**
+     * Returns this panel as the view component for display
+     * within the game UI.
+     *
+     * @return this {@code LightningPanel} instance
+     */
 	public JComponent getViewComponent() {
 		return this;
 	}

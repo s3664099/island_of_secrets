@@ -270,10 +270,10 @@ public class Persistence {
 		Player player = this.player;
 		
 		boolean loadFile = false;
-				
+		
 		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
 		String fileName = sanitiseFileName(splitCommand[1]);
-		File saveFile = new File(saveGameDirectory+"/"+fileName+SAVE_GAME_EXTENSION);		
+		File saveFile = new File(saveGameDirectory+"/"+fileName+SAVE_GAME_EXTENSION);
 		
 		if (!saveFile.exists()) {			
 			game.addMessage("Sorry, the saved game does not exist. Type 'games' to list games.",true,true);
