@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 4 September 2025
+Version: 4.20
+Date: 28 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -43,18 +43,23 @@ public class CommandValidator {
 		boolean validCommand = true;
 		
 		if (checkVerbAndNounInvalid(command)) {
+			logger.info("Validation Failed - Verb & Noun Invalid");
 			validCommand = false;
 			game = handleCheckVerbAndNounInvalidFails(game);
 		} else if (checkVerbOrNounInvalid(command)) {
+			logger.info("Validation Failed - Verb or Noun Invalid");
 			validCommand = false;
 			game = handleVerbOrNounInvalidFails(game,command);
 		} else if (checkMissingNoun(command)) {
+			logger.info("Validation Failed - Noun Missing");
 			validCommand = false;
 			game = handleMissingNounFails(game);
 		} else if (checkNone(command)) {
+			logger.info("Validation Failed - Missing Noun Failed");
 			validCommand = false;
 			game = handleCheckNoneFails(game);
 		} else if (isNounMissing(command)) {
+			logger.info("Validation Failed - Is Noun Missing True");
 			validCommand = false;
 			game = handleCheckNounFails(game);
 		}
@@ -113,11 +118,12 @@ public class CommandValidator {
      * @return true if the command contains an invalid verb or noun.
      */
 	private boolean checkVerbOrNounInvalid(ParsedCommand command) {
-		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
-				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
+		return ((command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
+				command.getNounNumber() == Constants.NUMBER_OF_NOUNS)
+				&& command.getVerbNumber() != GameEntities.CMD_SAVE 
+				&& command.getVerbNumber() != GameEntities.CMD_LOAD);
 	}
 	
-
     /**
      * @return true if both the verb and noun are invalid.
      */
@@ -314,4 +320,5 @@ public class CommandValidator {
  * 31 August 2025 - Completed special validation
  * 3 September 2025 - Changed parameters for the move function
  * 5 September 2025 - Updated based on changes to Consume
+ * 28 September 2025 - Updated validator to allow for load/save games
  */
