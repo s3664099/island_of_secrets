@@ -2,8 +2,8 @@
 Title: Island of Secrets Lightning Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date:15 August 2025
+Version: 4.6
+Date: 28 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -28,13 +28,15 @@ public class LightningPanel extends JPanel implements GameView {
 	
 	private int currentIndex;
 	private JLabel label;
-	private GamePanel panel;
+	private final GamePanel panel;
 	private Timer lightningTimer;
 	
-	private final String FONT = "Arial";
-	private final int FONT_SIZE = 36;
+	private static final String FONT = "Serif";
+	private static final int FONT_SIZE = 36;
+	
+	/** Duration of the Lightning Effect displayed by the panel in Microseconds */
 	private static final int DISPLAY_DURATION_MS = 100;
-	private static final int NUMB_EFFECTS = 31;
+	private static final int NUMB_FLASHES = 31;
 	
     public LightningPanel(GamePanel panel) {
         this.panel = Objects.requireNonNull(panel, "GamePanel cannot be null");;
@@ -57,7 +59,7 @@ public class LightningPanel extends JPanel implements GameView {
         lightningTimer.stop();
         this.currentIndex = 0;
         
-        if (this.currentIndex<NUMB_EFFECTS) {
+        if (this.currentIndex<NUMB_FLASHES) {
         	panel.showLightningView();
         	showNextEffect();
         }
@@ -65,18 +67,13 @@ public class LightningPanel extends JPanel implements GameView {
     
     private void showNextEffect() {
     	
-    	if(this.currentIndex<NUMB_EFFECTS) {
+    	if(this.currentIndex<NUMB_FLASHES) {
     		if ((this.currentIndex&1)==0) {
     			setBackground(Color.YELLOW);
     		} else {
     			setBackground(Color.BLACK);
     		}
     		this.currentIndex++;
-    		
-            // Start timer for next message or auto-close
-            if (this.currentIndex<NUMB_EFFECTS) {
-            	lightningTimer.restart();
-            }
     	} else {
     		lightningTimer.stop();
             panel.showMainView();
@@ -97,4 +94,5 @@ public class LightningPanel extends JPanel implements GameView {
  * 30 March 2025 - Removed unusued code
  * 28 July 2025 - Updated code for new architecture
  * 15 Aug 2025 - Panel now displays correctly
+ * 28 September 2025 - Updated code.
 */
