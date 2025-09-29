@@ -1,7 +1,7 @@
 
-**** Problem with load - game not loading
-	Can't exit the load screen either
 
+
+**** Tighten Comments in GameStateProvider
 **** Test the special items that the rules in SpecialItemHandler work
 **** Make sure the special exits are correct
 
@@ -9,6 +9,9 @@
 - See Below for issue with Trapdoor
 - HandleGoTrapdoor looks odd in CommandValidator
 - Game does not end if go boat
+
+**** Test if can complete game
+**** Test Each of the sections to see if they work
 
 - Redo the Panels
 

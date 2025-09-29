@@ -19,14 +19,10 @@ public interface GameStateProvider {
 
     /* Core Game Status Methods */
     
-    /**
-     * @return Formatted description of current room
-     */
+    /** @return Formatted description of current room*/
 	String getRoom();
 	
-    /**
-     * @return Formatted list of visible items in current location
-     */
+    /** @return Formatted list of visible items in current location*/
 	String getItems();
 	
     /**

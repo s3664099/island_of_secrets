@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 15 September 2025
+Version: 4.6
+Date: 29 September 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,44 +35,28 @@ import game.Player;
  */
 public class Persistence {
 
-    /**
-     * The current game instance to save or update.
-     */
+    /** The current game instance to save or update. */
 	private final Game game;
 
-    /**
-     * The current player instance to save or update.
-     */
+    /** The current player instance to save or update. */
 	private final Player player;
 	
-    /**
-     * Tokenized user command used to determine persistence actions.
-     */
+    /** Tokenized user command used to determine persistence actions.*/
 	private final String[] splitCommand;
 	
-    /**
-     * Logger for recording save/load errors and events.
-     */
+    /** Logger for recording save/load errors and events. */
 	private static final Logger logger = Logger.getLogger(Game.class.getName());
 	
-    /**
-     * Directory in which save files are stored.
-     */
+    /** Directory in which save files are stored.*/
 	private final String SAVE_GAME_DIRECTORY = "savegames";
 	
-    /**
-     * File extension used for saved games.
-     */
+    /** File extension used for saved games.*/
 	private final String SAVE_GAME_EXTENSION = ".sav";
 	
-    /**
-     * Overwrite flag expected in the command to overwrite an existing save.
-     */
+    /** Overwrite flag expected in the command to overwrite an existing save. */
 	private final String OVERWRITE = "o";
 	
-    /**
-     * Pattern that restricts save names to letters, digits, underscores, and hyphens.
-     */
+    /** Pattern that restricts save names to letters, digits, underscores, and hyphens. */
 	private static final Pattern SAFE_NAME = Pattern.compile("^[A-Za-z0-9_-]+$");
 	
     /**
@@ -265,10 +249,10 @@ public class Persistence {
      * @return an {@link ActionResult} representing success or failure of the load operation
      */
 	private ActionResult loadGame() {
-		
+
 		Game game = this.game;
 		Player player = this.player;
-		
+		System.out.println(game);
 		boolean loadFile = false;
 		
 		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
@@ -315,4 +299,5 @@ public class Persistence {
  * 			   - Stripped .sav from load game displays
  * 3 September 2025 - Changed for updated ActionResult changes
  * 15 September 2025 - Tightened Code and added JavaDocs
+ * 29 September 2025 - Tightened Comments
  */
