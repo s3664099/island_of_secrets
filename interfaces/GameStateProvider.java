@@ -2,8 +2,8 @@
 Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 24 July 2025
+Version: 4.7
+Date: 1 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,54 +30,34 @@ public interface GameStateProvider {
      */
 	String getExits();
 	
-    /**
-     * @return Current in-game time representation
-     */
+    /** @return Current in-game time representation */
 	String getTime();
 
-	/**
-     * @return The player's current score
-     */
+	/** @return The player's current score */
 	int getFinalScore();
 	
-    /**
-     * @return Special exit descriptions beyond standard directions
-     */
+    /** @return Special exit descriptions beyond standard directions */
 	String getSpecialExits();
 	
-	 /**
-     * @return Current player status (health, inventory count, etc.)
-     */
+	 /** @return Current player status (health, inventory count, etc.) */
 	String getStatus();
 	
-    /**
-     * @return Array of saved game names for display
-     */
+    /** @return Array of saved game names for display */
 	String[] getDisplayedSavedGames();
 	
-    /**
-     * @return True if at beginning of saved games list
-     */
+    /** @return True if at beginning of saved games list */
 	boolean getLowerLimitSavedGames();
 	
-    /**
-     * @return True if at end of saved games list
-     */
+    /** @return True if at end of saved games list */
 	boolean getUpperLimitSavedGames();
 	
-    /**
-     * @return Last executed commands (for history/recall)
-     */
+    /** @return Last executed commands (for history/recall) */
 	String[] getCommands();
 	
-    /**
-     * @return Unmodifiable list of game messages/notifications
-     */
+    /** @return Unmodifiable list of game messages/notifications */
 	List<String> getMessage();
 	
-    /**
-     * @return Unmodifiable list of panel messages
-     */
+    /** @return Unmodifiable list of panel messages */
 	List<String> getPanelMessage();
 	
     /* Map Data Access */
@@ -106,61 +86,39 @@ public interface GameStateProvider {
      */
 	String getRoomImageType(int roomNumber);
 	
-    /**
-     * @return Current room ID
-     */
+    /** @return Current room ID */
 	int getCurrentRoom();
 	
     /* UI State Flags */
     
-    /**
-     * @return True during initial game setup
-     */
+    /** @return True during initial game setup */
 	public boolean isInitialGameState();
 	
-    /**
-     * @return True when in saved game selection mode
-     */
+    /** @return True when in saved game selection mode */
 	public boolean isSavedGameState();
 	
-    /**
-     * @return True when game has ended
-     */
+    /** @return True when game has ended */
 	public boolean isEndGameState();
 	
-    /**
-     * @return True when a give response is required
-     */
+    /** @return True when a give response is required */
 	public boolean isGiveState();
 	
-    /**
-     * @return True when seeking shelter
-     */
+    /** @return True when seeking shelter */
 	public boolean isShelterState();
 
-    /**
-     * @return True when standard game state
-     */
+    /** @return True when standard game state */
 	public boolean isRunningState();
 	
-    /**
-     * @return True when swimming player state
-     */
+    /** @return True when swimming player state */
 	public boolean isSwimmingState();
 	
-    /**
-     * @return True when normal player state
-     */
+    /** @return True when normal player state */
 	public boolean isNormalState();
 	
-    /**
-     * @return True when message player state
-     */
+    /** @return True when message player state */
 	public boolean isMessageState();
 	
-    /**
-     * @return True when lightning player state
-     */
+    /** @return True when lightning player state */
 	public boolean isLightningState();
 }
 
@@ -172,4 +130,5 @@ public interface GameStateProvider {
  * 23 April 2025 - Removed response required
  * 25 April 2025 - Added 
  * 24 July 2025 - Added getPanelMessage
+ * 1 October 2025 - Tightened Comments
  */
