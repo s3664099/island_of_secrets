@@ -28,6 +28,26 @@
 	    ROOM_STOREROOM		-	Trapdoor - See Below for issue
 	    					- 	HandleGoTrapdoor looks odd in CommandValidator
 
+- Combat
+	- Chop Roots - Only With Axe
+	- Chop Column - Only with Hammer
+	- Chop Person
+	- Break Staff
+	- Attack
+		- Omegan
+		- Swampman
+		- Sage
+		- Logman
+		- Dactyl
+		- Flint
+	- Carrying Weapon
+		- Axe
+		- Hammer
+	- Tap Person - Make sure that it falls into the categories
+	
+- Consume
+	
+
 - Give when subject not present - it is refused, should respond otherwise
 
 
