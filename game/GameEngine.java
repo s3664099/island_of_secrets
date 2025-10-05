@@ -11,11 +11,11 @@ package game;
 
 import interfaces.GameCommandHandler;
 import interfaces.GameStateProvider;
-import test.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+import Tests.Test;
 import command_process.ActionResult;
 import command_process.CommandProcessor;
 

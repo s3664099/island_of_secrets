@@ -7,7 +7,7 @@ Date: 5 March 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
-package test;
+package Tests;
 
 import java.util.Set;
 import java.util.TreeSet;
