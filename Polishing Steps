@@ -69,10 +69,35 @@
 	- Papers
 	- Clues
 
-
-	
-
-- Give when subject not present - it is refused, should respond otherwise
+- Items
+	- Take
+		- Validate Take
+		- Check not in room
+		- Not valid pick
+		- not valid catch
+		- Are Apples
+		- Are No Apples
+		- Is no torch
+		- is food
+		- take drink
+		- take cloak
+		- take egg
+		- take books
+		- take beast failed
+	- Drop
+		- Validate Carrying
+		- drop jug
+		- drop torch
+		- release beast
+	- Give
+		- Validate Give
+		- Give when subject not present - it is refused, should respond otherwise
+		- is snake,
+		- is villager
+		- is swampman
+		- is logmen
+		- is scavenger
+		- is median
 
 
 
