@@ -111,13 +111,60 @@
 	- swim - can & cannot
 	- shelter - storm - cave, hut, grandpa
 	
-	
 - Move
-
-
-
-
-- Game does not end if go boat
+	- Normal
+	- Special
+		- CODE_IN_LAIR
+		- CODE_IN_LOG_HUT
+		- CODE_IN_SHACK
+		- CODE_IN_ABODE_HUT
+		- CODE_IN_PORTAL
+		- CODE_OUT_LAIR
+		- CODE_OUT_LOG_HUT
+		- CODE_OUT_LOG_CABIN
+		- CODE_DOWN_PYRAMID
+		- CODE_DOWN_TRAPDOOR
+		- CODE_OUT_ABODE_HUT
+		- CODE_UP_PYRAMID
+		- CODE_OUT_SHACK
+		- CODE_OUT_HALL
+		- ROOM_CAVE && noun.equals("cave"))
+		- ROOM_CLEARING && noun.equals("hut")
+		- ROOM_BUILDING && noun.equals("hut")
+			nounNumber = GameEntities.WEST;
+		- ROOM_ABODE_HUT && noun.equals("hut")
+			nounNumber=GameEntities.NORTH;
+	- Blocked
+		- (isOmeganPresent(game,player)) game.addMessage("Omegan's presence prevents you from leaving!",true,true);
+			result = new ActionResult(game,player,true);
+		- (isSwampmanPresent(game,player,command)) {
+			game.addMessage("He will not let you pass.",true,true);
+		- (areRocksMoving(game,player)) {
+			game.addMessage("The rocks move to prevent you",true,true);
+			result = new ActionResult(game,player,true);
+		- (doArmsHoldYou(game,player)) {
+			game.addMessage("The arms hold you fast",true,true);
+			result = new ActionResult(game,player,true);
+		- (isSnakePresent(game,player,command)) {
+			game.addMessage("Hisss!",true,true);
+			result = new ActionResult(game,player,true);
+		- (isPlayerRidingBeast(game,player,command)) {
+			game.addMessage("Too steep to climb",true,true);
+			result = new ActionResult(game,player,true);
+		- (isDoorClosed(player,command)) {
+			game.addMessage("The door is barred!",true,true);
+	- Entry Effects
+		- (isInHandsRoom(game,player)) {
+			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
+		- (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
+			game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
+		- (isInEntranceHall(player,command)) {
+			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
+		- (isOnJetty(game,player)) {
+			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
+			game.getItem(16).setItemFlag(0);
+			game.addMessage("The beast runs away",false,true);
+		- Game does not end if go boat
 
 **** Test if can complete game
 **** Test Each of the sections to see if they work
