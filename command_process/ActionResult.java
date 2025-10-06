@@ -5,8 +5,6 @@ Translator: David Sarkies
 Version: 4.3
 Date: 1 September 2025
 Source: https://archive.org/details/island-of-secrets_202303 
-
-- Update methods calling class
 */
 
 package command_process;
