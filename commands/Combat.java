@@ -99,6 +99,8 @@ public class Combat {
 			result = wasteStaff();
 		}
 		
+		System.out.println(result.getGame().getNormalMessage());
+		
 		return result;
 	}
 	
