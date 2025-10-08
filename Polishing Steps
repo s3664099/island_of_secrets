@@ -264,7 +264,7 @@ Perfect — this is a large project, so we want a **logical order for unit testi
 These are classes with minimal external dependencies, mostly data holders or simple logic.
 
 
-* **`ParsedCommand`** (`command_process`) – parsing logic; likely doesn’t depend on the game state.
+
 * **`Miscellaneous`** (`commands`) – if it has isolated functions.
 
 > Goal: Get a feel for the structure, start with straightforward `assertEquals`/`assertTrue` tests. No heavy mocking required.
