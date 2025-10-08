@@ -3,29 +3,29 @@
 
 
 **** Test the special items that the rules in SpecialItemHandler work
-		ROOM_CLEARING			-	A tree bristling with apples
-		ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
-		ROOM_GRANDPAS_SHACK		-	A coffee table against the wall, an open oak chest - Chest closed/Open
-		ROOM_PYRAMID_SPLIT		-	A piece of flint stuck in the crack - Show/Hide
-		ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
-		ROOM_LAIR				-	A parchment stuck amongst the mushrooms - Show/Hide
+	45	ROOM_CLEARING			-	A tree bristling with apples
+	27	ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
+	44	ROOM_GRANDPAS_SHACK		-	A coffee table against the wall, an open oak chest - Chest closed/Open
+	67	ROOM_PYRAMID_SPLIT		-	A piece of flint stuck in the crack - Show/Hide
+	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
+	11	ROOM_LAIR				-	A parchment stuck amongst the mushrooms - Show/Hide
 
 **** Make sure the special exits are correct
-	    ROOM_STOREROOM		-	There is a door to the east
-	    ROOM_CAVE			-	You can also go west into the cave
-	    ROOM_BUILDING		-	You can also go west into the hut
-	    ROOM_CLEARING		-	You can also go west into the hut
-	    ROOM_ABODE_HUT		-	You can also go north into the hut
-	    ROOM_CASTLE_WALL	- 	You can also go north into the portal
-	    ROOM_LAIR			-	You can also go east out of the lair
-	    ROOM_HUT			-	You can also go north out of the hut
-	    ROOM_LOGMAN_HUT		-	You can also go north out of the cabin
-	    ROOM_PYRAMID_ROOF	-	You can also go north down of the pyramid
-	    ROOM_OUTSIDE_HUT	-	You can go south out of the hut
-	    ROOM_PYRAMID_STEP	-	You can also go south up the pyramid
-	    ROOM_GRANDPAS_SHACK	-	You can go east out of the shack
-	    ROOM_LOGMAN_HALL	-	You can go east out of the hall
-	    ROOM_STOREROOM		-	Trapdoor - See Below for issue
+	51  ROOM_STOREROOM		-	There is a door to the east
+	12	ROOM_CAVE			-	You can also go west into the cave
+	53	ROOM_BUILDING		-	You can also go west into the hut
+	45	ROOM_CLEARING		-	You can also go west into the hut
+	70	ROOM_ABODE_HUT		-	You can also go north into the hut
+	37	ROOM_CASTLE_WALL	- 	You can also go north into the portal
+	11	ROOM_LAIR			-	You can also go east out of the lair
+	41	ROOM_HUT			-	You can also go north out of the hut
+	43	ROOM_LOGMAN_HUT		-	You can also go north out of the cabin
+	66	ROOM_PYRAMID_ROOF	-	You can also go north down of the pyramid
+	60	ROOM_OUTSIDE_HUT	-	You can go south out of the hut
+	56	ROOM_PYRAMID_STEP	-	You can also go south up the pyramid
+	44	ROOM_GRANDPAS_SHACK	-	You can go east out of the shack
+	52	ROOM_LOGMAN_HALL	-	You can go east out of the hall
+	51	ROOM_STOREROOM		-	Trapdoor - See Below for issue
 	    					- 	HandleGoTrapdoor looks odd in CommandValidator
 
 - Combat
@@ -114,25 +114,25 @@
 - Move
 	- Normal
 	- Special
-		- CODE_IN_LAIR
-		- CODE_IN_LOG_HUT
-		- CODE_IN_SHACK
-		- CODE_IN_ABODE_HUT
-		- CODE_IN_PORTAL
-		- CODE_OUT_LAIR
-		- CODE_OUT_LOG_HUT
-		- CODE_OUT_LOG_CABIN
-		- CODE_DOWN_PYRAMID
-		- CODE_DOWN_TRAPDOOR
-		- CODE_OUT_ABODE_HUT
-		- CODE_UP_PYRAMID
-		- CODE_OUT_SHACK
-		- CODE_OUT_HALL
-		- ROOM_CAVE && noun.equals("cave"))
-		- ROOM_CLEARING && noun.equals("hut")
-		- ROOM_BUILDING && noun.equals("hut")
+	12	- CODE_IN_LAIR
+	53	- CODE_IN_LOG_HUT
+	45	- CODE_IN_SHACK
+	70	- CODE_IN_ABODE_HUT
+	37	- CODE_IN_PORTAL
+	11	- CODE_OUT_LAIR
+	41	- CODE_OUT_LOG_HUT
+	43	- CODE_OUT_LOG_CABIN
+	66	- CODE_DOWN_PYRAMID
+	51	- CODE_DOWN_TRAPDOOR
+	60	- CODE_OUT_ABODE_HUT
+	56	- CODE_UP_PYRAMID
+	44	- CODE_OUT_SHACK
+	52	- CODE_OUT_HALL
+	12	- ROOM_CAVE && noun.equals("cave"))
+	45	- ROOM_CLEARING && noun.equals("hut")
+	53	- ROOM_BUILDING && noun.equals("hut")
 			nounNumber = GameEntities.WEST;
-		- ROOM_ABODE_HUT && noun.equals("hut")
+	70	- ROOM_ABODE_HUT && noun.equals("hut")
 			nounNumber=GameEntities.NORTH;
 	- Blocked
 		- (isOmeganPresent(game,player)) game.addMessage("Omegan's presence prevents you from leaving!",true,true);
@@ -202,7 +202,6 @@ Default Package
 	- Main
 	- Start
 command_process
-	- ActionResult
 	- CommandExecutor
 	- CommandParser
 	- CommandProcessor
@@ -361,3 +360,59 @@ Finally, the classes in `view/`:
 4. **Private methods**:
 
    * Either test via public methods that call them (preferred), or use reflection sparingly for complex internal logic.
+
+Default Package
+	- Main
+	- Start
+command_process
+	- ActionResult
+	- CommandExecutor
+	- CommandParser
+	- CommandProcessor
+	- CommandValidator
+	- ParsedCommand
+commands
+	- Combat
+	- Consume
+	- Examine
+	- ItemCommands
+	- Miscellaneous
+	- Move
+controller
+	- BookButton
+	- CommandButton
+	- CommandListener
+	- MapButton
+	- MapController
+	- QuitButton
+	- SearchGameButton
+	- ShelterButton
+	- ShowMainViewButton
+game
+	- Game
+	- GameEngine
+	- GameIntialiser
+	- MessageBuilder
+	- Player
+	- PostCommand
+	- RandomExitHandler
+	- SpecialExitHandler
+	- SpecialItemHandler
+	- Swimming
+	- SwimmingHandler
+persistence
+	- Persistence
+ui
+	- GameController
+	- GameState
+view
+	- CommandPanel
+	- GameFrame
+	- GamePanel
+	- LighningPanel
+	- MainGamePanel
+	- MapPanel
+	- MessagePanel
+	- RoomPanle
+	- StatusPanel
+   
