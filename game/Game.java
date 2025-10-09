@@ -124,7 +124,7 @@ public class Game implements Serializable {
 	    
 	    List<String> itemsFound = new ArrayList<>();
 		
-		String specialItems = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList);
+		String specialItems = specialItemHandler.getSpecialItems(roomNumber, itemList, locationList, apple_count);
 		if(!specialItems.isEmpty()) {
 			itemsFound.add(specialItems);
 		}

@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Item Handler Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 22 August 2025
+Version: 4.5
+Date: 9 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -36,7 +36,8 @@ public class SpecialItemHandler implements Serializable {
      * Alternative description for Grandpa's shack when the chest is not open.
      * Used instead of splitting strings inline.
      */
-	private static final String shackDescription = "A coffee table against the wall,";
+	private static final String shackDescription = "A coffee table against the wall";
+	private static final String treeDescription = "An apple tree with no apples";
 
     /**
      * Initializes the static special descriptions for known rooms.
@@ -62,14 +63,17 @@ public class SpecialItemHandler implements Serializable {
      * @param roomNumber   the current room number
      * @param itemList     the array of {@link Item} instances (indexed by {@link GameEntities} item constants)
      * @param locationList the array of {@link Location} instances (indexed by room number)
+     * @param appleCount   the number of apples on the tree
      * @return the special description for the room, or an empty string if none should be shown
      */
-	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList) {
+	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList,int appleCount) {
 		
 		String description = itemDescriptions.getOrDefault(roomNumber,"");
 		
 		if (shouldSplitDescription(roomNumber,itemList)) {
 			description = shackDescription;
+		} else if (shouldChangeApple(roomNumber,appleCount)) {
+			description =  treeDescription;
 		} else if (shouldHideTorch(roomNumber,itemList)
 				|| (shouldHideFlint(roomNumber,itemList))
 				|| (shouldHidePapers(roomNumber,locationList))
@@ -87,7 +91,7 @@ public class SpecialItemHandler implements Serializable {
      * @param itemList   the item array
      * @return true if the shortened shack description should be used
      */
-	public boolean shouldSplitDescription(int roomNumber,Item[] itemList) {
+	private boolean shouldSplitDescription(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_GRANDPAS_SHACK && itemList[GameEntities.ITEM_CHEST].getItemFlag() !=1);
 	}
 	
@@ -99,7 +103,7 @@ public class SpecialItemHandler implements Serializable {
      * @param itemList   the item array
      * @return true if the torch description should be hidden
      */
-	public boolean shouldHideTorch(int roomNumber,Item[] itemList) {
+	private boolean shouldHideTorch(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_ENTRANCE_CHAMBER 
 				&& (itemList[GameEntities.ITEM_TORCH].getItemLocation() != GameEntities.ROOM_ENTRANCE_CHAMBER 
 				|| itemList[GameEntities.ITEM_TORCH].getItemFlag() != Constants.FLAG_HIDDEN));
@@ -113,7 +117,7 @@ public class SpecialItemHandler implements Serializable {
      * @param itemList   the item array
      * @return true if the flint description should be hidden
      */
-	public boolean shouldHideFlint(int roomNumber,Item[] itemList) {
+	private boolean shouldHideFlint(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_PYRAMID_SPLIT 
 				&& (itemList[GameEntities.ITEM_FLINT].getItemLocation() != GameEntities.ROOM_PYRAMID_SPLIT 
 				|| itemList[GameEntities.ITEM_FLINT].getItemFlag() != Constants.FLAG_HIDDEN));
@@ -127,7 +131,7 @@ public class SpecialItemHandler implements Serializable {
      * @param locationList the location array
      * @return true if the papers description should be hidden
      */
-	public boolean shouldHidePapers(int roomNumber,Location[] locationList) {
+	private boolean shouldHidePapers(int roomNumber,Location[] locationList) {
 		return (roomNumber == GameEntities.ROOM_OUTSIDE_HUT && !locationList[GameEntities.ROOM_OUTSIDE_HUT].getViewed());
 	}
 	
@@ -139,10 +143,23 @@ public class SpecialItemHandler implements Serializable {
      * @param itemList   the item array
      * @return true if the parchment description should be hidden
      */
-	public boolean shouldHideParchment(int roomNumber,Item[] itemList) {
+	private boolean shouldHideParchment(int roomNumber,Item[] itemList) {
 		return (roomNumber == GameEntities.ROOM_LAIR && 
 				(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR));
 	}
+	
+    /**
+     * Determines which description of the apple tree is displayed.
+     *
+     * @param roomNumber the room number
+     * @param appleCount the number of apples on the tree
+     * @return true if there are no apples
+     */
+	private boolean shouldChangeApple(int roomNumber,int appleCount) {
+		return (roomNumber == GameEntities.ROOM_CLEARING && appleCount == 0);
+	}
+	
+	
 }
 
 /* 16 March 2025 - Created file
@@ -150,4 +167,5 @@ public class SpecialItemHandler implements Serializable {
  * 16 July 2025 - Fixed error with flint and added parchment
  * 17 July 2025 - Changed to GameEntities.
  * 22 August 2025 - Updated class to make it more readable. Added JavaDocs
+ * 9 October 2025 - Added changing description if no apples are on the tree.
  */
