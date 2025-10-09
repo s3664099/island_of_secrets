@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 26 September 2025
+Version: 4.17
+Date: 9 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -161,7 +161,7 @@ public class CommandPanel  extends JPanel  {
      */
 	private void addShelterButtonPanels() {
 		String[] shelters = {"Grandpa's Shack","Cave of Snelm","Log Cabin"};
-		Integer[] shelterLocations = {GameEntities.ROOM_GRANDPAS_SHACK,GameEntities.ROOM_LAIR,GameEntities.ROOM_HUT};
+		Integer[] shelterLocations = {GameEntities.ROOM_GRANDPAS_SHACK,GameEntities.ROOM_SNELM_LAIR,GameEntities.ROOM_HUT};
 		
 		for (int i=0;i<SHELTER_COUNT;i++) {
 			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
@@ -377,4 +377,5 @@ public class CommandPanel  extends JPanel  {
  * 11 July 2025 - Update show map check.
  * 27 July 2025 - Removed code not needed on map button
  * 26 September 2025 - Removed magic numbers. Added JavaDocs
+ * 9 October 2025 - Changed lair to Snelm's Lair
  */

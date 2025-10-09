@@ -49,7 +49,7 @@ public class SpecialItemHandler implements Serializable {
 		itemDescriptions.put(GameEntities.ROOM_GRANDPAS_SHACK, "A coffee table against the wall, an open oak chest");
 		itemDescriptions.put(GameEntities.ROOM_PYRAMID_SPLIT,"A piece of flint stuck in the crack");
 		itemDescriptions.put(GameEntities.ROOM_OUTSIDE_HUT, "A map, along with a collection of papers which seem to make up a diary");
-		itemDescriptions.put(GameEntities.ROOM_LAIR, "A parchment stuck amongst the mushrooms");
+		itemDescriptions.put(GameEntities.ROOM_SNELM_LAIR, "A parchment stuck amongst the mushrooms");
 	}
 	
     /**
@@ -144,8 +144,9 @@ public class SpecialItemHandler implements Serializable {
      * @return true if the parchment description should be hidden
      */
 	private boolean shouldHideParchment(int roomNumber,Item[] itemList) {
-		return (roomNumber == GameEntities.ROOM_LAIR && 
-				(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_LAIR));
+		return (roomNumber == GameEntities.ROOM_SNELM_LAIR && 
+				(itemList[GameEntities.ITEM_PARCHMENT].getItemLocation() != GameEntities.ROOM_SNELM_LAIR)
+				|| (itemList[GameEntities.ITEM_PARCHMENT].getItemFlag() != 9));
 	}
 	
     /**
@@ -168,4 +169,5 @@ public class SpecialItemHandler implements Serializable {
  * 17 July 2025 - Changed to GameEntities.
  * 22 August 2025 - Updated class to make it more readable. Added JavaDocs
  * 9 October 2025 - Added changing description if no apples are on the tree.
+ * 				  - Fixed display for the parchment
  */

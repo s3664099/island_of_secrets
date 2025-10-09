@@ -33,6 +33,7 @@ public class GameEntities {
 	public static final int ROOM_CLONE_FACTORY = 17;
 	public static final int ROOM_CLONE_ROOM = 18;
 	public static final int ROOM_WELL = 19;
+	public static final int ROOM_SNELM_LAIR = 21;
 	public static final int ROOM_PATH =  23;
 	public static final int ROOM_ROCKY_PATH = 25;
 	public static final int ROOM_ENTRANCE_CHAMBER = 27;
