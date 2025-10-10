@@ -4,13 +4,14 @@
 		- The response to looking in the open chest
 		- Can't examine table
 		- Omegan shouldn't appear in Grandpa's Hut
+		- Flint not displaying - 	67	ROOM_PYRAMID_SPLIT		-	A piece of flint stuck in the crack - Show/Hide
 
 
 **** Test the special items that the rules in SpecialItemHandler work
 
 	27	ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
 
-	67	ROOM_PYRAMID_SPLIT		-	A piece of flint stuck in the crack - Show/Hide
+
 	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
 
 
@@ -25,7 +26,7 @@
 
 	41	ROOM_HUT			-	You can also go north out of the hut
 	43	ROOM_LOGMAN_HUT		-	You can also go north out of the cabin
-	66	ROOM_PYRAMID_ROOF	-	You can also go north down of the pyramid
+
 	60	ROOM_OUTSIDE_HUT	-	You can go south out of the hut
 
 	52	ROOM_LOGMAN_HALL	-	You can go east out of the hall
@@ -75,10 +76,10 @@
 
 - Items
 	- Take
-		- Validate Take
-		- Check not in room
-		- Not valid pick
-		- not valid catch
+
+
+		- Not valid pick - lillies
+
 	
 
 		- Is no torch
@@ -126,10 +127,10 @@
 
 	41	- CODE_OUT_LOG_HUT
 	43	- CODE_OUT_LOG_CABIN
-	66	- CODE_DOWN_PYRAMID
+
 	51	- CODE_DOWN_TRAPDOOR
 	60	- CODE_OUT_ABODE_HUT
-	56	- CODE_UP_PYRAMID
+
 
 	52	- CODE_OUT_HALL
 	12	- ROOM_CAVE && noun.equals("cave"))
@@ -139,8 +140,8 @@
 	70	- ROOM_ABODE_HUT && noun.equals("hut")
 			nounNumber=GameEntities.NORTH;
 	- Blocked
-		- (isOmeganPresent(game,player)) game.addMessage("Omegan's presence prevents you from leaving!",true,true);
-			result = new ActionResult(game,player,true);
+
+
 		- (isSwampmanPresent(game,player,command)) {
 			game.addMessage("He will not let you pass.",true,true);
 		- (areRocksMoving(game,player)) {
