@@ -12,9 +12,7 @@ Source: https://archive.org/details/island-of-secrets_202303
 package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import game.Game;
@@ -25,12 +23,6 @@ public class ActionResultTest {
 
     private Game mockGame;
     private Player mockPlayer;
-
-    @BeforeEach
-    void setUp() {
-        mockGame = mock(Game.class);
-        mockPlayer = mock(Player.class);
-    }
 
     @Test
     void testDefaultConstructor() {

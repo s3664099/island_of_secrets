@@ -4,8 +4,7 @@
 		- The response to looking in the open chest
 		- Can't examine table
 		- Omegan shouldn't appear in Grandpa's Hut
-		- Flint not displaying - 	67	ROOM_PYRAMID_SPLIT		-	A piece of flint stuck in the crack - Show/Hide
-
+		
 
 **** Test the special items that the rules in SpecialItemHandler work
 
