@@ -69,7 +69,6 @@ public class SpecialItemHandler implements Serializable {
 	public String getSpecialItems(int roomNumber,Item[] itemList, Location[] locationList,int appleCount) {
 		
 		String description = itemDescriptions.getOrDefault(roomNumber,"");
-		System.out.println(description);
 		
 		if (shouldSplitDescription(roomNumber,itemList)) {
 			description = shackDescription;
@@ -160,8 +159,6 @@ public class SpecialItemHandler implements Serializable {
 	private boolean shouldChangeApple(int roomNumber,int appleCount) {
 		return (roomNumber == GameEntities.ROOM_CLEARING && appleCount == 0);
 	}
-	
-	
 }
 
 /* 16 March 2025 - Created file

@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 27 August 2025
+Version: 4.21
+Date: 13 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -399,7 +399,13 @@ public class ParsedCommand {
     /** @return true if the command is a QUIT command */
 	public boolean checkQuit() {
 		return commandType == CommandType.QUIT;
-	}	
+	}
+	
+	/** @return true if the noun is 'table' */
+	
+	public boolean checkNounTable() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_TABLE);
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -425,4 +431,5 @@ public class ParsedCommand {
  * 20 July 2025 - Added function to change command state
  * 24 August 2025 - Updated remaining commands.
  * 27 August 2025 - Fixed checkNonCommand
+ * 13 October 2025 - Added check to confirm that table is a valid command
  */

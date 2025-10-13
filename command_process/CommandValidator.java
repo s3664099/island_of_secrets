@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 28 September 2025
+Version: 4.21
+Date: 13 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -12,6 +12,7 @@ package command_process;
 import java.util.logging.Logger;
 
 import commands.Consume;
+import commands.Examine;
 import commands.ItemCommands;
 import commands.Move;
 import data.Constants;
@@ -69,6 +70,8 @@ public class CommandValidator {
 		
 		if (validCommand) {
 			result = specialCommandValidator(command,result);
+		} else {
+			result = specialNounValidator(command,result);
 		}
 		
 		if (checkResultNull(result)) {
@@ -107,8 +110,25 @@ public class CommandValidator {
 			result = validateEat(command,game,player);
 		} else if (checkDrink(command)) {
 			result = validateDrink(command,game,player);
+		} 		
+		return result;
+	}
+	
+	/**
+     * Applies specialized command checks for nouns that are not listed as the main nouns, 
+     *
+     * @param command the parsed player command
+     * @param result the current validation result
+     * @return the updated {@link ActionResult} after applying special rules
+     */
+	private ActionResult specialNounValidator(ParsedCommand command,ActionResult result) {
+		Game game = result.getGame();
+		Player player = result.getPlayer();
+		
+		if (checkExamineTable(command) ) {
+			result = validateExamineTable(command,game,player);
 		}
-					
+		
 		return result;
 	}
 	
@@ -217,6 +237,10 @@ public class CommandValidator {
 	private boolean checkDrink(ParsedCommand command) {
 		return command.checkDrink();
 	}
+	
+	private boolean checkExamineTable(ParsedCommand command) {
+		return command.checkExamine() && command.checkNounTable();
+	}
 
     // ===== Error handling =====
 
@@ -296,6 +320,10 @@ public class CommandValidator {
 	private ActionResult validateDrink(ParsedCommand command, Game game, Player player) {
 		return new Consume(command).validateDrink(game,player);
 	}
+	
+	private ActionResult validateExamineTable(ParsedCommand command, Game game, Player player) {
+		return new Examine(game,player,command).examine();
+	}
 }
 
 /* 28 April 2025 - Created File
@@ -321,4 +349,5 @@ public class CommandValidator {
  * 3 September 2025 - Changed parameters for the move function
  * 5 September 2025 - Updated based on changes to Consume
  * 28 September 2025 - Updated validator to allow for load/save games
+ * 13 October 2025 - Added special command for examining the table
  */

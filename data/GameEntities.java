@@ -165,6 +165,7 @@ public class GameEntities {
 	public static final String WORD_TO = "to";
 	public static final String WORD_WELL = "well";
 	public static final String SPACE = " ";
+	public static final String NOUN_TABLE = "table";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";

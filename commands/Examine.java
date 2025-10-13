@@ -2,8 +2,8 @@
 Title: Island of Secrets Examine Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 2 September 2025
+Version: 4.4
+Date: 13 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -72,6 +72,8 @@ public class Examine {
 			result = lookOpenChest();
 		} else if (isExamineTable()) {
 			result = examineTable();
+		} else if (isExamineTableInRoom()) {
+			result = examineTableNotInRoom();
 		} else if (isExamineColumn()) {
 			result = examineColumn();
 		} else if (isExamineRoom()) {
@@ -105,6 +107,11 @@ public class Examine {
     /** @return true if the table in Grandpa's shack is being examined */
 	private boolean isExamineTable() {
 		return noun.equals("table") && playerRoom==GameEntities.ROOM_GRANDPAS_SHACK && verb.equals("examine");
+	}
+	
+    /** @return true if the table is being examined and not in Grandpa's Shack */
+	private boolean isExamineTableInRoom() {
+		return noun.equals("table") && playerRoom!=GameEntities.ROOM_GRANDPAS_SHACK && verb.equals("examine");
 	}
 	
     /** @return true if the column in the column room is being examined */
@@ -171,9 +178,11 @@ public class Examine {
 		game.addMessage("The chest if full of Grandpa's old stuff. On the lid is parchment that says",true,true);
 		game.addMessage("'Use the rag if it looks a bit dim'", false,true);
 		
+		String chestContents = "";
+		
 		if (game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
 			game.getItem(GameEntities.ITEM_RAG).getItemFlag()==9) {
-			game.addMessage(" The chest contains a dirty old rag",false,true);
+			chestContents += " The chest contains a dirty old rag";
 			game.getItem(GameEntities.ITEM_RAG).setItemFlag(0);
 			ragSeen = true;
 		}
@@ -181,15 +190,13 @@ public class Examine {
 		if (game.getItem(GameEntities.ITEM_HAMMER).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
 			game.getItem(GameEntities.ITEM_HAMMER).getItemFlag()==9) {
 			
-			String hammer = "";
-
 			if (!ragSeen) {
-				hammer = "The chest contains ";
+				chestContents = "The chest contains ";
 			} else {
-				hammer = " and";
+				chestContents += " and";
 			}	
 			
-			game.addMessage(hammer+" a geologist's hammer",false,true);
+			game.addMessage(chestContents+" a geologist's hammer",false,true);
 			game.getItem(GameEntities.ITEM_HAMMER).setItemFlag(0);
 		}
 		return new ActionResult(game,player,true);
@@ -198,12 +205,12 @@ public class Examine {
     /** @return result of examining the table, possibly revealing bread or bottle */
 	private ActionResult examineTable() {
 		boolean breadSeen = false;
-		String bottle = "";
+		String tableContents = "";
 		game.addMessage("The coffee table looks like it has been better days.",true,true);
 		
 		if (game.getItem(GameEntities.ITEM_BREAD).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
 			game.getItem(GameEntities.ITEM_BREAD).getItemFlag()==9) {
-			game.addMessage("On the table is a loaf of bread",false,true);
+			tableContents = "On the table is a loaf of bread";
 			game.getItem(GameEntities.ITEM_BREAD).setItemFlag(0);
 			breadSeen = true;
 		}
@@ -211,14 +218,19 @@ public class Examine {
 		if (game.getItem(GameEntities.ITEM_BOTTLE).getItemLocation()==GameEntities.ROOM_GRANDPAS_SHACK && 
 			game.getItem(GameEntities.ITEM_BOTTLE).getItemFlag()==9) {
 			if (!breadSeen) {
-				bottle = "On the table is";
+				tableContents = "On the table is";
 			} else {
-				bottle = " and";
+				tableContents += " and";
 			}
-			game.addMessage(bottle+" a bottle of water",false,true);
+			game.addMessage(tableContents+" a bottle of water",false,true);
 			game.getItem(GameEntities.ITEM_BOTTLE).setItemFlag(0);
 		}
 		
+		return new ActionResult(game,player,true);
+	}
+	
+	private ActionResult examineTableNotInRoom() {
+		game.addMessage("There is no table here.",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -373,4 +385,5 @@ public class Examine {
  * 6 June 2025 - Finished Examine Room. Added Read Map
  * 8 June 2025 - Finished examine function with examine papers
  * 2 September 2025 - Updated based on new ActionResult
+ * 13 October 2025 - Tightened the contents of the chest
 */
