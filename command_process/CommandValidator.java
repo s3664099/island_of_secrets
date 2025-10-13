@@ -12,7 +12,6 @@ package command_process;
 import java.util.logging.Logger;
 
 import commands.Consume;
-import commands.Examine;
 import commands.ItemCommands;
 import commands.Move;
 import data.Constants;
@@ -126,7 +125,7 @@ public class CommandValidator {
 		Player player = result.getPlayer();
 		
 		if (checkExamineTable(command) ) {
-			result = validateExamineTable(command,game,player);
+			result = validateExamineTable(game,player);
 		}
 		
 		return result;
@@ -321,8 +320,8 @@ public class CommandValidator {
 		return new Consume(command).validateDrink(game,player);
 	}
 	
-	private ActionResult validateExamineTable(ParsedCommand command, Game game, Player player) {
-		return new Examine(game,player,command).examine();
+	private ActionResult validateExamineTable(Game game, Player player) {
+		return new ActionResult(game,player,true);
 	}
 }
 
