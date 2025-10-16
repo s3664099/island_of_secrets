@@ -3,7 +3,7 @@
 
 
 
-		- Omegan shouldn't appear in Grandpa's Hut
+		
 		
 
 **** Test the special items that the rules in SpecialItemHandler work
@@ -18,17 +18,17 @@
 **** Make sure the special exits are correct
 	51  ROOM_STOREROOM		-	There is a door to the east
 
-	53	ROOM_BUILDING		-	You can also go west into the hut
 
-	70	ROOM_ABODE_HUT		-	You can also go north into the hut
+
+
 	37	ROOM_CASTLE_WALL	- 	You can also go north into the portal
 
-	41	ROOM_HUT			-	You can also go north out of the hut
-	43	ROOM_LOGMAN_HUT		-	You can also go north out of the cabin
 
-	60	ROOM_OUTSIDE_HUT	-	You can go south out of the hut
 
-	52	ROOM_LOGMAN_HALL	-	You can go east out of the hall
+
+
+
+
 	51	ROOM_STOREROOM		-	Trapdoor - See Below for issue
 	    					- 	HandleGoTrapdoor looks odd in CommandValidator
 
@@ -109,7 +109,7 @@
 	- help - sage & villager
 	- polish
 	- speak
-	- fill - jug water & slime
+	- fill - jug water 
 	- ride - beast & already riding
 	- open - Chest & trapdoor
 	- swim - can & cannot
@@ -119,30 +119,28 @@
 	- Normal
 	- Special
 
-	53	- CODE_IN_LOG_HUT
 
-	70	- CODE_IN_ABODE_HUT
+
+
 	37	- CODE_IN_PORTAL
 
-	41	- CODE_OUT_LOG_HUT
-	43	- CODE_OUT_LOG_CABIN
+
+
 
 	51	- CODE_DOWN_TRAPDOOR
-	60	- CODE_OUT_ABODE_HUT
 
 
-	52	- CODE_OUT_HALL
-	12	- ROOM_CAVE && noun.equals("cave"))
-	45	- ROOM_CLEARING && noun.equals("hut")
-	53	- ROOM_BUILDING && noun.equals("hut")
-			nounNumber = GameEntities.WEST;
-	70	- ROOM_ABODE_HUT && noun.equals("hut")
-			nounNumber=GameEntities.NORTH;
+
+
+
+
+
+
+
 	- Blocked
 
 
-		- (isSwampmanPresent(game,player,command)) {
-			game.addMessage("He will not let you pass.",true,true);
+
 		- (areRocksMoving(game,player)) {
 			game.addMessage("The rocks move to prevent you",true,true);
 			result = new ActionResult(game,player,true);
