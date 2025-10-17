@@ -58,9 +58,9 @@ public class PostCommand {
 
 		if (isAtOrchids()) {atOrchids();}
 		
-		if(isAtThicket()) {atThicket();}
+		if (isAtThicket()) {atThicket();}
 		
-		if(needAdjustStorm()) {adjustStorm();}
+		if (needAdjustStorm()) {adjustStorm();}
 		
 		if (doesStormAppear()) {stormAppears();}
 
@@ -80,19 +80,19 @@ public class PostCommand {
 		if (!areLogmenPresent()) {moveLogmen();} 
 		else {logmenPresent();}
 		
-		if(isMedianFollowing()) {medianFollowing();}
+		if (isMedianFollowing()) {medianFollowing();}
 		
-		if(isMedianHint()) {medianHint();}
+		if (isMedianHint()) {medianHint();}
 		
 		if (isInVatRoom()) {inVatRoom();}
 		
 		if (isTooWeak()) {dropItems();}
 				
-		if(isAtClashingStones()) {atClashingStones();}
+		if (isAtClashingStones()) {atClashingStones();}
 		
-		if(isWinGame()) {winGame();}
+		if (isWinGame()) {winGame();}
 		
-		if(isLoseGame()) {loseGame();}
+		if (isLoseGame()) {loseGame();}
 		
 		return new ActionResult(game,player,true);
 	}

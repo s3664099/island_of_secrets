@@ -3,6 +3,8 @@
 
 - Strength not dropping
 - Can't drop beast
+- down trapdoor is closed - CODE_DOWN_TRAPDOOR
+- Should respond if try opening door in storeroom -  isDoorClosed()
 
 
 		
@@ -18,7 +20,7 @@
 
 		
 **** Make sure the special exits are correct
-	51  ROOM_STOREROOM		-	There is a door to the east
+
 
 
 
@@ -31,8 +33,8 @@
 
 
 
-	51	ROOM_STOREROOM		-	Trapdoor - See Below for issue
-	    					- 	HandleGoTrapdoor looks odd in CommandValidator
+
+
 
 - Combat
 	- Chop Roots - Only With Axe
@@ -169,6 +171,28 @@
 			game.getItem(16).setItemFlag(0);
 			game.addMessage("The beast runs away",false,true);
 		- Game does not end if go boat
+
+- After turn actions
+		if (isAtOrchids()) {atOrchids();}		
+		if(isAtThicket()) {atThicket();}
+		if(needAdjustStorm()) {adjustStorm();}
+		if (doesStormAppear()) {stormAppears();}
+		if (doesPlayerHaveBeast()) {moveBeast();}
+		if (doesOmeganMove()) {moveOmegan();} 
+		else if (isOmeganPresent()) {omeganAttacks();} 
+		if (isSwampManPresent()) {swampManNotPresent();}
+		if (doesSwampManTalk()) {swampManTalks();}
+		if (doesBoatmanAppear()) {boatmanAppears();}
+		if (isAtWell()) {atWell();}
+		if (!areLogmenPresent()) {moveLogmen();} 
+		else {logmenPresent();}
+		if(isMedianFollowing()) {medianFollowing();}
+		if(isMedianHint()) {medianHint();}
+		if (isInVatRoom()) {inVatRoom();}
+		if (isTooWeak()) {dropItems();}
+		if(isAtClashingStones()) {atClashingStones();}
+		if(isWinGame()) {winGame();}
+		if(isLoseGame()) {loseGame();}
 
 **** Test if can complete game
 **** Test Each of the sections to see if they work
