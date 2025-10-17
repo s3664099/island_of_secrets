@@ -1,6 +1,8 @@
 
 
 
+- Strength not dropping
+- Can't drop beast
 
 
 		
@@ -109,7 +111,7 @@
 	- help - sage & villager
 	- polish
 	- speak
-	- fill - jug water 
+
 	- ride - beast & already riding
 	- open - Chest & trapdoor
 	- swim - can & cannot
@@ -150,9 +152,9 @@
 		- (isSnakePresent(game,player,command)) {
 			game.addMessage("Hisss!",true,true);
 			result = new ActionResult(game,player,true);
-		- (isPlayerRidingBeast(game,player,command)) {
-			game.addMessage("Too steep to climb",true,true);
-			result = new ActionResult(game,player,true);
+
+
+
 		- (isDoorClosed(player,command)) {
 			game.addMessage("The door is barred!",true,true);
 	- Entry Effects
