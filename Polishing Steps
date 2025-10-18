@@ -1,10 +1,12 @@
 
 
 
-- Strength not dropping
+
 - Can't drop beast
 - down trapdoor is closed - CODE_DOWN_TRAPDOOR
 - Should respond if try opening door in storeroom -  isDoorClosed()
+- Pick Flower? Should Work
+	- Lily & Flower should be interchangeable
 
 
 		
@@ -110,7 +112,7 @@
 - Miscellaneous
 	- info
 	- wave - torch & boatman
-	- help - sage & villager
+	- help - villager
 	- polish
 	- speak
 
@@ -173,8 +175,8 @@
 		- Game does not end if go boat
 
 - After turn actions
-		if (isAtOrchids()) {atOrchids();}		
-		if(isAtThicket()) {atThicket();}
+	
+
 		if(needAdjustStorm()) {adjustStorm();}
 		if (doesStormAppear()) {stormAppears();}
 		if (doesPlayerHaveBeast()) {moveBeast();}

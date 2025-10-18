@@ -2,8 +2,8 @@
 Title: Island of Secrets Status Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 16 April 2025
+Version: 4.4
+Date: 18 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -93,9 +93,9 @@ public class StatusPanel extends JPanel {
      * @param state a non-null provider of the latest game state
      * @throws NullPointerException if {@code state} is {@code null}
      */
-	public void refreshUI(GameStateProvider state) {
+	public void refreshUI(GameStateProvider updatedState) {
 		GameStateProvider newState = 
-				Objects.requireNonNull(state, "GameStateProvider cannot be null");
+				Objects.requireNonNull(updatedState, "GameStateProvider cannot be null");
 		
 		if(checkChange(newState.getTime(),state.getTime()) || 
 				checkChange(newState.getStatus(),state.getStatus())) {
@@ -142,4 +142,5 @@ public class StatusPanel extends JPanel {
  * 16 April 2025 - Updated code based on DeepSeek
  * 25 September 2025 - Updated code based on recommendations
  * 					 - Added JavaDocs
+ * 18 October 2025 - Fixed issue where stats not updating
  */

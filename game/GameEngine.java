@@ -81,7 +81,6 @@ public class GameEngine implements GameCommandHandler,GameStateProvider {
      * @param result the action result containing updated game and player
      */
 	private void applyResult(ActionResult result) {
-		
 		this.player = result.getPlayer();
 		this.game = result.getGame();
 		this.player.turnUpdateStats();

@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 19 August 2025
+Version: 4.12
+Date: 18 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -85,13 +85,16 @@ public class Player implements Serializable {
      * Decreases time remaining and reduces strength based on weight carried.
      */
 	public void turnUpdateStats() {
-		
+		logger.info(stats.get("timeRemaining").toString());
 		int timeRemaining = (int) stats.get("timeRemaining");
 		stats.put("timeRemaining", timeRemaining-1);
+		logger.info(stats.get("timeRemaining").toString());
 		
+		logger.info(stats.get("strength").toString());
 		float strength = (float) stats.get("strength");
 		int weight = (int) stats.get("weight");
 		stats.put("strength", strength - (weight/Constants.NUMBER_OF_ITEMS+0.1f));
+		logger.info(stats.get("strength").toString());
 	}
 	
     /**
@@ -137,6 +140,7 @@ public class Player implements Serializable {
      * @param value    the new value
      */
 	public void setStat(String statName,Object value) {
+		logger.info("Adjust "+statName+" by "+value);
 		stats.put(statName,value);
 	}
 	
@@ -249,4 +253,5 @@ public class Player implements Serializable {
  * 19 July 2025 - Removed start swimming state
  * 20 July 2025 - Removed setting the swim position. Removed START_SWIM state
  * 19 August 2025 - Made minor fixes. Added JavaDocs
+ * 18 October 2025 - Added logger for when stat changes
  */
