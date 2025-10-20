@@ -7,6 +7,7 @@
 - Should respond if try opening door in storeroom -  isDoorClosed()
 - Pick Flower? Should Work
 	- Lily & Flower should be interchangeable
+- Seems that you can kill/attack something that is not present.
 
 
 		

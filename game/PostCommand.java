@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 13 October 2025
+Version: 4.10
+Date: 20 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -319,7 +319,7 @@ public class PostCommand {
 		
 		int newLocation = GameEntities.ROOM_GRANDPAS_SHACK;
 		
-		while (newLocation != GameEntities.ROOM_GRANDPAS_SHACK) {
+		while (newLocation == GameEntities.ROOM_GRANDPAS_SHACK) {
 			int part1 = 10 * (rand.nextInt(5)+1);
 			int part2 = 7 * (rand.nextInt(3)+1);
 			newLocation = Math.min(part1+part2, 80);
@@ -449,4 +449,5 @@ public class PostCommand {
  * 17 August 2025 - Added JavaDocs
  * 3 September 2025 - Updated with new ActionResult changes
  * 13 October 2025 - Changed so Omegan does not go to Grandpa's Shack
+ * 20 October 2025 - Fixed problem where Omegan is only in Grandpa's Shack
  */
