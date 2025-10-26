@@ -2,7 +2,7 @@
 
 
 
-- Can't drop beast
+- Can't drop beast - also, if drop rope, should drop beast as well
 - down trapdoor is closed - CODE_DOWN_TRAPDOOR
 - Should respond if try opening door in storeroom -  isDoorClosed()
 - Pick Flower? Should Work
@@ -17,6 +17,9 @@
 - incorrect result if can't drink something
 - should something happen when eat lillies?
 - should something happen when drink liquid?
+- Maybe allow drink wine - change Flagon to Wine?
+- restart command?
+- Examine room not working, also seems that the things not appearing in the hut
 
 
 
@@ -80,11 +83,11 @@
 
 
 - Examine
-	- Parchment
 
 
 
-	- Column
+
+
 	- Room
 	- Map
 	- Papers
@@ -104,18 +107,18 @@
 		- take cloak
 		- take egg
 		- take books
-		- take beast failed
+
 	- Drop
-		- Validate Carrying
-		- drop jug
+
+
 		- drop torch
-		- release beast
+
 	- Give
 		- Validate Give
 		- Give when subject not present - it is refused, should respond otherwise
 		- is snake,
 		- is villager
-		- is swampman
+
 		- is logmen
 		- is scavenger
 		- is median

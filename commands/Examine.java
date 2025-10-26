@@ -121,7 +121,7 @@ public class Examine {
 	
     /** @return true if the command is "examine room" */
 	private boolean isExamineRoom() {
-		return noun.equals("examine") && verb.equals("room");
+		return verb.equals("examine") && noun.equals("room");
 	}
 	
 
