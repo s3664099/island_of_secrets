@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 11 September 2025
+Version: 4.16
+Date: 27 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -120,9 +120,9 @@ public class ItemCommands {
 		
 		int noun = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player,true);
-		
+
 		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
-			(noun>=Constants.FOOD_THRESHOLD && noun != GameEntities.ITEM_CLOAK)) {
+			(noun>Constants.FOOD_THRESHOLD && noun != GameEntities.ITEM_CLOAK)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			result = result.failure(game, player);
 		}
@@ -562,7 +562,7 @@ public class ItemCommands {
 				result = dropTorch();
 			} else if (isBeast()) {
 				result = releaseBeast();
-			}
+			} //Add is Rope
 			
 			return result;
 		}
@@ -847,4 +847,6 @@ public class ItemCommands {
  * 2 September 2025 - Updated based on new ActionResult
  * 10 September 2025 - Tightened code
  * 11 September 2025 - Added JavaDocs for Take and main section of the class
+ * 27 October 2025 - Fixed problem where beast not being dropped.
+ * 
  */
