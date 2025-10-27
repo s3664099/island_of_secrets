@@ -560,9 +560,9 @@ public class ItemCommands {
 				result = dropJug();
 			} else if (isTorch()) {
 				result = dropTorch();
-			} else if (isBeast()) {
+			} else if (isBeast() || isRopeWithBeast()) {
 				result = releaseBeast();
-			} //Add is Rope
+			} 
 			
 			return result;
 		}
@@ -582,6 +582,12 @@ public class ItemCommands {
 		/** @return true if the item is the beast being dropped */
 		private boolean isBeast() {
 			return nounNumber == GameEntities.ITEM_BEAST;
+		}
+		
+		/** @return true if the item is the rope being dropped and the player has the beast*/
+		private boolean isRopeWithBeast() {
+			return nounNumber == GameEntities.ITEM_ROPE && 
+				   game.getItem(GameEntities.ITEM_BEAST).getItemLocation() == GameEntities.ROOM_CARRYING;
 		}
 		
 		/** 
@@ -615,12 +621,12 @@ public class ItemCommands {
 		}
 		
 		/** 
-		 * generates the result of the player dropping the beast
+		 * generates the result of the player dropping the beast or dropping the rope while carrying the beast
 		 * 
 		 * @return an {@link ActionResult} with the result
 		 */
 		private ActionResult releaseBeast() {
-			game.getItem(nounNumber).setItemFlag(0);
+			game.getItem(GameEntities.ITEM_BEAST).setItemFlag(0);
 			game.getItem(GameEntities.ITEM_BEAST).setItemLocation(GameEntities.ROOM_FOREST);
 			game.addMessage("The Canyon Beast runs away", true, true);
 			return new ActionResult(game,player,true);
@@ -848,5 +854,6 @@ public class ItemCommands {
  * 10 September 2025 - Tightened code
  * 11 September 2025 - Added JavaDocs for Take and main section of the class
  * 27 October 2025 - Fixed problem where beast not being dropped.
+ * 				   - If drop rope while carrying beast, release beast as well.
  * 
  */
