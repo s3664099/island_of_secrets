@@ -20,6 +20,14 @@
 - Maybe allow drink wine - change Flagon to Wine?
 - restart command?
 - Examine room not working, also seems that the things not appearing in the hut
+- Don't see boatman - can't give water or food
+- Can't give food or water to logmen
+- Can't give food to anything
+- Can't give water to villager
+- Can't shelter with two commands
+- Need to be able to use boat and boatman
+
+
 
 
 
@@ -102,8 +110,8 @@
 	
 
 		- Is no torch
-		- is food
-		- take drink
+
+
 		- take cloak
 		- take egg
 		- take books
@@ -114,29 +122,29 @@
 		- drop torch
 
 	- Give
-		- Validate Give
-		- Give when subject not present - it is refused, should respond otherwise
-		- is snake,
-		- is villager
 
-		- is logmen
+
+
+
+
+
 		- is scavenger
 		- is median
 
 - Miscellaneous
-	- info
-	- wave - torch & boatman
-	- help - villager
+
+
+
 	- polish
 	- speak
 
-	- ride - beast & already riding
-	- open - Chest & trapdoor
-	- swim - can & cannot
-	- shelter - storm - cave, hut, grandpa
+
+
+
+
 	
 - Move
-	- Normal
+
 	- Special
 
 
