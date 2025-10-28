@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 3 September 2025
+Version: 4.14
+Date: 28 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -49,12 +49,14 @@ public class Move {
 		String code = command.getCodedCommand();
 		nounNumber = handleSpecialRooms(room, noun, nounNumber);
 		nounNumber = mapCodedCommandToDirection(code,nounNumber);
-		
 		if(nounNumber>GameEntities.MOVE_NOT_DIRECTION && nounNumber != GameEntities.ITEM_BOAT) {
 			nounNumber -= 43;
 		}
+		if (isCodeDownTrapdoor(code)) {
+			code = codeEnterTrapdoor();
+		}
 		
-		return new ParsedCommand(verbNumber,nounNumber,command.getCodedCommand(),
+		return new ParsedCommand(verbNumber,nounNumber,code,
 				command.getSplitTwoCommand(),command.getCommand());
 	}
 	
@@ -93,7 +95,6 @@ public class Move {
 		codeToDirection.put(GameEntities.CODE_OUT_LOG_HUT,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_OUT_LOG_CABIN,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_DOWN_PYRAMID,GameEntities.NORTH);
-		codeToDirection.put(GameEntities.CODE_DOWN_TRAPDOOR,GameEntities.NORTH);
 		codeToDirection.put(GameEntities.CODE_OUT_ABODE_HUT,GameEntities.SOUTH);
 		codeToDirection.put(GameEntities.CODE_UP_PYRAMID,GameEntities.SOUTH);
 		codeToDirection.put(GameEntities.CODE_OUT_SHACK,GameEntities.EAST);
@@ -360,6 +361,22 @@ public class Move {
 	}
 	
     /**
+     * Checks if the code is go down into the trapdoor.
+     */
+	private boolean isCodeDownTrapdoor(String code) {
+		return code.equals(GameEntities.CODE_DOWN_TRAPDOOR);
+	}
+	
+    /**
+     * Changed code to enter trapdoor.
+     *
+     * @return a String with new action code
+     */
+	private String codeEnterTrapdoor() {
+		return GameEntities.CODE_ENTER_TRAPDOOR;
+	}
+	
+    /**
      * Handles movement attempt onto a boat.
      *
      * @return an {@link ActionResult} indicating failure
@@ -452,4 +469,5 @@ public class Move {
  * 3 September 2025 - Updated for new ActionResult
  * 					- Updated based on recommendations
  * 					- Added JavaDocs
+ * 28 October 2025 - Added function to handle going down into trapdoor
  */

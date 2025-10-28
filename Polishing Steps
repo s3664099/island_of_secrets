@@ -3,7 +3,7 @@
 
 
 
-- down trapdoor is closed - CODE_DOWN_TRAPDOOR
+
 - Should respond if try opening door in storeroom -  isDoorClosed()
 - Pick Flower? Should Work
 	- Lily & Flower should be interchangeable
