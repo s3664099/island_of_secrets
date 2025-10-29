@@ -1,0 +1,297 @@
+Test Document
+
+To Test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Stoney Words - Go to Hut, get apple & give to snake. Go hut & open chest
+		- get hammer and rag - also get any food on the way
+		- go to top of pyramid and get flint
+		- go to cave, get and fill jug
+		- go to logman's hut and get rope
+		- go to stone - rub stone, rub opening, get pebble (wisdom should be 63)
+		- Go to the Sage of the Lilly - scratch her and take the lillies
+		- go to villager and give water and take staff
+		- give jug to swampman to make him go away
+		- go to the marble column (oposite, past the petrified village and north), and get the chip from the column.
+		- go to leafy path and then snelms lair - get parchment & read parchment
+		- get the canyon beast and ride it
+		- go to dactyl nest and get the egg
+		- go to jetty and to boatman and cross to the island - n,n and stones - say stony words
+		- Torch is at entrance, so take it and wave it
+		- go to scavenger and give chip and lillies (Why the chip?)
+		- say 'remember old times'
+		- go to here and wait til either north or east appears
+		- give pebble to Median
+		- go to Omegan's sanctum and take cloak
+		- drop coal and strike flint
+		- drop egg and break staff
+		- Game Over successfully.
+
+
+
+The storm breaks on the following settings - Time is less than 900
+					   - Player at starting location
+					   - Storm Flag greater than 0
+					   - 1 in 3 change
+	- When it happens the flag is set to a -ve between 4 and 10
+When you shelter, the flag on the wine is set to -R (This is where you shelter)
+So, if you are where you are sheltering, your strength will increase when resting.
+Ideally you can't rest while the storm is raging, though by sheltering you don't lose strength.
+
+
+
+game1 - hut
+game2 - jug
+game3 - pebble & Sage
+game4 - Island
+game7 - At the end part
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+Post Command Responses:
+
+
+
+
+
+
+
+- Swampman shouldn't move if in the room with you to prevent you from passing unless you give him the slimes
+- The egg should open when breaking the staff if carrying it
+	- if Omegan not present the dactyl hatches and flies off removing egg & staff
+	- The cloak can be burnt if in the room - omegan should not need to be present
+	- If not in Omegan's sanctum - dactyl fails to take him and flies off - omegan flees
+
+
+
+
+
+
+
+	
+- Give stuff to logmen - check that out	
+
+	
+	
+
+
+
+	
+	
+	
+	
+
+
+Passed
+
+Go Command
+- In 12 becomes west - Done
+- In 53 becomes west - Done
+- Out 52 becomes east - Done
+- In 45 becomes west - Done
+- Out 44 becomes east - Done
+- In 70 becomes north - Done
+- Out 60 becomes south - Done 
+- In 37 becomes north - Done
+- Out 11 becomes north - Done
+- Out 41 becomes north - Done
+- Out 43 becomes north - Done
+- Down 66 becomes north - Done
+- Up 56 becomes south - Done
+- Down 51 becomes north - Done
+
+- Down 51 when Trap Door flag = 0 goes to poisoned water - You have to be in the room and type 'open trapdoor' for this to activate
+  Considering adding a command to examine (and adding it without having to make any significant changes to the code - will probably have
+  to tack it onto the end and increase the number of verbs).
+ - Omegan is in player location, strength+wisdom<180 or room=10 - cannot leave (and displays)
+ - Player in room with Swampman, tries to go east, and swampman flag<1 - can't move (otherwise can)
+	- Check how to allow swampman to let you move and test that
+	- Works - When tells his tale the flag is set to -1, which means he will block your way east.
+		- If you are in the room and the flag is 0, then he tells his tale.
+- Check can move & can't - I know this works.
+- The Ferry Man - Go Boat - works
+	- Have to be in same room as boatman and type 'go boat'
+	- If less than 60 - go to serve Omegan forever
+	- If greater, goes to Island of Secrets
+
+Take Command
+ - Item not in location
+ - Item is in location, but flag between 0 & 9
+ - Take evil books in library
+ 	- Room 50
+ 	- Removes 4 wis & 8 str
+ - Omegan's cloak (The code looks wrong - check it)
+	- Displays the lightning flashes panel
+	- loose 2 wis & 8 str
+- Pick mushrooms or Apples
+- Catch Canyon Beast
+- carriable items (location 0, weight -1)
+- canyon beast - unless have rope, it escapes (weight resets to 0)
+- Food & Drink - weight set to -1, item goes to -18
+- Take an item - increases widsom by 4 and weight by one. Item flag set to 0, if greater than 1
+- Look at the bird section
+
+Give command
+- Complains if don't have the item (no item name should be considered and fixed)
+- Complain if wrong command, or subject not present (two different types)
+- Standard response - it is refused (if not special case)
+- Give the shiny apple to the snake and it moves and allows entry to the hut
+- Villager offers Staff if condition met (looks like have to offer drink).
+- give lilyflower or marble chip to scavenger - is there a proper response?
+	- wisdom increases by ten - Looks like it is a way of increasing wisdom
+- Give jug to swampman (Doesn't seem to have proper response either) - sets the swampman flag to 1 
+	- If the swampman flag is 0 - he won't let you leave.
+	- Need to give him a jug that is full (ie the flag is -1)
+- Give pebble to Median - response depends on the room, and also Median's location
+	- this is one of the end game requirements.
+- Response is 'it is accepted' if the location of object now 81.
+- response us 'it is taken' if object is 41 - Logmen
+
+Drop Command
+- Dropping the jug breaks and destroys it
+	- lose 1 wisdom
+- Otherwise object now in location and lose 1 weight - responds with 'done'
+- if can't says so.
+
+Eat Command
+- if eat lillies - makes sick and lose wisdom and strength
+- Eat one word command
+- if no food says so
+- can also eat based on noun - unless doesn't fall into the food group
+	17 - loaf
+	18 - melon
+	19 - biscuits
+	20 - mushrooms
+
+Drink command
+- green liquid
+	- Jug flag not -1 - don't have it
+	- otherwise lose Str & Wisdom and displays panel message
+- if not drink flags it and lose wisdom
+	21 - bottle
+	22 - flagon
+	23 - sap
+	24 - water
+	31 - liquor
+
+Ride - Need Canyon Beast, and can only take beast if have the rope.
+	- When have the rope, the beast will allow you to ride it, and will set the beast flag to -1
+	  Which allows you to climb the path.
+	- If have canyon beast and on log pier (33) - runs away to random place (1-4)
+
+Open - Open chest in Granpa's Shack
+     - Open trapdoor in refuse filled rooms
+     - Add further details to chest
+     - Add an 'unable to do this' or similar response - need to only do it if you are carrying the object
+     
+Chip - verb 16,17,18,19 - needs two words
+	If carrying hammer or ax then says ok
+	chop roots get sap - should be infinite as long as player taken it
+	Column - need to work how it is done - looks like you break chip or crack, as opposed to column
+		- really should be 'break column' or the like, and checks if either of these are
+		visible
+	Breaking the staff - response changes based on whether in the same room as the egg.
+			- need to check if Omegan stays dead once this happens.
+Kill - Checks if the player takes a hit if they attack a random object
+	- Has response if item present and ends game.
+
+Attack - Does the player's stats go down?
+	- check Omegan
+	- Swampman
+	- sage
+	- logmen
+	- dactyl
+	- Strike Flint is coal in room & cloak present
+Swim - Can swim here
+	- swimming in poisoned waters
+Shelter - can only do it when flag certain number
+	- Does it occur when the flag is correct
+	- How does the flag get there?
+Help - Respond with villager & Sage
+	- flag set when sage scratched
+	- (what does the flag do?) - reveals Lily
+Polish - Response is nothing
+	- Rubbing Crystal Stone
+	- Rubbing stone (what is the take for?)
+Rub - This is used to stop the stones from preventing you from moving
+	- Need to work out how to get here and then to the stones to test it works.
+	- So, rub opening with the rag and the flags are set (and you hear the word as well).
+Examine - standard response
+	- When examine the parchment
+Fill - Standard Response
+	- The earthenware jug
+Speak - Stony Words - How to set it, and then get there
+	- Room is 47 & Blistering pebble flag is 0 (you read the parchment)
+	- wisdom needs to be 60 or above as you need to use the boatman to get there
+	- Scavenger - be in same room - Lily & Chip must be gone
+		- Give the lillies & the stone to the scavenger (He is in the castle)
+Rest - gets a count based on the living storm flage
+	- reduces time by count
+	- if time greater than 100 & living storm flag less than 1 increases wisdom and resets living storm flag
+	- displays Time Passes based on count
+	- Check Wine flags and if causes str to increase
+	- Check storm flags and see what causes it as well.
+Wave - Wave the torch and then use it to pass the hands (though you should be holding the torch as well - maybe reset the flag if dropped)
+	- Rooms with arms (28) and torch (item 7) flag != 1 - So, after this the player should be able to move
+	
+Info - Displays the player's inventory
+
+Save - save the game
+
+Load - load the game
+
+Display - display the saved games
+
+Post Command
+- in Grove of Orchids (61) - Wisdom increased between 1-3
+- Biting Bushes - one in three lose 1 strength
+- Living Storm Flag less than 1 & wine flag isn't room - increases storm flag by one, puts it in player's room, and increase strength by 1
+- Canyon Beast - if not being carried - random room 1-5
+- Omegan - if not in same room as player - random place based on strange calculation
+- Swampman - position changes 76,77 or 78
+- Boatman - Room either 33,57 or 73 - if egg flag 1 - appears at player's location
+		- Supposed to just appear at these locations on a 1 in 2 chance - nothing to do with the egg.
+- Swampman - with player, 1 in 2 changes, flag is 0 - tells tale - if have pebble asks for it
+		- Looks like if you haven't given him the pebble he won't let you pass.
+		- Need to check this further - it is a red herring making the game uncompletable
+		- Not the pebble but the jug full of green liquid - he disappears
+- Median - does he follow you when his flag is 0 - how to get his flag to 0?
+	- also look at the notice and the special flags that trigger it
+- Check with the logmen - that you lose the lilly flower and the jug
+- Near Clashing stones - cannot move further!!
+	- Item 8? Where flag changed (Blistering Pebble)
+- what is HERE!! for - the directions randomly change, which allows access to different parts
+- where you change locations in the castle
+- Storage Casks - Room 18 - lose 1 str
+- Ends Game - Wth Median and str less than 70 - - Pushed into the Pit
+- Too weak to carry something - test that
+- work out how to get the egg - you need the staff
+- Finally End Game - Staff, Pebble & Coal all -1 - need to see how that is set.
+Blistering Pebble 8 - Give to Median to throw into Vat
+Staff 11 - Break the staff where the egg is located and it turns into a baby dactyl (Located in Omegan's Sanctum)
+Coal 13 - Set it on fire (Supposed to destroy the cloak).
