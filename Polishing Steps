@@ -1,0 +1,470 @@
+
+
+
+
+
+
+
+- Pick Flower? Should Work
+	- Lily & Flower should be interchangeable
+- Seems that you can kill/attack something that is not present.
+- Say something when you chop the roots
+- The papers & examining them isn't working
+- Shouldn't be able to tap the liquid
+- Should be able to attack to boatman
+- can tap beast but not kill beast
+- Should there be a special one for eat apple?
+- incorrect result if can't drink something
+- should something happen when eat lillies?
+- should something happen when drink liquid?
+- Maybe allow drink wine - change Flagon to Wine?
+- restart command?
+- Examine room not working, also seems that the things not appearing in the hut
+- Don't see boatman - can't give water or food
+- Can't give food or water to logmen
+- Can't give food to anything
+- Can't give water to villager
+- Can't shelter with two commands
+- Need to be able to use boat and boatman
+
+
+
+
+
+		
+		
+
+**** Test the special items that the rules in SpecialItemHandler work
+
+	27	ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
+
+
+	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
+
+
+		
+**** Make sure the special exits are correct
+
+
+
+
+
+	37	ROOM_CASTLE_WALL	- 	You can also go north into the portal
+
+
+
+
+
+
+
+
+
+
+- Combat
+
+
+
+	- Break Staff
+
+		
+
+
+		
+		
+
+	
+		
+		
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Examine
+
+
+
+
+
+	- Room
+	- Map
+	- Papers
+	- Clues
+
+- Items
+	- Take
+
+
+		- Not valid pick - lillies
+
+	
+
+		- Is no torch
+
+
+		- take cloak
+		- take egg
+		- take books
+
+	- Drop
+
+
+		- drop torch
+
+	- Give
+
+
+
+
+
+
+		- is scavenger
+		- is median
+
+- Miscellaneous
+
+
+
+	- polish
+	- speak
+
+
+
+
+
+	
+- Move
+
+	- Special
+
+
+
+
+	37	- CODE_IN_PORTAL
+
+
+
+
+	51	- CODE_DOWN_TRAPDOOR
+
+
+
+
+
+
+
+
+
+	- Blocked
+
+
+
+		- (areRocksMoving(game,player)) {
+			game.addMessage("The rocks move to prevent you",true,true);
+			result = new ActionResult(game,player,true);
+		- (doArmsHoldYou(game,player)) {
+			game.addMessage("The arms hold you fast",true,true);
+			result = new ActionResult(game,player,true);
+		- (isSnakePresent(game,player,command)) {
+			game.addMessage("Hisss!",true,true);
+			result = new ActionResult(game,player,true);
+
+
+
+		- (isDoorClosed(player,command)) {
+			game.addMessage("The door is barred!",true,true);
+	- Entry Effects
+		- (isInHandsRoom(game,player)) {
+			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
+		- (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
+			game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
+		- (isInEntranceHall(player,command)) {
+			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
+		- (isOnJetty(game,player)) {
+			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
+			game.getItem(16).setItemFlag(0);
+			game.addMessage("The beast runs away",false,true);
+		- Game does not end if go boat
+
+- After turn actions
+	
+
+		if(needAdjustStorm()) {adjustStorm();}
+		if (doesStormAppear()) {stormAppears();}
+		if (doesPlayerHaveBeast()) {moveBeast();}
+		if (doesOmeganMove()) {moveOmegan();} 
+		else if (isOmeganPresent()) {omeganAttacks();} 
+		if (isSwampManPresent()) {swampManNotPresent();}
+		if (doesSwampManTalk()) {swampManTalks();}
+		if (doesBoatmanAppear()) {boatmanAppears();}
+		if (isAtWell()) {atWell();}
+		if (!areLogmenPresent()) {moveLogmen();} 
+		else {logmenPresent();}
+		if(isMedianFollowing()) {medianFollowing();}
+		if(isMedianHint()) {medianHint();}
+		if (isInVatRoom()) {inVatRoom();}
+		if (isTooWeak()) {dropItems();}
+		if(isAtClashingStones()) {atClashingStones();}
+		if(isWinGame()) {winGame();}
+		if(isLoseGame()) {loseGame();}
+
+**** Test if can complete game
+**** Test Each of the sections to see if they work
+
+- Redo the Panels
+
+- Add Accessiblity Warning with flashing light
+- Add Flag (noted) that will just to a normal message
+- Add option that if emoji's not available to just do normal
+
+TRAPDOOR ISSUE IDENTIFIED:
+Operator Precedence Bug ⚠️
+
+return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+        command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR) &&
+        (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1));
+
+
+Because && binds more tightly than ||, this is evaluated as:
+
+(CODE_DOWN_TRAPDOOR) || (CODE_ENTER_TRAPDOOR && trapdoorClosed)
+
+
+which is not what you intend. You want parentheses around the ||:
+
+return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
+        command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) &&
+        game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag() == 1;
+
+
+Same issue in checkGoTrapdoorOpen.
+
+
+Default Package
+	- Main
+	- Start
+command_process
+	- CommandExecutor
+	- CommandParser
+	- CommandProcessor
+	- CommandValidator
+	- ParsedCommand
+commands
+	- Combat
+	- Consume
+	- Examine
+	- ItemCommands
+	- Miscellaneous
+	- Move
+controller
+	- BookButton
+	- CommandButton
+	- CommandListener
+	- MapButton
+	- MapController
+	- QuitButton
+	- SearchGameButton
+	- ShelterButton
+	- ShowMainViewButton
+game
+	- Game
+	- GameEngine
+	- GameIntialiser
+	- MessageBuilder
+	- Player
+	- PostCommand
+	- RandomExitHandler
+	- SpecialExitHandler
+	- SpecialItemHandler
+	- Swimming
+	- SwimmingHandler
+persistence
+	- Persistence
+ui
+	- GameController
+	- GameState
+view
+	- CommandPanel
+	- GameFrame
+	- GamePanel
+	- LighningPanel
+	- MainGamePanel
+	- MapPanel
+	- MessagePanel
+	- RoomPanle
+	- StatusPanel
+
+
+
+
+Perfect — this is a large project, so we want a **logical order for unit testing** that balances dependencies, ease of mocking, and incremental building of confidence. Here’s how I would approach it:
+
+---
+
+## **1. Start with the simplest, self-contained classes**
+
+These are classes with minimal external dependencies, mostly data holders or simple logic.
+
+
+
+* **`Miscellaneous`** (`commands`) – if it has isolated functions.
+
+> Goal: Get a feel for the structure, start with straightforward `assertEquals`/`assertTrue` tests. No heavy mocking required.
+
+---
+
+## **2. Test core game data objects**
+
+Classes that hold game state but don’t yet perform complex interactions.
+
+* **`Player`** (`game`) – test getters, setters, stats, room tracking.
+* **`Game`** (`game`) – basic item and room management, messages, state flags.
+* **`GameState`** (`ui`) – if it’s mainly exposing game data to the UI.
+
+> Goal: Build confidence that the underlying data model works correctly. Use `mock(Game)` only if testing UI-dependent logic.
+
+---
+
+## **3. Test command-level logic**
+
+Once the core data objects are testable, move to classes that execute player actions.
+
+* **`Combat`** (`commands`) – as we discussed, this depends on `Player` and `Game`. Use mocks for `Game` and `Player` to isolate logic.
+* **`Move`, `Consume`, `Examine`, `ItemCommands`** (`commands`) – also command logic that manipulates `Player` and `Game`. Can mock `Game`/`Player`.
+
+> Goal: Start verifying business logic. You will **build on previous tests** by reusing mocked `Game` and `Player`.
+
+---
+
+## **4. Test command processing pipeline**
+
+These classes parse, validate, and execute commands.
+
+* **`CommandValidator`**
+* **`CommandParser`**
+* **`CommandExecutor`**
+* **`CommandProcessor`**
+
+> Goal: Verify that input commands reach the correct `commands` class and trigger expected `ActionResult`.
+> Build on previous tests: You can reuse mocked `ParsedCommand` and `Combat` tests to simulate full pipeline behavior.
+
+---
+
+## **5. Test the controller/UI interaction classes**
+
+Next, we cover the UI-controller layer. Most of these will require **mocking of Game/Player/CommandExecutor/GamePanel**.
+
+* **Buttons** (`BookButton`, `CommandButton`, `MapButton`, etc.) – test that they trigger the correct callbacks.
+* **`MapController`** – verify mouse clicks invoke correct map logic.
+
+> Goal: Ensure UI interactions call your game logic correctly. Not testing Swing rendering, just that the logic is triggered.
+
+---
+
+## **6. Test view classes**
+
+Finally, the classes in `view/`:
+
+* **`MessagePanel`**, **`LightningPanel`**, **`MapPanel`**, **`GamePanel`**, etc.
+
+> These will mostly be **integration-style unit tests**, where you verify:
+>
+> * Correct Swing components are updated.
+> * Timers or events are triggered correctly.
+> * Messages and images display as expected.
+
+> Build on previous tests: Mock `GameController`, `GameState`, and `Player` as needed. Use your tested `Combat` and `Game` mocks to simulate game behavior.
+
+---
+
+## **7. Optional: persistence tests**
+
+* **`Persistence`** – test saving and loading game state. Mock `Game`/`Player` if necessary.
+
+> You already ran into `ClassNotFoundException` – this will be important to test **file I/O** and classpath issues.
+
+---
+
+### **Testing Approach Notes**
+
+1. **Incremental building**:
+
+   * Start small and isolated → `ActionResult`, `Player`.
+   * Then test logic → `Combat`, `Move`.
+   * Finally test integration/UI → `MessagePanel`, `MapPanel`.
+
+2. **Use mocks liberally** for `Game`, `Player`, `ParsedCommand` to isolate the class under test.
+
+3. **Reuse mocks and setup**:
+
+   * For example, `mockGame` and `mockPlayer` used in `CombatTest` can also be used in `MoveTest` or `ConsumeTest`.
+
+4. **Private methods**:
+
+   * Either test via public methods that call them (preferred), or use reflection sparingly for complex internal logic.
+
+Default Package
+	- Main
+	- Start
+command_process
+	- ActionResult
+	- CommandExecutor
+	- CommandParser
+	- CommandProcessor
+	- CommandValidator
+	- ParsedCommand
+commands
+	- Combat
+	- Consume
+	- Examine
+	- ItemCommands
+	- Miscellaneous
+	- Move
+controller
+	- BookButton
+	- CommandButton
+	- CommandListener
+	- MapButton
+	- MapController
+	- QuitButton
+	- SearchGameButton
+	- ShelterButton
+	- ShowMainViewButton
+game
+	- Game
+	- GameEngine
+	- GameIntialiser
+	- MessageBuilder
+	- Player
+	- PostCommand
+	- RandomExitHandler
+	- SpecialExitHandler
+	- SpecialItemHandler
+	- Swimming
+	- SwimmingHandler
+persistence
+	- Persistence
+ui
+	- GameController
+	- GameState
+view
+	- CommandPanel
+	- GameFrame
+	- GamePanel
+	- LighningPanel
+	- MainGamePanel
+	- MapPanel
+	- MessagePanel
+	- RoomPanle
+	- StatusPanel
+   
