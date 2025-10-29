@@ -5,8 +5,8 @@
 
 
 
-- Pick Flower? Should Work
-	- Lily & Flower should be interchangeable
+
+
 - Seems that you can kill/attack something that is not present.
 - Say something when you chop the roots
 - The papers & examining them isn't working
@@ -34,32 +34,32 @@
 		
 		
 
+
+
+
 **** Test the special items that the rules in SpecialItemHandler work
-
 	27	ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
-
-
 	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
 
 
 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **** Make sure the special exits are correct
-
-
-
-
-
 	37	ROOM_CASTLE_WALL	- 	You can also go north into the portal
-
-
-
-
-
-
-
-
-
-
 - Combat
 
 
@@ -105,7 +105,7 @@
 	- Take
 
 
-		- Not valid pick - lillies
+
 
 	
 

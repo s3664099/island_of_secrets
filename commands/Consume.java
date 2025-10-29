@@ -148,7 +148,7 @@ public class Consume {
 	private ActionResult executeEat(Game game,Player player) {
 		
 		ActionResult result = new ActionResult(game,player,false);
-		
+
 		if (isEatingLillies(nounNumber,game)) {
 			result = eatLillies(game,player);
 		} else {

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 5 September 2025
+Version: 4.18
+Date: 28 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -25,6 +25,9 @@ import game.Game;
  * and special cases such as movement, eating, and looking at objects.
  */
 public class CommandParser {
+	
+	private static final String LILY = "lily";
+	private static final String FLOWER = "flower";
 	
 	private final CommandNormaliser normaliser;
 	
@@ -119,7 +122,7 @@ public class CommandParser {
 		
 		int verbNumber = Constants.NUMBER_OF_VERBS+1;
 		int verbCount = 0;
-		
+				
 		for (String command:RawData.getVerbs()) {
 			verbCount ++;
 			
@@ -142,6 +145,10 @@ public class CommandParser {
 	 * @return the noun number if found, otherwise -1
 	 */
 	private int getNounNumber(String noun,int verbNumber) {
+		
+		if (isLily(noun)) {
+			noun = setFlower();
+		}
 		
 		int nounNumber = Constants.NUMBER_OF_NOUNS;
 				
@@ -302,6 +309,14 @@ public class CommandParser {
 				
 		return command;
 	}
+	
+	private boolean isLily(String noun) {
+		return noun.equals(LILY);
+	}
+	
+	private String setFlower() {
+		return FLOWER;
+	}
 }
 
 /* 28 April 2025 - Created File
@@ -321,4 +336,5 @@ public class CommandParser {
  * 23 July 2025 - Fixed parse look so can use look command
  * 25 August 2025 - Removed some of the magic variables. Added JavaDocs
  * 5 Sepember 2025 - Updated based on changes to consume
+ * 29 October 2025 - Added validation to change lily to flower
  */
