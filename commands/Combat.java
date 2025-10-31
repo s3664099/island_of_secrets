@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 7 September 2025
+Version: 4.10
+Date: 31 October 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -99,8 +99,6 @@ public class Combat {
 			result = wasteStaff();
 		}
 		
-		System.out.println(result.getGame().getNormalMessage());
-		
 		return result;
 	}
 	
@@ -127,6 +125,8 @@ public class Combat {
 			} else if (isStrikeFlint()) {
 				result = strikeFlint();
 			}
+		} else {
+			result = notPresent();
 		}
 		return result;
 	}
@@ -420,8 +420,13 @@ public class Combat {
      */
 	private ActionResult defaultKillRespond() {
 		reduceStats(12,10);
-		game.addMessage("That would be unwise",true,true);
+		game.addMessage("That is not possible",true,true);
 		return new ActionResult(game,player,true);
+	}
+	
+	private ActionResult notPresent() {
+		game.addMessage("That is not possible",true,true);
+		return new ActionResult(game,player,false);
 	}
 	
     /**
@@ -578,4 +583,5 @@ public class Combat {
  * 2 September 2025 - Updated based on new ActionResult
  * 7 September 2025 - Fixed and tightened code
  * 					- Add JavaDocs
+ * 31 October 2025 - Changed response when attacking something not present
  */
