@@ -324,6 +324,7 @@ public class Combat {
 	private ActionResult choppingRoots() {
 		game.getItem(GameEntities.ITEM_SAP).setItemFlag(0);
 		game.getItem(GameEntities.ITEM_SAP).setItemLocation(player.getRoom());
+		game.addMessage("You chop the roots and sap flows out", true, true);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -584,4 +585,5 @@ public class Combat {
  * 7 September 2025 - Fixed and tightened code
  * 					- Add JavaDocs
  * 31 October 2025 - Changed response when attacking something not present
+ * 				   - Added message for when chop roots
  */
