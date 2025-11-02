@@ -121,7 +121,7 @@ public class Examine {
 	
     /** @return true if the command is "examine room" */
 	private boolean isExamineRoom() {
-		return verb.equals("examine") && noun.equals("room");
+		return verb.equals("examine") && noun.equals(GameEntities.NOUN_ROOM);
 	}
 	
 
@@ -146,13 +146,13 @@ public class Examine {
 	
     /** @return true if the player is attempting to read the map outside the hut */
 	private boolean isReadMap() {
-		return noun.equals("map") && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
+		return noun.equals(GameEntities.NOUN_MAP) && player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
 				game.getRoom(player.getRoom()).getViewed();
 	}
 	
     /** @return true if the player is examining papers or a diary outside the hut */
 	private boolean isExaminePapers() {
-		return (noun.equals("papers") || noun.equals("diary")) && 
+		return (noun.equals(GameEntities.NOUN_PAPERS) || noun.equals(GameEntities.NOUN_DIARY)) && 
 				player.getRoom()==GameEntities.ROOM_OUTSIDE_HUT && 
 				game.getRoom(playerRoom).getViewed();
 	}
@@ -271,7 +271,7 @@ public class Examine {
     /** @return result of examining the pyramid location */
 	private ActionResult examinePyramid() {
 		game.addMessage("You can see quite a distance from here. To the north a forest rises into ragged peaks",true,true);
-		game.addMessage("while to the west you can see a log village on a lake. The the south is a swamp, while",false,true);
+		game.addMessage("while to the west you can see a log village on a lake. To the south is a swamp, while",false,true);
 		game.addMessage("blasted lands disappear to the east. In the middle of a lake, shrouded in mist, appears",false,true);
 		game.addMessage("to be an ancient castle.",false,true);
 		return new ActionResult(game,player,true);

@@ -410,6 +410,21 @@ public class ParsedCommand {
 	public boolean checkNounRoom() {
 		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_ROOM);
 	}
+	
+	/** @return true if the noun is 'map' */
+	public boolean checkNounMap() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_MAP);
+	}
+	
+	/** @return true if the noun is 'diary' */
+	public boolean checkNounDiary() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_DIARY);
+	}
+	
+	/** @return true if the noun is 'papers' */
+	public boolean checkNounPapers() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_PAPERS);
+	}
 }
 
 /* 24 April 2025 - Created File

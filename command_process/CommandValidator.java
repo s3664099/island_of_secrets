@@ -124,7 +124,7 @@ public class CommandValidator {
 		Game game = result.getGame();
 		Player player = result.getPlayer();
 		
-		if (checkExamineTable(command) || checkExamineRoom(command)) {
+		if (checkOtherNoun(command)) {
 			result = validateOtherNoun(game,player);
 		}
 		
@@ -237,14 +237,14 @@ public class CommandValidator {
 		return command.checkDrink();
 	}
 	
-	private boolean checkExamineTable(ParsedCommand command) {
-		return command.checkExamine() && command.checkNounTable();
+	private boolean checkOtherNoun(ParsedCommand command) {
+		return command.checkExamine() && (command.checkNounTable() ||
+										  command.checkNounRoom() ||
+										  command.checkNounMap() ||
+										  command.checkNounPapers() ||
+										  command.checkNounDiary());
 	}
 	
-	private boolean checkExamineRoom(ParsedCommand command) {
-		return command.checkExamine() && command.checkNounRoom();
-	}
-
     // ===== Error handling =====
 
 	/** Adds a "You can't do that" message when verb/noun invalid. */

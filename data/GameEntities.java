@@ -167,6 +167,9 @@ public class GameEntities {
 	public static final String SPACE = " ";
 	public static final String NOUN_TABLE = "table";
 	public static final String NOUN_ROOM = "room";
+	public static final String NOUN_MAP = "map";
+	public static final String NOUN_PAPERS = "papers";
+	public static final String NOUN_DIARY = "diary";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
@@ -252,5 +255,5 @@ public class GameEntities {
  * 21 July 2025 - Added code for go command
  * 23 August 2025 - Added further variables
  * 24 August 2025 - Added remaining commands
- * 2 November 2025 - Added noun room
+ * 2 November 2025 - Added noun room, map, and papers
  */
