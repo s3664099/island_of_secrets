@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 31 October 2025
+Version: 4.11
+Date: 2 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -209,10 +209,18 @@ public class Combat {
      * @return true if tapping a person/creature, false otherwise
      */
 	private boolean isTapPerson() {
-		return (verbNumber==GameEntities.CMD_TAP && 
-				(nounNumber>GameEntities.ITEM_TRAPDOOR && nounNumber<GameEntities.ITEM_BOOKS) || 
-				(nounNumber>GameEntities.ITEM_CLOAK && nounNumber<GameEntities.ITEM_ROCKS) || 
-				 nounNumber==GameEntities.ITEM_BEAST);
+		return (verbNumber==GameEntities.CMD_TAP && isKillPerson());
+	}
+
+    /**
+     * Checks if the player is killing a valid character or creature.
+     *
+     * @return true if killing a person/creature, false otherwise
+     */
+	private boolean isKillPerson() {
+		return (nounNumber==GameEntities.ITEM_SWAMPMAN || nounNumber == GameEntities.ITEM_BOAT ||
+				nounNumber>GameEntities.ITEM_CLOAK && nounNumber<GameEntities.ITEM_ROCKS || 
+				nounNumber==GameEntities.ITEM_BEAST || nounNumber == GameEntities.ITEM_DACTYL);
 	}
 	
     /**
@@ -230,7 +238,7 @@ public class Combat {
      * @return true if the kill is fatal, false otherwise
      */
 	private boolean isFatalResponse() {
-		return game.getItem(nounNumber).getItemLocation() == player.getRoom();
+		return isKillPerson() && game.getItem(nounNumber).getItemLocation() == player.getRoom();
 	}
 	
     /**
@@ -586,4 +594,5 @@ public class Combat {
  * 					- Add JavaDocs
  * 31 October 2025 - Changed response when attacking something not present
  * 				   - Added message for when chop roots
+ * 2 November 2025 - Fixed problem with killing/tapping inanimate items. And not certain creatures
  */
