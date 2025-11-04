@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 2 September 2025
+Version: 4.9
+Date: 4 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -73,12 +73,14 @@ public class Consume {
 
 		boolean validEat = true;
 		
-		if (noun.equals("apple")) {
+		if (noun.equals(GameEntities.NOUN_APPLE)) {
 			nounNumber = Constants.FOOD_THRESHOLD+1;
+		} else if (noun.equals(GameEntities.NOUN_LILY)) {
+			nounNumber = GameEntities.ITEM_LILY;
 		}
-
+		
 		if ((nounNumber<=Constants.FOOD_THRESHOLD || nounNumber>=Constants.DRINK_THRESHOLD) 
-				&& noun.length()>0) {
+				&& nounNumber != GameEntities.ITEM_LILY && noun.length()>0) {
 				
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
@@ -148,9 +150,11 @@ public class Consume {
 	private ActionResult executeEat(Game game,Player player) {
 		
 		ActionResult result = new ActionResult(game,player,false);
-
+	
 		if (isEatingLillies(nounNumber,game)) {
 			result = eatLillies(game,player);
+		} else if (isEatingLilliesNotCarrying(nounNumber,game)) {
+			result = notCarryingLillies(game,player);
 		} else {
 			result = eatFood(game,player);
 		}
@@ -215,10 +219,16 @@ public class Consume {
 		return player;
 	}
 	
-    /** @return true if the player is eating lilies at the correct location. */
+    /** @return true if the player is eating lilies while carrying them. */
 	private boolean isEatingLillies(int nounNumber,Game game) {
 		return nounNumber == GameEntities.ITEM_LILY && 
 				game.getItem(GameEntities.ITEM_LILY).getItemLocation()==0;
+	}
+	
+    /** @return true if the player is eating lilies while not carrying them. */
+	private boolean isEatingLilliesNotCarrying(int nounNumber,Game game) {
+		return nounNumber == GameEntities.ITEM_LILY && 
+				game.getItem(GameEntities.ITEM_LILY).getItemLocation()!=0;
 	}
 	
     /** @return true if the noun corresponds to liquid. */
@@ -236,11 +246,19 @@ public class Consume {
      * Applies the effects of eating lilies: reduces wisdom and strength,
      * and adds an illness message.
      */
-
 	private ActionResult eatLillies(Game game, Player player) {
 		player.setStat("wisdom",(int) player.getStat("wisdom")-5);
 		player.setStat("strength",(float) player.getStat("strength")-2);
 		game.addMessage("They make you very ill",true,true);
+		return new ActionResult(game,player,true);
+	}
+	
+    /**
+     * Result when the player attempts to eat the lillies while not carrying them.
+     */
+	private ActionResult notCarryingLillies(Game game, Player player) {
+		player.setStat("wisdom",(int) player.getStat("wisdom")-1);
+		game.addMessage("You aren't carrying them",true,true);
 		return new ActionResult(game,player,true);
 	}
 	
@@ -327,4 +345,5 @@ public class Consume {
  * 26 July 2025 - Added setMessageGameState
  * 2 September 2025 - Updated based on new ActionResult
  * 4 September 2025 - Removed extraneous code and tightened if statements
+ * 4 November 2025 - Fixed problem where unable to eat lilies
  */
