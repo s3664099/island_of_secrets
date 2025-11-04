@@ -109,7 +109,7 @@ public class Consume {
 		
 		if ((nounNumber<Constants.DRINK_THRESHOLD || nounNumber>Constants.MAX_CARRIABLE_ITEMS) 
 				&& noun.length()>0) {
-				game.addMessage("You can't "+command,true,true);
+				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 				validDrink = false;
 		} else if (((int) player.getStat("drink"))<1) {
