@@ -172,7 +172,10 @@ public class GameEntities {
 	public static final String NOUN_DIARY = "diary";
 	public static final String NOUN_APPLE = "apple";
 	public static final String NOUN_LILY = "lily";
+	public static final String NOUN_FLOWER = "flower";
 	public static final String NOUN_WINE = "wine";
+	public static final String NOUN_BOATMAN = "boatman";
+	public static final String NOUN_BOAT = "boat";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
