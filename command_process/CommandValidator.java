@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.22
-Date: 2 November 2025
+Version: 4.23
+Date: 5 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -126,6 +126,8 @@ public class CommandValidator {
 		
 		if (checkOtherNoun(command)) {
 			result = validateOtherNoun(game,player);
+		} else if (checkDrinkWine(command)) {
+			result = validateDrinkWine(command,game,player);
 		}
 		
 		return result;
@@ -237,6 +239,10 @@ public class CommandValidator {
 		return command.checkDrink();
 	}
 	
+	private boolean checkDrinkWine(ParsedCommand command) {
+		return command.checkDrink() && command.checkNounWine();
+	}
+	
 	private boolean checkOtherNoun(ParsedCommand command) {
 		return command.checkExamine() && (command.checkNounTable() ||
 										  command.checkNounRoom() ||
@@ -324,6 +330,10 @@ public class CommandValidator {
 		return new Consume(command).validateDrink(game,player);
 	}
 	
+	private ActionResult validateDrinkWine(ParsedCommand command, Game game, Player player) {
+		return new Consume(command).validateDrinkWine(game,player);
+	}
+	
 	private ActionResult validateOtherNoun(Game game, Player player) {
 		return new ActionResult(game,player,true);
 	}
@@ -354,4 +364,5 @@ public class CommandValidator {
  * 28 September 2025 - Updated validator to allow for load/save games
  * 13 October 2025 - Added special command for examining the table
  * 2 November 2025 - Added validation for noun room
+ * 5 November 2025 - Added check to confirm drinking wine
  */

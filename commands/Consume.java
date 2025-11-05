@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 4 November 2025
+Version: 4.10
+Date: 5 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -92,7 +92,7 @@ public class Consume {
 		
 		return new ActionResult(game,player,validEat);
 	}
-	
+		
     /**
      * Validates whether the player can drink the specified noun.
      * <ul>
@@ -108,9 +108,9 @@ public class Consume {
 	public ActionResult validateDrink(Game game, Player player) {
 
 		boolean validDrink = true;
-		
+
 		if ((nounNumber<Constants.DRINK_THRESHOLD || nounNumber>Constants.MAX_CARRIABLE_ITEMS) 
-				&& noun.length()>0) {
+				&& nounNumber != GameEntities.ITEM_LIQUID && noun.length()>0) {
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				player.setStat("wisdom",(int) player.getStat("wisdom")-1);
 				validDrink = false;
@@ -121,7 +121,10 @@ public class Consume {
 		return new ActionResult(game,player,validDrink);
 	}
 	
-
+	public ActionResult validateDrinkWine(Game game,Player player) {
+		return new ActionResult(game,player,true);
+	}
+	
     /**
      * Executes the parsed command by delegating to the appropriate handler
      * (eat, drink, or rest).
@@ -283,14 +286,13 @@ public class Consume {
 	private ActionResult drinkLiquid(Game game,Player player,int nounNumber) {
 		
 		boolean success = false;
-		
+		System.out.println(game.getItemFlagSum(GameEntities.ITEM_JUG));
 		if(game.getItemFlagSum(GameEntities.ITEM_JUG)!=-1) {
-			game.addMessage("You don't have "+game.getItem(nounNumber).getItemName(),true,true);
+			game.addMessage("You don't have a jug full of bubbling green liquid",true,true);
 		} else {
 			game.addMessage("Ouch!",true,true);
 			player.setStat("strength",(float) player.getStat("strength")-4);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-7);
-			game.setMessageGameState();
 			success = true;
 			
 			int count = determineCount(game);
@@ -346,4 +348,6 @@ public class Consume {
  * 2 September 2025 - Updated based on new ActionResult
  * 4 September 2025 - Removed extraneous code and tightened if statements
  * 4 November 2025 - Fixed problem where unable to eat lilies
+ * 				   - Fixed problem with drinking liquid
+ * 5 November 2025 - Added check to confirm drinking wine
  */
