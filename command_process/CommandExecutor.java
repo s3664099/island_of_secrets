@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.24
-Date: 4 September 2025
+Version: 4.25
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -127,7 +127,7 @@ public class CommandExecutor {
 			result = new Persistence(game,player,command).quit();
 		} else if (command.checkRestart()) {
 			logger.info("Restart");
-			result = new Persistence(game,player,command).quit();
+			result = new Persistence(game,player,command).restart();
 		}
 		PostCommand updates = new PostCommand(result);
 		return updates.postUpdates();
@@ -233,4 +233,5 @@ public class CommandExecutor {
  * 1 September 2025 - Removed Magic Numbers
  * 2 September 2025 - Updated based on new ActionResult
  * 4 September 2025 - Updated based on changes to Consume
+ * 6 November 2025 - Added restart game command
  */

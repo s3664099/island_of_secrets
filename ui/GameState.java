@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 26 July 2025
+Version: 4.8
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -35,6 +35,7 @@ public class GameState implements GameStateProvider {
 	private final boolean initialGameState;
 	private final boolean saveGameState;
 	private final boolean endGameState;
+	private final boolean restartGameState;
 	private final boolean giveState;
 	private final boolean shelterState;
 	private final boolean runningState;
@@ -74,6 +75,7 @@ public class GameState implements GameStateProvider {
 		this.initialGameState = stateProvider.isInitialGameState();
 		this.saveGameState = stateProvider.isSavedGameState();
 		this.endGameState = stateProvider.isEndGameState();
+		this.restartGameState = stateProvider.isRestartGameState();
 		this.giveState = stateProvider.isGiveState();
 		this.shelterState = stateProvider.isShelterState();
 		this.runningState = stateProvider.isRunningState();
@@ -146,6 +148,11 @@ public class GameState implements GameStateProvider {
 	@Override
 	public boolean isEndGameState() {
 		return this.endGameState;
+	}
+	
+	@Override
+	public boolean isRestartGameState() {
+		return this.restartGameState;
 	}
 	
 	@Override
@@ -273,4 +280,5 @@ public class GameState implements GameStateProvider {
  * 23 April 2025 - Updated to enums instead if response required
  * 25 April 2025 - Updated based on enums in Player class.
  * 26 July 2025 - Added getPanelmessages
+ * 6 November 2025 - Added a check for a restart game state
  */

@@ -236,4 +236,5 @@ public final class GameController implements GameCommandHandler {
  * 28 July 2025 - Updated code so as to set message state
  * 15 August 2025 - Added check Lightning mode
  * 21 September 2025 - Added JavaDocs
+ * 6 November 2025 - Added restart game command
  */

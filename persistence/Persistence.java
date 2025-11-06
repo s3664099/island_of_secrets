@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 29 September 2025
+Version: 4.7
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -111,6 +111,20 @@ public class Persistence {
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
 		player.setStat("timeRemaining",1);
 		game.setEndGameState();
+		return new ActionResult(game,player,true);
+	}
+	
+    /**
+     * Ends the current game session, sets end-game state, and signals the player
+     * is quitting.
+     *
+     * @return an {@link ActionResult} indicating the game has been terminated
+     */
+	public ActionResult restart() {
+		game.addMessage("You relinquish your quest",true,true);
+		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(-1);
+		player.setStat("timeRemaining",1);
+		game.setRestartGameState();
 		return new ActionResult(game,player,true);
 	}
 	
@@ -300,4 +314,5 @@ public class Persistence {
  * 3 September 2025 - Changed for updated ActionResult changes
  * 15 September 2025 - Tightened Code and added JavaDocs
  * 29 September 2025 - Tightened Comments
+ * 6 November 2025 - Added restart game action
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 9 October 2025
+Version: 4.18
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -134,6 +134,8 @@ public class CommandPanel  extends JPanel  {
 			addSaveGameButtonPanels();
 		} else if (isEndGameState()) {
 			add(createButtonPanel("Exit",new QuitButton(game,false),BUTTON_INDENT));
+			add(createButtonPanel("Restart",new QuitButton(game,true),BUTTON_INDENT));
+		} else if (isRestartGameState()) {
 			add(createButtonPanel("Restart",new QuitButton(game,true),BUTTON_INDENT));
 		}
 				
@@ -315,7 +317,8 @@ public class CommandPanel  extends JPanel  {
 	private boolean isNormalUI() {
 		return !state.isShelterState() &&
 				!state.isSavedGameState() &&
-				!state.isEndGameState();
+				!state.isEndGameState() &&
+				!state.isRestartGameState();
 	}
 	
     /**
@@ -326,6 +329,16 @@ public class CommandPanel  extends JPanel  {
      */
 	private boolean isEndGameState() {
 		return state.isEndGameState();
+	}
+	
+    /**
+     * Checks if the game is to be restarted.
+     * where restart options is shown.
+     *
+     * @return {@code true} if the game has ended
+     */
+	private boolean isRestartGameState() {
+		return state.isRestartGameState();
 	}
 	
     /**
@@ -378,4 +391,5 @@ public class CommandPanel  extends JPanel  {
  * 27 July 2025 - Removed code not needed on map button
  * 26 September 2025 - Removed magic numbers. Added JavaDocs
  * 9 October 2025 - Changed lair to Snelm's Lair
+ * 6 November 2025 - Added restart game command
  */

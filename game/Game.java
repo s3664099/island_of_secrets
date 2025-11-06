@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 19 August 2025
+Version: 4.16
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -59,7 +59,7 @@ public class Game implements Serializable {
 	private String[] commands = {"","",""};
 	
 	/** Enum of possible game states. */
-	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,LIGHTNING }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,LIGHTNING,RESTART }
 	
 	private boolean hasMessage = false;
 	private GameState gameState = GameState.STARTED;
@@ -409,6 +409,13 @@ public class Game implements Serializable {
 		gameState = GameState.ENDED;
 	}
 	
+	/** Sets game state to restart. */
+	public void setRestartGameState() {
+		
+		logger.info("Game ended.");
+		gameState = GameState.RESTART;
+	}
+	
 	/** Checks and progresses from STARTED to RUNNING state. */
 	public boolean isInitialGameState() {
 		
@@ -431,6 +438,11 @@ public class Game implements Serializable {
 	/** Returns true if game is ended. */
 	public boolean isEndGameState() {
 		return gameState == GameState.ENDED;
+	}
+	
+	/** Returns true if game has restarted. */
+	public boolean isRestartGameState() {
+		return gameState == GameState.RESTART;
 	}
 	
 	/** Returns true if game is in GIVE state. */
@@ -513,4 +525,5 @@ public class Game implements Serializable {
  * 25 July 2025 - Added message state set when panel message added.
  * 28 July 2025 - Created separate boolean for message state
  * 19 August 2025 - Tightened code based on recommendations. Added JavaDocs
+ * 6 November 2025 - Added a restart state
  */
