@@ -156,7 +156,8 @@ public class GameEntities {
 	public static final int CMD_LOAD = 40;
 	public static final int CMD_SAVE = 41;
 	public static final int CMD_QUIT = 42;
-	public static final int CMD_NO_VERB = 43;
+	public static final int CMD_RESTART = 43;
+	public static final int CMD_NO_VERB = Constants.NUMBER_OF_VERBS+1;
 	
 	public static final String WORD_EXAMINE = "examine";
 	public static final String WORD_GIVE = "give";
@@ -262,4 +263,5 @@ public class GameEntities {
  * 23 August 2025 - Added further variables
  * 24 August 2025 - Added remaining commands
  * 2 November 2025 - Added noun room, map, and papers
+ * 6 November 2025 - Increased for a Restart option
  */

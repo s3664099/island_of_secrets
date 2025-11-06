@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 20 August 2025
+Version: 4.8
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -22,7 +22,7 @@ public class Constants {
 	//Game related constants
 	public static final int NUMBER_OF_ROOMS = 80;
 	public static final int NUMBER_OF_ITEMS = 43;
-	public static final int NUMBER_OF_VERBS = 42;
+	public static final int NUMBER_OF_VERBS = 43;
 	public static final int NUMBER_OF_NOUNS = 52;
 	public static final int NUMBER_EXITS = 4;
 	public static final int FLAG_HIDDEN = 9;
@@ -70,4 +70,5 @@ public class Constants {
  * 14 July 2025 - Increased size of message
  * 19 August 2025 - Added more constants from the game class
  * 20 August 2025 - Added hidden flag
+ * 6 November 2025 - Increased number of verbs by 1
 */

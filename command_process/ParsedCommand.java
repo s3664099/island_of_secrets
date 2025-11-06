@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.23
-Date: 5 November 2025
+Version: 4.24
+Date: 6 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -52,7 +52,7 @@ public class ParsedCommand {
      */
 	private enum CommandType { NONE,TAKE,GIVE,DROP,EAT,DRINK,RIDE,OPEN,CHOP,ATTACK,KILL,SWIM,SHELTER,
 								HELP,SCRATCH,CATCH,RUB,READ,EXAMINE,FILL,SAY,WAIT,WAVE,INFO,
-								LOAD,SAVE,QUIT};
+								LOAD,SAVE,QUIT,RESTART};
 
 	private CommandState commandState = CommandState.NONE;
 	private CommandType commandType = CommandType.NONE;
@@ -111,7 +111,7 @@ public class ParsedCommand {
 					verbNumber == GameEntities.CMD_SAVE || verbNumber == GameEntities.CMD_QUIT ||
 					verbNumber == GameEntities.CMD_REST || verbNumber == GameEntities.CMD_NORTH ||
 					verbNumber == GameEntities.CMD_SOUTH || verbNumber == GameEntities.CMD_EAST ||
-					verbNumber == GameEntities.CMD_WEST) {
+					verbNumber == GameEntities.CMD_WEST || verbNumber == GameEntities.CMD_RESTART) {
 			commandState = CommandState.SINGLE_COMMAND;
 			setSingleCommand(verbNumber);
 		} else {
@@ -151,6 +151,8 @@ public class ParsedCommand {
 			commandType = CommandType.SWIM;
 		} else if (verbNumber == GameEntities.CMD_SHELTER) {
 			commandType = CommandType.SHELTER;
+		} else if (verbNumber == GameEntities.CMD_RESTART) {
+			commandType = CommandType.RESTART;
 		}
 	}
 	
@@ -401,6 +403,11 @@ public class ParsedCommand {
 		return commandType == CommandType.QUIT;
 	}
 	
+    /** @return true if the command is a RESTART command */
+	public boolean checkRestart() {
+		return commandType == CommandType.RESTART;
+	}
+	
 	/** @return true if the noun is 'table' */
 	public boolean checkNounTable() {
 		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_TABLE);
@@ -458,4 +465,5 @@ public class ParsedCommand {
  * 13 October 2025 - Added check to confirm that table is a valid command
  * 2 November 2025 - Added check to confirm that room is a valid command
  * 5 November 2025 - Added check to confirm drinking wine
+ * 6 November 2025 - Added restart command
  */

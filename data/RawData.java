@@ -172,7 +172,7 @@ public class RawData {
 		"eat","drink","ride","open","pick","chop","chip","tap","break","fight",					//20
 		"strike","attack","hit","kill","swim","shelter","help","scratch","catch","rub",			//30
 		"polish","read","examine","fill","say","wait","rest","wave","info","load",				//40
-		"save","quit","games"																	//43
+		"save","quit","restart"																	//43
 	};
 	
 	private static final String[] NOUNS = {

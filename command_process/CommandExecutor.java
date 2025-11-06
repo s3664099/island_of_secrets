@@ -125,6 +125,9 @@ public class CommandExecutor {
 		} else if (command.checkQuit()) {
 			logger.info("Quit");
 			result = new Persistence(game,player,command).quit();
+		} else if (command.checkRestart()) {
+			logger.info("Restart");
+			result = new Persistence(game,player,command).quit();
 		}
 		PostCommand updates = new PostCommand(result);
 		return updates.postUpdates();
