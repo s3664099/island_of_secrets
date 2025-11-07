@@ -278,6 +278,7 @@ public class ItemCommands {
 	 * Executes a give command via the {@link GiveHandler}.
 	 */
 	private ActionResult executeGive(Game game,Player player, ParsedCommand command) {
+		System.out.println(command.getCommand());
 		return new GiveHandler(game,player,command).execute();
 	}
 	
@@ -668,7 +669,7 @@ public class ItemCommands {
 			
 			game.addMessage("It is refused.",true,true);
 			ActionResult result = new ActionResult(game,player,true);
-			
+
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
 				result = giveToSnake();
