@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.23
-Date: 5 November 2025
+Version: 4.24
+Date: 8 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -124,10 +124,12 @@ public class CommandValidator {
 		Game game = result.getGame();
 		Player player = result.getPlayer();
 		
-		if (checkOtherNoun(command)) {
-			result = validateOtherNoun(game,player);
+		if (checkExamineNoun(command)) {
+			result = validateExamineNoun(game,player);
 		} else if (checkDrinkWine(command)) {
 			result = validateDrinkWine(command,game,player);
+		} else if (checkGiveNoun(command)) {
+			result = validateGiveNoun(game,player);
 		}
 		
 		return result;
@@ -243,12 +245,17 @@ public class CommandValidator {
 		return command.checkDrink() && command.checkNounWine();
 	}
 	
-	private boolean checkOtherNoun(ParsedCommand command) {
+	private boolean checkExamineNoun(ParsedCommand command) {
 		return command.checkExamine() && (command.checkNounTable() ||
 										  command.checkNounRoom() ||
 										  command.checkNounMap() ||
 										  command.checkNounPapers() ||
 										  command.checkNounDiary());
+	}
+	
+	private boolean checkGiveNoun(ParsedCommand command) {
+		return command.checkExamine() && (command.checkNounFood() ||
+										  command.checkNounDrink());
 	}
 	
     // ===== Error handling =====
@@ -334,7 +341,11 @@ public class CommandValidator {
 		return new Consume(command).validateDrinkWine(game,player);
 	}
 	
-	private ActionResult validateOtherNoun(Game game, Player player) {
+	private ActionResult validateExamineNoun(Game game, Player player) {
+		return new ActionResult(game,player,true);
+	}
+	
+	private ActionResult validateGiveNoun(Game game, Player player) {
 		return new ActionResult(game,player,true);
 	}
 }
@@ -365,4 +376,5 @@ public class CommandValidator {
  * 13 October 2025 - Added special command for examining the table
  * 2 November 2025 - Added validation for noun room
  * 5 November 2025 - Added check to confirm drinking wine
+ * 8 November 2025 - Added validation for giving food & drink
  */

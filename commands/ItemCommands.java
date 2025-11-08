@@ -278,7 +278,6 @@ public class ItemCommands {
 	 * Executes a give command via the {@link GiveHandler}.
 	 */
 	private ActionResult executeGive(Game game,Player player, ParsedCommand command) {
-		System.out.println(command.getCommand());
 		return new GiveHandler(game,player,command).execute();
 	}
 	

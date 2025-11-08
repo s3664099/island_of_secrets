@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.26
-Date: 2 November 2025
+Version: 4.27
+Date: 8 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -177,6 +177,8 @@ public class GameEntities {
 	public static final String NOUN_WINE = "wine";
 	public static final String NOUN_BOATMAN = "boatman";
 	public static final String NOUN_BOAT = "boat";
+	public static final String NOUN_FOOD = "food";
+	public static final String NOUN_DRINK = "drink";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
@@ -264,4 +266,5 @@ public class GameEntities {
  * 24 August 2025 - Added remaining commands
  * 2 November 2025 - Added noun room, map, and papers
  * 6 November 2025 - Increased for a Restart option
+ * 8 November 2025 - Added nouns for food & drink
  */

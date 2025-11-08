@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.24
-Date: 6 November 2025
+Version: 4.25
+Date: 8 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -437,6 +437,16 @@ public class ParsedCommand {
 	public boolean checkNounWine() {
 		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_WINE);
 	}
+	
+	/** @return true if the noun is 'food' */
+	public boolean checkNounFood() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_FOOD);
+	}
+	
+	/** @return true if the noun is 'drink' */
+	public boolean checkNounDrink() {
+		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_DRINK);
+	}
 }
 
 /* 24 April 2025 - Created File
@@ -466,4 +476,5 @@ public class ParsedCommand {
  * 2 November 2025 - Added check to confirm that room is a valid command
  * 5 November 2025 - Added check to confirm drinking wine
  * 6 November 2025 - Added restart command
+ * 8 November 2025 - Added food & drink nouns
  */
