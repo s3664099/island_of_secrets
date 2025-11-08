@@ -160,7 +160,7 @@ public class ItemCommands {
 		
 		//Validates the receiver
 		} else {
-			
+
 			String object = getObject(commands);
 			int objectNumber = getNounNumber(object);
 			if (objectNumber == -1) {
@@ -168,6 +168,12 @@ public class ItemCommands {
 				result = result.failure(game, player);
 			} else if (playerRoom != game.getItem(objectNumber).getItemLocation()) {
 				game.addMessage("The "+object+" is not here.",true,true);
+				result = result.failure(game, player);
+			} else if (hasNoFood(player,command)) {
+				game.addMessage("You have no food", true, true);
+				result = result.failure(game, player);
+			} else if (hasNoDrink(player,command)) {
+				game.addMessage("You have no drink", true, true);
 				result = result.failure(game, player);
 			}
 		}
@@ -278,6 +284,20 @@ public class ItemCommands {
 	 */
 	private ActionResult executeGive(Game game,Player player, ParsedCommand command) {
 		return new GiveHandler(game,player,command).execute();
+	}
+	
+	/**
+	 * returns true if player has food, false if not
+	 */
+	private boolean hasNoFood(Player player, ParsedCommand command) {
+		return command.checkNounFood() && (int) player.getStat("food")<1;
+	}
+	
+	/**
+	 * returns true if player has drink, false if not
+	 */
+	private boolean hasNoDrink(Player player, ParsedCommand command) {
+		return command.checkNounDrink() && (int) player.getStat("drink")<1;
 	}
 	
 	/**

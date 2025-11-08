@@ -20,10 +20,10 @@
 
 
 
-- Don't see boatman - can't give water or food
-- Can't give food or water to logmen
+- Don't see boatman - can't give water or food - Need to recognise boatman as well as boat
+- Can't give food or water to logmen - need to reduce food/drink
 - Can't give food to anything
-- Can't give water to villager
+- Can't give water to villager - recognise drink/water
 - Can't shelter with two commands
 
 
