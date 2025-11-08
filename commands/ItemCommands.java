@@ -163,7 +163,6 @@ public class ItemCommands {
 			
 			String object = getObject(commands);
 			int objectNumber = getNounNumber(object);
-			
 			if (objectNumber == -1) {
 				game.addMessage("I do not see the "+object+" here!", true, true);
 				result = result.failure(game, player);

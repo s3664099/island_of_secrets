@@ -125,11 +125,14 @@ public class CommandValidator {
 		Player player = result.getPlayer();
 		
 		if (checkExamineNoun(command)) {
+			logger.info("Special Examine command");
 			result = validateExamineNoun(game,player);
 		} else if (checkDrinkWine(command)) {
+			logger.info("Special Drink Wine");
 			result = validateDrinkWine(command,game,player);
 		} else if (checkGiveNoun(command)) {
-			result = validateGiveNoun(game,player);
+			logger.info("Special Give Food Drink");
+			result = new ItemCommands().validateGive(game, player, command);
 		}
 		
 		return result;
@@ -254,7 +257,7 @@ public class CommandValidator {
 	}
 	
 	private boolean checkGiveNoun(ParsedCommand command) {
-		return command.checkExamine() && (command.checkNounFood() ||
+		return command.checkGive() && (command.checkNounFood() ||
 										  command.checkNounDrink());
 	}
 	
@@ -342,10 +345,6 @@ public class CommandValidator {
 	}
 	
 	private ActionResult validateExamineNoun(Game game, Player player) {
-		return new ActionResult(game,player,true);
-	}
-	
-	private ActionResult validateGiveNoun(Game game, Player player) {
 		return new ActionResult(game,player,true);
 	}
 }

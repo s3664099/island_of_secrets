@@ -440,12 +440,12 @@ public class ParsedCommand {
 	
 	/** @return true if the noun is 'food' */
 	public boolean checkNounFood() {
-		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_FOOD);
+		return splitFullCommand[1] != null && splitFullCommand[1].equals(GameEntities.NOUN_FOOD);
 	}
 	
 	/** @return true if the noun is 'drink' */
 	public boolean checkNounDrink() {
-		return splitTwoCommand[1] != null && splitTwoCommand[1].equals(GameEntities.NOUN_DRINK);
+		return splitFullCommand[1] != null && splitFullCommand[1].equals(GameEntities.NOUN_DRINK);
 	}
 }
 
