@@ -102,6 +102,9 @@ public class CommandParser {
 		
 		if(commands.length>1) {
 			splitCommand[1] = rawInput.substring(commands[0].length(),rawInput.length());
+			if (isBoatman(splitCommand[1])) {
+				splitCommand[1] = setBoat();
+			}
 		}
 		
 		return splitCommand;

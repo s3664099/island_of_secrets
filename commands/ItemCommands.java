@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 27 October 2025
+Version: 4.17
+Date: 10 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -208,6 +208,10 @@ public class ItemCommands {
 		int nounCount = 0;
 		int nounNumber = -1;
 		
+		if (isBoatman(object)) {
+			object = setBoat();
+		}
+		
 		if (object != null) {
 			for (String command:RawData.getNouns()) {
 				nounCount ++;
@@ -298,6 +302,20 @@ public class ItemCommands {
 	 */
 	private boolean hasNoDrink(Player player, ParsedCommand command) {
 		return command.checkNounDrink() && (int) player.getStat("drink")<1;
+	}
+	
+	/**
+	 * returns true if player giving to the boatman
+	 */
+	private boolean isBoatman(String noun) {
+		return noun.equals(GameEntities.NOUN_BOATMAN);
+	}
+	
+	/**
+	 * returns the string 'boat'
+	 */
+	private String setBoat() {
+		return GameEntities.NOUN_BOAT;
 	}
 	
 	/**
@@ -687,7 +705,7 @@ public class ItemCommands {
 			
 			game.addMessage("It is refused.",true,true);
 			ActionResult result = new ActionResult(game,player,true);
-
+			System.out.println("Give");
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
 				result = giveToSnake();
@@ -874,5 +892,5 @@ public class ItemCommands {
  * 11 September 2025 - Added JavaDocs for Take and main section of the class
  * 27 October 2025 - Fixed problem where beast not being dropped.
  * 				   - If drop rope while carrying beast, release beast as well.
- * 
+ * 10 November 2025 - Added validator to set the noun boatman to boat
  */
