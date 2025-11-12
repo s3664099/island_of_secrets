@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 10 November 2025
+Version: 4.18
+Date: 12 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -188,13 +188,24 @@ public class ItemCommands {
 	 * @return the object name as a string
 	 */
 	private String getObject(String[] commands) {
-		
 		String object = commands[3];
-		
 		if (object.equals("to")) {
 			object = commands[4];
 		}
 		return object;
+	}
+	
+	/**
+	 * Extracts the subject of a "give" command (the gift).
+	 *
+	 * @param commands the tokenized command array
+	 * @return the subject name as a string
+	 */
+	private String getNoun(String[] commands) {
+		for (String command:commands) {
+			System.out.println(command);
+		}
+		return commands[1];
 	}
 	
 	/**
@@ -683,14 +694,16 @@ public class ItemCommands {
 		private final String codedCommand;
 		private final String[] commands;
 		private final String object;
+		private final String noun;
 		
 		
 		public GiveHandler(Game game, Player player, ParsedCommand command) {
 			this.game = game;
 			this.player = player;
-			this.nounNumber = command.getNounNumber();
-			this.codedCommand = command.getCodedCommand();
 			this.commands = command.getSplitFullCommand();
+			this.nounNumber = command.getNounNumber();
+			this.noun = getNoun(commands);
+			this.codedCommand = command.getCodedCommand();			
 			this.object = getObject(commands);
 			this.objectNumber = getNounNumber(object);
 			
@@ -705,7 +718,7 @@ public class ItemCommands {
 			
 			game.addMessage("It is refused.",true,true);
 			ActionResult result = new ActionResult(game,player,true);
-			System.out.println("Give");
+
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
 				result = giveToSnake();
@@ -819,7 +832,14 @@ public class ItemCommands {
 		 */
 		private ActionResult giveToLogmen() {
 			game.addMessage("It is taken",true,true);
-			game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_STOREROOM);
+			if (noun.equals(GameEntities.NOUN_FOOD)) {
+				player.setStat("food", (int) player.getStat("food")-1);
+			} else if (noun.equals(GameEntities.NOUN_DRINK)) {
+				player.setStat("drink",(int) player.getStat("drink")-1);
+			} else {
+				game.addMessage("It is taken",true,true);
+				game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_STOREROOM);
+			}
 			return new ActionResult(game,player,true);
 		}
 		
