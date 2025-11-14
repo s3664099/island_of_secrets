@@ -121,12 +121,15 @@ public class ItemCommands {
 		int noun = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player,true);
 
+		//Check if the noun is food/drink and if so just check if have some.
+		
 		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
 			(noun>Constants.FOOD_THRESHOLD && noun != GameEntities.ITEM_CLOAK)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			result = result.failure(game, player);
 		}
 		
+		//Huh!
 		if (command.checkGive()) {
 			if(noun == GameEntities.ITEM_WATER) {
 				result = result.failure(game, player);
@@ -718,7 +721,7 @@ public class ItemCommands {
 			
 			game.addMessage("It is refused.",true,true);
 			ActionResult result = new ActionResult(game,player,true);
-
+						
 			//Removes the snake from the hut by giving it an apple
 			if(isSnake()) {
 				result = giveToSnake();
@@ -913,4 +916,5 @@ public class ItemCommands {
  * 27 October 2025 - Fixed problem where beast not being dropped.
  * 				   - If drop rope while carrying beast, release beast as well.
  * 10 November 2025 - Added validator to set the noun boatman to boat
+ * 12 November 2025 - Remove food & drink when give
  */
