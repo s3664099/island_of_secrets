@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.18
-Date: 12 November 2025
+Version: 4.19
+Date: 16 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -750,8 +750,8 @@ public class ItemCommands {
 		
 		/** @return true if the recipient is a villager */
 		private boolean isVillager() {
-			return validateCode(codedCommand,GameEntities.CODE_VILLAGER) && objectNumber==GameEntities.ITEM_VILLAGER && 
-					((int) player.getStat("drink"))>1;
+			return (validateCode(codedCommand,GameEntities.CODE_VILLAGER) || noun.equals(GameEntities.NOUN_DRINK)) && 
+					objectNumber==GameEntities.ITEM_VILLAGER && ((int) player.getStat("drink"))>1;
 		}
 		
 		/** @return true if the recipient is the swampman */
@@ -910,4 +910,5 @@ public class ItemCommands {
  * 				   - If drop rope while carrying beast, release beast as well.
  * 10 November 2025 - Added validator to set the noun boatman to boat
  * 12 November 2025 - Remove food & drink when give
+ * 16 November 2025 - Giving water to villager now works.
  */
