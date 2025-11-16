@@ -120,22 +120,18 @@ public class ItemCommands {
 		
 		int noun = command.getNounNumber();
 		ActionResult result = new ActionResult(game,player,true);
-
-		//Check if the noun is food/drink and if so just check if have some.
-		
-		if (game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING || 
-			(noun>Constants.FOOD_THRESHOLD && noun != GameEntities.ITEM_CLOAK)) {
+				
+		if ((noun>Constants.FOOD_THRESHOLD && noun<=Constants.DRINK_THRESHOLD && 
+				   (int) player.getStat("food")<1)||(noun>=Constants.DRINK_THRESHOLD &&
+				   noun<=Constants.MAX_CARRIABLE_ITEMS && (int) player.getStat("drink")<1)) {
+			game.addMessage("I don't have any. Sorry.",true,true);
+			result = result.failure(game, player);
+		} else if ((game.getItem(noun).getItemLocation()!=GameEntities.ROOM_CARRYING && 
+					noun<=Constants.FOOD_THRESHOLD) || (noun>Constants.MAX_CARRIABLE_ITEMS && 
+					noun != GameEntities.ITEM_CLOAK)) {
 			game.addMessage("I don't have that. Sorry.",true,true);
 			result = result.failure(game, player);
-		}
-		
-		//Huh!
-		if (command.checkGive()) {
-			if(noun == GameEntities.ITEM_WATER) {
-				result = result.failure(game, player);
-			}			
-		}
-		
+		} 		
 		return result;
 	}
 	
@@ -205,9 +201,6 @@ public class ItemCommands {
 	 * @return the subject name as a string
 	 */
 	private String getNoun(String[] commands) {
-		for (String command:commands) {
-			System.out.println(command);
-		}
 		return commands[1];
 	}
 	
