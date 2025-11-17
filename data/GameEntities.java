@@ -2,7 +2,7 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.27
+Version: 4.28
 Date: 8 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
@@ -179,6 +179,7 @@ public class GameEntities {
 	public static final String NOUN_BOAT = "boat";
 	public static final String NOUN_FOOD = "food";
 	public static final String NOUN_DRINK = "drink";
+	public static final String NOUN_STONE = "stone";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";

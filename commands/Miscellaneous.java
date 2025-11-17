@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 9 October 2025
+Version: 4.13
+Date: 17 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -275,7 +275,7 @@ public class Miscellaneous {
 		boolean polishStone = false;
 		if (command.getSplitTwoCommand()[1].length()>0) {
 			String noun = command.getSplitTwoCommand()[1];
-			if(noun.equals("stone") && player.getRoom()==GameEntities.ROOM_STONE 
+			if(noun.equals(GameEntities.NOUN_STONE) && player.getRoom()==GameEntities.ROOM_STONE 
 			   && game.getItem(GameEntities.ITEM_STONE).getItemFlag()==1
 			   && game.getItem(GameEntities.ITEM_RAG).getItemLocation()==GameEntities.ROOM_CARRYING) {
 				polishStone = true;
@@ -627,4 +627,5 @@ public class Miscellaneous {
  * 14 September 2025 - Tightened Up Code.
  * 					 - Added JavaDocs
  * 9 October 2025 - Changed lair to Snelm's Lair
+ * 17 November 2025 - Added entity for noun stone
  */

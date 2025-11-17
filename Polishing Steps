@@ -27,7 +27,7 @@
 - Can't shelter with two commands - shelter
 - The rest lasted too long
 
-- Rub stone not working - 
+
 - the item list cuts off - itemlist
 - The item section goes over
 
@@ -215,14 +215,14 @@
 		if(needAdjustStorm()) {adjustStorm();}
 		if (doesStormAppear()) {stormAppears();}
 		if (doesPlayerHaveBeast()) {moveBeast();}
-		if (doesOmeganMove()) {moveOmegan();} 
-		else if (isOmeganPresent()) {omeganAttacks();} 
+
+
 		if (isSwampManPresent()) {swampManNotPresent();}
-		if (doesSwampManTalk()) {swampManTalks();}
-		if (doesBoatmanAppear()) {boatmanAppears();}
+
+
 		if (isAtWell()) {atWell();}
-		if (!areLogmenPresent()) {moveLogmen();} 
-		else {logmenPresent();}
+
+
 		if(isMedianFollowing()) {medianFollowing();}
 		if(isMedianHint()) {medianHint();}
 		if (isInVatRoom()) {inVatRoom();}

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.24
-Date: 8 November 2025
+Version: 4.25
+Date: 17 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -147,13 +147,15 @@ public class CommandValidator {
 		return ((command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS)
 				&& command.getVerbNumber() != GameEntities.CMD_SAVE 
-				&& command.getVerbNumber() != GameEntities.CMD_LOAD);
+				&& command.getVerbNumber() != GameEntities.CMD_LOAD
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE));
 	}
 	
     /**
      * @return true if both the verb and noun are invalid.
      */
 	private boolean checkVerbAndNounInvalid(ParsedCommand command) {
+		System.out.println(command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE));
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}
@@ -376,4 +378,5 @@ public class CommandValidator {
  * 2 November 2025 - Added validation for noun room
  * 5 November 2025 - Added check to confirm drinking wine
  * 8 November 2025 - Added validation for giving food & drink
+ * 17 November 2025 - Fixed problem where stone not validating
  */

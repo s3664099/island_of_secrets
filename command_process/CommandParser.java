@@ -319,7 +319,7 @@ public class CommandParser {
 	private boolean isBoatman(String noun) {
 		return noun.equals(GameEntities.NOUN_BOATMAN);
 	}
-	
+
 	private String setFlower() {
 		return GameEntities.NOUN_FLOWER;
 	}
