@@ -24,15 +24,20 @@
 
 
 
-- Can't shelter with two commands
+- Can't shelter with two commands - shelter
+- The rest lasted too long
 
+- Rub stone not working - 
+- the item list cuts off - itemlist
+- The item section goes over
 
+- Going boat not auto death
 
-
-
+- Say stony words doesn't work
 
 		
 		
+
 
 
 
@@ -177,20 +182,20 @@
 
 
 
-		- (areRocksMoving(game,player)) {
-			game.addMessage("The rocks move to prevent you",true,true);
-			result = new ActionResult(game,player,true);
+
+
+
 		- (doArmsHoldYou(game,player)) {
 			game.addMessage("The arms hold you fast",true,true);
 			result = new ActionResult(game,player,true);
-		- (isSnakePresent(game,player,command)) {
-			game.addMessage("Hisss!",true,true);
-			result = new ActionResult(game,player,true);
 
 
 
-		- (isDoorClosed(player,command)) {
-			game.addMessage("The door is barred!",true,true);
+
+
+
+
+
 	- Entry Effects
 		- (isInHandsRoom(game,player)) {
 			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
@@ -198,11 +203,11 @@
 			game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
 		- (isInEntranceHall(player,command)) {
 			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
-		- (isOnJetty(game,player)) {
-			game.getItem(16).setItemLocation(rand.nextInt(4)+1);
-			game.getItem(16).setItemFlag(0);
-			game.addMessage("The beast runs away",false,true);
-		- Game does not end if go boat
+
+
+
+
+
 
 - After turn actions
 	
@@ -243,19 +248,19 @@ return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
         (game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==1));
 
 
-Because && binds more tightly than ||, this is evaluated as:
-
-(CODE_DOWN_TRAPDOOR) || (CODE_ENTER_TRAPDOOR && trapdoorClosed)
 
 
-which is not what you intend. You want parentheses around the ||:
-
-return (command.getCodedCommand().equals(GameEntities.CODE_DOWN_TRAPDOOR) ||
-        command.getCodedCommand().equals(GameEntities.CODE_ENTER_TRAPDOOR)) &&
-        game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag() == 1;
 
 
-Same issue in checkGoTrapdoorOpen.
+
+
+
+
+
+
+
+
+
 
 
 Default Package
@@ -315,13 +320,12 @@ view
 
 
 
-Perfect — this is a large project, so we want a **logical order for unit testing** that balances dependencies, ease of mocking, and incremental building of confidence. Here’s how I would approach it:
 
----
 
-## **1. Start with the simplest, self-contained classes**
 
-These are classes with minimal external dependencies, mostly data holders or simple logic.
+
+
+
 
 
 
