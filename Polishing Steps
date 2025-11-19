@@ -43,7 +43,7 @@
 
 
 **** Test the special items that the rules in SpecialItemHandler work
-	27	ROOM_ENTRANCE_CHAMBER	-	A torch hanging in a bracket on the wall - Show/Hide
+
 	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
 
 
@@ -64,8 +64,7 @@
 
 
 **** Make sure the special exits are correct
-	37	ROOM_CASTLE_WALL	- 	You can also go north into the portal
-- Combat
+
 
 
 
@@ -122,17 +121,17 @@
 
 	
 
-		- Is no torch
+
 
 
 		- take cloak
-		- take egg
+
 		- take books
 
-	- Drop
 
 
-		- drop torch
+
+
 
 	- Give
 
@@ -144,31 +143,18 @@
 		- is scavenger
 		- is median
 
-- Miscellaneous
 
 
 
-	- polish
-	- speak
+
+
+
 
 
 
 
 
 	
-- Move
-
-	- Special
-
-
-
-
-	37	- CODE_IN_PORTAL
-
-
-
-
-	51	- CODE_DOWN_TRAPDOOR
 
 
 
@@ -178,16 +164,6 @@
 
 
 
-	- Blocked
-
-
-
-
-
-
-		- (doArmsHoldYou(game,player)) {
-			game.addMessage("The arms hold you fast",true,true);
-			result = new ActionResult(game,player,true);
 
 
 
@@ -196,13 +172,36 @@
 
 
 
-	- Entry Effects
-		- (isInHandsRoom(game,player)) {
-			game.addMessage("You enter the room and giant hands grab you and hold you fast",false,true);
-		- (player.getRoom()==GameEntities.ROOM_WITH_HANDS) {
-			game.addMessage("You enter the room and brightly shining torch force the arms to retreat to the walls",false,true);
-		- (isInEntranceHall(player,command)) {
-			game.addMessage("The doors slam shut behind you preventing you from leaving",false,true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
 
 
 
