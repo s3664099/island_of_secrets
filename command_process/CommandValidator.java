@@ -148,14 +148,15 @@ public class CommandValidator {
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS)
 				&& command.getVerbNumber() != GameEntities.CMD_SAVE 
 				&& command.getVerbNumber() != GameEntities.CMD_LOAD
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE));
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE)
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONEYWORDS));
 	}
 	
     /**
      * @return true if both the verb and noun are invalid.
      */
 	private boolean checkVerbAndNounInvalid(ParsedCommand command) {
-		System.out.println(command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE));
+
 		return (command.getVerbNumber()>Constants.NUMBER_OF_VERBS && 
 				command.getNounNumber() == Constants.NUMBER_OF_NOUNS);
 	}

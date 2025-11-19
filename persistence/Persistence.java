@@ -266,7 +266,7 @@ public class Persistence {
 
 		Game game = this.game;
 		Player player = this.player;
-		System.out.println(game);
+
 		boolean loadFile = false;
 		
 		File saveGameDirectory = new File(SAVE_GAME_DIRECTORY);
