@@ -300,7 +300,7 @@ public class Miscellaneous {
      * @return true if conditions match
      */
 	private boolean isSayStonyWords(String noun) {
-		return noun.toLowerCase().equals("stony words") && player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE &&
+		return noun.toLowerCase().equals(GameEntities.NOUN_STONEYWORDS) && player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE &&
 				game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()==0;
 	}
 	
@@ -311,7 +311,7 @@ public class Miscellaneous {
      * @return true if conditions match
      */
 	private boolean isSpeakScavenger(String noun) {
-		return noun.toLowerCase().equals("remember old times") && 
+		return noun.toLowerCase().equals(GameEntities.NOUN_REMEMBEROLDTIMES) && 
 				player.getRoom()==game.getItem(GameEntities.ITEM_SCAVENGER).getItemLocation() && 
 				game.getItem(GameEntities.ITEM_LILY).getItemLocation()==GameEntities.ROOM_DESTROYED &&
 				game.getItem(GameEntities.ITEM_CHIP).getItemLocation()==GameEntities.ROOM_DESTROYED;

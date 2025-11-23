@@ -37,6 +37,10 @@
 
 - Can give flower but not lily to scavenger
 - should be able to say anything, and not error
+- Same with median disabling equipment
+- Same with taking close
+
+- can't get books? Should be able to
 
 
 
@@ -107,10 +111,10 @@
 
 	- Room
 
-		- well
+
 
 		- Clone Factory
-		- Sanctum
+
 
 
 
@@ -118,8 +122,8 @@
 
 	- Clues
 
-- Items
-	- Take
+
+
 
 
 
@@ -129,9 +133,9 @@
 
 
 
-		- take cloak
+	
 
-		- take books
+
 
 
 
@@ -139,14 +143,14 @@
 
 
 	- Give
+		- Median at vats
 
 
 
 
 
 
-		- is scavenger
-		- is median
+
 
 
 

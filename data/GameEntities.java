@@ -181,6 +181,7 @@ public class GameEntities {
 	public static final String NOUN_DRINK = "drink";
 	public static final String NOUN_STONE = "stone";
 	public static final String NOUN_STONEYWORDS = "stony words";
+	public static final String NOUN_REMEMBEROLDTIMES = "remember old times";
 	
 	// === Codes ===
 	public static final String CODE_CLOAK = "3810010";
