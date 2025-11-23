@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 2 November 2025
+Version: 4.12
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -354,7 +354,7 @@ public class Combat {
      * @return an {@link ActionResult} indicating the outcome
      */
 	private ActionResult breakStaff() {
-		return (ifHaveEggAndOmegan()) ? releaseDactyl():breakStaffNormal();
+		return (ifHaveEggAndOmegan()) ? releaseDactyl():wasteStaff();
 	}
 	
     /**
@@ -362,7 +362,7 @@ public class Combat {
      *
      * @return an {@link ActionResult} indicating the outcome
      */
-	private ActionResult breakStaffNormal() {
+	private ActionResult wasteStaff(){
 		reduceStats(0,10);
 		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(nounNumber).setItemFlag(-9);
@@ -387,20 +387,7 @@ public class Combat {
 		
 		return new ActionResult(game,player,true);
 	}
-	
-    /**
-     * Handles wasting a staff (breaking without special conditions).
-     *
-     * @return an {@link ActionResult} indicating the outcome
-     */
-	private ActionResult wasteStaff() {
-		game.getItem(nounNumber).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.getItem(nounNumber).setItemFlag(-1);
-		game.setMessageGameState();
-		game.addPanelMessage("It shatters releasing a rainbow of colours!", true);
-		return new ActionResult(game,player,true);
-	}
-	
+		
     /**
      * Handles the case where tapping someone annoys them rather than killing.
      *
@@ -595,4 +582,5 @@ public class Combat {
  * 31 October 2025 - Changed response when attacking something not present
  * 				   - Added message for when chop roots
  * 2 November 2025 - Fixed problem with killing/tapping inanimate items. And not certain creatures
+ * 23 November 2025 - Removed duplicate waste staff function
  */
