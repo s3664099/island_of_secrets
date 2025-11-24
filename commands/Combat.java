@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 23 November 2025
+Version: 4.13
+Date: 24 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -377,8 +377,7 @@ public class Combat {
      * @return an {@link ActionResult} indicating the outcome
      */
 	private ActionResult releaseDactyl() {		
-		game.setMessageGameState();
-		game.addPanelMessage("The egg hatches into a baby dactyl which takes", false);
+		game.addPanelMessage("The egg hatches into a baby dactyl which takes", true);
 		game.addPanelMessage("Omegan in its claws and flies away", false);
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(GameEntities.ITEM_EGG).setItemLocation(GameEntities.ROOM_DESTROYED);
@@ -531,8 +530,8 @@ public class Combat {
 	private ActionResult coalPresent() {
 		game.getItem(nounNumber).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_COAL).setItemLocation(GameEntities.ROOM_DESTROYED);
-		game.setMessageGameState();
 		game.addPanelMessage("The coal burns with a red flame",true);
+		game.setMessageGameState();
 		return (isOmeganCloakPresent())? omeganCloakPresent(): new ActionResult(game,player,true);
 	}
 	
@@ -542,16 +541,13 @@ public class Combat {
      * @return an {@link ActionResult} indicating the outcome
      */
 	private ActionResult omeganCloakPresent() {
-
-		game.setMessageGameState();
-		game.addPanelMessage("The coal burns with a red flame",true);
-		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
+		System.out.println("Cloak Destroyed");
 		player.setStat(STAT_WISDOM,(int) player.getStat(STAT_WISDOM)+20);
 		game.getItem(GameEntities.ITEM_COAL).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_CLOAK).setItemLocation(GameEntities.ROOM_DESTROYED);
-		ActionResult result = new ActionResult(game,player,true);
+		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
 		
-		return result;
+		return new ActionResult(game,player,true);
 	}
 	
     /**
@@ -583,4 +579,5 @@ public class Combat {
  * 				   - Added message for when chop roots
  * 2 November 2025 - Fixed problem with killing/tapping inanimate items. And not certain creatures
  * 23 November 2025 - Removed duplicate waste staff function
+ * 24 November 2025 - Fixed problem with special messages not displaying
  */
