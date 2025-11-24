@@ -3,7 +3,7 @@ Title: Island of Secrets Read Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
 Version: 4.8
-Date: 6 November 2025
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -120,9 +120,6 @@ public interface GameStateProvider {
 	
     /** @return True when message player state */
 	public boolean isMessageState();
-	
-    /** @return True when lightning player state */
-	public boolean isLightningState();
 }
 
 /* 24 March 2025 - Created File
@@ -135,4 +132,5 @@ public interface GameStateProvider {
  * 24 July 2025 - Added getPanelMessage
  * 1 October 2025 - Tightened Comments
  * 6 November 2025 - Added restart game check
+ * 23 November 2025 - Removed Lightning State
  */

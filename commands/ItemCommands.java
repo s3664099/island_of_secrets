@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 16 November 2025
+Version: 4.20
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -478,7 +478,8 @@ public class ItemCommands {
 			game.getItem(nounNumber).setItemLocation(0);
 			player.setStat("wisdom",(int) player.getStat("wisdom")-2);
 			player.setStat("strength",(float) player.getStat("strength")-8);
-			game.setLightingGameState();
+			game.addPanelMessage("⚡⚡ Lightning Flashes ⚡⚡", true);
+			game.setMessageGameState();
 			
 			return new ActionResult(game,player,true);
 		}
@@ -911,4 +912,5 @@ public class ItemCommands {
  * 10 November 2025 - Added validator to set the noun boatman to boat
  * 12 November 2025 - Remove food & drink when give
  * 16 November 2025 - Giving water to villager now works.
+ * 23 November 2025 - Changed lightning flashes to normal panel message
  */

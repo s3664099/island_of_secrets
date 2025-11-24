@@ -26,8 +26,8 @@
 
 - Can't shelter with two commands - shelter
 	- Maybe also can't shelter in a place you haven't visited.
-- The rest lasted too long
-- break staff response lasted too long
+
+
 
 
 - the item list cuts off - itemlist
@@ -36,9 +36,9 @@
 - Going boat not auto death
 
 - Can give flower but not lily to scavenger
-- should be able to say anything, and not error
-- Same with median disabling equipment
-- Same with taking close
+
+
+
 
 - can't get books? Should be able to
 
@@ -242,11 +242,11 @@
 **** Test if can complete game
 **** Test Each of the sections to see if they work
 
-- Redo the Panels
 
-- Add Accessiblity Warning with flashing light
-- Add Flag (noted) that will just to a normal message
-- Add option that if emoji's not available to just do normal
+
+
+
+
 
 TRAPDOOR ISSUE IDENTIFIED:
 Operator Precedence Bug ⚠️

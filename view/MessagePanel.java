@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 27 September 2025
+Version: 4.7
+Date: 24 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -99,7 +99,7 @@ public class MessagePanel extends JPanel implements GameView {
         // Set new messages
         this.gameMessages = Objects.requireNonNull(messages,"Messages can't be null");
         this.currentIndex = 0;
-        
+
         // Start displaying if we have messages
         if (!this.gameMessages.isEmpty()) {
             panel.showMessageView();
@@ -113,17 +113,14 @@ public class MessagePanel extends JPanel implements GameView {
      * automatically by the {@link Timer}.
      */
     private void showNextMessage() {
+
         if (currentIndex < gameMessages.size()) {
         	
             // Show current message
             label.setText("<html><div style='text-align: center;'>" + 
             		gameMessages.get(currentIndex) + "</div></html>");
             currentIndex++;
-            
-            // Start timer for next message or auto-close
-            if (currentIndex < gameMessages.size()) {
-                messageTimer.restart();
-            }
+            messageTimer.restart();
         } else {        	
             messageTimer.stop();
             panel.showMainView();
@@ -157,4 +154,5 @@ public class MessagePanel extends JPanel implements GameView {
  * 				- Message now returns to the main at the end
  * 27 September 2025 - Updated code based on recommendations.
  * 					 - Added JavaDocs
+ * 24 November 2025 - Fixed stalling messages where only one message
  */

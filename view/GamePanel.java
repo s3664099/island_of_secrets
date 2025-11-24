@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Pabel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 22 September 2025
+Version: 4.7
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -30,7 +30,6 @@ public class GamePanel extends JPanel {
 	private static final String MAIN_VIEW = "MAIN";
 	private static final String MAP_VIEW = "MAP";
 	private static final String MESSAGE_VIEW = "MESSAGE";
-	private static final String LIGHTNING_VIEW = "LIGHTNING";
 
 	//UI Components
 	private final CardLayout cardLayout = new CardLayout();
@@ -38,7 +37,6 @@ public class GamePanel extends JPanel {
     private MainGamePanel mainView;
     private MapPanel mapView;
     private MessagePanel messageView;
-    private LightningPanel lightningView;
 	
     /**
      * Constructs the GamePanel and initializes all game sub-views.
@@ -65,13 +63,11 @@ public class GamePanel extends JPanel {
 		this.mainView = new MainGamePanel(controller,this);
 		this.mapView = new MapPanel(controller,this);
 		this.messageView = new MessagePanel(this);
-		this.lightningView = new LightningPanel(this);
 
 		//Configure view container
 		viewContainer.add(mainView,MAIN_VIEW);
 		viewContainer.add(mapView,MAP_VIEW);
 		viewContainer.add(messageView,MESSAGE_VIEW);
-		viewContainer.add(lightningView,LIGHTNING_VIEW);
 		add(viewContainer,BorderLayout.CENTER);
 		
 		//Initial view
@@ -105,16 +101,7 @@ public class GamePanel extends JPanel {
 		SwingUtilities.invokeLater(() -> 
 			messageView.displayMessages(controller.getState().getPanelMessage()));
 	}
-	
-    /**
-     * Refreshes the lightning view
-     * @param controller The game controller providing current state
-     */
-	public void refreshLightningView(GameController controller) {
-		SwingUtilities.invokeLater(() -> 
-			lightningView.startLightningEffect());
-	}
-	
+		
     /**
      * Shows the main game view and triggers activation
      */
@@ -138,14 +125,6 @@ public class GamePanel extends JPanel {
 		cardLayout.show(viewContainer, MESSAGE_VIEW);
 		messageView.onViewActivated();
 	}
-	
-    /**
-     * Shows the message view and triggers activation
-     */
-	public void showLightningView() {
-		cardLayout.show(viewContainer, LIGHTNING_VIEW);
-		lightningView.onViewActivated();
-	}
 }
 
 /* 5 April 2025 - Created File
@@ -155,4 +134,5 @@ public class GamePanel extends JPanel {
  * 28 July 2025 - Added the lightningPanel option
  * 15 August 2025 - Updated lightningPanel option
  * 22 September 2025 - Updated class and added JavaDocs
+ * 23 November 2025 - Removed Lightning Panel
 */

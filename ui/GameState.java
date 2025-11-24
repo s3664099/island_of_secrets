@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 6 November 2025
+Version: 4.9
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -40,7 +40,6 @@ public class GameState implements GameStateProvider {
 	private final boolean shelterState;
 	private final boolean runningState;
 	private final boolean messageState;
-	private final boolean lightningState;
 	private final boolean normalState;
 	private final boolean swimmingState;
 	
@@ -79,7 +78,6 @@ public class GameState implements GameStateProvider {
 		this.giveState = stateProvider.isGiveState();
 		this.shelterState = stateProvider.isShelterState();
 		this.runningState = stateProvider.isRunningState();
-		this.lightningState = stateProvider.isLightningState();
 		this.messageState = stateProvider.isMessageState();
 		this.normalState = stateProvider.isNormalState();
 		this.swimmingState = stateProvider.isSwimmingState();
@@ -260,11 +258,6 @@ public class GameState implements GameStateProvider {
 	}
 
 	@Override
-	public boolean isLightningState() {
-		return lightningState;
-	}
-
-	@Override
 	public List<String> getPanelMessage() {
 		return stateProvider.getPanelMessage();
 	}
@@ -281,4 +274,5 @@ public class GameState implements GameStateProvider {
  * 25 April 2025 - Updated based on enums in Player class.
  * 26 July 2025 - Added getPanelmessages
  * 6 November 2025 - Added a check for a restart game state
+ * 23 November 2025 - Removed Lightning State
  */

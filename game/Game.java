@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 6 November 2025
+Version: 4.17
+Date: 23 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -59,7 +59,7 @@ public class Game implements Serializable {
 	private String[] commands = {"","",""};
 	
 	/** Enum of possible game states. */
-	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,LIGHTNING,RESTART }
+	private enum GameState { STARTED,RUNNING,SAVED_GAMES,ENDED,SHELTER,GIVE,RESTART }
 	
 	private boolean hasMessage = false;
 	private GameState gameState = GameState.STARTED;
@@ -396,12 +396,7 @@ public class Game implements Serializable {
 	public void setMessageGameState() {
 		hasMessage = !hasMessage;
 	}
-	
-	/** Sets game state to lightning. */
-	public void setLightingGameState() {
-		gameState = GameState.LIGHTNING;
-	}
-	
+		
 	/** Sets game state to ended. */
 	public void setEndGameState() {
 		
@@ -458,11 +453,6 @@ public class Game implements Serializable {
 	/** Returns true if game is showing messages. */
 	public boolean isMessageState() {
 		return hasMessage;
-	}
-	
-	/** Returns true if game is in lightning state. */
-	public boolean isLightningState() {
-		return gameState == GameState.LIGHTNING;
 	}
 	
 	/** Returns true if game is in running state. */
@@ -526,4 +516,5 @@ public class Game implements Serializable {
  * 28 July 2025 - Created separate boolean for message state
  * 19 August 2025 - Tightened code based on recommendations. Added JavaDocs
  * 6 November 2025 - Added a restart state
+ * 23 November 2025 - Removed Lighting State
  */
