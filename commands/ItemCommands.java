@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
-Date: 23 November 2025
+Version: 4.21
+Date: 26 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -55,7 +55,7 @@ public class ItemCommands {
 		} else if ((notValidPick(command)) || (notValidCatch(command))){
 				game.addMessage("You can't "+command.getCommand(),true,true);
 				result = result.failure(game, player);
-		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != GameEntities.ITEM_CLOAK) {
+		} else if (noun>=Constants.MAX_CARRIABLE_ITEMS && noun != GameEntities.ITEM_CLOAK && noun != GameEntities.ITEM_BOOKS) {
 			game.addMessage("I can't take the "+command.getSplitTwoCommand()[1], true, true);
 			result = result.failure(game, player);
 		}
@@ -350,7 +350,7 @@ public class ItemCommands {
 		 * @return an {@link ActionResult} with the result
 		 */
 		public ActionResult execute() {
-			
+
 			ActionResult result = new ActionResult();
 			if (areApples()) {
 				result = takeApple();
@@ -913,4 +913,5 @@ public class ItemCommands {
  * 12 November 2025 - Remove food & drink when give
  * 16 November 2025 - Giving water to villager now works.
  * 23 November 2025 - Changed lightning flashes to normal panel message
+ * 26 November 2025 - Added exclusion for books
  */

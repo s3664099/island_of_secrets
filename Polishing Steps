@@ -72,12 +72,12 @@
 
 
 
-**** Make sure the special exits are correct
 
 
 
 
-	- Break Staff
+
+
 
 		
 
@@ -239,8 +239,8 @@
 		if(isWinGame()) {winGame();}
 		if(isLoseGame()) {loseGame();}
 
-**** Test if can complete game
-**** Test Each of the sections to see if they work
+
+
 
 
 
@@ -337,13 +337,11 @@ view
 
 
 
-* **`Miscellaneous`** (`commands`) – if it has isolated functions.
 
-> Goal: Get a feel for the structure, start with straightforward `assertEquals`/`assertTrue` tests. No heavy mocking required.
 
----
 
-## **2. Test core game data objects**
+
+
 
 Classes that hold game state but don’t yet perform complex interactions.
 
