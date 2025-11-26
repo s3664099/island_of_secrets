@@ -40,7 +40,7 @@
 
 
 
-- can't get books? Should be able to
+
 
 
 
@@ -51,9 +51,9 @@
 
 
 
-**** Test the special items that the rules in SpecialItemHandler work
 
-	60	ROOM_OUTSIDE_HUT		-	A map, along with a collection of papers which seem to make up a diary - Show/Hide
+
+	
 
 
 		
@@ -103,24 +103,24 @@
 
 
 
-- Examine
-
-
-
-
-
-	- Room
-
-
-
-		- Clone Factory
 
 
 
 
 
 
-	- Clues
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -343,93 +343,93 @@ view
 
 
 
-Classes that hold game state but don’t yet perform complex interactions.
 
-* **`Player`** (`game`) – test getters, setters, stats, room tracking.
-* **`Game`** (`game`) – basic item and room management, messages, state flags.
-* **`GameState`** (`ui`) – if it’s mainly exposing game data to the UI.
 
-> Goal: Build confidence that the underlying data model works correctly. Use `mock(Game)` only if testing UI-dependent logic.
 
----
 
-## **3. Test command-level logic**
 
-Once the core data objects are testable, move to classes that execute player actions.
 
-* **`Combat`** (`commands`) – as we discussed, this depends on `Player` and `Game`. Use mocks for `Game` and `Player` to isolate logic.
-* **`Move`, `Consume`, `Examine`, `ItemCommands`** (`commands`) – also command logic that manipulates `Player` and `Game`. Can mock `Game`/`Player`.
 
-> Goal: Start verifying business logic. You will **build on previous tests** by reusing mocked `Game` and `Player`.
 
----
 
-## **4. Test command processing pipeline**
 
-These classes parse, validate, and execute commands.
 
-* **`CommandValidator`**
-* **`CommandParser`**
-* **`CommandExecutor`**
-* **`CommandProcessor`**
 
-> Goal: Verify that input commands reach the correct `commands` class and trigger expected `ActionResult`.
-> Build on previous tests: You can reuse mocked `ParsedCommand` and `Combat` tests to simulate full pipeline behavior.
 
----
 
-## **5. Test the controller/UI interaction classes**
 
-Next, we cover the UI-controller layer. Most of these will require **mocking of Game/Player/CommandExecutor/GamePanel**.
 
-* **Buttons** (`BookButton`, `CommandButton`, `MapButton`, etc.) – test that they trigger the correct callbacks.
-* **`MapController`** – verify mouse clicks invoke correct map logic.
 
-> Goal: Ensure UI interactions call your game logic correctly. Not testing Swing rendering, just that the logic is triggered.
 
----
 
-## **6. Test view classes**
 
-Finally, the classes in `view/`:
 
-* **`MessagePanel`**, **`LightningPanel`**, **`MapPanel`**, **`GamePanel`**, etc.
 
-> These will mostly be **integration-style unit tests**, where you verify:
->
-> * Correct Swing components are updated.
-> * Timers or events are triggered correctly.
-> * Messages and images display as expected.
 
-> Build on previous tests: Mock `GameController`, `GameState`, and `Player` as needed. Use your tested `Combat` and `Game` mocks to simulate game behavior.
 
----
 
-## **7. Optional: persistence tests**
 
-* **`Persistence`** – test saving and loading game state. Mock `Game`/`Player` if necessary.
 
-> You already ran into `ClassNotFoundException` – this will be important to test **file I/O** and classpath issues.
 
----
 
-### **Testing Approach Notes**
 
-1. **Incremental building**:
 
-   * Start small and isolated → `ActionResult`, `Player`.
-   * Then test logic → `Combat`, `Move`.
-   * Finally test integration/UI → `MessagePanel`, `MapPanel`.
 
-2. **Use mocks liberally** for `Game`, `Player`, `ParsedCommand` to isolate the class under test.
 
-3. **Reuse mocks and setup**:
 
-   * For example, `mockGame` and `mockPlayer` used in `CombatTest` can also be used in `MoveTest` or `ConsumeTest`.
 
-4. **Private methods**:
 
-   * Either test via public methods that call them (preferred), or use reflection sparingly for complex internal logic.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Default Package
 	- Main
