@@ -149,7 +149,10 @@ public class CommandValidator {
 				(command.getNounNumber() == Constants.NUMBER_OF_NOUNS)
 				&& command.getVerbNumber() != GameEntities.CMD_SAVE 
 				&& command.getVerbNumber() != GameEntities.CMD_LOAD
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE)));
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE)
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_CABIN)
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_SHACK)
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_CAVE)));
 	}
 	
     /**

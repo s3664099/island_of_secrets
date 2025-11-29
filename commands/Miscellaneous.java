@@ -594,11 +594,11 @@ public class Miscellaneous {
 				shelterLocation = commands[2];
 			}
 			
-			if (shelterLocation.equals("shack")) {
+			if (shelterLocation.equals(GameEntities.NOUN_SHACK)) {
 				player.setRoom(GameEntities.ROOM_GRANDPAS_SHACK);
-			} else if (shelterLocation.equals("cave")) {
+			} else if (shelterLocation.equals(GameEntities.NOUN_CAVE)) {
 				player.setRoom(GameEntities.ROOM_SNELM_LAIR);
-			} else if (shelterLocation.equals("cabin")) {
+			} else if (shelterLocation.equals(GameEntities.NOUN_CABIN)) {
 				player.setRoom(GameEntities.ROOM_HUT);
 			} else {
 				game.addMessage("I'm sorry, I do not know that place",true,true);

@@ -180,6 +180,9 @@ public class GameEntities {
 	public static final String NOUN_FOOD = "food";
 	public static final String NOUN_DRINK = "drink";
 	public static final String NOUN_STONE = "stone";
+	public static final String NOUN_CABIN = "cabin";
+	public static final String NOUN_SHACK = "shack";
+	public static final String NOUN_CAVE = "cave";
 	public static final String NOUN_STONEYWORDS = "stony words";
 	public static final String NOUN_REMEMBEROLDTIMES = "remember old times";
 	

@@ -370,7 +370,7 @@ public class MapPanel extends JPanel implements GameView {
          * @return a scaled ImageIcon
          */
         private ImageIcon createImageIcon(String path) {
-        	System.out.println(path);
+
             ImageIcon result = null;
             try {
                 InputStream stream = getClass().getResourceAsStream(path);
