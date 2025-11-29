@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 24 November 2025
+Version: 4.14
+Date: 29 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -34,16 +34,7 @@ public class Combat {
 	private final int verbNumber;
 	private final int nounNumber;
 	private final Random rand = new Random();
-	
-    /** Constant for the "strength" stat key. */
-	public static final String STAT_STRENGTH = "strength";
-	
-    /** Constant for the "wisdom" stat key. */
-	public static final String STAT_WISDOM = "wisdom";
-	
-    /** Constant for the "timeRemaining" stat key. */
-	public static final String STAT_TIME = "timeRemaining";
-	
+		
     /**
      * Constructs a Combat handler for the given game, player, and command.
      *
@@ -382,7 +373,7 @@ public class Combat {
 		game.getItem(GameEntities.ITEM_OMEGAN).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(GameEntities.ITEM_EGG).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.getItem(nounNumber).setItemFlag(-1);
-		player.setStat(STAT_STRENGTH,(float) player.getStat(STAT_STRENGTH)+40);
+		player.setStat(Constants.STAT_STRENGTH,(float) player.getStat(Constants.STAT_STRENGTH)+40);
 		
 		return new ActionResult(game,player,true);
 	}
@@ -430,8 +421,6 @@ public class Combat {
      * @return an {@link ActionResult} indicating the outcome
      */
 	private ActionResult fatalResponse() {
-		game.getItem(Constants.NUMBER_OF_ITEMS).setItemFlag(1);
-		
 		game.setMessageGameState();
 		game.setEndGameState();
 		game.addPanelMessage("Thunder splits the sky!",true);
@@ -441,9 +430,9 @@ public class Combat {
 		game.addPanelMessage("I claim you as my own!",false);
 		game.addPanelMessage("Ha Ha Hah!",false);
 
-		player.setStat(STAT_STRENGTH,(float) 0);
-		player.setStat(STAT_WISDOM,0);
-		player.setStat(STAT_TIME,0);
+		player.setStat(Constants.STAT_STRENGTH,(float) 0);
+		player.setStat(Constants.STAT_WISDOM,0);
+		player.setStat(Constants.STAT_TIME,0);
 		game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
 		
 		return new ActionResult(game,player,true);
@@ -542,7 +531,7 @@ public class Combat {
      */
 	private ActionResult omeganCloakPresent() {
 		System.out.println("Cloak Destroyed");
-		player.setStat(STAT_WISDOM,(int) player.getStat(STAT_WISDOM)+20);
+		player.setStat(Constants.STAT_WISDOM,(int) player.getStat(Constants.STAT_WISDOM)+20);
 		game.getItem(GameEntities.ITEM_COAL).setItemFlag(-1);
 		game.getItem(GameEntities.ITEM_CLOAK).setItemLocation(GameEntities.ROOM_DESTROYED);
 		game.addPanelMessage("Which dissolves Omegan's Cloak", false);						
@@ -557,8 +546,8 @@ public class Combat {
      * @param wisdom   the wisdom reduction
      */
 	private void reduceStats(int strength, int wisdom) {
-	    player.setStat(STAT_STRENGTH, (float) player.getStat(STAT_STRENGTH) - strength);
-	    player.setStat(STAT_WISDOM, (int) player.getStat(STAT_WISDOM) - wisdom);
+	    player.setStat(Constants.STAT_STRENGTH, (float) player.getStat(Constants.STAT_STRENGTH) - strength);
+	    player.setStat(Constants.STAT_WISDOM, (int) player.getStat(Constants.STAT_WISDOM) - wisdom);
 	}
 }
 
@@ -580,4 +569,5 @@ public class Combat {
  * 2 November 2025 - Fixed problem with killing/tapping inanimate items. And not certain creatures
  * 23 November 2025 - Removed duplicate waste staff function
  * 24 November 2025 - Fixed problem with special messages not displaying
+ * 29 November 2025 - Moved stat name constants to constants
  */

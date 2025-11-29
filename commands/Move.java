@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 29 October 2025
+Version: 4.16
+Date: 29 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -442,6 +442,7 @@ public class Move {
 			game.addPanelMessage("and are taken to the Island of Secrets ...", false);
 			game.addPanelMessage("to serve Omegan forever.", false);
 			game.getItem(Constants.NUMBER_OF_NOUNS).setItemFlag(1);
+			game.setEndGameState();
 		} else {
 			game.addPanelMessage("You board the craft ...", true);
 			game.addPanelMessage("and are taken to the Island of Secrets ...", false);
@@ -472,4 +473,5 @@ public class Move {
  * 					- Added JavaDocs
  * 28 October 2025 - Added function to handle going down into trapdoor
  * 29 October 2025 - Fixed so that says door closed
+ * 29 November 2025 - Added stat clearing to go boat
  */

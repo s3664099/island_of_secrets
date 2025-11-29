@@ -54,6 +54,10 @@ public class Constants {
 	private static final String EAST = "East";
 	private static final String WEST = "West";
 	public static final String[] DIRECTIONS = {NORTH, SOUTH, EAST,WEST};
+
+	public static final String STAT_STRENGTH = "strength";
+	public static final String STAT_WISDOM = "wisdom";
+	public static final String STAT_TIME = "timeRemaining";
 }
 
 /* 1 November 2024 - Created File
