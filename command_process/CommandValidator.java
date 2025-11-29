@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.26
-Date: 23 November 2025
+Version: 4.27
+Date: 29 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -146,13 +146,11 @@ public class CommandValidator {
 	private boolean checkVerbOrNounInvalid(ParsedCommand command) {
 		return ((command.getVerbNumber()>Constants.NUMBER_OF_VERBS ||
 				command.getVerbNumber() != GameEntities.CMD_SAY &&
+				command.getVerbNumber() != GameEntities.CMD_SHELTER &&
 				(command.getNounNumber() == Constants.NUMBER_OF_NOUNS)
 				&& command.getVerbNumber() != GameEntities.CMD_SAVE 
 				&& command.getVerbNumber() != GameEntities.CMD_LOAD
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE)
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_CABIN)
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_SHACK)
-				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_CAVE)));
+				&& !command.getSplitTwoCommand()[1].equals(GameEntities.NOUN_STONE)));
 	}
 	
     /**
@@ -384,4 +382,5 @@ public class CommandValidator {
  * 8 November 2025 - Added validation for giving food & drink
  * 17 November 2025 - Fixed problem where stone not validating
  * 23 November 2025 - Added check to exclude say from invalidating noun or verb
+ * 29 November 2025 - Removed shelter from the noun/verb check
  */

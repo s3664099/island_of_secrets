@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+import data.GameEntities;
 import ui.GameController;
 
 /**
@@ -32,10 +33,7 @@ public class ShelterButton implements ActionListener {
 
     /** The ID of the shelter location the player will be moved to. */
 	private final int shelterLocationId;
-	
-    /** The message displayed when the player reaches the shelter. */
-	private final String SHELTER_MESSAGE = "You reach shelter";
-	
+		
     /**
      * Constructs a ShelterButton for a given game controller and shelter location.
      *
@@ -71,7 +69,7 @@ public class ShelterButton implements ActionListener {
      */
 	private void navigateToShelter() {
 		controller.setRunningGameState();
-		controller.addMessage(SHELTER_MESSAGE,true,false);
+		controller.addMessage(GameEntities.SHELTER_MESSAGE,true,false);
 		controller.setRoom(shelterLocationId);
 	}
 	

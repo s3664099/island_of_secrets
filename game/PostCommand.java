@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 20 October 2025
+Version: 4.11
+Date: 30 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -116,12 +116,11 @@ public class PostCommand {
 	}
 	
 	private boolean needAdjustStorm() {
-		boolean adjustStorm = false;
-		if(game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1 && 
-		   game.getItem(GameEntities.ITEM_WINE).getItemFlag() != -player.getRoom()) {
-			adjustStorm = true;
-		}
-		return adjustStorm;
+		return (game.getItem(GameEntities.ITEM_STORM).getItemFlag()<1 && 
+				game.getItem(GameEntities.ITEM_WINE).getItemFlag() != -player.getRoom() &&
+				player.getRoom() != GameEntities.ROOM_GRANDPAS_SHACK &&
+				player.getRoom() != GameEntities.ROOM_SNELM_LAIR &&
+				player.getRoom() != GameEntities.ROOM_HUT);
 	}
 	
 	private boolean doesStormAppear() {
@@ -450,4 +449,5 @@ public class PostCommand {
  * 3 September 2025 - Updated with new ActionResult changes
  * 13 October 2025 - Changed so Omegan does not go to Grandpa's Shack
  * 20 October 2025 - Fixed problem where Omegan is only in Grandpa's Shack
+ * 30 November 2025 - Excluded storm from following player into shelter
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.13
-Date: 17 November 2025
+Version: 4.14
+Date: 30 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -588,7 +588,7 @@ public class Miscellaneous {
 		if (commandLength>1) {
 			
 			String shelterLocation = commands[1];
-			game.addMessage("",true,true);
+			game.addMessage(GameEntities.SHELTER_MESSAGE,true,true);
 			
 			if (commands.length>2 && commands[1].equals("in")) {
 				shelterLocation = commands[2];
@@ -598,7 +598,7 @@ public class Miscellaneous {
 				player.setRoom(GameEntities.ROOM_GRANDPAS_SHACK);
 			} else if (shelterLocation.equals(GameEntities.NOUN_CAVE)) {
 				player.setRoom(GameEntities.ROOM_SNELM_LAIR);
-			} else if (shelterLocation.equals(GameEntities.NOUN_CABIN)) {
+			} else if (shelterLocation.equals(GameEntities.NOUN_HUT)) {
 				player.setRoom(GameEntities.ROOM_HUT);
 			} else {
 				game.addMessage("I'm sorry, I do not know that place",true,true);
@@ -627,4 +627,5 @@ public class Miscellaneous {
  * 					 - Added JavaDocs
  * 9 October 2025 - Changed lair to Snelm's Lair
  * 17 November 2025 - Added entity for noun stone
+ * 30 November 2025 - Changed cabin to hut
  */
