@@ -401,8 +401,7 @@ public class Miscellaneous {
 				items = items+game.getItem(i).getItemName();
 				itemLength += game.getItem(i).getItemName().length()+extraLength;
 			}
-		}
-		
+		}		
 		return items;
 	}
 	

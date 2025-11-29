@@ -2,8 +2,8 @@
 Title: Island of Secrets Message Builder Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 20 August 2025
+Version: 4.5
+Date: 29 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -123,13 +123,13 @@ public class MessageBuilder implements Serializable {
 	            while (!message.isEmpty()) {
 	                int splitPoint = message.lastIndexOf(' ', maxMessageLength);
 	                if (splitPoint == -1) {
-	                    splitPoint = maxMessageLength;
+	                    splitPoint = message.length();
 	                }
 	                messages.add(message.substring(0, splitPoint).trim());
 	                message = message.substring(splitPoint).trim();
 	            }
 			}
-    	}    	
+    	}
     }
 	
     /**
@@ -155,4 +155,5 @@ public class MessageBuilder implements Serializable {
  * 7 July 2025 - Added serializable
  * 14 July 2025 - Change way long message works for long strings
  * 20 August 2025 - Updated class
+ * 29 November 2025 - Fixed issue where entire inventory not displaying
  */
