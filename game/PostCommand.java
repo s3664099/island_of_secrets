@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.11
-Date: 30 November 2025
+Version: 4.12
+Date: 1 November 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -100,19 +100,11 @@ public class PostCommand {
     // ================== Condition Checks ================== //
 	
 	private boolean isAtOrchids() {
-		boolean atOrchids = false;
-		if(player.getRoom()==GameEntities.ROOM_ORCHIDS) {
-			atOrchids = true;
-		}
-		return atOrchids;
+		return player.getRoom()==GameEntities.ROOM_ORCHIDS;
 	}
 	
 	private boolean isAtThicket() {
-		boolean atThicket = false;
-		if(player.getRoom()==GameEntities.ROOM_THICKET && rand.nextInt(3)==1) {
-			atThicket = true;
-		}
-		return atThicket;
+		return player.getRoom()==GameEntities.ROOM_THICKET && rand.nextInt(3)==1;
 	}
 	
 	private boolean needAdjustStorm() {
@@ -124,168 +116,98 @@ public class PostCommand {
 	}
 	
 	private boolean doesStormAppear() {
-		boolean stormAppears = false;
-		if((int) player.getStat("timeRemaining")<900 && 
-			player.getRoom()==GameEntities.ROOM_PATH && 
-			game.getItem(GameEntities.ITEM_STORM).getItemFlag()>0 && 
-			stormRand ==2) {
-			stormAppears = true;
-		}
-		return stormAppears;
+		return (int) player.getStat("timeRemaining")<900 && 
+				player.getRoom()==GameEntities.ROOM_PATH && 
+				game.getItem(GameEntities.ITEM_STORM).getItemFlag()>0 && 
+				stormRand ==2;
 	}
 	
 	private boolean doesPlayerHaveBeast() {
-		boolean playerHasBeast = false;
-		if(!game.getItem(GameEntities.ITEM_BEAST).isAtLocation(player.getRoom()) && 
-			game.getItem(GameEntities.ITEM_BEAST).getItemLocation()>GameEntities.ROOM_CARRYING) {
-			playerHasBeast = true;
-		}
-		return playerHasBeast;
+		return !game.getItem(GameEntities.ITEM_BEAST).isAtLocation(player.getRoom()) && 
+				game.getItem(GameEntities.ITEM_BEAST).getItemLocation()>GameEntities.ROOM_CARRYING;
 	}
 	
 	private boolean doesOmeganMove() {
-		boolean omeganMoves = false;
-		if(!game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom())) {
-			omeganMoves = true;
-		}
-		return omeganMoves;
+		return !game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom());
 	}
 	
 	private boolean isOmeganPresent() {
-		boolean omeganPresent = false;
-		if(game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
-		   !game.getItem(GameEntities.ITEM_MEDIAN).isAtLocation(player.getRoom()) &&
-		   game.getItem(GameEntities.ITEM_COAL).getItemFlag()>-1) {
-			omeganPresent = true;
-		}
-		return omeganPresent;
+		return game.getItem(GameEntities.ITEM_OMEGAN).isAtLocation(player.getRoom()) &&
+			   !game.getItem(GameEntities.ITEM_MEDIAN).isAtLocation(player.getRoom()) &&
+			   game.getItem(GameEntities.ITEM_COAL).getItemFlag()>-1;
 	}
 	
 	private boolean isSwampManPresent() {
-		boolean swampManPresent = false;
-		if(!game.getItem(GameEntities.ITEM_SWAMPMAN).isAtLocation(player.getRoom()) && 
-			game.isRunningState()) {
-			swampManPresent = true;
-		}
-		return swampManPresent;
+		return !game.getItem(GameEntities.ITEM_SWAMPMAN).isAtLocation(player.getRoom()) && 
+				game.isRunningState();
 	}
 	
 	private boolean doesSwampManTalk() {
-		boolean swampManTalks = false;
-		if(game.getItem(GameEntities.ITEM_SWAMPMAN).isAtLocation(player.getRoom()) && 
-		   rand.nextInt(2)==1 &&
-		   game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()==0) {
-			swampManTalks = true;
-		}
-		return swampManTalks;
+		return game.getItem(GameEntities.ITEM_SWAMPMAN).isAtLocation(player.getRoom()) && 
+			   rand.nextInt(2)==1 &&
+			   game.getItem(GameEntities.ITEM_SWAMPMAN).getItemFlag()==0;
 	}
 	
 	private boolean doesBoatmanAppear() {
-		boolean boatmanAppears = false;
-		if((player.getRoom()==GameEntities.ROOM_JETTY || 
-			player.getRoom()==GameEntities.ROOM_ISLAND || 
-			player.getRoom()==GameEntities.ROOM_BRIDGE) &&
-			rand.nextInt(2)==1) {
-			boatmanAppears = true;
-		}
-		return boatmanAppears;
+		return (player.getRoom()==GameEntities.ROOM_JETTY || 
+				player.getRoom()==GameEntities.ROOM_ISLAND || 
+				player.getRoom()==GameEntities.ROOM_BRIDGE) &&
+				rand.nextInt(2)==1;
 	}
 	
 	private boolean isAtWell() {
-		boolean atWell = false;
-		if(player.getRoom()==GameEntities.ROOM_WELL && 
-		   ((float) player.getStat("strength"))<70 && 
-		   game.getItem(GameEntities.ITEM_MEDIAN).getItemFlag()==0 && 
-		   rand.nextInt(4)==1) {
-			atWell = true;
-		}
-		return atWell;
+		return player.getRoom()==GameEntities.ROOM_WELL && 
+				   ((float) player.getStat("strength"))<70 && 
+				   game.getItem(GameEntities.ITEM_MEDIAN).getItemFlag()==0 && 
+				   rand.nextInt(4)==1;
 	}
 	
 	private boolean areLogmenPresent() {
-		boolean logmenPresent = true;
-		if(!game.getItem(GameEntities.ITEM_LOGMEN).isAtLocation(player.getRoom())) {
-			logmenPresent = false;
-		}
-		return logmenPresent;
+		return !game.getItem(GameEntities.ITEM_LOGMEN).isAtLocation(player.getRoom());
 		
 	}
 	
 	private boolean areLogmenUpset() {
-		boolean logmenUpset = false;
-		if(game.getItem(41).getItemFlag()<-4) {
-			logmenUpset = true;
-		}
-		return logmenUpset;
+		return game.getItem(41).getItemFlag()<-4;
 	}
 	
 	private boolean isMedianFollowing() {
-		boolean medianFollowing = false;
-		if(game.getItem(GameEntities.ITEM_MEDIAN).getItemFlag()==0) {
-			medianFollowing = true;
-		}
-		return medianFollowing;
+		return game.getItem(GameEntities.ITEM_MEDIAN).getItemFlag()==0;
 	}
 	
 	private boolean isMedianHint() {
-		boolean medianHint = false;
-		if(game.getItem(GameEntities.ITEM_MEDIAN).getItemLocation()<GameEntities.ROOM_CLONE_ROOM && 
-		   player.getRoom() != GameEntities.ROOM_BATTLEMENTS && 
-		   player.getRoom() != GameEntities.ROOM_SANCTUM && 
-		   game.getItem(GameEntities.ITEM_FLAG_49).getItemFlag()<1) {
-			medianHint = true;
-		}
-		return medianHint;
+		return game.getItem(GameEntities.ITEM_MEDIAN).getItemLocation()<GameEntities.ROOM_CLONE_ROOM && 
+				   player.getRoom() != GameEntities.ROOM_BATTLEMENTS && 
+				   player.getRoom() != GameEntities.ROOM_SANCTUM && 
+				   game.getItem(GameEntities.ITEM_FLAG_49).getItemFlag()<1;
 	}
 	
 	private boolean isInVatRoom() {
-		boolean inVatRoom = false;
-		if(player.getRoom()==GameEntities.ROOM_CLONE_ROOM) {
-			inVatRoom = true;
-		}
-		return inVatRoom;
+		return player.getRoom()==GameEntities.ROOM_CLONE_ROOM;
 	}
 	
 	private boolean isTooWeak() {
-		
-		boolean tooWeak = false;
 		float str = (float) player.getStat("strength");
 		int weight = (int) player.getStat("weight");
-		if ((str-weight)<50) {
-			tooWeak = true;
-		}
-		return tooWeak;
+		return (str-weight)<50;
 	}
 	
 	private boolean isAtClashingStones() {
-		boolean atClashingStones = false;
-		if (player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE && 
-			game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()>0) {
-			atClashingStones = true;
-		}
-		return atClashingStones;
+		return player.getRoom()==GameEntities.ROOM_CASTLE_ENTRANCE && 
+				game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()>0;
 	}
 	
 	private boolean isWinGame() {
-
-		boolean winGame = false;
-		if (game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()+
-			game.getItem(GameEntities.ITEM_STAFF).getItemFlag()+
-			game.getItem(GameEntities.ITEM_COAL).getItemFlag()==-3) {
-			winGame = true;
-		}
-		return winGame;
+		return game.getItem(GameEntities.ITEM_PEBBLE).getItemFlag()+
+				game.getItem(GameEntities.ITEM_STAFF).getItemFlag()+
+				game.getItem(GameEntities.ITEM_COAL).getItemFlag()==-3;
 	}
 	
 	private boolean isLoseGame() {
-		boolean loseGame = false;
-		if ((int) player.getStat("timeRemaining")<0 || 
-			(float) player.getStat("strength")<0 || 
-			(game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1 &&
-			!game.isMessageState())) {
-			loseGame = true;
-		}
-		return loseGame;
+		return (int) player.getStat("timeRemaining")<0 || 
+				(float) player.getStat("strength")<0 || 
+				(game.getItem(Constants.NUMBER_OF_NOUNS).getItemFlag()==1 &&
+				!game.isMessageState());
 	}
 
     // ================== Actions ================== //
