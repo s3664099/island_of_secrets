@@ -163,7 +163,7 @@ public class PostCommand {
 	}
 	
 	private boolean areLogmenPresent() {
-		return !game.getItem(GameEntities.ITEM_LOGMEN).isAtLocation(player.getRoom());
+		return game.getItem(GameEntities.ITEM_LOGMEN).isAtLocation(player.getRoom());
 		
 	}
 	
@@ -372,4 +372,5 @@ public class PostCommand {
  * 13 October 2025 - Changed so Omegan does not go to Grandpa's Shack
  * 20 October 2025 - Fixed problem where Omegan is only in Grandpa's Shack
  * 30 November 2025 - Excluded storm from following player into shelter
+ * 1 December 2025 - Tightened up the code
  */
