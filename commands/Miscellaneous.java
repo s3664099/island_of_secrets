@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 30 November 2025
+Version: 4.15
+Date: 2 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -594,11 +594,11 @@ public class Miscellaneous {
 				shelterLocation = commands[2];
 			}
 			
-			if (shelterLocation.equals(GameEntities.NOUN_SHACK)) {
+			if (shelterLocation.equals(GameEntities.NOUN_SHACK) && game.getRoomVisited(GameEntities.ROOM_GRANDPAS_SHACK)) {
 				player.setRoom(GameEntities.ROOM_GRANDPAS_SHACK);
-			} else if (shelterLocation.equals(GameEntities.NOUN_CAVE)) {
+			} else if (shelterLocation.equals(GameEntities.NOUN_CAVE) && game.getRoomVisited(GameEntities.ROOM_SNELM_LAIR)) {
 				player.setRoom(GameEntities.ROOM_SNELM_LAIR);
-			} else if (shelterLocation.equals(GameEntities.NOUN_HUT)) {
+			} else if (shelterLocation.equals(GameEntities.NOUN_HUT) && game.getRoomVisited(GameEntities.ROOM_HUT)) {
 				player.setRoom(GameEntities.ROOM_HUT);
 			} else {
 				game.addMessage("I'm sorry, I do not know that place",true,true);

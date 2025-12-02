@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.18
-Date: 6 November 2025
+Version: 4.19
+Date: 2 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -166,7 +166,9 @@ public class CommandPanel  extends JPanel  {
 		Integer[] shelterLocations = {GameEntities.ROOM_GRANDPAS_SHACK,GameEntities.ROOM_SNELM_LAIR,GameEntities.ROOM_HUT};
 		
 		for (int i=0;i<SHELTER_COUNT;i++) {
-			add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
+			if(state.getRoomVisited(shelterLocations[i])) {
+				add(createButtonPanel(shelters[i],new ShelterButton(game,shelterLocations[i]),BUTTON_INDENT));
+			}
 		}
 	}
 	
@@ -392,4 +394,5 @@ public class CommandPanel  extends JPanel  {
  * 26 September 2025 - Removed magic numbers. Added JavaDocs
  * 9 October 2025 - Changed lair to Snelm's Lair
  * 6 November 2025 - Added restart game command
+ * 2 December 2025 - Hid locations not visited from shelter
  */
