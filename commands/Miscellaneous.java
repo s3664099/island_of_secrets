@@ -2,8 +2,8 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.15
-Date: 2 December 2025
+Version: 4.16
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -357,6 +357,13 @@ public class Miscellaneous {
 		return game.getItem(GameEntities.ITEM_STORM).getItemFlag()<0;
 	}
 	
+	/** @return true if know of shelter.*/
+	private boolean knowAnyShelter() {
+		return game.getRoomVisited(GameEntities.ROOM_GRANDPAS_SHACK) || 
+			   game.getRoomVisited(GameEntities.ROOM_SNELM_LAIR) ||
+			   game.getRoomVisited(GameEntities.ROOM_HUT);
+	}
+	
     /** @return true if swimming is currently possible. */
 	private boolean checkCanSwim() {
 		return player.getRoom()==GameEntities.ROOM_STOREROOM && game.getItem(GameEntities.ITEM_TRAPDOOR).getItemFlag()==0;
@@ -577,11 +584,24 @@ public class Miscellaneous {
 		return new ActionResult(game,player,true);
 	}
 	
+	 /**
+     * Handles taking whether player knows of any shelter or not
+     * @return action result of sheltering
+     */
+	private ActionResult shelterFromStorm() {
+		game.addMessage("I don't know of any shelter",true,true);
+		ActionResult result = new ActionResult(game,player,true);
+		if (knowAnyShelter()) {
+			result = selectShelter();
+		}
+		return result;
+	}
+	
     /**
      * Handles taking shelter from a storm based on player input.
      * @return action result of sheltering
      */
-	private ActionResult shelterFromStorm() {
+	private ActionResult selectShelter() {
 		int commandLength = command.getCommand().split(" ").length;
 		String[] commands = command.getSplitFullCommand();
 		
@@ -628,4 +648,5 @@ public class Miscellaneous {
  * 9 October 2025 - Changed lair to Snelm's Lair
  * 17 November 2025 - Added entity for noun stone
  * 30 November 2025 - Changed cabin to hut
+ * 3 December 2025 - Added response if no shelter known
  */
