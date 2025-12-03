@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.19
-Date: 5 November 2025
+Version: 4.20
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -52,6 +52,11 @@ public class CommandParser {
 		String[] splitCommand = splitCommand(rawInput);
 		int verbNumber = getVerbNumber(splitCommand[0]);
 		
+		if (isLily(splitCommand[1].trim())) {
+			splitCommand[1] = splitCommand[1].replace(GameEntities.NOUN_LILY, GameEntities.NOUN_FLOWER);
+			rawInput = rawInput.replace(GameEntities.NOUN_LILY, GameEntities.NOUN_FLOWER);
+		}
+			
 		if (game.isGiveState()) {
 			boolean giveResponse = false;
 			if(splitCommand[0].equals(GameEntities.WORD_TO)) {
@@ -145,7 +150,7 @@ public class CommandParser {
 	 * @return the noun number if found, otherwise -1
 	 */
 	private int getNounNumber(String noun,int verbNumber) {
-		
+
 		if (isLily(noun)) {
 			noun = setFlower();
 		} else if (isBoatman(noun)) {
@@ -313,7 +318,7 @@ public class CommandParser {
 	}
 	
 	private boolean isLily(String noun) {
-		return noun.equals(GameEntities.NOUN_LILY);
+		return noun.contains(GameEntities.NOUN_LILY);
 	}
 	
 	private boolean isBoatman(String noun) {
@@ -348,4 +353,5 @@ public class CommandParser {
  * 5 Sepember 2025 - Updated based on changes to consume
  * 29 October 2025 - Added validation to change lily to flower
  * 5 November 2025 - Added switch for boatman to boat
+ * 3 December 2025 - Change lily to flower if being used.
  */
