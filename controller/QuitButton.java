@@ -2,8 +2,8 @@
 Title: Island of Secrets Quit Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 18 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -96,4 +96,5 @@ public class QuitButton implements ActionListener {
  * 9 April 2025 - Added the restart functionality
  * 21 April 2025 - Updated based on DeepSeek's recommendations.
  * 18 September 2025 - Updated code based on recommendations
+ * 3 December 2025 - Increased version number
  */

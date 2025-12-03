@@ -2,8 +2,8 @@
 Title: Island of Secrets Starter
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 20 July 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -70,5 +70,6 @@ public class Start {
 23 December 2024 - Updated to version 2.
 31 January 2025 - Completed Testing and increased version
 5 March 2025 - Increased to v4.0
-9 March 2025 - Added try/catch & logging	
+9 March 2025 - Added try/catch & logging
+3 December 2025 - Increased version number
 */

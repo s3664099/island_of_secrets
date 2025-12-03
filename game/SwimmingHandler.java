@@ -2,8 +2,8 @@
 Title: Island of Secrets Swimming Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 3 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -119,5 +119,6 @@ public class SwimmingHandler {
  * 7 May 2025 - Changed return to ActionResult
  * 18 August 2025 - Updated with JavaDocs and polished it.
  * 3 September 2025 - Updated for ActionResult changes
+ * 3 December 2025 - Increased version number
  */
  

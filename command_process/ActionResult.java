@@ -2,8 +2,8 @@
 Title: Island of Secrets Action Result
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 1 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303 
 */
 
@@ -117,4 +117,5 @@ public class ActionResult {
  * 8 May 2025 - Added constructor for all variables
  * 17 July 2025 - Removed redundant include
  * 1 September 2025 - Updated based on recommendations. Added JavaDocs
+ * 3 December 2025 - Increased version number
 */

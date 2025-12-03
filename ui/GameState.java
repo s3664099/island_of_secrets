@@ -2,8 +2,8 @@
 Title: Island of Secrets Game State
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.9
-Date: 23 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -275,4 +275,5 @@ public class GameState implements GameStateProvider {
  * 26 July 2025 - Added getPanelmessages
  * 6 November 2025 - Added a check for a restart game state
  * 23 November 2025 - Removed Lightning State
+ * 3 December 2025 - Increased version number
  */

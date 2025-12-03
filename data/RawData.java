@@ -2,8 +2,8 @@
 Title: Island of Secrets Raw Data
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 6 July 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -271,4 +271,5 @@ public class RawData {
  * 				 - Fix problem with error preventing objects
  * 26 May 2025 - Moved commands around for easy referencing
  * 6 July 2025 - Only one way into and out of Snelm's Lair
+ * 3 December 2025 - Increased version number
 */

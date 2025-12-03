@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Processor
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 1 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -92,4 +92,5 @@ public class CommandProcessor {
  * 18 June 2025 - Tidied up code
  * 30 June 2025 - Removed the give section
  * 1 September 2025 - Updated based on recommendations and added Javadocs.
+ * 3 December 2025 - Increased version number
  */

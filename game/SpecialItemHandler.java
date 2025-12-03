@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Item Handler Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 12 October 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -169,4 +169,5 @@ public class SpecialItemHandler implements Serializable {
  * 9 October 2025 - Added changing description if no apples are on the tree.
  * 				  - Fixed display for the parchment
  * 12 October 2025 - Fixed problem with operator precedence in special items for flint not displaying
+ * 3 December 2025 - Increased version number
  */

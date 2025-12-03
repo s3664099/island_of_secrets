@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.10
-Date: 5 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -350,4 +350,5 @@ public class Consume {
  * 4 November 2025 - Fixed problem where unable to eat lilies
  * 				   - Fixed problem with drinking liquid
  * 5 November 2025 - Added check to confirm drinking wine
+ * 3 December 2025 - Increased version number
  */

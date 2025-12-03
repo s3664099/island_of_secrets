@@ -2,8 +2,8 @@
 Title: Island of Secrets Message Builder Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 29 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -156,4 +156,5 @@ public class MessageBuilder implements Serializable {
  * 14 July 2025 - Change way long message works for long strings
  * 20 August 2025 - Updated class
  * 29 November 2025 - Fixed issue where entire inventory not displaying
+ * 3 December 2025 - Increased version number
  */

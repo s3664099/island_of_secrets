@@ -2,8 +2,8 @@
 Title: Island of Secrets Write Operation Interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 30 June 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -74,4 +74,5 @@ public interface GameCommandHandler {
  * 23 April 2025 - Removed process shelter
  * 25 April 2025 - Updated interface with new functions
  * 30 June 2024 - Removed separate process for give
+ * 3 December 2025 - Increased version number
  */

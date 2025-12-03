@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Swimming Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.2
-Date: 18 August 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -56,4 +56,5 @@ public class Swimming {
 /*15 March 2025 - Created File
  * 20 July 2025 - Moved random position here.
  * 18 August 2025 - Added JavaDocs and cleaned up and fixed up class
+ * 3 December 2025 - Increased version number
  */

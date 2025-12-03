@@ -2,8 +2,8 @@
 Title: Island of Secrets Initialise Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 18 October 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -254,4 +254,5 @@ public class Player implements Serializable {
  * 20 July 2025 - Removed setting the swim position. Removed START_SWIM state
  * 19 August 2025 - Made minor fixes. Added JavaDocs
  * 18 October 2025 - Added logger for when stat changes
+ * 3 December 2025 - Increased version number
  */

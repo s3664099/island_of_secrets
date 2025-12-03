@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.17
-Date: 23 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -517,4 +517,5 @@ public class Game implements Serializable {
  * 19 August 2025 - Tightened code based on recommendations. Added JavaDocs
  * 6 November 2025 - Added a restart state
  * 23 November 2025 - Removed Lighting State
+ * 3 December 2025 - Increased version number
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Move Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 29 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -474,4 +474,5 @@ public class Move {
  * 28 October 2025 - Added function to handle going down into trapdoor
  * 29 October 2025 - Fixed so that says door closed
  * 29 November 2025 - Added stat clearing to go boat
+ * 3 December 2025 - Increased version number
  */

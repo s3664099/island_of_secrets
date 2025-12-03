@@ -2,8 +2,8 @@
 Title: Island of Secrets MessagePanel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 24 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -155,4 +155,5 @@ public class MessagePanel extends JPanel implements GameView {
  * 27 September 2025 - Updated code based on recommendations.
  * 					 - Added JavaDocs
  * 24 November 2025 - Fixed stalling messages where only one message
+ * 3 December 2025 - Increased version number
  */

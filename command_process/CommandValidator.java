@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Validator
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.27
-Date: 29 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -383,4 +383,5 @@ public class CommandValidator {
  * 17 November 2025 - Fixed problem where stone not validating
  * 23 November 2025 - Added check to exclude say from invalidating noun or verb
  * 29 November 2025 - Removed shelter from the noun/verb check
+ * 3 December 2025 - Increased version number
  */

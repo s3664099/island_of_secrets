@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.6
-Date: 21 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -62,4 +62,5 @@ public class ShowMainViewButton implements ActionListener {
  * 25 April 2025 - Changed based on updated to Enums
  * 27 July 2025 - Removed functions not used
  * 21 September 2025 - 
+ * 3 December 2025 - Increased version number
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Main Game Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 29 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -207,4 +207,5 @@ class MainGamePanel extends JPanel implements GameUI, GameView {
  * 16 April 2025 - Completed recommended changes
  * 24 September 2025 - Added JavaDocs
  * 29 September 2025 - Fixed problem where couldn't exit load game status
+ * 3 December 2025 - Increased version number
  */

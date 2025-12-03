@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.5
-Date: 17 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -112,4 +112,5 @@ public class CommandButton implements ActionListener {
  * 1 April 2024 - Updated listener
  * 21 April 2025 - Updated class based on recommendations by DeepSeek
  * 17 September 2025 - Added JavaDocs
+ * 3 December 2025 - Increased version number
  */

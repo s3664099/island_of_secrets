@@ -2,8 +2,8 @@
 Title: Island of Secrets Examine Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 13 October 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -386,4 +386,5 @@ public class Examine {
  * 8 June 2025 - Finished examine function with examine papers
  * 2 September 2025 - Updated based on new ActionResult
  * 13 October 2025 - Tightened the contents of the chest
+ * 3 December 2025 - Increased version number
 */

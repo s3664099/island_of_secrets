@@ -2,8 +2,8 @@
 Title: Island of Secrets GameUI interface
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 14 April 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -47,4 +47,5 @@ public interface GameUI {
  * 4 April 2025 - Added function to set mapPanel
  * 8 April 2025 - Added closePanel function definition
  * 14 April 2025 - Updated and added JavaDocs
+ * 3 December 2025 - Increased version number
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Execution Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.21
-Date: 26 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -914,4 +914,5 @@ public class ItemCommands {
  * 16 November 2025 - Giving water to villager now works.
  * 23 November 2025 - Changed lightning flashes to normal panel message
  * 26 November 2025 - Added exclusion for books
+ * 3 December 2025 - Increased version number
  */

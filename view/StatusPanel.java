@@ -2,8 +2,8 @@
 Title: Island of Secrets Status Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 18 October 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -143,4 +143,5 @@ public class StatusPanel extends JPanel {
  * 25 September 2025 - Updated code based on recommendations
  * 					 - Added JavaDocs
  * 18 October 2025 - Fixed issue where stats not updating
+ * 3 December 2025 - Increased version number
  */

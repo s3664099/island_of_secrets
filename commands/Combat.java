@@ -2,8 +2,8 @@
 Title: Island of Secrets Combat Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.14
-Date: 29 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -570,4 +570,5 @@ public class Combat {
  * 23 November 2025 - Removed duplicate waste staff function
  * 24 November 2025 - Fixed problem with special messages not displaying
  * 29 November 2025 - Moved stat name constants to constants
+ * 3 December 2025 - Increased version number
  */

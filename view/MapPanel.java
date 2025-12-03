@@ -2,8 +2,8 @@
 Title: Island of Secrets Map Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 26 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -427,4 +427,5 @@ public class MapPanel extends JPanel implements GameView {
  * 27 July 2025 - Updated game button to remove code not used.
  * 18 September 2025 - Removed game and panel from Map Controller
  * 26 September 2025 - 
+ * 3 December 2025 - Increased version number
  */

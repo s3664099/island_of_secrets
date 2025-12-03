@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.8
-Date: 6 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -75,4 +75,5 @@ public class Constants {
  * 19 August 2025 - Added more constants from the game class
  * 20 August 2025 - Added hidden flag
  * 6 November 2025 - Increased number of verbs by 1
+ * 3 December 2025 - Increased version number
 */

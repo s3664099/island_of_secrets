@@ -2,8 +2,8 @@
 Title: Island of Secrets Command Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.25
-Date: 6 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -234,4 +234,5 @@ public class CommandExecutor {
  * 2 September 2025 - Updated based on new ActionResult
  * 4 September 2025 - Updated based on changes to Consume
  * 6 November 2025 - Added restart game command
+ * 3 December 2025 - Increased version number
  */

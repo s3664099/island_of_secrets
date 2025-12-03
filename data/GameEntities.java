@@ -2,8 +2,8 @@
 Title: Island of Secrets Constant Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.29
-Date: 30 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 This class is designed to hold the constants. They have been made public since they
@@ -275,4 +275,5 @@ public class GameEntities {
  * 6 November 2025 - Increased for a Restart option
  * 8 November 2025 - Added nouns for food & drink
  * 30 November 2025 - Changed cabin to hut
+ * 3 December 2025 - Increased version number
  */

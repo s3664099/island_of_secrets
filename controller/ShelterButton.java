@@ -2,8 +2,8 @@
 Title: Island of Secrets Shelter Button
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.3
-Date: 25 April 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -93,4 +93,5 @@ public class ShelterButton implements ActionListener {
  * 10 April 2025 - Updated Listener
  * 21 April 2025 - Update class based on DeepSeek recommendations
  * 25 April 2025 - Changed based on changes to Enums
+ * 3 December 2025 - Increased version number
  */

@@ -2,8 +2,8 @@
 Title: Island of Secrets Parsed Command
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.25
-Date: 8 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -477,4 +477,5 @@ public class ParsedCommand {
  * 5 November 2025 - Added check to confirm drinking wine
  * 6 November 2025 - Added restart command
  * 8 November 2025 - Added food & drink nouns
+ * 3 December 2025 - Increased version number
  */

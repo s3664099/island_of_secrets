@@ -2,8 +2,8 @@
 Title: Island of Secrets Game Initialiser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 16 August 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -110,4 +110,5 @@ public final class GameInitialiser {
  * 13 April 2025 - Updated code based on DeepSeek
  * 13 July 2025 - Increase size of Items when read
  * 16 August 2025 - Added Java Docs
+ * 3 December 2025 - Increased version number
  */

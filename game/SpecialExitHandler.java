@@ -2,8 +2,8 @@
 Title: Island of Secrets Special Exit Handler
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.4
-Date: 23 August 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 
 Remove magic numbers, and directions and use the GameEntities, plus special ones for the direction names (since already used in Game Entities)
@@ -143,4 +143,5 @@ public class SpecialExitHandler implements Serializable {
  * 6 July 2025 - Updated directions out of cave
  * 18 July 2025 - Move hardcoded trapdoor section to GameEntities.
  * 23 August 2025 - Updated Class by removing magic numbers. Added JavaDocs
+ * 3 December 2025 - Increased version number
  */

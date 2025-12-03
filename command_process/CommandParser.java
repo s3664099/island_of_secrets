@@ -2,7 +2,7 @@
 Title: Island of Secrets Command Parser
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.20
+Version: 5.0
 Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -354,4 +354,5 @@ public class CommandParser {
  * 29 October 2025 - Added validation to change lily to flower
  * 5 November 2025 - Added switch for boatman to boat
  * 3 December 2025 - Change lily to flower if being used.
+ * 					- Increased version number
  */

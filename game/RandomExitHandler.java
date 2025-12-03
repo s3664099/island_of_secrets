@@ -2,8 +2,8 @@
 Title: Island of Secrets Random Exit Class
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.1
-Date: 20 August 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -55,4 +55,5 @@ public class RandomExitHandler implements Serializable {
 /*
  * 17 March 2025 - Created new file
  * 20 August 2025 - Updated class and added JavaDocs
+ * 3 December 2025 - Increased version number
  */

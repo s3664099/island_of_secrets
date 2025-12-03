@@ -2,8 +2,8 @@
 Title: Island of Secrets Persistence Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 6 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -315,4 +315,5 @@ public class Persistence {
  * 15 September 2025 - Tightened Code and added JavaDocs
  * 29 September 2025 - Tightened Comments
  * 6 November 2025 - Added restart game action
+ * 3 December 2025 - Increased version number
  */

@@ -2,7 +2,7 @@
 Title: Island of Secrets Miscellaneous Commands
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
+Version: 5.0
 Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
@@ -649,4 +649,5 @@ public class Miscellaneous {
  * 17 November 2025 - Added entity for noun stone
  * 30 November 2025 - Changed cabin to hut
  * 3 December 2025 - Added response if no shelter known
+ * 				   - Increased version number
  */

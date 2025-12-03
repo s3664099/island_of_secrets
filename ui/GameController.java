@@ -2,8 +2,8 @@
 Title: Island of Secrets GameController
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.16
-Date: 23 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -229,4 +229,5 @@ public final class GameController implements GameCommandHandler {
  * 21 September 2025 - Added JavaDocs
  * 6 November 2025 - Added restart game command
  * 23 November 2025 - Removed Lightning State
+ * 3 December 2025 - Increased version number
  */

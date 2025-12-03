@@ -2,8 +2,8 @@
 Title: Island of Secrets Post Command Functions
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.12
-Date: 1 November 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -373,4 +373,5 @@ public class PostCommand {
  * 20 October 2025 - Fixed problem where Omegan is only in Grandpa's Shack
  * 30 November 2025 - Excluded storm from following player into shelter
  * 1 December 2025 - Tightened up the code
+ * 3 December 2025 - Increased version number
  */

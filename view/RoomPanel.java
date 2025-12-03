@@ -2,8 +2,8 @@
 Title: Island of Secrets Room Panel
 Author: Jenny Tyler & Les Howarth
 Translator: David Sarkies
-Version: 4.7
-Date: 24 September 2025
+Version: 5.0
+Date: 3 December 2025
 Source: https://archive.org/details/island-of-secrets_202303
 */
 
@@ -235,4 +235,5 @@ public class RoomPanel extends JPanel {
  * 3 April 2025 - Updated code to take the Game State
  * 18 April 2025 - Removed redundant functions, and updated rest as per DeepSeek.
  * 24 September 2025 - Added JavaDocs
+ * 3 December 2025 - Increased version number
  */
